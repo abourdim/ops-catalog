@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="terminal" data-lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Workshop-Diy — Ops Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════ RESET ═══════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ═══════ THEMES ═══════ */
+:root{--transition:0.2s ease}
+
+[data-theme="terminal"]{
+  --bg:#0a0c10;--bg2:#0d1117;--bg3:#161b22;--border:#21262d;--border2:#30363d;
+  --text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--heading:#e6edf3;
+  --accent:#00ff88;--accent2:#00cc6a;--accent-bg:rgba(0,255,136,0.06);--accent-border:rgba(0,255,136,0.2);
+  --card-hover:rgba(0,255,136,0.03);--voted-bg:rgba(0,255,136,0.05);--voted-border:rgba(0,255,136,0.25);
+  --scanline:rgba(0,255,136,0.015);--glow:0 0 20px rgba(0,255,136,0.1);
+}
+[data-theme="midnight"]{
+  --bg:#08090d;--bg2:#0e1018;--bg3:#171a26;--border:#1e2235;--border2:#2a2f45;
+  --text:#b8c0d9;--text2:#7580a0;--text3:#4a5070;--heading:#e0e5f5;
+  --accent:#6c5ce7;--accent2:#5a4bd1;--accent-bg:rgba(108,92,231,0.06);--accent-border:rgba(108,92,231,0.25);
+  --card-hover:rgba(108,92,231,0.04);--voted-bg:rgba(108,92,231,0.06);--voted-border:rgba(108,92,231,0.3);
+  --scanline:transparent;--glow:0 0 20px rgba(108,92,231,0.1);
+}
+[data-theme="ember"]{
+  --bg:#0f0a08;--bg2:#161010;--bg3:#201816;--border:#2d2220;--border2:#3d302c;
+  --text:#d4b8a8;--text2:#9a7e70;--text3:#6a5448;--heading:#f0ddd0;
+  --accent:#ff6b35;--accent2:#e55a28;--accent-bg:rgba(255,107,53,0.06);--accent-border:rgba(255,107,53,0.25);
+  --card-hover:rgba(255,107,53,0.04);--voted-bg:rgba(255,107,53,0.06);--voted-border:rgba(255,107,53,0.3);
+  --scanline:transparent;--glow:0 0 20px rgba(255,107,53,0.1);
+}
+[data-theme="arctic"]{
+  --bg:#f4f7fa;--bg2:#ffffff;--bg3:#eaeff5;--border:#d0d7e0;--border2:#b8c4d0;
+  --text:#3a4555;--text2:#6b7a8d;--text3:#9aa8b8;--heading:#1a2535;
+  --accent:#0066cc;--accent2:#0055aa;--accent-bg:rgba(0,102,204,0.06);--accent-border:rgba(0,102,204,0.2);
+  --card-hover:rgba(0,102,204,0.03);--voted-bg:rgba(0,102,204,0.06);--voted-border:rgba(0,102,204,0.25);
+  --scanline:transparent;--glow:0 0 15px rgba(0,102,204,0.08);
+}
+[data-theme="phosphor"]{
+  --bg:#001100;--bg2:#001a00;--bg3:#002200;--border:#003300;--border2:#004400;
+  --text:#33cc33;--text2:#228822;--text3:#116611;--heading:#44ff44;
+  --accent:#44ff44;--accent2:#33dd33;--accent-bg:rgba(68,255,68,0.06);--accent-border:rgba(68,255,68,0.2);
+  --card-hover:rgba(68,255,68,0.03);--voted-bg:rgba(68,255,68,0.06);--voted-border:rgba(68,255,68,0.25);
+  --scanline:rgba(68,255,68,0.02);--glow:0 0 25px rgba(68,255,68,0.15);
+}
+[data-theme="signal"]{
+  --bg:#0c0a14;--bg2:#110e1c;--bg3:#1a1628;--border:#252040;--border2:#352e55;
+  --text:#c8b8e8;--text2:#8878b8;--text3:#5a4a80;--heading:#e8ddf8;
+  --accent:#00e5ff;--accent2:#00bcd4;--accent-bg:rgba(0,229,255,0.06);--accent-border:rgba(0,229,255,0.2);
+  --card-hover:rgba(0,229,255,0.03);--voted-bg:rgba(0,229,255,0.06);--voted-border:rgba(0,229,255,0.25);
+  --scanline:rgba(0,229,255,0.01);--glow:0 0 20px rgba(0,229,255,0.1);
+}
+[data-theme="redshift"]{
+  --bg:#100808;--bg2:#180c0c;--bg3:#221414;--border:#331a1a;--border2:#442222;
+  --text:#d4a8a8;--text2:#9a6e6e;--text3:#6a4848;--heading:#f0cccc;
+  --accent:#ff3355;--accent2:#dd2244;--accent-bg:rgba(255,51,85,0.06);--accent-border:rgba(255,51,85,0.25);
+  --card-hover:rgba(255,51,85,0.04);--voted-bg:rgba(255,51,85,0.06);--voted-border:rgba(255,51,85,0.3);
+  --scanline:transparent;--glow:0 0 20px rgba(255,51,85,0.1);
+}
+[data-theme="sand"]{
+  --bg:#f5f0e8;--bg2:#faf7f0;--bg3:#ede6d8;--border:#d8cebb;--border2:#c5b8a0;
+  --text:#4a4035;--text2:#7a6e60;--text3:#a09585;--heading:#2a2018;
+  --accent:#b8860b;--accent2:#9a7209;--accent-bg:rgba(184,134,11,0.06);--accent-border:rgba(184,134,11,0.2);
+  --card-hover:rgba(184,134,11,0.03);--voted-bg:rgba(184,134,11,0.06);--voted-border:rgba(184,134,11,0.25);
+  --scanline:transparent;--glow:0 0 15px rgba(184,134,11,0.08);
+}
+
+/* ═══════ BASE ═══════ */
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;line-height:1.6;
+  transition:background var(--transition),color var(--transition);
+}
+[data-lang="ar"] body{font-family:'Noto Sans Arabic','IBM Plex Mono',monospace}
+h1,h2,h3,.heading{font-family:'Outfit','Noto Sans Arabic',sans-serif;color:var(--heading)}
+a{color:var(--accent);text-decoration:none}
+
+/* ═══════ SCANLINE ═══════ */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,var(--scanline) 0px,var(--scanline) 1px,transparent 1px,transparent 3px);
+}
+
+/* ═══════ SCROLLBAR ═══════ */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ═══════ SPLASH ═══════ */
+.splash{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.splash-box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+  padding:48px 40px;max-width:460px;width:100%;text-align:center;
+  box-shadow:var(--glow);animation:fadeUp .5s ease;
+}
+.splash-logo{width:80px;margin:0 auto 20px;display:block}
+.splash-logo svg{width:100%;height:auto}
+.splash-title{font-size:24px;font-weight:700;margin-bottom:4px}
+.splash-sub{color:var(--accent);font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;font-weight:500}
+.splash-desc{color:var(--text2);font-size:12px;line-height:1.7;margin-bottom:28px}
+.splash-input{
+  width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border2);
+  border-radius:8px;color:var(--heading);font-size:14px;font-family:inherit;outline:none;
+  margin-bottom:12px;transition:border-color var(--transition);
+}
+.splash-input:focus{border-color:var(--accent)}
+.splash-input::placeholder{color:var(--text3)}
+.btn-primary{
+  width:100%;padding:12px;background:var(--accent);color:var(--bg);border:none;
+  border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;
+  font-family:'Outfit',sans-serif;letter-spacing:1px;text-transform:uppercase;
+  transition:all var(--transition);
+}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.4;cursor:default;transform:none}
+.btn-skip{
+  background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;
+  margin-top:12px;font-family:inherit;transition:color var(--transition);
+}
+.btn-skip:hover{color:var(--text2)}
+
+/* ═══════ MAIN LAYOUT ═══════ */
+.main{display:none}
+.main.active{display:block}
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ═══════ HEADER ═══════ */
+.hdr{
+  position:sticky;top:0;z-index:100;
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg) 85%,transparent 100%);
+  padding:14px 0 20px;
+}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.hdr-brand{display:flex;align-items:center;gap:10px}
+.hdr-logo{width:32px;flex-shrink:0}
+.hdr-logo svg{width:100%;height:auto;display:block}
+.hdr-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;color:var(--heading)}
+.hdr-tag{color:var(--text3);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-left:6px}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hdr-voter{color:var(--text2);font-size:11px}
+.badge{
+  padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;
+  border:1px solid var(--border);color:var(--text2);
+}
+.badge.active{background:var(--accent-bg);border-color:var(--accent-border);color:var(--accent)}
+.btn-sm{
+  padding:5px 12px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;
+  font-family:'Outfit',sans-serif;letter-spacing:.5px;text-transform:uppercase;
+  border:none;transition:all var(--transition);
+}
+.btn-export{background:var(--accent);color:var(--bg)}
+.btn-export:disabled{background:var(--border);color:var(--text3);cursor:default}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--text2);cursor:pointer;font-family:inherit;font-size:10px;padding:4px 9px;border-radius:5px}
+.btn-ghost:hover{border-color:var(--accent-border);color:var(--text)}
+
+/* ═══════ CONTROLS ROW ═══════ */
+.controls{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search-wrap{position:relative;flex:1 1 260px}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:12px;pointer-events:none}
+.search-input{
+  width:100%;padding:8px 12px 8px 32px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;color:var(--heading);font-size:12px;font-family:inherit;outline:none;
+  transition:border-color var(--transition);
+}
+[dir="rtl"] .search-icon{left:auto;right:11px}
+[dir="rtl"] .search-input{padding:8px 32px 8px 12px}
+.search-input:focus{border-color:var(--accent-border)}
+.search-input::placeholder{color:var(--text3)}
+.ctrl-select{
+  padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  color:var(--heading);font-size:11px;font-family:inherit;outline:none;cursor:pointer;
+}
+
+/* ═══════ TOOLBAR ROWS ═══════ */
+.toolbar{margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.pill{
+  padding:3px 11px;border-radius:20px;font-size:10px;cursor:pointer;
+  border:1px solid var(--border);color:var(--text2);background:none;
+  font-family:inherit;transition:all .15s;white-space:nowrap;
+}
+.pill:hover{border-color:var(--accent-border)}
+.pill.on{background:var(--accent-bg);border-color:var(--accent-border);color:var(--accent);font-weight:600}
+
+/* ═══════ SWITCHER BARS ═══════ */
+.switchers{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.sw-group{display:flex;gap:3px;align-items:center}
+.sw-label{color:var(--text3);font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+[dir="rtl"] .sw-label{margin-right:0;margin-left:4px}
+.sw-btn{
+  width:26px;height:26px;border-radius:6px;border:1px solid var(--border);
+  background:none;color:var(--text2);font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.sw-btn:hover{border-color:var(--accent-border)}
+.sw-btn.on{background:var(--accent-bg);border-color:var(--accent-border);color:var(--accent)}
+
+.summary{margin-top:6px;color:var(--text3);font-size:10px}
+
+/* ═══════ CATEGORIES ═══════ */
+.categories{padding-bottom:60px}
+.cat-section{margin-bottom:2px}
+.cat-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 14px;cursor:pointer;border-radius:10px;
+  transition:background .15s;user-select:none;
+}
+.cat-hdr:hover{background:var(--card-hover)}
+.cat-left{display:flex;align-items:center;gap:8px}
+.cat-arrow{color:var(--text3);font-size:9px;transition:transform .2s;display:inline-block}
+.cat-arrow.open{transform:rotate(90deg)}
+[dir="rtl"] .cat-arrow{transform:rotate(180deg)}
+[dir="rtl"] .cat-arrow.open{transform:rotate(90deg)}
+.cat-icon{font-size:17px}
+.cat-label{font-family:'Outfit','Noto Sans Arabic',sans-serif;font-weight:600;font-size:13px;color:var(--heading)}
+.cat-count{background:var(--bg3);color:var(--text2);padding:1px 7px;border-radius:10px;font-size:10px}
+.cat-hw{color:var(--text3);font-size:10px}
+.cat-sep{color:var(--border2);font-size:9px}
+.cat-votes{
+  background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent);
+  padding:1px 9px;border-radius:10px;font-size:10px;font-weight:600;
+}
+
+/* ═══════ GRID ═══════ */
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  gap:7px;padding:4px 0 14px;
+  animation:fadeIn .25s ease;
+}
+.card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:13px 15px;cursor:pointer;transition:all .15s;position:relative;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.card:hover{border-color:var(--accent-border);background:var(--card-hover)}
+.card.voted{background:var(--voted-bg);border-color:var(--voted-border)}
+.card-body{flex:1;min-width:0}
+.card-name{
+  font-family:'Outfit','Noto Sans Arabic',sans-serif;font-weight:600;font-size:12.5px;
+  color:var(--heading);margin-bottom:5px;word-break:break-word;transition:color .15s;
+}
+.card.voted .card-name{color:var(--accent)}
+.card-desc{color:var(--text2);font-size:10.5px;line-height:1.55}
+.card-check{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:1px;
+  border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  transition:all .2s;font-size:14px;color:transparent;
+}
+.card-check:hover{transform:scale(1.08)}
+.card.voted .card-check{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+
+/* ═══════ FOOTER ═══════ */
+.foot{
+  text-align:center;padding:24px 20px 40px;
+  border-top:1px solid var(--border);color:var(--text3);font-size:10px;
+}
+.foot-logo{width:24px;margin:0 auto 8px;opacity:.3}
+.foot-logo svg{width:100%;height:auto;display:block}
+
+/* ═══════ ANIMATIONS ═══════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:600px){
+  .splash-box{padding:32px 24px}
+  .grid{grid-template-columns:1fr}
+  .hdr-top{gap:6px}
+  .hdr-voter{display:none}
+}
+
+/* ═══════ HIDDEN ═══════ */
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ═══════ SPLASH ═══════ -->
+<div class="splash" id="splash">
+<div class="splash-box">
+  <div class="splash-logo" id="splash-logo"></div>
+  <h1 class="splash-title heading">Workshop-Diy</h1>
+  <h2 class="splash-sub heading" data-i18n="splash_sub">Ops Catalog</h2>
+  <p class="splash-desc" data-i18n="splash_desc">240+ project ideas across 26 categories. Vote on the ones you want built first.</p>
+  <input class="splash-input" id="name-input" data-i18n-ph="splash_ph" placeholder="Enter your name" autocomplete="off"/>
+  <button class="btn-primary" id="enter-btn" data-i18n="splash_enter" disabled>Enter HQ</button>
+  <button class="btn-skip" id="skip-btn" data-i18n="splash_skip">Skip &mdash; browse without voting</button>
+
+  <div class="switchers" style="justify-content:center;margin-top:20px">
+    <div class="sw-group">
+      <span class="sw-label">Lang</span>
+      <button class="sw-btn on" data-setlang="en" title="English">EN</button>
+      <button class="sw-btn" data-setlang="fr" title="Français">FR</button>
+      <button class="sw-btn" data-setlang="ar" title="العربية">ع</button>
+    </div>
+    <div class="sw-group">
+      <span class="sw-label">Theme</span>
+      <button class="sw-btn on" data-settheme="terminal" title="Terminal">🖥</button>
+      <button class="sw-btn" data-settheme="midnight" title="Midnight">🌌</button>
+      <button class="sw-btn" data-settheme="ember" title="Ember">🔥</button>
+      <button class="sw-btn" data-settheme="phosphor" title="Phosphor">💚</button>
+      <button class="sw-btn" data-settheme="signal" title="Signal">📡</button>
+      <button class="sw-btn" data-settheme="redshift" title="Redshift">🔴</button>
+      <button class="sw-btn" data-settheme="arctic" title="Arctic">❄️</button>
+      <button class="sw-btn" data-settheme="sand" title="Sand">🏜</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════ MAIN ═══════ -->
+<div class="main" id="main">
+<div class="hdr"><div class="container">
+  <div class="hdr-top">
+    <div class="hdr-brand">
+      <div class="hdr-logo" id="hdr-logo"></div>
+      <span class="hdr-name heading">Workshop-Diy</span>
+      <span class="hdr-tag" data-i18n="hdr_tag">OPS CATALOG</span>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-voter" id="hdr-voter"></span>
+      <span class="badge" id="hdr-badge">0</span>
+      <button class="btn-sm btn-export" id="export-btn" data-i18n="export" disabled>Export</button>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">&#128269;</span>
+      <input class="search-input" id="search" data-i18n-ph="search_ph" placeholder="Search projects..." autocomplete="off"/>
+    </div>
+    <select class="ctrl-select" id="sort-select">
+      <option value="category" data-i18n-opt="sort_cat">By Category</option>
+      <option value="votes" data-i18n-opt="sort_votes">By Votes</option>
+    </select>
+    <button class="btn-ghost" id="expand-btn" data-i18n="expand">Expand All</button>
+    <button class="btn-ghost" id="collapse-btn" data-i18n="collapse">Collapse</button>
+  </div>
+  <div class="toolbar" id="hw-bar"></div>
+  <div class="switchers">
+    <div class="sw-group">
+      <span class="sw-label">Lang</span>
+      <button class="sw-btn on" data-setlang="en">EN</button>
+      <button class="sw-btn" data-setlang="fr">FR</button>
+      <button class="sw-btn" data-setlang="ar">ع</button>
+    </div>
+    <div class="sw-group">
+      <span class="sw-label">Theme</span>
+      <button class="sw-btn on" data-settheme="terminal">🖥</button>
+      <button class="sw-btn" data-settheme="midnight">🌌</button>
+      <button class="sw-btn" data-settheme="ember">🔥</button>
+      <button class="sw-btn" data-settheme="phosphor">💚</button>
+      <button class="sw-btn" data-settheme="signal">📡</button>
+      <button class="sw-btn" data-settheme="redshift">🔴</button>
+      <button class="sw-btn" data-settheme="arctic">❄️</button>
+      <button class="sw-btn" data-settheme="sand">🏜</button>
+    </div>
+  </div>
+  <div class="summary" id="summary"></div>
+</div></div>
+<div class="container categories" id="categories"></div>
+<div class="foot">
+  <div class="foot-logo" id="foot-logo"></div>
+  <span data-i18n="footer">Workshop-Diy — Ops Catalog</span>
+</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════════════════════ */
+
+const LOGO=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-92.820084 179.975632 6.000000 3.214096" fill="currentColor"><path d="M-90.26918,180.70665C-90.270096,180.703674,-90.280693,180.55484,-90.292725,180.3759C-90.304756,180.19696,-90.315605,180.042282,-90.316826,180.032166L-90.319046,180.013763L-90.29628,180.013763C-90.283752,180.013748,-90.25869,180.012115,-90.240585,180.010117C-90.222481,180.008118,-90.191841,180.005646,-90.172501,180.004608L-90.137344,180.002731L-90.128738,180.131226C-90.124008,180.201889,-90.119133,180.269699,-90.117897,180.281921L-90.115662,180.304123L-90.05497,180.20639C-90.021591,180.152634,-89.977379,180.08139,-89.956726,180.048065L-89.919182,179.987488L-89.883324,179.985062C-89.863602,179.983734,-89.824806,179.980759,-89.797112,179.978455C-89.769424,179.976166,-89.739342,179.974884,-89.73027,179.975632L-89.713783,179.976974L-89.825653,180.145996L-89.937531,180.315033L-89.796638,180.490601C-89.719147,180.587158,-89.655746,180.667526,-89.655746,180.669174C-89.655746,180.670837,-89.657356,180.672195,-89.659317,180.672195C-89.676155,180.672195,-89.856628,180.684464,-89.861404,180.685928C-89.865883,180.687317,-89.896164,180.651016,-89.971275,180.554199C-90.028305,180.480698,-90.076393,180.421448,-90.07814,180.422516C-90.079887,180.423599,-90.086746,180.433975,-90.093384,180.445587L-90.105461,180.466675L-90.097374,180.581726C-90.091408,180.66658,-90.090439,180.697479,-90.093674,180.699478C-90.099167,180.702866,-90.137032,180.7061,-90.21048,180.709442C-90.257515,180.711578,-90.267807,180.71109,-90.26918,180.70665z"/><path d="M-89.190971,180.7686C-89.267868,180.753281,-89.31105,180.739975,-89.360039,180.716522C-89.393906,180.700302,-89.471527,180.651245,-89.480576,180.640335C-89.484718,180.635345,-89.482971,180.627808,-89.446373,180.493073C-89.44014,180.470108,-89.428429,180.473007,-89.40416,180.50351C-89.35006,180.571503,-89.267303,180.622406,-89.189331,180.635666C-89.152946,180.641846,-89.149734,180.641846,-89.129295,180.635406C-89.09346,180.624115,-89.075447,180.597748,-89.081604,180.565582C-89.085762,180.543793,-89.121902,180.514221,-89.183189,180.482422C-89.254944,180.44519,-89.27681,180.430908,-89.309555,180.399933C-89.365524,180.347,-89.382957,180.291809,-89.367203,180.217453C-89.349838,180.135468,-89.298691,180.084976,-89.207352,180.059616C-89.16906,180.048981,-89.099213,180.048294,-89.053474,180.058105C-88.98037,180.073776,-88.906212,180.104935,-88.843803,180.14621C-88.810745,180.16806,-88.807495,180.171295,-88.809486,180.180176C-88.810699,180.185577,-88.820007,180.220505,-88.830177,180.257782C-88.847977,180.323044,-88.849014,180.325516,-88.858116,180.324509C-88.863312,180.323944,-88.870895,180.31871,-88.874962,180.312897C-88.886063,180.297012,-88.932678,180.252243,-88.951851,180.239044C-89.003326,180.203629,-89.07032,180.181305,-89.113388,180.185211C-89.166359,180.190018,-89.195839,180.22757,-89.177078,180.266357C-89.168106,180.284912,-89.14418,180.302139,-89.078835,180.337082C-88.97522,180.392517,-88.924667,180.434921,-88.900993,180.486298C-88.888092,180.514282,-88.885109,180.566086,-88.894295,180.602661C-88.921547,180.711212,-89.010704,180.773865,-89.135971,180.772491C-89.156639,180.772263,-89.181389,180.770508,-89.190971,180.7686z"/><path d="M-91.104111,180.90361C-91.134857,180.834915,-91.198944,180.691757,-91.246529,180.585495C-91.294121,180.479233,-91.332542,180.391785,-91.331917,180.391159C-91.330269,180.389511,-91.248558,180.352615,-91.135277,180.302368C-91.080956,180.278275,-91.021782,180.253952,-91.003784,180.248306C-90.923584,180.22316,-90.848717,180.234344,-90.799507,180.278824C-90.775833,180.300217,-90.757965,180.329971,-90.742996,180.372955C-90.732986,180.401703,-90.731194,180.412506,-90.731262,180.44368C-90.731339,180.474075,-90.733147,180.485123,-90.741638,180.507187C-90.753166,180.53714,-90.772163,180.572006,-90.780914,180.579269C-90.784096,180.581909,-90.786697,180.585449,-90.786697,180.587128C-90.786697,180.590454,-90.750763,180.609756,-90.581421,180.697388C-90.520706,180.72879,-90.466957,180.757034,-90.461975,180.760147C-90.4533,180.765549,-90.456924,180.767578,-90.547188,180.807983C-90.599037,180.831192,-90.645187,180.85022,-90.64975,180.850266C-90.654312,180.850327,-90.720131,180.816483,-90.796013,180.775055L-90.933975,180.699768L-90.960068,180.711792C-90.974419,180.718399,-90.986549,180.72406,-90.987015,180.72435C-90.987488,180.724655,-90.965302,180.775085,-90.937721,180.836411C-90.910133,180.897751,-90.887093,180.950424,-90.886513,180.953476C-90.885788,180.957291,-90.909706,180.96991,-90.96286,180.993774C-91.005432,181.012878,-91.042053,181.028519,-91.044235,181.028519C-91.046425,181.028519,-91.073364,180.972321,-91.104111,180.90361z"/><path d="M-88.328873,181.18129C-88.367035,181.1548,-88.399017,181.132355,-88.399948,181.131424C-88.400887,181.130493,-88.36216,181.072723,-88.313889,181.003052C-88.265625,180.933365,-88.227539,180.875137,-88.229256,180.873642C-88.232262,180.871017,-88.36467,180.779251,-88.401207,180.754456L-88.418991,180.742401L-88.505783,180.867996C-88.55352,180.937073,-88.594093,180.993607,-88.59594,180.993622C-88.59967,180.993668,-88.741692,180.896652,-88.741692,180.894058C-88.741692,180.892731,-88.562958,180.634018,-88.382385,180.373978C-88.362411,180.345215,-88.344566,180.321136,-88.342712,180.320465C-88.340332,180.319611,-88.229614,180.393921,-88.196304,180.418747C-88.195633,180.41925,-88.226578,180.465042,-88.265076,180.520508C-88.303574,180.575974,-88.335899,180.623642,-88.336906,180.62645C-88.338058,180.629654,-88.30468,180.655014,-88.246178,180.695328C-88.195274,180.730423,-88.152,180.759674,-88.150009,180.76033C-88.148026,180.761002,-88.11441,180.715302,-88.075317,180.658768C-88.036224,180.602249,-88.002808,180.556,-88.00106,180.556C-87.996506,180.556,-87.856689,180.652924,-87.856689,180.656067C-87.856689,180.66153,-88.251923,181.229736,-88.255615,181.229599C-88.257751,181.229523,-88.29071,181.207779,-88.328873,181.18129z"/><path d="M-91.754158,181.531448C-91.888771,181.512161,-92.043076,181.366882,-92.082649,181.222183C-92.093285,181.183273,-92.092499,181.109177,-92.081032,181.069366C-92.049042,180.958313,-91.935387,180.846329,-91.824692,180.816788C-91.785378,180.806305,-91.704155,180.807419,-91.663956,180.818985C-91.603546,180.836395,-91.54142,180.875549,-91.484215,180.932281C-91.430611,180.985458,-91.394707,181.040161,-91.374954,181.098755C-91.364899,181.128601,-91.362389,181.143066,-91.360794,181.18042C-91.358604,181.231888,-91.362877,181.260315,-91.379135,181.302338C-91.403221,181.364624,-91.466469,181.439941,-91.530434,181.482498C-91.598885,181.528046,-91.669739,181.543549,-91.754158,181.531448z"/><path d="M-90.370827,181.625046C-90.382538,181.620316,-90.390862,181.606598,-90.416695,181.549454C-90.474388,181.421844,-90.474808,181.421082,-90.488495,181.41835C-90.495407,181.416962,-90.549316,181.415833,-90.608307,181.415833L-90.715553,181.415833L-90.723869,181.430634C-90.735786,181.451828,-90.771561,181.484283,-90.794991,181.495132C-90.860039,181.525269,-90.93119,181.512695,-90.977165,181.462952C-90.988503,181.450684,-91.003014,181.430267,-91.009399,181.417587C-91.019745,181.397064,-91.021019,181.390701,-91.021019,181.35968C-91.021019,181.328476,-91.019714,181.322067,-91.008591,181.298569C-90.99292,181.265488,-90.965279,181.238113,-90.930862,181.221588C-90.907669,181.210464,-90.901016,181.209076,-90.869965,181.208862C-90.80793,181.208435,-90.764534,181.22995,-90.732475,181.277023L-90.715042,181.302612L-90.575615,181.304077C-90.436188,181.305527,-90.43618,181.305542,-90.416817,181.31517C-90.398369,181.324356,-90.3964,181.32692,-90.375305,181.369354C-90.363121,181.39386,-90.334541,181.455734,-90.31179,181.506851C-90.28904,181.557983,-90.267876,181.603714,-90.264763,181.60849C-90.253143,181.626328,-90.259285,181.628876,-90.313087,181.628616C-90.340317,181.628479,-90.366295,181.626862,-90.370827,181.625046z"/><path d="M-87.689041,181.814713C-87.786903,181.790314,-87.870369,181.715668,-87.921272,181.60704C-87.961113,181.522034,-87.962357,181.427811,-87.924713,181.347366C-87.880302,181.252457,-87.770462,181.160889,-87.653992,181.121689C-87.640503,181.117157,-87.61174,181.110748,-87.590088,181.107452C-87.543861,181.100433,-87.500732,181.104416,-87.451973,181.120224C-87.34948,181.153458,-87.251862,181.266296,-87.221748,181.386353C-87.207726,181.442276,-87.215767,181.522842,-87.240837,181.577591C-87.277092,181.656799,-87.35939,181.734268,-87.458282,181.782288C-87.516975,181.810791,-87.550575,181.819305,-87.610748,181.820877C-87.648811,181.821884,-87.665543,181.820572,-87.689041,181.814713z"/><path d="M-91.179817,182.039474C-91.240829,182.01506,-91.283562,181.954742,-91.284126,181.892227C-91.284538,181.846878,-91.272766,181.820145,-91.236206,181.783401C-91.198219,181.745209,-91.182449,181.739227,-91.119781,181.739273C-91.077911,181.739304,-91.073738,181.740036,-91.050072,181.751389C-91.022453,181.764633,-90.989449,181.794998,-90.973816,181.821548L-90.964127,181.837997L-90.801819,181.837997L-90.639519,181.837997L-90.639519,181.87619C-90.639519,181.897202,-90.640625,181.92247,-90.641983,181.932358L-90.644447,181.950317L-90.804367,181.950317L-90.964287,181.950317L-90.981079,181.974396C-91.000191,182.001801,-91.03743,182.0336,-91.057686,182.039841C-91.065216,182.04216,-91.091415,182.044769,-91.115913,182.045639C-91.153854,182.046982,-91.163322,182.046066,-91.179817,182.039474z"/><path d="M-90.43026,182.097061C-90.443474,182.091797,-90.44574,182.086975,-90.445808,182.064041L-90.445862,182.044144L-90.473946,182.030762C-90.509743,182.013718,-90.522903,182.002441,-90.536835,181.976837C-90.552689,181.947708,-90.555206,181.902817,-90.542641,181.873596C-90.531776,181.848343,-90.494835,181.812912,-90.473343,181.807114C-90.454979,181.80217,-90.451126,181.79776,-90.447922,181.777969C-90.443199,181.748764,-90.442154,181.746368,-90.43222,181.741837C-90.426376,181.739182,-90.403076,181.737305,-90.37587,181.737305L-90.329475,181.737305L-90.325516,181.747726C-90.32296,181.75444,-90.32196,181.818039,-90.322708,181.926041C-90.3237,182.07019,-90.324684,182.094437,-90.329674,182.09758C-90.337296,182.102402,-90.417938,182.10199,-90.43026,182.097061z"/><path d="M-88.590645,182.127808L-88.590645,181.999313L-88.701027,181.812332C-88.761742,181.709473,-88.811409,181.623474,-88.811409,181.621216C-88.811409,181.618393,-88.782516,181.617432,-88.719673,181.618134L-88.62793,181.619171L-88.567894,181.728592C-88.534874,181.788773,-88.506706,181.838013,-88.505295,181.838013C-88.503883,181.838013,-88.476761,181.788773,-88.445015,181.728592L-88.387306,181.619171L-88.297256,181.618134C-88.247726,181.617569,-88.207207,181.617935,-88.207207,181.618958C-88.207207,181.621033,-88.414284,181.971008,-88.422684,181.983139C-88.426903,181.989243,-88.427971,182.017624,-88.427971,182.123535L-88.427971,182.256302L-88.509308,182.256302L-88.590645,182.256302L-88.590645,182.127808z"/><path d="M-89.308197,182.253403C-89.309006,182.251801,-89.309547,182.226959,-89.309387,182.198212L-89.309105,182.14592L-89.263596,182.144821L-89.218086,182.143738L-89.218086,181.936768L-89.218086,181.729797L-89.263596,181.728714L-89.309105,181.727615L-89.309105,181.673401L-89.309105,181.619171L-89.13578,181.618164L-88.962463,181.617157L-88.962463,181.673355L-88.962463,181.729553L-89.007004,181.729553L-89.051544,181.729553L-89.051544,181.936768L-89.051544,182.143982L-89.007004,182.143982L-88.962463,182.143982L-88.962463,182.200134L-88.962463,182.256302L-89.13459,182.256302C-89.229256,182.256302,-89.307381,182.25499,-89.308197,182.253403z"/><path d="M-89.905563,182.262238C-89.96151,182.247894,-89.990219,182.234238,-90.052368,182.192383C-90.115425,182.149918,-90.14962,182.130615,-90.192177,182.113449L-90.219284,182.102524L-90.218651,182.052567C-90.218292,182.025085,-90.217857,181.94191,-90.217682,181.867706L-90.217354,181.732803L-90.20089,181.726425C-90.161942,181.711304,-90.114967,181.68573,-90.064362,181.6521C-90.005035,181.612671,-89.953232,181.586243,-89.917183,181.577011C-89.823479,181.552994,-89.732635,181.562454,-89.646065,181.605209C-89.560043,181.64769,-89.498184,181.720734,-89.463531,181.820694C-89.453461,181.849747,-89.45282,181.85553,-89.452698,181.919342L-89.452568,181.987122L-89.466812,182.025299C-89.487122,182.079727,-89.50985,182.117279,-89.545082,182.154602C-89.597618,182.210281,-89.660454,182.245728,-89.739082,182.264069C-89.786667,182.275162,-89.858246,182.274368,-89.905563,182.262238z"/><path d="M-92.15197,182.548569C-92.177536,182.545853,-92.224594,182.540802,-92.256546,182.537354C-92.288498,182.53392,-92.338173,182.52858,-92.366928,182.525513C-92.395683,182.522461,-92.434898,182.518082,-92.454071,182.515793C-92.473244,182.513504,-92.512894,182.509094,-92.542183,182.505966C-92.57148,182.502853,-92.620277,182.497635,-92.650635,182.494385C-92.680992,182.491135,-92.728966,182.486145,-92.757248,182.483307C-92.785538,182.480469,-92.809792,182.47702,-92.811157,182.475662C-92.812523,182.474289,-92.799805,182.436142,-92.782898,182.390884C-92.754135,182.313873,-92.751503,182.308502,-92.74189,182.307388C-92.736244,182.306732,-92.704903,182.310547,-92.672249,182.315887C-92.639587,182.321213,-92.58847,182.329208,-92.558647,182.333633C-92.528824,182.338074,-92.494835,182.343353,-92.483124,182.345383C-92.471405,182.347397,-92.437416,182.352676,-92.407593,182.357101C-92.377769,182.361511,-92.338562,182.367523,-92.320465,182.370438C-92.302368,182.373352,-92.287102,182.37529,-92.286552,182.374741C-92.285995,182.374191,-92.372719,182.313995,-92.479263,182.240982C-92.585815,182.167969,-92.673676,182.107132,-92.674507,182.105774C-92.675339,182.104416,-92.662621,182.067581,-92.64624,182.023911L-92.616463,181.944504L-92.597237,181.944794C-92.586662,181.944946,-92.555351,181.947952,-92.527664,181.951462C-92.499969,181.954971,-92.454651,181.960617,-92.426956,181.964005C-92.399269,181.967392,-92.36528,181.971695,-92.351433,181.973557C-92.328728,181.976624,-92.30175,181.979965,-92.19651,181.992737C-92.178406,181.994934,-92.159386,181.99675,-92.154243,181.996765C-92.148262,181.99678,-92.215065,181.952087,-92.340157,181.87236C-92.44754,181.803909,-92.536781,181.746689,-92.53846,181.745178C-92.542084,181.741913,-92.481216,181.576385,-92.476608,181.576981C-92.47123,181.577667,-91.883232,181.983047,-91.883003,181.986237C-91.882706,181.990311,-91.945244,182.160767,-91.948204,182.16394C-91.950806,182.166733,-91.989197,182.1633,-92.237175,182.138077z"/><path d="M-87.128403,182.564102C-87.143234,182.558975,-87.167259,182.546646,-87.181786,182.536728C-87.243195,182.494766,-87.274879,182.442429,-87.301308,182.33931C-87.310005,182.305374,-87.317406,182.277313,-87.317749,182.276932C-87.318092,182.276566,-87.334915,182.280426,-87.355141,182.285492C-87.475342,182.315628,-87.534744,182.329453,-87.537277,182.327881C-87.540825,182.325684,-87.582123,182.160416,-87.579628,182.158386z"/><path d="M-90.936707,182.606812C-90.969139,182.590576,-90.996002,182.563431,-91.010574,182.532135C-91.01944,182.513092,-91.020889,182.504822,-91.02095,182.473129C-91.021019,182.439178,-91.020012,182.434204,-91.008255,182.410309C-90.991882,182.377029,-90.965805,182.351044,-90.933876,182.336182C-90.910561,182.325317,-90.905411,182.324448,-90.864159,182.324265C-90.822647,182.324097,-90.81813,182.324844,-90.797768,182.335159C-90.769356,182.349548,-90.740501,182.375031,-90.72467,182.399689L-90.712036,182.419388L-90.596565,182.418213z"/><path d="M-89.823586,182.830811C-89.825005,182.829391,-89.826164,182.809341,-89.826164,182.78627L-89.826164,182.744308L-88.327271,182.744308L-86.828384,182.744324L-86.828384,182.788864L-86.828384,182.833405L-88.324692,182.833389C-89.147659,182.833389,-89.822166,182.83223,-89.823586,182.830811z"/><path d="M-90.825432,182.968948L-90.825432,182.926346L-88.826904,182.926346L-86.828384,182.926346L-86.828384,182.968964L-86.828384,183.011566L-88.826904,183.011551L-90.825432,183.011551L-90.825432,182.968948z"/><path d="M-92.820084,183.14711L-92.820084,183.104507L-89.824234,183.104507L-86.828384,183.104523L-86.828384,183.147125L-86.828384,183.189728L-89.824234,183.189713L-92.820084,183.189713L-92.820084,183.14711z"/></svg>`;
+
+const CATS=[
+{id:"spy-mb",icon:"🕵️",hw:"micro:bit"},{id:"spy-esp",icon:"🔐",hw:"ESP32"},{id:"spy-web",icon:"🕶️",hw:"None"},{id:"spy-combo",icon:"🎯",hw:"Mixed"},
+{id:"net-esp",icon:"🌐",hw:"ESP32"},{id:"net-web",icon:"🕸️",hw:"None"},{id:"net-mb",icon:"📶",hw:"micro:bit"},{id:"net-multi",icon:"🔗",hw:"ESP32 x3+"},{id:"net-ult",icon:"🏆",hw:"Mixed"},
+{id:"hrf-core",icon:"📡",hw:"HackRF"},{id:"hrf-mb",icon:"📻",hw:"HackRF+micro:bit"},{id:"hrf-esp",icon:"⚡",hw:"HackRF+ESP32"},{id:"hrf-spy",icon:"🛡️",hw:"HackRF"},
+{id:"wifi-rec",icon:"🔍",hw:"WiFi Adapter"},{id:"wifi-spy",icon:"👻",hw:"WiFi Adapter"},{id:"wifi-hrf",icon:"📊",hw:"WiFi+HackRF"},{id:"wifi-edu",icon:"🏫",hw:"WiFi Adapter"},{id:"wifi-esp",icon:"🍯",hw:"WiFi+ESP32"},
+{id:"ham-core",icon:"📻",hw:"HackRF"},{id:"ham-digi",icon:"💬",hw:"HackRF"},{id:"ham-sat",icon:"🛰️",hw:"HackRF"},{id:"ham-mb",icon:"🤖",hw:"HackRF+micro:bit"},{id:"ham-esp",icon:"⚙️",hw:"HackRF+ESP32"},{id:"ham-em",icon:"🏕️",hw:"Mixed"},{id:"ham-learn",icon:"🎓",hw:"HackRF"},{id:"ham-ult",icon:"👑",hw:"Full Stack"},
+{id:"sdr-dsp",icon:"🔧",hw:"HackRF"},{id:"sdr-multi",icon:"📊",hw:"HackRF x2+"},{id:"sdr-avia",icon:"🛩️",hw:"HackRF"},{id:"sdr-sci",icon:"🔬",hw:"HackRF"},{id:"sdr-iot",icon:"🏭",hw:"HackRF"},{id:"sdr-tool",icon:"🛠️",hw:"HackRF"},{id:"sdr-learn",icon:"🎓",hw:"HackRF"},{id:"sdr-ult",icon:"👑",hw:"Full Stack"},
+{id:"ant-build",icon:"📡",hw:"HackRF"},{id:"ant-pi",icon:"📡",hw:"RPi+HackRF"},
+{id:"rpi-core",icon:"🥧",hw:"Raspberry Pi"},{id:"rpi-ant",icon:"🥧",hw:"RPi+Antenna"},
+{id:"agt-field",icon:"🕵️",hw:"RPi+Mixed"},{id:"agt-mb",icon:"🤖",hw:"RPi+micro:bit"},{id:"agt-ant",icon:"📡",hw:"RPi+HackRF"},{id:"agt-ult",icon:"💀",hw:"Full Stack"},
+];
+
+const I18N={
+en:{
+splash_sub:"Ops Catalog",splash_desc:"300+ project ideas across 42 categories. Vote on the ones you want built first.",
+splash_ph:"Enter your name (agent codename works too)",splash_enter:"Enter HQ",splash_skip:"Skip — browse without voting",
+hdr_tag:"OPS CATALOG",export:"Export",search_ph:"Search projects...",sort_cat:"By Category",sort_votes:"By Votes",
+expand:"Expand All",collapse:"Collapse",footer:"Workshop-Diy — Ops Catalog",
+hw_all:"All",hw_none:"Browser",hw_mb:"micro:bit",hw_esp:"ESP32",hw_hrf:"HackRF",hw_wifi:"WiFi",hw_rpi:"Raspberry Pi",hw_mix:"Mixed",
+voted:"voted",shown:"projects shown",
+"spy-mb":"Spy Ops — micro:bit","spy-esp":"Spy Ops — ESP32","spy-web":"Spy Ops — Browser","spy-combo":"Spy Ops — Combos",
+"net-esp":"Network — ESP32","net-web":"Network — Browser","net-mb":"Network — micro:bit","net-multi":"Network — Multi-Node","net-ult":"Network — Ultimate",
+"hrf-core":"HackRF — Signal Intel","hrf-mb":"HackRF + micro:bit","hrf-esp":"HackRF + ESP32","hrf-spy":"HackRF — Spy Ops",
+"wifi-rec":"WiFi Monitor — Recon","wifi-spy":"WiFi Monitor — Spy","wifi-hrf":"WiFi + HackRF","wifi-edu":"WiFi — Classroom","wifi-esp":"WiFi + ESP32",
+"ham-core":"Ham Radio — Core","ham-digi":"Ham — Digital Modes","ham-sat":"Ham — Satellites","ham-mb":"Ham + micro:bit","ham-esp":"Ham + ESP32","ham-em":"Ham — Emergency","ham-learn":"Ham — Learning","ham-ult":"Ham — God-Tier",
+"sdr-dsp":"SDR — DSP & Processing","sdr-multi":"SDR — Multi-Receiver","sdr-avia":"SDR — Aviation/Maritime","sdr-sci":"SDR — Science","sdr-iot":"SDR — IoT/Industrial","sdr-tool":"SDR — Tools","sdr-learn":"SDR — Learning","sdr-ult":"SDR — God-Tier",
+"ant-build":"Antenna — Build & Test","ant-pi":"Antenna + Raspberry Pi",
+"rpi-core":"Raspberry Pi — Core","rpi-ant":"Raspberry Pi + Antenna",
+"agt-field":"Secret Agent — Field Gear","agt-mb":"Secret Agent + micro:bit","agt-ant":"Secret Agent + Antenna","agt-ult":"Agent — Ultimate Kits",
+},
+fr:{
+splash_sub:"Ops Catalog",splash_desc:"300+ idées de projets dans 42 catégories. Votez pour ceux que vous voulez construire en premier.",
+splash_ph:"Entrez votre nom (nom de code d'agent aussi)",splash_enter:"Entrer au QG",splash_skip:"Passer — parcourir sans voter",
+hdr_tag:"OPS CATALOG",export:"Exporter",search_ph:"Rechercher des projets...",sort_cat:"Par Catégorie",sort_votes:"Par Votes",
+expand:"Tout déplier",collapse:"Replier",footer:"Workshop-Diy — Ops Catalog",
+hw_all:"Tous",hw_none:"Navigateur",hw_mb:"micro:bit",hw_esp:"ESP32",hw_hrf:"HackRF",hw_wifi:"WiFi",hw_rpi:"Raspberry Pi",hw_mix:"Mixte",
+voted:"votés",shown:"projets affichés",
+"spy-mb":"Ops Espion — micro:bit","spy-esp":"Ops Espion — ESP32","spy-web":"Ops Espion — Navigateur","spy-combo":"Ops Espion — Combos",
+"net-esp":"Réseau — ESP32","net-web":"Réseau — Navigateur","net-mb":"Réseau — micro:bit","net-multi":"Réseau — Multi-Nœuds","net-ult":"Réseau — Ultime",
+"hrf-core":"HackRF — Renseignement Signal","hrf-mb":"HackRF + micro:bit","hrf-esp":"HackRF + ESP32","hrf-spy":"HackRF — Ops Espion",
+"wifi-rec":"WiFi Moniteur — Recon","wifi-spy":"WiFi Moniteur — Espion","wifi-hrf":"WiFi + HackRF","wifi-edu":"WiFi — Classe","wifi-esp":"WiFi + ESP32",
+"ham-core":"Radio Amateur — Base","ham-digi":"Radio — Modes Numériques","ham-sat":"Radio — Satellites","ham-mb":"Radio + micro:bit","ham-esp":"Radio + ESP32","ham-em":"Radio — Urgence","ham-learn":"Radio — Apprentissage","ham-ult":"Radio — Niveau Divin",
+"sdr-dsp":"SDR — DSP & Traitement","sdr-multi":"SDR — Multi-Récepteur","sdr-avia":"SDR — Aviation/Maritime","sdr-sci":"SDR — Science","sdr-iot":"SDR — IoT/Industriel","sdr-tool":"SDR — Outils","sdr-learn":"SDR — Apprentissage","sdr-ult":"SDR — Niveau Divin",
+"ant-build":"Antenne — Construction & Test","ant-pi":"Antenne + Raspberry Pi",
+"rpi-core":"Raspberry Pi — Base","rpi-ant":"Raspberry Pi + Antenne",
+"agt-field":"Agent Secret — Équipement Terrain","agt-mb":"Agent Secret + micro:bit","agt-ant":"Agent Secret + Antenne","agt-ult":"Agent — Kits Ultimes",
+},
+ar:{
+splash_sub:"Ops Catalog",splash_desc:"أكثر من 300 فكرة مشروع في 42 فئة. صوّت على ما تريد بناءه أولاً.",
+splash_ph:"أدخل اسمك (الاسم الرمزي يعمل أيضاً)",splash_enter:"دخول المقر",splash_skip:"تخطّي — تصفح بدون تصويت",
+hdr_tag:"OPS CATALOG",export:"تصدير",search_ph:"بحث في المشاريع...",sort_cat:"حسب الفئة",sort_votes:"حسب الأصوات",
+expand:"توسيع الكل",collapse:"طي",footer:"Workshop-Diy — Ops Catalog",
+hw_all:"الكل",hw_none:"متصفح",hw_mb:"micro:bit",hw_esp:"ESP32",hw_hrf:"HackRF",hw_wifi:"WiFi",hw_rpi:"Raspberry Pi",hw_mix:"مختلط",
+voted:"مصوّت",shown:"مشاريع معروضة",
+"spy-mb":"عمليات تجسس — micro:bit","spy-esp":"عمليات تجسس — ESP32","spy-web":"عمليات تجسس — متصفح","spy-combo":"عمليات تجسس — مجمّعة",
+"net-esp":"شبكة — ESP32","net-web":"شبكة — متصفح","net-mb":"شبكة — micro:bit","net-multi":"شبكة — متعدد العقد","net-ult":"شبكة — المستوى الأعلى",
+"hrf-core":"HackRF — استخبارات الإشارة","hrf-mb":"HackRF + micro:bit","hrf-esp":"HackRF + ESP32","hrf-spy":"HackRF — عمليات تجسس",
+"wifi-rec":"مراقبة WiFi — استطلاع","wifi-spy":"مراقبة WiFi — تجسس","wifi-hrf":"WiFi + HackRF","wifi-edu":"WiFi — فصل دراسي","wifi-esp":"WiFi + ESP32",
+"ham-core":"راديو هواة — أساسي","ham-digi":"راديو — أوضاع رقمية","ham-sat":"راديو — أقمار صناعية","ham-mb":"راديو + micro:bit","ham-esp":"راديو + ESP32","ham-em":"راديو — طوارئ","ham-learn":"راديو — تعلّم","ham-ult":"راديو — المستوى الأسطوري",
+"sdr-dsp":"SDR — معالجة الإشارات","sdr-multi":"SDR — متعدد المستقبلات","sdr-avia":"SDR — طيران/بحري","sdr-sci":"SDR — علوم","sdr-iot":"SDR — إنترنت الأشياء","sdr-tool":"SDR — أدوات","sdr-learn":"SDR — تعلّم","sdr-ult":"SDR — المستوى الأسطوري",
+"ant-build":"هوائي — بناء واختبار","ant-pi":"هوائي + Raspberry Pi",
+"rpi-core":"Raspberry Pi — أساسي","rpi-ant":"Raspberry Pi + هوائي",
+"agt-field":"عميل سري — معدات ميدانية","agt-mb":"عميل سري + micro:bit","agt-ant":"عميل سري + هوائي","agt-ult":"عميل — أطقم قصوى",
+}};
+
+/* ══ App list: [id, cat, name, desc(en), desc(fr), desc(ar)] ══ */
+const A=[
+// SPY — micro:bit
+["dead-drop","spy-mb","dead-drop","micro:bit stores encrypted messages. Two agents bump micro:bits (BLE handshake) to transfer secrets. No internet, no trace.","micro:bit stocke des messages chiffrés. Deux agents cognent leurs micro:bits (BLE) pour transférer des secrets. Pas d'internet.","يخزن micro:bit رسائل مشفرة. عميلان يصطدمان بأجهزتهما (BLE) لنقل الأسرار. بدون إنترنت."],
+["shake-cipher","spy-mb","shake-cipher","Shake micro:bit in a secret pattern to unlock a hidden message. Wrong pattern shows decoy.","Secouez le micro:bit dans un motif secret pour débloquer un message caché. Mauvais motif = leurre.","هز micro:bit بنمط سري لفتح رسالة مخفية. النمط الخاطئ يعرض رسالة مزيفة."],
+["stealth-alarm","spy-mb","stealth-alarm","Light sensor detects broken beams, accelerometer detects pickup. Browser silently logs intrusions.","Capteur de lumière détecte les faisceaux coupés. Le navigateur enregistre silencieusement les intrusions.","مستشعر الضوء يكشف قطع الأشعة. المتصفح يسجل التسللات بصمت."],
+["spy-compass","spy-mb","spy-compass","Compass + accelerometer guide agent to waypoints. Reach target zone to unlock secret file.","Boussole + accéléromètre guident l'agent vers des points. Atteignez la zone cible pour débloquer le fichier secret.","البوصلة + مقياس التسارع يوجه العميل لنقاط الطريق. الوصول للمنطقة يفتح الملف السري."],
+["micro-wire","spy-mb","micro-wire","micro:bit mic streams audio to browser via BLE. Real-time transcription with Web Speech API.","Le micro du micro:bit diffuse l'audio au navigateur via BLE. Transcription en temps réel.","ميكروفون micro:bit يبث الصوت للمتصفح عبر BLE. نسخ نصي فوري."],
+["panic-button","spy-mb","panic-button","Shake hard or press both buttons — browser sends alert, wipes mission data, shows decoy screen.","Secouez fort ou appuyez sur les deux boutons — alerte envoyée, données effacées, écran leurre.","هز بقوة أو اضغط الزرين — المتصفح يرسل تنبيه ويمسح البيانات ويعرض شاشة مزيفة."],
+["field-scanner","spy-mb","field-scanner","Reads magnetic field, light, temp, sound. Browser displays spy HUD threat assessment.","Lit le champ magnétique, lumière, temp, son. Le navigateur affiche une évaluation de menaces.","يقرأ المجال المغناطيسي والضوء والحرارة والصوت. المتصفح يعرض تقييم التهديدات."],
+["agent-id","spy-mb","agent-id","Encrypted agent profile on micro:bit. Custom BLE handshake authenticates. Wrong sequence = alarm.","Profil d'agent chiffré sur micro:bit. Poignée de main BLE personnalisée. Mauvaise séquence = alarme.","ملف عميل مشفر على micro:bit. مصافحة BLE مخصصة للمصادقة. التسلسل الخاطئ = إنذار."],
+["invisible-ink","spy-mb","invisible-ink","Draw message on screen — it vanishes. Only specific micro:bit with right combo reveals it. Self-destructs after one read.","Dessinez un message — il disparaît. Seul le micro:bit avec la bonne combinaison le révèle. Auto-destruction après lecture.","ارسم رسالة — تختفي. فقط micro:bit المحدد بالمجموعة الصحيحة يكشفها. تتلف ذاتياً بعد القراءة."],
+// SPY — ESP32
+["dark-net-radio","spy-esp","dark-net-radio","ESP32 creates private WiFi mesh (no internet). Encrypted text/voice. Fully offline, untraceable.","ESP32 crée un réseau WiFi privé (sans internet). Texte/voix chiffrés. Hors ligne, intraçable.","ESP32 ينشئ شبكة WiFi خاصة (بدون إنترنت). نصوص/صوت مشفرة. غير قابلة للتتبع."],
+["packet-sniffer-101","spy-esp","packet-sniffer-101","ESP32 monitor mode captures WiFi packets. Browser visualizes as live radar.","ESP32 en mode moniteur capture les paquets WiFi. Visualisation radar en temps réel.","وضع المراقبة في ESP32 يلتقط حزم WiFi. المتصفح يعرضها كرادار حي."],
+["ghost-beacon","spy-esp","ghost-beacon","ESP32 broadcasts BLE beacons with hidden encoded messages. Only right app decodes them.","ESP32 diffuse des balises BLE avec des messages encodés cachés.","ESP32 يبث إشارات BLE مع رسائل مشفرة مخفية. فقط التطبيق الصحيح يفك تشفيرها."],
+["dead-zone","spy-esp","dead-zone","Detects all WiFi devices in range. Find hidden phones, spot cameras, discover who's nearby.","Détecte tous les appareils WiFi. Trouvez des téléphones cachés, repérez des caméras.","يكتشف جميع أجهزة WiFi في النطاق. ابحث عن الهواتف المخفية والكاميرات."],
+["shadow-cam","spy-esp","shadow-cam","ESP32-CAM with motion detection. Captures, encrypts, auto-deletes after viewing. Face blur built in.","ESP32-CAM avec détection de mouvement. Capture, chiffre, auto-supprime. Flou facial intégré.","ESP32-CAM مع كشف الحركة. يلتقط ويشفر ويحذف تلقائياً. تمويه الوجوه مدمج."],
+["frequency-hunter","spy-esp","frequency-hunter","Scans radio frequencies, visualizes signal activity. Hunt hidden transmitters with hot/cold feedback.","Scanne les fréquences radio. Chassez les émetteurs cachés avec retour chaud/froid.","يمسح ترددات الراديو. اصطد المرسلات المخفية مع تقييم ساخن/بارد."],
+["usb-rubber-ducky","spy-esp","usb-rubber-ducky","ESP32-S2 as USB keyboard. Write harmless payloads, deploy via USB. Teaches USB attack vectors.","ESP32-S2 comme clavier USB. Écrivez des payloads, déployez via USB. Enseigne les vecteurs d'attaque USB.","ESP32-S2 كلوحة مفاتيح USB. اكتب حمولات غير ضارة. يعلم متجهات هجوم USB."],
+["vault","spy-esp","vault","Fingerprint + NFC + keypad. Three-factor auth to unlock vault interface.","Empreinte + NFC + clavier. Authentification à trois facteurs.","بصمة + NFC + لوحة مفاتيح. مصادقة ثلاثية لفتح الخزنة."],
+["wifi-jammer-detector","spy-esp","wifi-jammer-detector","Monitors deauth packets in real time. Alerts on network attacks. Defensive cybersecurity.","Surveille les paquets deauth en temps réel. Alerte sur les attaques réseau.","يراقب حزم إلغاء المصادقة. ينبه عند هجمات الشبكة."],
+["tor-relay-visual","spy-esp","tor-relay-visual","Routes messages through multiple ESP32 nodes. Browser visualizes onion routing path.","Route les messages à travers plusieurs nœuds ESP32. Visualise le routage en oignon.","يوجه الرسائل عبر عقد ESP32 متعددة. المتصفح يعرض مسار التوجيه البصلي."],
+// SPY — Browser
+["cipher-suite","spy-web","cipher-suite","All-in-one crypto: Caesar, Vigenere, RSA, AES, steganography. One-time pads.","Crypto tout-en-un : César, Vigenère, RSA, AES, stéganographie.","تشفير شامل: قيصر، فيجنير، RSA، AES، إخفاء المعلومات."],
+["steganography-lab","spy-web","steganography-lab","Hide secret messages inside normal images. Only the app can extract them.","Cachez des messages secrets dans des images normales.","أخفِ رسائل سرية داخل صور عادية. فقط التطبيق يستخرجها."],
+["metadata-detective","spy-web","metadata-detective","Upload any photo, extract hidden metadata: GPS, camera, timestamp. See what photos reveal.","Téléchargez une photo, extrayez les métadonnées cachées : GPS, caméra, horodatage.","ارفع أي صورة واستخرج البيانات المخفية: GPS، الكاميرا، الوقت."],
+["dark-profile","spy-web","dark-profile","Paste username, search across platforms. Teaches digital footprint and privacy.","Collez un pseudo, recherchez sur les plateformes. Enseigne l'empreinte numérique.","الصق اسم مستخدم وابحث عبر المنصات. يعلم البصمة الرقمية والخصوصية."],
+["onion-simulator","spy-web","onion-simulator","Visual Tor/onion routing simulation. Watch messages bounce through encrypted relay nodes.","Simulation visuelle du routage Tor/oignon. Regardez les messages rebondir à travers des nœuds chiffrés.","محاكاة بصرية لتوجيه Tor البصلي. شاهد الرسائل تتنقل عبر عقد مشفرة."],
+["phishing-trainer","spy-web","phishing-trainer","Fake vs real login pages, emails, URLs. Score points spotting fakes.","Faux vs vrais pages de connexion, emails, URLs. Marquez des points en repérant les faux.","صفحات تسجيل دخول مزيفة مقابل حقيقية. اكسب نقاط بكشف المزيفة."],
+["burner-chat","spy-web","burner-chat","P2P encrypted chat (WebRTC). No server, no history. Close tab = gone forever.","Chat P2P chiffré (WebRTC). Pas de serveur, pas d'historique. Fermez l'onglet = disparu.","دردشة مشفرة P2P (WebRTC). بدون خادم أو سجل. أغلق التبويب = اختفت للأبد."],
+["password-cracker-sim","spy-web","password-cracker-sim","Visual brute force, dictionary, rainbow table attacks. Watch passwords crack in real time.","Simulation visuelle : force brute, dictionnaire, rainbow table. Regardez les mots de passe se craquer.","محاكاة بصرية للقوة الغاشمة والقواميس. شاهد كلمات المرور تُكسر مباشرة."],
+["network-map","spy-web","network-map","WebRTC peer discovery as spy network graph. Encrypted messages through the network.","Découverte de pairs WebRTC comme graphe d'espionnage. Messages chiffrés à travers le réseau.","اكتشاف أقران WebRTC كشبكة تجسس. رسائل مشفرة عبر الشبكة."],
+["exif-eraser","spy-web","exif-eraser","Strip all metadata from photos before sharing. Learn what data phones embed.","Supprimez toutes les métadonnées des photos. Apprenez ce que les téléphones intègrent.","أزل جميع البيانات الوصفية من الصور. تعلم ما تخفيه الهواتف."],
+// SPY — Combos
+["spy-kit-pro","spy-combo","spy-kit-pro","Full loadout: micro:bit wearable + ESP32 field device + browser HQ. Encrypted comms, missions.","Équipement complet : micro:bit portable + ESP32 terrain + navigateur QG.","عدة كاملة: micro:bit قابل للارتداء + جهاز ESP32 ميداني + مقر المتصفح."],
+["capture-the-flag-spy","spy-combo","capture-the-flag","Physical CTF: ESP32s broadcast clues, micro:bit scans, browser tracks. Teams compete.","CTF physique : ESP32 diffuse des indices, micro:bit scanne, navigateur suit. Compétition d'équipes.","CTF فعلي: ESP32 يبث أدلة، micro:bit يمسح، المتصفح يتتبع. فرق تتنافس."],
+["escape-hq","spy-combo","escape-hq","Spy escape room: ESP32 locks/sensors, micro:bit gadget, browser puzzles and storyline.","Escape room espion : ESP32 serrures/capteurs, micro:bit gadget, navigateur énigmes.","غرفة هروب تجسسية: ESP32 أقفال/مستشعرات، أداة micro:bit، ألغاز المتصفح."],
+// NET — ESP32
+["mesh-whisper","net-esp","mesh-whisper","Self-healing mesh. Messages hop node to node. Kill a node — mesh reroutes. Visualize every hop.","Réseau mesh auto-réparant. Les messages sautent de nœud en nœud. Tuez un nœud — reroute.","شبكة ذاتية الإصلاح. الرسائل تقفز بين العقد. أزل عقدة — الشبكة تعيد التوجيه."],
+["dead-letter-box","net-esp","dead-letter-box","ESP32 hidden WiFi AP. Agents connect to find encrypted files. Digital dead drops.","ESP32 comme point d'accès WiFi caché. Les agents se connectent pour trouver des fichiers chiffrés.","ESP32 كنقطة وصول WiFi مخفية. العملاء يتصلون للعثور على ملفات مشفرة."],
+["packet-storm","net-esp","packet-storm","ESP32 generates fake local traffic. Cyberpunk visualization. Learn packet headers.","ESP32 génère du faux trafic local. Visualisation cyberpunk. Apprenez les en-têtes de paquets.","ESP32 يولد حركة مرور محلية وهمية. تصور سايبربانك. تعلم رؤوس الحزم."],
+["rogue-ap-detector","net-esp","rogue-ap-detector","Scans WiFi APs, fingerprints them. Unknown AP (evil twin)? Alert with full details.","Scanne les AP WiFi, les identifie. AP inconnu (evil twin) ? Alerte avec détails.","يمسح نقاط وصول WiFi ويبصمها. نقطة وصول مجهولة (توأم شرير)؟ تنبيه كامل."],
+["network-cartographer","net-esp","network-cartographer","Scans WiFi, BLE, ESP-NOW. Builds live map of invisible radio landscape.","Scanne WiFi, BLE, ESP-NOW. Construit une carte en direct du paysage radio invisible.","يمسح WiFi وBLE وESP-NOW. يبني خريطة حية للمشهد الراديوي غير المرئي."],
+["signal-ghost","net-esp","signal-ghost","Rapidly switches MAC addresses, appearing as hundreds of phantom devices.","Change rapidement d'adresses MAC, apparaissant comme des centaines d'appareils fantômes.","يبدل عناوين MAC بسرعة ليظهر كمئات من الأجهزة الوهمية."],
+["esp-honeypot","net-esp","esp-honeypot","Fake SSH, HTTP login, FTP. Browser logs every connection attempt. Real honeypot.","Faux SSH, login HTTP, FTP. Le navigateur enregistre chaque tentative de connexion.","SSH وHTTP وFTP مزيفة. المتصفح يسجل كل محاولة اتصال. فخ حقيقي."],
+["dns-playground","net-esp","dns-playground","ESP32 tiny DNS server. Redirect domains from browser. Teaches DNS poisoning.","ESP32 mini serveur DNS. Redirigez les domaines. Enseigne l'empoisonnement DNS.","خادم DNS صغير على ESP32. أعد توجيه النطاقات. يعلم تسميم DNS."],
+["arp-detective","net-esp","arp-detective","Monitors ARP tables. Visualizes who talks to who, spots ARP spoofing and MITM.","Surveille les tables ARP. Visualise qui parle à qui, détecte le spoofing ARP et MITM.","يراقب جداول ARP. يعرض من يتحدث مع من ويكشف انتحال ARP وهجمات الوسيط."],
+["captive-portal-lab","net-esp","captive-portal-lab","WiFi with captive portal you design. Learn how hotel WiFi works and abuse vectors.","WiFi avec portail captif que vous concevez. Apprenez comment fonctionne le WiFi d'hôtel.","WiFi مع بوابة أسيرة تصممها. تعلم كيف يعمل WiFi الفنادق وكيف يُستغل."],
+["wifi-thermometer","net-esp","wifi-thermometer","Maps WiFi signal strength as you walk. Live heatmap. Find dead zones.","Cartographie la force du signal WiFi. Carte de chaleur en direct. Trouvez les zones mortes.","يرسم خريطة قوة إشارة WiFi أثناء المشي. خريطة حرارية حية. ابحث عن المناطق الميتة."],
+["spectrum-wars-net","net-esp","spectrum-wars","Multiple ESP32s compete for bandwidth. Visualize collisions and throughput collapse.","Plusieurs ESP32 se battent pour la bande passante. Visualisez les collisions.","عدة ESP32 تتنافس على النطاق الترددي. شاهد التصادمات وانهيار الإنتاجية."],
+// NET — Browser
+["traceroute-quest","net-web","traceroute-quest","Visual traceroute across globe. Every hop on animated world map through cities and cables.","Traceroute visuel à travers le monde. Chaque saut sur une carte animée.","تتبع مسار بصري عبر العالم. كل قفزة على خريطة متحركة عبر المدن والكابلات."],
+["protocol-decoder","net-web","protocol-decoder","Paste raw hex packet. Animated layer-by-layer decode: Ethernet > IP > TCP > HTTP.","Collez un paquet hex brut. Décodage animé couche par couche.","الصق حزمة hex خام. فك تشفير متحرك طبقة بطبقة."],
+["subnet-architect","net-web","subnet-architect","Design networks visually: drag routers, switches, hosts. Simulate traffic and failures.","Concevez des réseaux visuellement : glissez routeurs, commutateurs, hôtes. Simulez le trafic.","صمم شبكات بصرياً: اسحب الموجهات والمحولات. حاكِ حركة المرور والأعطال."],
+["firewall-fortress","net-web","firewall-fortress","Tower defense with firewall rules. Packets stream in — write rules to block attacks.","Tower defense avec règles de pare-feu. Les paquets affluent — écrivez des règles pour bloquer.","دفاع برجي بقواعد جدار الحماية. الحزم تتدفق — اكتب قواعد لصد الهجمات."],
+["port-scanner-sim","net-web","port-scanner-sim","Simulated Nmap: scan virtual servers, discover ports, services, OS fingerprints. CTF scoring.","Nmap simulé : scannez des serveurs virtuels, découvrez les ports et services. Score CTF.","Nmap محاكى: امسح خوادم افتراضية واكتشف المنافذ والخدمات. تسجيل CTF."],
+["vpn-tunnel-visual","net-web","vpn-tunnel-visual","Animated VPN: data encrypted, tunneled, exits. Toggle off = data exposed.","VPN animé : données chiffrées, tunnelisées. Désactivez = données exposées.","VPN متحرك: بيانات مشفرة عبر نفق. أوقفه = البيانات مكشوفة."],
+["mitm-sim","net-web","man-in-the-middle-sim","Three-party sim: Alice, Bob, Eve. Play as Eve intercepting. Then defend with encryption.","Simulation Alice, Bob, Eve. Jouez Eve qui intercepte. Puis défendez avec le chiffrement.","محاكاة ثلاثية: أليس، بوب، إيف. العب كإيف المتنصت. ثم دافع بالتشفير."],
+["certificate-inspector","net-web","certificate-inspector","Paste URL, visualize TLS certificate chain: root CA > intermediate > leaf.","Collez l'URL, visualisez la chaîne de certificats TLS.","الصق URL وتصور سلسلة شهادات TLS: الجذر > الوسيط > الورقة."],
+["dns-odyssey","net-web","dns-odyssey","Type domain, watch full recursive DNS resolution animated step by step.","Tapez un domaine, regardez la résolution DNS récursive complète animée.","اكتب نطاق وشاهد حل DNS التكراري الكامل خطوة بخطوة."],
+["bgp-simulator","net-web","bgp-simulator","Simplified BGP sim. Run autonomous systems, inject bad routes, hijack traffic.","Simulateur BGP simplifié. Gérez des systèmes autonomes, injectez de mauvaises routes.","محاكي BGP مبسط. شغّل أنظمة مستقلة وحقن مسارات سيئة واختطف حركة المرور."],
+["darknet-simulator","net-web","darknet-simulator","Safe sandboxed onion network. Relay nodes, hidden services, deanonymization attempts.","Réseau oignon sandboxé. Nœuds relais, services cachés, tentatives de désanonymisation.","شبكة بصلية آمنة في بيئة معزولة. عقد ترحيل وخدمات مخفية ومحاولات كشف الهوية."],
+["botnet-defense","net-web","botnet-defense","Simulated botnet: compromised nodes, C2 server, DDoS. Isolate and trace before it's too late.","Botnet simulé : nœuds compromis, serveur C2, DDoS. Isolez et tracez avant qu'il ne soit trop tard.","شبكة بوت محاكاة: عقد مخترقة وخادم C2 وDDoS. اعزل وتتبع قبل فوات الأوان."],
+["blockchain-messenger","net-web","blockchain-messenger","Messages in mini blockchain. Tamper with one = chain breaks visibly.","Messages dans une mini blockchain. Modifiez un = la chaîne casse visiblement.","رسائل في بلوكتشين مصغر. العبث برسالة واحدة = السلسلة تنكسر بوضوح."],
+["packet-racer","net-web","packet-racer","Multiplayer: each player is a packet navigating routers, firewalls, congested links.","Multijoueur : chaque joueur est un paquet naviguant entre routeurs et pare-feux.","متعدد اللاعبين: كل لاعب حزمة تتنقل بين الموجهات وجدران الحماية."],
+// NET — micro:bit
+["ble-mesh-chat","net-mb","ble-mesh-chat","Multiple micro:bits form BLE mesh. Messages hop until reaching target. No WiFi needed.","Plusieurs micro:bits forment un réseau BLE. Les messages sautent jusqu'à la cible.","عدة micro:bits تشكل شبكة BLE. الرسائل تقفز حتى الهدف. بدون WiFi."],
+["radio-sniffer","net-mb","radio-sniffer","Scans micro:bit radio frequencies. Visualize all radio traffic in the room.","Scanne les fréquences radio du micro:bit. Visualisez tout le trafic radio de la salle.","يمسح ترددات راديو micro:bit. عرض كل حركة الراديو في الغرفة."],
+["micro-vpn","net-mb","micro-vpn","Two micro:bits through browser relay with E2E encryption. Toggle on/off to show difference.","Deux micro:bits via relais navigateur avec chiffrement E2E. Activez/désactivez pour voir la différence.","micro:bit اثنان عبر ترحيل المتصفح مع تشفير شامل. فعّل/أوقف لرؤية الفرق."],
+["mesh-rescue","net-mb","mesh-rescue","micro:bits form network. Remove relay = reroutes. Browser shows mesh healing in real time.","Les micro:bits forment un réseau. Supprimez un relais = reroutage. Guérison du mesh en temps réel.","micro:bits تشكل شبكة. أزل عقدة ترحيل = إعادة توجيه. شاهد الشبكة تتعافى."],
+["radio-cartographer","net-mb","radio-cartographer","Walk around logging signal strength. Browser builds signal map around walls and obstacles.","Marchez en enregistrant la force du signal. Le navigateur construit une carte des signaux.","تجول وسجل قوة الإشارة. المتصفح يبني خريطة الإشارة حول الجدران."],
+// NET — Multi ESP32
+["swarm-net","net-multi","swarm-net","Fleet of ESP32s running ESP-NOW. Browser command center. Coordinated swarm intelligence.","Flotte d'ESP32 en ESP-NOW. Centre de commande navigateur. Intelligence d'essaim.","أسطول ESP32 يعمل بـ ESP-NOW. مركز قيادة المتصفح. ذكاء السرب."],
+["internet-simulator","net-multi","internet-simulator","Each ESP32 is DNS/web server/router/firewall. Browser visualizes traffic. Build the internet on your desk.","Chaque ESP32 est serveur DNS/web/routeur/pare-feu. Construisez l'internet sur votre bureau.","كل ESP32 هو خادم DNS/ويب/موجه/جدار حماية. ابنِ الإنترنت على مكتبك."],
+["tor-in-a-box","net-multi","tor-in-a-box","Three ESP32s as onion relays. Message encrypted in 3 layers, each strips one. Real onion routing.","Trois ESP32 comme relais oignon. Message chiffré en 3 couches. Vrai routage oignon.","ثلاثة ESP32 كعقد ترحيل بصلية. رسالة مشفرة بثلاث طبقات. توجيه بصلي حقيقي."],
+["cyber-range","net-multi","cyber-range","ESP32s simulate corporate network. Red team attacks, blue team defends. Physical cyber training.","Les ESP32 simulent un réseau d'entreprise. Red team attaque, blue team défend.","ESP32 تحاكي شبكة مؤسسية. الفريق الأحمر يهاجم والأزرق يدافع. تدريب سيبراني فعلي."],
+["gossip-protocol","net-multi","gossip-protocol","ESP32s spread data via gossip/epidemic protocol. Watch infection-like spread in real time.","Les ESP32 propagent les données via protocole gossip. Propagation type infection.","ESP32 تنشر البيانات عبر بروتوكول الشائعات. شاهد الانتشار الوبائي مباشرة."],
+["consensus-lab","net-multi","consensus-lab","ESP32 nodes run Raft/PBFT consensus. Visualize elections, replication, crashes.","Nœuds ESP32 exécutent le consensus Raft/PBFT. Visualisez les élections et réplications.","عقد ESP32 تشغل إجماع Raft/PBFT. تصور الانتخابات والتكرار والأعطال."],
+["network-time-machine","net-multi","network-time-machine","All events logged. Scrub through time replaying network evolution. Full network DVR.","Tous les événements enregistrés. Parcourez le temps pour rejouer l'évolution du réseau.","جميع الأحداث مسجلة. تنقل عبر الزمن لإعادة تشغيل تطور الشبكة."],
+// NET — Ultimate
+["cyber-academy","net-ult","cyber-academy","20+ interactive lessons from 'what is IP' to 'run a honeypot.' Hands-on labs.","20+ leçons interactives de 'qu'est-ce qu'une IP' à 'gérer un honeypot.'","20+ درس تفاعلي من 'ما هو IP' إلى 'تشغيل فخ'. مختبرات عملية."],
+["hackathon-arena","net-ult","hackathon-arena","PeerJS multiplayer: teams compete in live network challenges. Scoreboard, replays.","Multijoueur PeerJS : équipes en compétition. Tableau de scores, replays.","متعدد اللاعبين PeerJS: فرق تتنافس في تحديات شبكة حية."],
+["operation-blackout","net-ult","operation-blackout","City network under attack. Incident response with real tools. Save the city before time runs out.","Réseau de ville sous attaque. Réponse aux incidents avec de vrais outils.","شبكة المدينة تحت الهجوم. استجابة للحوادث بأدوات حقيقية. أنقذ المدينة."],
+// HackRF — Core
+["rf-waterfall","hrf-core","rf-waterfall","Live waterfall from HackRF. See WiFi, Bluetooth, FM, keyfobs. The invisible world revealed.","Cascade en direct du HackRF. Voyez WiFi, Bluetooth, FM, télécommandes.","شلال حي من HackRF. شاهد WiFi وBluetooth وFM. العالم غير المرئي يُكشف."],
+["fm-pirate-radio","hrf-core","fm-pirate-radio","Broadcast tiny FM station. Browser DJ booth: upload audio, TTS, mix live.","Diffusez une mini station FM. Cabine DJ navigateur.","بث محطة FM صغيرة. كابينة DJ في المتصفح."],
+["signal-hunter","hrf-core","signal-hunter","Gamified RF scavenger hunt. Hide transmitters, scan, triangulate, capture.","Chasse au trésor RF gamifiée. Cachez des émetteurs, scannez, triangulez.","صيد كنز RF. أخفِ مرسلات وامسح وثلث الموقع والتقط."],
+["rf-fingerprinter","hrf-core","rf-fingerprinter","Capture unique RF signature of devices: garage remote, keyfob, weather station.","Capturez la signature RF unique : télécommande garage, clé auto, station météo.","التقط البصمة الراديوية الفريدة لكل جهاز."],
+["replay-lab","hrf-core","replay-lab","Capture 433MHz signal, analyze waveform, replay. Then show why rolling codes defeat replays.","Capturez un signal 433MHz, analysez, rejouez. Puis montrez pourquoi les rolling codes gagnent.","التقط إشارة 433MHz وحللها وأعد تشغيلها. ثم اشرح لماذا الرموز المتدحرجة تمنع ذلك."],
+["spectrum-wars-rf","hrf-core","spectrum-wars","Two players fight over frequency bands. Transmit while jamming opponent.","Deux joueurs se battent pour les bandes de fréquence. Transmettez en brouillant l'adversaire.","لاعبان يتنافسان على نطاقات التردد. أرسل أثناء تشويش الخصم."],
+["satellite-listener","hrf-core","satellite-listener","Tune to NOAA 137MHz. Decode APT into actual satellite weather images from space.","Accordez-vous sur NOAA 137MHz. Décodez APT en vraies images satellites météo.","اضبط على NOAA 137MHz. فك تشفير APT إلى صور أقمار صناعية حقيقية."],
+["aircraft-radar","hrf-core","aircraft-radar","Receive ADS-B at 1090MHz. Plot every aircraft overhead: altitude, speed, callsign.","Recevez ADS-B à 1090MHz. Cartographiez chaque avion : altitude, vitesse, indicatif.","استقبل ADS-B على 1090MHz. ارسم كل طائرة: الارتفاع والسرعة والعلامة."],
+["pager-decoder","hrf-core","pager-decoder","Tune POCSAG pager frequencies. Decode messages in real time. Unencrypted radio is public.","Accordez les fréquences POCSAG. Décodez les messages en temps réel.","اضبط ترددات POCSAG. فك تشفير الرسائل مباشرة. الراديو غير المشفر عام."],
+["radio-telescope","hrf-core","radio-telescope","Capture hydrogen line at 1420MHz. Detect galaxy structure. Actual radio astronomy.","Capturez la raie d'hydrogène à 1420MHz. Détectez la structure galactique.","التقط خط الهيدروجين عند 1420MHz. اكتشف بنية المجرة. علم فلك راديوي حقيقي."],
+["ism-band-explorer","hrf-core","ism-band-explorer","Scan 433/868/915MHz ISM bands. Identify every device transmitting.","Scannez les bandes ISM 433/868/915MHz. Identifiez chaque appareil émetteur.","امسح نطاقات ISM. حدد كل جهاز يرسل."],
+["signal-zoo","hrf-core","signal-zoo","Catalog modulation types: AM, FM, FSK, PSK, LoRa, Zigbee. Visual encyclopedia.","Cataloguez les types de modulation. Encyclopédie visuelle des signaux radio.","صنف أنواع التعديل: AM وFM وFSK وPSK وLoRa. موسوعة بصرية."],
+["gsm-tower-mapper","hrf-core","gsm-tower-mapper","Scan GSM/LTE. Map every cell tower: signal, band, cell ID.","Scannez GSM/LTE. Cartographiez chaque tour cellulaire.","امسح GSM/LTE. ارسم خريطة كل برج خلوي: الإشارة والنطاق والمعرف."],
+["rf-time-machine","hrf-core","rf-time-machine","Record spectrum, replay and analyze later. Scrub through time, find missed signals.","Enregistrez le spectre, rejouez et analysez plus tard. DVR radio.","سجل الطيف وأعد تشغيله وحلله لاحقاً. تنقل عبر الزمن."],
+// HackRF + micro:bit
+["rf-remote-control","hrf-mb","rf-remote-control","micro:bit sends via radio, HackRF captures/decodes. Then flip. Build your own radio protocol.","micro:bit envoie par radio, HackRF capture/décode. Puis inversez. Créez votre propre protocole.","micro:bit يرسل عبر الراديو، HackRF يلتقط/يفك. ثم اعكس. ابنِ بروتوكولك."],
+["frequency-duel","hrf-mb","frequency-duel","micro:bit transmits 2.4GHz. HackRF shows exact signal on waterfall. See YOUR transmission.","micro:bit transmet à 2.4GHz. HackRF montre le signal exact. Voyez VOTRE transmission.","micro:bit يرسل 2.4GHz. HackRF يعرض الإشارة. شاهد إرسالك أنت."],
+["rf-alarm-system","hrf-mb","rf-alarm-system","micro:bit alarm transmits. HackRF monitors. Try to jam/spoof. Break your security, then improve it.","micro:bit envoie l'alarme. HackRF surveille. Essayez de brouiller. Cassez puis améliorez.","micro:bit يرسل الإنذار. HackRF يراقب. حاول التشويش. اكسر أمنك ثم حسّنه."],
+["micro-radar","hrf-mb","micro-radar","micro:bit ultrasonic + HackRF RF scanning. Browser fuses physical + electromagnetic map.","micro:bit ultrasonique + HackRF RF. Le navigateur fusionne les cartes physique et électromagnétique.","micro:bit بالموجات فوق الصوتية + مسح HackRF. المتصفح يدمج الخريطتين."],
+// HackRF + ESP32
+["lora-lab","hrf-esp","lora-lab","ESP32 LoRa sends long-range. HackRF captures chirp spectrum. See km range with mW.","ESP32 LoRa envoie longue portée. HackRF capture le spectre chirp.","ESP32 LoRa يرسل مسافات بعيدة. HackRF يلتقط طيف النقيق."],
+["wifi-dissector","hrf-esp","wifi-dissector","ESP32 runs WiFi. HackRF captures raw 2.4GHz. Browser decodes 802.11 frames.","ESP32 fait du WiFi. HackRF capture le 2.4GHz brut. Le navigateur décode les trames 802.11.","ESP32 يشغل WiFi. HackRF يلتقط 2.4GHz الخام. المتصفح يفك تشفير إطارات 802.11."],
+["ble-xray","hrf-esp","ble-xray","ESP32 BLE beacons. HackRF shows 1600 hops/sec frequency hopping visualized.","ESP32 balises BLE. HackRF montre 1600 sauts/sec du frequency hopping.","ESP32 يبث BLE. HackRF يعرض 1600 قفزة/ثانية في قفز التردد."],
+["esp-rf-bridge","hrf-esp","esp-rf-bridge","ESP32 streams HackRF data over WiFi. SDR on any device. Wireless SDR for classroom.","ESP32 transmet les données HackRF via WiFi. SDR sans fil pour la classe.","ESP32 يبث بيانات HackRF عبر WiFi. SDR لاسلكي للفصل الدراسي."],
+["rf-iot-audit","hrf-esp","rf-iot-audit","ESP32 runs WiFi/BLE/ESP-NOW. HackRF captures all simultaneously side by side.","ESP32 fait WiFi/BLE/ESP-NOW. HackRF capture tout simultanément.","ESP32 يشغل WiFi/BLE/ESP-NOW. HackRF يلتقط الكل معاً جنباً إلى جنب."],
+["collision-visualizer","hrf-esp","collision-visualizer","ESP32 + micro:bit both transmit 2.4GHz. HackRF captures collision. See data corruption.","ESP32 + micro:bit transmettent tous les deux. HackRF capture la collision.","ESP32 + micro:bit يرسلان معاً. HackRF يلتقط التصادم. شاهد تلف البيانات."],
+// HackRF — Spy
+["bug-sweeper","hrf-spy","bug-sweeper","Scan surveillance frequencies. Alert on suspicious transmitters. Professional RF sweep.","Scannez les fréquences de surveillance. Alerte sur les émetteurs suspects.","امسح ترددات المراقبة. تنبيه على المرسلات المشبوهة. مسح RF احترافي."],
+["tracker-hunter","hrf-spy","tracker-hunter","Scan for AirTag/Tile/SmartTag BLE beacons. Map and alert on unknown trackers.","Scannez les balises BLE AirTag/Tile. Cartographiez et alertez sur les trackers inconnus.","امسح إشارات AirTag/Tile. ارسم خريطة وتنبيه على المتتبعات المجهولة."],
+["rf-cloak","hrf-spy","rf-cloak","Analyze personal RF emissions. Visibility report showing how trackable you are.","Analysez vos émissions RF. Rapport de visibilité montrant à quel point vous êtes traçable.","حلل انبعاثاتك الراديوية. تقرير يوضح مدى قابليتك للتتبع."],
+["covert-channel","hrf-spy","covert-channel","Hide data in normal radio: FM noise, WiFi beacons, BLE ads. Radio steganography.","Cachez des données dans la radio normale : bruit FM, balises WiFi. Stéganographie radio.","أخفِ بيانات في إرسال عادي: ضوضاء FM، إشارات WiFi. إخفاء معلومات راديوي."],
+["direction-finder","hrf-spy","direction-finder","HackRF + directional antenna. Arrow points toward signal source. Track transmitters.","HackRF + antenne directionnelle. Flèche vers la source du signal.","HackRF + هوائي اتجاهي. سهم يشير لمصدر الإشارة. تتبع المرسلات."],
+["rf-jail","hrf-spy","rf-jail","Monitor all frequencies leaving a room. Alert on unauthorized transmissions. Build a SCIF.","Surveillez toutes les fréquences quittant une pièce. Construisez un SCIF.","راقب جميع الترددات الخارجة. تنبيه على الإرسال غير المصرح. ابنِ غرفة آمنة."],
+["signal-forge","hrf-spy","signal-forge","Design custom radio signals: frequency, modulation, data. HackRF transmits. RF sandbox.","Concevez des signaux radio personnalisés. HackRF transmet. Bac à sable RF.","صمم إشارات راديو مخصصة: التردد والتعديل والبيانات. HackRF يرسل."],
+// WiFi — Recon
+["wifi-sonar","wifi-rec","wifi-sonar","Every WiFi frame on sonar radar. APs as fixed points, clients orbiting. Living WiFi map.","Chaque trame WiFi sur radar sonar. Points d'accès fixes, clients en orbite.","كل إطار WiFi على رادار سونار. نقاط وصول ثابتة وأجهزة تدور حولها."],
+["probe-tracker","wifi-rec","probe-tracker","Capture probe requests. Map devices and networks they've visited. Phones leak location history.","Capturez les probe requests. Cartographiez les appareils et réseaux visités.","التقط طلبات الاستكشاف. ارسم خريطة الأجهزة والشبكات التي زارتها."],
+["handshake-theater","wifi-rec","handshake-theater","Capture WPA 4-way handshake. Animate every step: nonces, MIC, keys derived.","Capturez le handshake WPA 4 voies. Animez chaque étape.","التقط مصافحة WPA رباعية الاتجاه. حرك كل خطوة بصرياً."],
+["beacon-flood-viz","wifi-rec","beacon-flood-viz","Capture all AP beacons. Visualize SSIDs, channels, encryption, vendors, hidden networks.","Capturez toutes les balises AP. Visualisez SSIDs, canaux, chiffrement.","التقط جميع إشارات نقاط الوصول. عرض SSIDs والقنوات والتشفير."],
+["deauth-detector","wifi-rec","deauth-detector","Watch for deauth frames. Alert on attacks. Wireless IDS.","Surveillez les trames deauth. Alerte sur les attaques. IDS sans fil.","راقب إطارات إلغاء المصادقة. تنبيه على الهجمات. نظام كشف لاسلكي."],
+["channel-heatmap","wifi-rec","channel-heatmap","Hop across WiFi channels. Live congestion heatmap. Pick the best channel.","Sautez entre les canaux WiFi. Carte de chaleur de congestion en direct.","تنقل بين قنوات WiFi. خريطة حرارية للازدحام. اختر أفضل قناة."],
+["client-fingerprinter","wifi-rec","client-fingerprinter","Fingerprint devices by WiFi behavior. MAC randomization alone doesn't hide you.","Identifiez les appareils par comportement WiFi. La randomisation MAC ne suffit pas.","بصم الأجهزة بسلوك WiFi. عشوائية MAC وحدها لا تخفيك."],
+["evil-twin-spotter","wifi-rec","evil-twin-spotter","Compare beacons. Two APs same name, different fingerprints? Evil twin flagged.","Comparez les balises. Deux AP même nom, empreintes différentes ? Evil twin détecté.","قارن الإشارات. نقطتا وصول بنفس الاسم وبصمات مختلفة؟ توأم شرير مكشوف."],
+["packet-microscope","wifi-rec","packet-microscope","Raw 802.11 frame dissection byte by byte. Color-coded fields. Beautiful Wireshark.","Dissection des trames 802.11 octet par octet. Champs colorés.","تشريح إطارات 802.11 بايت بايت. حقول ملونة. Wireshark جميل."],
+["wifi-timeline","wifi-rec","wifi-timeline","Every event with ms precision. Timeline editor. Reconstruct what happened on the network.","Chaque événement avec précision ms. Éditeur de chronologie. Reconstruisez ce qui s'est passé.","كل حدث بدقة المللي ثانية. محرر خط زمني. أعد بناء ما حدث."],
+// WiFi — Spy
+["ghost-detector","wifi-spy","ghost-detector","Find hidden cameras, rogue APs, unknown clients. Vendor lookup, threat level. Room sweep.","Trouvez caméras cachées, APs malveillants. Recherche de vendeur, niveau de menace.","ابحث عن كاميرات مخفية ونقاط وصول مزيفة. مسح الغرف."],
+["movement-tracker","wifi-spy","movement-tracker","Track movement via RSSI changes. Purely passive. WiFi surveillance lesson.","Suivez les mouvements via RSSI. Purement passif. Leçon de surveillance WiFi.","تتبع الحركة عبر تغيرات RSSI. سلبي تماماً. درس مراقبة WiFi."],
+["persona-builder","wifi-spy","persona-builder","Probe requests reveal visited networks. Build owner profile from WiFi data alone.","Les probe requests révèlent les réseaux visités. Construisez un profil.","طلبات الاستكشاف تكشف الشبكات المزارة. ابنِ ملف المالك من بيانات WiFi فقط."],
+["invisibility-test","wifi-spy","invisibility-test","Try MAC randomization, disable probes. Monitor tries to detect you. Cat-and-mouse privacy.","Essayez la randomisation MAC. Le moniteur tente de vous détecter.","جرب عشوائية MAC وتعطيل الاستكشاف. المراقب يحاول كشفك."],
+["covert-exfil-lab","wifi-spy","covert-exfil-lab","Embed data in beacon SSIDs, probe requests, timing. Monitor captures and decodes.","Intégrez des données dans les SSIDs, probes, timing. Le moniteur capture et décode.","ادمج بيانات في SSIDs والاستكشافات والتوقيت. المراقب يلتقط ويفك."],
+["rf-lineup","wifi-spy","rf-lineup","Cross-reference WiFi + BLE + cellular captures. Complete radio profile per device.","Croisez WiFi + BLE + cellulaire. Profil radio complet par appareil.","اربط التقاطات WiFi + BLE + خلوي. ملف راديوي كامل لكل جهاز."],
+// WiFi + HackRF
+["full-spectrum-dashboard","wifi-hrf","full-spectrum-dashboard","HackRF sub-GHz to 6GHz + WiFi 802.11 decode + device map. God-view RF dashboard.","HackRF sub-GHz à 6GHz + décodage WiFi 802.11. Tableau de bord RF omniscient.","HackRF من sub-GHz إلى 6GHz + فك WiFi 802.11. لوحة تحكم RF شاملة."],
+["protocol-rainbow","wifi-hrf","protocol-rainbow","Raw RF + WiFi + BLE. Three layers simultaneously: spectrum > protocol > data.","RF brut + WiFi + BLE. Trois couches simultanément.","RF خام + WiFi + BLE. ثلاث طبقات معاً: الطيف > البروتوكول > البيانات."],
+["frequency-forensics","wifi-hrf","frequency-forensics","Record spectrum + packets simultaneously. Click burst = see decoded packet. Time-synced.","Enregistrez spectre + paquets simultanément. Cliquez sur un burst = paquet décodé.","سجل الطيف والحزم معاً. انقر على دفقة = شاهد الحزمة المفككة."],
+["jamming-lab","wifi-hrf","jamming-lab","HackRF noise on WiFi channel. Monitor measures impact. Graph destruction. Teach countermeasures.","Bruit HackRF sur canal WiFi. Le moniteur mesure l'impact. Enseignez les contre-mesures.","ضوضاء HackRF على قناة WiFi. المراقب يقيس التأثير. علم التدابير المضادة."],
+["hidden-network-revealer","wifi-hrf","hidden-network-revealer","HackRF sees raw beacon energy. WiFi waits for association. Correlate to unmask hidden networks.","HackRF voit l'énergie brute des balises. WiFi attend l'association. Démasquez les réseaux cachés.","HackRF يرى طاقة الإشارة الخام. WiFi ينتظر الارتباط. اكشف الشبكات المخفية."],
+// WiFi — Classroom
+["wifi-101-lab","wifi-edu","wifi-101-lab","Interactive course with live monitor demos. Beacons > probes > handshake > attacks > defense.","Cours interactif avec démos moniteur en direct. Balises > probes > handshake > attaques > défense.","دورة تفاعلية مع عروض المراقب الحية. إشارات > استكشاف > مصافحة > هجمات > دفاع."],
+["network-detective","wifi-edu","network-detective","Murder-mystery: 'Something happened at 14:32.' Analyze packet capture to solve. Different scenarios.","Murder mystery : 'Quelque chose s'est passé à 14h32.' Analysez pour résoudre.","لغز قتل: 'حدث شيء في 14:32.' حلل التقاط الحزم لحل القضية."],
+["wifi-escape-room","wifi-edu","wifi-escape-room","Clues in beacons, SSIDs, probes, payloads. Capture and decode to advance. Physical + technical.","Indices dans les balises, SSIDs, probes. Capturez et décodez pour avancer.","أدلة في الإشارات والأسماء والاستكشافات. التقط وفك لتتقدم."],
+["security-audit-sim","wifi-edu","security-audit-sim","Full WiFi audit on ESP32 test network. Discover, enumerate, capture, test, report.","Audit WiFi complet sur réseau ESP32. Découvrez, énumérez, capturez, testez, rapportez.","تدقيق WiFi كامل على شبكة ESP32. اكتشف وعدد والتقط واختبر وأبلغ."],
+["attack-defense-arena","wifi-edu","attack-defense-arena","Red team: deauth, evil twin. Blue team: detect and block. Browser referees with live scoring.","Red team : deauth, evil twin. Blue team : détecte et bloque. Arbitrage en direct.","الفريق الأحمر: إلغاء مصادقة. الأزرق: كشف وحظر. المتصفح يحكم."],
+// WiFi + ESP32
+["honeypot-network","wifi-esp","honeypot-network","ESP32 fake open WiFi. Monitor captures everything. See why open WiFi is dangerous.","ESP32 faux WiFi ouvert. Le moniteur capture tout. Voyez pourquoi le WiFi ouvert est dangereux.","ESP32 WiFi مفتوح مزيف. المراقب يلتقط كل شيء. شاهد خطورة WiFi المفتوح."],
+["wifi-canary","wifi-esp","wifi-canary","ESP32 trusted network. Monitor watches for attacks. DIY wireless IDS.","ESP32 réseau de confiance. Le moniteur surveille les attaques. IDS sans fil DIY.","شبكة ESP32 موثوقة. المراقب يرصد الهجمات. نظام كشف لاسلكي."],
+["roaming-visualizer","wifi-esp","roaming-visualizer","ESP32 multiple APs. Phone roams. Monitor captures handoff with timing and signal.","ESP32 multiples AP. Le téléphone roame. Le moniteur capture le handoff.","ESP32 نقاط وصول متعددة. الهاتف يتجول. المراقب يلتقط التسليم."],
+["captive-portal-atk","wifi-esp","captive-portal-attack-defense","ESP32 captive portal. Monitor captures all. Learn, bypass, then make secure.","Portail captif ESP32. Le moniteur capture tout. Apprenez, contournez, sécurisez.","بوابة أسيرة ESP32. المراقب يلتقط الكل. تعلم وتجاوز ثم أمّن."],
+["mesh-vs-traditional","wifi-esp","mesh-vs-traditional","ESP32 mesh + traditional AP. Monitor compares latency, overhead, resilience.","ESP32 mesh + AP traditionnel. Le moniteur compare latence, overhead, résilience.","شبكة ESP32 + نقطة وصول تقليدية. المراقب يقارن الكمون والحمل والمرونة."],
+// Ham — Core
+["band-explorer","ham-core","band-explorer","HackRF tunes all ham bands. Band plan overlay on live waterfall. Color-coded by allocation.","HackRF parcourt toutes les bandes amateur. Plan de bande sur cascade en direct.","HackRF يضبط جميع نطاقات الهواة. خريطة النطاقات على الشلال الحي."],
+["cw-decoder","ham-core","cw-decoder","Receive CW (Morse) on any band. Real-time decode: waveform, tone, text simultaneously.","Recevez CW (Morse) sur n'importe quelle bande. Décodage en temps réel.","استقبل CW (مورس) على أي نطاق. فك فوري: موجة وصوت ونص معاً."],
+["cw-keyer","ham-core","cw-keyer","Type message, generate CW audio. HackRF transmits (with license). Complete CW station.","Tapez un message, générez l'audio CW. HackRF transmet (avec licence).","اكتب رسالة وولد صوت CW. HackRF يرسل (مع الرخصة)."],
+["ssb-visualizer","ham-core","ssb-visualizer","Receive SSB voice. See audio waveform, spectrum, and waterfall simultaneously.","Recevez la voix SSB. Voyez la forme d'onde audio, le spectre et la cascade.","استقبل صوت SSB. شاهد الموجة والطيف والشلال معاً."],
+["qso-logger","ham-core","qso-logger","Auto-decode callsigns from CW, FT8, APRS. Auto-log with world map plot.","Auto-décodage des indicatifs depuis CW, FT8, APRS. Journal automatique avec carte.","فك تلقائي لعلامات النداء من CW وFT8 وAPRS. سجل تلقائي مع خريطة."],
+["propagation-monitor","ham-core","propagation-monitor","Monitor beacons 24/7. Map propagation with solar data overlay. Watch ionosphere breathe.","Surveillez les balises 24h/24. Cartographiez la propagation avec données solaires.","راقب المنارات على مدار الساعة. ارسم خريطة الانتشار مع بيانات شمسية."],
+["repeater-map","ham-core","repeater-map","Scan 2m/70cm. Map every active repeater with CTCSS/DCS tones and activity.","Scannez 2m/70cm. Cartographiez chaque répéteur actif.","امسح 2m/70cm. ارسم خريطة كل مكرر نشط مع نغمات CTCSS/DCS."],
+["waterfall-art","ham-core","waterfall-art","Receive Hellschreiber, SSTV, MFSK. Reveal hidden art in spectrum. Hunt secret pictures.","Recevez Hellschreiber, SSTV, MFSK. Révélez l'art caché dans le spectre.","استقبل Hellschreiber وSSTV وMFSK. اكشف الفن المخفي في الطيف."],
+// Ham — Digital
+["digi-mode-zoo","ham-digi","digi-mode-zoo","Decode FT8, FT4, JS8Call, PSK31, RTTY, Olivia, MFSK. Unique waterfall signatures.","Décodez FT8, FT4, JS8Call, PSK31, RTTY. Signatures uniques en cascade.","فك FT8 وFT4 وJS8Call وPSK31 وRTTY. بصمات شلال فريدة."],
+["ft8-world-map","ham-digi","ft8-world-map","Passive FT8 receive. Plot stations worldwide. 50+ countries in minutes. No license needed.","Réception FT8 passive. 50+ pays en minutes. Pas de licence nécessaire.","استقبال FT8 سلبي. ارسم المحطات عالمياً. 50+ دولة في دقائق. بدون رخصة."],
+["ft8-station","ham-digi","ft8-station","Receive 14.074 MHz FT8. Decode callsigns, grids, reports. Plot on world map.","Recevez FT8 14.074 MHz. Décodez indicatifs, grilles, rapports.","استقبل FT8 على 14.074 MHz. فك العلامات والشبكات والتقارير."],
+["js8-messenger","ham-digi","js8-messenger","JS8Call weak-signal chat. Read ionosphere conversations. With license: transmit.","Chat JS8Call signal faible. Lisez les conversations ionosphériques. Avec licence : transmettez.","دردشة JS8Call بإشارات ضعيفة. اقرأ محادثات الأيونوسفير. مع الرخصة: أرسل."],
+["psk31-chat","ham-digi","psk31-chat","14.070 MHz PSK31. Dozens of simultaneous conversations in waterfall. Click any to read.","14.070 MHz PSK31. Des dizaines de conversations simultanées. Cliquez pour lire.","14.070 MHz PSK31. عشرات المحادثات المتزامنة في الشلال. انقر لتقرأ."],
+["aprs-dashboard","ham-digi","aprs-dashboard","Receive APRS 144.800MHz. Decode packets, plot stations, weather, vehicles on live map.","Recevez APRS 144.800MHz. Décodez les paquets, stations, météo sur carte en direct.","استقبل APRS 144.800MHz. فك الحزم وارسم المحطات والطقس على خريطة حية."],
+["aprs-tracker","ham-digi","aprs-tracker","ESP32 + GPS portable tracker. HackRF base. Browser shows live position on map.","ESP32 + GPS tracker portable. HackRF base. Position en direct sur carte.","ESP32 + متتبع GPS محمول. قاعدة HackRF. الموقع الحي على الخريطة."],
+["packet-radio-station","ham-digi","packet-radio-station","AX.25 packet radio. Browser terminal. The original wireless internet from the 1980s.","Radio par paquets AX.25. Terminal navigateur. L'internet sans fil original des années 80.","راديو حزم AX.25. طرفية المتصفح. الإنترنت اللاسلكي الأصلي من الثمانينات."],
+["winlink-gateway","ham-digi","winlink-gateway","Send/receive email over radio. No internet needed. Emergency comms standard.","Envoyez/recevez des emails par radio. Pas d'internet nécessaire. Standard d'urgence.","أرسل/استقبل بريد عبر الراديو. بدون إنترنت. معيار اتصالات الطوارئ."],
+["wspr-beacon","ham-digi","wspr-beacon","Transmit WSPR beacons. See milliwatt signal received worldwide. Ionospheric propagation.","Transmettez des balises WSPR. Voyez votre signal milliwatt reçu mondialement.","أرسل منارات WSPR. شاهد إشارة المللي واط مستقبلة عالمياً."],
+["sstv-gallery","ham-digi","sstv-gallery","Receive SSTV on 14.230 MHz. Decode images line by line. ISS SSTV = photos from space.","Recevez SSTV sur 14.230 MHz. Décodez les images ligne par ligne. ISS = photos de l'espace.","استقبل SSTV على 14.230 MHz. فك الصور سطراً بسطر. ISS = صور من الفضاء."],
+// Ham — Satellites
+["iss-contact","ham-sat","iss-contact","Track ISS. Tune 145.800 MHz. Decode APRS or voice from ISS. Hear astronauts.","Suivez l'ISS. Accordez 145.800 MHz. Décodez APRS ou voix de l'ISS.","تتبع محطة الفضاء. اضبط 145.800 MHz. فك APRS أو صوت. اسمع رواد الفضاء."],
+["satellite-commander","ham-sat","satellite-commander","Live amateur satellite positions. Auto Doppler correction. Click satellite, hear downlink.","Positions satellites amateur en direct. Correction Doppler automatique.","مواقع أقمار الهواة الحية. تصحيح دوبلر تلقائي. انقر لسماع الوصلة الهابطة."],
+["noaa-weather-lab","ham-sat","noaa-weather-lab","Receive NOAA 137 MHz. Decode APT images as satellite passes. Photos from space.","Recevez NOAA 137 MHz. Décodez les images APT. Photos depuis l'espace.","استقبل NOAA 137 MHz. فك صور APT مع مرور القمر. صور من الفضاء."],
+["meteor-m2-hd","ham-sat","meteor-m2-hd","Receive Meteor-M2 137 MHz LRPT. High-res weather: false color, thermal, visible.","Recevez Meteor-M2 LRPT. Météo haute résolution : fausses couleurs, thermique.","استقبل Meteor-M2 LRPT. طقس عالي الدقة: ألوان زائفة وحراري ومرئي."],
+["cubesat-telemetry","ham-sat","cubesat-telemetry","Receive CubeSat UHF telemetry. Monitor real spacecraft health in real time.","Recevez la télémétrie UHF CubeSat. Surveillez la santé des engins spatiaux en temps réel.","استقبل بيانات CubeSat UHF. راقب صحة المركبات الفضائية مباشرة."],
+["moon-bounce-viz","ham-sat","moon-bounce-viz","EME visualization: signal to Moon and back. Plot real EME contacts. Ultimate distance.","Visualisation EME : signal vers la Lune et retour. Distance ultime.","تصور EME: إشارة للقمر والعودة. ارسم اتصالات EME حقيقية. المسافة القصوى."],
+["graves-meteor","ham-sat","graves-radar-meteor","Receive GRAVES radar reflections off meteor trails. Detect shooting stars with radio.","Recevez les réflexions radar GRAVES sur les météores. Détectez les étoiles filantes par radio.","استقبل انعكاسات رادار GRAVES عن مسارات الشهب. اكتشف النجوم المتساقطة بالراديو."],
+// Ham + micro:bit
+["cw-paddle","ham-mb","cw-paddle","micro:bit as CW paddle. Buttons for dit/dah, accelerometer for speed. HackRF transmits.","micro:bit comme manipulateur CW. Boutons dit/dah, accéléromètre pour la vitesse.","micro:bit كمفتاح CW. أزرار للنقطة/الشرطة ومقياس تسارع للسرعة."],
+["signal-meter","ham-mb","signal-meter","micro:bit displays S-meter from HackRF on LED matrix. Find best antenna position.","micro:bit affiche le S-mètre du HackRF sur matrice LED. Trouvez la meilleure position d'antenne.","micro:bit يعرض مقياس S من HackRF على مصفوفة LED. ابحث عن أفضل موضع هوائي."],
+["satellite-alarm","ham-mb","satellite-alarm","micro:bit buzzes for satellite/ISS passes. Never miss a pass.","micro:bit vibre pour les passages satellites/ISS. Ne ratez jamais un passage.","micro:bit يهتز لتمرير الأقمار/ISS. لا تفوت أي تمرير."],
+["fox-hunt-compass","ham-mb","fox-hunt-compass","micro:bit compass + HackRF signal strength. Arrow toward hidden transmitter.","Boussole micro:bit + force du signal HackRF. Flèche vers l'émetteur caché.","بوصلة micro:bit + قوة إشارة HackRF. سهم نحو المرسل المخفي."],
+// Ham + ESP32
+["aprs-igate","ham-esp","aprs-igate","ESP32 receives APRS, forwards to internet (iGate). Run real infrastructure.","ESP32 reçoit APRS, transmet à internet (iGate). Infrastructure réelle.","ESP32 يستقبل APRS ويحوله للإنترنت (iGate). بنية تحتية حقيقية."],
+["digi-repeater","ham-esp","digi-repeater","ESP32 digital repeater for packet radio. Visualize relay chain.","ESP32 répéteur numérique. Visualisez la chaîne de relais.","ESP32 مكرر رقمي لراديو الحزم. تصور سلسلة الترحيل."],
+["remote-sdr","ham-esp","remote-sdr","ESP32 streams HackRF over WiFi. Shared radio station for classroom.","ESP32 transmet HackRF via WiFi. Station radio partagée pour la classe.","ESP32 يبث HackRF عبر WiFi. محطة راديو مشتركة للفصل."],
+["antenna-analyzer","ham-esp","antenna-analyzer","ESP32 RF bridge + HackRF. Plot SWR, impedance, resonance. Design and test antennas.","ESP32 pont RF + HackRF. Tracez SWR, impédance, résonance. Testez des antennes.","جسر RF ESP32 + HackRF. ارسم SWR والمعاوقة والرنين. صمم واختبر الهوائيات."],
+["beacon-controller","ham-esp","beacon-controller","ESP32 controls HackRF as automated beacon: WSPR, CW, FT8. Propagation research.","ESP32 contrôle HackRF comme balise automatique : WSPR, CW, FT8. Recherche de propagation.","ESP32 يتحكم بـ HackRF كمنارة آلية: WSPR وCW وFT8."],
+["solar-monitor","ham-esp","solar-monitor","ESP32 solar sensor + SFI/SSN data. Correlate with HackRF observations.","ESP32 capteur solaire + données SFI/SSN. Corrélation avec observations HackRF.","ESP32 مستشعر شمسي + بيانات SFI/SSN. ارتباط مع ملاحظات HackRF."],
+// Ham — Emergency
+["go-box-dashboard","ham-em","go-box-dashboard","Portable EmComm: HackRF + ESP32 + battery. Radio, digital modes, APRS, Winlink, solar status.","EmComm portable : HackRF + ESP32 + batterie. Radio, modes numériques, APRS, Winlink.","EmComm محمول: HackRF + ESP32 + بطارية. راديو وأوضاع رقمية وAPRS وWinlink."],
+["mesh-emergency-net","ham-em","mesh-emergency-net","ESP32 mesh local + HackRF long-range HF. Bridge local and distant comms.","Mesh ESP32 local + HackRF HF longue portée. Pont entre comms locales et distantes.","شبكة ESP32 محلية + HackRF HF بعيد المدى. جسر بين الاتصالات المحلية والبعيدة."],
+["field-day-station","ham-em","field-day-station","Complete Field Day: HackRF radio, browser logging, ESP32 antenna control, micro:bit meter.","Field Day complet : HackRF radio, journalisation navigateur, ESP32 antenne, micro:bit mètre.","يوم ميداني كامل: راديو HackRF وتسجيل المتصفح وتحكم هوائي ESP32 ومقياس micro:bit."],
+["skywarn-station","ham-em","skywarn-station","ESP32 weather sensors + HackRF APRS weather. Contribute to national weather network.","Capteurs météo ESP32 + APRS météo HackRF. Contribuez au réseau météo national.","مستشعرات طقس ESP32 + APRS طقس HackRF. ساهم في شبكة الطقس الوطنية."],
+// Ham — Learning
+["ham-exam-trainer","ham-learn","ham-exam-trainer","Exam prep with live HackRF demos. Theory meets practice instantly.","Préparation d'examen avec démos HackRF en direct. Théorie et pratique instantanées.","تحضير الامتحان مع عروض HackRF حية. النظرية تلتقي بالممارسة فوراً."],
+["band-condition-game","ham-learn","band-condition-game","'What band is open to Japan?' Check with HackRF, get scored. Live propagation learning.","'Quelle bande est ouverte vers le Japon ?' Vérifiez avec HackRF. Apprentissage en direct.","'أي نطاق مفتوح لليابان؟' تحقق بـ HackRF واحصل على نقاط."],
+["antenna-sim-vs-real","ham-learn","antenna-sim-vs-real","Browser simulates patterns. HackRF + analyzer measures real antenna. Compare sim vs reality.","Le navigateur simule les diagrammes. HackRF mesure l'antenne réelle. Comparez.","المتصفح يحاكي الأنماط. HackRF يقيس الهوائي الحقيقي. قارن المحاكاة بالواقع."],
+["qsl-card-maker","ham-learn","qsl-card-maker","Auto-generate QSL cards: callsign, freq, mode, waterfall screenshot, location map.","Génération automatique de cartes QSL : indicatif, fréquence, mode, capture cascade.","توليد تلقائي لبطاقات QSL: علامة نداء وتردد ووضع ولقطة شلال وخريطة."],
+// Ham — God-Tier
+["all-band-all-mode","ham-ult","all-band-all-mode","HackRF as radio, browser as full transceiver: VFO, waterfall, every decoder. One app.","HackRF comme radio, navigateur comme transceiver complet. Une seule app.","HackRF كراديو، المتصفح كجهاز إرسال واستقبال كامل. تطبيق واحد."],
+["ionosphere-mapper","ham-ult","ionosphere-mapper","HackRF beacons + ESP32 solar data. Real-time 3D ionosphere model. The invisible mirror.","Balises HackRF + données solaires ESP32. Modèle 3D de l'ionosphère en temps réel.","منارات HackRF + بيانات شمسية ESP32. نموذج أيونوسفير ثلاثي الأبعاد."],
+["radio-observatory-365","ham-ult","radio-observatory-365","24/7 spectrum recording. Long-term: seasonal propagation, solar cycles, meteor showers.","Enregistrement spectral 24h/24. Long terme : propagation saisonnière, cycles solaires.","تسجيل طيفي على مدار الساعة. طويل المدى: انتشار موسمي ودورات شمسية."],
+["contest-station","ham-ult","contest-station","Full contest: logging, decode, score, rate meter, multiplier map, rotator control.","Contest complet : journalisation, décodage, score, carte multiplicateur, contrôle rotateur.","مسابقة كاملة: تسجيل وفك تشفير ونقاط وخريطة مضاعفات وتحكم دوار."],
+// SDR — DSP
+["dsp-workbench","sdr-dsp","dsp-workbench","Visual DSP sandbox: drag-drop filters, mixers, demodulators, FFT. Build your receiver.","Bac à sable DSP visuel : glissez filtres, mélangeurs, démodulateurs. Construisez votre récepteur.","ساحة DSP بصرية: اسحب مرشحات وخلاطات ومزيلات تعديل وFFT. ابنِ مستقبلك."],
+["filter-forge","sdr-dsp","filter-forge","Design FIR/IIR filters visually. See filter applied to live signal. Poles, zeros, impulse response.","Concevez des filtres FIR/IIR visuellement. Voyez le filtre appliqué au signal en direct.","صمم مرشحات FIR/IIR بصرياً. شاهد المرشح مطبقاً على الإشارة الحية."],
+["modulation-lab","sdr-dsp","modulation-lab","Generate/analyze AM, FM, SSB, QAM, OFDM, FSK. Constellation, eye diagrams, BER curves.","Générez/analysez AM, FM, SSB, QAM, OFDM. Diagrammes de constellation, courbes BER.","ولد/حلل AM وFM وSSB وQAM وOFDM. مخططات الكوكبة ومنحنيات BER."],
+["iq-explorer","sdr-dsp","iq-explorer","Visualize raw IQ data every way: time, frequency, spectrogram, constellation, phase.","Visualisez les données IQ brutes : temps, fréquence, spectrogramme, constellation, phase.","تصور بيانات IQ الخام بكل طريقة: زمن وتردد ومخطط طيفي وكوكبة وطور."],
+["fft-racing","sdr-dsp","fft-racing","Compare FFT sizes, window functions, overlap. See how settings affect resolution.","Comparez tailles FFT, fonctions de fenêtrage, chevauchement. Impact sur la résolution.","قارن أحجام FFT ودوال النوافذ والتداخل. شاهد تأثير الإعدادات على الدقة."],
+["signal-generator","sdr-dsp","signal-generator","Arbitrary waveform generator. Design chirps, bursts, sweeps. HackRF transmits.","Générateur de forme d'onde arbitraire. Concevez chirps, bursts, sweeps.","مولد موجات عشوائية. صمم نقائق ودفقات ومسحات. HackRF يرسل."],
+["demod-challenge","sdr-dsp","demod-challenge","Mystery signals on waterfall. Identify modulation, build demod chain to decode. CTF for DSP.","Signaux mystères sur la cascade. Identifiez la modulation, construisez la chaîne de démodulation.","إشارات غامضة على الشلال. حدد التعديل وابنِ سلسلة فك لفك التشفير. CTF لـ DSP."],
+["noise-floor-lab","sdr-dsp","noise-floor-lab","Measure noise figure, SNR, dynamic range. Compare antennas, preamps. Dig out weak signals.","Mesurez le facteur de bruit, SNR, dynamique. Comparez antennes, préamplis.","قس رقم الضوضاء وSNR والنطاق الديناميكي. قارن الهوائيات والمكبرات."],
+// SDR — Multi-Receiver
+["coherent-sdr","sdr-multi","coherent-sdr","Two phase-locked HackRFs. Compute angle of arrival. Real direction-finding array.","Deux HackRFs verrouillés en phase. Calculez l'angle d'arrivée. Goniométrie réelle.","HackRF اثنان مقفلان بالطور. احسب زاوية الوصول. مصفوفة تحديد اتجاه حقيقية."],
+["wideband-recorder","sdr-multi","wideband-recorder","Record 20MHz continuously. Scrub through time, demodulate anything after the fact. Radio DVR.","Enregistrez 20MHz en continu. Parcourez le temps, démodulez après coup. DVR radio.","سجل 20MHz باستمرار. تنقل عبر الزمن وفك أي شيء لاحقاً."],
+["sdr-farm","sdr-multi","sdr-farm","Multiple RTL-SDRs, each on different band. Browser stitches into wideband display.","Plusieurs RTL-SDR, chacun sur une bande. Le navigateur assemble en affichage large bande.","عدة RTL-SDR كل واحد على نطاق مختلف. المتصفح يدمجها في عرض واسع."],
+["tdoa-locator","sdr-multi","tdoa-locator","Three SDRs at known positions. Compute TDOA to triangulate any transmitter on map.","Trois SDR à positions connues. Calculez TDOA pour trianguler tout émetteur.","ثلاثة SDR في مواقع معروفة. احسب TDOA لتثليث أي مرسل على الخريطة."],
+["doppler-tracker","sdr-multi","doppler-tracker","Track moving transmitters by Doppler shift. Compute velocity and trajectory.","Suivez les émetteurs mobiles par effet Doppler. Calculez vitesse et trajectoire.","تتبع المرسلات المتحركة بانزياح دوبلر. احسب السرعة والمسار."],
+["correlation-detector","sdr-multi","correlation-detector","Cross-correlate two SDRs to extract signals below noise floor. Radio interferometry.","Corrélation croisée de deux SDR pour extraire les signaux sous le plancher de bruit.","ارتباط متبادل بين SDR اثنين لاستخراج إشارات تحت أرضية الضوضاء."],
+// SDR — Aviation/Maritime
+["vhf-airband","sdr-avia","vhf-airband","Receive 118-137 MHz aviation. Decode ACARS, log frequencies. Live airport radio.","Recevez 118-137 MHz aviation. Décodez ACARS. Radio aéroport en direct.","استقبل 118-137 MHz طيران. فك ACARS. راديو المطار الحي."],
+["acars-decoder","sdr-avia","acars-decoder","Decode ACARS: flight info, weather, position, maintenance. Real aircraft data.","Décodez ACARS : info vol, météo, position, maintenance. Données avion réelles.","فك ACARS: معلومات الرحلة والطقس والموقع والصيانة."],
+["ais-maritime","sdr-avia","ais-maritime","Receive AIS 162 MHz. Plot ships: name, course, speed, destination, cargo.","Recevez AIS 162 MHz. Cartographiez les navires : nom, cap, vitesse, destination.","استقبل AIS 162 MHz. ارسم السفن: الاسم والمسار والسرعة والوجهة."],
+["vdl-mode2","sdr-avia","vdl-mode2","Decode VDL Mode 2 aircraft datalink. Next-gen aviation monitoring.","Décodez VDL Mode 2 liaison de données avion. Surveillance aviation nouvelle génération.","فك VDL Mode 2 وصلة بيانات الطائرات. مراقبة طيران من الجيل التالي."],
+["navtex-decoder","sdr-avia","navtex-decoder","Receive NAVTEX 518/490 kHz. Maritime safety: weather warnings, hazards, SAR alerts.","Recevez NAVTEX 518/490 kHz. Sécurité maritime : alertes météo, dangers.","استقبل NAVTEX 518/490 kHz. أمان بحري: تحذيرات طقس ومخاطر."],
+["radiosondes-tracker","sdr-avia","radiosondes-tracker","Decode weather balloon telemetry 400-406 MHz. Track path, temperature, humidity, wind.","Décodez la télémétrie des ballons-sondes 400-406 MHz. Suivez la trajectoire.","فك بيانات بالون الطقس 400-406 MHz. تتبع المسار والحرارة والرطوبة."],
+["lightning-detector","sdr-avia","lightning-detector","SDR detects radio sferics from lightning. Map strikes in real time. DIY lightning network.","SDR détecte les sphériques radio de la foudre. Cartographiez les impacts en temps réel.","SDR يكشف موجات البرق الراديوية. ارسم خريطة الضربات مباشرة."],
+// SDR — Science
+["radio-spectrometer","sdr-sci","radio-spectrometer","SDR as scientific instrument. Calibrated spectral data. Real radio science.","SDR comme instrument scientifique. Données spectrales calibrées. Vraie science radio.","SDR كأداة علمية. بيانات طيفية معايرة. علم راديو حقيقي."],
+["solar-flare-monitor","sdr-sci","solar-flare-monitor","Monitor solar radio bursts on VHF. Alert on sudden ionospheric disturbances. Detect flares.","Surveillez les sursauts radio solaires en VHF. Alertes sur les perturbations ionosphériques.","راقب الانفجارات الراديوية الشمسية على VHF. تنبيه على الاضطرابات الأيونوسفيرية."],
+["jupiter-receiver","sdr-sci","jupiter-receiver","Receive Jupiter's decametric emissions at 20 MHz. Detect Io-related bursts. Planetary radio.","Recevez les émissions décamétriques de Jupiter à 20 MHz. Radio planétaire.","استقبل انبعاثات المشتري عند 20 MHz. اكتشف انفجارات مرتبطة بـ Io."],
+["rfi-hunter","sdr-sci","rfi-hunter","Map RF interference sources. Plot with spectrum fingerprint. Keep bands clean.","Cartographiez les sources d'interférences RF. Gardez les bandes propres.","ارسم خريطة مصادر التداخل الراديوي. حافظ على نظافة النطاقات."],
+["propagation-beacon-net","sdr-sci","propagation-beacon-net","Deploy SDRs at multiple locations. Crowdsourced ionospheric research.","Déployez des SDR à plusieurs endroits. Recherche ionosphérique collaborative.","انشر SDR في مواقع متعددة. بحث أيونوسفيري تعاوني."],
+// SDR — IoT/Industrial
+["lorawan-decoder","sdr-iot","lorawan-decoder","Receive and decode LoRaWAN traffic. Device addresses, frame counters, spreading factors.","Recevez et décodez le trafic LoRaWAN. Adresses, compteurs, facteurs d'étalement.","استقبل وفك حركة LoRaWAN. عناوين الأجهزة وعدادات الإطارات."],
+["zigbee-sniffer","sdr-iot","zigbee-sniffer","Capture Zigbee 2.4 GHz. Decode frames, map topology, identify coordinators.","Capturez Zigbee 2.4 GHz. Décodez les trames, cartographiez la topologie.","التقط Zigbee 2.4 GHz. فك الإطارات وارسم الطوبولوجيا."],
+["smart-meter-reader","sdr-iot","smart-meter-reader","Receive wireless smart meter transmissions 900 MHz. See utility RF data broadcasts.","Recevez les transmissions des compteurs intelligents 900 MHz.","استقبل إرسالات العدادات الذكية 900 MHz. شاهد بث بيانات RF."],
+["tpms-scanner","sdr-iot","tpms-scanner","Decode tire pressure sensors 315/433 MHz. Pressure, temperature, sensor IDs.","Décodez les capteurs de pression de pneus 315/433 MHz.","فك مستشعرات ضغط الإطارات 315/433 MHz. الضغط والحرارة والمعرفات."],
+["keyfob-analyzer","sdr-iot","keyfob-analyzer","Analyze car keyfob signals: fixed vs rolling code, modulation. Security analysis, never replay.","Analysez les signaux de clés auto : code fixe vs roulant. Analyse sécurité.","حلل إشارات مفاتيح السيارة: رمز ثابت مقابل متدحرج. تحليل أمني فقط."],
+["industrial-scanner","sdr-iot","industrial-scanner","Scan for SCADA/industrial wireless: WirelessHART, ISA100. ICS security awareness.","Scannez les protocoles industriels sans fil : WirelessHART, ISA100. Sécurité ICS.","امسح البروتوكولات الصناعية اللاسلكية. توعية أمن ICS."],
+// SDR — Tools
+["antenna-profiler","sdr-tool","antenna-profiler","SDR + noise source. Measure gain, bandwidth, VSWR. Calibrated antenna reports.","SDR + source de bruit. Mesurez gain, bande passante, VSWR. Rapports d'antenne calibrés.","SDR + مصدر ضوضاء. قس الكسب والنطاق الترددي وVSWR."],
+["oscilloscope-mode","sdr-tool","oscilloscope-mode","SDR as RF oscilloscope. Triggered waveforms, measurements. Basic RF test equipment.","SDR comme oscilloscope RF. Formes d'onde déclenchées, mesures. Équipement de test RF.","SDR كأوسيلوسكوب RF. أشكال موجية ملتقطة وقياسات. معدات اختبار أساسية."],
+["signal-classifier","sdr-tool","signal-classifier","ML on SDR data: auto-identify and classify signals. Train on known, identify unknowns.","ML sur données SDR : identifiez et classifiez automatiquement les signaux.","تعلم آلي على بيانات SDR: حدد وصنف الإشارات تلقائياً."],
+["band-allocator","sdr-tool","band-allocator","Input country, overlay legal band allocations on live waterfall. Know what's legal.","Entrez votre pays, superposez les allocations de bandes légales sur la cascade.","أدخل بلدك وشاهد تخصيصات النطاقات القانونية على الشلال الحي."],
+["interference-finder","sdr-tool","interference-finder","SDR identifies interference: harmonics, spurs, intermod. Trace to likely source. Debug RF.","SDR identifie les interférences : harmoniques, spurs, intermod. Déboguez les problèmes RF.","SDR يحدد التداخل: التوافقيات والنتوءات. تتبع المصدر المحتمل."],
+["sdr-benchmark","sdr-tool","sdr-benchmark","Test SDR hardware: sensitivity, dynamic range, frequency accuracy. Performance reports.","Testez le matériel SDR : sensibilité, plage dynamique, précision. Rapports de performance.","اختبر أجهزة SDR: الحساسية والنطاق الديناميكي ودقة التردد."],
+// SDR — Learning
+["rf-101","sdr-learn","rf-101","Interactive course from zero: radio waves, frequency, propagation, modulation. 30+ lessons with live SDR.","Cours interactif depuis zéro : ondes radio, fréquence, propagation. 30+ leçons avec SDR en direct.","دورة تفاعلية من الصفر: موجات الراديو والتردد والانتشار. 30+ درس مع SDR حي."],
+["sdr-sandbox","sdr-learn","sdr-sandbox","Safe receive-only exploration. Guided overlays explaining each signal.","Exploration sûre en réception seule. Guides expliquant chaque signal.","استكشاف آمن بالاستقبال فقط. أدلة تشرح كل إشارة."],
+["build-a-receiver","sdr-learn","build-a-receiver","Step-by-step: write FFT, build filter, implement demodulator on live SDR data.","Étape par étape : écrivez la FFT, construisez le filtre, implémentez le démodulateur.","خطوة بخطوة: اكتب FFT وابنِ مرشح ونفذ مزيل تعديل على بيانات SDR حية."],
+["protocol-reverse-lab","sdr-learn","protocol-reverse-lab","Unknown signal. Measure baud rate, identify encoding, extract data. Reverse engineering.","Signal inconnu. Mesurez le débit, identifiez l'encodage. Rétro-ingénierie.","إشارة مجهولة. قس معدل البود وحدد الترميز واستخرج البيانات."],
+["exam-lab-sdr","sdr-learn","exam-lab-sdr","Ham exam questions linked to live SDR demos. 'What is a mixer?' — see it live.","Questions d'examen radioamateur liées à des démos SDR en direct.","أسئلة امتحان الهواة مرتبطة بعروض SDR حية. 'ما هو الخلاط؟' — شاهده حياً."],
+// SDR — God-Tier
+["universal-decoder","sdr-ult","universal-decoder","Auto-detect and decode everything: ADS-B, AIS, APRS, POCSAG, DMR, P25, FT8, SSTV, NOAA APT...","Auto-détection et décodage de tout : ADS-B, AIS, APRS, POCSAG, DMR, P25, FT8, SSTV...","كشف وفك تلقائي لكل شيء: ADS-B وAIS وAPRS وPOCSAG وDMR وP25 وFT8..."],
+["sdr-server","sdr-ult","sdr-server","HackRF as network SDR server. Multiple users, multiple frequencies, one receiver.","HackRF comme serveur SDR réseau. Plusieurs utilisateurs, plusieurs fréquences.","HackRF كخادم SDR شبكي. عدة مستخدمين وعدة ترددات ومستقبل واحد."],
+["spectrum-observatory","sdr-ult","spectrum-observatory","24/7 monitoring. Long-term statistics, anomaly detection, occupancy. Spectrum management.","Surveillance 24h/24. Statistiques long terme, détection d'anomalies. Gestion du spectre.","مراقبة على مدار الساعة. إحصائيات طويلة المدى وكشف الشذوذ وإدارة الطيف."],
+["sdr-os","sdr-ult","sdr-os","Complete SDR OS in browser: receiver, transmitter, analyzer, recorder, decoder, plugins.","OS SDR complet dans le navigateur : récepteur, émetteur, analyseur, enregistreur.","نظام SDR كامل في المتصفح: مستقبل ومرسل ومحلل ومسجل ومكونات إضافية."],
+// ANTENNA — Build & Test
+["antenna-forge","ant-build","antenna-forge","Interactive antenna designer: input frequency, select type (dipole, Yagi, loop, patch, helical). Browser calculates dimensions, 3D model, cutting template. HackRF tests.","Concepteur d'antenne interactif : fréquence, type (dipôle, Yagi, boucle). Modèle 3D, gabarit. HackRF teste.","مصمم هوائيات تفاعلي: أدخل التردد واختر النوع. نموذج ثلاثي الأبعاد وقالب قطع. HackRF يختبر."],
+["antenna-range","ant-build","antenna-range","Automated test range: HackRF transmits reference, ESP32 rotator spins antenna, browser plots radiation pattern live.","Banc d'essai automatisé : HackRF transmet, ESP32 fait tourner l'antenne, navigateur trace le diagramme.","نطاق اختبار آلي: HackRF يرسل إشارة مرجعية، ESP32 يدير الهوائي، المتصفح يرسم نمط الإشعاع."],
+["yagi-optimizer","ant-build","yagi-optimizer","Design Yagi-Uda: add/remove elements, adjust spacing, see gain and pattern change live. Build and compare with HackRF.","Concevez une Yagi-Uda : ajoutez des éléments, ajustez l'espacement. Construisez et comparez avec HackRF.","صمم Yagi-Uda: أضف/أزل عناصر واضبط التباعد. ابنِ وقارن مع HackRF."],
+["antenna-shootout","ant-build","antenna-shootout","Side-by-side comparison: switch antennas, HackRF measures each. Gain difference, bandwidth, noise floor. Data-driven selection.","Comparaison côte à côte : changez d'antenne, HackRF mesure chacune. Sélection basée sur les données.","مقارنة جنباً لجنب: بدل الهوائيات وHackRF يقيس كلاً منها. اختيار قائم على البيانات."],
+["sdr-antenna-tuner","ant-build","sdr-antenna-tuner","Automated tuner: ESP32 controls variable caps/inductors, HackRF measures SWR, browser optimizes match.","Accordeur automatique : ESP32 contrôle condensateurs/inducteurs variables, HackRF mesure SWR.","موالف آلي: ESP32 يتحكم بالمكثفات المتغيرة، HackRF يقيس SWR، المتصفح يحسن المطابقة."],
+["fractal-antenna-lab","ant-build","fractal-antenna-lab","Design fractal antennas: Koch, Sierpinski, Minkowski. 3D-print, HackRF measures multi-band performance.","Antennes fractales : Koch, Sierpinski. Imprimez 3D, HackRF mesure les performances multi-bandes.","هوائيات كسورية: Koch وSierpinski. اطبع ثلاثي الأبعاد وHackRF يقيس الأداء متعدد النطاقات."],
+["wire-antenna-wizard","ant-build","wire-antenna-wizard","End-fed, dipole, EFHW, inverted-V, G5RV, OCF — calculate, build, deploy, compare each with HackRF.","End-fed, dipôle, EFHW, V inversé, G5RV — calculez, construisez, déployez, comparez avec HackRF.","End-fed ودايبول وEFHW وV مقلوب وG5RV — احسب وابنِ وانشر وقارن مع HackRF."],
+["pcb-antenna-studio","ant-build","pcb-antenna-studio","Design PCB antennas: trace width, ground plane, feed point. Export Gerber, order PCB, test with HackRF.","Concevez des antennes PCB : largeur de piste, plan de masse. Exportez Gerber, testez avec HackRF.","صمم هوائيات PCB: عرض المسار ومستوى الأرض. صدّر Gerber واختبر مع HackRF."],
+["antenna-farm-manager","ant-build","antenna-farm-manager","Multiple antennas via relay switching (ESP32). Browser selects antenna per band. HackRF compares. Manage your arsenal.","Antennes multiples via commutation relais (ESP32). Le navigateur sélectionne par bande. Gérez votre arsenal.","هوائيات متعددة عبر تبديل المرحلات (ESP32). المتصفح يختار الهوائي لكل نطاق. أدر ترسانتك."],
+["satellite-antenna-tracker","ant-build","satellite-antenna-tracker","Motorized dish/Yagi on pan-tilt (ESP32 servos). Browser computes satellite position, auto-points. HackRF receives.","Antenne motorisée sur pan-tilt (servos ESP32). Le navigateur calcule la position satellite. HackRF reçoit.","طبق/Yagi آلي على محور دوران (سيرفو ESP32). المتصفح يحسب موقع القمر. HackRF يستقبل."],
+["fox-antenna-builder","ant-build","fox-antenna-builder","Build directional antennas for fox hunting: tape-measure Yagi, Moxon, Adcock. Test each, use in real hunts.","Construisez des antennes directionnelles : Yagi mètre-ruban, Moxon. Testez et utilisez en chasse.","ابنِ هوائيات اتجاهية لصيد الثعالب: Yagi شريط قياس وMoxon. اختبر واستخدم في صيد حقيقي."],
+["magnetic-loop-tuner","ant-build","magnetic-loop-tuner","ESP32 stepper tunes magnetic loop capacitor. HackRF monitors SWR. Browser auto-tunes to any frequency.","ESP32 accorde le condensateur de boucle magnétique. HackRF surveille le SWR. Auto-accord.","ESP32 يضبط مكثف الحلقة المغناطيسية. HackRF يراقب SWR. المتصفح يوالف تلقائياً."],
+["antenna-graveyard","ant-build","antenna-graveyard","Document antenna experiments: photos, measurements, radiation patterns, notes. Personal antenna database.","Documentez vos expériences d'antennes : photos, mesures, diagrammes. Base de données personnelle.","وثق تجارب الهوائي: صور وقياسات وأنماط إشعاع. قاعدة بيانات هوائيات شخصية."],
+// ANTENNA + Raspberry Pi
+["pi-antenna-switch","ant-pi","pi-antenna-switch","Pi controls antenna relay matrix via GPIO. Browser selects antenna per band. Automated A/B testing.","Pi contrôle la matrice de relais d'antenne via GPIO. Test A/B automatisé.","Pi يتحكم بمصفوفة مرحلات الهوائي عبر GPIO. اختبار A/B آلي."],
+["pi-rotator-controller","ant-pi","pi-rotator-controller","Pi drives az/el rotator motors. Browser shows compass overlay with targets. Click target, antenna auto-tracks.","Pi pilote les moteurs rotatifs az/el. Cliquez sur la cible, l'antenne suit automatiquement.","Pi يشغل محركات الدوران. المتصفح يعرض بوصلة مع الأهداف. انقر والهوائي يتتبع."],
+["pi-remote-station","ant-pi","pi-remote-station","Full remote ham station: Pi + HackRF + antenna + rotator at remote location. Operate via browser from anywhere.","Station amateur distante complète : Pi + HackRF + antenne. Opérez de n'importe où via navigateur.","محطة هواة بعيدة كاملة: Pi + HackRF + هوائي. شغل من أي مكان عبر المتصفح."],
+["pi-phased-array","ant-pi","pi-phased-array","Multiple SDRs on Pi with separate antennas. Software beamforming. Steer the beam from browser. Phased array on a desk.","Plusieurs SDR sur Pi avec antennes séparées. Formation de faisceau logiciel. Réseau phasé sur un bureau.","عدة SDR على Pi بهوائيات منفصلة. توجيه شعاع برمجي. مصفوفة طورية على المكتب."],
+["pi-nec-simulator","ant-pi","pi-nec-simulator","Run NEC2 antenna simulation on Pi. Browser design interface. Compare sim with real HackRF measurements.","Exécutez NEC2 sur Pi. Interface de conception navigateur. Comparez avec les mesures HackRF.","شغل محاكاة NEC2 على Pi. واجهة تصميم المتصفح. قارن المحاكاة بقياسات HackRF."],
+// RASPBERRY PI — Core
+["pi-sdr-station","rpi-core","pi-sdr-station","Pi as dedicated SDR server. Runs GNU Radio, streams IQ over network. Browser connects. Always-on SDR.","Pi comme serveur SDR dédié. Exécute GNU Radio, diffuse IQ. SDR permanent.","Pi كخادم SDR مخصص. يشغل GNU Radio ويبث IQ عبر الشبكة. SDR دائم."],
+["pi-war-room","rpi-core","pi-war-room","Pi portable hacking station: Kismet, Aircrack-ng, GNU Radio, rtl_433, dump1090. Browser unifies all tools.","Station de piratage portable Pi : Kismet, Aircrack-ng, GNU Radio. Le navigateur unifie tous les outils.","محطة اختراق Pi محمولة: Kismet وAircrack-ng وGNU Radio. المتصفح يوحد كل الأدوات."],
+["pi-mesh-node","rpi-core","pi-mesh-node","Pi as Meshtastic/MQTT mesh node with LoRa HAT. Off-grid messaging. Browser dashboard for mesh visualization.","Pi comme nœud mesh Meshtastic/MQTT avec HAT LoRa. Messagerie hors réseau. Tableau de bord mesh.","Pi كعقدة شبكة Meshtastic/MQTT مع HAT LoRa. رسائل خارج الشبكة. لوحة تحكم الشبكة."],
+["pi-radio-recorder","rpi-core","pi-radio-recorder","Pi records spectrum 24/7 on schedule: FT8 at dawn, ADS-B by day, meteors at night. Browser archive.","Pi enregistre le spectre 24h/24 : FT8 à l'aube, ADS-B le jour, météores la nuit. Archive navigateur.","Pi يسجل الطيف على مدار الساعة: FT8 عند الفجر، ADS-B نهاراً، شهب ليلاً. أرشيف المتصفح."],
+["pi-packet-bbs","rpi-core","pi-packet-bbs","Pi runs packet radio BBS via HackRF. AX.25 connections. 1980s ham radio internet relived.","Pi gère un BBS radio par paquets via HackRF. Internet radioamateur des années 80.","Pi يشغل BBS راديو حزم عبر HackRF. إنترنت راديو الهواة من الثمانينات."],
+["pi-repeater","rpi-core","pi-repeater","Pi + HackRF as software-defined repeater. CTCSS/DCS, courtesy tones, timeout timer. Full repeater in software.","Pi + HackRF comme répéteur logiciel. CTCSS/DCS, tonalités de courtoisie. Répéteur complet en logiciel.","Pi + HackRF كمكرر برمجي. CTCSS/DCS ونغمات مجاملة. مكرر كامل في البرنامج."],
+["pi-igate-digi","rpi-core","pi-igate-digipeater","Pi as combined APRS iGate + digipeater. Receive, relay, internet-gateway. Run real ham infrastructure.","Pi comme iGate + digipéter APRS combiné. Infrastructure radioamateur réelle.","Pi كبوابة iGate + مكرر رقمي APRS. بنية تحتية حقيقية للهواة."],
+["pi-camera-trap","rpi-core","pi-camera-trap","Pi camera + motion detection + IR. Encrypted photos, local storage, browser dashboard. Night vision spy cam.","Caméra Pi + détection de mouvement + IR. Photos chiffrées, stockage local. Caméra espion nocturne.","كاميرا Pi + كشف حركة + أشعة تحت حمراء. صور مشفرة. كاميرا تجسس ليلية."],
+["pi-kiosk","rpi-core","pi-kiosk","Pi touchscreen dashboard: waterfall, APRS map, aircraft radar, weather sat — all simultaneous. Wall-mounted RF observatory.","Pi écran tactile : cascade, carte APRS, radar avion, sat météo — simultanément. Observatoire RF mural.","شاشة لمس Pi: شلال وخريطة APRS ورادار طيران وقمر طقس — معاً. مرصد RF جداري."],
+["pi-tor-router","rpi-core","pi-tor-router","Pi as transparent Tor proxy. All devices on its WiFi routed through Tor. Circuit visualization. Portable anonymity.","Pi comme proxy Tor transparent. Tous les appareils sur son WiFi routés via Tor. Anonymat portable.","Pi كوكيل Tor شفاف. جميع الأجهزة على WiFi الخاص به عبر Tor. إخفاء هوية محمول."],
+["pi-vpn-gateway","rpi-core","pi-vpn-gateway","Pi as WireGuard VPN server/client. Browser management. Secure all devices through one point.","Pi comme serveur/client VPN WireGuard. Gestion navigateur. Sécurisez tous vos appareils.","Pi كخادم/عميل VPN WireGuard. إدارة المتصفح. أمّن جميع أجهزتك من نقطة واحدة."],
+["pi-honeypot-server","rpi-core","pi-honeypot-server","Full honeypot: fake SSH, HTTP, FTP, SMTP, DNS. Browser shows attack viz, geoIP, credential attempts.","Honeypot complet : faux SSH, HTTP, FTP, SMTP, DNS. Visualisation d'attaques et geoIP.","فخ كامل: SSH وHTTP وFTP وSMTP وDNS مزيفة. المتصفح يعرض الهجمات وgeoIP."],
+["pi-nas-vault","rpi-core","pi-nas-vault","Encrypted NAS: AES-256 at rest, hardware key (micro:bit/NFC) to unlock. Browser file manager.","NAS chiffré : AES-256, clé matérielle (micro:bit/NFC) pour déverrouiller. Gestionnaire de fichiers.","NAS مشفر: AES-256 في السكون، مفتاح مادي (micro:bit/NFC) للفتح. مدير ملفات المتصفح."],
+["pi-print-server","rpi-core","pi-print-server","Pi thermal printer: print decoded messages, QSL cards, mission briefs, network reports. Tangible output.","Imprimante thermique Pi : messages décodés, cartes QSL, briefings de mission. Sortie tangible.","طابعة حرارية Pi: اطبع الرسائل المفككة وبطاقات QSL وملخصات المهمات. مخرجات ملموسة."],
+["pi-clock-station","rpi-core","pi-clock-station","GPS-disciplined NTP server on Pi. Nanosecond-accurate time for TDOA, coherent SDR, timestamp correlation.","Serveur NTP discipliné par GPS. Temps nanoseconde pour TDOA, SDR cohérent.","خادم NTP منضبط بـ GPS على Pi. وقت بدقة النانو ثانية لـ TDOA وSDR المتماسك."],
+// RASPBERRY PI + ANTENNA
+["pi-ant-remote","rpi-ant","pi-remote-antenna-station","Full remote: Pi + HackRF + antenna + rotator at mountain/rooftop. Operate from home via browser.","Station distante complète : Pi + HackRF + antenne + rotateur en hauteur. Opérez depuis chez vous.","محطة بعيدة كاملة: Pi + HackRF + هوائي + دوار على سطح. شغّل من المنزل."],
+// SECRET AGENT — Field Gear
+["dead-drop-pi","agt-field","dead-drop-pi","Pi hidden in everyday object. Creates WiFi AP on schedule. Agents exchange encrypted files. Timer-activated, auto-wipes.","Pi caché dans un objet du quotidien. Crée un AP WiFi programmé. Échange de fichiers chiffrés. Auto-effacement.","Pi مخفي في غرض يومي. ينشئ WiFi وفق جدول. العملاء يتبادلون ملفات مشفرة. يمسح تلقائياً."],
+["covert-radio","agt-field","covert-radio","Pi + HackRF disguised. Scheduled burst transmissions: compress, encrypt, transmit in <1s. Virtually undetectable.","Pi + HackRF déguisés. Transmissions en rafale : compresser, chiffrer, transmettre en <1s. Indétectable.","Pi + HackRF متنكران. إرسالات مكثفة مجدولة: ضغط وتشفير وإرسال في أقل من ثانية."],
+["field-comms-kit","agt-field","field-comms-kit","Pi mesh + HackRF long-range + micro:bit panic + ESP32 beacon. All in backpack. Browser is mission control.","Pi mesh + HackRF longue portée + micro:bit panique + ESP32 balise. Dans un sac à dos. Navigateur = QG.","شبكة Pi + HackRF بعيد المدى + زر ذعر micro:bit + منارة ESP32. في حقيبة ظهر. المتصفح = القيادة."],
+["spy-pi-zero","agt-field","spy-pi-zero","Pi Zero as USB device: appears as keyboard + network adapter. Exfiltrates data to encrypted storage. Teaches USB attacks.","Pi Zero comme USB : apparaît comme clavier + adaptateur réseau. Exfiltre vers stockage chiffré.","Pi Zero كجهاز USB: يظهر كلوحة مفاتيح + محول شبكة. ينسخ البيانات لتخزين مشفر."],
+["pi-surveillance-drone","agt-field","pi-surveillance-drone","Pi Zero + camera + ESP32 WiFi downlink. Mount on RC car/drone. Live feed with GPS overlay. Mobile recon.","Pi Zero + caméra + ESP32 WiFi. Montez sur RC car/drone. Flux en direct avec GPS. Recon mobile.","Pi Zero + كاميرا + ESP32 WiFi. ركبه على سيارة RC/طائرة. بث مباشر مع GPS. استطلاع متحرك."],
+["counter-surveillance-kit","agt-field","counter-surveillance-kit","Pi scans RF (HackRF), WiFi, BLE, cameras simultaneously. Unified dashboard flags anomalies. Professional bug sweep.","Pi scanne RF, WiFi, BLE, caméras simultanément. Tableau de bord unifié. Balayage anti-écoute professionnel.","Pi يمسح RF وWiFi وBLE والكاميرات معاً. لوحة موحدة تكشف الشذوذ. مسح احترافي."],
+["pi-faraday-test","agt-field","pi-faraday-test","Build Faraday bags/boxes, test with HackRF inside. Pi measures signal leakage. Grade your shielding.","Construisez des sacs/boîtes Faraday, testez avec HackRF dedans. Pi mesure les fuites.","ابنِ أكياس/صناديق فاراداي واختبرها مع HackRF بداخلها. Pi يقيس تسرب الإشارة."],
+["agent-communicator","agt-field","agent-communicator","Pi runs numbers station: TTS reads encrypted sequences on HF via HackRF. Agents decode with one-time pads.","Pi gère une station de nombres : TTS lit des séquences chiffrées en HF via HackRF. Décodage avec carnets.","Pi يشغل محطة أرقام: TTS يقرأ تسلسلات مشفرة على HF عبر HackRF. العملاء يفكون بدفاتر المرة الواحدة."],
+["burst-transmitter","agt-field","burst-transmitter","Record voice, compress to 0.5s, encrypt, burst-transmit. Second Pi captures, decrypts, plays. Cold War tech.","Enregistrez, compressez en 0.5s, chiffrez, transmettez en rafale. Deuxième Pi décode. Technologie Guerre Froide.","سجل الصوت واضغطه لـ 0.5 ثانية وشفره وأرسله دفعة. Pi ثاني يلتقط ويفك. تقنية الحرب الباردة."],
+["stealth-ap","agt-field","stealth-ap","Pi invisible WiFi AP: hidden SSID + MAC rotation + time-limited windows. Only agents with exact SSID connect.","AP WiFi invisible Pi : SSID caché + rotation MAC + fenêtres temporelles. Seuls les agents connectent.","Pi كنقطة وصول WiFi خفية: SSID مخفي + تدوير MAC + نوافذ زمنية. فقط العملاء يتصلون."],
+["signal-intercept-station","agt-field","signal-intercept-station","Pi + HackRF + WiFi + RTL-SDR. All bands simultaneously. Browser correlates events across frequencies.","Pi + HackRF + WiFi + RTL-SDR. Toutes les bandes simultanément. Corrélation inter-fréquences.","Pi + HackRF + WiFi + RTL-SDR. جميع النطاقات معاً. المتصفح يربط الأحداث عبر الترددات."],
+["pi-lockpick-trainer","agt-field","pi-lockpick-trainer","Pi camera watches lockpick practice on transparent locks. CV scores technique, tracks progress.","Caméra Pi observe la pratique du crochetage. CV note la technique, suit les progrès.","كاميرا Pi تراقب تدريب فتح الأقفال. رؤية حاسوبية تقيم التقنية وتتتبع التقدم."],
+// SECRET AGENT + micro:bit
+["wrist-communicator","agt-mb","wrist-communicator","micro:bit on wrist: tap patterns send coded messages to Pi base. Vibration feedback. No screen needed.","micro:bit au poignet : tapez des motifs pour envoyer des messages codés au Pi. Retour vibratoire.","micro:bit على المعصم: انقر أنماط لإرسال رسائل مشفرة لقاعدة Pi. اهتزاز كملاحظات. بدون شاشة."],
+["dead-man-switch","agt-mb","dead-man-switch","micro:bit monitors movement. Stop moving X seconds (agent down) = Pi triggers alert, GPS location, evidence wipe.","micro:bit surveille le mouvement. Arrêt X secondes = alerte Pi, localisation GPS, effacement.","micro:bit يراقب الحركة. توقف X ثوان (عميل سقط) = Pi يطلق تنبيه وموقع GPS ومسح."],
+["invisible-fence","agt-mb","invisible-fence","micro:bits as perimeter sensors (light, sound, magnetic). Pi maps breaches in real time. Invisible security.","micro:bits comme capteurs de périmètre. Pi cartographie les brèches en temps réel. Sécurité invisible.","micro:bits كمستشعرات محيط. Pi يرسم الاختراقات مباشرة. أمن غير مرئي."],
+["micro-beacon-trail","agt-mb","micro-beacon-trail","Plant micro:bits along route broadcasting BLE breadcrumbs. Agents follow trail using Pi scanner.","Plantez des micro:bits le long d'un itinéraire diffusant des miettes BLE. Suivez avec Pi.","ازرع micro:bits على طول المسار تبث فتات BLE. العملاء يتبعون المسار بماسح Pi."],
+["extraction-signal","agt-mb","extraction-signal","micro:bit emergency beacon: specific shake activates distress. Pi shows agent location and status. Extraction protocol.","Balise d'urgence micro:bit : secousse spécifique active la détresse. Pi montre l'emplacement.","منارة طوارئ micro:bit: هز محدد يفعل الاستغاثة. Pi يعرض موقع وحالة العميل."],
+// SECRET AGENT + Antenna
+["direction-finder-pro","agt-ant","direction-finder-pro","Pi + HackRF + motorized directional antenna. 360° sweep, plot signal strength. Find any transmitter or camera.","Pi + HackRF + antenne directionnelle motorisée. Balayage 360°. Trouvez tout émetteur ou caméra.","Pi + HackRF + هوائي اتجاهي آلي. مسح 360°. ابحث عن أي مرسل أو كاميرا."],
+["covert-antenna","agt-ant","covert-antenna","Antennas disguised as objects: ruler Yagi, clothesline dipole, umbrella loop, window patch. Test with HackRF.","Antennes déguisées : règle Yagi, corde à linge dipôle, parapluie boucle. Testez avec HackRF.","هوائيات متنكرة: Yagi مسطرة ودايبول حبل غسيل وحلقة مظلة. اختبر مع HackRF."],
+["antenna-in-a-bag","agt-ant","antenna-in-a-bag","Deployable kit: Pi auto-detects antenna, recommends band, auto-tunes. Backpack to operational in 60 seconds.","Kit déployable : Pi détecte l'antenne, recommande la bande. Sac à dos à opérationnel en 60s.","طقم قابل للنشر: Pi يكتشف الهوائي ويوصي بالنطاق. من الحقيبة للتشغيل في 60 ثانية."],
+["rf-perimeter","agt-ant","rf-perimeter","Multiple directional antennas on Pi + HackRF. Monitor all directions. Alert on new transmitters with bearing.","Antennes directionnelles multiples sur Pi + HackRF. Surveillez toutes les directions. Alerte avec azimut.","هوائيات اتجاهية متعددة على Pi + HackRF. راقب كل الاتجاهات. تنبيه مع الاتجاه."],
+["satellite-comms-station","agt-ant","satellite-comms-station","Pi + HackRF + auto-tracking antenna. Amateur sats, weather images, ISS — all automated. Portable ground station.","Pi + HackRF + antenne auto-tracking. Sats amateurs, images météo, ISS. Station sol portable.","Pi + HackRF + هوائي تتبع تلقائي. أقمار هواة وصور طقس وISS. محطة أرضية محمولة."],
+// SECRET AGENT — Ultimate Kits
+["ghost-box","agt-ult","ghost-box","Complete SIGINT in Pelican case: Pi, HackRF, WiFi, RTL-SDR, GPS, antenna, battery, touchscreen. Unified C2.","SIGINT complet dans une valise Pelican : Pi, HackRF, WiFi, RTL-SDR, GPS, antenne, batterie, écran.","SIGINT كامل في حقيبة Pelican: Pi وHackRF وWiFi وRTL-SDR وGPS وهوائي وبطارية وشاشة."],
+["safe-house-kit","agt-ult","safe-house-kit","Pi secures location: cameras, RF sweep, WiFi monitoring, perimeter sensors, encrypted comms, Faraday-tested entries.","Pi sécurise un lieu : caméras, balayage RF, surveillance WiFi, capteurs périmètre, comms chiffrées.","Pi يؤمن الموقع: كاميرات ومسح RF ومراقبة WiFi ومستشعرات محيط واتصالات مشفرة."],
+["agent-onboarding","agt-ult","agent-onboarding","20 lessons: encryption, comms, counter-surveillance, RF awareness. Hands-on with real hardware. Graduate certified.","20 leçons : chiffrement, comms, contre-surveillance, RF. Pratique avec du vrai matériel. Certification.","20 درساً: تشفير واتصالات ومكافحة مراقبة ووعي RF. عملي بأجهزة حقيقية. تخرج معتمد."],
+["red-team-toolkit","agt-ult","red-team-toolkit","Offensive security: Pi recon (WiFi+RF+BLE), ESP32 active tools (honeypot, rogue AP), micro:bit physical access.","Sécurité offensive : Pi recon, ESP32 outils actifs, micro:bit accès physique. Toutes phases coordonnées.","أمن هجومي: استطلاع Pi وأدوات ESP32 نشطة ووصول فعلي micro:bit. المتصفح ينسق."],
+["blue-team-sentinel","agt-ult","blue-team-sentinel","Defensive: Pi monitors all frequencies/networks, detects anomalies, identifies attacks, auto-deploys countermeasures.","Défensif : Pi surveille toutes les fréquences, détecte les anomalies, identifie les attaques.","دفاعي: Pi يراقب كل الترددات والشبكات ويكشف الشذوذ ويحدد الهجمات وينشر الإجراءات المضادة."],
+["mission-impossible-box","agt-ult","mission-impossible-box","Self-destructing briefing: Pi displays mission, timer counts, micro:bit confirms identity. Tamper = instant wipe.","Briefing auto-destructeur : Pi affiche la mission, minuteur, micro:bit confirme l'identité. Sabotage = effacement.","إحاطة ذاتية التدمير: Pi يعرض المهمة والمؤقت وmicro:bit يؤكد الهوية. العبث = مسح فوري."],
+["mobile-command","agt-ult","mobile-command","Vehicle-mounted: Pi + HackRF + roof antenna + GPS + 4G. Drive mapping RF, WiFi, BLE, cellular. War-driving evolved.","Monté sur véhicule : Pi + HackRF + antenne toit + GPS + 4G. Cartographie en conduisant. War-driving évolué.","مركّب على مركبة: Pi + HackRF + هوائي سقف + GPS + 4G. قُد وارسم خريطة RF وWiFi وBLE."],
+];
+
+const HW_KEYS=["hw_all","hw_none","hw_mb","hw_esp","hw_hrf","hw_wifi","hw_rpi","hw_mix"];
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════════════════════ */
+let lang="en",voterName="",canVote=true,votes={},search="",hwFilter="hw_all",sortBy="category";
+let expanded=new Set(CATS.map(c=>c.id));
+
+/* ═══════════════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════════════ */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const t=k=>(I18N[lang]||I18N.en)[k]||(I18N.en)[k]||k;
+
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  document.documentElement.dir=l==="ar"?"rtl":"ltr";
+  document.documentElement.dataset.lang=l;
+  $$("[data-setlang]").forEach(b=>b.classList.toggle("on",b.dataset.setlang===l));
+  $$("[data-i18n]").forEach(el=>el.innerHTML=t(el.dataset.i18n));
+  $$("[data-i18n-ph]").forEach(el=>el.placeholder=t(el.dataset.i18nPh));
+  $$("[data-i18n-opt]").forEach(el=>el.textContent=t(el.dataset.i18nOpt));
+  buildHwBar();render();
+}
+
+function setTheme(th){
+  document.documentElement.dataset.theme=th;
+  $$("[data-settheme]").forEach(b=>b.classList.toggle("on",b.dataset.settheme===th));
+}
+
+function injectLogos(){
+  const colored=LOGO;
+  ["splash-logo","hdr-logo","foot-logo"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML=colored;
+  });
+}
+
+function matchHw(catHw,filter){
+  if(filter==="hw_all") return true;
+  if(filter==="hw_none") return catHw==="None";
+  if(filter==="hw_mix") return catHw.includes("Mixed")||catHw.includes("Full")||catHw.includes("+");
+  const map={hw_mb:"micro:bit",hw_esp:"ESP32",hw_hrf:"HackRF",hw_wifi:"WiFi",hw_rpi:"Pi"};
+  return catHw.includes(map[filter]||"");
+}
+
+function getDesc(app){return app[lang==="fr"?4:lang==="ar"?5:3]}
+
+function filteredApps(){
+  const q=search.toLowerCase();
+  return A.filter(a=>{
+    const cat=CATS.find(c=>c.id===a[1]);
+    if(!cat) return false;
+    if(!matchHw(cat.hw,hwFilter)) return false;
+    if(!q) return true;
+    return a[2].toLowerCase().includes(q)||getDesc(a).toLowerCase().includes(q);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUILD
+   ═══════════════════════════════════════════════════════════ */
+function buildHwBar(){
+  const bar=$("#hw-bar");
+  bar.innerHTML=HW_KEYS.map(k=>`<button class="pill${hwFilter===k?" on":""}" data-hw="${k}">${t(k)}</button>`).join("");
+  bar.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{hwFilter=b.dataset.hw;buildHwBar();render()});
+}
+
+function render(){
+  const apps=filteredApps();
+  const votedCount=Object.values(votes).filter(v=>v).length;
+  const badge=$("#hdr-badge");
+  badge.textContent=votedCount+" "+t("voted");
+  badge.className="badge"+(votedCount>0?" active":"");
+  $("#export-btn").disabled=votedCount===0;
+  $("#summary").textContent=apps.length+" "+t("shown");
+  if(voterName) $("#hdr-voter").textContent=voterName;
+
+  let cats=sortBy==="votes"?[...CATS].sort((a,b)=>{
+    const av=apps.filter(x=>x[1]===a.id&&votes[x[0]]).length;
+    const bv=apps.filter(x=>x[1]===b.id&&votes[x[0]]).length;
+    return bv-av;
+  }):CATS;
+
+  const container=$("#categories");
+  container.innerHTML="";
+
+  cats.forEach(cat=>{
+    const catApps=apps.filter(a=>a[1]===cat.id);
+    if(!catApps.length) return;
+    const catVotes=catApps.filter(a=>votes[a[0]]).length;
+    const isOpen=expanded.has(cat.id);
+
+    const section=document.createElement("div");
+    section.className="cat-section";
+
+    const hdr=document.createElement("div");
+    hdr.className="cat-hdr";
+    hdr.innerHTML=`
+      <div class="cat-left">
+        <span class="cat-arrow${isOpen?" open":""}">&#9654;</span>
+        <span class="cat-icon">${cat.icon}</span>
+        <span class="cat-label">${t(cat.id)}</span>
+        <span class="cat-count">${catApps.length}</span>
+        <span class="cat-sep">|</span>
+        <span class="cat-hw">${cat.hw}</span>
+      </div>
+      ${catVotes>0?`<span class="cat-votes">${catVotes} ${t("voted")}</span>`:""}
+    `;
+    hdr.onclick=()=>{expanded.has(cat.id)?expanded.delete(cat.id):expanded.add(cat.id);render()};
+    section.appendChild(hdr);
+
+    if(isOpen){
+      const grid=document.createElement("div");
+      grid.className="grid";
+      catApps.forEach(app=>{
+        const v=!!votes[app[0]];
+        const card=document.createElement("div");
+        card.className="card"+(v?" voted":"");
+        card.innerHTML=`
+          <div class="card-body">
+            <div class="card-name">${app[2]}</div>
+            <div class="card-desc">${getDesc(app)}</div>
+          </div>
+          ${canVote?`<div class="card-check">${v?"&#10003;":""}</div>`:""}
+        `;
+        if(canVote) card.onclick=()=>{votes[app[0]]=!votes[app[0]];render()};
+        grid.appendChild(card);
+      });
+      section.appendChild(grid);
+    }
+    container.appendChild(section);
+  });
+}
+
+function exportVotes(){
+  const voted=A.filter(a=>votes[a[0]]);
+  const lines=voted.map(a=>{
+    const cat=CATS.find(c=>c.id===a[1]);
+    return `${t(cat.id)} | ${a[2]} | ${getDesc(a).slice(0,80)}`;
+  });
+  const text=`WORKSHOP-DIY ROADMAP VOTES\n${voterName||"Anonymous"}\n${"=".repeat(50)}\n${voted.length} projects:\n\n${lines.join("\n")}`;
+  const blob=new Blob([text],{type:"text/plain"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=`votes-${(voterName||"anon").replace(/\s/g,"-")}.txt`;a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════ */
+function enterApp(){
+  $("#splash").style.display="none";
+  $("#main").classList.add("active");
+  render();
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  injectLogos();setLang("en");setTheme("terminal");
+
+  // Splash
+  const ni=$("#name-input"),eb=$("#enter-btn"),sb=$("#skip-btn");
+  ni.addEventListener("input",()=>eb.disabled=!ni.value.trim());
+  ni.addEventListener("keydown",e=>{if(e.key==="Enter"&&ni.value.trim()){voterName=ni.value.trim();enterApp()}});
+  eb.addEventListener("click",()=>{if(ni.value.trim()){voterName=ni.value.trim();enterApp()}});
+  sb.addEventListener("click",()=>{canVote=false;voterName="";enterApp()});
+
+  // Lang + Theme
+  $$("[data-setlang]").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.setlang)));
+  $$("[data-settheme]").forEach(b=>b.addEventListener("click",()=>setTheme(b.dataset.settheme)));
+
+  // Controls
+  $("#search").addEventListener("input",e=>{search=e.target.value;render()});
+  $("#sort-select").addEventListener("change",e=>{sortBy=e.target.value;render()});
+  $("#expand-btn").addEventListener("click",()=>{expanded=new Set(CATS.map(c=>c.id));render()});
+  $("#collapse-btn").addEventListener("click",()=>{expanded=new Set();render()});
+  $("#export-btn").addEventListener("click",exportVotes);
+});
+</script>
+</body>
+</html>
