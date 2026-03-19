@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bio Body Antenna — Workshop DIY</title>
+  <meta name="description" content="Human body as 1.8MHz antenna — impedance measurement simulation with micro:bit" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="Bio Body Antenna — Workshop DIY" />
+  <meta property="og:description" content="Human body as 1.8MHz antenna — impedance measurement" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #antennaCanvas{width:100%;height:340px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.35);cursor:crosshair;display:block}
+    .sim-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .sim-controls button{flex:1;min-width:110px}
+    .stats-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .stat-badge{font-size:.7rem;padding:3px 10px;border-radius:999px;border:1px solid var(--border);color:var(--text-muted);background:rgba(0,0,0,.2)}
+    .stat-badge strong{color:var(--accent)}
+    .impedance-bar{width:100%;height:24px;border-radius:8px;background:rgba(0,0,0,.3);border:1px solid var(--border);margin-top:8px;overflow:hidden;position:relative}
+    .impedance-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#33ff33,#ffcc00,#ff3333);transition:width .3s}
+    .impedance-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+    .freq-display{font-family:'Orbitron',monospace;font-size:1.8rem;text-align:center;color:var(--accent);margin:8px 0}
+    .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+    .step-card{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;text-align:center}
+    .step-card .step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.75rem;margin-bottom:6px}
+    .step-card .step-icon{font-size:1.6rem;display:block;margin-bottom:4px}
+    .step-card h4{font-size:.76rem;margin:4px 0 2px;color:var(--text)}
+    .step-card p{font-size:.7rem;color:var(--text-muted);line-height:1.4}
+    .challenge-list{display:flex;flex-direction:column;gap:8px}
+    .challenge-item{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;display:flex;align-items:flex-start;gap:10px}
+    .challenge-item .ch-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-weight:700;font-size:.72rem;flex-shrink:0}
+    .challenge-item h4{font-size:.78rem;color:var(--text);margin-bottom:2px}
+    .challenge-item p{font-size:.72rem;color:var(--text-muted);line-height:1.4}
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">Your body is a 1.8 MHz antenna</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          &#x0628;&#x0650;&#x0633;&#x0652;&#x0645;&#x0650; &#x0671;&#x0644;&#x0644;&#x0651;&#x064e;&#x0647;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064e;&#x062d;&#x0652;&#x0645;&#x064e;&#x0640;&#x0670;&#x0646;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064e;&#x062d;&#x0650;&#x064a;&#x0645;&#x0650;
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Bio Body Antenna</h1>
+            <div class="subtitle" data-i18n="subtitle">Your body is a 1.8 MHz antenna</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#x1F4DC;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#x1F4E1;</span> <span data-i18n="mainSection">Body Antenna — Impedance Measurement</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Human body as 1.8 MHz receiving antenna with impedance analysis</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+        <canvas id="antennaCanvas" width="760" height="340"></canvas>
+        <div class="freq-display" id="freqDisplay">1.800 MHz</div>
+        <div class="impedance-bar"><div class="impedance-fill" id="impedanceFill" style="width:30%"></div><div class="impedance-label" id="impedanceLabel">Z = 150 + j45 &#x2126;</div></div>
+        <div class="stats-row" id="statsRow">
+          <span class="stat-badge"><strong id="statFreq">1.800</strong> MHz</span>
+          <span class="stat-badge"><strong id="statSWR">2.1</strong> <span data-i18n="statSWR">SWR</span></span>
+          <span class="stat-badge"><strong id="statGain">-12</strong> <span data-i18n="statGain">dBi</span></span>
+          <span class="stat-badge"><strong id="statZ">150</strong> <span data-i18n="statZ">&#x2126; impedance</span></span>
+        </div>
+        <div class="sim-controls">
+          <button id="startBtn" class="primary"><span class="btn-icon">&#x25B6;</span> <span data-i18n="startScan">Start Scan</span></button>
+          <button id="touchBtn"><span class="btn-icon">&#x270B;</span> <span data-i18n="touchBody">Touch Body</span></button>
+          <button id="groundBtn"><span class="btn-icon">&#x26A1;</span> <span data-i18n="groundBtn">Ground</span></button>
+          <button id="sweepBtn" class="fire-btn"><span class="btn-icon">&#x1F4CA;</span> <span data-i18n="sweepBtn">Freq Sweep</span></button>
+        </div>
+      </div>
+
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionA">A — How It Works</span></summary>
+        <div class="card">
+          <div class="step-grid">
+            <div class="step-card"><span class="step-icon">&#x1F9CD;</span><span class="step-num">1</span><h4 data-i18n="step1Title">Body as Antenna</h4><p data-i18n="step1Desc">The human body acts as a ~1.7m antenna, resonant near 1.8 MHz. micro:bit ADC measures the RF signal picked up.</p></div>
+            <div class="step-card"><span class="step-icon">&#x1F4CF;</span><span class="step-num">2</span><h4 data-i18n="step2Title">Impedance Probe</h4><p data-i18n="step2Desc">A simple bridge circuit measures body impedance — the complex resistance to RF signals at different frequencies.</p></div>
+            <div class="step-card"><span class="step-icon">&#x1F4C8;</span><span class="step-num">3</span><h4 data-i18n="step3Title">SWR Calculation</h4><p data-i18n="step3Desc">Standing Wave Ratio shows how well the body antenna is matched. SWR = 1.0 is perfect, higher means mismatch.</p></div>
+            <div class="step-card"><span class="step-icon">&#x1F50A;</span><span class="step-num">4</span><h4 data-i18n="step4Title">Signal Detection</h4><p data-i18n="step4Desc">Touch detection changes the antenna pattern. Grounding improves reception. Nearby AM stations become audible!</p></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F3C6;</span> <span data-i18n="sectionC">C — Challenges</span></summary>
+        <div class="card">
+          <div class="challenge-list">
+            <div class="challenge-item"><span class="ch-num">1</span><div><h4 data-i18n="ch1Title">Find the Resonance</h4><p data-i18n="ch1Desc">Use frequency sweep to find the exact frequency where your body has lowest SWR. Every person is different!</p></div></div>
+            <div class="challenge-item"><span class="ch-num">2</span><div><h4 data-i18n="ch2Title">Ground Effect</h4><p data-i18n="ch2Desc">Touch a grounded metal surface while scanning. What happens to the impedance reading?</p></div></div>
+            <div class="challenge-item"><span class="ch-num">3</span><div><h4 data-i18n="ch3Title">AM Radio Pickup</h4><p data-i18n="ch3Desc">Sweep 500 kHz to 1700 kHz. Can you detect any AM radio stations using your body as antenna?</p></div></div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#x2753; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div>
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">Can my body really be an antenna?</summary><p data-i18n="faq_a1">Yes! Any conductive object can receive RF. The human body, being ~1.7m tall and conductive, resonates near 1.8 MHz.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">What is impedance?</summary><p data-i18n="faq_a2">Impedance (Z) is the total opposition to current flow in an AC circuit. It has real (resistance) and imaginary (reactance) parts.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">Is this safe?</summary><p data-i18n="faq_a3">Absolutely. We are only measuring signals already passing through your body. No energy is transmitted into you.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Start Scan to begin impedance measurement.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Touch Body to simulate skin contact with the probe.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Freq Sweep to scan across 0.5-5 MHz range.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_ant_title">&#x1F4E1; Body Antenna Theory</h3><p data-i18n="wiki_ant">A 1.7m human body resonates at ~1.8 MHz (quarter-wave). Grounding one end creates a monopole antenna with ~36 ohm impedance.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_imp_title">&#x26A1; Impedance</h3><p data-i18n="wiki_imp">Z = R + jX. Real part R is resistance, imaginary part jX is reactance. Measured in ohms. SWR indicates matching quality.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>&#x1F1EC;&#x1F1E7; EN</option><option value="fr">&#x1F1EB;&#x1F1F7; FR</option><option value="ar">&#x1F1E9;&#x1F1FF; &#x0639;&#x0631;&#x0628;&#x064A;</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">&#x1F50A; Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">&#x1F4DC; Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#x2713;</button><button class="log-filter" data-filter="error">&#x2717;</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working&hellip;</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
