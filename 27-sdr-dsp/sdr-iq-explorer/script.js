@@ -231,3 +231,60 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — IQ Explorer
+   Animated phasor wheel + instantaneous frequency meter
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const trail=[];
+function boot(){
+  let el=document.getElementById('iqSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='iqSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.03;cx.fillStyle='rgba(6,8,16,.15)';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Phasor wheel
+  const pcx=120,pcy=H/2,pr=70;
+  cx.strokeStyle='rgba(100,200,255,.1)';cx.lineWidth=1;
+  cx.beginPath();cx.arc(pcx,pcy,pr,0,Math.PI*2);cx.stroke();
+  cx.beginPath();cx.moveTo(pcx-pr-5,pcy);cx.lineTo(pcx+pr+5,pcy);cx.stroke();
+  cx.beginPath();cx.moveTo(pcx,pcy-pr-5);cx.lineTo(pcx,pcy+pr+5);cx.stroke();
+  const angle=t*3;const px=pcx+Math.cos(angle)*pr*.8,py=pcy-Math.sin(angle)*pr*.8;
+  trail.push({x:px,y:py,a:1});if(trail.length>80)trail.shift();
+  trail.forEach((p,i)=>{p.a*=.97;cx.fillStyle=`rgba(${parseInt(acc.slice(1,3),16)||212},${parseInt(acc.slice(3,5),16)||160},${parseInt(acc.slice(5,7),16)||60},${p.a*.4})`;cx.beginPath();cx.arc(p.x,p.y,2,0,Math.PI*2);cx.fill();});
+  cx.strokeStyle=acc;cx.lineWidth=2;cx.beginPath();cx.moveTo(pcx,pcy);cx.lineTo(px,py);cx.stroke();
+  cx.fillStyle=acc;cx.beginPath();cx.arc(px,py,4,0,Math.PI*2);cx.fill();
+  // Frequency meter on right
+  const mX=W*.35,mW=W*.6,mH=H-40;
+  cx.strokeStyle='rgba(100,200,255,.06)';cx.lineWidth=.5;
+  cx.beginPath();cx.moveTo(mX,20+mH/2);cx.lineTo(mX+mW,20+mH/2);cx.stroke();
+  cx.strokeStyle='#f84';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<200;i++){
+    const x=mX+i/200*mW;const tt=i/200+t;
+    const freq=Math.sin(tt*2)*30+50;
+    const y=20+mH/2-freq*mH*.005;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(248,132,68,.4)';cx.font='8px monospace';cx.fillText('Inst. Frequency',mX+5,18);
+  // Magnitude
+  cx.strokeStyle='#8f8';cx.lineWidth=1;cx.beginPath();
+  for(let i=0;i<200;i++){
+    const x=mX+i/200*mW;const tt=i/200+t;
+    const mag=.8+.2*Math.sin(tt*5);
+    const y=20+mH-mag*mH*.3;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(136,255,136,.4)';cx.font='8px monospace';cx.fillText('Magnitude',mX+5,mH+15);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('IQ Phasor Wheel — Frequency + Magnitude',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

@@ -140,3 +140,55 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — SDR OS
+   Animated desktop environment + system monitor + task manager
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const cpuHist=[];const memHist=[];
+function boot(){
+  let el=document.getElementById('osSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='osSimCanvas';el.width=780;el.height=220;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#0a0c14;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.016;cx.fillStyle='#0a0c14';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // CPU usage history
+  cpuHist.push(20+Math.random()*60+Math.sin(t)*15);if(cpuHist.length>100)cpuHist.shift();
+  memHist.push(40+Math.random()*20+Math.sin(t*.5)*10);if(memHist.length>100)memHist.shift();
+  // CPU graph
+  const gx=20,gy=25,gw=W*.44,gh=H*.4;
+  cx.fillStyle='rgba(100,200,255,.03)';cx.fillRect(gx,gy,gw,gh);
+  cx.strokeStyle='rgba(100,200,255,.1)';cx.lineWidth=.5;
+  for(let i=0;i<5;i++){cx.beginPath();cx.moveTo(gx,gy+i*gh/4);cx.lineTo(gx+gw,gy+i*gh/4);cx.stroke();}
+  cx.strokeStyle='#22c55e';cx.lineWidth=1.5;cx.beginPath();
+  cpuHist.forEach((v,i)=>{const x=gx+i/100*gw,y=gy+gh-v/100*gh;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);});cx.stroke();
+  cx.fillStyle='#22c55e';cx.font='9px monospace';cx.fillText(`CPU: ${cpuHist[cpuHist.length-1]?.toFixed(0)||0}%`,gx+5,gy+12);
+  // Memory graph
+  const mx=W*.52,my=25,mw=W*.44,mh=H*.4;
+  cx.fillStyle='rgba(100,200,255,.03)';cx.fillRect(mx,my,mw,mh);
+  cx.strokeStyle='#4fc3f7';cx.lineWidth=1.5;cx.beginPath();
+  memHist.forEach((v,i)=>{const x=mx+i/100*mw,y=my+mh-v/100*mh;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);});cx.stroke();
+  cx.fillStyle='#4fc3f7';cx.font='9px monospace';cx.fillText(`MEM: ${memHist[memHist.length-1]?.toFixed(0)||0}%`,mx+5,my+12);
+  // Process list at bottom
+  const procs=[{name:'sdr_receiver',cpu:15+Math.random()*10,pid:1024},{name:'fft_worker',cpu:8+Math.random()*5,pid:1025},
+    {name:'demod_am',cpu:3+Math.random()*3,pid:1026},{name:'waterfall_ui',cpu:12+Math.random()*8,pid:1027},
+    {name:'audio_out',cpu:2+Math.random()*2,pid:1028},{name:'spectrum_log',cpu:1+Math.random(),pid:1029}];
+  cx.fillStyle='rgba(0,0,0,.4)';cx.fillRect(0,H*.55,W,H*.45);
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('PID     PROCESS              CPU%',20,H*.55+14);
+  procs.forEach((p,i)=>{
+    cx.fillStyle='rgba(200,230,255,.3)';cx.font='8px monospace';
+    cx.fillText(`${p.pid}    ${p.name.padEnd(20)} ${p.cpu.toFixed(1)}%`,20,H*.55+28+i*14);
+    cx.fillStyle=acc+'44';cx.fillRect(280,H*.55+19+i*14,p.cpu*3,8);
+  });
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('SDR-OS System Monitor',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

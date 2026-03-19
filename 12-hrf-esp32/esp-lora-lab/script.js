@@ -405,3 +405,115 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(!chirpActive&&Math.random()<0.3){chirpActive=true;chirpPhase=Math.random()*(wfCanvas?.width||800);setTimeout(()=>{chirpActive=false;},500+Math.random()*1000);}
   },3000);
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — LoRa Lab: Chirp spread spectrum with
+   upchirp/downchirp visualization, spreading factor display,
+   and long-range signal propagation
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simLoraCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const chirps=[],waveRings=[];let sf=7,bw=125,txCount=0;
+  const SFs=[7,8,9,10,11,12];
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:300px;border-radius:12px;margin:1.2rem 0;display:block;background:#080812;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  /* Chirp signal — frequency sweep */
+  class Chirp{
+    constructor(up){this.up=up;this.x=up?40:W-40;this.progress=0;this.speed=0.005+Math.random()*0.005;this.alive=true;this.sf=sf;this.y=H/2;}
+    update(){this.progress+=this.speed;if(this.progress>=1)this.alive=false;return this.alive;}
+    draw(){
+      const startX=this.up?40:W-40,endX=this.up?W-40:40;
+      const px=startX+(endX-startX)*this.progress;
+      // Draw chirp waveform
+      ctx.beginPath();
+      const samples=60;
+      for(let i=0;i<=samples;i++){
+        const t=i/samples*this.progress;
+        const sx=startX+(endX-startX)*t;
+        const freq=this.up?(0.5+t*3):(3.5-t*3);
+        const amp=20*(1-Math.abs(t-this.progress)*3);
+        const sy=this.y+Math.sin(t*freq*30+frameCount*0.1)*Math.max(0,amp);
+        if(i===0)ctx.moveTo(sx,sy);else ctx.lineTo(sx,sy);
+      }
+      ctx.strokeStyle=this.up?'rgba(0,200,255,0.6)':'rgba(255,150,0,0.6)';ctx.lineWidth=2;ctx.stroke();
+      // Head dot
+      ctx.beginPath();ctx.arc(px,this.y,5,0,Math.PI*2);ctx.fillStyle=this.up?'#0cf':'#f90';ctx.fill();
+      ctx.font='7px monospace';ctx.fillStyle=this.up?'#0cf':'#f90';ctx.textAlign='center';
+      ctx.fillText(this.up?'UPCHIRP':'DOWNCHIRP',px,this.y-14);
+    }
+  }
+
+  /* Long range signal ring */
+  class WaveRing{
+    constructor(x,y){this.x=x;this.y=y;this.r=10;this.maxR=200;this.alpha=0.4;}
+    update(){this.r+=0.5;this.alpha=0.4*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.strokeStyle='rgba(0,200,255,'+this.alpha+')';ctx.lineWidth=1;ctx.stroke();}
+  }
+
+  /* Frequency-time spectrogram at bottom */
+  function drawSpectrogram(){
+    const sh=60,sy=H-sh-20;
+    ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(0,sy,W,sh);
+    ctx.strokeStyle='#fff1';ctx.strokeRect(0,sy,W,sh);
+    // Moving chirp pattern
+    const sliceW=3;
+    for(let x=0;x<W;x+=sliceW){
+      const t=(x+frameCount*2)%W/W;
+      const freq=t*sh;
+      ctx.fillStyle='rgba(0,180,255,'+(0.1+Math.sin(t*Math.PI)*0.2)+')';
+      ctx.fillRect(x,sy+sh-freq-2,sliceW,3);
+      // Mirror downchirp
+      ctx.fillStyle='rgba(255,150,0,'+(0.05+Math.cos(t*Math.PI)*0.1)+')';
+      ctx.fillRect(x,sy+freq,sliceW,3);
+    }
+    ctx.font='7px monospace';ctx.fillStyle='#666';ctx.textAlign='left';ctx.fillText('Freq',4,sy+10);ctx.fillText('Time \u2192',W-40,sy+sh-4);
+  }
+
+  /* Gateway and end-device */
+  function drawDevices(){
+    // End device (left)
+    ctx.save();ctx.shadowColor='#0cf';ctx.shadowBlur=6;
+    ctx.beginPath();ctx.arc(40,H/2,16,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.15)';ctx.fill();ctx.strokeStyle='#0cf';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+    ctx.font='12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u{1F4E1}',40,H/2);
+    ctx.font='7px monospace';ctx.fillStyle='#0cf';ctx.fillText('End Device',40,H/2+24);ctx.restore();
+    // Gateway (right)
+    ctx.save();ctx.shadowColor='#6bcb77';ctx.shadowBlur=6;
+    ctx.beginPath();ctx.arc(W-40,H/2,16,0,Math.PI*2);ctx.fillStyle='rgba(107,203,119,0.15)';ctx.fill();ctx.strokeStyle='#6bcb77';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+    ctx.font='12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u{1F3F0}',W-40,H/2);
+    ctx.font='7px monospace';ctx.fillStyle='#6bcb77';ctx.fillText('Gateway',W-40,H/2+24);ctx.restore();
+  }
+
+  function drawSFIndicator(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(W/2-50,8,100,30);ctx.strokeStyle='#0cf3';ctx.strokeRect(W/2-50,8,100,30);
+    ctx.font='10px monospace';ctx.fillStyle='#0cf';ctx.textAlign='center';ctx.fillText('SF'+sf+' BW'+bw+'kHz',W/2,28);ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,175,56);ctx.strokeStyle='#0cf3';ctx.strokeRect(8,8,175,56);
+    ctx.font='10px monospace';ctx.fillStyle='#0cf';ctx.textAlign='left';ctx.fillText('LORA LAB',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('SF: '+sf+'  BW: '+bw+'kHz',16,40);ctx.fillText('Transmissions: '+txCount,16,54);ctx.restore();
+  }
+
+  function init(){ensureCanvas();animate();}
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(8,8,18,0.14)';ctx.fillRect(0,0,W,H);
+    // Cycle SF
+    if(frameCount%300===0){sf=SFs[Math.floor(Math.random()*SFs.length)];bw=[125,250,500][Math.floor(Math.random()*3)];}
+    // Spawn chirps
+    if(frameCount%80===0){chirps.push(new Chirp(true));waveRings.push(new WaveRing(40,H/2));txCount++;}
+    if(frameCount%120===0){chirps.push(new Chirp(false));waveRings.push(new WaveRing(W-40,H/2));}
+    for(let i=waveRings.length-1;i>=0;i--){if(!waveRings[i].update())waveRings.splice(i,1);else waveRings[i].draw();}
+    drawDevices();
+    for(let i=chirps.length-1;i>=0;i--){if(!chirps[i].update())chirps.splice(i,1);else chirps[i].draw();}
+    drawSpectrogram();drawSFIndicator();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,300);
+})();

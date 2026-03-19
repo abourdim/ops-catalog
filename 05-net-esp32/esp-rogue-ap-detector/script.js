@@ -336,3 +336,94 @@ function initRogueDetector(){
 }
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initRogueDetector);}else{setTimeout(initRogueDetector,50);}
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Rogue AP Detector: Evil twin detection
+   with AP radar, fingerprint comparison, and alert system
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const aps=[],scanWaves=[];
+  const SSIDS=['CoffeeShop_WiFi','Airport_Free','Hotel_Guest','Corp_Net','Library_Public'];
+  let radarAngle=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#0a0a14;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  class AP{
+    constructor(rogue){
+      this.ssid=SSIDS[Math.floor(Math.random()*SSIDS.length)];this.isRogue=rogue;
+      this.bssid=Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':');
+      this.channel=Math.floor(Math.random()*13)+1;this.rssi=-30-Math.random()*50;
+      const a=Math.random()*Math.PI*2,d=60+Math.random()*100;
+      this.x=W/2+Math.cos(a)*d;this.y=H/2+Math.sin(a)*d;
+      this.pulsePhase=Math.random()*Math.PI*2;this.beaconTimer=0;this.beacons=[];
+      this.detected=false;this.detectTimer=0;
+    }
+    update(){
+      this.pulsePhase+=0.04;this.beaconTimer++;
+      if(this.beaconTimer%40===0)this.beacons.push({x:this.x,y:this.y,r:0,maxR:50,alpha:0.5});
+      for(let i=this.beacons.length-1;i>=0;i--){this.beacons[i].r+=0.8;this.beacons[i].alpha=0.5*(1-this.beacons[i].r/this.beacons[i].maxR);if(this.beacons[i].r>this.beacons[i].maxR)this.beacons.splice(i,1);}
+      if(this.isRogue&&!this.detected&&frameCount>120){this.detectTimer++;if(this.detectTimer>60)this.detected=true;}
+    }
+    draw(){
+      this.beacons.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.strokeStyle=this.isRogue?'rgba(255,60,60,'+b.alpha+')':'rgba(60,200,60,'+b.alpha+')';ctx.lineWidth=1;ctx.stroke();});
+      const glow=6+Math.sin(this.pulsePhase)*3;ctx.save();ctx.shadowColor=this.isRogue?'#ff3333':'#33ff33';ctx.shadowBlur=glow;
+      ctx.beginPath();ctx.arc(this.x,this.y,16,0,Math.PI*2);ctx.fillStyle=this.isRogue?'rgba(255,50,50,0.2)':'rgba(50,255,50,0.15)';ctx.fill();
+      ctx.strokeStyle=this.isRogue?'#ff4444':'#44ff44';ctx.lineWidth=2;ctx.stroke();
+      ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.isRogue?'\u{1F6A8}':'\u{1F4E1}',this.x,this.y);ctx.restore();
+      ctx.font='8px monospace';ctx.fillStyle=this.isRogue?'#ff6666':'#66ff66';ctx.textAlign='center';ctx.fillText(this.ssid,this.x,this.y-22);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.fillText('CH:'+this.channel+' '+Math.round(this.rssi)+'dBm',this.x,this.y+24);
+      if(this.isRogue&&this.detected){const flash=Math.sin(frameCount*0.15)>0;if(flash){ctx.strokeStyle='#ff0000';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc(this.x,this.y,26,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);}
+        ctx.font='bold 9px monospace';ctx.fillStyle='#ff4444';ctx.fillText('EVIL TWIN',this.x,this.y+36);}
+    }
+  }
+
+  function drawRadar(){
+    radarAngle+=0.015;ctx.save();ctx.translate(W/2,H/2);ctx.rotate(radarAngle);
+    const g=ctx.createLinearGradient(0,0,140,0);g.addColorStop(0,'rgba(0,255,100,0.25)');g.addColorStop(1,'rgba(0,255,100,0)');
+    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,140,-0.1,0.1);ctx.closePath();ctx.fillStyle=g;ctx.fill();ctx.restore();
+    ctx.beginPath();ctx.arc(W/2,H/2,10,0,Math.PI*2);ctx.fillStyle='#00ff66';ctx.fill();
+    ctx.font='7px monospace';ctx.fillStyle='#00ff66';ctx.textAlign='center';ctx.fillText('DETECTOR',W/2,H/2+20);
+    [50,100,140].forEach(r=>{ctx.beginPath();ctx.arc(W/2,H/2,r,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,100,0.08)';ctx.lineWidth=1;ctx.stroke();});
+  }
+
+  function drawGrid(){ctx.strokeStyle='rgba(0,255,100,0.04)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();}
+
+  function drawAlertBanner(){
+    const rogues=aps.filter(a=>a.isRogue&&a.detected);if(rogues.length===0)return;
+    const flash=Math.sin(frameCount*0.1)>0;ctx.save();ctx.fillStyle=flash?'rgba(255,0,0,0.15)':'rgba(255,0,0,0.08)';ctx.fillRect(0,H-32,W,32);
+    ctx.font='bold 11px monospace';ctx.fillStyle='#ff4444';ctx.textAlign='center';
+    ctx.fillText('\u26A0 '+rogues.length+' ROGUE AP'+(rogues.length>1?'S':'')+' DETECTED \u26A0',W/2,H-14);ctx.restore();
+  }
+
+  function drawConnections(){
+    aps.forEach(ap=>{ctx.beginPath();ctx.moveTo(ap.x,ap.y);ctx.lineTo(W/2,H/2);ctx.strokeStyle=ap.isRogue?'rgba(255,60,60,0.08)':'rgba(60,255,60,0.06)';ctx.lineWidth=1;ctx.setLineDash([2,6]);ctx.stroke();ctx.setLineDash([]);});
+  }
+
+  function drawHUD(){
+    const total=aps.length,rogue=aps.filter(a=>a.isRogue).length,detected=aps.filter(a=>a.isRogue&&a.detected).length;
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(8,8,170,68);ctx.strokeStyle='#0f03';ctx.strokeRect(8,8,170,68);
+    ctx.font='10px monospace';ctx.fillStyle='#00ff66';ctx.textAlign='left';ctx.fillText('ROGUE AP DETECTOR',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('APs Found: '+total,16,40);ctx.fillText('Legit: '+(total-rogue)+'  Rogue: '+rogue,16,54);
+    ctx.fillStyle=detected>0?'#ff4444':'#666';ctx.fillText('Alerts: '+detected,16,68);ctx.restore();
+  }
+
+  function init(){
+    ensureCanvas();for(let i=0;i<5;i++)aps.push(new AP(false));for(let i=0;i<2;i++)aps.push(new AP(true));
+    if(aps.length>5)aps[5].ssid=aps[0].ssid;if(aps.length>6)aps[6].ssid=aps[1].ssid;animate();
+  }
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(10,10,20,0.16)';ctx.fillRect(0,0,W,H);
+    drawGrid();drawRadar();drawConnections();aps.forEach(ap=>{ap.update();ap.draw();});
+    if(frameCount%300===0&&aps.length<12){const rogue=Math.random()<0.3;const n=new AP(rogue);if(rogue&&aps.length>0)n.ssid=aps[Math.floor(Math.random()*aps.length)].ssid;aps.push(n);}
+    drawAlertBanner();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
+})();

@@ -200,3 +200,69 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Anonymity Entropy Monitor ═══════ */
+(function(){
+let aCanvas,aCtx;const aParticles=[];let entropyLevel=0.5;const entropyHistory=[];
+function createAC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Anonymity Entropy Monitor</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=250;
+  c.style.cssText='width:100%;height:auto;display:block;background:#050810;cursor:pointer;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawAC(){
+  if(!aCtx)return;const w=aCanvas.width,h=aCanvas.height;
+  aCtx.fillStyle='rgba(5,8,16,0.1)';aCtx.fillRect(0,0,w,h);
+  // Entropy based on circuit state
+  const targetEntropy=circuit.length===3?(isConnected?0.9:0.7):0.3;
+  entropyLevel+=(targetEntropy-entropyLevel)*0.02;
+  if(entropyHistory.length>200)entropyHistory.shift();
+  entropyHistory.push(entropyLevel);
+  // Entropy wave
+  const waveY=h*0.45;
+  aCtx.beginPath();
+  for(let x=0;x<w;x++){
+    const idx=Math.floor(x/w*entropyHistory.length);
+    const val=entropyHistory[Math.min(idx,entropyHistory.length-1)]||0.5;
+    const y=waveY+Math.sin(x*0.03+Date.now()/500)*20*val+Math.sin(x*0.07-Date.now()/300)*10*val;
+    x===0?aCtx.moveTo(x,y):aCtx.lineTo(x,y);
+  }
+  aCtx.strokeStyle='rgba(156,39,176,0.6)';aCtx.lineWidth=2;aCtx.stroke();
+  // Fill below wave
+  aCtx.lineTo(w,h);aCtx.lineTo(0,h);aCtx.closePath();
+  aCtx.fillStyle='rgba(156,39,176,0.05)';aCtx.fill();
+  // Particles (noise dots)
+  if(Math.random()<entropyLevel*0.5){
+    aParticles.push({x:Math.random()*w,y:Math.random()*h,life:1,size:1+Math.random()*3,
+      color:['#9c27b0','#4fc3f7','#66bb6a','#ffa726'][Math.floor(Math.random()*4)]});
+  }
+  for(let i=aParticles.length-1;i>=0;i--){
+    const p=aParticles[i];p.life-=0.015;
+    if(p.life<=0){aParticles.splice(i,1);continue;}
+    aCtx.globalAlpha=p.life*0.5;aCtx.beginPath();aCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    aCtx.fillStyle=p.color;aCtx.fill();aCtx.globalAlpha=1;
+  }
+  // Entropy gauge (right side)
+  const gx=w-60,gy=30,gw=30,gh=h-60;
+  aCtx.fillStyle='rgba(255,255,255,0.03)';aCtx.fillRect(gx,gy,gw,gh);
+  const gFill=entropyLevel*gh;
+  const gColor=entropyLevel>0.7?'#66bb6a':entropyLevel>0.4?'#ffa726':'#ef5350';
+  aCtx.fillStyle=gColor+'44';aCtx.fillRect(gx,gy+gh-gFill,gw,gFill);
+  aCtx.strokeStyle=gColor+'66';aCtx.lineWidth=1;aCtx.strokeRect(gx,gy,gw,gh);
+  aCtx.fillStyle=gColor;aCtx.font='10px Orbitron,sans-serif';aCtx.textAlign='center';
+  aCtx.fillText(Math.round(entropyLevel*100)+'%',gx+gw/2,gy-5);
+  aCtx.fillStyle='rgba(255,255,255,0.3)';aCtx.font='7px monospace';
+  aCtx.fillText('Entropy',gx+gw/2,gy+gh+12);
+  // Status
+  aCtx.fillStyle='rgba(255,255,255,0.4)';aCtx.font='8px monospace';aCtx.textAlign='left';
+  const status=entropyLevel>0.7?'HIGH ANONYMITY':entropyLevel>0.4?'MODERATE RISK':'LOW ANONYMITY';
+  aCtx.fillText('Circuit: '+(circuit.length===3?'BUILT':'NONE')+' | HS: '+(hasHS?'ACTIVE':'NONE')+' | '+status,10,h-8);
+  requestAnimationFrame(drawAC);
+}
+function initAC(){aCanvas=createAC();if(!aCanvas)return;aCtx=aCanvas.getContext('2d');
+  aCanvas.addEventListener('click',()=>{for(let i=0;i<20;i++)aParticles.push({x:Math.random()*aCanvas.width,y:Math.random()*aCanvas.height,life:1,size:2+Math.random()*4,color:'#9c27b0'});});
+  drawAC();}
+setTimeout(initAC,2000);
+})();

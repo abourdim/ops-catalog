@@ -192,3 +192,51 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Spectrum Wars
+   Animated battle radar + EW jamming visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const sparks=[];
+function boot(){
+  let el=document.getElementById('warSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='warSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#0a0408;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='rgba(10,4,8,.15)';cx.fillRect(0,0,W,H);
+  // Radar sweep left (P1)
+  const r1x=100,r1y=H/2,r1r=70;
+  cx.strokeStyle='rgba(59,130,246,.15)';cx.beginPath();cx.arc(r1x,r1y,r1r,0,Math.PI*2);cx.stroke();
+  const a1=t*2;cx.strokeStyle='rgba(59,130,246,.5)';cx.lineWidth=2;
+  cx.beginPath();cx.moveTo(r1x,r1y);cx.lineTo(r1x+Math.cos(a1)*r1r,r1y+Math.sin(a1)*r1r);cx.stroke();
+  for(let i=0;i<5;i++){cx.strokeStyle=`rgba(59,130,246,${.3-i*.06})`;cx.beginPath();cx.moveTo(r1x,r1y);
+  cx.lineTo(r1x+Math.cos(a1-i*.12)*r1r,r1y+Math.sin(a1-i*.12)*r1r);cx.stroke();}
+  // Radar sweep right (P2)
+  const r2x=W-100,r2y=H/2,r2r=70;
+  cx.strokeStyle='rgba(239,68,68,.15)';cx.beginPath();cx.arc(r2x,r2y,r2r,0,Math.PI*2);cx.stroke();
+  const a2=-t*1.8;cx.strokeStyle='rgba(239,68,68,.5)';cx.lineWidth=2;
+  cx.beginPath();cx.moveTo(r2x,r2y);cx.lineTo(r2x+Math.cos(a2)*r2r,r2y+Math.sin(a2)*r2r);cx.stroke();
+  // Jamming bolts between radars
+  if(Math.random()<.08)sparks.push({x:r1x+r1r+20,y:H/2+(Math.random()-.5)*60,vx:4+Math.random()*3,life:1,color:Math.random()>.5?'#3b82f6':'#ef4444'});
+  for(let i=sparks.length-1;i>=0;i--){
+    const s=sparks[i];s.x+=s.vx;s.life-=.03;
+    if(s.life<=0||s.x>r2x-r2r){sparks.splice(i,1);continue;}
+    cx.fillStyle=s.color.slice(0,7);cx.globalAlpha=s.life;
+    cx.fillRect(s.x-1,s.y-1,3+Math.random()*4,2);cx.globalAlpha=1;
+  }
+  // Score display in center
+  const s1=typeof p1Score!=='undefined'?p1Score:0,s2=typeof p2Score!=='undefined'?p2Score:0;
+  cx.fillStyle='rgba(0,0,0,.5)';cx.fillRect(W/2-60,H/2-14,120,28);
+  cx.fillStyle='#3b82f6';cx.font='12px Orbitron,monospace';cx.textAlign='right';cx.fillText(s1,W/2-8,H/2+4);
+  cx.fillStyle='rgba(255,255,255,.3)';cx.textAlign='center';cx.fillText('vs',W/2,H/2+4);
+  cx.fillStyle='#ef4444';cx.textAlign='left';cx.fillText(s2,W/2+12,H/2+4);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Electronic Warfare — Spectrum Battle Radar',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

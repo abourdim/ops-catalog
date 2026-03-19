@@ -202,3 +202,86 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Password Entropy Visualizer Canvas ═══════ */
+(function(){
+let eCanvas,eCtx;const entropyBars=[];const crackParticles=[];
+function createEC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Real-Time Attack Visualizer</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=280;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:crosshair;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawE(){
+  if(!eCtx)return;const w=eCanvas.width,h=eCanvas.height;
+  eCtx.fillStyle='rgba(6,13,26,0.08)';eCtx.fillRect(0,0,w,h);
+  // Matrix rain background
+  eCtx.fillStyle='rgba(51,255,51,0.03)';eCtx.font='10px monospace';
+  for(let i=0;i<15;i++){const x=Math.random()*w,y=Math.random()*h;
+    eCtx.fillText(CHARS_FULL[Math.floor(Math.random()*CHARS_FULL.length)],x,y);}
+  // Password strength meter (animated bars)
+  const pw=($('passwordInput')||{}).value||'';
+  const metrics=[
+    {label:'Length',val:Math.min(pw.length/20,1),color:'#4488ff'},
+    {label:'Lowercase',val:/[a-z]/.test(pw)?1:0,color:'#33cc55'},
+    {label:'Uppercase',val:/[A-Z]/.test(pw)?1:0,color:'#ffcc00'},
+    {label:'Numbers',val:/[0-9]/.test(pw)?1:0,color:'#ff8800'},
+    {label:'Symbols',val:/[^a-zA-Z0-9]/.test(pw)?1:0,color:'#ff4444'},
+    {label:'Entropy',val:Math.min(pw.length*4/100,1),color:'#cc44ff'},
+  ];
+  const barW=70,barH=12,startX=30,startY=30;
+  metrics.forEach((m,i)=>{
+    const y=startY+i*(barH+14);
+    // Animated fill
+    if(!entropyBars[i])entropyBars[i]=0;
+    entropyBars[i]+=(m.val-entropyBars[i])*0.08;
+    eCtx.fillStyle='rgba(255,255,255,0.05)';eCtx.fillRect(startX+60,y,200,barH);
+    eCtx.fillStyle=m.color+'88';eCtx.fillRect(startX+60,y,200*entropyBars[i],barH);
+    eCtx.strokeStyle=m.color+'44';eCtx.lineWidth=1;eCtx.strokeRect(startX+60,y,200,barH);
+    eCtx.fillStyle=m.color;eCtx.font='9px Orbitron,monospace';eCtx.textAlign='right';
+    eCtx.fillText(m.label,startX+55,y+10);
+    eCtx.textAlign='left';eCtx.fillText(Math.round(entropyBars[i]*100)+'%',startX+265,y+10);
+  });
+  // Crack attempt visualization (right side)
+  const cx=w-180,cy=h/2;
+  const lockSize=40;const crackT=Date.now()/1000;
+  // Lock icon
+  eCtx.strokeStyle=attacking?'#ff4444':'#33cc55';eCtx.lineWidth=3;
+  eCtx.beginPath();eCtx.arc(cx,cy-lockSize/2,lockSize/3,Math.PI,0);eCtx.stroke();
+  eCtx.fillStyle=attacking?'rgba(255,68,68,0.2)':'rgba(51,204,85,0.2)';
+  eCtx.fillRect(cx-lockSize/2,cy-lockSize/4,lockSize,lockSize*0.7);
+  eCtx.strokeRect(cx-lockSize/2,cy-lockSize/4,lockSize,lockSize*0.7);
+  // Crack rays when attacking
+  if(attacking){
+    for(let i=0;i<8;i++){
+      const a=crackT*2+i*Math.PI/4;const r=lockSize+Math.sin(crackT*5+i)*15;
+      eCtx.beginPath();eCtx.moveTo(cx,cy);
+      eCtx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+      eCtx.strokeStyle='rgba(255,68,68,'+(0.1+Math.sin(crackT*3+i)*0.1)+')';
+      eCtx.lineWidth=2;eCtx.stroke();
+    }
+    // Spawn crack particles
+    if(Math.random()>0.7)crackParticles.push({x:cx,y:cy,vx:(Math.random()-0.5)*3,vy:(Math.random()-0.5)*3,life:1,color:'#ff4444'});
+  }
+  // Particles
+  for(let i=crackParticles.length-1;i>=0;i--){
+    const p=crackParticles[i];p.life-=0.02;p.x+=p.vx;p.y+=p.vy;
+    if(p.life<=0){crackParticles.splice(i,1);continue;}
+    eCtx.globalAlpha=p.life;eCtx.beginPath();eCtx.arc(p.x,p.y,2,0,Math.PI*2);
+    eCtx.fillStyle=p.color;eCtx.fill();eCtx.globalAlpha=1;
+  }
+  // Brute force attempt counter
+  eCtx.fillStyle='rgba(255,255,255,0.3)';eCtx.font='8px monospace';eCtx.textAlign='left';
+  const charset=(/[^a-zA-Z0-9]/.test(pw)?95:/[A-Z]/.test(pw)?62:/[0-9]/.test(pw)?36:26);
+  const combos=Math.pow(charset,pw.length||1);
+  eCtx.fillText('Charset: '+charset+' | Combinations: '+combos.toExponential(2),10,h-8);
+  eCtx.fillText('Status: '+(attacking?'ATTACKING':'IDLE'),10,h-20);
+  requestAnimationFrame(drawE);
+}
+function initEC(){eCanvas=createEC();if(!eCanvas)return;eCtx=eCanvas.getContext('2d');
+  const input=$('passwordInput');if(input)input.addEventListener('input',()=>{});
+  drawE();}
+setTimeout(initEC,1500);
+})();

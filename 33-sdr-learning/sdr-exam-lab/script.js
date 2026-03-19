@@ -319,3 +319,56 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Exam Lab
+   Animated knowledge tree + progress visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const nodes=[];
+function boot(){
+  let el=document.getElementById('examSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='examSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  const topics=['RF Basics','Modulation','Propagation','Antenna','Circuits','Regulations','Safety','Digital'];
+  topics.forEach((t,i)=>nodes.push({x:60+i*90,y:H/2+Math.sin(i*.8)*30,label:t,r:20,active:false,pulse:0}));
+}
+function tick(){
+  t+=.02;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Connections between nodes
+  for(let i=0;i<nodes.length-1;i++){
+    cx.strokeStyle='rgba(100,200,255,.1)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(nodes[i].x,nodes[i].y);cx.lineTo(nodes[i+1].x,nodes[i+1].y);cx.stroke();
+    const dot=(t*30+i*15)%(Math.hypot(nodes[i+1].x-nodes[i].x,nodes[i+1].y-nodes[i].y));
+    const ratio=dot/Math.hypot(nodes[i+1].x-nodes[i].x,nodes[i+1].y-nodes[i].y);
+    const dx=nodes[i].x+(nodes[i+1].x-nodes[i].x)*ratio;
+    const dy=nodes[i].y+(nodes[i+1].y-nodes[i].y)*ratio;
+    cx.fillStyle=acc;cx.beginPath();cx.arc(dx,dy,2,0,Math.PI*2);cx.fill();
+  }
+  // Nodes
+  const currentQ=typeof questionNum!=='undefined'?questionNum:0;
+  nodes.forEach((n,i)=>{
+    const active=i<=currentQ;n.pulse+=.05;
+    cx.beginPath();cx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    cx.fillStyle=active?'rgba(34,197,94,.15)':'rgba(100,200,255,.05)';cx.fill();
+    cx.strokeStyle=active?'#22c55e':'rgba(100,200,255,.15)';cx.lineWidth=active?2:1;cx.stroke();
+    if(active&&i===currentQ){
+      cx.strokeStyle=acc+'44';cx.lineWidth=1;
+      cx.beginPath();cx.arc(n.x,n.y,n.r+5+Math.sin(n.pulse)*3,0,Math.PI*2);cx.stroke();
+    }
+    cx.fillStyle=active?'#fff':'rgba(200,230,255,.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText(n.label,n.x,n.y+3);
+  });
+  // Progress bar
+  const progress=typeof correctCount!=='undefined'&&typeof totalQuestions!=='undefined'?correctCount/Math.max(1,totalQuestions):0;
+  cx.fillStyle='rgba(255,255,255,.05)';cx.fillRect(20,H-18,W-40,8);
+  cx.fillStyle='#22c55e';cx.fillRect(20,H-18,(W-40)*progress,8);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Knowledge Tree — Exam Progress',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

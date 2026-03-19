@@ -145,3 +145,106 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Packet Byte Stream Visualizer ═══════ */
+(function packetStreamCanvas(){
+  const CVS_ID='packetStreamVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">🔎</span> Live Byte Stream</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:260px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const byteGrid=[];let _raf=null,frameCount=0;
+  const FIELD_COLORS={fc:'#ef4444',dur:'#f97316',addr1:'#22c55e',addr2:'#3b82f6',addr3:'#a855f7',seq:'#fbbf24',body:'#06b6d4',fcs:'#ec4899'};
+  // Initialize byte grid
+  for(let row=0;row<16;row++){
+    byteGrid[row]=[];
+    for(let col=0;col<32;col++){
+      byteGrid[row][col]={value:Math.floor(Math.random()*256).toString(16).padStart(2,'0'),field:'body',age:0,flash:0};
+    }
+  }
+  function updateGrid(){
+    // Map frame structure to grid
+    const fields=[{name:'fc',len:2},{name:'dur',len:2},{name:'addr1',len:6},{name:'addr2',len:6},{name:'addr3',len:6},{name:'seq',len:2},{name:'body',len:20},{name:'fcs',len:4}];
+    let idx=0;
+    fields.forEach(f=>{
+      for(let b=0;b<f.len;b++){
+        const row=Math.floor(idx/32),col=idx%32;
+        if(row<16&&col<32){
+          byteGrid[row][col].field=f.name;
+          if(typeof simRunning!=='undefined'&&simRunning&&Math.random()<0.15){
+            byteGrid[row][col].value=Math.floor(Math.random()*256).toString(16).padStart(2,'0');
+            byteGrid[row][col].flash=1;
+          }
+        }
+        idx++;
+      }
+    });
+  }
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.2)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    if(frameCount%3===0)updateGrid();
+    const cellW=w/34,cellH=h/18;
+    const offsetX=cellW,offsetY=cellH;
+    // Row addresses
+    ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.2)';ctx.textAlign='right';
+    for(let row=0;row<16;row++){
+      ctx.fillText((row*32).toString(16).padStart(4,'0'),offsetX-4,offsetY+row*cellH+cellH*0.7);
+    }
+    // Draw bytes
+    for(let row=0;row<16;row++){
+      for(let col=0;col<32;col++){
+        const cell=byteGrid[row][col];
+        const x=offsetX+col*cellW;const y=offsetY+row*cellH;
+        cell.flash=Math.max(0,cell.flash-0.03);
+        const color=FIELD_COLORS[cell.field]||'#06b6d4';
+        // Background highlight
+        if(cell.flash>0){
+          ctx.fillStyle=color;ctx.globalAlpha=cell.flash*0.3;
+          ctx.fillRect(x,y,cellW-0.5,cellH-0.5);ctx.globalAlpha=1;
+        }
+        // Hex text
+        ctx.font='7px monospace';ctx.textAlign='center';
+        ctx.fillStyle=color;ctx.globalAlpha=0.6+cell.flash*0.4;
+        ctx.fillText(cell.value,x+cellW/2,y+cellH*0.7);
+        ctx.globalAlpha=1;
+      }
+    }
+    // ASCII sidebar
+    ctx.font='7px monospace';ctx.textAlign='left';
+    for(let row=0;row<16;row++){
+      let ascii='';
+      for(let col=0;col<32;col++){
+        const v=parseInt(byteGrid[row][col].value,16);
+        ascii+=(v>=32&&v<=126)?String.fromCharCode(v):'.';
+      }
+      ctx.fillStyle='rgba(255,255,255,0.12)';
+      ctx.fillText(ascii.substring(0,16),offsetX+32*cellW+4,offsetY+row*cellH+cellH*0.7);
+    }
+    // Field legend bar at bottom
+    const legendY=h-12;
+    let lx=8;
+    Object.entries(FIELD_COLORS).forEach(([name,color])=>{
+      ctx.fillStyle=color;
+      ctx.fillRect(lx,legendY,8,8);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='7px monospace';ctx.textAlign='left';
+      ctx.fillText(name.toUpperCase(),lx+11,legendY+7);
+      lx+=name.length*5+20;
+    });
+    // Scan line effect
+    const scanY=(frameCount*2)%Math.floor(h);
+    ctx.fillStyle='rgba(34,197,94,0.04)';ctx.fillRect(0,scanY,w,3);
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

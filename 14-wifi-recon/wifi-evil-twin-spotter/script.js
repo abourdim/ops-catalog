@@ -179,3 +179,95 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Evil Twin Network Map ═══════ */
+(function evilTwinCanvas(){
+  const CVS_ID='evilTwinVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">👯</span> Twin Detection Network Map</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:280px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const apNodes=[];let _raf=null,frameCount=0;
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.15)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    // Sync nodes with allAPs
+    if(typeof allAPs!=='undefined'){
+      while(apNodes.length<allAPs.length&&apNodes.length<40){
+        const ap=allAPs[apNodes.length];
+        const side=ap.evil?0.7:0.3;
+        apNodes.push({x:side*w+(Math.random()-0.5)*w*0.3,y:0.2*h+Math.random()*0.6*h,
+          vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,
+          evil:ap.evil,ssid:ap.ssid,r:ap.evil?6:5,pulsePhase:Math.random()*Math.PI*2});
+      }
+    }
+    // Center dividing line
+    ctx.beginPath();ctx.setLineDash([4,4]);
+    ctx.moveTo(w/2,10);ctx.lineTo(w/2,h-10);
+    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    ctx.font='9px monospace';ctx.fillStyle='rgba(34,197,94,0.4)';ctx.textAlign='center';
+    ctx.fillText('LEGITIMATE',w*0.25,15);
+    ctx.fillStyle='rgba(239,68,68,0.4)';ctx.fillText('SUSPECTED EVIL',w*0.75,15);
+    // Draw connections between twins (same SSID)
+    for(let i=0;i<apNodes.length;i++){
+      for(let j=i+1;j<apNodes.length;j++){
+        if(apNodes[i].evil!==apNodes[j].evil){
+          // Draw twin link as warning
+          const dx=apNodes[i].x-apNodes[j].x,dy=apNodes[i].y-apNodes[j].y;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<w*0.7){
+            ctx.beginPath();ctx.moveTo(apNodes[i].x,apNodes[i].y);ctx.lineTo(apNodes[j].x,apNodes[j].y);
+            const flash=Math.sin(frameCount*0.08)*0.3+0.3;
+            ctx.strokeStyle=`rgba(239,68,68,${flash*0.15})`;ctx.lineWidth=1;
+            ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+          }
+        }
+      }
+    }
+    // Draw AP nodes
+    apNodes.forEach(n=>{
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<20||n.x>w-20)n.vx*=-1;if(n.y<25||n.y>h-20)n.vy*=-1;
+      n.vx+=(Math.random()-0.5)*0.03;n.vy+=(Math.random()-0.5)*0.03;
+      n.vx*=0.98;n.vy*=0.98;
+      const pulse=Math.sin(frameCount*0.04+n.pulsePhase)*0.3+0.7;
+      const color=n.evil?'#ef4444':'#22c55e';
+      // Signal rings
+      for(let ring=1;ring<=3;ring++){
+        ctx.beginPath();ctx.arc(n.x,n.y,n.r*ring*1.5*pulse,0,Math.PI*2);
+        ctx.strokeStyle=color;ctx.globalAlpha=0.06/ring;ctx.lineWidth=1;ctx.stroke();
+      }
+      ctx.globalAlpha=1;
+      // Core
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r*pulse,0,Math.PI*2);
+      ctx.fillStyle=color+'cc';ctx.fill();ctx.strokeStyle=color+'60';ctx.lineWidth=1.5;ctx.stroke();
+      // Warning icon for evil
+      if(n.evil){
+        ctx.font='bold 8px sans-serif';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText('!',n.x,n.y+3);
+      }
+      // SSID label
+      if(apNodes.length<25){
+        ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.35)';ctx.textAlign='center';
+        ctx.fillText(n.ssid||'',n.x,n.y+n.r*2+4);
+      }
+    });
+    // Stats
+    const legit=apNodes.filter(n=>!n.evil).length;
+    const evil=apNodes.filter(n=>n.evil).length;
+    ctx.font='9px monospace';ctx.textAlign='left';
+    ctx.fillStyle='#22c55e';ctx.fillText('Legit: '+legit,8,h-8);
+    ctx.fillStyle='#ef4444';ctx.fillText('Evil: '+evil,80,h-8);
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

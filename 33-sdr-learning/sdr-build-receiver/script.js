@@ -453,3 +453,55 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Build Receiver
+   Animated superheterodyne block diagram + signal flow
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('rxSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='rxSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#050a10;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='#050a10';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const blocks=[{x:20,w:80,label:'ANTENNA'},{x:120,w:80,label:'LNA'},{x:220,w:80,label:'MIXER'},{x:320,w:80,label:'IF FILTER'},{x:420,w:80,label:'DEMOD'},{x:520,w:80,label:'AUDIO'},{x:620,w:80,label:'ADC'}];
+  blocks.forEach((b,i)=>{
+    const y=H*.3;
+    cx.fillStyle='rgba(100,200,255,.06)';cx.fillRect(b.x,y,b.w,45);
+    cx.strokeStyle=i<=Math.floor(t*2)%blocks.length?acc:'rgba(100,200,255,.15)';
+    cx.lineWidth=i<=Math.floor(t*2)%blocks.length?2:1;cx.strokeRect(b.x,y,b.w,45);
+    cx.fillStyle=i<=Math.floor(t*2)%blocks.length?acc:'rgba(200,230,255,.5)';
+    cx.font='9px Orbitron,monospace';cx.textAlign='center';cx.fillText(b.label,b.x+b.w/2,y+28);
+    if(i<blocks.length-1){
+      cx.strokeStyle='rgba(100,200,255,.15)';cx.lineWidth=1;
+      cx.beginPath();cx.moveTo(b.x+b.w,y+22);cx.lineTo(blocks[i+1].x,y+22);cx.stroke();
+      const dot=(t*60+i*20)%(blocks[i+1].x-b.x-b.w);
+      cx.fillStyle=acc;cx.beginPath();cx.arc(b.x+b.w+dot,y+22,3,0,Math.PI*2);cx.fill();
+    }
+  });
+  // LO indicator
+  cx.fillStyle='rgba(245,158,11,.3)';cx.font='8px monospace';cx.textAlign='center';
+  cx.fillText('LO',260,H*.3-8);cx.strokeStyle='rgba(245,158,11,.2)';cx.lineWidth=1;
+  cx.beginPath();cx.moveTo(260,H*.3-3);cx.lineTo(260,H*.3);cx.stroke();
+  // Signal trace at bottom
+  cx.strokeStyle=acc+'88';cx.lineWidth=1;cx.beginPath();
+  for(let i=0;i<W;i++){const x=i,tt=i/W+t;
+    const stage=Math.floor(i/W*blocks.length);
+    const freq=stage<2?40:stage<4?15:5;
+    const amp=stage<1?.3:stage<3?.5:.7;
+    const y=H*.78-Math.sin(tt*freq)*H*.12*amp;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Superheterodyne Receiver — Signal Flow',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

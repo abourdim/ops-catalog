@@ -321,3 +321,57 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — FFT Racing
+   Animated butterfly diagram + algorithmic race visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('fftRaceSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='fftRaceSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Butterfly diagram
+  const N=8,levels=3,bx=30,bw=W*.4,bh=H-40;
+  for(let l=0;l<levels;l++){
+    const step=N>>l;const half=step>>1;
+    for(let i=0;i<N;i++){
+      const y1=20+i/N*bh;const x1=bx+l/levels*bw;const x2=bx+(l+1)/levels*bw;
+      const partner=i^half;if(partner<N&&partner>i){
+        const y2=20+partner/N*bh;
+        const prog=Math.min(1,(t*2-l*.3)%3);
+        if(prog>0){
+          cx.strokeStyle=`rgba(79,195,247,${Math.min(.4,prog)})`;cx.lineWidth=1;
+          cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y1);cx.stroke();
+          cx.beginPath();cx.moveTo(x1,y2);cx.lineTo(x2,y2);cx.stroke();
+          cx.strokeStyle='rgba(245,158,11,.2)';cx.setLineDash([2,3]);
+          cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();
+          cx.beginPath();cx.moveTo(x1,y2);cx.lineTo(x2,y1);cx.stroke();cx.setLineDash([]);
+        }
+      }
+      cx.fillStyle='rgba(79,195,247,.4)';cx.beginPath();cx.arc(x1,y1,3,0,Math.PI*2);cx.fill();
+    }
+  }
+  // Race progress bars on right
+  const rX=W*.55,rW=W*.4;
+  const algos=[{name:'DFT O(N^2)',progress:(Math.sin(t*.5)*.5+.5)*.3,color:'#f44'},{name:'CT O(NlogN)',progress:(Math.sin(t*.5)*.5+.5)*.8,color:'#4af'},{name:'Split-Radix',progress:(Math.sin(t*.5)*.5+.5)*.9,color:'#4f4'}];
+  algos.forEach((a,i)=>{
+    const y=30+i*55;
+    cx.fillStyle='rgba(255,255,255,.05)';cx.fillRect(rX,y,rW,30);
+    cx.fillStyle=a.color+'88';cx.fillRect(rX,y,rW*a.progress,30);
+    cx.fillStyle='#fff';cx.font='10px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText(a.name,rX+8,y+20);
+  });
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('FFT Butterfly Diagram — Algorithm Race',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

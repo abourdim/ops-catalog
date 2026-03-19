@@ -197,3 +197,86 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — 3D Perspective Event Waterfall ═══════ */
+(function timelineWaterfallCanvas(){
+  const CVS_ID='timelineWaterfallVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">⏱️</span> Event Waterfall</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:260px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const drops=[];let _raf=null,frameCount=0;
+  const typeColors={beacon:'#22c55e',probe:'#3b82f6',auth:'#fbbf24',deauth:'#ef4444',data:'#a855f7',assoc:'#06b6d4'};
+  const typeNames=Object.keys(typeColors);
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.15)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    // Spawn drops from sim events
+    if(typeof simRunning!=='undefined'&&simRunning&&frameCount%4===0){
+      const type=typeNames[Math.floor(Math.random()*typeNames.length)];
+      const lane=typeNames.indexOf(type);
+      drops.push({x:lane*(w/6)+w/12,y:-5,vy:1+Math.random()*1.5,type,
+        r:2+Math.random()*3,alpha:1,trail:[]});
+      if(drops.length>100)drops.splice(0,20);
+    }
+    // Column headers
+    ctx.font='8px monospace';ctx.textAlign='center';
+    typeNames.forEach((t,i)=>{
+      ctx.fillStyle=typeColors[t]+'80';
+      ctx.fillText(t.toUpperCase(),i*(w/6)+w/12,12);
+      // Column line
+      ctx.beginPath();ctx.moveTo(i*(w/6)+w/12,18);ctx.lineTo(i*(w/6)+w/12,h);
+      ctx.strokeStyle=typeColors[t]+'10';ctx.lineWidth=1;ctx.stroke();
+    });
+    // Draw drops
+    drops.forEach((d,i)=>{
+      d.y+=d.vy;
+      d.trail.push({x:d.x,y:d.y});
+      if(d.trail.length>12)d.trail.shift();
+      if(d.y>h+10){drops.splice(i,1);return;}
+      const color=typeColors[d.type]||'#22c55e';
+      // Trail
+      d.trail.forEach((pt,ti)=>{
+        ctx.beginPath();ctx.arc(pt.x,pt.y,d.r*(ti/d.trail.length)*0.6,0,Math.PI*2);
+        ctx.fillStyle=color;ctx.globalAlpha=ti/d.trail.length*0.15;ctx.fill();
+      });
+      ctx.globalAlpha=1;
+      // Main drop
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+      ctx.fillStyle=color+'cc';ctx.fill();
+      // Glow
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r*2,0,Math.PI*2);
+      ctx.fillStyle=color+'15';ctx.fill();
+      // Ripple when reaching bottom
+      if(d.y>h-30){
+        const ripple=(d.y-(h-30))/30;
+        ctx.beginPath();ctx.arc(d.x,h-10,ripple*20,0,Math.PI*2);
+        ctx.strokeStyle=color;ctx.globalAlpha=(1-ripple)*0.3;ctx.lineWidth=1;ctx.stroke();
+        ctx.globalAlpha=1;
+      }
+    });
+    // Live event counter bars at bottom
+    if(typeof counts!=='undefined'){
+      const total=Object.values(counts).reduce((a,b)=>a+b,0)||1;
+      let bx=0;
+      typeNames.forEach(t=>{
+        const pct=(counts[t]||0)/total;
+        const bw=pct*w;
+        ctx.fillStyle=typeColors[t]+'40';ctx.fillRect(bx,h-4,bw,4);
+        bx+=bw;
+      });
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

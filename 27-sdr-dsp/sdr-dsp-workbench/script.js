@@ -311,3 +311,53 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — DSP Workbench
+   Animated signal flow diagram + live oscilloscope trace
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('dspSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='dspSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060a12;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.03;cx.fillStyle='#060a12';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Signal flow blocks
+  const blocks=[{x:40,label:'SRC'},{x:180,label:'FILTER'},{x:320,label:'FFT'},{x:460,label:'DSP'},{x:600,label:'OUT'}];
+  blocks.forEach((b,i)=>{
+    cx.fillStyle='rgba(100,200,255,.08)';cx.fillRect(b.x,H*.3,100,40);
+    cx.strokeStyle='rgba(100,200,255,.2)';cx.strokeRect(b.x,H*.3,100,40);
+    cx.fillStyle=acc;cx.font='10px Orbitron,monospace';cx.textAlign='center';
+    cx.fillText(b.label,b.x+50,H*.3+25);
+    // Animated dots along arrows
+    if(i<blocks.length-1){
+      const nx=blocks[i+1].x;cx.strokeStyle='rgba(100,200,255,.15)';cx.lineWidth=1;
+      cx.beginPath();cx.moveTo(b.x+100,H*.3+20);cx.lineTo(nx,H*.3+20);cx.stroke();
+      const dx=((t*80+i*30)%(nx-b.x-100));
+      cx.fillStyle=acc;cx.beginPath();cx.arc(b.x+100+dx,H*.3+20,3,0,Math.PI*2);cx.fill();
+    }
+  });
+  // Oscilloscope trace at bottom
+  const oY=H*.65,oH=H*.3;
+  cx.strokeStyle='rgba(100,200,255,.06)';cx.lineWidth=.5;
+  cx.beginPath();cx.moveTo(0,oY+oH/2);cx.lineTo(W,oY+oH/2);cx.stroke();
+  cx.strokeStyle=acc;cx.lineWidth=1.5;cx.beginPath();
+  const freq=typeof document.getElementById('freqSlider')!=='undefined'&&document.getElementById('freqSlider')?+document.getElementById('freqSlider').value:1000;
+  for(let i=0;i<W;i++){
+    const x=i,tt=i/W*.1+t;
+    const y=oY+oH/2-Math.sin(2*Math.PI*freq*tt*.001)*oH*.4*(1+.3*Math.sin(t*2));
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('DSP Signal Flow — Live Oscilloscope',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

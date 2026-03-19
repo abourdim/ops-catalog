@@ -215,3 +215,87 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Threat Detection Matrix Canvas ═══════ */
+(function(){
+let tCanvas,tCtx;const threats=[];const scanLines=[];let tScore=0,tTotal=0;
+function createTC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Threat Detection Matrix</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=260;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+const THREAT_TYPES=[
+  {name:'Spoofed Domain',color:'#ff4444',icon:'🔗'},
+  {name:'Urgent Language',color:'#ff8800',icon:'⚠️'},
+  {name:'Generic Greeting',color:'#ffcc00',icon:'👤'},
+  {name:'Credential Request',color:'#cc44ff',icon:'🔑'},
+  {name:'Mismatched URL',color:'#ff6699',icon:'🌐'},
+  {name:'Legitimate',color:'#33cc55',icon:'✅'},
+];
+function spawnThreat(){
+  const tt=THREAT_TYPES[Math.floor(Math.random()*THREAT_TYPES.length)];
+  threats.push({x:tCanvas.width+20,y:30+Math.random()*(tCanvas.height-80),
+    type:tt,speed:0.5+Math.random()*1.5,size:8+Math.random()*6,life:1,detected:false});
+}
+function drawT(){
+  if(!tCtx)return;const w=tCanvas.width,h=tCanvas.height;
+  tCtx.fillStyle='rgba(6,13,26,0.1)';tCtx.fillRect(0,0,w,h);
+  // Grid
+  tCtx.strokeStyle='#0a1a30';tCtx.lineWidth=0.3;
+  for(let i=0;i<w;i+=25){tCtx.beginPath();tCtx.moveTo(i,0);tCtx.lineTo(i,h);tCtx.stroke();}
+  for(let i=0;i<h;i+=25){tCtx.beginPath();tCtx.moveTo(0,i);tCtx.lineTo(w,i);tCtx.stroke();}
+  // Detection line
+  const lineX=w*0.3;tCtx.strokeStyle='rgba(255,255,255,0.1)';tCtx.lineWidth=2;
+  tCtx.setLineDash([5,5]);tCtx.beginPath();tCtx.moveTo(lineX,0);tCtx.lineTo(lineX,h);tCtx.stroke();tCtx.setLineDash([]);
+  tCtx.fillStyle='rgba(255,255,255,0.2)';tCtx.font='9px Orbitron,monospace';tCtx.textAlign='center';
+  tCtx.fillText('DETECTION LINE',lineX,h-8);
+  // Threats
+  for(let i=threats.length-1;i>=0;i--){
+    const t=threats[i];t.x-=t.speed;
+    if(t.x<lineX&&!t.detected){t.detected=true;tTotal++;
+      if(t.type.color!=='#33cc55')tScore++;
+      scanLines.push({y:t.y,life:1,color:t.type.color});}
+    if(t.x<-20||t.life<=0){threats.splice(i,1);continue;}
+    if(t.detected)t.life-=0.02;
+    tCtx.globalAlpha=t.life;
+    // Threat dot
+    tCtx.beginPath();tCtx.arc(t.x,t.y,t.size,0,Math.PI*2);
+    tCtx.fillStyle=t.type.color+'44';tCtx.fill();
+    tCtx.strokeStyle=t.type.color;tCtx.lineWidth=2;tCtx.stroke();
+    tCtx.fillStyle='#fff';tCtx.font='10px serif';tCtx.textAlign='center';
+    tCtx.fillText(t.type.icon,t.x,t.y+4);
+    if(!t.detected){tCtx.fillStyle=t.type.color;tCtx.font='7px monospace';tCtx.fillText(t.type.name,t.x,t.y+t.size+10);}
+    tCtx.globalAlpha=1;
+  }
+  // Scan lines
+  for(let i=scanLines.length-1;i>=0;i--){
+    const s=scanLines[i];s.life-=0.02;
+    if(s.life<=0){scanLines.splice(i,1);continue;}
+    tCtx.globalAlpha=s.life*0.3;tCtx.fillStyle=s.color;
+    tCtx.fillRect(0,s.y-2,lineX,4);tCtx.globalAlpha=1;
+  }
+  // Score
+  tCtx.fillStyle='rgba(255,255,255,0.5)';tCtx.font='10px Orbitron,monospace';tCtx.textAlign='left';
+  tCtx.fillText('Detected: '+tScore+'/'+tTotal+' threats | Active: '+threats.length,10,18);
+  // Legend
+  const lx=w-180;
+  THREAT_TYPES.forEach((tt,i)=>{
+    tCtx.fillStyle=tt.color;tCtx.font='8px monospace';tCtx.textAlign='left';
+    tCtx.fillText(tt.icon+' '+tt.name,lx,18+i*14);
+  });
+  requestAnimationFrame(drawT);
+}
+function initTC(){tCanvas=createTC();if(!tCanvas)return;tCtx=tCanvas.getContext('2d');
+  setInterval(()=>{if(Math.random()>0.3)spawnThreat();},800);
+  tCanvas.addEventListener('click',e=>{
+    const rect=tCanvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(tCanvas.width/rect.width),my=(e.clientY-rect.top)*(tCanvas.height/rect.height);
+    threats.forEach(t=>{if(Math.abs(t.x-mx)<15&&Math.abs(t.y-my)<15&&!t.detected){
+      t.detected=true;t.life=0.5;tTotal++;if(t.type.color!=='#33cc55')tScore++;
+      scanLines.push({y:t.y,life:1,color:t.type.color});}});
+  });drawT();}
+setTimeout(initTC,1500);
+})();

@@ -277,3 +277,59 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — ISM Band Explorer
+   Animated device pulse map + protocol decoder waterfall
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,on=false,af=null,t=0;
+const particles=[];
+function boot(){
+  let el=document.getElementById('ismSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='ismSimCanvas';el.width=780;el.height=240;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060c18;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function addPulse(){
+  if(typeof devices==='undefined'||devices.length===0)return;
+  const d=devices[Math.floor(Math.random()*devices.length)];
+  particles.push({x:Math.random()*W,y:H*.3+Math.random()*H*.5,r:2,maxR:15+Math.random()*25,
+    color:d.lastSignal>-60?'#81c784':d.lastSignal>-70?'#ffb74d':'#e57373',
+    name:d.name.slice(0,12),proto:d.protocol,life:1,speed:.02+Math.random()*.02});
+}
+function tick(){
+  if(!on)return;t+=.016;
+  if(Math.random()<.15)addPulse();
+  cx.fillStyle='rgba(6,12,24,.15)';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Draw frequency ruler
+  cx.strokeStyle='rgba(100,200,255,.06)';cx.lineWidth=.5;
+  for(let i=0;i<=8;i++){const x=i/8*W;cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
+  // Particles
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];p.r+=.5;p.life-=p.speed;
+    if(p.life<=0){particles.splice(i,1);continue;}
+    cx.strokeStyle=p.color.replace(')',`,${p.life*.5})`).replace('rgb','rgba');
+    cx.lineWidth=1.5;cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.stroke();
+    if(p.r<p.maxR*.3){cx.fillStyle=p.color.replace(')',`,${p.life*.8})`).replace('rgb','rgba');
+    cx.beginPath();cx.arc(p.x,p.y,3,0,Math.PI*2);cx.fill();}
+    cx.fillStyle=`rgba(200,230,255,${p.life*.5})`;cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText(p.proto,p.x,p.y-p.r-4);
+  }
+  // Moving band indicator
+  const bandX=(Math.sin(t*.5)*.5+.5)*W;
+  cx.strokeStyle=acc+'44';cx.lineWidth=20;cx.globalAlpha=.08;
+  cx.beginPath();cx.moveTo(bandX,0);cx.lineTo(bandX,H);cx.stroke();cx.globalAlpha=1;
+  // Protocol decode ticker at bottom
+  cx.fillStyle='rgba(0,0,0,.6)';cx.fillRect(0,H-22,W,22);
+  const band=typeof currentBand!=='undefined'?currentBand:'433';
+  const cnt=typeof devices!=='undefined'?devices.filter(d=>d.band===band).length:0;
+  cx.fillStyle='rgba(100,200,255,.5)';cx.font='10px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText(`ISM ${band} MHz | ${cnt} active devices | Protocol pulses`,8,H-7);
+  cx.textAlign='right';cx.fillText('rtl_433 sim',W-8,H-7);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();on=true;tick();},600);
+})();

@@ -427,6 +427,62 @@ function init(){
     drawScene(ctx,c.width,c.height,{eveActive:false,encrypted:false,packetX:null,packetY:null,eveData:null});
   }
 
+  // Enhanced: Packet Sniffer Visualization
+  (function(){
+  let sCanvas,sCtx;const sniffed=[];
+  function createSC(){
+    const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+    const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+    w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Packet Sniffer Waterfall</div>';
+    const c=document.createElement('canvas');c.width=620;c.height=220;
+    c.style.cssText='width:100%;height:auto;display:block;background:#0a0e1a;';
+    w.appendChild(c);t.appendChild(w);return c;
+  }
+  function drawSC(){
+    if(!sCtx)return;const w=sCanvas.width,h=sCanvas.height;
+    sCtx.fillStyle='rgba(10,14,26,0.08)';sCtx.fillRect(0,0,w,h);
+    // Waterfall - each row is a captured packet
+    const rowH=8;const maxRows=Math.floor(h/rowH);
+    if(sniffed.length>maxRows)sniffed.shift();
+    sniffed.forEach((pkt,i)=>{
+      const y=i*rowH;
+      // Protocol color band
+      const colors={TCP:'#3b82f6',UDP:'#22c55e',HTTP:'#f59e0b',HTTPS:'#10b981',DNS:'#8b5cf6'};
+      const proto=['TCP','UDP','HTTP','HTTPS','DNS'][Math.floor(Math.random()*5)];
+      if(!pkt.proto)pkt.proto=proto;
+      const col=colors[pkt.proto]||'#6b7280';
+      fCtx=sCtx;
+      // Time column
+      sCtx.fillStyle='rgba(255,255,255,0.05)';sCtx.fillRect(0,y,60,rowH-1);
+      sCtx.fillStyle='rgba(255,255,255,0.3)';sCtx.font='6px monospace';sCtx.textAlign='left';
+      sCtx.fillText(pkt.time||'00:00',2,y+6);
+      // Source
+      sCtx.fillStyle=col+'22';sCtx.fillRect(62,y,120,rowH-1);
+      sCtx.fillStyle=col;sCtx.fillText(pkt.src||'192.168.1.'+Math.floor(Math.random()*255),64,y+6);
+      // Dest
+      sCtx.fillStyle='rgba(255,255,255,0.03)';sCtx.fillRect(184,y,120,rowH-1);
+      sCtx.fillStyle='rgba(255,255,255,0.4)';sCtx.fillText(pkt.dst||'10.0.0.'+Math.floor(Math.random()*255),186,y+6);
+      // Protocol
+      sCtx.fillStyle=col+'33';sCtx.fillRect(306,y,50,rowH-1);
+      sCtx.fillStyle=col;sCtx.fillText(pkt.proto,308,y+6);
+      // Data preview (hex)
+      sCtx.fillStyle='rgba(255,255,255,0.03)';sCtx.fillRect(358,y,w-358,rowH-1);
+      if(!pkt.hex)pkt.hex=Array.from({length:20},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(' ');
+      sCtx.fillStyle=pkt.encrypted?'rgba(16,185,129,0.4)':'rgba(239,68,68,0.4)';
+      sCtx.fillText(pkt.encrypted?'[ENCRYPTED]':pkt.hex,360,y+6);
+    });
+    // Auto-generate packets
+    if(Math.random()>0.7){
+      sniffed.push({time:new Date().toLocaleTimeString().slice(0,5),
+        src:'192.168.1.'+Math.floor(Math.random()*255),
+        dst:'10.0.0.'+Math.floor(Math.random()*255),
+        encrypted:Math.random()>0.5});
+    }
+    requestAnimationFrame(drawSC);
+  }
+  sCanvas=createSC();if(sCanvas){sCtx=sCanvas.getContext('2d');drawSC();}
+  })();
+
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

@@ -193,3 +193,71 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Network Latency & Hop Visualizer ═══════ */
+(function(){
+let nCanvas,nCtx;const hopNodes=[];const hopParticles=[];let latencyData=[];
+function createNC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Packet Route Tracer</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=230;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function initHops(){
+  const labels=['Client','Router A','ISP','Backbone','Router B','Server'];
+  const colors=['#22c55e','#3b82f6','#f59e0b','#ef4444','#8b5cf6','#06b6d4'];
+  labels.forEach((l,i)=>{hopNodes.push({x:50+i*(520/5),y:60,label:l,color:colors[i]});});
+}
+function drawNC(){
+  if(!nCtx)return;const w=nCanvas.width,h=nCanvas.height;
+  nCtx.fillStyle='rgba(6,13,26,0.1)';nCtx.fillRect(0,0,w,h);
+  // Connections
+  for(let i=0;i<hopNodes.length-1;i++){
+    nCtx.beginPath();nCtx.moveTo(hopNodes[i].x,hopNodes[i].y);nCtx.lineTo(hopNodes[i+1].x,hopNodes[i+1].y);
+    nCtx.strokeStyle='rgba(255,255,255,0.08)';nCtx.lineWidth=1;nCtx.stroke();
+  }
+  // Nodes
+  hopNodes.forEach(n=>{
+    nCtx.beginPath();nCtx.arc(n.x,n.y,14,0,Math.PI*2);
+    nCtx.fillStyle=n.color+'30';nCtx.fill();nCtx.strokeStyle=n.color;nCtx.lineWidth=2;nCtx.stroke();
+    nCtx.fillStyle='#fff';nCtx.font='8px Orbitron,monospace';nCtx.textAlign='center';
+    nCtx.fillText(n.label,n.x,n.y+28);
+  });
+  // Latency hops
+  if(Math.random()>0.85){
+    const startIdx=0;
+    hopParticles.push({idx:startIdx,t:0,speed:0.02+Math.random()*0.03,
+      color:['#22c55e','#f59e0b','#ef4444'][Math.floor(Math.random()*3)]});
+  }
+  for(let i=hopParticles.length-1;i>=0;i--){
+    const p=hopParticles[i];p.t+=p.speed;
+    const segIdx=Math.floor(p.t*(hopNodes.length-1));
+    const segT=(p.t*(hopNodes.length-1))-segIdx;
+    if(segIdx>=hopNodes.length-1){hopParticles.splice(i,1);continue;}
+    const a=hopNodes[segIdx],b=hopNodes[segIdx+1];
+    const px=a.x+(b.x-a.x)*segT,py=a.y+(b.y-a.y)*segT;
+    nCtx.beginPath();nCtx.arc(px,py,4,0,Math.PI*2);nCtx.fillStyle=p.color;nCtx.fill();
+    nCtx.beginPath();nCtx.arc(px,py,7,0,Math.PI*2);nCtx.strokeStyle=p.color+'44';nCtx.lineWidth=1;nCtx.stroke();
+  }
+  // Latency graph (bottom)
+  if(latencyData.length>120)latencyData.shift();
+  latencyData.push(gameRunning?20+Math.random()*80:5+Math.random()*15);
+  const gY=110,gH=h-gY-15;
+  nCtx.strokeStyle='rgba(255,255,255,0.05)';nCtx.lineWidth=1;
+  nCtx.beginPath();nCtx.moveTo(20,gY);nCtx.lineTo(w-20,gY);nCtx.stroke();
+  if(latencyData.length>1){
+    nCtx.beginPath();
+    latencyData.forEach((v,i)=>{const x=20+(w-40)*(i/120),y=gY+gH-Math.min(v/100,1)*gH;i===0?nCtx.moveTo(x,y):nCtx.lineTo(x,y);});
+    nCtx.strokeStyle='#3b82f688';nCtx.lineWidth=1.5;nCtx.stroke();
+    nCtx.lineTo(20+(w-40),gY+gH);nCtx.lineTo(20,gY+gH);nCtx.fillStyle='rgba(59,130,246,0.05)';nCtx.fill();
+  }
+  const last=latencyData.length>0?latencyData[latencyData.length-1]:0;
+  nCtx.fillStyle='rgba(255,255,255,0.3)';nCtx.font='8px monospace';nCtx.textAlign='left';
+  nCtx.fillText('Latency: '+Math.round(last)+'ms | Hops: '+hopNodes.length+' | Packets: '+hopParticles.length,10,h-5);
+  requestAnimationFrame(drawNC);
+}
+function initNC(){nCanvas=createNC();if(!nCanvas)return;nCtx=nCanvas.getContext('2d');initHops();drawNC();}
+setTimeout(initNC,2000);
+})();

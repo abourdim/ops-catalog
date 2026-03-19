@@ -342,3 +342,106 @@ document.addEventListener('DOMContentLoaded',()=>{
   setStatus(false);
   log(LANG[currentLang]?.ready||'Ready','success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — WiFi Dissector: 802.11 frame visualization
+   with color-coded fields, hex bytes, and frame flow animation
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simDissectorCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const wifiFrames=[],hexDrops=[];let captureCount=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:300px;border-radius:12px;margin:1.2rem 0;display:block;background:#080810;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  const FRAME_TYPES=[
+    {name:'Beacon',color:'#4d96ff',fields:['FC','Dur','BSSID','SA','DA','Seq','SSID','Rates','CH','FCS']},
+    {name:'Probe Req',color:'#ffd93d',fields:['FC','Dur','DA','SA','BSSID','Seq','SSID','FCS']},
+    {name:'Data',color:'#6bcb77',fields:['FC','Dur','Addr1','Addr2','Addr3','Seq','Payload','FCS']},
+    {name:'ACK',color:'#ff78ae',fields:['FC','Dur','RA','FCS']},
+    {name:'Auth',color:'#e879f9',fields:['FC','Dur','DA','SA','BSSID','Seq','AuthAlg','Status','FCS']},
+    {name:'RTS',color:'#ff6b6b',fields:['FC','Dur','RA','TA','FCS']}
+  ];
+
+  class WiFiFrame{
+    constructor(){
+      this.type=FRAME_TYPES[Math.floor(Math.random()*FRAME_TYPES.length)];
+      this.x=-50;this.y=30+Math.random()*(H-100);this.vx=1+Math.random()*1.5;
+      this.alive=true;this.fieldWidth=Math.max(16,Math.floor((W-100)/this.type.fields.length));
+      this.hex=Array.from({length:this.type.fields.length*2},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0'));
+    }
+    update(){this.x+=this.vx;if(this.x>W+100)this.alive=false;return this.alive;}
+    draw(){
+      const fh=20,totalW=this.type.fields.length*this.fieldWidth;
+      // Frame background
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(this.x,this.y,totalW,fh+14);
+      // Type label
+      ctx.font='bold 8px monospace';ctx.fillStyle=this.type.color;ctx.textAlign='left';ctx.fillText(this.type.name,this.x,this.y-4);
+      // Fields
+      this.type.fields.forEach((f,i)=>{
+        const fx=this.x+i*this.fieldWidth;
+        ctx.fillStyle=this.type.color+'33';ctx.fillRect(fx,this.y,this.fieldWidth-2,fh);
+        ctx.strokeStyle=this.type.color+'66';ctx.lineWidth=1;ctx.strokeRect(fx,this.y,this.fieldWidth-2,fh);
+        ctx.font='7px monospace';ctx.fillStyle=this.type.color;ctx.textAlign='center';ctx.fillText(f,fx+this.fieldWidth/2-1,this.y+8);
+        // Hex bytes below
+        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='6px monospace';
+        const hexStr=this.hex[i*2]||'00';ctx.fillText(hexStr,fx+this.fieldWidth/2-1,this.y+fh+8);
+      });
+    }
+  }
+
+  /* Hex rain background */
+  class HexDrop{
+    constructor(){this.x=Math.random()*W;this.y=-10;this.speed=0.5+Math.random()*1;this.char=Math.floor(Math.random()*256).toString(16).padStart(2,'0');}
+    update(){this.y+=this.speed;if(this.y>H){this.y=-10;this.x=Math.random()*W;this.char=Math.floor(Math.random()*256).toString(16).padStart(2,'0');}return true;}
+    draw(){ctx.font='8px monospace';ctx.fillStyle='rgba(100,150,255,0.06)';ctx.textAlign='center';ctx.fillText(this.char,this.x,this.y);}
+  }
+
+  /* Frame type histogram */
+  function drawHistogram(){
+    const counts={};FRAME_TYPES.forEach(t=>counts[t.name]=0);wifiFrames.forEach(f=>counts[f.type.name]++);
+    const bw=Math.min(50,(W-40)/FRAME_TYPES.length-6),sx=(W-FRAME_TYPES.length*(bw+6))/2;
+    const by=H-8;
+    FRAME_TYPES.forEach((t,i)=>{
+      const bx=sx+i*(bw+6),bh=Math.min(30,counts[t.name]*4);
+      ctx.fillStyle=t.color+'44';ctx.fillRect(bx,by-bh,bw,bh);ctx.strokeStyle=t.color;ctx.lineWidth=1;ctx.strokeRect(bx,by-bh,bw,bh);
+      ctx.font='6px monospace';ctx.fillStyle=t.color;ctx.textAlign='center';ctx.fillText(t.name.slice(0,6),bx+bw/2,by+6);
+    });
+  }
+
+  /* Protocol control field decoder */
+  function drawFCDecoder(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fillRect(W-140,8,132,44);ctx.strokeStyle='#fff2';ctx.strokeRect(W-140,8,132,44);
+    ctx.font='8px monospace';ctx.fillStyle='#4d96ff';ctx.textAlign='left';ctx.fillText('Frame Control Bits',W-134,20);
+    const bits=['ToDS','FromDS','Retry','PwrMgt','More','WEP','Order','Prot'];
+    bits.forEach((b,i)=>{const on=Math.random()>0.5;ctx.fillStyle=on?'#6bcb77':'#444';ctx.fillText((on?'1':'0')+' '+b,W-134+(i%4)*33,32+(Math.floor(i/4)*12));});
+    ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,185,56);ctx.strokeStyle='#4d96ff33';ctx.strokeRect(8,8,185,56);
+    ctx.font='10px monospace';ctx.fillStyle='#4d96ff';ctx.textAlign='left';ctx.fillText('\u{1F52C} WIFI DISSECTOR',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Frames: '+captureCount+'  Active: '+wifiFrames.length,16,40);
+    ctx.fillText('Types: '+FRAME_TYPES.length,16,54);ctx.restore();
+  }
+
+  function init(){
+    ensureCanvas();
+    for(let i=0;i<60;i++)hexDrops.push(new HexDrop());
+    animate();
+  }
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(8,8,16,0.14)';ctx.fillRect(0,0,W,H);
+    hexDrops.forEach(d=>{d.update();d.draw();});
+    if(frameCount%30===0){wifiFrames.push(new WiFiFrame());captureCount++;}
+    for(let i=wifiFrames.length-1;i>=0;i--){if(!wifiFrames[i].update())wifiFrames.splice(i,1);else wifiFrames[i].draw();}
+    drawHistogram();if(frameCount%60<30)drawFCDecoder();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,300);
+})();

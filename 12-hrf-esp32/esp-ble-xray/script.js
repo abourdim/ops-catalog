@@ -290,3 +290,106 @@ document.addEventListener('DOMContentLoaded',()=>{
   setStatus(false);
   log(LANG[currentLang]?.ready||'Ready','success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — BLE X-Ray: 2.4GHz frequency hopping
+   waterfall with channel activity, adaptive hopping, and
+   advertising channel highlights
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simBleCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const channels=40,channelW=0,hopHistory=[];
+  let currentCh=0,hopTimer=0,advTimer=0;
+  const ADV_CHANNELS=[37,38,39];
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:300px;border-radius:12px;margin:1.2rem 0;display:block;background:#080818;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  function drawChannelGrid(){
+    const cw=W/channels;
+    ctx.font='7px monospace';ctx.textAlign='center';
+    for(let i=0;i<channels;i++){
+      const x=i*cw;
+      const isAdv=ADV_CHANNELS.includes(i);
+      ctx.strokeStyle=isAdv?'rgba(255,100,100,0.15)':'rgba(100,100,255,0.06)';
+      ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H-20);ctx.stroke();
+      ctx.fillStyle=isAdv?'#ff6b6b':'rgba(100,150,255,0.3)';
+      ctx.fillText(i,x+cw/2,H-6);
+    }
+  }
+
+  function drawWaterfall(){
+    const cw=W/channels;const rowH=3;
+    // Shift existing content down
+    if(frameCount>1){
+      const imgData=ctx.getImageData(0,0,canvas.width,(H-20)*(devicePixelRatio||1));
+      ctx.putImageData(imgData,0,rowH*(devicePixelRatio||1));
+    }
+    // Draw new row at top
+    ctx.fillStyle='rgba(8,8,24,0.95)';ctx.fillRect(0,0,W,rowH);
+    // Active channel
+    const x=currentCh*cw;
+    const isAdv=ADV_CHANNELS.includes(currentCh);
+    const intensity=0.5+Math.random()*0.5;
+    ctx.fillStyle=isAdv?'rgba(255,100,100,'+intensity+')':'rgba(0,180,255,'+intensity+')';
+    ctx.fillRect(x,0,cw,rowH);
+    // Noise on random channels
+    for(let i=0;i<3;i++){
+      const nc=Math.floor(Math.random()*channels);
+      ctx.fillStyle='rgba(50,100,50,'+(Math.random()*0.15)+')';
+      ctx.fillRect(nc*cw,0,cw,rowH);
+    }
+    // WiFi interference band (channels 1-14 overlap)
+    if(Math.random()<0.1){
+      const wifiStart=Math.floor(Math.random()*10);
+      ctx.fillStyle='rgba(255,200,0,0.06)';
+      ctx.fillRect(wifiStart*cw,0,cw*5,rowH);
+    }
+  }
+
+  function drawCurrentHop(){
+    const cw=W/channels,x=currentCh*cw+cw/2;
+    ctx.save();ctx.shadowColor='#0cf';ctx.shadowBlur=10;
+    ctx.beginPath();ctx.arc(x,8,4,0,Math.PI*2);ctx.fillStyle='#0cf';ctx.fill();ctx.restore();
+    ctx.font='8px monospace';ctx.fillStyle='#0cf';ctx.textAlign='center';ctx.fillText('CH '+currentCh,x,22);
+  }
+
+  function drawFreqLabel(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(W/2-80,H-38,160,16);
+    ctx.font='9px monospace';ctx.fillStyle='#aaa';ctx.textAlign='center';
+    const freq=2402+currentCh*2;ctx.fillText('2.4 GHz ISM Band \u2014 '+freq+' MHz',W/2,H-28);ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,170,56);ctx.strokeStyle='#0cf3';ctx.strokeRect(8,8,170,56);
+    ctx.font='10px monospace';ctx.fillStyle='#0cf';ctx.textAlign='left';ctx.fillText('\u{1F499} BLE X-RAY',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Channel: '+currentCh+'  Freq: '+(2402+currentCh*2)+' MHz',16,40);
+    ctx.fillText('Hops: '+frameCount+'  1600 hop/s',16,54);ctx.restore();
+  }
+
+  function hop(){
+    // Adaptive frequency hopping — skip some channels
+    const blocked=new Set();
+    for(let i=0;i<5;i++)blocked.add(Math.floor(Math.random()*37));
+    let next;
+    if(Math.random()<0.15){next=ADV_CHANNELS[Math.floor(Math.random()*3)];}
+    else{do{next=Math.floor(Math.random()*37);}while(blocked.has(next));}
+    currentCh=next;
+    hopHistory.push(currentCh);if(hopHistory.length>100)hopHistory.shift();
+  }
+
+  function init(){ensureCanvas();animate();}
+  function animate(){
+    frameCount++;hopTimer++;
+    if(hopTimer>=2){hopTimer=0;hop();}
+    drawWaterfall();drawChannelGrid();drawCurrentHop();drawFreqLabel();drawHUD();
+    animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,300);
+})();

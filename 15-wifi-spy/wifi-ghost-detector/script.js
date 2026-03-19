@@ -136,3 +136,95 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Ghost Signal Oscilloscope ═══════ */
+(function ghostOscilloscopeCanvas(){
+  const CVS_ID='ghostOscVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">👻</span> Ghost Signal Oscilloscope</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:240px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const signalHistory=[];let _raf=null,frameCount=0;
+  const ghostSignals=[];
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.18)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    const margin={l:35,r:10,t:15,b:25};const gw=w-margin.l-margin.r,gh=h-margin.t-margin.b;
+    // Grid
+    ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
+    for(let i=0;i<=10;i++){
+      const y=margin.t+i*gh/10;
+      ctx.beginPath();ctx.moveTo(margin.l,y);ctx.lineTo(w-margin.r,y);ctx.stroke();
+    }
+    for(let i=0;i<=10;i++){
+      const x=margin.l+i*gw/10;
+      ctx.beginPath();ctx.moveTo(x,margin.t);ctx.lineTo(x,margin.t+gh);ctx.stroke();
+    }
+    // dBm labels
+    ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.2)';ctx.textAlign='right';
+    for(let db=-20;db>=-90;db-=10){
+      const y=margin.t+((db+20)/(-70))*gh;
+      ctx.fillText(db,margin.l-3,y+3);
+    }
+    // Normal signal waveform (green)
+    const isRunning=typeof simRunning!=='undefined'&&simRunning;
+    const baseSig=isRunning?-45:-80;
+    signalHistory.push(baseSig+Math.sin(frameCount*0.08)*5+(Math.random()-0.5)*8);
+    if(signalHistory.length>200)signalHistory.shift();
+    ctx.beginPath();
+    signalHistory.forEach((v,i)=>{
+      const x=margin.l+(i/200)*gw;
+      const y=margin.t+((v+20)/(-70))*gh;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle='#22c55e80';ctx.lineWidth=1.5;ctx.stroke();
+    // Ghost signal spikes (purple)
+    if(isRunning&&typeof devices!=='undefined'){
+      const ghostCount=devices.filter(d=>d.ghost).length;
+      // Random ghost spikes
+      if(Math.random()<0.1*ghostCount){
+        ghostSignals.push({x:signalHistory.length,strength:-25-Math.random()*30,life:1});
+      }
+    }
+    ghostSignals.forEach((gs,i)=>{
+      gs.life-=0.015;
+      if(gs.life<=0){ghostSignals.splice(i,1);return;}
+      const x=margin.l+(gs.x/200)*gw;
+      const y=margin.t+((gs.strength+20)/(-70))*gh;
+      // Ghost spike
+      ctx.beginPath();ctx.moveTo(x,margin.t+gh);ctx.lineTo(x,y);
+      ctx.strokeStyle=`rgba(168,85,247,${gs.life*0.6})`;ctx.lineWidth=2;ctx.stroke();
+      // Ghost glow
+      ctx.beginPath();ctx.arc(x,y,6*gs.life,0,Math.PI*2);
+      ctx.fillStyle=`rgba(168,85,247,${gs.life*0.3})`;ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,3*gs.life,0,Math.PI*2);
+      ctx.fillStyle=`rgba(168,85,247,${gs.life*0.6})`;ctx.fill();
+    });
+    if(ghostSignals.length>50)ghostSignals.splice(0,20);
+    // Scan line
+    const scanX=margin.l+((frameCount*2)%gw);
+    ctx.beginPath();ctx.moveTo(scanX,margin.t);ctx.lineTo(scanX,margin.t+gh);
+    ctx.strokeStyle='rgba(34,197,94,0.12)';ctx.lineWidth=1;ctx.stroke();
+    // Legend
+    ctx.font='8px monospace';ctx.textAlign='left';
+    ctx.fillStyle='#22c55e';ctx.fillRect(margin.l,h-12,8,8);ctx.fillStyle='rgba(255,255,255,0.4)';ctx.fillText('Normal',margin.l+12,h-5);
+    ctx.fillStyle='#a855f7';ctx.fillRect(margin.l+70,h-12,8,8);ctx.fillStyle='rgba(255,255,255,0.4)';ctx.fillText('Ghost',margin.l+82,h-5);
+    // Device count overlay
+    if(typeof devices!=='undefined'){
+      ctx.font='9px monospace';ctx.textAlign='right';ctx.fillStyle='rgba(255,255,255,0.3)';
+      ctx.fillText('Devices: '+devices.length+' | Ghosts: '+devices.filter(d=>d.ghost).length,w-margin.r,margin.t-3);
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

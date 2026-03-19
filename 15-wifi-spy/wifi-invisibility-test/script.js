@@ -115,3 +115,115 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Invisibility Shield Visualizer ═══════ */
+(function invisibilityShieldCanvas(){
+  const CVS_ID='invisShieldVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">🛡️</span> Invisibility Shield</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:260px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const scanBeams=[];let _raf=null,frameCount=0;
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.12)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    const cx=w/2,cy=h/2;
+    const score=(typeof results!=='undefined'&&results.length>0)?results.filter(r=>r.pass).length/results.length:0;
+    const shieldR=Math.min(w,h)*0.28;
+    // Shield rings — more rings = better protection
+    const numRings=Math.max(1,Math.floor(score*6));
+    for(let i=numRings;i>=1;i--){
+      const r=shieldR*(0.5+i*0.1);
+      const pulse=Math.sin(frameCount*0.02+i*0.5)*3;
+      ctx.beginPath();ctx.arc(cx,cy,r+pulse,0,Math.PI*2);
+      const alpha=score>0.7?0.12:score>0.4?0.08:0.04;
+      const color=score>0.7?'34,197,94':score>0.4?'251,191,36':'239,68,68';
+      ctx.strokeStyle=`rgba(${color},${alpha*i})`;ctx.lineWidth=2;ctx.stroke();
+    }
+    // Hexagonal shield pattern
+    const hexR=shieldR*0.8;
+    for(let ring=1;ring<=3;ring++){
+      const hr=hexR*ring/3;
+      for(let a=0;a<6;a++){
+        const angle=a*Math.PI/3-Math.PI/6;const nextAngle=(a+1)*Math.PI/3-Math.PI/6;
+        ctx.beginPath();
+        ctx.moveTo(cx+Math.cos(angle)*hr,cy+Math.sin(angle)*hr);
+        ctx.lineTo(cx+Math.cos(nextAngle)*hr,cy+Math.sin(nextAngle)*hr);
+        const shieldAlpha=score*0.15*ring/3;
+        ctx.strokeStyle=`rgba(34,197,94,${shieldAlpha})`;ctx.lineWidth=1;ctx.stroke();
+      }
+    }
+    // Center device icon
+    ctx.beginPath();ctx.arc(cx,cy,12,0,Math.PI*2);
+    ctx.fillStyle='rgba(59,130,246,0.3)';ctx.fill();
+    ctx.strokeStyle='#3b82f6';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='10px sans-serif';ctx.fillStyle='#3b82f6';ctx.textAlign='center';ctx.fillText('📱',cx,cy+4);
+    // Incoming scan beams (threats)
+    if(frameCount%15===0){
+      const angle=Math.random()*Math.PI*2;
+      scanBeams.push({angle,dist:shieldR*2.5,speed:2+Math.random()*2,blocked:Math.random()<score});
+    }
+    scanBeams.forEach((beam,i)=>{
+      beam.dist-=beam.speed;
+      const bx=cx+Math.cos(beam.angle)*beam.dist;
+      const by=cy+Math.sin(beam.angle)*beam.dist;
+      if(beam.dist<shieldR&&beam.blocked){
+        // Deflection sparks
+        for(let s=0;s<3;s++){
+          const sa=beam.angle+Math.PI+(Math.random()-0.5)*1;
+          const sd=shieldR+Math.random()*15;
+          const sx=cx+Math.cos(sa)*sd,sy=cy+Math.sin(sa)*sd;
+          ctx.beginPath();ctx.arc(sx,sy,1.5,0,Math.PI*2);
+          ctx.fillStyle='#22c55e';ctx.globalAlpha=0.5;ctx.fill();ctx.globalAlpha=1;
+        }
+        scanBeams.splice(i,1);return;
+      }
+      if(beam.dist<15&&!beam.blocked){
+        // Hit — device exposed
+        ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);
+        ctx.fillStyle='rgba(239,68,68,0.2)';ctx.fill();
+        scanBeams.splice(i,1);return;
+      }
+      if(beam.dist<0){scanBeams.splice(i,1);return;}
+      // Draw beam
+      ctx.beginPath();
+      ctx.moveTo(cx+Math.cos(beam.angle)*(beam.dist+15),cy+Math.sin(beam.angle)*(beam.dist+15));
+      ctx.lineTo(bx,by);
+      ctx.strokeStyle=beam.blocked?'rgba(239,68,68,0.3)':'rgba(239,68,68,0.5)';ctx.lineWidth=2;ctx.stroke();
+      // Beam head
+      ctx.beginPath();ctx.arc(bx,by,3,0,Math.PI*2);ctx.fillStyle='#ef4444';ctx.fill();
+    });
+    if(scanBeams.length>30)scanBeams.splice(0,10);
+    // Score display
+    ctx.font='bold 22px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillStyle=score>0.7?'#22c55e':score>0.4?'#fbbf24':'#ef4444';
+    ctx.fillText(Math.round(score*100)+'%',cx,h-25);
+    ctx.font='8px monospace';ctx.fillStyle='rgba(255,255,255,0.3)';
+    ctx.fillText('INVISIBILITY SCORE',cx,h-12);
+    // Test progress dots
+    if(typeof TESTS!=='undefined'){
+      const dotStartX=cx-TESTS.length*6;
+      TESTS.forEach((t,i)=>{
+        ctx.beginPath();ctx.arc(dotStartX+i*12,h-40,3,0,Math.PI*2);
+        if(typeof results!=='undefined'&&i<results.length){
+          ctx.fillStyle=results[i].pass?'#22c55e':results[i].warn?'#fbbf24':'#ef4444';
+        }else{
+          ctx.fillStyle='rgba(255,255,255,0.1)';
+        }
+        ctx.fill();
+      });
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

@@ -256,3 +256,61 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — SDR Coherent
+   Animated phased array beam pattern + array factor visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('cohSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='cohSimCanvas';el.width=780;el.height=220;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#040810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.015;cx.fillStyle='#040810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Array elements at bottom
+  const nElem=typeof document.getElementById('elemSlider')!=='undefined'&&document.getElementById('elemSlider')?+document.getElementById('elemSlider').value:8;
+  const spacing=Math.min(50,W/(nElem+2));
+  const arrayX=W/2-nElem*spacing/2;
+  for(let i=0;i<nElem;i++){
+    const ex=arrayX+i*spacing+spacing/2,ey=H-25;
+    cx.fillStyle='rgba(79,195,247,.6)';cx.beginPath();cx.moveTo(ex,ey-10);cx.lineTo(ex-4,ey);cx.lineTo(ex+4,ey);cx.closePath();cx.fill();
+    cx.fillRect(ex-.5,ey,1,8);
+  }
+  // Beam pattern (polar)
+  const bcx=W/2,bcy=H-30,br=H*.6;
+  const steer=(typeof document.getElementById('steerSlider')!=='undefined'&&document.getElementById('steerSlider')?+document.getElementById('steerSlider').value:0)*Math.PI/180;
+  cx.strokeStyle='rgba(100,200,255,.06)';cx.lineWidth=.5;
+  for(let r=20;r<=br;r+=20){cx.beginPath();cx.arc(bcx,bcy,r,-Math.PI,0);cx.stroke();}
+  // Array factor
+  cx.strokeStyle=acc;cx.lineWidth=2;cx.beginPath();
+  for(let a=-180;a<=0;a++){
+    const theta=a*Math.PI/180;
+    const d=.5;let af2=0;
+    for(let n=0;n<nElem;n++)af2+=Math.cos(n*2*Math.PI*d*(Math.sin(theta)-Math.sin(steer)));
+    const mag=Math.abs(af2)/nElem;
+    const r2=mag*br;
+    const px=bcx+Math.cos(theta)*r2,py=bcy+Math.sin(theta)*r2;
+    if(a===-180)cx.moveTo(px,py);else cx.lineTo(px,py);
+  }
+  cx.stroke();
+  // Animated wavefront
+  const wfAngle=steer;
+  for(let w=0;w<5;w++){
+    const wr=((t*100+w*40)%200);
+    cx.strokeStyle=`rgba(79,195,247,${.15-w*.03})`;cx.lineWidth=1;
+    cx.beginPath();const px=bcx+Math.cos(Math.PI/2+wfAngle)*wr;const py=bcy+Math.sin(Math.PI/2+wfAngle)*wr;
+    cx.arc(px,py-br*.3,wr*1.5,-Math.PI*.3,Math.PI*.3);cx.stroke();
+  }
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText(`Phased Array Beam — ${nElem} elements`,8,14);
+  cx.textAlign='right';cx.fillText(`Steer: ${(steer*180/Math.PI).toFixed(0)} deg`,W-8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

@@ -190,3 +190,94 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED CANVAS VISUALIZATION — Encryption Flow ═══════ */
+(function(){
+const particles=[];
+const encNodes=[
+  {x:80,y:100,label:'You',icon:'👤',color:'#33cc55'},
+  {x:300,y:60,label:'E2E Layer',icon:'🔐',color:'#ffcc00'},
+  {x:520,y:100,label:'Agent Shadow',icon:'🕵️',color:'#4488ff'},
+];
+const relayNodes=[
+  {x:190,y:180,label:'Relay A',icon:'📡',color:'#ff6644'},
+  {x:410,y:180,label:'Relay B',icon:'📡',color:'#cc44ff'},
+];
+let simCanvas,simCtx;
+
+function createSimCanvas(){
+  const cards=document.querySelectorAll('.card');
+  const target=cards.length>0?cards[0]:document.body;
+  const wrap=document.createElement('div');
+  wrap.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  wrap.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Encryption Flow Visualization</div>';
+  const c=document.createElement('canvas');
+  c.width=620;c.height=260;
+  c.style.cssText='width:100%;height:auto;display:block;cursor:crosshair;background:#060d1a;';
+  wrap.appendChild(c);target.appendChild(wrap);
+  return c;
+}
+
+function spawnParticle(from,to,color){
+  particles.push({x:from.x,y:from.y,tx:to.x,ty:to.y,t:0,color,speed:0.008+Math.random()*0.012,size:3+Math.random()*3,trail:[]});
+}
+
+function drawSim(){
+  if(!simCtx)return;
+  const w=simCanvas.width,h=simCanvas.height;
+  simCtx.fillStyle='rgba(6,13,26,0.15)';simCtx.fillRect(0,0,w,h);
+  simCtx.strokeStyle='#0a1a30';simCtx.lineWidth=0.3;
+  for(let i=0;i<w;i+=30){simCtx.beginPath();simCtx.moveTo(i,0);simCtx.lineTo(i,h);simCtx.stroke();}
+  for(let i=0;i<h;i+=30){simCtx.beginPath();simCtx.moveTo(0,i);simCtx.lineTo(w,i);simCtx.stroke();}
+  const allNodes=[...encNodes,...relayNodes];
+  [[0,3],[3,1],[1,4],[4,2]].forEach(([a,b])=>{
+    simCtx.beginPath();simCtx.moveTo(allNodes[a].x,allNodes[a].y);simCtx.lineTo(allNodes[b].x,allNodes[b].y);
+    simCtx.strokeStyle='rgba(100,150,200,0.15)';simCtx.lineWidth=1.5;simCtx.stroke();
+  });
+  allNodes.forEach(n=>{
+    simCtx.beginPath();simCtx.arc(n.x,n.y,20,0,Math.PI*2);
+    simCtx.fillStyle=n.color+'22';simCtx.fill();
+    simCtx.strokeStyle=n.color;simCtx.lineWidth=2;simCtx.stroke();
+    simCtx.fillStyle='#fff';simCtx.font='14px serif';simCtx.textAlign='center';
+    simCtx.fillText(n.icon,n.x,n.y+5);
+    simCtx.fillStyle=n.color;simCtx.font='9px Orbitron,monospace';
+    simCtx.fillText(n.label,n.x,n.y+34);
+  });
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];p.t+=p.speed;
+    p.x+=(p.tx-p.x)*p.speed*3;p.y+=(p.ty-p.y)*p.speed*3;
+    p.trail.push({x:p.x,y:p.y});if(p.trail.length>12)p.trail.shift();
+    p.trail.forEach((pt,idx)=>{
+      simCtx.beginPath();simCtx.arc(pt.x,pt.y,p.size*(idx/p.trail.length),0,Math.PI*2);
+      simCtx.fillStyle=p.color+(Math.floor(25+idx*15).toString(16).padStart(2,'0'));simCtx.fill();
+    });
+    simCtx.beginPath();simCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    simCtx.fillStyle=p.color;simCtx.fill();
+    if(p.t>1||Math.abs(p.x-p.tx)<5&&Math.abs(p.y-p.ty)<5)particles.splice(i,1);
+  }
+  const pulse=Math.sin(Date.now()/400)*3;
+  simCtx.beginPath();simCtx.arc(encNodes[1].x,encNodes[1].y,28+pulse,0,Math.PI*2);
+  simCtx.strokeStyle='rgba(255,204,0,0.2)';simCtx.lineWidth=2;simCtx.stroke();
+  simCtx.fillStyle='rgba(255,255,255,0.3)';simCtx.font='8px monospace';simCtx.textAlign='left';
+  simCtx.fillText('Active packets: '+particles.length+' | E2E: AES-256-GCM | Forward Secrecy: ON',10,h-10);
+  requestAnimationFrame(drawSim);
+}
+
+function initEnhancedSim(){
+  simCanvas=createSimCanvas();if(!simCanvas)return;
+  simCtx=simCanvas.getContext('2d');
+  setInterval(()=>{
+    if(Math.random()>0.4){
+      const allN=[...encNodes,...relayNodes];const route=[0,3,1,4,2];
+      const s=Math.floor(Math.random()*4);
+      spawnParticle(allN[route[s]],allN[route[s+1]],['#33cc55','#ffcc00','#4488ff','#ff6644','#cc44ff'][Math.floor(Math.random()*5)]);
+    }
+  },600);
+  simCanvas.addEventListener('click',()=>{
+    const allN=[...encNodes,...relayNodes];const route=[0,3,1,4,2];
+    for(let i=0;i<4;i++)setTimeout(()=>spawnParticle(allN[route[i]],allN[route[i+1]],'#33ff88'),i*150);
+  });
+  drawSim();
+}
+setTimeout(initEnhancedSim,1500);
+})();

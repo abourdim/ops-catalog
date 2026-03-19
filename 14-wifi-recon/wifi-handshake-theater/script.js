@@ -288,3 +288,105 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+/* ═══════ RICH CANVAS SIMULATION — WPA Handshake Packet Flow ═══════ */
+(function handshakeCanvas(){
+  const CVS_ID='handshakeFlowVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">🤝</span> Handshake Packet Flow</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:300px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const packets=[];let _raf=null,frameCount=0;
+  const stepColors=['#3b82f6','#22c55e','#fbbf24','#a855f7'];
+  const stepLabels=['ANonce','SNonce+MIC','GTK+MIC','ACK'];
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.12)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    const apX=w*0.15,staX=w*0.85,topY=50,botY=h-30;
+    // AP and STA towers
+    ctx.fillStyle='rgba(34,197,94,0.15)';ctx.fillRect(apX-20,topY-20,40,botY-topY+40);
+    ctx.fillStyle='rgba(59,130,246,0.15)';ctx.fillRect(staX-20,topY-20,40,botY-topY+40);
+    // Labels
+    ctx.font='bold 10px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillStyle='#22c55e';ctx.fillText('AP',apX,topY-28);
+    ctx.fillStyle='#3b82f6';ctx.fillText('STA',staX,topY-28);
+    // Vertical lines
+    ctx.beginPath();ctx.setLineDash([2,4]);
+    ctx.moveTo(apX,topY);ctx.lineTo(apX,botY);
+    ctx.moveTo(staX,topY);ctx.lineTo(staX,botY);
+    ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    // Step indicators
+    const cStep=typeof currentStep!=='undefined'?currentStep:0;
+    for(let i=0;i<4;i++){
+      const y=topY+30+i*(botY-topY-60)/3;
+      const fromLeft=i%2===0;
+      const fromX=fromLeft?apX:staX;const toX=fromLeft?staX:apX;
+      const active=i<cStep;const current=i===cStep-1;
+      // Arrow line
+      ctx.beginPath();ctx.moveTo(fromX+10*(fromLeft?1:-1),y);ctx.lineTo(toX-10*(fromLeft?1:-1),y);
+      ctx.strokeStyle=active?stepColors[i]+'90':'rgba(255,255,255,0.08)';
+      ctx.lineWidth=active?2:1;ctx.stroke();
+      // Arrowhead
+      if(active){
+        const dir=fromLeft?1:-1;
+        ctx.beginPath();
+        ctx.moveTo(toX-15*dir,y-5);ctx.lineTo(toX-5*dir,y);ctx.lineTo(toX-15*dir,y+5);
+        ctx.strokeStyle=stepColors[i];ctx.lineWidth=2;ctx.stroke();
+      }
+      // Label
+      ctx.font='8px monospace';ctx.fillStyle=active?stepColors[i]+'cc':'rgba(255,255,255,0.2)';
+      ctx.textAlign='center';ctx.fillText('Msg '+(i+1)+': '+stepLabels[i],(apX+staX)/2,y-6);
+      // Animate packet blob on current step
+      if(current){
+        const t=(frameCount%60)/60;
+        const px=fromX+(toX-fromX)*t;
+        ctx.beginPath();ctx.arc(px,y,5,0,Math.PI*2);
+        ctx.fillStyle=stepColors[i];ctx.fill();
+        // Trail
+        for(let tr=1;tr<=5;tr++){
+          const tt=Math.max(0,t-tr*0.04);
+          const tx=fromX+(toX-fromX)*tt;
+          ctx.beginPath();ctx.arc(tx,y,3,0,Math.PI*2);
+          ctx.fillStyle=stepColors[i];ctx.globalAlpha=0.3-tr*0.05;ctx.fill();
+        }
+        ctx.globalAlpha=1;
+      }
+    }
+    // Key exchange visualization — encrypted data flowing
+    if(cStep>=4){
+      // Encrypted tunnel effect
+      const tunnelY=(topY+botY)/2;
+      for(let i=0;i<15;i++){
+        const t=((frameCount*2+i*20)%((staX-apX)))/((staX-apX));
+        const px=apX+t*(staX-apX);
+        const py=tunnelY+Math.sin(t*Math.PI*4+frameCount*0.05)*15;
+        ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);
+        ctx.fillStyle='#86efac';ctx.globalAlpha=0.3+Math.sin(t*Math.PI)*0.3;ctx.fill();
+      }
+      ctx.globalAlpha=1;
+      ctx.font='bold 10px monospace';ctx.fillStyle='#86efac';ctx.textAlign='center';
+      ctx.fillText('ENCRYPTED SESSION ACTIVE',(apX+staX)/2,botY+10);
+    }
+    // Crypto key particles floating around
+    if(typeof hsRunning!=='undefined'&&hsRunning){
+      for(let i=0;i<3;i++){
+        const kx=w*0.3+Math.sin(frameCount*0.02+i*2)*w*0.15;
+        const ky=h*0.3+Math.cos(frameCount*0.015+i*3)*h*0.15;
+        ctx.font='7px monospace';ctx.fillStyle='rgba(168,85,247,0.25)';ctx.textAlign='center';
+        ctx.fillText('0x'+Math.floor(Math.sin(frameCount*0.01+i)*999999).toString(16),kx,ky);
+      }
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

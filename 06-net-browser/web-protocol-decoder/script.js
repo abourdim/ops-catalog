@@ -485,3 +485,75 @@ function init() {
 }
 
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Protocol Stack Visualizer Canvas ═══════ */
+(function(){
+let psCanvas,psCtx;const stackLayers=[];const dataFlow=[];
+function createPS(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">OSI Protocol Stack Visualizer</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=280;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:pointer;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+const OSI_LAYERS=[
+  {name:'Application',proto:'HTTP/DNS/FTP',color:'#ef4444',y:0},
+  {name:'Transport',proto:'TCP/UDP',color:'#f59e0b',y:0},
+  {name:'Network',proto:'IP/ICMP',color:'#22c55e',y:0},
+  {name:'Data Link',proto:'Ethernet/WiFi',color:'#3b82f6',y:0},
+  {name:'Physical',proto:'Bits/Signals',color:'#8b5cf6',y:0},
+];
+function drawPS(){
+  if(!psCtx)return;const w=psCanvas.width,h=psCanvas.height;
+  psCtx.fillStyle='rgba(6,13,26,0.08)';psCtx.fillRect(0,0,w,h);
+  // Draw OSI stack (left side)
+  const stackX=20,stackW=180,layerH=42,stackY=20;
+  OSI_LAYERS.forEach((l,i)=>{
+    l.y=stackY+i*layerH;
+    const pulse=Math.sin(Date.now()/500+i*0.5)*0.03;
+    psCtx.fillStyle=l.color+(Math.floor(20+pulse*200).toString(16).padStart(2,'0'));
+    psCtx.fillRect(stackX,l.y,stackW,layerH-3);
+    psCtx.strokeStyle=l.color+'44';psCtx.lineWidth=1;psCtx.strokeRect(stackX,l.y,stackW,layerH-3);
+    psCtx.fillStyle=l.color;psCtx.font='10px Orbitron,sans-serif';psCtx.textAlign='left';
+    psCtx.fillText('L'+(5-i)+': '+l.name,stackX+6,l.y+16);
+    psCtx.fillStyle='rgba(255,255,255,0.4)';psCtx.font='8px monospace';
+    psCtx.fillText(l.proto,stackX+6,l.y+30);
+  });
+  // Encapsulation visualization (right side)
+  const encX=230,encW=w-encX-20,encY=30;
+  psCtx.fillStyle='rgba(255,255,255,0.3)';psCtx.font='9px Orbitron';psCtx.textAlign='left';
+  psCtx.fillText('Packet Encapsulation',encX,encY-8);
+  // Draw nested packet
+  const t=Date.now()/1000;
+  OSI_LAYERS.forEach((l,i)=>{
+    const pad=i*25;const bx=encX+pad,by=encY+10+i*5;
+    const bw=encW-pad*2,bh=180-i*20;
+    if(bw>0&&bh>0){
+      const glow=Math.sin(t+i)*0.05+0.05;
+      psCtx.fillStyle=l.color+Math.floor(glow*255).toString(16).padStart(2,'0');
+      psCtx.fillRect(bx,by,bw,bh);
+      psCtx.strokeStyle=l.color+'66';psCtx.lineWidth=1;psCtx.strokeRect(bx,by,bw,bh);
+      // Header label
+      psCtx.fillStyle=l.color;psCtx.font='7px monospace';psCtx.textAlign='left';
+      psCtx.fillText('HDR-L'+(5-i),bx+3,by+10);
+    }
+  });
+  // Data bits flowing down stack
+  if(Math.random()>0.85){dataFlow.push({x:stackX+stackW/2+(Math.random()-0.5)*60,y:stackY,speed:1+Math.random()*2,life:1,color:OSI_LAYERS[Math.floor(Math.random()*5)].color});}
+  for(let i=dataFlow.length-1;i>=0;i--){
+    const d=dataFlow[i];d.y+=d.speed;d.life-=0.008;
+    if(d.life<=0||d.y>h){dataFlow.splice(i,1);continue;}
+    psCtx.globalAlpha=d.life*0.6;psCtx.beginPath();psCtx.arc(d.x,d.y,2,0,Math.PI*2);
+    psCtx.fillStyle=d.color;psCtx.fill();psCtx.globalAlpha=1;
+  }
+  // Stats
+  psCtx.fillStyle='rgba(255,255,255,0.3)';psCtx.font='8px monospace';psCtx.textAlign='left';
+  psCtx.fillText('OSI Model: 5 layers | Data units flowing: '+dataFlow.length,10,h-8);
+  requestAnimationFrame(drawPS);
+}
+function initPS(){psCanvas=createPS();if(!psCanvas)return;psCtx=psCanvas.getContext('2d');
+  psCanvas.addEventListener('click',()=>{for(let i=0;i<10;i++)dataFlow.push({x:110+(Math.random()-0.5)*100,y:20,speed:1.5+Math.random()*2,life:1,color:OSI_LAYERS[Math.floor(Math.random()*5)].color});});
+  drawPS();}
+setTimeout(initPS,2000);
+})();

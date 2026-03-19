@@ -213,3 +213,68 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Port Scan Visualization Grid ═══════ */
+(function(){
+let pCanvas,pCtx;const portGrid=new Array(256).fill(0);const scanBeams=[];
+function createPC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Port Map Visualizer</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=260;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:crosshair;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawPC(){
+  if(!pCtx)return;const w=pCanvas.width,h=pCanvas.height;
+  pCtx.fillStyle='rgba(6,13,26,0.08)';pCtx.fillRect(0,0,w,h);
+  // Port grid (16x16)
+  const cols=32,rows=8,cellW=(w-40)/cols,cellH=(h-80)/rows;
+  const wellKnown={21:'FTP',22:'SSH',23:'Telnet',25:'SMTP',53:'DNS',80:'HTTP',110:'POP3',443:'HTTPS',445:'SMB',3389:'RDP',8080:'Proxy'};
+  const openPorts=[22,80,443,8080,3389,21,25,53,110,445];
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const port=r*cols+c+1;const x=20+c*cellW,y=25+r*cellH;
+      const isOpen=openPorts.includes(port);
+      const isScanning=scanning&&Math.random()>0.98;
+      // Decay scan animation
+      if(isScanning)portGrid[port%256]=1;
+      if(portGrid[port%256]>0)portGrid[port%256]-=0.01;
+      const intensity=portGrid[port%256];
+      pCtx.fillStyle=isOpen?'rgba(239,68,68,'+(0.2+intensity*0.3)+')':'rgba(59,130,246,'+(intensity*0.15)+')';
+      pCtx.fillRect(x,y,cellW-1,cellH-1);
+      if(isOpen){pCtx.strokeStyle='#ef444444';pCtx.lineWidth=0.5;pCtx.strokeRect(x,y,cellW-1,cellH-1);}
+      // Port number label for well-known
+      if(wellKnown[port]){
+        pCtx.fillStyle='rgba(255,255,255,0.5)';pCtx.font='5px monospace';pCtx.textAlign='center';
+        pCtx.fillText(port.toString(),x+cellW/2,y+cellH/2+2);
+      }
+    }
+  }
+  // Scan beam
+  if(scanning){
+    const beamX=20+(Date.now()/10)%((w-40));
+    pCtx.fillStyle='rgba(59,130,246,0.1)';pCtx.fillRect(beamX,25,3,rows*cellH);
+  }
+  // Legend & stats
+  const ly=h-40;
+  pCtx.fillStyle='#ef4444';pCtx.fillRect(20,ly,8,8);
+  pCtx.fillStyle='rgba(255,255,255,0.4)';pCtx.font='8px monospace';pCtx.textAlign='left';
+  pCtx.fillText('Open',32,ly+7);
+  pCtx.fillStyle='#3b82f6';pCtx.fillRect(80,ly,8,8);
+  pCtx.fillStyle='rgba(255,255,255,0.4)';pCtx.fillText('Closed/Filtered',92,ly+7);
+  pCtx.fillText('Ports 1-256 | Status: '+(scanning?'SCANNING':'IDLE'),20,h-8);
+  pCtx.fillText('Well-known: FTP(21) SSH(22) HTTP(80) HTTPS(443) RDP(3389)',250,h-8);
+  requestAnimationFrame(drawPC);
+}
+function initPC(){pCanvas=createPC();if(!pCanvas)return;pCtx=pCanvas.getContext('2d');
+  pCanvas.addEventListener('click',e=>{
+    const rect=pCanvas.getBoundingClientRect();const mx=(e.clientX-rect.left)*(pCanvas.width/rect.width);
+    const my=(e.clientY-rect.top)*(pCanvas.height/rect.height);
+    const cols=32,cellW=(pCanvas.width-40)/cols,cellH=(pCanvas.height-80)/8;
+    const col=Math.floor((mx-20)/cellW),row=Math.floor((my-25)/cellH);
+    if(col>=0&&col<cols&&row>=0&&row<8){const port=row*cols+col+1;portGrid[port%256]=1;}
+  });
+  drawPC();}
+setTimeout(initPC,2000);
+})();

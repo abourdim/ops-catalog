@@ -287,3 +287,54 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Protocol Reverse
+   Animated packet dissection + byte-level protocol view
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const packets=[];
+function boot(){
+  let el=document.getElementById('protoSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='protoSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function addPacket(){
+  const fields=[{label:'SYNC',len:2,color:'#4fc3f7'},{label:'ADDR',len:3,color:'#f59e0b'},
+    {label:'TYPE',len:1,color:'#22c55e'},{label:'LEN',len:1,color:'#ec4899'},
+    {label:'PAYLOAD',len:4+Math.floor(Math.random()*6),color:'#8b5cf6'},{label:'CRC',len:2,color:'#ef4444'}];
+  packets.unshift({fields,y:H*.4,alpha:1,bytes:Array.from({length:16},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0'))});
+  if(packets.length>6)packets.pop();
+}
+function tick(){
+  t+=.02;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  if(Math.random()<.02)addPacket();
+  packets.forEach((pkt,pi)=>{
+    const py=30+pi*24;let px=20;pkt.alpha=Math.max(.2,1-pi*.15);
+    pkt.fields.forEach(f=>{
+      const fw=f.len*35;
+      cx.fillStyle=f.color+'22';cx.fillRect(px,py,fw-2,18);
+      cx.strokeStyle=f.color+'66';cx.lineWidth=1;cx.strokeRect(px,py,fw-2,18);
+      cx.fillStyle=f.color;cx.font='8px monospace';cx.textAlign='center';
+      cx.globalAlpha=pkt.alpha;cx.fillText(f.label,px+fw/2-1,py+13);cx.globalAlpha=1;
+      px+=fw;
+    });
+    // Hex dump on right
+    cx.fillStyle=`rgba(200,230,255,${pkt.alpha*.3})`;cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText(pkt.bytes.join(' '),px+10,py+13);
+  });
+  // Animated binary stream at bottom
+  cx.fillStyle='rgba(100,200,255,.06)';cx.font='10px monospace';
+  for(let i=0;i<60;i++){
+    const bx=(i*14-t*40%14+W)%W;
+    cx.fillText(Math.random()>.5?'1':'0',bx,H-6);
+  }
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Protocol Dissector — Packet Structure',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

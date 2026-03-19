@@ -226,3 +226,118 @@ document.addEventListener('DOMContentLoaded', () => {
   setStatus(false);
   log(LANG[currentLang]?.ready || 'Ready', 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Collision Visualizer: Dual transmitter
+   signal collision zone with BER visualization and capture effect
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCollCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const waves1=[],waves2=[],sparks=[];
+  let ber=0,totalBitsVis=0,errorBitsVis=0;
+  const tx1={x:0,y:0,power:0.7,freq:2.44};
+  const tx2={x:0,y:0,power:0.5,freq:2.44};
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:300px;border-radius:12px;margin:1.2rem 0;display:block;background:#0a0810;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+    tx1.x=W*0.2;tx1.y=H/2;tx2.x=W*0.8;tx2.y=H/2;
+  }
+
+  class Wave{
+    constructor(x,y,color){this.x=x;this.y=y;this.r=0;this.maxR=Math.min(W,H)*0.6;this.alpha=0.5;this.color=color;}
+    update(){this.r+=2;this.alpha=0.5*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.strokeStyle=this.color.replace('1)',this.alpha+')');ctx.lineWidth=2;ctx.stroke();}
+  }
+
+  class Spark{
+    constructor(x,y){this.x=x;this.y=y;this.vx=(Math.random()-0.5)*5;this.vy=(Math.random()-0.5)*5;this.life=1;this.size=2+Math.random()*2;}
+    update(){this.x+=this.vx;this.y+=this.vy;this.vx*=0.95;this.vy*=0.95;this.life-=0.03;return this.life>0;}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size*this.life,0,Math.PI*2);ctx.fillStyle='rgba(255,200,50,'+this.life+')';ctx.fill();}
+  }
+
+  function drawTX(tx,label,color){
+    ctx.save();ctx.shadowColor=color;ctx.shadowBlur=8;
+    ctx.beginPath();ctx.arc(tx.x,tx.y,18,0,Math.PI*2);ctx.fillStyle=color.replace('1)','0.2)');ctx.fill();
+    ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+    ctx.font='12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u{1F4E1}',tx.x,tx.y);
+    ctx.font='8px monospace';ctx.fillStyle=color;ctx.fillText(label,tx.x,tx.y+26);
+    // Power bar
+    ctx.fillStyle='#222';ctx.fillRect(tx.x-20,tx.y+32,40,5);
+    ctx.fillStyle=color;ctx.fillRect(tx.x-20,tx.y+32,40*tx.power,5);
+    ctx.font='7px monospace';ctx.fillStyle='#888';ctx.fillText(Math.floor(tx.power*100)+'%',tx.x,tx.y+46);
+    ctx.restore();
+  }
+
+  function drawCollisionZone(){
+    const cx=W/2,cy=H/2;
+    // Interference pattern
+    const berLevel=Math.min(1,ber);
+    ctx.save();ctx.globalAlpha=0.2+berLevel*0.3;
+    const grad=ctx.createRadialGradient(cx,cy,10,cx,cy,80);
+    grad.addColorStop(0,'rgba(255,100,50,'+(berLevel*0.5)+')');
+    grad.addColorStop(1,'rgba(255,100,50,0)');
+    ctx.fillStyle=grad;ctx.fillRect(cx-80,cy-80,160,160);ctx.restore();
+    // Collision label
+    if(berLevel>0.1){
+      ctx.font='bold 10px monospace';ctx.fillStyle='rgba(255,200,50,'+(0.5+Math.sin(frameCount*0.1)*0.3)+')';
+      ctx.textAlign='center';ctx.fillText('\u{1F4A5} COLLISION ZONE',cx,cy-40);
+    }
+  }
+
+  function drawSignalWaveform(){
+    const y1=H*0.15,y2=H*0.85,ww=W*0.6,sx=(W-ww)/2;
+    // TX1 waveform
+    ctx.beginPath();ctx.moveTo(sx,y1);
+    for(let x=0;x<ww;x++){const v=Math.sin((x+frameCount*3)*0.05)*tx1.power*20;ctx.lineTo(sx+x,y1+v);}
+    ctx.strokeStyle='rgba(255,100,100,0.4)';ctx.lineWidth=1;ctx.stroke();
+    // TX2 waveform
+    ctx.beginPath();ctx.moveTo(sx,y2);
+    for(let x=0;x<ww;x++){const v=Math.sin((x+frameCount*3)*0.05+1)*tx2.power*20;ctx.lineTo(sx+x,y2+v);}
+    ctx.strokeStyle='rgba(100,100,255,0.4)';ctx.lineWidth=1;ctx.stroke();
+    // Combined (center)
+    ctx.beginPath();ctx.moveTo(sx,H/2);
+    for(let x=0;x<ww;x++){const v1=Math.sin((x+frameCount*3)*0.05)*tx1.power*15;const v2=Math.sin((x+frameCount*3)*0.05+1)*tx2.power*15;ctx.lineTo(sx+x,H/2+v1+v2);}
+    ctx.strokeStyle='rgba(255,200,100,0.3)';ctx.lineWidth=1;ctx.stroke();
+  }
+
+  function drawBERMeter(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(W/2-80,H-30,160,22);
+    ctx.strokeStyle='#fff2';ctx.strokeRect(W/2-80,H-30,160,22);
+    const g=ctx.createLinearGradient(W/2-80,0,W/2+80,0);g.addColorStop(0,'#6bcb77');g.addColorStop(0.5,'#ffd93d');g.addColorStop(1,'#ff4444');
+    ctx.fillStyle='#222';ctx.fillRect(W/2-75,H-26,150,14);ctx.fillStyle=g;ctx.fillRect(W/2-75,H-26,150*Math.min(1,ber),14);
+    ctx.font='8px monospace';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText('BER: '+(ber*100).toFixed(1)+'%',W/2,H-16);ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,185,56);ctx.strokeStyle='#f903';ctx.strokeRect(8,8,185,56);
+    ctx.font='10px monospace';ctx.fillStyle='#ff9944';ctx.textAlign='left';ctx.fillText('\u{1F4A5} COLLISION VISUALIZER',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Bits: '+totalBitsVis+'  Errors: '+errorBitsVis,16,40);
+    ctx.fillText('BER: '+(ber*100).toFixed(2)+'%',16,54);ctx.restore();
+  }
+
+  function init(){ensureCanvas();animate();}
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(10,8,16,0.14)';ctx.fillRect(0,0,W,H);
+    // Slowly vary power
+    tx1.power=0.5+Math.sin(frameCount*0.005)*0.3;tx2.power=0.5+Math.cos(frameCount*0.007)*0.3;
+    // BER calculation based on power difference
+    const diff=Math.abs(tx1.power-tx2.power);ber=Math.max(0.01,0.5-diff*1.5);
+    totalBitsVis+=10;errorBitsVis+=Math.round(ber*10);
+    // Waves
+    if(frameCount%12===0){waves1.push(new Wave(tx1.x,tx1.y,'rgba(255,100,100,1)'));waves2.push(new Wave(tx2.x,tx2.y,'rgba(100,100,255,1)'));}
+    for(let i=waves1.length-1;i>=0;i--){if(!waves1[i].update())waves1.splice(i,1);else waves1[i].draw();}
+    for(let i=waves2.length-1;i>=0;i--){if(!waves2[i].update())waves2.splice(i,1);else waves2[i].draw();}
+    drawCollisionZone();drawSignalWaveform();
+    // Collision sparks
+    if(ber>0.2&&frameCount%4===0){for(let i=0;i<2;i++)sparks.push(new Spark(W/2+(Math.random()-0.5)*40,H/2+(Math.random()-0.5)*40));}
+    for(let i=sparks.length-1;i>=0;i--){if(!sparks[i].update())sparks.splice(i,1);else sparks[i].draw();}
+    drawTX(tx1,'TX1','rgba(255,100,100,1)');drawTX(tx2,'TX2','rgba(100,100,255,1)');
+    drawBERMeter();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,300);
+})();

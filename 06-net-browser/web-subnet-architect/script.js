@@ -273,3 +273,78 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: IP Address Space Visualizer ═══════ */
+(function(){
+let ipCanvas,ipCtx;const ipBlocks=[];
+function createIC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">IP Address Space Map</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=260;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:crosshair;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+const SUBNETS=[
+  {cidr:'/8',hosts:16777214,color:'#ef4444',name:'Class A'},
+  {cidr:'/16',hosts:65534,color:'#f59e0b',name:'Class B'},
+  {cidr:'/24',hosts:254,color:'#22c55e',name:'Class C'},
+  {cidr:'/28',hosts:14,color:'#3b82f6',name:'Small'},
+  {cidr:'/30',hosts:2,color:'#8b5cf6',name:'P2P Link'},
+];
+function initBlocks(){
+  ipBlocks.length=0;
+  const cols=16,rows=16,cellW=(620-40)/cols,cellH=(260-80)/rows;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const idx=r*cols+c;
+      const subnet=SUBNETS[Math.floor(Math.random()*SUBNETS.length)];
+      ipBlocks.push({x:20+c*cellW,y:25+r*cellH,w:cellW-1,h:cellH-1,
+        subnet,ip:idx+'.0.0.0',intensity:Math.random(),pulsePhase:Math.random()*Math.PI*2});
+    }
+  }
+}
+function drawIC(){
+  if(!ipCtx)return;const w=ipCanvas.width,h=ipCanvas.height;
+  ipCtx.fillStyle='rgba(6,13,26,0.06)';ipCtx.fillRect(0,0,w,h);
+  // IP blocks
+  ipBlocks.forEach(b=>{
+    const pulse=Math.sin(Date.now()/800+b.pulsePhase)*0.1;
+    const alpha=0.1+b.intensity*0.15+pulse;
+    ipCtx.fillStyle=b.subnet.color+Math.floor(alpha*255).toString(16).padStart(2,'0');
+    ipCtx.fillRect(b.x,b.y,b.w,b.h);
+    // Border on hover intensity
+    if(b.intensity>0.7){
+      ipCtx.strokeStyle=b.subnet.color+'44';ipCtx.lineWidth=0.5;ipCtx.strokeRect(b.x,b.y,b.w,b.h);
+    }
+  });
+  // Subnet utilization bars
+  const barY=h-45;
+  SUBNETS.forEach((s,i)=>{
+    const count=ipBlocks.filter(b=>b.subnet===s).length;
+    const x=20+i*120,bw=100;
+    ipCtx.fillStyle='rgba(255,255,255,0.03)';ipCtx.fillRect(x,barY,bw,10);
+    ipCtx.fillStyle=s.color+'44';ipCtx.fillRect(x,barY,bw*(count/256),10);
+    ipCtx.fillStyle=s.color;ipCtx.font='7px monospace';ipCtx.textAlign='left';
+    ipCtx.fillText(s.name+' '+s.cidr+': '+count,x,barY+22);
+  });
+  // Legend
+  ipCtx.fillStyle='rgba(255,255,255,0.3)';ipCtx.font='8px monospace';ipCtx.textAlign='left';
+  ipCtx.fillText('256 address blocks | Click to reassign subnets',10,h-5);
+  requestAnimationFrame(drawIC);
+}
+function initIC(){ipCanvas=createIC();if(!ipCanvas)return;ipCtx=ipCanvas.getContext('2d');
+  initBlocks();
+  ipCanvas.addEventListener('click',e=>{
+    const rect=ipCanvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(ipCanvas.width/rect.width),my=(e.clientY-rect.top)*(ipCanvas.height/rect.height);
+    ipBlocks.forEach(b=>{
+      if(mx>=b.x&&mx<=b.x+b.w&&my>=b.y&&my<=b.y+b.h){
+        b.subnet=SUBNETS[(SUBNETS.indexOf(b.subnet)+1)%SUBNETS.length];
+        b.intensity=1;b.pulsePhase=0;
+      }
+    });
+  });
+  drawIC();}
+setTimeout(initIC,2000);
+})();

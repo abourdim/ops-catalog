@@ -315,3 +315,99 @@ function initCartographer(){
 }
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initCartographer);}else{setTimeout(initCartographer,50);}
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Network Cartographer: Multi-protocol
+   radio landscape mapper with live RSSI-based positioning
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const devs=[],scanRings=[];
+  const PROTOS=[{name:'WiFi',color:'#4d96ff',icon:'\u{1F4E1}'},{name:'BLE',color:'#ff78ae',icon:'\u{1F499}'},{name:'ESP-NOW',color:'#ffd93d',icon:'\u26A1'},{name:'Zigbee',color:'#6bcb77',icon:'\u{1F517}'}];
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#080818;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  function drawGrid(){
+    ctx.strokeStyle='rgba(100,100,255,0.06)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=30){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  }
+
+  const scanner={x:0,y:0,angle:0};
+  function drawScanner(){
+    scanner.x=W/2;scanner.y=H/2;scanner.angle+=0.02;
+    ctx.save();ctx.translate(scanner.x,scanner.y);ctx.rotate(scanner.angle);
+    const g=ctx.createLinearGradient(0,0,160,0);g.addColorStop(0,'rgba(0,200,255,0.3)');g.addColorStop(1,'rgba(0,200,255,0)');
+    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,160,-0.15,0.15);ctx.closePath();ctx.fillStyle=g;ctx.fill();ctx.restore();
+    ctx.beginPath();ctx.arc(scanner.x,scanner.y,12,0,Math.PI*2);ctx.fillStyle='#0cf';ctx.fill();
+    ctx.beginPath();ctx.arc(scanner.x,scanner.y,18,0,Math.PI*2);ctx.strokeStyle='rgba(0,204,255,0.4)';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#fff';ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText('SCANNER',scanner.x,scanner.y+28);
+  }
+
+  function drawRangeRings(){
+    [60,110,160].forEach((r,i)=>{ctx.beginPath();ctx.arc(W/2,H/2,r,0,Math.PI*2);ctx.strokeStyle='rgba(0,204,255,'+(0.1-i*0.02)+')';ctx.lineWidth=1;ctx.setLineDash([4,6]);ctx.stroke();ctx.setLineDash([]);});
+  }
+
+  class Device{
+    constructor(){
+      const p=PROTOS[Math.floor(Math.random()*PROTOS.length)];this.protocol=p;
+      this.rssi=-30-Math.random()*60;const dist=Math.abs(this.rssi)*1.8,a=Math.random()*Math.PI*2;
+      this.tx=W/2+Math.cos(a)*dist;this.ty=H/2+Math.sin(a)*dist;this.x=W/2;this.y=H/2;
+      this.size=Math.max(4,14+this.rssi*0.1);
+      this.mac=Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':').toUpperCase();
+      this.alive=300+Math.random()*500;this.age=0;this.blinkPhase=Math.random()*Math.PI*2;
+    }
+    update(){this.x+=(this.tx-this.x)*0.04;this.y+=(this.ty-this.y)*0.04;this.age++;this.blinkPhase+=0.05;return this.age<this.alive;}
+    draw(){
+      const b=0.6+Math.sin(this.blinkPhase)*0.3;ctx.save();ctx.globalAlpha=b*Math.min(1,(this.alive-this.age)/60);
+      ctx.shadowColor=this.protocol.color;ctx.shadowBlur=10;
+      ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=this.protocol.color+'44';ctx.fill();
+      ctx.strokeStyle=this.protocol.color;ctx.lineWidth=1.5;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font=(this.size*0.9)+'px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.protocol.icon,this.x,this.y);
+      ctx.font='7px monospace';ctx.fillStyle=this.protocol.color;ctx.fillText(this.mac.slice(0,8),this.x,this.y-this.size-4);
+      ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fillText(Math.round(this.rssi)+' dBm',this.x,this.y+this.size+8);ctx.restore();
+    }
+  }
+
+  class ScanRing{
+    constructor(){this.r=10;this.maxR=180;this.alpha=0.5;}
+    update(){this.r+=1.2;this.alpha=0.5*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){ctx.beginPath();ctx.arc(W/2,H/2,this.r,0,Math.PI*2);ctx.strokeStyle='rgba(0,204,255,'+this.alpha+')';ctx.lineWidth=2;ctx.stroke();}
+  }
+
+  function drawLinks(){
+    for(let i=0;i<devs.length;i++)for(let j=i+1;j<devs.length;j++){
+      if(devs[i].protocol.name!==devs[j].protocol.name)continue;
+      const dx=devs[i].x-devs[j].x,dy=devs[i].y-devs[j].y;
+      if(Math.sqrt(dx*dx+dy*dy)<80){ctx.beginPath();ctx.moveTo(devs[i].x,devs[i].y);ctx.lineTo(devs[j].x,devs[j].y);ctx.strokeStyle=devs[i].protocol.color+'22';ctx.lineWidth=1;ctx.stroke();}
+    }
+  }
+
+  function drawHUD(){
+    const counts={};PROTOS.forEach(p=>counts[p.name]=0);devs.forEach(d=>counts[d.protocol.name]++);
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,200,80);ctx.strokeStyle='#0cf3';ctx.strokeRect(8,8,200,80);
+    ctx.font='10px monospace';ctx.fillStyle='#0cf';ctx.textAlign='left';ctx.fillText('NETWORK CARTOGRAPHER',16,24);
+    ctx.fillStyle='#aaa';ctx.fillText('Total Devices: '+devs.length,16,40);let yy=52;
+    PROTOS.forEach(p=>{ctx.fillStyle=p.color;ctx.fillText(p.icon+' '+p.name+': '+counts[p.name],16,yy);yy+=12;});ctx.restore();
+  }
+
+  function init(){ensureCanvas();animate();}
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(8,8,24,0.18)';ctx.fillRect(0,0,W,H);
+    drawGrid();drawRangeRings();
+    if(frameCount%90===0)scanRings.push(new ScanRing());
+    for(let i=scanRings.length-1;i>=0;i--){if(!scanRings[i].update())scanRings.splice(i,1);else scanRings[i].draw();}
+    drawScanner();drawLinks();
+    for(let i=devs.length-1;i>=0;i--){if(!devs[i].update())devs.splice(i,1);else devs[i].draw();}
+    if(frameCount%30===0&&devs.length<20)devs.push(new Device());
+    drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
+})();

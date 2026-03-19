@@ -375,3 +375,52 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — RF Fingerprinter
+   Animated spectral fingerprint comparison + harmonic visualizer
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+const rings=[];
+function boot(){
+  let el=document.getElementById('fpSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='fpSimCanvas';el.width=780;el.height=220;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#06080e;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='rgba(6,8,14,.1)';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Draw harmonic bars visualization
+  const numBars=48;
+  for(let i=0;i<numBars;i++){
+    const x=i*(W/numBars),bw=W/numBars-2;
+    const h1=Math.abs(Math.sin(i*.3+t*2))*H*.4+Math.sin(i*.7+t*1.3)*H*.15;
+    const h2=Math.abs(Math.sin(i*.4+t*1.5+1))*H*.35+Math.cos(i*.5+t)*H*.1;
+    cx.fillStyle=`rgba(79,195,247,${.2+Math.abs(Math.sin(i*.2+t))*.3})`;
+    cx.fillRect(x+1,H/2-h1,bw,h1);
+    cx.fillStyle=`rgba(245,158,11,${.2+Math.abs(Math.cos(i*.3+t))*.3})`;
+    cx.fillRect(x+1,H/2,bw,h2);
+  }
+  // Center label
+  cx.fillStyle='rgba(0,0,0,.4)';cx.fillRect(W/2-100,H/2-12,200,24);
+  cx.fillStyle=acc;cx.font='11px Orbitron,monospace';cx.textAlign='center';
+  cx.fillText('HARMONIC FINGERPRINT ANALYSIS',W/2,H/2+4);
+  // Fingerprint rings
+  if(Math.random()<.05)rings.push({x:W*.2+Math.random()*W*.6,y:H*.3+Math.random()*H*.4,r:0,maxR:30+Math.random()*40,life:1});
+  for(let i=rings.length-1;i>=0;i--){
+    const r=rings[i];r.r+=.8;r.life=1-r.r/r.maxR;
+    if(r.life<=0){rings.splice(i,1);continue;}
+    cx.strokeStyle=`rgba(34,197,94,${r.life*.4})`;cx.lineWidth=1;
+    cx.beginPath();cx.arc(r.x,r.y,r.r,0,Math.PI*2);cx.stroke();
+  }
+  // DB count
+  const dbCount=typeof fpDB!=='undefined'?fpDB.length:0;
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText(`Fingerprint DB: ${dbCount} entries | Harmonic analysis running`,8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

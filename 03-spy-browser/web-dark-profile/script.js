@@ -322,3 +322,74 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED CANVAS — Digital Footprint Radar ═══════ */
+(function(){
+let rCanvas,rCtx,rAngle=0;
+const CATS=[
+  {name:'Social',angle:0,color:'#ff4488',items:['Twitter','Instagram','Facebook','TikTok']},
+  {name:'Professional',angle:Math.PI*0.33,color:'#4488ff',items:['LinkedIn']},
+  {name:'Coding',angle:Math.PI*0.66,color:'#44ff88',items:['GitHub','GitLab','StackOverflow']},
+  {name:'Forum',angle:Math.PI,color:'#ffaa44',items:['Reddit']},
+  {name:'Messaging',angle:Math.PI*1.33,color:'#cc44ff',items:['Discord','Telegram']},
+  {name:'Media',angle:Math.PI*1.66,color:'#44ffff',items:['YouTube','Twitch','Spotify']},
+];
+const blips=[];
+function createRC(){
+  const cards=document.querySelectorAll('.card');
+  const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');
+  w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Digital Footprint Radar</div>';
+  const c=document.createElement('canvas');c.width=600;c.height=400;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:crosshair;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawR(){
+  if(!rCtx)return;
+  const w=rCanvas.width,h=rCanvas.height,cx=w/2,cy=h/2,maxR=Math.min(cx,cy)-40;
+  rCtx.fillStyle='rgba(6,13,26,0.12)';rCtx.fillRect(0,0,w,h);
+  for(let r=1;r<=4;r++){rCtx.beginPath();rCtx.arc(cx,cy,maxR*r/4,0,Math.PI*2);rCtx.strokeStyle='rgba(100,200,150,0.08)';rCtx.lineWidth=1;rCtx.stroke();}
+  CATS.forEach(cat=>{
+    const ex=cx+Math.cos(cat.angle)*maxR,ey=cy+Math.sin(cat.angle)*maxR;
+    rCtx.beginPath();rCtx.moveTo(cx,cy);rCtx.lineTo(ex,ey);rCtx.strokeStyle='rgba(255,255,255,0.06)';rCtx.lineWidth=1;rCtx.stroke();
+    rCtx.fillStyle=cat.color;rCtx.font='9px Orbitron,monospace';rCtx.textAlign='center';
+    rCtx.fillText(cat.name,cx+Math.cos(cat.angle)*(maxR+20),cy+Math.sin(cat.angle)*(maxR+20));
+  });
+  rAngle+=0.015;
+  const sx=cx+Math.cos(rAngle)*maxR,sy=cy+Math.sin(rAngle)*maxR;
+  const gr=rCtx.createLinearGradient(cx,cy,sx,sy);
+  gr.addColorStop(0,'rgba(76,255,120,0.4)');gr.addColorStop(1,'rgba(76,255,120,0)');
+  rCtx.beginPath();rCtx.moveTo(cx,cy);rCtx.lineTo(sx,sy);rCtx.strokeStyle=gr;rCtx.lineWidth=2;rCtx.stroke();
+  rCtx.beginPath();rCtx.moveTo(cx,cy);rCtx.arc(cx,cy,maxR,rAngle-0.4,rAngle);rCtx.lineTo(cx,cy);
+  rCtx.fillStyle='rgba(76,255,120,0.04)';rCtx.fill();
+  CATS.forEach(cat=>{
+    const diff=Math.abs(((rAngle%(Math.PI*2))-cat.angle+Math.PI*2)%(Math.PI*2));
+    if(diff<0.03&&Math.random()>0.6){
+      cat.items.forEach(p=>{
+        if(Math.random()>0.5){
+          const d=0.3+Math.random()*0.6,sp=cat.angle+(Math.random()-0.5)*0.4;
+          blips.push({x:cx+Math.cos(sp)*maxR*d,y:cy+Math.sin(sp)*maxR*d,life:1,color:cat.color,name:p,size:4+Math.random()*4});
+        }
+      });
+    }
+  });
+  for(let i=blips.length-1;i>=0;i--){
+    const b=blips[i];b.life-=0.005;if(b.life<=0){blips.splice(i,1);continue;}
+    rCtx.globalAlpha=b.life;
+    rCtx.beginPath();rCtx.arc(b.x,b.y,b.size*b.life,0,Math.PI*2);rCtx.fillStyle=b.color;rCtx.fill();
+    rCtx.beginPath();rCtx.arc(b.x,b.y,b.size*b.life+4,0,Math.PI*2);rCtx.strokeStyle=b.color+'66';rCtx.lineWidth=1;rCtx.stroke();
+    if(b.life>0.7){rCtx.fillStyle='rgba(255,255,255,0.7)';rCtx.font='7px monospace';rCtx.textAlign='center';rCtx.fillText(b.name,b.x,b.y-b.size-3);}
+    rCtx.globalAlpha=1;
+  }
+  rCtx.beginPath();rCtx.arc(cx,cy,4,0,Math.PI*2);rCtx.fillStyle='#33ff88';rCtx.fill();
+  rCtx.fillStyle='rgba(255,255,255,0.3)';rCtx.font='8px monospace';rCtx.textAlign='left';
+  rCtx.fillText('Tracking: '+blips.length+' signals | Sweep: '+(rAngle/(Math.PI*2)*360%360).toFixed(0)+'deg',8,h-8);
+  requestAnimationFrame(drawR);
+}
+function initR(){rCanvas=createRC();if(!rCanvas)return;rCtx=rCanvas.getContext('2d');
+  rCanvas.addEventListener('click',e=>{const rect=rCanvas.getBoundingClientRect();const mx=(e.clientX-rect.left)*(rCanvas.width/rect.width),my=(e.clientY-rect.top)*(rCanvas.height/rect.height);
+    for(let i=0;i<8;i++)blips.push({x:mx+(Math.random()-0.5)*40,y:my+(Math.random()-0.5)*40,life:1,color:CATS[Math.floor(Math.random()*CATS.length)].color,name:'Signal',size:3+Math.random()*5});
+  });drawR();}
+setTimeout(initR,1500);
+})();

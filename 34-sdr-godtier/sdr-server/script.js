@@ -90,3 +90,58 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — SDR Server
+   Animated client connections + data throughput graph
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const throughput=[];const clients=[];
+function boot(){
+  let el=document.getElementById('srvSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='srvSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  for(let i=0;i<5;i++)clients.push({x:120+Math.random()*(W-240),y:40+Math.random()*(H-80),active:Math.random()>.3,phase:Math.random()*Math.PI*2});
+}
+function tick(){
+  t+=.02;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Server in center
+  const sx=W/2,sy=H/2;
+  cx.fillStyle='rgba(100,200,255,.1)';cx.fillRect(sx-30,sy-20,60,40);
+  cx.strokeStyle='rgba(100,200,255,.3)';cx.strokeRect(sx-30,sy-20,60,40);
+  cx.fillStyle=acc;cx.font='10px Orbitron,monospace';cx.textAlign='center';cx.fillText('SERVER',sx,sy+4);
+  // Client nodes
+  clients.forEach((c,i)=>{
+    c.phase+=.02;c.x=sx+Math.cos(i/clients.length*Math.PI*2+t*.3)*150;
+    c.y=sy+Math.sin(i/clients.length*Math.PI*2+t*.3)*70;
+    cx.fillStyle=c.active?'rgba(34,197,94,.2)':'rgba(239,68,68,.2)';
+    cx.beginPath();cx.arc(c.x,c.y,12,0,Math.PI*2);cx.fill();
+    cx.strokeStyle=c.active?'#22c55e':'#ef4444';cx.lineWidth=1;cx.stroke();
+    cx.fillStyle='rgba(255,255,255,.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText(`C${i+1}`,c.x,c.y+3);
+    // Data flow lines
+    if(c.active){
+      cx.strokeStyle='rgba(34,197,94,.15)';cx.lineWidth=1;cx.setLineDash([3,5]);
+      cx.beginPath();cx.moveTo(c.x,c.y);cx.lineTo(sx,sy);cx.stroke();cx.setLineDash([]);
+      const dot=(t*60+i*20)%Math.hypot(c.x-sx,c.y-sy);
+      const ratio=dot/Math.hypot(c.x-sx,c.y-sy);
+      const dx=c.x+(sx-c.x)*ratio,dy=c.y+(sy-c.y)*ratio;
+      cx.fillStyle=acc;cx.beginPath();cx.arc(dx,dy,2,0,Math.PI*2);cx.fill();
+    }
+  });
+  // Throughput sparkline
+  throughput.push(50+Math.random()*40+Math.sin(t)*20);if(throughput.length>80)throughput.shift();
+  cx.strokeStyle=acc+'88';cx.lineWidth=1;cx.beginPath();
+  throughput.forEach((v,i)=>{const x=W-200+i*2,y=H-10-v*.5;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);});
+  cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='7px monospace';cx.textAlign='right';
+  cx.fillText(`${throughput[throughput.length-1]?.toFixed(0)||0} Mbps`,W-8,H-4);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('SDR Server — Client Topology',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

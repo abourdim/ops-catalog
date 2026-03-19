@@ -158,3 +158,106 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   setStatus(false);log(LANG[currentLang]?.ready||'Ready','success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — RF IoT Audit: 3-protocol concurrent
+   monitor with WiFi/BLE/ESP-NOW device radar and audit findings
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simIotAuditCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const auditDevs=[],scanPulses=[],findings=[];
+  const PROTO_DEFS=[
+    {name:'WiFi',color:'#4d96ff',icon:'\u{1F4F6}',ring:60},
+    {name:'BLE',color:'#ff78ae',icon:'\u{1F499}',ring:100},
+    {name:'ESP-NOW',color:'#ffd93d',icon:'\u26A1',ring:140}
+  ];
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:300px;border-radius:12px;margin:1.2rem 0;display:block;background:#080810;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  class AuditDev{
+    constructor(){
+      this.proto=PROTO_DEFS[Math.floor(Math.random()*PROTO_DEFS.length)];
+      const angle=Math.random()*Math.PI*2;
+      const dist=this.proto.ring+Math.random()*30-15;
+      this.x=W/2+Math.cos(angle)*dist;this.y=H/2+Math.sin(angle)*dist;
+      this.rssi=-30-Math.random()*50;this.secure=Math.random()>0.3;
+      this.mac=Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':');
+      this.pulse=Math.random()*Math.PI*2;this.alive=200+Math.random()*300;this.age=0;
+    }
+    update(){this.age++;this.pulse+=0.04;return this.age<this.alive;}
+    draw(){
+      const alpha=Math.min(1,(this.alive-this.age)/40)*0.8;const glow=3+Math.sin(this.pulse)*2;
+      ctx.save();ctx.globalAlpha=alpha;ctx.shadowColor=this.proto.color;ctx.shadowBlur=glow;
+      ctx.beginPath();ctx.arc(this.x,this.y,8,0,Math.PI*2);ctx.fillStyle=this.proto.color+'33';ctx.fill();
+      ctx.strokeStyle=this.secure?this.proto.color:'#ff4444';ctx.lineWidth=this.secure?1:2;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='8px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.proto.icon,this.x,this.y);
+      if(!this.secure){ctx.font='bold 7px monospace';ctx.fillStyle='#ff4444';ctx.fillText('\u26A0',this.x+10,this.y-6);}
+      ctx.font='6px monospace';ctx.fillStyle=this.proto.color;ctx.fillText(this.mac.slice(0,8),this.x,this.y+14);ctx.restore();
+    }
+  }
+
+  class ScanPulse{
+    constructor(proto){this.ring=proto.ring;this.color=proto.color;this.r=0;this.maxR=this.ring+20;this.alpha=0.4;}
+    update(){this.r+=1;this.alpha=0.4*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){ctx.beginPath();ctx.arc(W/2,H/2,this.r,0,Math.PI*2);ctx.strokeStyle=this.color.replace(')',','+this.alpha+')').replace('rgb','rgba');ctx.strokeStyle=this.color+Math.floor(this.alpha*255).toString(16).padStart(2,'0');ctx.lineWidth=2;ctx.stroke();}
+  }
+
+  function drawProtoRings(){
+    PROTO_DEFS.forEach(p=>{ctx.beginPath();ctx.arc(W/2,H/2,p.ring,0,Math.PI*2);ctx.strokeStyle=p.color+'22';ctx.lineWidth=1;ctx.setLineDash([4,8]);ctx.stroke();ctx.setLineDash([]);
+      ctx.font='7px monospace';ctx.fillStyle=p.color+'88';ctx.textAlign='left';ctx.fillText(p.name,W/2+p.ring+4,H/2);});
+  }
+
+  function drawScanner(){
+    ctx.save();ctx.shadowColor='#fff';ctx.shadowBlur=6;
+    ctx.beginPath();ctx.arc(W/2,H/2,14,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.1)';ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+    ctx.font='12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u{1F50D}',W/2,H/2);
+    ctx.font='7px monospace';ctx.fillStyle='#fff';ctx.fillText('AUDITOR',W/2,H/2+22);ctx.restore();
+  }
+
+  /* Audit findings ticker at bottom */
+  function drawFindings(){
+    const fh=24;ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,H-fh,W,fh);
+    const insecure=auditDevs.filter(d=>!d.secure);
+    const msg=insecure.length>0?'\u26A0 '+insecure.length+' insecure device'+(insecure.length>1?'s':'')+' found — '+insecure.map(d=>d.proto.name).join(', '):'All devices secure \u2714';
+    ctx.font='9px monospace';ctx.fillStyle=insecure.length>0?'#ff6666':'#6bcb77';ctx.textAlign='center';
+    ctx.fillText(msg,W/2,H-8);
+  }
+
+  /* Protocol pie chart */
+  function drawPieChart(){
+    const counts={};PROTO_DEFS.forEach(p=>counts[p.name]=0);auditDevs.forEach(d=>counts[d.proto.name]++);
+    const total=auditDevs.length||1;let startAngle=0;const cx=W-50,cy=50,r=30;
+    PROTO_DEFS.forEach(p=>{const slice=counts[p.name]/total*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,startAngle,startAngle+slice);ctx.closePath();ctx.fillStyle=p.color+'66';ctx.fill();ctx.strokeStyle=p.color;ctx.lineWidth=1;ctx.stroke();startAngle+=slice;});
+    ctx.font='7px monospace';ctx.fillStyle='#888';ctx.textAlign='center';ctx.fillText('Protocol Mix',cx,cy+r+10);
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,185,68);ctx.strokeStyle='#ffd93d33';ctx.strokeRect(8,8,185,68);
+    ctx.font='10px monospace';ctx.fillStyle='#ffd93d';ctx.textAlign='left';ctx.fillText('\u{1F50D} RF IOT AUDIT',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Devices: '+auditDevs.length,16,40);
+    ctx.fillText('Secure: '+auditDevs.filter(d=>d.secure).length+'  Insecure: '+auditDevs.filter(d=>!d.secure).length,16,54);
+    ctx.fillText('Protocols: 3 concurrent',16,68);ctx.restore();
+  }
+
+  function init(){ensureCanvas();animate();}
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(8,8,16,0.14)';ctx.fillRect(0,0,W,H);
+    drawProtoRings();drawScanner();
+    // Scan pulses
+    if(frameCount%45===0)PROTO_DEFS.forEach(p=>scanPulses.push(new ScanPulse(p)));
+    for(let i=scanPulses.length-1;i>=0;i--){if(!scanPulses[i].update())scanPulses.splice(i,1);else scanPulses[i].draw();}
+    // Spawn devices
+    if(frameCount%25===0&&auditDevs.length<24)auditDevs.push(new AuditDev());
+    for(let i=auditDevs.length-1;i>=0;i--){if(!auditDevs[i].update())auditDevs.splice(i,1);else auditDevs[i].draw();}
+    drawPieChart();drawFindings();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,300);
+})();

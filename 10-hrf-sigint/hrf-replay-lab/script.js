@@ -222,3 +222,58 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Replay Lab
+   Animated RF signal capture/replay visualization + rolling code counter
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+const waves=[];
+function boot(){
+  let el=document.getElementById('replaySimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='replaySimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#080410;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.016;
+  cx.fillStyle='rgba(8,4,16,.12)';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // TX antenna on left
+  const ax=80,ay=H/2;
+  cx.fillStyle=acc;cx.beginPath();cx.moveTo(ax,ay-20);cx.lineTo(ax-8,ay+8);cx.lineTo(ax+8,ay+8);cx.closePath();cx.fill();
+  cx.fillRect(ax-1,ay+8,2,12);
+  // RX antenna on right
+  const rx=W-80,ry=H/2;
+  cx.fillStyle='#4fc3f7';cx.beginPath();cx.moveTo(rx,ry-20);cx.lineTo(rx-8,ry+8);cx.lineTo(rx+8,ry+8);cx.closePath();cx.fill();
+  cx.fillRect(rx-1,ry+8,2,12);
+  // Emit waves from TX
+  if(Math.random()<.08)waves.push({x:ax+15,y:ay,r:5,maxR:W*.6,speed:2+Math.random(),life:1,
+    color:typeof isRolling==='function'&&isRolling()?'#22c55e':'#f59e0b'});
+  for(let i=waves.length-1;i>=0;i--){
+    const w=waves[i];w.r+=w.speed;w.life=1-w.r/w.maxR;
+    if(w.life<=0){waves.splice(i,1);continue;}
+    cx.strokeStyle=w.color.replace(')',`,${w.life*.4})`).replace('#',
+      (()=>{const c=w.color;const r=parseInt(c.slice(1,3),16),g=parseInt(c.slice(3,5),16),b=parseInt(c.slice(5,7),16);return `rgba(${r},${g},${b},${w.life*.4})`})()
+    );
+    cx.strokeStyle=`rgba(${parseInt(w.color.slice(1,3),16)},${parseInt(w.color.slice(3,5),16)},${parseInt(w.color.slice(5,7),16)},${w.life*.35})`;
+    cx.lineWidth=1.5;cx.beginPath();cx.arc(w.x,w.y,w.r,-.4,.4);cx.stroke();
+  }
+  // Rolling code counter display
+  const rolling=typeof isRolling==='function'&&isRolling();
+  cx.fillStyle='rgba(0,0,0,.5)';cx.fillRect(W/2-80,8,160,28);
+  cx.fillStyle=rolling?'#22c55e':'#f59e0b';cx.font='11px Orbitron,monospace';cx.textAlign='center';
+  cx.fillText(rolling?'ROLLING CODE':'FIXED CODE',W/2,26);
+  // Binary stream background
+  cx.fillStyle='rgba(100,200,255,.06)';cx.font='10px monospace';
+  for(let i=0;i<20;i++){
+    const bx=(i*42+t*30)%W,by=H-15;
+    cx.fillText(Math.random()>.5?'1':'0',bx,by);}
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('RF Signal Propagation Sim',8,H-4);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

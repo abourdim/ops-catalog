@@ -182,3 +182,86 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Channel Spectrum Analyzer ═══════ */
+(function channelSpectrumCanvas(){
+  const CVS_ID='channelSpectrumVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">📊</span> Live Spectrum Analyzer</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:240px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const spectrumData=Array(14).fill(0).map(()=>Array(60).fill(-90));
+  let frameCount=0,_raf=null;
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.25)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    const margin={l:40,r:10,t:15,b:25};
+    const gw=w-margin.l-margin.r,gh=h-margin.t-margin.b;
+    // dBm scale
+    ctx.font='8px monospace';ctx.fillStyle='rgba(255,255,255,0.25)';ctx.textAlign='right';
+    for(let db=-20;db>=-90;db-=10){
+      const y=margin.t+((db+20)/70)*gh*-1+gh;
+      ctx.fillText(db+'dBm',margin.l-4,y+3);
+      ctx.beginPath();ctx.moveTo(margin.l,y);ctx.lineTo(w-margin.r,y);
+      ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;ctx.stroke();
+    }
+    // Channel labels
+    ctx.textAlign='center';ctx.fillStyle='rgba(255,255,255,0.3)';
+    for(let ch=1;ch<=13;ch++){
+      const x=margin.l+(ch-1)/(12)*gw;ctx.fillText(ch,x,h-5);
+    }
+    // Update spectrum data from sim
+    if(typeof channels!=='undefined'&&channels.length>0&&typeof simRunning!=='undefined'&&simRunning){
+      channels.forEach((ch,i)=>{
+        if(i>=14)return;
+        const target=ch.aps.length>0?ch.avgSignal||-60:-90;
+        const noise=Math.random()*8-4;
+        spectrumData[i].push(Math.max(-95,Math.min(-15,target+noise)));
+        if(spectrumData[i].length>60)spectrumData[i].shift();
+      });
+    }else{
+      spectrumData.forEach(arr=>{
+        arr.push(-85+Math.random()*10);if(arr.length>60)arr.shift();
+      });
+    }
+    // Draw spectrum curves as filled areas
+    const colors=['#22c55e','#3b82f6','#ef4444','#fbbf24','#a855f7','#06b6d4','#ec4899','#f97316','#84cc16','#14b8a6','#8b5cf6','#f43f5e','#0ea5e9'];
+    for(let ch=0;ch<13;ch++){
+      const arr=spectrumData[ch];const lastVal=arr[arr.length-1];
+      const cx=margin.l+ch/(12)*gw;
+      // Draw a bell curve for each channel
+      ctx.beginPath();
+      const bellW=gw/10;
+      for(let px=-bellW;px<=bellW;px++){
+        const t=px/bellW;
+        const amplitude=Math.max(0,(lastVal+90)/70);
+        const y=margin.t+gh-(amplitude*Math.exp(-t*t*3)*gh);
+        const x=cx+px;
+        if(px===-bellW)ctx.moveTo(x,margin.t+gh);
+        ctx.lineTo(x,y);
+      }
+      ctx.lineTo(cx+bellW,margin.t+gh);ctx.closePath();
+      const grad=ctx.createLinearGradient(0,margin.t,0,margin.t+gh);
+      const clr=colors[ch%colors.length];
+      grad.addColorStop(0,clr+'80');grad.addColorStop(1,clr+'08');
+      ctx.fillStyle=grad;ctx.fill();
+      ctx.strokeStyle=clr+'90';ctx.lineWidth=1.5;ctx.stroke();
+    }
+    // Waterfall at bottom
+    const wfH=20;
+    const imgData=ctx.getImageData(0,(h-wfH-margin.b)*2,w*2,wfH*2);
+    ctx.putImageData(imgData,0,(h-wfH-margin.b+1)*2);
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

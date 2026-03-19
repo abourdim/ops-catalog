@@ -145,3 +145,82 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Fingerprint Constellation ═══════ */
+(function fingerprintCanvas(){
+  const CVS_ID='fingerprintVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">🔬</span> Fingerprint Constellation</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:280px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const nodes=[];let _raf=null,frameCount=0;
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.12)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    // Sync with devices array
+    if(typeof devices!=='undefined'){
+      while(nodes.length<devices.length&&nodes.length<50){
+        const d=devices[nodes.length];
+        const angle=Math.random()*Math.PI*2;const dist=0.15+Math.random()*0.32;
+        nodes.push({x:w/2+Math.cos(angle)*dist*w,y:h/2+Math.sin(angle)*dist*h,
+          vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,
+          uniq:d?d.uniqueness:50,vendor:d?d.vendor:'Unknown',
+          pulsePhase:Math.random()*Math.PI*2,r:4+Math.random()*4});
+      }
+    }
+    // Draw connections between similar nodes
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle=`rgba(168,85,247,${(1-dist/120)*0.15})`;ctx.lineWidth=0.5;ctx.stroke();
+        }
+      }
+    }
+    // Draw nodes
+    nodes.forEach((n,i)=>{
+      n.x+=n.vx;n.y+=n.vy;
+      if(n.x<30||n.x>w-30)n.vx*=-1;if(n.y<30||n.y>h-30)n.vy*=-1;
+      n.vx+=(Math.random()-0.5)*0.05;n.vy+=(Math.random()-0.5)*0.05;
+      n.vx*=0.99;n.vy*=0.99;
+      const pulse=Math.sin(frameCount*0.03+n.pulsePhase)*0.3+0.7;
+      const color=n.uniq>=80?'#ef4444':n.uniq>=60?'#fbbf24':'#22c55e';
+      // Glow
+      const grad=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*3*pulse);
+      grad.addColorStop(0,color+'40');grad.addColorStop(1,color+'00');
+      ctx.fillStyle=grad;ctx.fillRect(n.x-n.r*3,n.y-n.r*3,n.r*6,n.r*6);
+      // Core
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r*pulse,0,Math.PI*2);ctx.fillStyle=color+'cc';ctx.fill();
+      ctx.strokeStyle=color+'40';ctx.lineWidth=1;ctx.stroke();
+      // Uniqueness ring
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r*1.8,0,Math.PI*2*(n.uniq/100));
+      ctx.strokeStyle=color+'80';ctx.lineWidth=2;ctx.lineCap='round';ctx.stroke();
+      // Label
+      if(nodes.length<25){
+        ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.4)';ctx.textAlign='center';
+        ctx.fillText(n.vendor,n.x,n.y+n.r*2.5);
+        ctx.fillText(n.uniq+'%',n.x,n.y+n.r*2.5+9);
+      }
+    });
+    // Legend
+    ctx.font='9px monospace';ctx.textAlign='left';
+    [['#22c55e','Low <60%'],['#fbbf24','Med 60-80%'],['#ef4444','High >80%']].forEach(([c,l],i)=>{
+      ctx.fillStyle=c;ctx.beginPath();ctx.arc(12,15+i*14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fillText(l,20,18+i*14);
+    });
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

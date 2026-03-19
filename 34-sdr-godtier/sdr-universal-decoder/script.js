@@ -149,3 +149,52 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Universal Decoder
+   Animated multi-protocol decode waterfall + bit stream
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const streams=[];
+function boot(){
+  let el=document.getElementById('decSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='decSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  const protos=['POCSAG','ADS-B','ACARS','DMR','P25','APRS'];
+  protos.forEach((p,i)=>streams.push({name:p,y:28+i*28,bits:[],color:`hsl(${i*60},70%,60%)`,active:Math.random()>.3}));
+}
+function tick(){
+  t+=.016;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  streams.forEach(s=>{
+    // Add new bits
+    if(s.active&&Math.random()<.3)s.bits.push({v:Math.random()>.5?1:0,x:W-20});
+    // Move bits left
+    s.bits.forEach(b=>b.x-=1.5);s.bits=s.bits.filter(b=>b.x>80);
+    // Protocol label
+    cx.fillStyle=s.active?s.color:'rgba(100,100,100,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='right';
+    cx.fillText(s.name,75,s.y+4);
+    // Status indicator
+    cx.fillStyle=s.active?'#22c55e':'#555';cx.beginPath();cx.arc(80,s.y,3,0,Math.PI*2);cx.fill();
+    // Bit stream
+    s.bits.forEach(b=>{
+      cx.fillStyle=b.v?s.color+'88':s.color+'22';
+      cx.fillRect(b.x,s.y-6,8,12);
+    });
+    // Decode progress bar
+    const progress=(Math.sin(t+streams.indexOf(s))*.5+.5);
+    cx.fillStyle=s.color+'22';cx.fillRect(W-100,s.y-6,80,12);
+    cx.fillStyle=s.color+'66';cx.fillRect(W-100,s.y-6,80*progress,12);
+  });
+  // Scanning indicator
+  const scanY=28+((t*40)%(streams.length*28));
+  cx.strokeStyle=acc+'44';cx.lineWidth=1;cx.beginPath();cx.moveTo(80,scanY);cx.lineTo(W-20,scanY);cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Universal Decoder — Multi-Protocol Stream',8,14);
+  cx.textAlign='right';cx.fillText(`${streams.filter(s=>s.active).length}/${streams.length} active`,W-8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

@@ -399,3 +399,101 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Gossip Protocol: Epidemic data spreading
+   with node infection visualization and convergence tracking
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const gNodes=[],gossipMsgs=[];let roundNum=0,infected=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#060810;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  class GNode{
+    constructor(x,y,id){this.x=x;this.y=y;this.id=id;this.infected=false;this.infectedTime=0;this.pulse=Math.random()*Math.PI*2;this.neighbors=[];}
+    draw(){
+      this.pulse+=0.04;const glow=3+Math.sin(this.pulse)*2;
+      ctx.save();ctx.shadowColor=this.infected?'#ff6b6b':'#4d96ff';ctx.shadowBlur=glow;
+      ctx.beginPath();ctx.arc(this.x,this.y,12,0,Math.PI*2);
+      if(this.infected){const t=Math.min(1,(frameCount-this.infectedTime)/30);ctx.fillStyle='rgba(255,107,107,'+(0.2+t*0.3)+')';ctx.strokeStyle='#ff6b6b';}
+      else{ctx.fillStyle='rgba(77,150,255,0.15)';ctx.strokeStyle='#4d96ff';}
+      ctx.fill();ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='8px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=this.infected?'#ff6b6b':'#4d96ff';
+      ctx.fillText(this.infected?'\u{1F9E0}':'\u{1F4AD}',this.x,this.y);
+      ctx.font='7px monospace';ctx.fillText('N'+this.id,this.x,this.y+18);ctx.restore();
+    }
+  }
+
+  class GossipMsg{
+    constructor(src,tgt){this.sx=src.x;this.sy=src.y;this.tx=tgt.x;this.ty=tgt.y;this.target=tgt;this.progress=0;this.alive=true;}
+    update(){this.progress+=0.03;if(this.progress>=1){if(!this.target.infected&&Math.random()<0.7){this.target.infected=true;this.target.infectedTime=frameCount;infected++;}this.alive=false;}return this.alive;}
+    draw(){
+      const px=this.sx+(this.tx-this.sx)*this.progress,py=this.sy+(this.ty-this.sy)*this.progress;
+      ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fillStyle='#ffd93d';ctx.fill();
+      ctx.beginPath();ctx.moveTo(this.sx,this.sy);ctx.lineTo(px,py);ctx.strokeStyle='rgba(255,217,61,0.3)';ctx.lineWidth=1;ctx.stroke();
+    }
+  }
+
+  function drawLinks(){
+    gNodes.forEach(n=>{n.neighbors.forEach(nb=>{ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(nb.x,nb.y);
+      ctx.strokeStyle=(n.infected&&nb.infected)?'rgba(255,107,107,0.12)':'rgba(77,150,255,0.06)';ctx.lineWidth=1;ctx.stroke();});});
+  }
+
+  function drawConvergenceBar(){
+    const pct=gNodes.length>0?infected/gNodes.length:0;
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(W/2-100,H-28,200,20);
+    ctx.strokeStyle='#fff2';ctx.strokeRect(W/2-100,H-28,200,20);
+    const g=ctx.createLinearGradient(W/2-100,0,W/2+100,0);g.addColorStop(0,'#4d96ff');g.addColorStop(0.5,'#ffd93d');g.addColorStop(1,'#ff6b6b');
+    ctx.fillStyle=g;ctx.fillRect(W/2-100,H-28,200*pct,20);
+    ctx.font='9px monospace';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText('Convergence: '+Math.floor(pct*100)+'%',W/2,H-15);ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,180,68);ctx.strokeStyle='#ff6b6b33';ctx.strokeRect(8,8,180,68);
+    ctx.font='10px monospace';ctx.fillStyle='#ff6b6b';ctx.textAlign='left';ctx.fillText('GOSSIP PROTOCOL',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Nodes: '+gNodes.length+'  Infected: '+infected,16,40);
+    ctx.fillText('Round: '+roundNum,16,54);
+    ctx.fillText('Spread: '+(gNodes.length>0?Math.floor(infected/gNodes.length*100):0)+'%',16,68);ctx.restore();
+  }
+
+  function gossipRound(){
+    roundNum++;
+    gNodes.filter(n=>n.infected).forEach(n=>{
+      if(n.neighbors.length===0)return;
+      const tgt=n.neighbors[Math.floor(Math.random()*n.neighbors.length)];
+      gossipMsgs.push(new GossipMsg(n,tgt));
+    });
+  }
+
+  function init(){
+    ensureCanvas();
+    const count=20,margin=40;
+    for(let i=0;i<count;i++){const x=margin+Math.random()*(W-2*margin),y=margin+Math.random()*(H-2*margin-30);gNodes.push(new GNode(x,y,i));}
+    // Build neighbor graph
+    gNodes.forEach(n=>{gNodes.forEach(m=>{if(n===m)return;const dx=n.x-m.x,dy=n.y-m.y;if(Math.sqrt(dx*dx+dy*dy)<120)n.neighbors.push(m);});});
+    // Seed initial infection
+    const seed=gNodes[Math.floor(Math.random()*gNodes.length)];seed.infected=true;seed.infectedTime=0;infected=1;
+    animate();
+  }
+
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(6,8,16,0.14)';ctx.fillRect(0,0,W,H);
+    drawLinks();
+    if(frameCount%60===0&&infected<gNodes.length)gossipRound();
+    for(let i=gossipMsgs.length-1;i>=0;i--){if(!gossipMsgs[i].update())gossipMsgs.splice(i,1);else gossipMsgs[i].draw();}
+    gNodes.forEach(n=>n.draw());
+    // Auto-restart when fully converged
+    if(infected>=gNodes.length&&frameCount%300===0){gNodes.forEach(n=>{n.infected=false;n.infectedTime=0;});infected=0;roundNum=0;
+      const seed=gNodes[Math.floor(Math.random()*gNodes.length)];seed.infected=true;seed.infectedTime=frameCount;infected=1;}
+    drawConvergenceBar();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
+})();

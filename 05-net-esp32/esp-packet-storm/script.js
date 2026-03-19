@@ -360,3 +360,89 @@ function initPacketStorm(){
 }
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initPacketStorm);}else{setTimeout(initPacketStorm,50);}
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Packet Storm: Cyberpunk traffic generator
+   with matrix-style packet rain and protocol visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0,totalPkts=0,pps=0,ppsCtr=0,lastPps=0;
+  const packets=[],bursts=[],hexCols=[];
+  const PROTOS=[{name:'TCP',color:'#ff4444'},{name:'UDP',color:'#4d96ff'},{name:'ICMP',color:'#ffd93d'},{name:'ARP',color:'#6bcb77'},{name:'DNS',color:'#ff78ae'},{name:'HTTP',color:'#e879f9'}];
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#0a0612;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  class Packet{
+    constructor(){
+      this.proto=PROTOS[Math.floor(Math.random()*PROTOS.length)];this.x=Math.random()*W;this.y=-20;
+      this.vy=1.5+Math.random()*3;this.vx=(Math.random()-0.5)*0.5;this.size=6+Math.random()*10;
+      this.rotation=Math.random()*Math.PI;this.rotSpeed=(Math.random()-0.5)*0.08;this.alpha=1;
+    }
+    update(){this.y+=this.vy;this.x+=this.vx;this.rotation+=this.rotSpeed;if(this.y>H-30)this.alpha-=0.05;return this.alpha>0&&this.y<H+40;}
+    draw(){
+      ctx.save();ctx.globalAlpha=this.alpha;ctx.translate(this.x,this.y);ctx.rotate(this.rotation);
+      ctx.fillStyle=this.proto.color+'33';ctx.fillRect(-this.size/2,-this.size/2,this.size,this.size);
+      ctx.strokeStyle=this.proto.color;ctx.lineWidth=1;ctx.strokeRect(-this.size/2,-this.size/2,this.size,this.size);ctx.restore();
+      ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x-this.vx*8,this.y-this.vy*6);ctx.strokeStyle=this.proto.color+'44';ctx.lineWidth=1;ctx.stroke();
+      ctx.font='7px monospace';ctx.fillStyle=this.proto.color+'aa';ctx.textAlign='center';ctx.fillText(this.proto.name,this.x,this.y+this.size+6);
+    }
+  }
+
+  class Burst{
+    constructor(x,y,c){this.x=x;this.y=y;this.color=c;this.parts=[];
+      for(let i=0;i<8;i++){const a=Math.PI*2/8*i;this.parts.push({x:0,y:0,vx:Math.cos(a)*2,vy:Math.sin(a)*2,life:1});}
+    }
+    update(){this.parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=0.95;p.vy*=0.95;p.life-=0.04;});return this.parts.some(p=>p.life>0);}
+    draw(){this.parts.forEach(p=>{if(p.life<=0)return;ctx.beginPath();ctx.arc(this.x+p.x,this.y+p.y,2,0,Math.PI*2);ctx.fillStyle=this.color+Math.floor(p.life*255).toString(16).padStart(2,'0');ctx.fill();});}
+  }
+
+  function initHexBg(){
+    const c=Math.floor(W/20);for(let i=0;i<c;i++)hexCols.push({x:i*20,y:Math.random()*H,speed:0.3+Math.random(),chars:Array.from({length:12},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0'))});
+  }
+  function drawHexBg(){
+    ctx.font='9px monospace';ctx.textAlign='left';
+    hexCols.forEach(col=>{col.y+=col.speed;if(col.y>H+150)col.y=-150;col.chars.forEach((ch,i)=>{ctx.fillStyle='rgba(128,0,255,'+(0.03+i*0.005)+')';ctx.fillText(ch,col.x,col.y+i*12);});if(Math.random()<0.03)col.chars[Math.floor(Math.random()*col.chars.length)]=Math.floor(Math.random()*256).toString(16).padStart(2,'0');});
+  }
+
+  function drawProtoBars(){
+    const counts={};PROTOS.forEach(p=>counts[p.name]=0);packets.forEach(pk=>counts[pk.proto.name]++);
+    const bW=Math.min(60,(W-40)/PROTOS.length-8),sX=(W-PROTOS.length*(bW+8))/2;
+    PROTOS.forEach((p,i)=>{const bx=sX+i*(bW+8),bh=Math.min(40,counts[p.name]*3);
+      ctx.fillStyle=p.color+'44';ctx.fillRect(bx,H-8-bh,bW,bh);ctx.strokeStyle=p.color;ctx.lineWidth=1;ctx.strokeRect(bx,H-8-bh,bW,bh);
+      ctx.fillStyle=p.color;ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText(p.name,bx+bW/2,H-2);});
+  }
+
+  function drawStormMeter(){
+    const intensity=Math.min(1,packets.length/50);
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(W-170,8,162,60);ctx.strokeStyle='#f0f3';ctx.strokeRect(W-170,8,162,60);
+    ctx.font='10px monospace';ctx.fillStyle='#e879f9';ctx.textAlign='left';ctx.fillText('STORM INTENSITY',W-162,24);
+    ctx.fillStyle='#222';ctx.fillRect(W-162,30,146,10);
+    const g=ctx.createLinearGradient(W-162,0,W-16,0);g.addColorStop(0,'#4d96ff');g.addColorStop(0.5,'#ffd93d');g.addColorStop(1,'#ff4444');
+    ctx.fillStyle=g;ctx.fillRect(W-162,30,146*intensity,10);
+    ctx.fillStyle='#aaa';ctx.fillText('Packets: '+totalPkts+'  PPS: '+pps,W-162,56);ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(8,8,160,44);ctx.strokeStyle='#f0f3';ctx.strokeRect(8,8,160,44);
+    ctx.font='10px monospace';ctx.fillStyle='#e879f9';ctx.textAlign='left';ctx.fillText('PACKET STORM',16,24);
+    ctx.fillStyle='#aaa';ctx.fillText('Active: '+packets.length+'  Frame: '+frameCount,16,42);ctx.restore();
+  }
+
+  function init(){ensureCanvas();initHexBg();lastPps=performance.now();animate();}
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(10,6,18,0.14)';ctx.fillRect(0,0,W,H);drawHexBg();
+    const sr=2+Math.sin(frameCount*0.01)*2;for(let i=0;i<sr;i++){packets.push(new Packet());totalPkts++;ppsCtr++;}
+    const now=performance.now();if(now-lastPps>=1000){pps=ppsCtr;ppsCtr=0;lastPps=now;}
+    for(let i=packets.length-1;i>=0;i--){if(!packets[i].update()){if(packets[i].y>=H-50)bursts.push(new Burst(packets[i].x,H-20,packets[i].proto.color));packets.splice(i,1);}else packets[i].draw();}
+    for(let i=bursts.length-1;i>=0;i--){if(!bursts[i].update())bursts.splice(i,1);else bursts[i].draw();}
+    drawProtoBars();drawStormMeter();drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
+})();

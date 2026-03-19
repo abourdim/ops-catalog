@@ -216,3 +216,47 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Signal Generator
+   Animated multi-tone harmonic series + Lissajous pattern
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('sigGenSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='sigGenSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='rgba(6,8,16,.15)';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Harmonic bars
+  const numH=16;for(let i=0;i<numH;i++){
+    const bx=20+i*(W*.5/numH),bw=W*.5/numH-3;
+    const amp=1/(i+1)*Math.abs(Math.sin(t+i*.5));
+    const bh=amp*H*.7;
+    cx.fillStyle=`rgba(${79+i*10},${195-i*5},247,${.3+amp*.4})`;
+    cx.fillRect(bx,H-bh-10,bw,bh);
+    cx.fillStyle='rgba(255,255,255,.2)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText(`H${i+1}`,bx+bw/2,H-4);
+  }
+  // Lissajous on right
+  const lcx=W*.72,lcy=H/2,lr=H*.35;
+  cx.strokeStyle='rgba(100,200,255,.1)';cx.lineWidth=.5;
+  cx.beginPath();cx.arc(lcx,lcy,lr,0,Math.PI*2);cx.stroke();
+  cx.strokeStyle=acc;cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<300;i++){
+    const p=i/300*Math.PI*4;
+    const x=lcx+Math.sin(p*3+t)*lr*.9;const y=lcy+Math.sin(p*2)*lr*.9;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Harmonic Series + Lissajous Pattern',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

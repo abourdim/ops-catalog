@@ -246,3 +246,64 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Firewall Rule Match Heatmap ═══════ */
+(function(){
+let fCanvas,fCtx;const ruleHits=[];const portHeatmap=new Array(65536).fill(0);
+function createFC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Firewall Analytics Dashboard</div>';
+  const c=document.createElement('canvas');c.width=650;c.height=220;
+  c.style.cssText='width:100%;height:auto;display:block;background:#0a1628;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawFC(){
+  if(!fCtx)return;const w=fCanvas.width,h=fCanvas.height;
+  fCtx.fillStyle='rgba(10,22,40,0.1)';fCtx.fillRect(0,0,w,h);
+  // Port scan visualization (top half)
+  const portH=h/2-10;
+  const ports=[22,23,25,53,80,110,443,445,3389,4444,8080,31337];
+  const barW=Math.floor((w-40)/ports.length)-4;
+  ports.forEach((port,i)=>{
+    const x=20+i*(barW+4);
+    const isAttack=ATTACK_PORTS.includes(port);
+    const hitCount=ruleHits.filter(r=>r.port===port).length;
+    const barFill=Math.min(hitCount*8,portH);
+    fCtx.fillStyle='rgba(255,255,255,0.03)';fCtx.fillRect(x,5,barW,portH);
+    fCtx.fillStyle=isAttack?'rgba(244,67,54,0.3)':'rgba(59,130,246,0.3)';
+    fCtx.fillRect(x,5+portH-barFill,barW,barFill);
+    fCtx.strokeStyle=isAttack?'#ef444444':'#3b82f644';fCtx.lineWidth=0.5;fCtx.strokeRect(x,5,barW,portH);
+    fCtx.fillStyle=isAttack?'#ef4444':'#3b82f6';fCtx.font='7px monospace';fCtx.textAlign='center';
+    fCtx.fillText(':'+port,x+barW/2,portH+18);
+    fCtx.fillStyle='rgba(255,255,255,0.5)';fCtx.fillText(hitCount.toString(),x+barW/2,portH-barFill>10?5+portH-barFill-3:14);
+  });
+  // Rule match timeline (bottom half)
+  const tY=h/2+15;
+  fCtx.strokeStyle='rgba(255,255,255,0.05)';fCtx.lineWidth=1;
+  fCtx.beginPath();fCtx.moveTo(20,tY);fCtx.lineTo(w-20,tY);fCtx.stroke();
+  const recent=ruleHits.slice(-50);
+  recent.forEach((hit,i)=>{
+    const x=20+(w-40)*(i/50);const y=tY+10+Math.random()*40;
+    fCtx.beginPath();fCtx.arc(x,y,3,0,Math.PI*2);
+    fCtx.fillStyle=hit.blocked?'#22c55e':'#ef4444';fCtx.fill();
+  });
+  // Stats bar
+  const blocked=ruleHits.filter(r=>r.blocked).length;const passed=ruleHits.length-blocked;
+  fCtx.fillStyle='rgba(255,255,255,0.4)';fCtx.font='8px monospace';fCtx.textAlign='left';
+  fCtx.fillText('Rules: '+rules.length+' | Blocked: '+blocked+' | Passed: '+passed+' | Score: '+score+' | Wave: '+wave,10,h-5);
+  requestAnimationFrame(drawFC);
+}
+// Hook into packet checking
+const origCheckPacket=window.checkPacket;
+if(typeof checkPacket==='function'){
+  window.checkPacket=function(pkt){
+    const result=origCheckPacket(pkt);
+    ruleHits.push({port:pkt.port,proto:pkt.proto,src:pkt.src,blocked:result==='DENY',ts:Date.now()});
+    if(ruleHits.length>200)ruleHits.shift();
+    return result;
+  };
+}
+function initFC(){fCanvas=createFC();if(!fCanvas)return;fCtx=fCanvas.getContext('2d');drawFC();}
+setTimeout(initFC,2000);
+})();

@@ -263,3 +263,61 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — RF Time Machine
+   Animated 3D-perspective waterfall with time axis + signal ghost trails
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const history=[];
+function boot(){
+  let el=document.getElementById('tmSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='tmSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#040810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function genLine(){
+  const n=128,d=new Float32Array(n);
+  for(let i=0;i<n;i++)d[i]=-90+(Math.random()-.5)*6;
+  const ns=2+Math.floor(Math.random()*3);
+  for(let s=0;s<ns;s++){const c=10+Math.random()*(n-20),w=2+Math.random()*6,p=15+Math.random()*30;
+    for(let i=0;i<n;i++){const dist=(i-c)/w;d[i]+=p*Math.exp(-.5*dist*dist);}}
+  return d;
+}
+function tick(){
+  t+=.016;
+  if(history.length===0||Math.random()<.3)history.unshift(genLine());
+  if(history.length>40)history.pop();
+  cx.fillStyle='#040810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // 3D perspective waterfall
+  const rows=Math.min(history.length,30);
+  for(let r=rows-1;r>=0;r--){
+    const line=history[r],n=line.length;
+    const yOff=H-20-r*5,xOff=r*2,scale=1-r*.015;
+    const alpha=1-r/rows;
+    cx.strokeStyle=`rgba(100,200,255,${alpha*.3})`;cx.lineWidth=1;cx.beginPath();
+    for(let i=0;i<n;i++){
+      const x=xOff+(i/n)*(W-r*4)*scale;
+      const norm=Math.max(0,Math.min(1,(line[i]+90)/50));
+      const y=yOff-norm*40*scale;
+      if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+    }
+    cx.stroke();
+    // Fill under curve
+    cx.lineTo(xOff+(W-r*4)*scale,yOff);cx.lineTo(xOff,yOff);cx.closePath();
+    cx.fillStyle=`rgba(100,200,255,${alpha*.03})`;cx.fill();
+  }
+  // Time arrow
+  cx.strokeStyle=acc+'88';cx.lineWidth=1.5;cx.setLineDash([4,4]);
+  cx.beginPath();cx.moveTo(W-30,H-10);cx.lineTo(W-30,20);cx.stroke();
+  cx.fillStyle=acc;cx.beginPath();cx.moveTo(W-30,15);cx.lineTo(W-34,25);cx.lineTo(W-26,25);cx.closePath();cx.fill();
+  cx.setLineDash([]);
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('3D Spectrum Timeline — DVR Perspective View',8,14);
+  cx.textAlign='right';cx.fillText('TIME ↑',W-10,H/2);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

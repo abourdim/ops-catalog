@@ -427,3 +427,72 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: DNS Cache TTL Countdown & Query Stats ═══════ */
+(function(){
+let qCanvas,qCtx;const queryStats={total:0,cached:0,recursive:0};const latencyHistory=[];
+function createQC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">DNS Query Statistics & TTL Monitor</div>';
+  const c=document.createElement('canvas');c.width=650;c.height=240;
+  c.style.cssText='width:100%;height:auto;display:block;background:#0a0e1a;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawQC(){
+  if(!qCtx)return;const w=qCanvas.width,h=qCanvas.height;
+  qCtx.fillStyle='rgba(10,14,26,0.1)';qCtx.fillRect(0,0,w,h);
+  qCtx.strokeStyle='rgba(255,255,255,0.03)';qCtx.lineWidth=0.5;
+  for(let x=0;x<w;x+=20){qCtx.beginPath();qCtx.moveTo(x,0);qCtx.lineTo(x,h);qCtx.stroke();}
+  // TTL countdown bars
+  const cacheEntries=Object.entries(dnsCache);
+  const barStartX=20,barY=20,barW=200,barH=14,gap=4;
+  qCtx.fillStyle='rgba(255,255,255,0.5)';qCtx.font='9px Orbitron,sans-serif';qCtx.textAlign='left';
+  qCtx.fillText('TTL Cache ('+cacheEntries.length+' entries)',barStartX,barY-5);
+  cacheEntries.forEach(([domain,rec],i)=>{
+    const y=barY+10+i*(barH+gap);if(y>h-60)return;
+    const remaining=Math.max(0,rec.ttl-(Date.now()-rec.ts)/1000);
+    const pct=remaining/rec.ttl;
+    const color=pct>0.5?'#66bb6a':pct>0.2?'#ffa726':'#ef5350';
+    qCtx.fillStyle='rgba(255,255,255,0.04)';qCtx.fillRect(barStartX,y,barW,barH);
+    qCtx.fillStyle=color+'44';qCtx.fillRect(barStartX,y,barW*pct,barH);
+    qCtx.strokeStyle=color+'44';qCtx.lineWidth=0.5;qCtx.strokeRect(barStartX,y,barW,barH);
+    qCtx.fillStyle='rgba(255,255,255,0.6)';qCtx.font='7px monospace';qCtx.textAlign='left';
+    qCtx.fillText(domain.substring(0,20),barStartX+3,y+10);
+    qCtx.textAlign='right';qCtx.fillStyle=color;
+    qCtx.fillText(Math.round(remaining)+'s',barStartX+barW-3,y+10);qCtx.textAlign='left';
+  });
+  // Latency graph (right side)
+  if(latencyHistory.length>100)latencyHistory.shift();
+  latencyHistory.push(dnsResolving?50+Math.random()*200:5+Math.random()*20);
+  const gx=280,gy=20,gw=w-gx-20,gh=h-50;
+  qCtx.strokeStyle='rgba(255,255,255,0.05)';qCtx.lineWidth=1;
+  qCtx.strokeRect(gx,gy,gw,gh);
+  qCtx.fillStyle='rgba(255,255,255,0.4)';qCtx.font='9px Orbitron';qCtx.textAlign='left';
+  qCtx.fillText('Query Latency (ms)',gx,gy-5);
+  if(latencyHistory.length>1){
+    qCtx.beginPath();
+    latencyHistory.forEach((v,i)=>{const x=gx+gw*(i/100),y=gy+gh-Math.min(v/300,1)*gh;i===0?qCtx.moveTo(x,y):qCtx.lineTo(x,y);});
+    qCtx.strokeStyle='#4fc3f788';qCtx.lineWidth=1.5;qCtx.stroke();
+    // Fill under
+    qCtx.lineTo(gx+gw,gy+gh);qCtx.lineTo(gx,gy+gh);qCtx.closePath();
+    qCtx.fillStyle='rgba(79,195,247,0.05)';qCtx.fill();
+  }
+  // Query type pie chart indicators
+  queryStats.total=resolveHistory.length;
+  queryStats.cached=Object.keys(dnsCache).length;
+  queryStats.recursive=Math.max(0,queryStats.total-queryStats.cached);
+  const pieX=gx+gw/2,pieY=gy+gh+18;
+  qCtx.fillStyle='rgba(255,255,255,0.3)';qCtx.font='8px monospace';qCtx.textAlign='center';
+  qCtx.fillText('Total: '+queryStats.total+' | Cached: '+queryStats.cached+' | Recursive: '+queryStats.recursive,pieX,pieY);
+  // Active resolution indicator
+  if(dnsResolving){
+    const flash=Math.sin(Date.now()/200)>0;
+    qCtx.fillStyle=flash?'rgba(79,195,247,0.2)':'transparent';
+    qCtx.fillRect(gx,gy,gw,3);
+  }
+  requestAnimationFrame(drawQC);
+}
+function initQC(){qCanvas=createQC();if(!qCanvas)return;qCtx=qCanvas.getContext('2d');drawQC();}
+setTimeout(initQC,2000);
+})();

@@ -72,3 +72,54 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — SDR Sandbox
+   Animated signal mixing visualizer + frequency domain morph
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('sandboxSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='sandboxSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.025;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Signal 1 (left third)
+  cx.strokeStyle='#4fc3f7';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<W/3-10;i++){const x=i+5;const y=H*.3-Math.sin(i*.08+t*4)*H*.18;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}cx.stroke();
+  // Signal 2 (left third, lower)
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<W/3-10;i++){const x=i+5;const y=H*.7-Math.sin(i*.12+t*3)*H*.15;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}cx.stroke();
+  // Plus sign
+  cx.fillStyle='rgba(255,255,255,.3)';cx.font='20px monospace';cx.textAlign='center';cx.fillText('+',W/3,H/2);
+  // Mixed signal (middle third)
+  cx.strokeStyle=acc;cx.lineWidth=2;cx.beginPath();
+  for(let i=0;i<W/3-10;i++){const x=W/3+10+i;
+    const y=H/2-(Math.sin(i*.08+t*4)*H*.15+Math.sin(i*.12+t*3)*H*.12)*.5;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}cx.stroke();
+  // Arrow
+  cx.fillStyle='rgba(255,255,255,.3)';cx.font='20px monospace';cx.textAlign='center';cx.fillText('->',2*W/3+5,H/2);
+  // FFT of mixed (right third)
+  cx.strokeStyle='#22c55e';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<W/3-20;i++){
+    const x=2*W/3+15+i;const f=i/(W/3-20);
+    const peak1=Math.exp(-Math.pow((f-.2)/.03,2));
+    const peak2=Math.exp(-Math.pow((f-.35)/.04,2));
+    const y=H-15-(peak1+peak2+Math.random()*.02)*H*.7;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }cx.stroke();
+  cx.fillStyle='#4fc3f788';cx.font='8px monospace';cx.textAlign='left';cx.fillText('Sig 1',8,20);
+  cx.fillStyle='#f59e0b88';cx.fillText('Sig 2',8,H*.55);
+  cx.fillStyle=acc+'88';cx.fillText('Mixed',W/3+15,20);
+  cx.fillStyle='#22c55e88';cx.fillText('FFT',2*W/3+20,20);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='center';
+  cx.fillText('Signal Mixing Pipeline — Time to Frequency',W/2,H-4);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

@@ -300,3 +300,82 @@ function initSignalGhost(){
 }
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initSignalGhost);}else{setTimeout(initSignalGhost,50);}
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Signal Ghost: MAC phantom with rapid
+   MAC cycling, ghost device flood, and network chaos meter
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0,ghostCnt=0;
+  const ghosts=[],spectres=[];
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#08060e;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+  function randMAC(){return Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':').toUpperCase();}
+
+  class Ghost{
+    constructor(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-0.5)*1.2;this.vy=(Math.random()-0.5)*1.2;
+      this.mac=randMAC();this.alpha=0;this.fadeIn=true;this.life=120+Math.random()*200;this.age=0;
+      this.size=10+Math.random()*10;this.hue=Math.random()*360;this.macTimer=0;}
+    update(){
+      this.age++;this.macTimer++;if(this.macTimer>30){this.mac=randMAC();this.macTimer=0;this.hue=Math.random()*360;}
+      if(this.fadeIn){this.alpha=Math.min(1,this.alpha+0.03);if(this.alpha>=1)this.fadeIn=false;}
+      if(this.age>this.life-40)this.alpha=Math.max(0,this.alpha-0.03);
+      this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1;return this.age<this.life;
+    }
+    draw(){
+      ctx.save();ctx.globalAlpha=this.alpha*0.7;ctx.shadowColor='hsl('+this.hue+',80%,60%)';ctx.shadowBlur=12;
+      ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle='hsla('+this.hue+',70%,50%,0.15)';ctx.fill();
+      ctx.strokeStyle='hsl('+this.hue+',80%,60%)';ctx.lineWidth=1.5;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font=(this.size*0.9)+'px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u{1F47B}',this.x,this.y);
+      ctx.font='7px monospace';ctx.fillStyle='hsla('+this.hue+',80%,70%,'+this.alpha+')';ctx.fillText(this.mac,this.x,this.y+this.size+8);ctx.restore();
+    }
+  }
+
+  class Spectre{
+    constructor(x,y,h){this.x=x;this.y=y;this.vx=(Math.random()-0.5)*2;this.vy=(Math.random()-0.5)*2;this.life=1;this.hue=h;this.size=2+Math.random()*3;}
+    update(){this.x+=this.vx;this.y+=this.vy;this.life-=0.02;this.vx*=0.97;this.vy*=0.97;return this.life>0;}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size*this.life,0,Math.PI*2);ctx.fillStyle='hsla('+this.hue+',70%,60%,'+(this.life*0.4)+')';ctx.fill();}
+  }
+
+  function drawRouter(){
+    const load=Math.min(1,ghosts.length/20),shake=load>0.5?(Math.random()-0.5)*load*4:0;
+    const rx=W/2+shake,ry=H/2+shake;ctx.save();ctx.shadowColor=load>0.7?'#ff4444':'#00ccff';ctx.shadowBlur=10;
+    ctx.beginPath();ctx.arc(rx,ry,22,0,Math.PI*2);ctx.fillStyle='rgba('+(load>0.7?'255,60,60':'0,200,255')+',0.15)';ctx.fill();
+    ctx.strokeStyle=load>0.7?'#ff4444':'#00ccff';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+    ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u{1F500}',rx,ry);
+    ctx.font='8px monospace';ctx.fillStyle=load>0.7?'#ff6666':'#00ccff';ctx.fillText('SWITCH',rx,ry+30);
+    ctx.fillStyle='#222';ctx.fillRect(rx-30,ry+36,60,6);
+    const g=ctx.createLinearGradient(rx-30,0,rx+30,0);g.addColorStop(0,'#00ccff');g.addColorStop(0.7,'#ffcc00');g.addColorStop(1,'#ff4444');
+    ctx.fillStyle=g;ctx.fillRect(rx-30,ry+36,60*load,6);
+    ctx.font='7px monospace';ctx.fillStyle='#888';ctx.fillText('CAM: '+Math.floor(load*100)+'%',rx,ry+52);ctx.restore();
+  }
+
+  function drawProbes(){ghosts.forEach(g=>{if(Math.random()>0.3)return;ctx.beginPath();ctx.moveTo(g.x,g.y);ctx.lineTo(W/2,H/2);ctx.strokeStyle='hsla('+g.hue+',60%,50%,0.06)';ctx.lineWidth=1;ctx.stroke();});}
+
+  function drawHUD(){
+    const cl=Math.min(100,Math.floor(ghosts.length/25*100));
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,185,70);ctx.strokeStyle=cl>70?'#f003':'#80f3';ctx.strokeRect(8,8,185,70);
+    ctx.font='10px monospace';ctx.fillStyle='#c084fc';ctx.textAlign='left';ctx.fillText('SIGNAL GHOST',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Ghost Devices: '+ghosts.length,16,40);ctx.fillText('Total Spawned: '+ghostCnt,16,54);
+    ctx.fillStyle=cl>70?'#ff4444':cl>40?'#ffd93d':'#6bcb77';ctx.fillText('Chaos Level: '+cl+'%',16,68);ctx.restore();
+  }
+
+  function init(){ensureCanvas();animate();}
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(8,6,14,0.12)';ctx.fillRect(0,0,W,H);
+    if(frameCount%8===0&&ghosts.length<30){ghosts.push(new Ghost());ghostCnt++;}
+    drawProbes();drawRouter();
+    for(let i=ghosts.length-1;i>=0;i--){if(!ghosts[i].update()){for(let s=0;s<6;s++)spectres.push(new Spectre(ghosts[i].x,ghosts[i].y,ghosts[i].hue));ghosts.splice(i,1);}
+      else{ghosts[i].draw();if(Math.random()<0.05)spectres.push(new Spectre(ghosts[i].x,ghosts[i].y,ghosts[i].hue));}}
+    for(let i=spectres.length-1;i>=0;i--){if(!spectres[i].update())spectres.splice(i,1);else spectres[i].draw();}
+    drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
+})();

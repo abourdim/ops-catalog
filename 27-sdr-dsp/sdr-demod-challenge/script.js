@@ -234,3 +234,54 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Demod Challenge
+   Animated signal constellation scramble + score fireworks
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const pts=[];
+function boot(){
+  let el=document.getElementById('demodSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='demodSimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#06080e;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='rgba(6,8,14,.12)';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Rotating constellation
+  const ccx=W*.25,ccy=H/2,cr=H*.35;
+  cx.strokeStyle='rgba(100,200,255,.08)';cx.lineWidth=1;
+  cx.beginPath();cx.arc(ccx,ccy,cr,0,Math.PI*2);cx.stroke();
+  cx.beginPath();cx.moveTo(ccx-cr-5,ccy);cx.lineTo(ccx+cr+5,ccy);cx.stroke();
+  cx.beginPath();cx.moveTo(ccx,ccy-cr-5);cx.lineTo(ccx,ccy+cr+5);cx.stroke();
+  const numPts=32;
+  for(let i=0;i<numPts;i++){
+    const a=i/numPts*Math.PI*2+t*.5;const r2=cr*(.4+.3*Math.sin(i*1.7+t));
+    const px=ccx+Math.cos(a)*r2+(Math.random()-.5)*4;
+    const py=ccy+Math.sin(a)*r2+(Math.random()-.5)*4;
+    cx.fillStyle=acc;cx.globalAlpha=.5;cx.beginPath();cx.arc(px,py,2.5,0,Math.PI*2);cx.fill();cx.globalAlpha=1;
+  }
+  // Signal type indicator ring
+  const modTypes=['AM','FM','SSB','BPSK','QPSK','CW'];
+  modTypes.forEach((m,i)=>{
+    const a=i/modTypes.length*Math.PI*2-Math.PI/2+t*.2;
+    const mx=W*.65+Math.cos(a)*60,my=H/2+Math.sin(a)*60;
+    const isCurrent=typeof currentMod!=='undefined'&&currentMod===m;
+    cx.fillStyle=isCurrent?acc:'rgba(100,200,255,.2)';cx.font=isCurrent?'bold 11px monospace':'9px monospace';
+    cx.textAlign='center';cx.fillText(m,mx,my+4);
+    if(isCurrent){cx.strokeStyle=acc+'66';cx.lineWidth=1;cx.beginPath();cx.arc(mx,my,16,0,Math.PI*2);cx.stroke();}
+  });
+  // Score/streak display
+  const sc=typeof score!=='undefined'?score:0,st=typeof streak!=='undefined'?streak:0;
+  cx.fillStyle='rgba(0,0,0,.4)';cx.fillRect(W*.55,8,90,20);
+  cx.fillStyle='#4f4';cx.font='10px Orbitron,monospace';cx.textAlign='center';
+  cx.fillText(`${sc} pts | x${st}`,W*.55+45,22);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Signal Identification — Constellation View',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

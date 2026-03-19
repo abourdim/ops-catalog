@@ -394,3 +394,110 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Tor in a Box: Onion routing with 3-relay
+   packet journey, layer peeling, and encryption visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const relays=[],onionPkts=[],layerParticles=[];let circuitCount=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#0a0814;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  const RELAY_TYPES=[
+    {name:'Client',icon:'\u{1F4BB}',color:'#4d96ff'},
+    {name:'Guard',icon:'\u{1F6E1}',color:'#ff6b6b'},
+    {name:'Middle',icon:'\u{1F9C5}',color:'#ffd93d'},
+    {name:'Exit',icon:'\u{1F6AA}',color:'#6bcb77'},
+    {name:'Destination',icon:'\u{1F310}',color:'#e879f9'}
+  ];
+
+  class Relay{
+    constructor(x,y,type){this.x=x;this.y=y;this.type=type;this.pulse=Math.random()*Math.PI*2;this.active=false;this.activeTimer=0;}
+    draw(){
+      this.pulse+=0.03;if(this.active){this.activeTimer--;if(this.activeTimer<=0)this.active=false;}
+      const glow=4+Math.sin(this.pulse)*2;ctx.save();ctx.shadowColor=this.active?'#fff':this.type.color;ctx.shadowBlur=glow+(this.active?6:0);
+      ctx.beginPath();ctx.arc(this.x,this.y,22,0,Math.PI*2);ctx.fillStyle=this.active?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.05)';ctx.fill();
+      ctx.strokeStyle=this.type.color;ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.type.icon,this.x,this.y);
+      ctx.font='8px monospace';ctx.fillStyle=this.type.color;ctx.fillText(this.type.name,this.x,this.y+30);ctx.restore();
+    }
+  }
+
+  class OnionPacket{
+    constructor(){this.step=0;this.progress=0;this.speed=0.012;this.layers=3;this.alive=true;this.peeling=false;this.peelTimer=0;}
+    update(){
+      if(this.peeling){this.peelTimer++;if(this.peelTimer>20){this.peeling=false;this.peelTimer=0;this.layers=Math.max(0,this.layers-1);this.step++;this.progress=0;}return this.alive;}
+      this.progress+=this.speed;
+      if(this.progress>=1){
+        if(this.step<relays.length-2){relays[this.step+1].active=true;relays[this.step+1].activeTimer=30;
+          this.peeling=true;this.peelTimer=0;
+          for(let i=0;i<10;i++){const r=relays[this.step+1];layerParticles.push({x:r.x,y:r.y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:1,color:RELAY_TYPES[this.step+1].color});}
+        }else{this.alive=false;circuitCount++;}
+      }
+      return this.alive;
+    }
+    draw(){
+      if(this.step>=relays.length-1)return;
+      const src=relays[this.step],tgt=relays[this.step+1];
+      const px=src.x+(tgt.x-src.x)*this.progress,py=src.y+(tgt.y-src.y)*this.progress;
+      // Onion layers
+      const colors=['#ff6b6b','#ffd93d','#6bcb77'];
+      for(let l=this.layers-1;l>=0;l--){
+        ctx.beginPath();ctx.arc(px,py,8+l*4,0,Math.PI*2);ctx.fillStyle=colors[l]+'44';ctx.fill();
+        ctx.strokeStyle=colors[l];ctx.lineWidth=1;ctx.stroke();
+      }
+      // Core dot
+      ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+      // Layer count label
+      ctx.font='7px monospace';ctx.fillStyle='#ffd93d';ctx.textAlign='center';ctx.fillText(this.layers+' layers',px,py-14);
+    }
+  }
+
+  function drawCircuit(){
+    for(let i=0;i<relays.length-1;i++){
+      ctx.beginPath();ctx.moveTo(relays[i].x,relays[i].y);ctx.lineTo(relays[i+1].x,relays[i+1].y);
+      ctx.strokeStyle='rgba(150,100,200,0.12)';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.stroke();ctx.setLineDash([]);
+    }
+  }
+
+  function drawOnionDiagram(){
+    const ox=W-60,oy=40;
+    ctx.save();ctx.globalAlpha=0.6;
+    [20,15,10].forEach((r,i)=>{ctx.beginPath();ctx.arc(ox,oy,r,0,Math.PI*2);ctx.fillStyle=['#ff6b6b44','#ffd93d44','#6bcb7744'][i];ctx.fill();ctx.strokeStyle=['#ff6b6b','#ffd93d','#6bcb77'][i];ctx.lineWidth=1;ctx.stroke();});
+    ctx.font='7px monospace';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText('Onion',ox,oy+28);ctx.restore();
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,185,58);ctx.strokeStyle='#c084fc33';ctx.strokeRect(8,8,185,58);
+    ctx.font='10px monospace';ctx.fillStyle='#c084fc';ctx.textAlign='left';ctx.fillText('TOR IN A BOX',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Relays: '+relays.length+'  Circuits: '+circuitCount,16,40);
+    ctx.fillText('Active: '+onionPkts.length,16,54);ctx.restore();
+  }
+
+  function init(){
+    ensureCanvas();
+    const spacing=W/(RELAY_TYPES.length+1);
+    RELAY_TYPES.forEach((t,i)=>{relays.push(new Relay(spacing*(i+1),H/2+(Math.sin(i)*30),t));});
+    animate();
+  }
+
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(10,8,20,0.14)';ctx.fillRect(0,0,W,H);
+    drawCircuit();drawOnionDiagram();relays.forEach(r=>r.draw());
+    if(frameCount%150===0)onionPkts.push(new OnionPacket());
+    for(let i=onionPkts.length-1;i>=0;i--){if(!onionPkts[i].update())onionPkts.splice(i,1);else onionPkts[i].draw();}
+    for(let i=layerParticles.length-1;i>=0;i--){const p=layerParticles[i];p.x+=p.vx;p.y+=p.vy;p.life-=0.025;if(p.life<=0)layerParticles.splice(i,1);
+      else{ctx.beginPath();ctx.arc(p.x,p.y,3*p.life,0,Math.PI*2);ctx.fillStyle=p.color+Math.floor(p.life*200).toString(16).padStart(2,'0');ctx.fill();}}
+    drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
+})();

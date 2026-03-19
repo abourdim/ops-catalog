@@ -465,3 +465,93 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Swarm Net: ESP-NOW fleet coordination
+   with swarm agents, formation patterns, and mesh communication
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const bots=[],msgs=[],trails=[];let formation='scatter',msgCount=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#060810;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  class Bot{
+    constructor(x,y,id){this.x=x;this.y=y;this.id=id;this.tx=x;this.ty=y;this.vx=0;this.vy=0;
+      this.hue=200+Math.random()*60;this.pulse=Math.random()*Math.PI*2;this.trail=[];}
+    update(){
+      const dx=this.tx-this.x,dy=this.ty-this.y;this.vx+=(dx*0.01-this.vx*0.05);this.vy+=(dy*0.01-this.vy*0.05);
+      this.x+=this.vx;this.y+=this.vy;this.pulse+=0.04;
+      this.trail.push({x:this.x,y:this.y,alpha:1});if(this.trail.length>20)this.trail.shift();
+      this.trail.forEach(t=>t.alpha-=0.03);
+    }
+    draw(){
+      // Trail
+      this.trail.forEach(t=>{if(t.alpha<=0)return;ctx.beginPath();ctx.arc(t.x,t.y,2,0,Math.PI*2);ctx.fillStyle='hsla('+this.hue+',70%,60%,'+(t.alpha*0.2)+')';ctx.fill();});
+      const glow=3+Math.sin(this.pulse)*2;ctx.save();ctx.shadowColor='hsl('+this.hue+',80%,60%)';ctx.shadowBlur=glow;
+      ctx.beginPath();ctx.arc(this.x,this.y,8,0,Math.PI*2);ctx.fillStyle='hsla('+this.hue+',60%,50%,0.3)';ctx.fill();
+      ctx.strokeStyle='hsl('+this.hue+',80%,60%)';ctx.lineWidth=1.5;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='6px monospace';ctx.textAlign='center';ctx.fillStyle='hsl('+this.hue+',80%,70%)';ctx.fillText('B'+this.id,this.x,this.y+14);ctx.restore();
+    }
+  }
+
+  class Msg{
+    constructor(src,tgt){this.sx=src.x;this.sy=src.y;this.tx=tgt.x;this.ty=tgt.y;this.progress=0;this.alive=true;}
+    update(){this.progress+=0.04;if(this.progress>=1)this.alive=false;return this.alive;}
+    draw(){
+      const px=this.sx+(this.tx-this.sx)*this.progress,py=this.sy+(this.ty-this.sy)*this.progress;
+      ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);ctx.fillStyle='rgba(255,217,61,'+(1-this.progress)+')';ctx.fill();
+    }
+  }
+
+  function drawMesh(){
+    for(let i=0;i<bots.length;i++)for(let j=i+1;j<bots.length;j++){
+      const dx=bots[i].x-bots[j].x,dy=bots[i].y-bots[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<100){ctx.beginPath();ctx.moveTo(bots[i].x,bots[i].y);ctx.lineTo(bots[j].x,bots[j].y);
+        ctx.strokeStyle='rgba(100,200,255,'+(0.15*(1-d/100))+')';ctx.lineWidth=1;ctx.stroke();}
+    }
+  }
+
+  function setFormation(){
+    const formations=['circle','grid','scatter','vee'];
+    formation=formations[Math.floor(Math.random()*formations.length)];
+    const cx=W/2,cy=H/2;
+    bots.forEach((b,i)=>{
+      if(formation==='circle'){const a=Math.PI*2/bots.length*i;b.tx=cx+Math.cos(a)*80;b.ty=cy+Math.sin(a)*80;}
+      else if(formation==='grid'){const cols=Math.ceil(Math.sqrt(bots.length));b.tx=cx-60+(i%cols)*30;b.ty=cy-60+Math.floor(i/cols)*30;}
+      else if(formation==='vee'){b.tx=cx+i*15-bots.length*7;b.ty=cy-Math.abs(i-bots.length/2)*15;}
+      else{b.tx=40+Math.random()*(W-80);b.ty=40+Math.random()*(H-80);}
+    });
+  }
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,185,68);ctx.strokeStyle='#0cf3';ctx.strokeRect(8,8,185,68);
+    ctx.font='10px monospace';ctx.fillStyle='#00ccff';ctx.textAlign='left';ctx.fillText('SWARM NET',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Bots: '+bots.length+'  Formation: '+formation,16,40);
+    ctx.fillText('Messages: '+msgCount,16,54);ctx.fillText('Frame: '+frameCount,16,68);ctx.restore();
+  }
+
+  function init(){
+    ensureCanvas();
+    for(let i=0;i<12;i++)bots.push(new Bot(W/2+(Math.random()-0.5)*100,H/2+(Math.random()-0.5)*100,i));
+    setFormation();animate();
+  }
+
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(6,8,16,0.12)';ctx.fillRect(0,0,W,H);
+    drawMesh();bots.forEach(b=>{b.update();b.draw();});
+    // Random ESP-NOW messages
+    if(frameCount%15===0&&bots.length>1){const a=bots[Math.floor(Math.random()*bots.length)];let b;do{b=bots[Math.floor(Math.random()*bots.length)];}while(b===a);msgs.push(new Msg(a,b));msgCount++;}
+    for(let i=msgs.length-1;i>=0;i--){if(!msgs[i].update())msgs.splice(i,1);else msgs[i].draw();}
+    if(frameCount%300===0)setFormation();
+    drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
+})();

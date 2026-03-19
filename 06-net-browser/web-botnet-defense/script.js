@@ -197,3 +197,69 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: DDoS Traffic Flow Visualizer ═══════ */
+(function(){
+let dCanvas,dCtx;const flowParticles=[];const trafficBars=[];
+function createDC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">DDoS Traffic Monitor</div>';
+  const c=document.createElement('canvas');c.width=650;c.height=240;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060a12;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawDC(){
+  if(!dCtx)return;const w=dCanvas.width,h=dCanvas.height;
+  dCtx.fillStyle='rgba(6,10,18,0.1)';dCtx.fillRect(0,0,w,h);
+  dCtx.strokeStyle='rgba(255,255,255,0.02)';dCtx.lineWidth=0.5;
+  for(let x=0;x<w;x+=20){dCtx.beginPath();dCtx.moveTo(x,0);dCtx.lineTo(x,h);dCtx.stroke();}
+  // Traffic bars
+  const infected=BOT_NODES.filter(n=>n.status==='compromised'&&n.role==='bot').length;
+  const quarantined=BOT_NODES.filter(n=>n.status==='quarantined').length;
+  const barData=[
+    {label:'Infected',val:infected,max:8,color:'#ef5350'},
+    {label:'Quarantined',val:quarantined,max:8,color:'#ff9800'},
+    {label:'Clean',val:8-infected-quarantined,max:8,color:'#66bb6a'},
+    {label:'DDoS Level',val:ddosActive?infected*12:0,max:100,color:'#ff4444'},
+    {label:'Defense',val:quarantined*15,max:100,color:'#4fc3f7'},
+  ];
+  const barW=80,barH=h-50,barGap=20,startX=40;
+  barData.forEach((d,i)=>{
+    const x=startX+i*(barW+barGap);
+    if(!trafficBars[i])trafficBars[i]=0;
+    trafficBars[i]+=(d.val/d.max-trafficBars[i])*0.05;
+    const fill=trafficBars[i]*barH;
+    dCtx.fillStyle='rgba(255,255,255,0.03)';dCtx.fillRect(x,20,barW,barH);
+    dCtx.fillStyle=d.color+'44';dCtx.fillRect(x,20+barH-fill,barW,fill);
+    dCtx.strokeStyle=d.color+'66';dCtx.lineWidth=1;dCtx.strokeRect(x,20,barW,barH);
+    // Glow at top of bar
+    if(fill>5){const grd=dCtx.createLinearGradient(x,20+barH-fill,x,20+barH-fill+10);
+      grd.addColorStop(0,d.color+'44');grd.addColorStop(1,'transparent');
+      dCtx.fillStyle=grd;dCtx.fillRect(x,20+barH-fill,barW,10);}
+    dCtx.fillStyle=d.color;dCtx.font='9px Orbitron,sans-serif';dCtx.textAlign='center';
+    dCtx.fillText(d.label,x+barW/2,h-8);
+    dCtx.fillStyle='#fff';dCtx.fillText(d.val.toString(),x+barW/2,15);
+  });
+  // Attack flow particles
+  if(ddosActive){
+    for(let i=0;i<2;i++)flowParticles.push({x:Math.random()*w,y:0,vy:2+Math.random()*3,life:1,color:'#ef5350',size:2+Math.random()*3});
+  }
+  for(let i=flowParticles.length-1;i>=0;i--){
+    const p=flowParticles[i];p.y+=p.vy;p.life-=0.01;
+    if(p.life<=0||p.y>h){flowParticles.splice(i,1);continue;}
+    dCtx.globalAlpha=p.life*0.5;dCtx.beginPath();dCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    dCtx.fillStyle=p.color;dCtx.fill();dCtx.globalAlpha=1;
+  }
+  // Alert banner
+  if(ddosActive){
+    const flash=Math.sin(Date.now()/200)>0;
+    dCtx.fillStyle=flash?'rgba(244,67,54,0.15)':'transparent';dCtx.fillRect(0,0,w,20);
+    dCtx.fillStyle='#ef5350';dCtx.font='10px Orbitron,sans-serif';dCtx.textAlign='center';
+    dCtx.fillText('DDOS ATTACK IN PROGRESS',w/2,14);
+  }
+  requestAnimationFrame(drawDC);
+}
+function initDC(){dCanvas=createDC();if(!dCanvas)return;dCtx=dCanvas.getContext('2d');drawDC();}
+setTimeout(initDC,2000);
+})();

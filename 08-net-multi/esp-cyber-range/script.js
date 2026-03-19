@@ -379,3 +379,114 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Cyber Range: Red vs Blue attack/defense
+   training with network topology and live attack animations
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const netNodes=[],attacks=[],defenses=[],particles=[];
+  let redScore=0,blueScore=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#080810;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  const NODE_TYPES=[
+    {name:'Firewall',icon:'\u{1F6E1}',color:'#4d96ff'},
+    {name:'Web Server',icon:'\u{1F5A5}',color:'#6bcb77'},
+    {name:'Database',icon:'\u{1F4BE}',color:'#ffd93d'},
+    {name:'Router',icon:'\u{1F500}',color:'#00ccff'},
+    {name:'Workstation',icon:'\u{1F4BB}',color:'#ff78ae'},
+    {name:'IDS',icon:'\u{1F50D}',color:'#e879f9'}
+  ];
+
+  class NetNode{
+    constructor(x,y,type){this.x=x;this.y=y;this.type=type;this.shieldActive=false;this.shieldTimer=0;this.compromised=false;this.pulse=Math.random()*Math.PI*2;}
+    draw(){
+      this.pulse+=0.03;const glow=4+Math.sin(this.pulse)*2;
+      ctx.save();
+      if(this.compromised){ctx.shadowColor='#ff4444';ctx.shadowBlur=glow+4;}
+      else if(this.shieldActive){ctx.shadowColor='#4d96ff';ctx.shadowBlur=glow+6;}
+      else{ctx.shadowColor=this.type.color;ctx.shadowBlur=glow;}
+      ctx.beginPath();ctx.arc(this.x,this.y,20,0,Math.PI*2);
+      ctx.fillStyle=this.compromised?'rgba(255,40,40,0.2)':this.shieldActive?'rgba(77,150,255,0.2)':'rgba(255,255,255,0.05)';
+      ctx.fill();ctx.strokeStyle=this.compromised?'#ff4444':this.shieldActive?'#4d96ff':this.type.color;ctx.lineWidth=2;ctx.stroke();
+      if(this.shieldActive){ctx.beginPath();ctx.arc(this.x,this.y,26,0,Math.PI*2);ctx.strokeStyle='rgba(77,150,255,0.4)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);this.shieldTimer--;if(this.shieldTimer<=0)this.shieldActive=false;}
+      ctx.shadowBlur=0;ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.type.icon,this.x,this.y);
+      ctx.font='7px monospace';ctx.fillStyle=this.type.color;ctx.fillText(this.type.name,this.x,this.y+28);ctx.restore();
+    }
+  }
+
+  class Attack{
+    constructor(src,tgt){this.sx=src.x;this.sy=src.y;this.tx=tgt.x;this.ty=tgt.y;this.target=tgt;
+      this.progress=0;this.speed=0.015+Math.random()*0.01;this.alive=true;
+      this.type=['Port Scan','SQL Inject','Lateral Mv','Brute Force','XSS'][Math.floor(Math.random()*5)];
+    }
+    update(){
+      this.progress+=this.speed;
+      if(this.progress>=1){
+        if(this.target.shieldActive){blueScore+=10;for(let i=0;i<8;i++)particles.push(new Particle(this.tx,this.ty,'#4d96ff'));}
+        else{this.target.compromised=true;redScore+=10;for(let i=0;i<8;i++)particles.push(new Particle(this.tx,this.ty,'#ff4444'));setTimeout(()=>{this.target.compromised=false;},2000);}
+        this.alive=false;
+      }
+      return this.alive;
+    }
+    draw(){
+      const px=this.sx+(this.tx-this.sx)*this.progress,py=this.sy+(this.ty-this.sy)*this.progress;
+      ctx.beginPath();ctx.moveTo(this.sx,this.sy);ctx.lineTo(px,py);
+      ctx.strokeStyle='rgba(255,60,60,0.5)';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fillStyle='#ff4444';ctx.fill();
+      ctx.font='7px monospace';ctx.fillStyle='#ff6666';ctx.textAlign='center';ctx.fillText(this.type,px,py-10);
+    }
+  }
+
+  class Particle{
+    constructor(x,y,color){this.x=x;this.y=y;this.color=color;this.vx=(Math.random()-0.5)*4;this.vy=(Math.random()-0.5)*4;this.life=1;}
+    update(){this.x+=this.vx;this.y+=this.vy;this.vx*=0.95;this.vy*=0.95;this.life-=0.03;return this.life>0;}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,2*this.life,0,Math.PI*2);ctx.fillStyle=this.color+Math.floor(this.life*200).toString(16).padStart(2,'0');ctx.fill();}
+  }
+
+  function drawLinks(){
+    for(let i=0;i<netNodes.length;i++)for(let j=i+1;j<netNodes.length;j++){
+      const dx=netNodes[i].x-netNodes[j].x,dy=netNodes[i].y-netNodes[j].y;
+      if(Math.sqrt(dx*dx+dy*dy)<160){ctx.beginPath();ctx.moveTo(netNodes[i].x,netNodes[i].y);ctx.lineTo(netNodes[j].x,netNodes[j].y);ctx.strokeStyle='rgba(100,100,200,0.08)';ctx.lineWidth=1;ctx.stroke();}
+    }
+  }
+
+  function drawScoreboard(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,200,74);ctx.strokeStyle='#8884';ctx.strokeRect(8,8,200,74);
+    ctx.font='10px monospace';ctx.textAlign='left';
+    ctx.fillStyle='#ff4444';ctx.fillText('\u2694 RED TEAM: '+redScore,16,26);
+    ctx.fillStyle='#4d96ff';ctx.fillText('\u{1F6E1} BLUE TEAM: '+blueScore,16,42);
+    ctx.fillStyle='#aaa';ctx.fillText('Nodes: '+netNodes.length+'  Attacks: '+attacks.length,16,58);
+    ctx.fillText('Frame: '+frameCount,16,72);ctx.restore();
+  }
+
+  function drawGrid(){ctx.strokeStyle='rgba(100,100,200,0.04)';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}}
+
+  function init(){
+    ensureCanvas();
+    const cx=W/2,cy=H/2;
+    for(let i=0;i<NODE_TYPES.length;i++){const a=Math.PI*2/NODE_TYPES.length*i,r=80+Math.random()*40;netNodes.push(new NetNode(cx+Math.cos(a)*r,cy+Math.sin(a)*r,NODE_TYPES[i]));}
+    for(let i=0;i<3;i++){const a=Math.random()*Math.PI*2,r=40+Math.random()*30;netNodes.push(new NetNode(cx+Math.cos(a)*r,cy+Math.sin(a)*r,NODE_TYPES[Math.floor(Math.random()*NODE_TYPES.length)]));}
+    animate();
+  }
+
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(8,8,16,0.15)';ctx.fillRect(0,0,W,H);drawGrid();drawLinks();
+    netNodes.forEach(n=>n.draw());
+    if(frameCount%120===0&&netNodes.length>1){const src=netNodes[Math.floor(Math.random()*netNodes.length)];let tgt;do{tgt=netNodes[Math.floor(Math.random()*netNodes.length)];}while(tgt===src);attacks.push(new Attack(src,tgt));}
+    if(frameCount%90===0){const n=netNodes[Math.floor(Math.random()*netNodes.length)];n.shieldActive=true;n.shieldTimer=180;blueScore+=5;}
+    for(let i=attacks.length-1;i>=0;i--){if(!attacks[i].update())attacks.splice(i,1);else attacks[i].draw();}
+    for(let i=particles.length-1;i>=0;i--){if(!particles[i].update())particles.splice(i,1);else particles[i].draw();}
+    drawScoreboard();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
+})();

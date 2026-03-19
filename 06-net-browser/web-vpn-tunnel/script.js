@@ -175,3 +175,94 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: VPN Tunnel Encryption Pipe Visualizer ═══════ */
+(function(){
+let vCanvas,vCtx;const tunnelParticles=[];let tunnelActive=false;
+function createVC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">VPN Encryption Tunnel Flow</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=260;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:pointer;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+const TUNNEL_NODES=[
+  {x:60,y:130,label:'Client',icon:'💻',color:'#22c55e'},
+  {x:200,y:130,label:'VPN Client',icon:'🔐',color:'#3b82f6'},
+  {x:420,y:130,label:'VPN Server',icon:'🔐',color:'#8b5cf6'},
+  {x:560,y:130,label:'Internet',icon:'🌐',color:'#f59e0b'},
+];
+function drawVC(){
+  if(!vCtx)return;const w=vCanvas.width,h=vCanvas.height;
+  vCtx.fillStyle='rgba(6,13,26,0.1)';vCtx.fillRect(0,0,w,h);
+  // Grid
+  vCtx.strokeStyle='rgba(255,255,255,0.02)';vCtx.lineWidth=0.5;
+  for(let x=0;x<w;x+=20){vCtx.beginPath();vCtx.moveTo(x,0);vCtx.lineTo(x,h);vCtx.stroke();}
+  // Tunnel pipe (between VPN client and server)
+  const tStart=TUNNEL_NODES[1].x+20,tEnd=TUNNEL_NODES[2].x-20;
+  const tY=130,tH=50;
+  // Outer pipe
+  vCtx.fillStyle='rgba(59,130,246,0.05)';
+  vCtx.beginPath();vCtx.moveTo(tStart,tY-tH/2);
+  vCtx.lineTo(tEnd,tY-tH/2);vCtx.lineTo(tEnd,tY+tH/2);vCtx.lineTo(tStart,tY+tH/2);vCtx.closePath();vCtx.fill();
+  // Pipe border
+  vCtx.strokeStyle='rgba(59,130,246,0.2)';vCtx.lineWidth=2;
+  vCtx.beginPath();vCtx.moveTo(tStart,tY-tH/2);vCtx.lineTo(tEnd,tY-tH/2);vCtx.stroke();
+  vCtx.beginPath();vCtx.moveTo(tStart,tY+tH/2);vCtx.lineTo(tEnd,tY+tH/2);vCtx.stroke();
+  // Encryption text inside pipe
+  const encT=Date.now()/100;
+  for(let x=tStart;x<tEnd;x+=30){
+    const char='0123456789abcdef'[Math.floor(Math.random()*16)];
+    vCtx.fillStyle='rgba(59,130,246,0.15)';vCtx.font='10px monospace';vCtx.textAlign='center';
+    vCtx.fillText(char,x+(encT%30),tY+Math.sin(x*0.05+encT/50)*15);
+  }
+  vCtx.fillStyle='rgba(59,130,246,0.3)';vCtx.font='10px Orbitron,sans-serif';vCtx.textAlign='center';
+  vCtx.fillText('ENCRYPTED TUNNEL',tStart+(tEnd-tStart)/2,tY-tH/2-8);
+  // Connections outside tunnel
+  [[0,1],[2,3]].forEach(([a,b])=>{
+    vCtx.beginPath();vCtx.moveTo(TUNNEL_NODES[a].x,TUNNEL_NODES[a].y);
+    vCtx.lineTo(TUNNEL_NODES[b].x,TUNNEL_NODES[b].y);
+    vCtx.strokeStyle='rgba(255,255,255,0.1)';vCtx.lineWidth=1;vCtx.setLineDash([4,4]);vCtx.stroke();vCtx.setLineDash([]);
+  });
+  // Nodes
+  TUNNEL_NODES.forEach(n=>{
+    vCtx.beginPath();vCtx.arc(n.x,n.y,18,0,Math.PI*2);
+    vCtx.fillStyle=n.color+'25';vCtx.fill();vCtx.strokeStyle=n.color;vCtx.lineWidth=2;vCtx.stroke();
+    vCtx.fillStyle='#fff';vCtx.font='14px serif';vCtx.textAlign='center';vCtx.fillText(n.icon,n.x,n.y+5);
+    vCtx.fillStyle=n.color;vCtx.font='8px Orbitron,monospace';vCtx.fillText(n.label,n.x,n.y+32);
+  });
+  // Data particles through tunnel
+  if(Math.random()>0.7||tunnelActive){
+    const isEncrypted=Math.random()>0.3;
+    const startNode=Math.random()>0.5?0:3;
+    const path=startNode===0?[0,1,2,3]:[3,2,1,0];
+    tunnelParticles.push({pathIdx:0,path,t:0,speed:0.01+Math.random()*0.015,
+      color:isEncrypted?'#3b82f6':'#ef4444',encrypted:isEncrypted,size:3+Math.random()*2});
+  }
+  for(let i=tunnelParticles.length-1;i>=0;i--){
+    const p=tunnelParticles[i];p.t+=p.speed;
+    const totalSegs=p.path.length-1;const seg=Math.min(Math.floor(p.t*totalSegs),totalSegs-1);
+    const segT=(p.t*totalSegs)-seg;
+    if(seg>=totalSegs){tunnelParticles.splice(i,1);continue;}
+    const a=TUNNEL_NODES[p.path[seg]],b=TUNNEL_NODES[p.path[seg+1]];
+    const px=a.x+(b.x-a.x)*segT;
+    const py=a.y+(b.y-a.y)*segT+(p.encrypted?Math.sin(px*0.05)*15:0);
+    vCtx.beginPath();vCtx.arc(px,py,p.size,0,Math.PI*2);
+    vCtx.fillStyle=p.color;vCtx.fill();
+    vCtx.beginPath();vCtx.arc(px,py,p.size+3,0,Math.PI*2);
+    vCtx.strokeStyle=p.color+'44';vCtx.lineWidth=1;vCtx.stroke();
+  }
+  // Stats
+  vCtx.fillStyle='rgba(255,255,255,0.3)';vCtx.font='8px monospace';vCtx.textAlign='left';
+  const enc=tunnelParticles.filter(p=>p.encrypted).length;const plain=tunnelParticles.length-enc;
+  vCtx.fillText('Encrypted: '+enc+' | Plaintext: '+plain+' | Cipher: AES-256-CBC | Protocol: WireGuard',10,h-8);
+  // Warning for plaintext
+  if(plain>0){vCtx.fillStyle='rgba(239,68,68,0.5)';vCtx.fillText('WARNING: Unencrypted traffic detected outside tunnel!',10,h-20);}
+  requestAnimationFrame(drawVC);
+}
+function initVC(){vCanvas=createVC();if(!vCanvas)return;vCtx=vCanvas.getContext('2d');
+  vCanvas.addEventListener('click',()=>{tunnelActive=!tunnelActive;});
+  drawVC();}
+setTimeout(initVC,2000);
+})();

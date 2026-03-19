@@ -285,3 +285,48 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Modulation Lab
+   Animated carrier + message + modulated waveform overlay
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('modLabSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='modLabSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060a14;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='#060a14';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const third=H/3;
+  // Message signal
+  cx.strokeStyle='#4fc3f7';cx.lineWidth=1;cx.beginPath();
+  for(let i=0;i<W;i++){const x=i,tt=i/W+t;cx.lineTo(x,third*.5-Math.sin(tt*8)*third*.3);} cx.stroke();
+  cx.fillStyle='rgba(79,195,247,.4)';cx.font='8px monospace';cx.fillText('Message',4,12);
+  // Carrier
+  cx.strokeStyle='rgba(255,255,255,.15)';cx.lineWidth=.5;cx.beginPath();
+  for(let i=0;i<W;i++){const x=i,tt=i/W+t;cx.lineTo(x,third+third*.5-Math.sin(tt*60)*third*.3);} cx.stroke();
+  cx.fillStyle='rgba(255,255,255,.3)';cx.font='8px monospace';cx.fillText('Carrier',4,third+12);
+  // AM Modulated
+  cx.strokeStyle=acc;cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<W;i++){
+    const x=i,tt=i/W+t;
+    const msg=.5+.5*Math.sin(tt*8);const y=2*third+third*.5-msg*Math.sin(tt*60)*third*.35;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  // Envelope
+  cx.strokeStyle=acc+'44';cx.lineWidth=1;cx.setLineDash([3,3]);cx.beginPath();
+  for(let i=0;i<W;i++){const x=i,tt=i/W+t;const msg=.5+.5*Math.sin(tt*8);cx.lineTo(x,2*third+third*.5-msg*third*.35);}
+  cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=acc+'88';cx.font='8px monospace';cx.fillText('AM Output',4,2*third+12);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='right';
+  cx.fillText('Modulation Breakdown',W-8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

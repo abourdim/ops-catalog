@@ -344,3 +344,63 @@ function init() {
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Signal Zoo
+   Animated modulation comparison grid + eye diagram
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('zooSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='zooSimCanvas';el.width=780;el.height=220;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.03;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Eye diagram simulation
+  const eyeW=W*.45,eyeH=H-40,eyeX=W*.52,eyeY=20;
+  cx.strokeStyle='rgba(100,200,255,.06)';cx.lineWidth=.5;
+  cx.beginPath();cx.moveTo(eyeX,eyeY+eyeH/2);cx.lineTo(eyeX+eyeW,eyeY+eyeH/2);cx.stroke();
+  // Draw multiple overlaid eye traces
+  for(let trace=0;trace<30;trace++){
+    const noise=(Math.random()-.5)*.15;const jitter=(Math.random()-.5)*5;
+    cx.strokeStyle=`rgba(${parseInt(acc.slice(1,3),16)||212},${parseInt(acc.slice(3,5),16)||160},${parseInt(acc.slice(5,7),16)||60},.12)`;
+    cx.lineWidth=1;cx.beginPath();
+    for(let i=0;i<100;i++){
+      const x=eyeX+jitter+i/100*eyeW;
+      const sym=(i/50)%2<1?1:-1;const trans=Math.abs((i%50)/50-.5)*2;
+      const y=eyeY+eyeH/2-(sym*(1-Math.exp(-trans*5))+noise*(1-trans))*eyeH*.35;
+      if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+    }
+    cx.stroke();
+  }
+  cx.fillStyle='rgba(0,0,0,.5)';cx.fillRect(eyeX+eyeW/2-35,eyeY,70,16);
+  cx.fillStyle=acc;cx.font='10px Orbitron,monospace';cx.textAlign='center';cx.fillText('EYE DIAGRAM',eyeX+eyeW/2,eyeY+12);
+  // Mini modulation previews on left
+  const mods=['AM','FM','BPSK','QPSK'];const pw=W*.42/2,ph=(H-30)/2;
+  mods.forEach((m,idx)=>{
+    const mx=8+(idx%2)*pw,my=18+Math.floor(idx/2)*ph;
+    cx.strokeStyle='rgba(100,200,255,.08)';cx.strokeRect(mx,my,pw-6,ph-6);
+    cx.fillStyle='rgba(100,200,255,.3)';cx.font='8px monospace';cx.fillText(m,mx+4,my+10);
+    cx.strokeStyle=`rgba(${100+idx*40},${200-idx*20},255,.3)`;cx.lineWidth=1;cx.beginPath();
+    for(let i=0;i<60;i++){
+      const xt=mx+4+i/60*(pw-14),tt=i/60+t;
+      let y=my+ph/2-3;
+      if(m==='AM')y-=(.5+.5*Math.sin(tt*4))*Math.sin(tt*20)*(ph*.25);
+      else if(m==='FM')y-=Math.sin(tt*20+3*Math.sin(tt*4))*(ph*.25);
+      else if(m==='BPSK')y-=(Math.floor(tt*3)%2?1:-1)*Math.sin(tt*20)*(ph*.25);
+      else y-=Math.sin(tt*20+[.785,2.356,3.927,5.498][Math.floor(tt*2)%4])*(ph*.25);
+      if(i===0)cx.moveTo(xt,y);else cx.lineTo(xt,y);
+    }
+    cx.stroke();
+  });
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Modulation Zoo — Eye Diagram + Mini Previews',8,12);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

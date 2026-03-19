@@ -223,3 +223,52 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Noise Floor
+   Animated thermal noise waterfall + noise figure cascade
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('noiseSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='noiseSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#040608;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.016;
+  // Scroll noise waterfall up
+  const imgData=cx.getImageData(0,0,W,H-1);cx.putImageData(imgData,0,1);
+  // New noise line at top
+  for(let x=0;x<W;x++){
+    const nf=Math.random();const v=nf*nf;
+    const r=v*40|0,g=v*60|0,b=80+v*175|0;
+    cx.fillStyle=`rgb(${r},${g},${b})`;cx.fillRect(x,0,1,1);
+  }
+  // Signal peak emerging from noise
+  const sigX=W/2+Math.sin(t*.5)*100;const sigW=20+Math.sin(t*.3)*8;
+  for(let x=sigX-sigW;x<sigX+sigW;x++){
+    if(x<0||x>=W)continue;
+    const d=Math.abs(x-sigX)/sigW;const v=1-d*d;
+    const r=v*200+55|0,g=v*150+50|0,b=50;
+    cx.fillStyle=`rgb(${r},${g},${b})`;cx.fillRect(x,0,1,1);
+  }
+  // NF cascade overlay at bottom
+  cx.fillStyle='rgba(0,0,0,.6)';cx.fillRect(0,H-28,W,28);
+  const stages=['ANT','LNA','MIXER','IF AMP','ADC'];
+  const nfs=[0,1.5,8,3,6];let cumNF=0;
+  stages.forEach((s,i)=>{
+    const sx=20+i*(W/5-4);
+    cumNF+=nfs[i];
+    cx.fillStyle='rgba(100,200,255,.15)';cx.fillRect(sx,H-26,W/5-12,22);
+    cx.fillStyle='rgba(100,200,255,.6)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText(`${s} NF=${nfs[i]}dB`,sx+(W/5-12)/2,H-11);
+  });
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText(`Thermal Noise Waterfall | System NF: ${cumNF.toFixed(1)} dB`,8,H-30);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

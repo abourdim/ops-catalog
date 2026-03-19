@@ -167,3 +167,72 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Beacon Flood Airwave Visualizer ═══════ */
+(function beaconFloodCanvas(){
+  const CVS_ID='beaconFloodVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');
+    card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">📡</span> Airwave Visualizer</div>';
+    const c=document.createElement('canvas');
+    c.id=CVS_ID;c.style.cssText='width:100%;height:260px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);
+    wrap.parentNode.insertBefore(card,wrap.nextSibling);
+    return c;
+  }
+  const beacons=[];
+  let _raf=null;
+  function spawnBeacon(ch,hidden){
+    const angle=Math.random()*Math.PI*2;
+    beacons.push({x:0.5,y:0.5,vx:Math.cos(angle)*(.003+Math.random()*.004),vy:Math.sin(angle)*(.003+Math.random()*.004),r:0,maxR:.12+Math.random()*.08,life:1,ch:ch||Math.ceil(Math.random()*13),hidden:hidden||false,alpha:1});
+    if(beacons.length>120)beacons.splice(0,30);
+  }
+  function draw(){
+    const c=document.getElementById(CVS_ID);
+    if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');
+    const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.18)';ctx.fillRect(0,0,w,h);
+    // Grid
+    ctx.strokeStyle='rgba(255,255,255,0.03)';ctx.lineWidth=1;
+    for(let i=0;i<14;i++){const x=w*0.05+i*(w*0.9/13);ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+    ctx.font='8px monospace';ctx.fillStyle='rgba(255,255,255,0.15)';ctx.textAlign='center';
+    for(let i=1;i<=13;i++){ctx.fillText('Ch'+i,w*0.05+(i-1)*(w*0.9/12),h-4);}
+    // Central AP tower
+    const cx=w/2,cy=h/2;
+    ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fillStyle='rgba(34,197,94,0.9)';ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,12,0,Math.PI*2);ctx.strokeStyle='rgba(34,197,94,0.3)';ctx.lineWidth=1;ctx.stroke();
+    // Beacons
+    beacons.forEach((b,i)=>{
+      b.r+=0.002;b.life-=0.008;b.x+=b.vx;b.y+=b.vy;b.alpha=b.life;
+      if(b.life<=0){beacons.splice(i,1);return;}
+      const bx=b.x*w,by=b.y*h;
+      const color=b.hidden?'rgba(168,85,247,':'rgba(34,197,94,';
+      // Expanding ring
+      ctx.beginPath();ctx.arc(bx,by,b.r*w,0,Math.PI*2);
+      ctx.strokeStyle=color+(b.alpha*0.4).toFixed(2)+')';ctx.lineWidth=1.5;ctx.stroke();
+      // Core dot
+      ctx.beginPath();ctx.arc(bx,by,3,0,Math.PI*2);
+      ctx.fillStyle=color+(b.alpha*0.8).toFixed(2)+')';ctx.fill();
+      // Channel indicator line
+      const chX=w*0.05+(b.ch-1)*(w*0.9/12);
+      ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(chX,h-12);
+      ctx.strokeStyle=color+(b.alpha*0.08).toFixed(2)+')';ctx.lineWidth=0.5;ctx.stroke();
+    });
+    // Spawn when sim is running
+    if(typeof simRunning!=='undefined'&&simRunning){
+      if(Math.random()<0.4)spawnBeacon(Math.ceil(Math.random()*13),Math.random()<0.15);
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){
+    const c=ensureCanvas();if(!c)return setTimeout(boot,500);
+    if(!_raf)draw();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

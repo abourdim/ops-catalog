@@ -170,3 +170,93 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Deauth Attack Radar ═══════ */
+(function deauthRadarCanvas(){
+  const CVS_ID='deauthRadarVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">🚨</span> Attack Visualization Radar</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:280px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const particles=[];let _raf=null,angle=0;
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.15)';ctx.fillRect(0,0,w,h);
+    const cx=w/2,cy=h/2,maxR=Math.min(cx,cy)-25;
+    // Radar rings
+    for(let i=1;i<=5;i++){
+      ctx.beginPath();ctx.arc(cx,cy,maxR*i/5,0,Math.PI*2);
+      ctx.strokeStyle='rgba(34,197,94,0.08)';ctx.lineWidth=1;ctx.stroke();
+    }
+    // Cross hairs
+    ctx.beginPath();ctx.moveTo(cx-maxR,cy);ctx.lineTo(cx+maxR,cy);
+    ctx.moveTo(cx,cy-maxR);ctx.lineTo(cx,cy+maxR);
+    ctx.strokeStyle='rgba(34,197,94,0.06)';ctx.stroke();
+    // Sweep line
+    angle+=0.02;
+    const sweepA=angle%(Math.PI*2);
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(sweepA)*maxR,cy+Math.sin(sweepA)*maxR);
+    ctx.strokeStyle='rgba(34,197,94,0.6)';ctx.lineWidth=2;ctx.stroke();
+    // Sweep gradient trail
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,maxR,sweepA-0.5,sweepA,false);ctx.closePath();
+    ctx.fillStyle='rgba(34,197,94,0.08)';ctx.fill();
+    // Spawn attack particles when running
+    if(typeof simRunning!=='undefined'&&simRunning&&typeof deauthCount!=='undefined'){
+      const rate=deauthCount/(((Date.now()-startTime)||1)/60000);
+      if(Math.random()<Math.min(0.5,rate/100)){
+        const a=Math.random()*Math.PI*2;
+        const d=0.2+Math.random()*0.7;
+        particles.push({x:cx+Math.cos(a)*d*maxR,y:cy+Math.sin(a)*d*maxR,
+          life:1,isDeauth:Math.random()<0.6,r:3+Math.random()*4,
+          pulsePhase:Math.random()*Math.PI*2,spawnAngle:sweepA});
+      }
+    }
+    // Normal traffic blips
+    if(typeof simRunning!=='undefined'&&simRunning&&Math.random()<0.15){
+      const a=Math.random()*Math.PI*2;const d=0.3+Math.random()*0.6;
+      particles.push({x:cx+Math.cos(a)*d*maxR,y:cy+Math.sin(a)*d*maxR,
+        life:1,isDeauth:false,r:2,pulsePhase:Math.random()*Math.PI*2,spawnAngle:sweepA});
+    }
+    // Draw particles
+    particles.forEach((p,i)=>{
+      const age=((sweepA-p.spawnAngle+Math.PI*4)%(Math.PI*2))/(Math.PI*2);
+      p.life=Math.max(0,1-age*1.5);
+      if(p.life<=0){particles.splice(i,1);return;}
+      const color=p.isDeauth?'#ef4444':'#22c55e';
+      const pulse=Math.sin(angle*3+p.pulsePhase)*0.3+0.7;
+      // Glow
+      if(p.isDeauth){
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r*2.5*pulse,0,Math.PI*2);
+        ctx.fillStyle=`rgba(239,68,68,${p.life*0.15})`;ctx.fill();
+        // Shockwave ring
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r*3*(1-p.life*0.5),0,Math.PI*2);
+        ctx.strokeStyle=`rgba(239,68,68,${p.life*0.3})`;ctx.lineWidth=1;ctx.stroke();
+      }
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r*pulse,0,Math.PI*2);
+      ctx.fillStyle=color;ctx.globalAlpha=p.life*0.8;ctx.fill();ctx.globalAlpha=1;
+    });
+    if(particles.length>150)particles.splice(0,40);
+    // Center label
+    ctx.font='bold 11px Orbitron,monospace';ctx.fillStyle='rgba(34,197,94,0.7)';
+    ctx.textAlign='center';ctx.fillText('IDS RADAR',cx,cy+maxR+16);
+    // Stats overlay
+    if(typeof deauthCount!=='undefined'){
+      ctx.font='9px monospace';ctx.fillStyle=deauthCount>20?'#ef4444':'rgba(255,255,255,0.4)';
+      ctx.textAlign='left';ctx.fillText('DEAUTH: '+(deauthCount||0),8,15);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.fillText('FRAMES: '+(typeof totalFrames!=='undefined'?totalFrames:0),8,27);
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

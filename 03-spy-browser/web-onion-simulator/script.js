@@ -252,3 +252,70 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Onion Layer Encryption Visualizer ═══════ */
+(function(){
+let lCanvas,lCtx;const layerParticles=[];
+function createLC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Onion Layer Encryption Visualizer</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=300;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:pointer;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawL(){
+  if(!lCtx)return;const w=lCanvas.width,h=lCanvas.height,cx=w/2,cy=h/2;
+  lCtx.fillStyle='rgba(6,13,26,0.1)';lCtx.fillRect(0,0,w,h);
+  lCtx.strokeStyle='#0a1a30';lCtx.lineWidth=0.3;
+  for(let i=0;i<w;i+=25){lCtx.beginPath();lCtx.moveTo(i,0);lCtx.lineTo(i,h);lCtx.stroke();}
+  for(let i=0;i<h;i+=25){lCtx.beginPath();lCtx.moveTo(0,i);lCtx.lineTo(w,i);lCtx.stroke();}
+  const layers=[
+    {r:110,color:'#ff4444',label:'Layer 3: Exit Encryption',speed:0.003},
+    {r:80,color:'#ff8800',label:'Layer 2: Middle Encryption',speed:0.005},
+    {r:50,color:'#ffcc00',label:'Layer 1: Entry Encryption',speed:0.008},
+    {r:20,color:'#33cc55',label:'Plaintext Message',speed:0},
+  ];
+  const t=Date.now()/1000;
+  layers.forEach((l,idx)=>{
+    const segments=12+idx*4;
+    for(let s=0;s<segments;s++){
+      const a=(s/segments)*Math.PI*2+t*l.speed*(idx%2===0?1:-1);
+      const a2=((s+0.8)/segments)*Math.PI*2+t*l.speed*(idx%2===0?1:-1);
+      lCtx.beginPath();lCtx.arc(cx,cy,l.r,a,a2);
+      lCtx.strokeStyle=l.color+(idx===3?'cc':'66');lCtx.lineWidth=idx===3?4:8-idx;lCtx.stroke();
+    }
+    const labelAngle=t*0.3+idx*1.2;
+    const lx=cx+Math.cos(labelAngle)*(l.r+18);const ly=cy+Math.sin(labelAngle)*(l.r+18);
+    lCtx.fillStyle=l.color;lCtx.font='8px Orbitron,monospace';lCtx.textAlign='center';
+    lCtx.fillText(l.label,lx,ly);
+    // Orbiting data bits
+    for(let b=0;b<3;b++){
+      const ba=t*(0.5+idx*0.2)+b*(Math.PI*2/3);
+      const bx=cx+Math.cos(ba)*l.r,by=cy+Math.sin(ba)*l.r;
+      lCtx.beginPath();lCtx.arc(bx,by,2+idx*0.5,0,Math.PI*2);
+      lCtx.fillStyle=l.color;lCtx.fill();
+    }
+  });
+  // Center icon
+  lCtx.fillStyle='#fff';lCtx.font='16px serif';lCtx.textAlign='center';lCtx.fillText('📨',cx,cy+6);
+  // Particles
+  for(let i=layerParticles.length-1;i>=0;i--){
+    const p=layerParticles[i];p.life-=0.01;p.r+=0.5;p.angle+=p.speed;
+    if(p.life<=0){layerParticles.splice(i,1);continue;}
+    const px=cx+Math.cos(p.angle)*p.r,py=cy+Math.sin(p.angle)*p.r;
+    lCtx.globalAlpha=p.life;lCtx.beginPath();lCtx.arc(px,py,3,0,Math.PI*2);
+    lCtx.fillStyle=p.color;lCtx.fill();lCtx.globalAlpha=1;
+  }
+  lCtx.fillStyle='rgba(255,255,255,0.3)';lCtx.font='8px monospace';lCtx.textAlign='left';
+  lCtx.fillText('Layers: 3 | Cipher: AES-256 | Key Exchange: Curve25519',10,h-8);
+  requestAnimationFrame(drawL);
+}
+function initLC(){lCanvas=createLC();if(!lCanvas)return;lCtx=lCanvas.getContext('2d');
+  lCanvas.addEventListener('click',()=>{
+    const colors=['#ff4444','#ff8800','#ffcc00','#33cc55'];
+    for(let i=0;i<20;i++)layerParticles.push({r:20+Math.random()*30,angle:Math.random()*Math.PI*2,
+      speed:(Math.random()-0.5)*0.05,life:1,color:colors[Math.floor(Math.random()*4)]});
+  });drawL();}
+setTimeout(initLC,1500);
+})();

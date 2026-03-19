@@ -160,3 +160,57 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — GSM Tower Mapper
+   Signal strength heatmap + animated coverage + signal bars
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+const SIM_ID='gsmHeatSim';let cv,cx,W,H,on=false,af=null,t=0;
+const HW=64,HH=48;let heat=new Float32Array(HW*HH);
+function boot(){
+  let el=document.getElementById(SIM_ID);
+  if(!el){el=document.createElement('canvas');el.id=SIM_ID;el.width=780;el.height=260;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#050a14;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function hcol(v){if(v<.25)return[0,0,v*4*180|0];if(v<.5){const t=(v-.25)*4;return[0,t*200|0,180];}if(v<.75){const t=(v-.5)*4;return[t*255|0,200,(1-t)*180|0];}const u=(v-.75)*4;return[255,200+u*55|0,u*100|0];}
+function tick(){
+  if(!on)return;t+=.016;
+  for(let i=0;i<HW*HH;i++)heat[i]*=.95;
+  if(typeof towers!=='undefined')towers.forEach(tw=>{
+    const px=tw.x*HW|0,py=tw.y*HH|0,r=tw.coverage*HW*1.5|0,pw=(-tw.signal+40)/70;
+    for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
+      const nx=px+dx,ny=py+dy;if(nx<0||nx>=HW||ny<0||ny>=HH)continue;
+      const d=Math.sqrt(dx*dx+dy*dy)/r;if(d>1)continue;
+      heat[ny*HW+nx]+=pw*(1-d*d)*.12;}
+  });
+  for(let i=0;i<HW*HH;i++)heat[i]=Math.min(1,heat[i]);
+  cx.fillStyle='#050a14';cx.fillRect(0,0,W,H);
+  const cw=W/HW,ch=(H-44)/HH;
+  for(let y=0;y<HH;y++)for(let x=0;x<HW;x++){
+    const v=heat[y*HW+x];if(v<.01)continue;
+    const[r,g,b]=hcol(v);cx.fillStyle=`rgba(${r},${g},${b},${Math.min(.8,v)})`;
+    cx.fillRect(x*cw,y*ch+18,cw+1,ch+1);}
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  if(typeof towers!=='undefined'){
+    const bw=Math.min(36,W/Math.max(1,towers.length)-4);
+    towers.forEach((tw,i)=>{
+      const bx=8+i*(bw+3),bh=Math.max(2,((tw.signal+110)/70)*28);
+      cx.fillStyle=tw.signal>-70?'#81c784':tw.signal>-85?'#ffb74d':'#e57373';
+      cx.fillRect(bx,H-bh-2,bw,bh);
+      cx.fillStyle='rgba(255,255,255,.3)';cx.font='6px monospace';cx.textAlign='center';
+      cx.fillText(tw.cellId,bx+bw/2,H-bh-4);});}
+  const sx=(t*55)%W;cx.strokeStyle=acc+'55';cx.lineWidth=1;cx.beginPath();cx.moveTo(sx,18);cx.lineTo(sx,H-38);cx.stroke();
+  // Radar sweep
+  const rcx=W-60,rcy=50,rr=35;
+  cx.strokeStyle='rgba(100,200,255,.1)';cx.beginPath();cx.arc(rcx,rcy,rr,0,Math.PI*2);cx.stroke();
+  const ra=t*1.2;cx.strokeStyle=acc+'88';cx.lineWidth=2;cx.beginPath();cx.moveTo(rcx,rcy);cx.lineTo(rcx+Math.cos(ra)*rr,rcy+Math.sin(ra)*rr);cx.stroke();
+  for(let i=0;i<6;i++){const a=ra-i*.15;cx.strokeStyle=`rgba(100,200,255,${.3-i*.05})`;cx.beginPath();cx.moveTo(rcx,rcy);cx.lineTo(rcx+Math.cos(a)*rr,rcy+Math.sin(a)*rr);cx.stroke();}
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='10px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Signal Heatmap — Coverage Simulation',8,13);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();on=true;tick();},600);
+})();

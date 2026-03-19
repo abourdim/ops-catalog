@@ -111,3 +111,64 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Spectrum Observatory
+   Animated wideband panoramic spectrum + anomaly detection
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;const specHist=[];
+function boot(){
+  let el=document.getElementById('obsSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='obsSimCanvas';el.width=780;el.height=220;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#030608;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function genSpec(){
+  const n=256,d=new Float32Array(n);
+  for(let i=0;i<n;i++)d[i]=-100+(Math.random()-.5)*4;
+  // Known bands
+  const bands=[{c:30,w:8,p:25},{c:80,w:5,p:20},{c:128,w:15,p:30},{c:180,w:4,p:18},{c:220,w:10,p:22}];
+  bands.forEach(b=>{for(let i=0;i<n;i++){const dist=(i-b.c)/b.w;d[i]+=b.p*Math.exp(-.5*dist*dist);}});
+  // Random transient
+  if(Math.random()<.1){const c=Math.floor(Math.random()*n),w=1+Math.random()*3;
+    for(let i=0;i<n;i++){const dist=(i-c)/w;d[i]+=35*Math.exp(-.5*dist*dist);}}
+  return d;
+}
+function pCol(v){const n=Math.max(0,Math.min(1,(v+100)/60));
+  if(n<.25)return[0,0,n*4*200|0];if(n<.5){const t=(n-.25)*4;return[0,t*200|0,200];}
+  if(n<.75){const t=(n-.5)*4;return[t*255|0,200,(1-t)*200|0];}
+  const u=(n-.75)*4;return[255,200+u*55|0,u*200|0];
+}
+function tick(){
+  t+=.016;
+  specHist.unshift(genSpec());if(specHist.length>H-25)specHist.pop();
+  cx.fillStyle='#030608';cx.fillRect(0,0,W,H);
+  // Waterfall
+  for(let r=0;r<specHist.length;r++){
+    const line=specHist[r];
+    for(let i=0;i<256;i++){
+      const[rr,g,b]=pCol(line[i]);
+      cx.fillStyle=`rgb(${rr},${g},${b})`;
+      cx.fillRect(i/256*W,20+r,Math.ceil(W/256)+1,1);
+    }
+  }
+  // Overlay current spectrum line at top
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  if(specHist.length>0){
+    cx.strokeStyle=acc+'88';cx.lineWidth=1;cx.beginPath();
+    const cur=specHist[0];
+    for(let i=0;i<256;i++){const x=i/256*W;const y=20-((cur[i]+100)/60)*18;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}
+    cx.stroke();
+  }
+  // Band labels
+  cx.fillStyle='rgba(255,255,255,.15)';cx.font='7px monospace';cx.textAlign='center';
+  const labels=[{x:30,l:'HF'},{x:80,l:'VHF'},{x:128,l:'UHF'},{x:180,l:'L-Band'},{x:220,l:'S-Band'}];
+  labels.forEach(lb=>{cx.fillText(lb.l,lb.x/256*W,16);});
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Panoramic Spectrum Observatory — Wideband Monitor',8,12);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

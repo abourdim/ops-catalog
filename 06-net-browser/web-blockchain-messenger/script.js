@@ -182,3 +182,79 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ ENHANCED: Mining Nonce Search Visualizer ═══════ */
+(function(){
+let mCanvas,mCtx;const hashParticles=[];let nonceHistory=[];let hashRate=0;
+function createMC(){
+  const cards=document.querySelectorAll('.card');const t=cards.length>0?cards[0]:document.body;
+  const w=document.createElement('div');w.style.cssText='margin:1rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--glass-border,rgba(255,255,255,0.1));';
+  w.innerHTML='<div style="padding:.5rem .8rem;font-size:.75rem;font-weight:700;opacity:.6;text-transform:uppercase;letter-spacing:1px;">Mining Visualizer</div>';
+  const c=document.createElement('canvas');c.width=620;c.height=260;
+  c.style.cssText='width:100%;height:auto;display:block;background:#060d1a;cursor:pointer;';
+  w.appendChild(c);t.appendChild(w);return c;
+}
+function drawMC(){
+  if(!mCtx)return;const w=mCanvas.width,h=mCanvas.height;
+  mCtx.fillStyle='rgba(6,13,26,0.1)';mCtx.fillRect(0,0,w,h);
+  // Hash grid
+  const cols=32,rows=8,cellW=w/cols,cellH=(h-60)/rows;
+  const t=Date.now()/100;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const val=Math.sin(t+r*0.5+c*0.3)*0.5+0.5;
+      const isLeadingZero=c<miningDifficulty&&r===Math.floor(t/5)%rows;
+      mCtx.fillStyle=isLeadingZero?'rgba(255,165,38,0.3)':`rgba(255,165,38,${val*0.08})`;
+      mCtx.fillRect(c*cellW,r*cellH,cellW-1,cellH-1);
+      if(val>0.8||isLeadingZero){
+        mCtx.fillStyle=isLeadingZero?'#ffa726':'rgba(255,165,38,0.4)';
+        mCtx.font='8px monospace';mCtx.textAlign='center';
+        const hex=isLeadingZero?'0':'0123456789abcdef'[Math.floor(Math.random()*16)];
+        mCtx.fillText(hex,c*cellW+cellW/2,r*cellH+cellH/2+3);
+      }
+    }
+  }
+  // Nonce search line
+  const searchY=h-50;
+  mCtx.strokeStyle='rgba(255,165,38,0.2)';mCtx.lineWidth=1;
+  mCtx.beginPath();mCtx.moveTo(0,searchY);mCtx.lineTo(w,searchY);mCtx.stroke();
+  // Hash rate graph
+  if(nonceHistory.length>100)nonceHistory.shift();
+  hashRate+=(isMining?500+Math.random()*1000:-hashRate)*0.1;
+  nonceHistory.push(hashRate);
+  if(nonceHistory.length>1){
+    mCtx.beginPath();
+    nonceHistory.forEach((v,i)=>{const x=w*(i/100),y=searchY+40-(v/1500*35);i===0?mCtx.moveTo(x,y):mCtx.lineTo(x,y);});
+    mCtx.strokeStyle='#ffa72688';mCtx.lineWidth=1.5;mCtx.stroke();
+  }
+  // Mining particles
+  if(isMining){
+    for(let i=0;i<3;i++)hashParticles.push({x:Math.random()*w,y:Math.random()*(h-60),vx:(Math.random()-0.5)*2,vy:-1-Math.random()*2,life:1,color:Math.random()>0.5?'#ffa726':'#66bb6a'});
+  }
+  for(let i=hashParticles.length-1;i>=0;i--){
+    const p=hashParticles[i];p.life-=0.02;p.x+=p.vx;p.y+=p.vy;
+    if(p.life<=0){hashParticles.splice(i,1);continue;}
+    mCtx.globalAlpha=p.life;mCtx.beginPath();mCtx.arc(p.x,p.y,2,0,Math.PI*2);
+    mCtx.fillStyle=p.color;mCtx.fill();mCtx.globalAlpha=1;
+  }
+  // Stats
+  mCtx.fillStyle='rgba(255,255,255,0.4)';mCtx.font='9px monospace';mCtx.textAlign='left';
+  mCtx.fillText('Blocks: '+blockchain.length+' | Difficulty: '+miningDifficulty+' | H/s: '+Math.round(hashRate),10,h-5);
+  mCtx.fillText('Status: '+(isMining?'MINING':'IDLE')+' | Chain: '+(validateChain()?'VALID':'BROKEN'),10,h-18);
+  // Chain mini-view
+  const chainY=searchY-15;
+  blockchain.forEach((b,i)=>{
+    const bx=10+i*28,by=chainY;
+    const valid=i===0||(calculateHash(b)===b.hash&&b.prevHash===blockchain[i-1].hash);
+    mCtx.fillStyle=valid?'rgba(102,187,106,0.3)':'rgba(244,67,54,0.3)';
+    mCtx.fillRect(bx,by,22,12);mCtx.strokeStyle=valid?'#66bb6a':'#ef5350';mCtx.lineWidth=1;mCtx.strokeRect(bx,by,22,12);
+    mCtx.fillStyle='#fff';mCtx.font='7px monospace';mCtx.textAlign='center';mCtx.fillText('#'+i,bx+11,by+9);
+    if(i>0){mCtx.beginPath();mCtx.moveTo(bx,by+6);mCtx.lineTo(bx-6,by+6);mCtx.strokeStyle=valid?'#66bb6a44':'#ef535044';mCtx.lineWidth=1;mCtx.stroke();}
+  });
+  requestAnimationFrame(drawMC);
+}
+function initMC(){mCanvas=createMC();if(!mCanvas)return;mCtx=mCanvas.getContext('2d');
+  mCanvas.addEventListener('click',()=>{for(let i=0;i<15;i++)hashParticles.push({x:Math.random()*mCanvas.width,y:Math.random()*200,vx:(Math.random()-0.5)*4,vy:-2-Math.random()*3,life:1,color:'#ffa726'});});
+  drawMC();}
+setTimeout(initMC,2000);
+})();

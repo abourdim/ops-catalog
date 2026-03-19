@@ -93,3 +93,51 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — RF 101
+   Animated EM wave propagation + wavelength visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('rf101SimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='rf101SimCanvas';el.width=780;el.height=200;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#040810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.03;cx.fillStyle='#040810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const mid=H/2;
+  // E-field wave (vertical polarization)
+  cx.strokeStyle=acc;cx.lineWidth=2;cx.beginPath();
+  for(let i=0;i<W;i++){const x=i,y=mid-Math.sin(i*.03-t*3)*H*.3;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}
+  cx.stroke();
+  // B-field wave (90 degrees offset, dimmer)
+  cx.strokeStyle='#4fc3f7';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<W;i++){const x=i,y=mid-Math.cos(i*.03-t*3)*H*.25;if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}
+  cx.stroke();
+  // Wavelength marker
+  const wl=Math.PI*2/.03;const wlStart=100,wlEnd=wlStart+wl;
+  cx.strokeStyle='rgba(255,255,255,.3)';cx.lineWidth=1;cx.setLineDash([3,3]);
+  cx.beginPath();cx.moveTo(wlStart,mid+H*.35);cx.lineTo(wlStart,mid-H*.35);cx.stroke();
+  cx.beginPath();cx.moveTo(wlEnd,mid+H*.35);cx.lineTo(wlEnd,mid-H*.35);cx.stroke();
+  cx.beginPath();cx.moveTo(wlStart,mid+H*.33);cx.lineTo(wlEnd,mid+H*.33);cx.stroke();cx.setLineDash([]);
+  cx.fillStyle='rgba(255,255,255,.4)';cx.font='10px monospace';cx.textAlign='center';
+  cx.fillText('lambda',wlStart+(wlEnd-wlStart)/2,mid+H*.33-5);
+  // Direction arrow
+  cx.strokeStyle='rgba(255,255,255,.2)';cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(W-60,mid);cx.lineTo(W-20,mid);cx.stroke();
+  cx.beginPath();cx.moveTo(W-20,mid);cx.lineTo(W-28,mid-5);cx.moveTo(W-20,mid);cx.lineTo(W-28,mid+5);cx.stroke();
+  cx.fillStyle='rgba(255,255,255,.3)';cx.fillText('propagation',W-40,mid-10);
+  // Labels
+  cx.fillStyle=acc+'88';cx.font='9px monospace';cx.textAlign='left';cx.fillText('E-field',8,30);
+  cx.fillStyle='#4fc3f788';cx.fillText('B-field',8,42);
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';
+  cx.fillText('EM Wave Propagation — E and B fields',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

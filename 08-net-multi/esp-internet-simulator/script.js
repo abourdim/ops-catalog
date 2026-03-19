@@ -402,3 +402,106 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS SIMULATION — Internet Simulator: DNS/Web/Router/Firewall
+   packet journey with animated network topology
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCanvas';let canvas,ctx,animId,W,H,frameCount=0;
+  const inetNodes=[],pkts=[],particles=[];let reqCount=0;
+
+  function ensureCanvas(){
+    canvas=document.getElementById(CVS_ID);
+    if(!canvas){canvas=document.createElement('canvas');canvas.id=CVS_ID;
+      canvas.style.cssText='width:100%;height:340px;border-radius:12px;margin:1.2rem 0;display:block;background:#060812;';
+      (document.querySelector('.workshop-card')||document.querySelector('.main-content')||document.body).appendChild(canvas);}
+    const r=canvas.getBoundingClientRect();canvas.width=r.width*(devicePixelRatio||1);canvas.height=r.height*(devicePixelRatio||1);
+    ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio||1,devicePixelRatio||1);W=r.width;H=r.height;
+  }
+
+  const INET_TYPES=[
+    {name:'Client',icon:'\u{1F4BB}',color:'#4d96ff'},
+    {name:'DNS',icon:'\u{1F4D6}',color:'#ffd93d'},
+    {name:'Router',icon:'\u{1F500}',color:'#00ccff'},
+    {name:'Firewall',icon:'\u{1F6E1}',color:'#ff6b6b'},
+    {name:'Web Server',icon:'\u{1F310}',color:'#6bcb77'},
+    {name:'CDN',icon:'\u26A1',color:'#e879f9'}
+  ];
+
+  class InetNode{
+    constructor(x,y,type){this.x=x;this.y=y;this.type=type;this.pulse=Math.random()*Math.PI*2;this.active=false;this.activeTimer=0;}
+    draw(){
+      this.pulse+=0.03;if(this.active){this.activeTimer--;if(this.activeTimer<=0)this.active=false;}
+      const glow=4+Math.sin(this.pulse)*2;ctx.save();ctx.shadowColor=this.active?'#fff':this.type.color;ctx.shadowBlur=this.active?glow+6:glow;
+      ctx.beginPath();ctx.arc(this.x,this.y,18,0,Math.PI*2);ctx.fillStyle=this.active?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.05)';ctx.fill();
+      ctx.strokeStyle=this.active?'#fff':this.type.color;ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.type.icon,this.x,this.y);
+      ctx.font='7px monospace';ctx.fillStyle=this.type.color;ctx.fillText(this.type.name,this.x,this.y+26);ctx.restore();
+    }
+  }
+
+  class NetPacket{
+    constructor(path,label){this.path=path;this.step=0;this.progress=0;this.speed=0.02+Math.random()*0.01;this.label=label;this.alive=true;}
+    update(){
+      this.progress+=this.speed;
+      if(this.progress>=1){
+        this.path[this.step].active=true;this.path[this.step].activeTimer=30;
+        this.step++;this.progress=0;
+        if(this.step>=this.path.length-1)this.alive=false;
+      }
+      return this.alive;
+    }
+    draw(){
+      if(this.step>=this.path.length-1)return;
+      const src=this.path[this.step],tgt=this.path[this.step+1];
+      const px=src.x+(tgt.x-src.x)*this.progress,py=src.y+(tgt.y-src.y)*this.progress;
+      // Trail
+      ctx.beginPath();ctx.moveTo(src.x,src.y);ctx.lineTo(px,py);ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=2;ctx.stroke();
+      // Packet dot
+      ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=1;ctx.stroke();
+      ctx.font='7px monospace';ctx.fillStyle='#ffd93d';ctx.textAlign='center';ctx.fillText(this.label,px,py-12);
+    }
+  }
+
+  function drawLinks(){
+    for(let i=0;i<inetNodes.length-1;i++){
+      ctx.beginPath();ctx.moveTo(inetNodes[i].x,inetNodes[i].y);ctx.lineTo(inetNodes[i+1].x,inetNodes[i+1].y);
+      ctx.strokeStyle='rgba(100,100,200,0.1)';ctx.lineWidth=1;ctx.setLineDash([4,8]);ctx.stroke();ctx.setLineDash([]);
+    }
+  }
+
+  function drawGrid(){ctx.strokeStyle='rgba(100,100,200,0.03)';ctx.lineWidth=1;for(let x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}}
+
+  function drawHUD(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(8,8,190,58);ctx.strokeStyle='#0cf3';ctx.strokeRect(8,8,190,58);
+    ctx.font='10px monospace';ctx.fillStyle='#00ccff';ctx.textAlign='left';ctx.fillText('INTERNET SIMULATOR',16,24);ctx.fillStyle='#aaa';
+    ctx.fillText('Nodes: '+inetNodes.length+'  Requests: '+reqCount,16,40);
+    ctx.fillText('Active Packets: '+pkts.length,16,54);ctx.restore();
+  }
+
+  function sendRequest(){
+    const labels=['HTTP GET','DNS Query','TCP SYN','TLS Hello','ICMP Ping','HTTP POST'];
+    const label=labels[Math.floor(Math.random()*labels.length)];
+    const path=[...inetNodes];if(Math.random()>0.5)path.reverse();
+    pkts.push(new NetPacket(path,label));reqCount++;
+  }
+
+  function init(){
+    ensureCanvas();
+    const spacing=W/(INET_TYPES.length+1);
+    INET_TYPES.forEach((t,i)=>{inetNodes.push(new InetNode(spacing*(i+1),H/2+(Math.sin(i*0.8)*40),t));});
+    animate();
+  }
+
+  function animate(){
+    frameCount++;ctx.fillStyle='rgba(6,8,18,0.14)';ctx.fillRect(0,0,W,H);drawGrid();drawLinks();
+    inetNodes.forEach(n=>n.draw());
+    if(frameCount%80===0)sendRequest();
+    for(let i=pkts.length-1;i>=0;i--){if(!pkts[i].update()){for(let p=0;p<6;p++){const last=pkts[i].path[pkts[i].path.length-1];particles.push({x:last.x,y:last.y,vx:(Math.random()-0.5)*3,vy:(Math.random()-0.5)*3,life:1,color:'#6bcb77'});}pkts.splice(i,1);}else pkts[i].draw();}
+    for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.life-=0.03;if(p.life<=0){particles.splice(i,1);}else{ctx.beginPath();ctx.arc(p.x,p.y,2*p.life,0,Math.PI*2);ctx.fillStyle=p.color+Math.floor(p.life*200).toString(16).padStart(2,'0');ctx.fill();}}
+    drawHUD();animId=requestAnimationFrame(animate);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
+})();

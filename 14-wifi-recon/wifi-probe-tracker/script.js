@@ -455,3 +455,97 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+/* ═══════ RICH CANVAS SIMULATION — Probe Location Leak Map ═══════ */
+(function probeMapCanvas(){
+  const CVS_ID='probeMapVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">📍</span> Location Leak Map</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:280px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const locIcons={Hotel:'H',Airport:'A','Coffee Shop':'C',Home:'*',Office:'O',School:'S',Library:'L',Gym:'G',Hospital:'+',Transit:'T',Coworking:'W',Restaurant:'R',Rental:'R'};
+  const locPositions={};const trails=[];let _raf=null,frameCount=0;
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.12)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    // Build location positions (stable)
+    const locs=Object.keys(locIcons);
+    locs.forEach((loc,i)=>{
+      if(!locPositions[loc]){
+        const cols=4,rows=Math.ceil(locs.length/cols);
+        const col=i%cols,row=Math.floor(i/cols);
+        locPositions[loc]={x:w*0.15+col*(w*0.7/(cols-1)),y:h*0.15+row*(h*0.6/(rows-1||1))};
+      }
+    });
+    // Grid effect
+    ctx.strokeStyle='rgba(255,255,255,0.02)';ctx.lineWidth=1;
+    for(let x=0;x<w;x+=30){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+    for(let y=0;y<h;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    // Center device
+    const devX=w/2,devY=h*0.85;
+    ctx.beginPath();ctx.arc(devX,devY,8,0,Math.PI*2);ctx.fillStyle='#3b82f6';ctx.fill();
+    ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.5)';ctx.textAlign='center';
+    ctx.fillText('DEVICE',devX,devY+16);
+    // Signal rings from device
+    for(let r=1;r<=3;r++){
+      ctx.beginPath();ctx.arc(devX,devY,r*25,Math.PI*1.1,Math.PI*1.9);
+      ctx.strokeStyle=`rgba(59,130,246,${0.15/r})`;ctx.lineWidth=1;ctx.stroke();
+    }
+    // Draw locations that have been revealed
+    if(typeof allNetworks!=='undefined'){
+      const revealedLocs=new Set();
+      if(typeof LOCATION_SSIDS!=='undefined'){
+        LOCATION_SSIDS.forEach(e=>{if(allNetworks.has(e.ssid))revealedLocs.add(e.location);});
+      }
+      locs.forEach(loc=>{
+        const pos=locPositions[loc];if(!pos)return;
+        const revealed=revealedLocs.has(loc);
+        const pulse=Math.sin(frameCount*0.03+loc.length)*0.3+0.7;
+        if(revealed){
+          // Glow
+          ctx.beginPath();ctx.arc(pos.x,pos.y,18*pulse,0,Math.PI*2);
+          ctx.fillStyle='rgba(239,68,68,0.08)';ctx.fill();
+          // Connection line from device to location
+          ctx.beginPath();ctx.moveTo(devX,devY);ctx.lineTo(pos.x,pos.y);
+          const flash=Math.sin(frameCount*0.05+loc.length)*0.1+0.12;
+          ctx.strokeStyle=`rgba(239,68,68,${flash})`;ctx.lineWidth=1;
+          ctx.setLineDash([3,5]);ctx.stroke();ctx.setLineDash([]);
+          // Animated probe packet along the line
+          const t=((frameCount*2+loc.length*30)%120)/120;
+          const px=devX+(pos.x-devX)*t;const py=devY+(pos.y-devY)*t;
+          ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);ctx.fillStyle='#ef4444';ctx.globalAlpha=1-t;ctx.fill();ctx.globalAlpha=1;
+        }
+        // Location node
+        ctx.beginPath();ctx.arc(pos.x,pos.y,10,0,Math.PI*2);
+        ctx.fillStyle=revealed?'rgba(239,68,68,0.25)':'rgba(255,255,255,0.05)';ctx.fill();
+        ctx.strokeStyle=revealed?'#ef4444':'rgba(255,255,255,0.1)';ctx.lineWidth=revealed?1.5:1;ctx.stroke();
+        // Icon
+        ctx.font=revealed?'bold 9px monospace':'9px monospace';
+        ctx.fillStyle=revealed?'#fca5a5':'rgba(255,255,255,0.15)';ctx.textAlign='center';
+        ctx.fillText(locIcons[loc]||'?',pos.x,pos.y+3);
+        // Label
+        ctx.font='7px monospace';ctx.fillStyle=revealed?'rgba(252,165,165,0.6)':'rgba(255,255,255,0.1)';
+        ctx.fillText(loc,pos.x,pos.y+20);
+      });
+      // Risk meter
+      const riskPct=Math.min(1,revealedLocs.size/locs.length);
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(w-80,h-18,70,10);
+      ctx.fillStyle=riskPct>0.6?'#ef4444':riskPct>0.3?'#fbbf24':'#22c55e';
+      ctx.fillRect(w-80,h-18,70*riskPct,10);
+      ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.4)';ctx.textAlign='right';
+      ctx.fillText('EXPOSURE',w-10,h-21);
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

@@ -166,3 +166,91 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════ RICH CANVAS SIMULATION — Data Exfiltration Matrix ═══════ */
+(function exfilMatrixCanvas(){
+  const CVS_ID='exfilMatrixVis';
+  function ensureCanvas(){
+    if(document.getElementById(CVS_ID))return document.getElementById(CVS_ID);
+    const wrap=document.querySelector('.section-card')||document.querySelector('.main-section')||document.querySelector('main');
+    if(!wrap)return null;
+    const card=document.createElement('div');card.className='section-card';
+    card.innerHTML='<div class="section-header"><span class="section-icon">🕵️</span> Exfiltration Data Matrix</div>';
+    const c=document.createElement('canvas');c.id=CVS_ID;
+    c.style.cssText='width:100%;height:260px;border-radius:12px;background:#0a0a1a;display:block;margin-top:8px;';
+    card.appendChild(c);wrap.parentNode.insertBefore(card,wrap.nextSibling);return c;
+  }
+  const columns=[];let _raf=null,frameCount=0;
+  function initColumns(w){
+    const numCols=Math.floor(w/14);
+    while(columns.length<numCols){
+      columns.push({chars:[],speed:0.5+Math.random()*2,y:-Math.random()*200});
+    }
+  }
+  function draw(){
+    const c=document.getElementById(CVS_ID);if(!c){_raf=null;return;}
+    const ctx=c.getContext('2d');const W=c.width=c.offsetWidth*2,H=c.height=c.offsetHeight*2;
+    ctx.scale(2,2);const w=W/2,h=H/2;
+    ctx.fillStyle='rgba(10,10,26,0.12)';ctx.fillRect(0,0,w,h);
+    frameCount++;
+    initColumns(w);
+    const methodColors={dns:'#22c55e',icmp:'#3b82f6',steg:'#a855f7'};
+    const activeColor=methodColors[typeof currentMethod!=='undefined'?currentMethod:'dns']||'#22c55e';
+    const isRunning=typeof simRunning!=='undefined'&&simRunning;
+    // Matrix rain columns
+    columns.forEach((col,i)=>{
+      if(!isRunning){col.speed*=0.98;return;}
+      col.y+=col.speed;
+      if(col.y>h+20){col.y=-20;col.speed=0.5+Math.random()*2;}
+      const x=i*14+7;
+      // Leading bright character
+      const ch='0123456789abcdef'[Math.floor(Math.random()*16)];
+      ctx.font='10px monospace';ctx.fillStyle=activeColor;ctx.globalAlpha=0.9;ctx.textAlign='center';
+      ctx.fillText(ch,x,col.y);
+      // Trail
+      for(let t=1;t<15;t++){
+        const ty=col.y-t*12;if(ty<0)break;
+        const tc='0123456789abcdef:./'[Math.floor(Math.random()*19)];
+        ctx.globalAlpha=Math.max(0,0.5-t*0.04);
+        ctx.fillStyle=activeColor;
+        ctx.fillText(tc,x,ty);
+      }
+      ctx.globalAlpha=1;
+    });
+    // Data flow tunnel in center
+    if(isRunning){
+      const cx=w/2,tunnelW=w*0.6;
+      // Source label
+      ctx.font='8px monospace';ctx.fillStyle='rgba(255,255,255,0.3)';ctx.textAlign='left';
+      ctx.fillText('SOURCE',10,h/2-2);
+      ctx.textAlign='right';ctx.fillText('EXFIL',w-10,h/2-2);
+      // Tunnel
+      ctx.beginPath();ctx.moveTo(w*0.15,h/2-15);ctx.lineTo(w*0.85,h/2-15);
+      ctx.lineTo(w*0.85,h/2+15);ctx.lineTo(w*0.15,h/2+15);ctx.closePath();
+      ctx.fillStyle=activeColor+'08';ctx.fill();
+      ctx.strokeStyle=activeColor+'20';ctx.lineWidth=1;ctx.stroke();
+      // Flowing data packets
+      for(let p=0;p<8;p++){
+        const t=((frameCount*3+p*40)%(w*0.7))/(w*0.7);
+        const px=w*0.15+t*w*0.7;
+        const py=h/2+Math.sin(t*Math.PI*6)*8;
+        ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fillStyle=activeColor;ctx.globalAlpha=0.6;ctx.fill();
+        // Packet label
+        ctx.font='6px monospace';ctx.fillStyle=activeColor;ctx.globalAlpha=0.4;ctx.textAlign='center';
+        const labels={dns:'DNS',icmp:'ICMP',steg:'STEG'};
+        ctx.fillText(labels[typeof currentMethod!=='undefined'?currentMethod:'dns']||'DNS',px,py-6);
+        ctx.globalAlpha=1;
+      }
+      // Throughput bar
+      const bytes=typeof totalBytes!=='undefined'?totalBytes:0;
+      const maxBytes=50000;const pct=Math.min(1,bytes/maxBytes);
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(10,h-15,w-20,8);
+      ctx.fillStyle=activeColor+'80';ctx.fillRect(10,h-15,(w-20)*pct,8);
+      ctx.font='7px monospace';ctx.fillStyle='rgba(255,255,255,0.4)';ctx.textAlign='center';
+      ctx.fillText((bytes>1024?(bytes/1024).toFixed(1)+'K':bytes)+' bytes exfiltrated',w/2,h-4);
+    }
+    _raf=requestAnimationFrame(draw);
+  }
+  function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();

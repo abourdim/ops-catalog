@@ -290,3 +290,61 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Filter Forge
+   Animated impulse response + cascading filter stages
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('filterSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='filterSimCanvas';el.width=780;el.height=180;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.02;cx.fillStyle='#060810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Animated impulse response
+  cx.strokeStyle=acc;cx.lineWidth=1.5;cx.beginPath();
+  const irW=W*.45;
+  for(let i=0;i<200;i++){
+    const x=20+i/200*irW;const n=i-100;
+    const sinc=n===0?1:Math.sin(Math.PI*n*.1)/(Math.PI*n*.1);
+    const win=.54-.46*Math.cos(2*Math.PI*i/200);
+    const decay=Math.exp(-Math.abs(n)*.01)*Math.sin(t*3+n*.05)*.1;
+    const y=H/2-(sinc*win+decay)*H*.35;
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='8px monospace';cx.fillText('Impulse Response h[n]',25,20);
+  // Filter cascade blocks on right
+  const stages=[{label:'LPF',fc:'500'},{label:'HPF',fc:'200'},{label:'BPF',fc:'350'}];
+  stages.forEach((s,i)=>{
+    const sx=W*.55+i*90,sy=H*.25;
+    cx.fillStyle='rgba(100,200,255,.06)';cx.fillRect(sx,sy,75,50);
+    cx.strokeStyle='rgba(100,200,255,.2)';cx.strokeRect(sx,sy,75,50);
+    cx.fillStyle=acc;cx.font='10px Orbitron,monospace';cx.textAlign='center';
+    cx.fillText(s.label,sx+37,sy+22);cx.fillStyle='rgba(200,230,255,.3)';cx.font='8px monospace';
+    cx.fillText('fc='+s.fc,sx+37,sy+38);
+    if(i<stages.length-1){
+      cx.strokeStyle='rgba(100,200,255,.15)';cx.lineWidth=1;
+      cx.beginPath();cx.moveTo(sx+75,sy+25);cx.lineTo(sx+90,sy+25);cx.stroke();
+      const dx=(t*40)%15;cx.fillStyle=acc;cx.beginPath();cx.arc(sx+75+dx,sy+25,2,0,Math.PI*2);cx.fill();
+    }
+  });
+  // Passband shape at bottom
+  cx.strokeStyle='#4f4';cx.lineWidth=1;cx.beginPath();
+  for(let i=0;i<W;i++){
+    const f=i/W;const lp=1/(1+Math.pow(f/.3,8));
+    const y=H-10-lp*50;if(i===0)cx.moveTo(i,y);else cx.lineTo(i,y);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(100,200,255,.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('Filter Forge — Impulse + Cascade Stages',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();

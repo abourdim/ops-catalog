@@ -189,3 +189,59 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Satellite Listener
+   Animated polar orbit + signal cone + Doppler curve
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+let cv,cx,W,H,af=null,t=0;
+function boot(){
+  let el=document.getElementById('satSimCanvas');
+  if(!el){el=document.createElement('canvas');el.id='satSimCanvas';el.width=780;el.height=220;
+  el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#020810;display:block;';
+  const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+  cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+}
+function tick(){
+  t+=.008;cx.fillStyle='#020810';cx.fillRect(0,0,W,H);
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  // Earth arc
+  const ecx=W*.3,ecy=H+80,er=140;
+  cx.strokeStyle='rgba(50,120,200,.2)';cx.lineWidth=2;cx.beginPath();cx.arc(ecx,ecy,er,Math.PI,2*Math.PI);cx.stroke();
+  cx.fillStyle='rgba(30,80,150,.08)';cx.beginPath();cx.arc(ecx,ecy,er,Math.PI,2*Math.PI);cx.fill();
+  // Ground station
+  const gx=ecx,gy=ecy-er-2;
+  cx.fillStyle='#4fc3f7';cx.beginPath();cx.moveTo(gx,gy-10);cx.lineTo(gx-5,gy);cx.lineTo(gx+5,gy);cx.closePath();cx.fill();
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='8px monospace';cx.textAlign='center';cx.fillText('GND',gx,gy+10);
+  // Satellite orbit
+  const orbitR=er+60;const satAngle=t*1.5+Math.PI;
+  const sx=ecx+Math.cos(satAngle)*orbitR,sy=ecy+Math.sin(satAngle)*orbitR;
+  cx.strokeStyle='rgba(100,200,255,.1)';cx.lineWidth=1;cx.setLineDash([3,6]);
+  cx.beginPath();cx.arc(ecx,ecy,orbitR,Math.PI,2*Math.PI);cx.stroke();cx.setLineDash([]);
+  // Satellite
+  if(sy<ecy){
+    cx.fillStyle=acc;cx.fillRect(sx-6,sy-2,12,4);cx.fillRect(sx-12,sy-1,4,2);cx.fillRect(sx+8,sy-1,4,2);
+    // Signal cone
+    const dist=Math.hypot(sx-gx,sy-gy);const elev=Math.max(0,Math.asin((ecy-sy-er)/dist))*180/Math.PI;
+    if(elev>5){cx.strokeStyle=`rgba(100,255,100,${Math.min(.3,elev/90)})`;cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(sx,sy);cx.lineTo(gx-15,gy);cx.moveTo(sx,sy);cx.lineTo(gx+15,gy);cx.stroke();}
+  }
+  // Doppler curve on right side
+  cx.strokeStyle='rgba(100,200,255,.15)';cx.lineWidth=.5;
+  for(let i=0;i<=4;i++){cx.beginPath();cx.moveTo(W*.55,i*H/4);cx.lineTo(W,i*H/4);cx.stroke();}
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<120;i++){
+    const px=W*.55+i/120*(W*.43);const pt=i/120;
+    const doppler=Math.cos(pt*Math.PI)*30;
+    const py=H/2-doppler*(H*.01);
+    if(i===0)cx.moveTo(px,py);else cx.lineTo(px,py);
+  }
+  cx.stroke();
+  cx.fillStyle='rgba(245,158,11,.5)';cx.font='8px monospace';cx.textAlign='left';cx.fillText('Doppler Shift',W*.56,16);
+  cx.fillStyle='rgba(100,200,255,.4)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+  cx.fillText('NOAA Polar Orbit Simulation — 137 MHz APT',8,14);
+  af=requestAnimationFrame(tick);
+}
+setTimeout(()=>{boot();tick();},600);
+})();
