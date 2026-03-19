@@ -234,3 +234,209 @@ document.addEventListener('DOMContentLoaded', () => {
   $('carrierSelect').onchange = updateSignalInfo; $('baudSelect').onchange = updateSignalInfo;
   drawIdle(); updateSignalInfo(); fillProtocol(); log(T('ready'), 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Ultrasonic Data Link
+   Animated FSK modulation visualization with TX/RX nodes,
+   frequency-shift waveform, and bit stream decoder
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simUltrasonicLink';let cv,cx,W,H,af=null,t=0;
+  const packets=[];const bitStream=[];let txActive=false,rxActive=false,txTimer=0;
+  const msgChars='HELLO WORLD COVERT DATA LINK TEST'.split('');
+  let charIdx=0,bitIdx=0,currentBits=[];
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=280;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060812;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function charToBits(ch){
+    const code=ch.charCodeAt(0);
+    const bits=[0]; // start bit
+    for(let b=0;b<8;b++)bits.push((code>>b)&1);
+    bits.push(1); // stop bit
+    return bits;
+  }
+
+  class SoundWave{
+    constructor(freq,x,y){this.x=x;this.y=y;this.freq=freq;this.r=0;this.maxR=80;this.alpha=0.4;}
+    update(){this.r+=2;this.alpha=0.4*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){
+      cx.beginPath();cx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      cx.strokeStyle=this.freq>0?'rgba(34,197,94,'+this.alpha+')':'rgba(59,130,246,'+this.alpha+')';
+      cx.lineWidth=1.5;cx.stroke();
+    }
+  }
+
+  function drawTXNode(){
+    const nx=120,ny=H/2-30;
+    const pulse=4+Math.sin(t*4)*2;
+    cx.save();cx.shadowColor=txActive?'#22c55e':'#444';cx.shadowBlur=txActive?pulse:2;
+    cx.beginPath();cx.rect(nx-30,ny-20,60,40);
+    cx.fillStyle=txActive?'rgba(34,197,94,0.12)':'rgba(100,100,100,0.08)';cx.fill();
+    cx.strokeStyle=txActive?'#22c55e':'#555';cx.lineWidth=2;cx.stroke();
+    cx.shadowBlur=0;
+    cx.font='12px sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+    cx.fillText('\u{1F50A}',nx,ny);
+    cx.font='8px monospace';cx.fillStyle=txActive?'#22c55e':'#555';
+    cx.fillText('TX',nx,ny+28);
+    cx.font='7px monospace';cx.fillStyle='#888';
+    cx.fillText('Speaker',nx,ny+38);cx.restore();
+  }
+
+  function drawRXNode(){
+    const nx=W-120,ny=H/2-30;
+    const pulse=4+Math.sin(t*3)*2;
+    cx.save();cx.shadowColor=rxActive?'#3b82f6':'#444';cx.shadowBlur=rxActive?pulse:2;
+    cx.beginPath();cx.rect(nx-30,ny-20,60,40);
+    cx.fillStyle=rxActive?'rgba(59,130,246,0.12)':'rgba(100,100,100,0.08)';cx.fill();
+    cx.strokeStyle=rxActive?'#3b82f6':'#555';cx.lineWidth=2;cx.stroke();
+    cx.shadowBlur=0;
+    cx.font='12px sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+    cx.fillText('\u{1F399}',nx,ny);
+    cx.font='8px monospace';cx.fillStyle=rxActive?'#3b82f6':'#555';
+    cx.fillText('RX',nx,ny+28);
+    cx.font='7px monospace';cx.fillStyle='#888';
+    cx.fillText('Microphone',nx,ny+38);cx.restore();
+  }
+
+  function drawFSKWaveform(){
+    const wx=180,wy=10,ww=W-360,wh=80;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(wx,wy,ww,wh);
+    cx.strokeStyle='rgba(255,255,255,0.05)';cx.lineWidth=0.5;
+    cx.beginPath();cx.moveTo(wx,wy+wh/2);cx.lineTo(wx+ww,wy+wh/2);cx.stroke();
+
+    if(bitStream.length>0){
+      cx.strokeStyle='#22c55e';cx.lineWidth=1.5;cx.beginPath();
+      const visibleBits=Math.min(bitStream.length,80);
+      const start=Math.max(0,bitStream.length-visibleBits);
+      for(let i=0;i<visibleBits;i++){
+        const bit=bitStream[start+i];
+        const bx=wx+i/visibleBits*ww;
+        const freq=bit?0.4:0.15;
+        for(let s=0;s<ww/visibleBits;s++){
+          const sx=bx+s;
+          const sy=wy+wh/2+Math.sin((sx+t*200)*freq)*wh*0.35;
+          if(i===0&&s===0)cx.moveTo(sx,sy);else cx.lineTo(sx,sy);
+        }
+      }
+      cx.stroke();
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('FSK Waveform — f0: 17.8 kHz  f1: 18.2 kHz',wx+4,wy+wh+10);
+  }
+
+  function drawBitDisplay(){
+    const bx=180,by=H-70,bw=W-360,bh=20;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(bx,by,bw,bh);
+    const visibleBits=Math.min(bitStream.length,64);
+    const start=Math.max(0,bitStream.length-visibleBits);
+    const cellW=bw/64;
+    for(let i=0;i<visibleBits;i++){
+      const bit=bitStream[start+i];
+      cx.fillStyle=bit?'rgba(34,197,94,0.6)':'rgba(59,130,246,0.3)';
+      cx.fillRect(bx+i*cellW+0.5,by+1,cellW-1,bh-2);
+      if(cellW>6){
+        cx.fillStyle='#fff';cx.font='7px monospace';cx.textAlign='center';
+        cx.fillText(bit.toString(),bx+i*cellW+cellW/2,by+bh/2+2);
+      }
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('Decoded Bits (UART: START + 8-DATA + STOP)',bx+4,by-4);
+  }
+
+  function drawDecodedText(){
+    const dx=180,dy=H-38,dw=W-360;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(dx,dy,dw,22);
+    const decoded=msgChars.slice(0,charIdx).join('');
+    cx.fillStyle='#22c55e';cx.font='11px monospace';cx.textAlign='left';
+    cx.fillText('> '+decoded+(Math.sin(t*5)>0?'\u2588':''),dx+8,dy+15);
+  }
+
+  function drawAirGap(){
+    const ax=W/2,ay=H/2-30;
+    cx.save();
+    cx.setLineDash([4,6]);cx.strokeStyle='rgba(255,255,255,0.08)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(150,ay);cx.lineTo(W-150,ay);cx.stroke();
+    cx.setLineDash([]);
+    cx.fillStyle='rgba(255,255,255,0.08)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('AIR GAP',ax,ay-40);
+    // Distance indicator
+    cx.fillText('~1-5 meters',ax,ay+60);
+    cx.restore();
+  }
+
+  function drawSignalStrength(){
+    const sx=W-60,sy=20,sw=40,sh=100;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(sx,sy,sw,sh);
+    const level=txActive?0.6+Math.sin(t*2)*0.2:0.1;
+    const barH=sh*level;
+    const grad=cx.createLinearGradient(0,sy+sh,0,sy);
+    grad.addColorStop(0,'#22c55e');grad.addColorStop(0.6,'#f59e0b');grad.addColorStop(1,'#ef4444');
+    cx.fillStyle=grad;cx.fillRect(sx+4,sy+sh-barH,sw-8,barH);
+    cx.fillStyle='rgba(255,255,255,0.3)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('SNR',sx+sw/2,sy+sh+10);
+    cx.fillText(Math.floor(level*30)+'dB',sx+sw/2,sy+sh+20);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,180,68);
+    cx.strokeStyle='rgba(34,197,94,0.15)';cx.strokeRect(8,8,180,68);
+    cx.font='10px monospace';cx.fillStyle='#22c55e';cx.textAlign='left';
+    cx.fillText('\u{1F50A} ULTRASONIC DATA LINK',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Bits: '+bitStream.length+'  Chars: '+charIdx,16,40);
+    cx.fillText('Carrier: 18 kHz  Baud: 20',16,54);
+    cx.fillText('Mode: FSK  Encoding: UART',16,68);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,8,18,0.12)';cx.fillRect(0,0,W,H);
+
+    // Simulate transmission
+    txTimer+=0.016;
+    if(txTimer>0.15){
+      txTimer=0;txActive=true;rxActive=true;
+      if(currentBits.length===0){
+        if(charIdx<msgChars.length){
+          currentBits=charToBits(msgChars[charIdx]);
+          bitIdx=0;
+        }else{charIdx=0;currentBits=charToBits(msgChars[0]);}
+      }
+      if(bitIdx<currentBits.length){
+        bitStream.push(currentBits[bitIdx]);
+        if(bitStream.length>200)bitStream.shift();
+        // Spawn sound wave
+        packets.push(new SoundWave(currentBits[bitIdx],120,H/2-30));
+        bitIdx++;
+      }else{
+        charIdx++;currentBits=[];
+      }
+    }
+
+    drawAirGap();drawTXNode();drawRXNode();
+
+    // Sound waves
+    for(let i=packets.length-1;i>=0;i--){
+      if(!packets[i].update())packets.splice(i,1);
+      else packets[i].draw();
+    }
+
+    drawFSKWaveform();drawBitDisplay();drawDecodedText();
+    drawSignalStrength();drawHUD();
+
+    cx.fillStyle='rgba(100,200,255,0.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Ultrasonic Covert Data Link — FSK over Air Gap',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

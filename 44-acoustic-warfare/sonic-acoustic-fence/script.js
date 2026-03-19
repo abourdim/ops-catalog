@@ -144,3 +144,206 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('armBtn').onclick=armFence;$('disarmBtn').onclick=disarmFence;
   drawIdle();fillTheory();log(T('ready'),'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Acoustic Fence
+   Animated ultrasonic perimeter with Doppler wave propagation,
+   intrusion zones, and frequency-shift visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simAcousticFence';let cv,cx,W,H,af=null,t=0;
+  const pulses=[];const intruders=[];const shiftHist=[];
+  let fenceRadius=0,simIntrusions=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=280;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#06080e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+    fenceRadius=Math.min(W,H)*0.35;
+  }
+
+  class UltrasonicPulse{
+    constructor(){this.r=20;this.maxR=fenceRadius+30;this.alpha=0.5;this.speed=1.8;}
+    update(){this.r+=this.speed;this.alpha=0.5*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){
+      cx.beginPath();cx.arc(W/2,H/2,this.r,0,Math.PI*2);
+      cx.strokeStyle='rgba(0,255,170,'+this.alpha+')';cx.lineWidth=2;cx.stroke();
+    }
+  }
+
+  class Intruder{
+    constructor(){
+      const angle=Math.random()*Math.PI*2;
+      this.angle=angle;this.dist=fenceRadius+60;this.targetDist=40+Math.random()*60;
+      this.speed=0.3+Math.random()*0.4;this.x=0;this.y=0;this.detected=false;
+      this.life=300+Math.random()*200;this.age=0;this.dopplerShift=0;
+    }
+    update(){
+      this.age++;
+      if(this.dist>this.targetDist)this.dist-=this.speed;
+      else{this.dist+=this.speed*0.5;this.targetDist=fenceRadius+60;}
+      this.x=W/2+Math.cos(this.angle)*this.dist;
+      this.y=H/2+Math.sin(this.angle)*this.dist;
+      this.dopplerShift=this.dist>this.targetDist?this.speed*80:-this.speed*40;
+      if(this.dist<fenceRadius&&!this.detected){this.detected=true;simIntrusions++;}
+      return this.age<this.life;
+    }
+    draw(){
+      const alpha=Math.min(1,(this.life-this.age)/40);
+      cx.save();cx.globalAlpha=alpha;
+      cx.beginPath();cx.arc(this.x,this.y,6,0,Math.PI*2);
+      cx.fillStyle=this.detected?'rgba(239,68,68,0.6)':'rgba(245,158,11,0.5)';cx.fill();
+      cx.strokeStyle=this.detected?'#ef4444':'#f59e0b';cx.lineWidth=1.5;cx.stroke();
+      cx.font='9px sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+      cx.fillText('\u{1F6B6}',this.x,this.y);
+      if(this.detected){
+        cx.font='bold 7px monospace';cx.fillStyle='#ef4444';
+        cx.fillText('ALERT',this.x,this.y-12);
+      }
+      cx.restore();
+    }
+  }
+
+  function drawEmitter(){
+    const pulse=4+Math.sin(t*3)*2;
+    cx.save();cx.shadowColor='#00ffaa';cx.shadowBlur=pulse;
+    cx.beginPath();cx.arc(W/2,H/2,18,0,Math.PI*2);
+    cx.fillStyle='rgba(0,255,170,0.12)';cx.fill();
+    cx.strokeStyle='#00ffaa';cx.lineWidth=2;cx.stroke();
+    cx.shadowBlur=0;
+    cx.font='14px sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+    cx.fillText('\u{1F50A}',W/2,H/2);
+    cx.font='7px monospace';cx.fillStyle='#00ffaa';
+    cx.fillText('EMITTER',W/2,H/2+26);cx.restore();
+  }
+
+  function drawPerimeter(){
+    cx.setLineDash([6,8]);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.lineWidth=1;
+    cx.beginPath();cx.arc(W/2,H/2,fenceRadius,0,Math.PI*2);cx.stroke();
+    cx.setLineDash([]);
+    cx.fillStyle='rgba(0,255,170,0.04)';
+    cx.beginPath();cx.arc(W/2,H/2,fenceRadius,0,Math.PI*2);cx.fill();
+    // Zone labels
+    cx.font='7px monospace';cx.fillStyle='rgba(0,255,170,0.3)';cx.textAlign='center';
+    cx.fillText('SECURE ZONE',W/2,H/2+fenceRadius+12);
+  }
+
+  function drawDopplerGraph(){
+    const gx=W-180,gy=20,gw=160,gh=80;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(gx,gy,gw,gh);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.lineWidth=0.5;
+    cx.beginPath();cx.moveTo(gx,gy+gh/2);cx.lineTo(gx+gw,gy+gh/2);cx.stroke();
+    if(shiftHist.length>1){
+      cx.strokeStyle='#22c55e';cx.lineWidth=1.5;cx.beginPath();
+      const step=gw/Math.max(1,shiftHist.length-1);
+      shiftHist.forEach((v,i)=>{
+        const x=gx+i*step;
+        const y=gy+gh/2-v/200*gh*0.4;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    cx.fillStyle='rgba(0,255,170,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('DOPPLER SHIFT',gx+4,gy+10);
+    cx.fillText('+Hz',gx+4,gy+20);
+    cx.textAlign='right';cx.fillText('-Hz',gx+gw-4,gy+gh-4);
+    cx.textAlign='left';
+  }
+
+  function drawFreqBands(){
+    const bx=20,by=H-50,bw=W*0.4,bh=35;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(bx,by,bw,bh);
+    // Simulated ultrasonic frequency spectrum
+    const bins=64;const binW=bw/bins;
+    for(let i=0;i<bins;i++){
+      const tonePos=bins*0.6;
+      const dist=Math.abs(i-tonePos);
+      let h2=Math.max(1,(1-dist/20)*bh*0.8+Math.random()*3);
+      if(dist>20)h2=Math.random()*3;
+      const approaching=intruders.some(n=>!n.detected&&n.dist<fenceRadius+20);
+      const col=approaching&&dist<5?'rgba(239,68,68,0.7)':'rgba(0,255,170,'+(0.2+h2/bh*0.5)+')';
+      cx.fillStyle=col;
+      cx.fillRect(bx+i*binW,by+bh-h2,binW-1,h2);
+    }
+    cx.fillStyle='rgba(0,255,170,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('18 kHz                          22 kHz',bx+4,by+bh+10);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,180,68);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.strokeRect(8,8,180,68);
+    cx.font='10px monospace';cx.fillStyle='#00ffaa';cx.textAlign='left';
+    cx.fillText('\u{1F50A} ACOUSTIC FENCE',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Active Targets: '+intruders.length,16,40);
+    cx.fillText('Intrusions: '+simIntrusions,16,54);
+    const alertLvl=intruders.some(n=>n.detected)?'HIGH':'LOW';
+    cx.fillStyle=alertLvl==='HIGH'?'#ef4444':'#22c55e';
+    cx.fillText('Alert: '+alertLvl,16,68);
+    cx.restore();
+  }
+
+  function drawScanSweep(){
+    cx.save();cx.translate(W/2,H/2);cx.rotate(t*0.8);
+    const grad=cx.createLinearGradient(0,0,fenceRadius,0);
+    grad.addColorStop(0,'rgba(0,255,170,0.15)');grad.addColorStop(1,'rgba(0,255,170,0)');
+    cx.beginPath();cx.moveTo(0,0);cx.arc(0,0,fenceRadius,-0.12,0.12);cx.closePath();
+    cx.fillStyle=grad;cx.fill();cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,8,14,0.12)';cx.fillRect(0,0,W,H);
+
+    // Spawn pulses
+    if(Math.floor(t*60)%20===0)pulses.push(new UltrasonicPulse());
+
+    // Spawn intruders
+    if(Math.random()<0.005&&intruders.length<6)intruders.push(new Intruder());
+
+    // Aggregate doppler shift
+    let avgShift=0;
+    intruders.forEach(n=>{avgShift+=n.dopplerShift;});
+    avgShift/=Math.max(1,intruders.length);
+    avgShift+=(Math.random()-0.5)*10;
+    shiftHist.push(avgShift);if(shiftHist.length>100)shiftHist.shift();
+
+    drawPerimeter();drawScanSweep();
+
+    // Pulses
+    for(let i=pulses.length-1;i>=0;i--){
+      if(!pulses[i].update())pulses.splice(i,1);
+      else pulses[i].draw();
+    }
+
+    drawEmitter();
+
+    // Intruders
+    for(let i=intruders.length-1;i>=0;i--){
+      if(!intruders[i].update())intruders.splice(i,1);
+      else{
+        intruders[i].draw();
+        // Detection line to emitter
+        if(intruders[i].dist<fenceRadius+10){
+          cx.strokeStyle=intruders[i].detected?'rgba(239,68,68,0.15)':'rgba(245,158,11,0.08)';
+          cx.lineWidth=1;cx.beginPath();
+          cx.moveTo(intruders[i].x,intruders[i].y);cx.lineTo(W/2,H/2);cx.stroke();
+        }
+      }
+    }
+
+    drawDopplerGraph();drawFreqBands();drawHUD();
+
+    // Footer
+    cx.fillStyle='rgba(0,255,170,0.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Ultrasonic Doppler Perimeter — 20 kHz Emission Simulation',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

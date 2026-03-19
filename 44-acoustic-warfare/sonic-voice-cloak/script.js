@@ -271,3 +271,211 @@ document.addEventListener('DOMContentLoaded', () => {
   $('distRange').oninput = e => { $('distVal').textContent = e.target.value; if (distNode) distNode.curve = makeDistortionCurve(parseInt(e.target.value)); };
   drawIdle(); fillPresets(); fillDSP(); log(T('ready'), 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Voice Cloak
+   Animated voice transformation pipeline with spectrum morphing,
+   formant visualization, and real-time DSP chain diagram
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simVoiceCloak';let cv,cx,W,H,af=null,t=0;
+  const specBars=128;const origSpec=new Float32Array(specBars);
+  const cloakedSpec=new Float32Array(specBars);
+  const waveHist=[];let simPitch=0.7,simDist=30,morphPhase=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#080610;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function genVoiceSpectrum(pitch,dist){
+    // Simulate vocal formants with pitch adjustment
+    const f1=700*pitch,f2=1200*pitch,f3=2500*pitch;
+    for(let i=0;i<specBars;i++){
+      const freq=i/specBars*8000;
+      let val=0;
+      // Formant peaks
+      val+=0.8*Math.exp(-Math.pow((freq-f1)/120,2));
+      val+=0.5*Math.exp(-Math.pow((freq-f2)/180,2));
+      val+=0.3*Math.exp(-Math.pow((freq-f3)/250,2));
+      // Harmonics from pitch
+      for(let h=1;h<=8;h++){
+        val+=0.15/h*Math.exp(-Math.pow((freq-150*pitch*h)/50,2));
+      }
+      // Noise floor
+      val+=0.03+Math.random()*0.02;
+      origSpec[i]=val;
+      // Cloaked version: distortion adds harmonics, pitch shifts formants
+      let cVal=val;
+      cVal+=dist/100*0.3*Math.sin(freq*0.01+t*5);
+      cVal*=(1+dist/100*0.5*Math.sin(freq*0.005));
+      cloakedSpec[i]=Math.min(1,Math.max(0,cVal));
+    }
+  }
+
+  function drawDSPChain(){
+    const cy=20,ch=40;
+    const nodes=[
+      {label:'MIC',icon:'\u{1F399}',color:'#3b82f6',x:60},
+      {label:'Pitch',icon:'\u{1F3B5}',color:'#f59e0b',x:200},
+      {label:'Distort',icon:'\u{26A1}',color:'#ef4444',x:340},
+      {label:'Filter',icon:'\u{1F50A}',color:'#8b5cf6',x:480},
+      {label:'OUT',icon:'\u{1F50A}',color:'#22c55e',x:620}
+    ];
+    // Connection lines
+    for(let i=0;i<nodes.length-1;i++){
+      cx.beginPath();cx.moveTo(nodes[i].x+25,cy+ch/2);cx.lineTo(nodes[i+1].x-25,cy+ch/2);
+      const pulseBright=0.15+0.1*Math.sin(t*3+i);
+      cx.strokeStyle='rgba(100,200,255,'+pulseBright+')';cx.lineWidth=2;cx.stroke();
+      // Signal dots flowing
+      const dotPos=((t*60+i*30)%(nodes[i+1].x-nodes[i].x-50));
+      cx.fillStyle='rgba(255,255,255,0.6)';cx.beginPath();
+      cx.arc(nodes[i].x+25+dotPos,cy+ch/2,2,0,Math.PI*2);cx.fill();
+    }
+    // Nodes
+    nodes.forEach(n=>{
+      cx.save();cx.shadowColor=n.color;cx.shadowBlur=4;
+      cx.beginPath();cx.roundRect(n.x-22,cy,44,ch,6);
+      cx.fillStyle='rgba(0,0,0,0.5)';cx.fill();
+      cx.strokeStyle=n.color;cx.lineWidth=1.5;cx.stroke();
+      cx.shadowBlur=0;
+      cx.font='12px sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+      cx.fillText(n.icon,n.x,cy+ch/2-2);
+      cx.font='7px monospace';cx.fillStyle=n.color;
+      cx.fillText(n.label,n.x,cy+ch+10);
+      cx.restore();
+    });
+  }
+
+  function drawSpectrumComparison(){
+    const sx=30,sy=80,sw=(W-80)/2,sh=90;
+    // Original
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(sx,sy,sw,sh);
+    cx.fillStyle='rgba(59,130,246,0.4)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('ORIGINAL VOICE',sx+4,sy+10);
+    for(let i=0;i<specBars;i++){
+      const x=sx+i/specBars*sw;
+      const h2=origSpec[i]*sh*0.8;
+      const hue=200+origSpec[i]*60;
+      cx.fillStyle='hsla('+hue+',70%,50%,0.6)';
+      cx.fillRect(x,sy+sh-h2,sw/specBars-0.5,h2);
+    }
+    // Cloaked
+    const cx2=sx+sw+20;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(cx2,sy,sw,sh);
+    cx.fillStyle='rgba(239,68,68,0.4)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('CLOAKED VOICE',cx2+4,sy+10);
+    for(let i=0;i<specBars;i++){
+      const x=cx2+i/specBars*sw;
+      const h2=cloakedSpec[i]*sh*0.8;
+      const hue=0+cloakedSpec[i]*40;
+      cx.fillStyle='hsla('+hue+',70%,50%,0.6)';
+      cx.fillRect(x,sy+sh-h2,sw/specBars-0.5,h2);
+    }
+    // Arrow between
+    cx.fillStyle='rgba(255,255,255,0.3)';cx.font='16px sans-serif';cx.textAlign='center';
+    cx.fillText('\u{27A1}',sx+sw+10,sy+sh/2);
+  }
+
+  function drawWaveformComparison(){
+    const wy=185,wh=50,ww=(W-80)/2;
+    // Original waveform
+    cx.fillStyle='rgba(0,0,0,0.2)';cx.fillRect(30,wy,ww,wh);
+    cx.strokeStyle='rgba(59,130,246,0.6)';cx.lineWidth=1.5;cx.beginPath();
+    for(let i=0;i<ww;i++){
+      const tt=i/ww*4+t*3;
+      const y=wy+wh/2+Math.sin(tt*8)*wh*0.3*Math.sin(tt);
+      if(i===0)cx.moveTo(30+i,y);else cx.lineTo(30+i,y);
+    }
+    cx.stroke();
+
+    // Cloaked waveform
+    const cx2=50+ww;
+    cx.fillStyle='rgba(0,0,0,0.2)';cx.fillRect(cx2,wy,ww,wh);
+    cx.strokeStyle='rgba(239,68,68,0.6)';cx.lineWidth=1.5;cx.beginPath();
+    for(let i=0;i<ww;i++){
+      const tt=i/ww*4+t*3;
+      let y=wy+wh/2+Math.sin(tt*8*simPitch)*wh*0.3*Math.sin(tt*simPitch);
+      // Add distortion clipping
+      y+=Math.sin(tt*20)*wh*0.1*(simDist/100);
+      if(i===0)cx.moveTo(cx2+i,y);else cx.lineTo(cx2+i,y);
+    }
+    cx.stroke();
+  }
+
+  function drawFormantMap(){
+    const fx=30,fy=245,fw=W-60,fh=30;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(fx,fy,fw,fh);
+    // Formant positions
+    const formants=[
+      {label:'F1',origHz:700,cloakHz:700*simPitch,color:'#f59e0b'},
+      {label:'F2',origHz:1200,cloakHz:1200*simPitch,color:'#8b5cf6'},
+      {label:'F3',origHz:2500,cloakHz:2500*simPitch,color:'#ec4899'}
+    ];
+    formants.forEach(f=>{
+      // Original position
+      const ox=fx+(f.origHz/4000)*fw;
+      cx.fillStyle=f.color+'44';cx.beginPath();cx.arc(ox,fy+fh/2,6,0,Math.PI*2);cx.fill();
+      cx.strokeStyle=f.color;cx.lineWidth=1;cx.setLineDash([2,2]);cx.stroke();cx.setLineDash([]);
+      // Cloaked position
+      const mx=fx+(f.cloakHz/4000)*fw;
+      cx.fillStyle=f.color;cx.beginPath();cx.arc(mx,fy+fh/2,5,0,Math.PI*2);cx.fill();
+      cx.font='6px monospace';cx.fillStyle=f.color;cx.textAlign='center';
+      cx.fillText(f.label,mx,fy+fh/2-9);
+    });
+    cx.fillStyle='rgba(255,255,255,0.3)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('FORMANT SHIFT MAP — 0 Hz',fx+4,fy-3);
+    cx.textAlign='right';cx.fillText('4000 Hz',fx+fw-4,fy-3);cx.textAlign='left';
+  }
+
+  function drawPresetIndicator(){
+    const px=W-160,py=245,pw=140,ph=30;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(px,py,pw,ph);
+    cx.strokeStyle='rgba(255,255,255,0.1)';cx.strokeRect(px,py,pw,ph);
+    cx.fillStyle='rgba(255,255,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('Pitch: '+simPitch.toFixed(1)+'x',px+8,py+12);
+    cx.fillText('Distortion: '+simDist,px+8,py+24);
+    // Cycle presets slowly
+    if(Math.floor(t)%8===0&&Math.floor(t)!==Math.floor(t-0.016)){
+      const pitches=[0.5,0.7,0.85,1.3,1.6,2.0];
+      const dists=[0,20,40,60,80,100];
+      const idx=Math.floor(Math.random()*pitches.length);
+      simPitch=pitches[idx];simDist=dists[idx];
+    }
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,190,56);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.strokeRect(8,8,190,56);
+    cx.font='10px monospace';cx.fillStyle='#00ffaa';cx.textAlign='left';
+    cx.fillText('\u{1F399} VOICE CLOAK DSP',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Chain: Mic > Pitch > Dist > Filter > Out',16,40);
+    cx.fillText('Latency: ~25ms  Quality: 16-bit/44.1kHz',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(8,6,16,0.15)';cx.fillRect(0,0,W,H);
+
+    genVoiceSpectrum(simPitch,simDist);
+    drawDSPChain();
+    drawSpectrumComparison();
+    drawWaveformComparison();
+    drawFormantMap();
+    drawPresetIndicator();
+    drawHUD();
+
+    cx.fillStyle='rgba(100,200,255,0.3)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Voice Transformation Pipeline — Real-Time DSP Simulation',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();
