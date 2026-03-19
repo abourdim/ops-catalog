@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>esp-arp-detective — Workshop DIY</title>
+  <meta name="description" content="Monitor ARP tables and spot MITM attacks — ARP spoof detection simulation for ESP32." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="esp-arp-detective — Workshop DIY" />
+  <meta property="og:description" content="Monitor ARP tables and spot MITM attacks — ARP spoof detection simulation for ESP32." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .arp-table { width:100%; border-collapse:collapse; font-size:.75rem; }
+    .arp-table th { text-align:left; padding:.4rem; color:var(--text-muted); border-bottom:1px solid var(--border); font-size:.65rem; text-transform:uppercase; }
+    .arp-table td { padding:.4rem; border-bottom:1px solid rgba(255,255,255,.05); font-family:'Orbitron',monospace; font-size:.7rem; }
+    .arp-table tr.spoofed { background:rgba(255,68,68,.15); }
+    .arp-table tr.spoofed td { color:#fca5a5; }
+    .alert-bar { display:none; padding:.6rem .8rem; margin:.5rem; border-radius:8px; background:rgba(255,68,68,.15); border:1px solid rgba(255,68,68,.4); color:#fca5a5; font-size:.8rem; font-weight:700; text-align:center; animation:alertPulse 1s infinite; }
+    .alert-bar.active { display:block; }
+    @keyframes alertPulse { 0%,100% { opacity:1; } 50% { opacity:.6; } }
+    .topo-canvas { width:100%; height:250px; border-radius:8px; background:#0a0a1a; border:1px solid var(--border); }
+    .btn-row { display:flex; gap:.5rem; padding:.5rem; flex-wrap:wrap; }
+    .stats-row { display:flex; gap:.5rem; flex-wrap:wrap; padding:0 .5rem; margin-bottom:.5rem; }
+    .stat-box { flex:1; min-width:70px; padding:.4rem; text-align:center; border-radius:8px; background:rgba(0,0,0,.2); border:1px solid var(--border); }
+    .stat-box .stat-num { font-family:'Orbitron',monospace; font-size:1rem; font-weight:700; color:var(--accent); }
+    .stat-box .stat-label { font-size:.6rem; color:var(--text-muted); text-transform:uppercase; }
+    .challenge-card { padding:.8rem; margin-bottom:.5rem; border-radius:8px; background:rgba(0,0,0,.15); border:1px solid var(--border); }
+    .challenge-card p { margin:0 0 .5rem; font-size:.85rem; }
+    .challenge-answer { display:none; padding:.5rem; margin-top:.5rem; border-radius:6px; background:rgba(0,0,0,.2); font-size:.8rem; color:var(--accent); border-left:3px solid var(--accent); }
+    .challenge-answer.visible { display:block; }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">🔎 scan · 🛡️ detect · ⚠️ alert</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">esp-arp-detective</h1><div class="subtitle" data-i18n="subtitle">🔎 scan · 🛡️ detect · ⚠️ alert</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header"><div>
+          <div class="card-title"><span class="icon">🔎</span> <span data-i18n="mainSection">ARP Detective — Spoof Detector</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Monitor ARP tables, spot MITM attacks</span> <span class="version-tag">v1.0</span></div>
+        </div></div>
+
+        <div id="alertBar" class="alert-bar" data-i18n="spoofAlert">⚠️ ARP SPOOF DETECTED — Possible MITM Attack!</div>
+
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-num" id="deviceCount">0</div><div class="stat-label" data-i18n="devices">Devices</div></div>
+          <div class="stat-box"><div class="stat-num" id="spoofCount">0</div><div class="stat-label" data-i18n="spoofs">Spoofs</div></div>
+          <div class="stat-box"><div class="stat-num" id="packetCount">0</div><div class="stat-label" data-i18n="arpPackets">ARP Packets</div></div>
+        </div>
+
+        <div style="padding:0 .5rem; max-height:200px; overflow-y:auto;">
+          <table class="arp-table">
+            <thead><tr><th data-i18n="thIP">IP Address</th><th data-i18n="thMAC">MAC Address</th><th data-i18n="thVendor">Vendor</th><th data-i18n="thStatus">Status</th></tr></thead>
+            <tbody id="arpTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-row">
+          <button id="scanBtn" class="primary" data-i18n="startScan">Start Scan</button>
+          <button id="stopScanBtn" data-i18n="stopScan">Stop</button>
+          <button id="injectBtn" class="fire-btn" data-i18n="injectSpoof">Inject Spoof</button>
+        </div>
+      </div>
+
+      <!-- SECTION A — Network Topology -->
+      <details class="collapsible">
+        <summary><span class="icon">🌐</span> <span data-i18n="sectionA">Network Topology</span></summary>
+        <div class="card"><canvas id="topoCanvas" class="topo-canvas" height="250"></canvas></div>
+      </details>
+
+      <!-- SECTION B — MITM Visualization -->
+      <details class="collapsible">
+        <summary><span class="icon">🕵️</span> <span data-i18n="sectionB">MITM Visualization</span></summary>
+        <div class="card"><canvas id="mitmCanvas" class="topo-canvas" height="200"></canvas><div class="hint" data-i18n="mitmHint">Shows how ARP spoofing enables man-in-the-middle interception</div></div>
+      </details>
+
+      <!-- SECTION C — Challenge -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card"><div style="padding:1rem">
+          <div class="challenge-card"><p data-i18n="challenge1">What is ARP and why is it vulnerable?</p><button class="button" onclick="revealChallenge(0)" data-i18n="revealBtn">Reveal</button><div class="challenge-answer" id="answer0" data-i18n="challengeReveal1">ARP maps IP addresses to MAC addresses on local networks. It is vulnerable because it has no authentication — any device can claim any IP-to-MAC mapping.</div></div>
+          <div class="challenge-card"><p data-i18n="challenge2">How does a MITM attack work via ARP spoofing?</p><button class="button" onclick="revealChallenge(1)" data-i18n="revealBtn">Reveal</button><div class="challenge-answer" id="answer1" data-i18n="challengeReveal2">The attacker sends fake ARP replies claiming the gateway's IP belongs to their MAC. Victims then route all traffic through the attacker, who can read or modify it.</div></div>
+          <div class="challenge-card"><p data-i18n="challenge3">How can you defend against ARP spoofing?</p><button class="button" onclick="revealChallenge(2)" data-i18n="revealBtn">Reveal</button><div class="challenge-answer" id="answer2" data-i18n="challengeReveal3">Use static ARP entries, enable Dynamic ARP Inspection (DAI) on switches, use encrypted protocols (HTTPS, VPN), and monitor for duplicate IP-MAC mappings.</div></div>
+        </div></div>
+      </details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is ARP?</summary><p data-i18n="faq_a1">ARP (Address Resolution Protocol) maps IP addresses to hardware MAC addresses on a local network.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">What is ARP spoofing?</summary><p data-i18n="faq_a2">ARP spoofing is when an attacker sends fake ARP messages to link their MAC address with a legitimate IP, enabling traffic interception.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What is a MITM attack?</summary><p data-i18n="faq_a3">Man-in-the-Middle: the attacker secretly intercepts and possibly alters communication between two parties who think they are talking directly.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. This is a simulation. No real network scanning occurs.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Start Scan to begin monitoring the simulated ARP table.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Watch devices appear in the table with IP and MAC addresses.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Inject Spoof to simulate an ARP spoofing attack and see the alert.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Open Network Topology to see device connections and the MITM path.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_arp_title">📡 ARP</h3><p data-i18n="wiki_arp">Address Resolution Protocol. Maps Layer 3 (IP) to Layer 2 (MAC). Operates on the local network only. Stateless and unauthenticated.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_mac_title">🏷️ MAC Address</h3><p data-i18n="wiki_mac">48-bit hardware address burned into network cards. Format: AA:BB:CC:DD:EE:FF. First 3 bytes identify the vendor (OUI).</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_mitm_title">🕵️ MITM</h3><p data-i18n="wiki_mitm">Man-in-the-Middle attack. Attacker positions between victim and gateway to intercept, read, or modify all traffic.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_dai_title">🛡️ DAI</h3><p data-i18n="wiki_dai">Dynamic ARP Inspection. Switch feature that validates ARP packets against a DHCP snooping database to prevent spoofing.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

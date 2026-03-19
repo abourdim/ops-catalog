@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dark Profile — Workshop DIY</title>
+  <meta name="description" content="Search usernames across platforms — Digital Footprint analyzer." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="Dark Profile — Workshop DIY" />
+  <meta property="og:description" content="Search usernames across platforms." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">🕵️ Search usernames across platforms</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Dark Profile</h1><div class="subtitle" data-i18n="subtitle">🕵️ Search usernames across platforms</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">🕵️</span> <span data-i18n="mainSection">Digital Footprint Scanner</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Enter a username to search across platforms</span> <span class="version-tag">v1.2</span></div></div></div>
+        <div class="card-body" style="padding:1rem;">
+          <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+            <input type="text" id="usernameInput" placeholder="Enter username..." style="flex:1;min-width:200px;padding:.6rem;border-radius:6px;border:1px solid var(--glass-border);background:var(--glass-bg);color:inherit;font-family:Orbitron,monospace;font-size:.9rem;" />
+            <button class="btn-sm primary" id="searchBtn">🔍 <span data-i18n="searchBtn">Search</span></button>
+          </div>
+          <div id="searchStatus" style="margin-bottom:1rem;font-size:.85rem;display:none;"></div>
+          <div id="platformGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem;"></div>
+          <div id="riskScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;text-align:center;"></div>
+        </div>
+      </div>
+
+      <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">Platform Database</span></summary><div class="card" style="padding:1rem;font-size:.85rem;line-height:1.8;"><p data-i18n="platformText">The scanner checks 15+ platforms including social media, coding sites, forums, and messaging apps.</p></div></details>
+      <details class="collapsible"><summary><span class="icon">🛡️</span> <span data-i18n="sectionB">Privacy Protection</span></summary><div class="card" style="padding:1rem;font-size:.85rem;line-height:1.8;"><p data-i18n="privacyText">Use unique usernames per platform, enable 2FA, review privacy settings regularly.</p></div></details>
+      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionC">Exposure Analysis</span></summary><div class="card" style="padding:1rem;font-size:.85rem;"><p data-i18n="exposureText">Cross-referencing usernames across platforms can reveal identity clusters.</p><div id="exposurePanel" style="margin-top:1rem;"><button class="btn-sm primary" id="exposureBtn">📊 <span data-i18n="exposureBtn">Generate Exposure Report</span></button><div id="exposureResults" style="margin-top:.5rem;display:none;"></div></div></div></details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is Dark Profile?</summary><p data-i18n="faq_a1">A digital footprint simulator that searches usernames across platforms to calculate privacy risk.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">Is this a real search?</summary><p data-i18n="faq_a2">No. All results are simulated locally.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">How do I change the language?</summary><p data-i18n="faq_a3">Open Settings and pick your language.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Type a username in the search field.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Search to scan platforms.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">View results and risk score.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Generate an exposure report.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual: EN, FR, AR.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_log_title">📜 Activity Log</h3><p data-i18n="wiki_log">Timestamped log.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">Local-first.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

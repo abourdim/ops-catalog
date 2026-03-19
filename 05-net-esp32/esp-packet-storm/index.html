@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>esp-packet-storm — Workshop DIY</title>
+  <meta name="description" content="Network traffic generator with cyberpunk visualization and protocol analysis." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="esp-packet-storm — Workshop DIY" />
+  <meta property="og:description" content="Generate fake network traffic with cyberpunk visualization." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .storm-area { padding: 1rem; }
+    .storm-area canvas { width: 100%; border-radius: 8px; background: #000; border: 1px solid var(--border, #222); }
+    .storm-controls { display: flex; gap: .5rem; flex-wrap: wrap; padding: .5rem 1rem 1rem; align-items: center; }
+    .storm-controls select, .storm-controls input[type="range"] { padding: .4rem; border: 1px solid var(--border, #333); border-radius: 6px; background: var(--bg, #111); color: var(--text, #eee); font-family: 'Orbitron', monospace; font-size: .75rem; }
+    .storm-controls select { min-width: 100px; }
+    .storm-controls input[type="range"] { flex: 1; min-width: 80px; }
+    .rate-label { font-size: .7rem; color: var(--text-muted, #888); min-width: 50px; text-align: center; }
+    .stats-row { display: flex; justify-content: space-around; padding: .5rem 1rem; font-size: .75rem; color: var(--text-muted, #888); flex-wrap: wrap; gap: .3rem; }
+    .stats-row .stat { text-align: center; }
+    .stats-row .stat-val { font-family: 'Orbitron', monospace; font-size: 1rem; color: var(--accent, #d4a03c); }
+    .hex-inspector { padding: 1rem; font-family: 'Orbitron', monospace; font-size: .7rem; color: #33ff33; background: #000; border-radius: 8px; max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; border: 1px solid var(--border, #222); margin: 0 1rem 1rem; }
+    .protocol-bar { display: flex; height: 20px; border-radius: 4px; overflow: hidden; margin: .5rem 1rem; }
+    .protocol-bar div { transition: width .3s; display: flex; align-items: center; justify-content: center; font-size: .6rem; color: #fff; font-weight: 700; }
+    .how-steps { padding: 1rem; }
+    .how-step-item { display: flex; gap: .8rem; margin-bottom: .8rem; align-items: flex-start; }
+    .how-step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent, #d4a03c); color: var(--bg, #000); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem; }
+    .how-step-text { font-size: .85rem; line-height: 1.5; }
+    .challenge-card { padding: .8rem; margin-bottom: .5rem; border-radius: 8px; background: var(--bg, #111); border: 1px solid var(--border, #222); }
+    .challenge-card p { margin: 0 0 .5rem; font-size: .85rem; }
+    .challenge-answer { display: none; padding: .5rem; margin-top: .5rem; border-radius: 6px; background: var(--bg, #000); font-size: .8rem; color: var(--accent, #33ff33); border-left: 3px solid var(--accent, #d4a03c); }
+    .challenge-answer.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">⚡ generate · 📊 analyze · 🌊 storm</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">esp-packet-storm</h1><div class="subtitle" data-i18n="subtitle">⚡ generate · 📊 analyze · 🌊 storm</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">⚡</span> <span data-i18n="mainSection">Packet Storm — Traffic Generator</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Generate fake network traffic with cyberpunk visualization</span> <span class="version-tag">v1.0</span></div></div></div>
+        <div class="storm-area"><canvas id="stormCanvas" height="250"></canvas></div>
+        <div class="storm-controls">
+          <select id="protoSelect"><option value="TCP">TCP</option><option value="UDP">UDP</option><option value="ICMP">ICMP</option><option value="ARP">ARP</option><option value="MIX">MIX</option></select>
+          <input type="range" id="rateSlider" min="1" max="100" value="30" />
+          <span class="rate-label" id="rateLabel">30 pps</span>
+          <button id="startBtn" class="button primary" data-i18n="startBtn">Start Storm</button>
+          <button id="stopBtn" class="button" data-i18n="stopBtn">Stop</button>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><div class="stat-val" id="totalPkts">0</div><div data-i18n="totalPackets">Total Packets</div></div>
+          <div class="stat"><div class="stat-val" id="ppsRate">0</div><div data-i18n="pps">Packets/sec</div></div>
+          <div class="stat"><div class="stat-val" id="totalBytes">0</div><div data-i18n="totalBytesLabel">Bytes</div></div>
+        </div>
+        <div class="protocol-bar" id="protocolBar"></div>
+        <div class="hex-inspector" id="hexInspector">Click Start Storm to generate packets...</div>
+      </div>
+
+      <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary><div class="card"><div class="how-steps">
+        <div class="how-step-item"><span class="how-step-num">1</span><span class="how-step-text" data-i18n="howStep1">The generator creates fake network packets with realistic headers.</span></div>
+        <div class="how-step-item"><span class="how-step-num">2</span><span class="how-step-text" data-i18n="howStep2">Each packet type (TCP, UDP, ICMP, ARP) has its own header structure and color.</span></div>
+        <div class="how-step-item"><span class="how-step-num">3</span><span class="how-step-text" data-i18n="howStep3">The matrix-style canvas shows packets flowing in real-time.</span></div>
+        <div class="how-step-item"><span class="how-step-num">4</span><span class="how-step-text" data-i18n="howStep4">The hex inspector shows raw packet bytes like Wireshark.</span></div>
+      </div></div></details>
+
+      <details class="collapsible"><summary><span class="icon">🧪</span> <span data-i18n="sectionB">Protocol Lab</span></summary><div class="card"><div style="padding:1rem">
+        <p style="font-size:.85rem;color:var(--text-muted)" data-i18n="labDesc">The protocol breakdown bar shows the ratio of different packet types in your storm.</p>
+        <div class="stats-row">
+          <div class="stat"><div class="stat-val" id="tcpCount">0</div><div>TCP</div></div>
+          <div class="stat"><div class="stat-val" id="udpCount">0</div><div>UDP</div></div>
+          <div class="stat"><div class="stat-val" id="icmpCount">0</div><div>ICMP</div></div>
+          <div class="stat"><div class="stat-val" id="arpCount">0</div><div>ARP</div></div>
+        </div>
+      </div></div></details>
+
+      <details class="collapsible"><summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary><div class="card"><div style="padding:1rem">
+        <div class="challenge-card"><p data-i18n="challenge1">What is the difference between TCP and UDP?</p><button class="button" onclick="revealChallenge(0)" data-i18n="revealBtn">Reveal Answer</button><div class="challenge-answer" id="answer0" data-i18n="challengeReveal1">TCP is connection-oriented with error checking and retransmission. UDP is connectionless — faster but unreliable. TCP = phone call, UDP = postcard.</div></div>
+        <div class="challenge-card"><p data-i18n="challenge2">Why is ARP important for network attacks?</p><button class="button" onclick="revealChallenge(1)" data-i18n="revealBtn">Reveal Answer</button><div class="challenge-answer" id="answer1" data-i18n="challengeReveal2">ARP maps IP addresses to MAC addresses. ARP spoofing lets attackers redirect traffic through their machine (man-in-the-middle).</div></div>
+        <div class="challenge-card"><p data-i18n="challenge3">How can you detect a packet storm on a real network?</p><button class="button" onclick="revealChallenge(2)" data-i18n="revealBtn">Reveal Answer</button><div class="challenge-answer" id="answer2" data-i18n="challengeReveal3">Monitor bandwidth usage, check for unusual packet rates, use IDS/IPS systems, and look for traffic patterns that deviate from baseline.</div></div>
+      </div></div></details>
+    </div>
+
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is a packet storm?</summary><p data-i18n="faq_a1">A flood of network packets used for testing, stress analysis, or understanding network protocols.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">Are real packets sent?</summary><p data-i18n="faq_a2">No. This is a simulation. No actual network traffic is generated.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What do the hex bytes mean?</summary><p data-i18n="faq_a3">The hex inspector shows simulated packet headers — source/dest IP, ports, flags, and protocol fields.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select a protocol type (TCP, UDP, ICMP, ARP, or MIX).</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Adjust the rate slider to control packets per second.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Start Storm to begin generating packets on the canvas.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Watch the hex inspector for raw packet details and the protocol bar for breakdown.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_tcp_title">🔵 TCP</h3><p data-i18n="wiki_tcp">Transmission Control Protocol — reliable, ordered, connection-oriented. Used for web, email, file transfer.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_udp_title">🟢 UDP</h3><p data-i18n="wiki_udp">User Datagram Protocol — fast, connectionless, no delivery guarantee. Used for streaming, gaming, DNS.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_icmp_title">🟡 ICMP</h3><p data-i18n="wiki_icmp">Internet Control Message Protocol — used for ping, traceroute, and network diagnostics.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_arp_title">🔴 ARP</h3><p data-i18n="wiki_arp">Address Resolution Protocol — maps IP addresses to MAC addresses on local networks.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select" aria-label="Language"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select" aria-label="Theme"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

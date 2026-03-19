@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Faraday Test — Workshop DIY</title>
+  <meta name="description" content="Shielding effectiveness measurement lab"/>
+  <meta name="author" content="Workshop-DIY — abourdim"/>
+  <meta property="og:title" content="Faraday Test — Workshop DIY"/>
+  <meta property="og:description" content="Shielding effectiveness measurement lab"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="icon-512.png"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#08091a"/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Faraday Test</div>
+      <div class="splash-sub" data-i18n="subtitle">🛡️ Shielding effectiveness measurement lab</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div><h1 data-i18n="title">Faraday Test</h1><div class="subtitle" data-i18n="subtitle">🛡️ Shielding effectiveness measurement lab</div></div>
+        </div>
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
+        </div>
+      </div>
+      <div class="card" id="mainCard">
+        <div class="card-header"><div>
+          <div class="card-title"><span class="icon">🛡️</span> <span data-i18n="mainSection">Faraday Test</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Shielding effectiveness measurement lab</span> <span class="version-tag">v1.2</span></div>
+        </div></div>
+        <div class="control-section">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
+            <div class="stat-box"><div class="stat-label" data-i18n="ftStat1">Status</div><div class="stat-val" id="ftS1">STANDBY</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="ftStat2">Signal</div><div class="stat-val" id="ftS2">--</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="ftStat3">Events</div><div class="stat-val" id="ftS3">0</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="ftStat4">Uptime</div><div class="stat-val" id="ftS4">00:00</div></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-sm primary" onclick="ftActivate()"><span class="btn-icon">🛡️</span> <span data-i18n="ftActivate">Activate</span></button>
+            <button class="btn-sm" onclick="ftAction1()"><span class="btn-icon">▶️</span> <span data-i18n="ftAct1">Run Scan</span></button>
+            <button class="btn-sm fire-btn" onclick="ftEmergency()"><span class="btn-icon">🔥</span> <span data-i18n="ftEmerg">Emergency</span></button>
+          </div>
+          <div class="progress-wrap" style="margin-top:10px"><div class="progress-bar" id="ftBar" style="width:0%"></div></div>
+          <canvas id="ftCanvas" width="400" height="120" style="width:100%;margin-top:10px;border-radius:8px;background:#0a0a1a"></canvas>
+        </div>
+      </div>
+      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionA">Signal Meter</span></summary>
+        <div class="card"><div class="control-section">
+          <h3><span class="icon">📊</span> <span data-i18n="ftSecA">Signal Meter</span></h3>
+          <div id="ftSecAContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn-sm primary" onclick="ftSecAAction()"><span data-i18n="ftSecABtn">Execute</span></button>
+            <button class="btn-sm" onclick="ftSecAReset()"><span data-i18n="ftSecARst">Reset</span></button>
+          </div>
+        </div></div>
+      </details>
+      <details class="collapsible"><summary><span class="icon">🧪</span> <span data-i18n="sectionB">Test Results</span></summary>
+        <div class="card"><div class="control-section">
+          <h3><span class="icon">🧪</span> <span data-i18n="ftSecB">Test Results</span></h3>
+          <div id="ftSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn-sm primary" onclick="ftSecBAction()"><span data-i18n="ftSecBBtn">Execute</span></button>
+            <button class="btn-sm" onclick="ftSecBReset()"><span data-i18n="ftSecBRst">Reset</span></button>
+          </div>
+        </div></div>
+      </details>
+      <details class="collapsible"><summary><span class="icon">📋</span> <span data-i18n="sectionC">Report</span></summary>
+        <div class="card"><div class="control-section">
+          <h3><span class="icon">📋</span> <span data-i18n="ftSecC">Report</span></h3>
+          <div id="ftSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn-sm primary" onclick="ftSecCAction()"><span data-i18n="ftSecCBtn">Execute</span></button>
+            <button class="btn-sm" onclick="ftSecCReset()"><span data-i18n="ftSecCRst">Reset</span></button>
+          </div>
+        </div></div>
+      </details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is Faraday Test?</summary><p data-i18n="faq_a1">Shielding effectiveness measurement lab</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">How do I change the theme?</summary><p data-i18n="faq_a2">Open Settings and pick a theme.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">How do I change the language?</summary><p data-i18n="faq_a3">Open Settings and pick your language. Arabic enables RTL.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Explore the main dashboard.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Open sections for more controls.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Check the Activity Log.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Settings to customize.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">EN/FR/AR with RTL.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">All data local.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

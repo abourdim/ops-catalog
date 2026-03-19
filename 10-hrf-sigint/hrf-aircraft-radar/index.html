@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aircraft Radar — Workshop DIY</title>
+  <meta name="description" content="Plot every aircraft overhead with altitude, speed, callsign — ADS-B Receiver educational SIGINT app." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Aircraft Radar — ADS-B Receiver — Workshop DIY" />
+  <meta property="og:description" content="Plot every aircraft overhead with altitude, speed, callsign — ADS-B Receiver." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">✈️ Aircraft Radar — ADS-B Receiver</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Aircraft Radar</h1>
+            <div class="subtitle" data-i18n="subtitle">✈️ Plot every aircraft overhead with altitude, speed, callsign</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD — Sky Map ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">✈️</span> <span data-i18n="mainSection">Aircraft Radar — ADS-B Receiver</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Plot every aircraft overhead with altitude, speed, callsign</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+        <div class="control-section" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="startBtn" class="btn-sm primary" data-i18n="startScan">Start Receiver</button>
+          <button id="stopBtn" class="btn-sm" data-i18n="stopScan">Stop</button>
+          <span style="margin-inline-start:auto;font-family:Orbitron,monospace;font-size:.85rem;color:var(--accent);" id="aircraftCount">0 <span data-i18n="aircraftTracked">aircraft tracked</span></span>
+        </div>
+        <canvas id="skyMap" width="800" height="500" style="width:100%;border-radius:8px;background:#0a0e1a;cursor:crosshair;"></canvas>
+        <!-- Flight info panel -->
+        <div id="flightInfo" class="control-section" style="margin-top:8px;display:none;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-family:Orbitron,monospace;font-size:.75rem;">
+            <div><span style="opacity:.6" data-i18n="callsignLabel">Callsign:</span> <span id="infoCallsign">—</span></div>
+            <div><span style="opacity:.6" data-i18n="altitudeLabel">Altitude:</span> <span id="infoAlt">—</span></div>
+            <div><span style="opacity:.6" data-i18n="speedLabel">Speed:</span> <span id="infoSpeed">—</span></div>
+            <div><span style="opacity:.6" data-i18n="headingLabel">Heading:</span> <span id="infoHeading">—</span></div>
+            <div><span style="opacity:.6" data-i18n="squawkLabel">Squawk:</span> <span id="infoSquawk">—</span></div>
+            <div><span style="opacity:.6" data-i18n="typeLabel">Type:</span> <span id="infoType">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — Altitude Chart ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">📈</span> <span data-i18n="sectionA">Altitude Chart</span></summary>
+        <div class="card">
+          <canvas id="altChart" width="800" height="200" style="width:100%;border-radius:8px;background:#0a0e1a;"></canvas>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Aircraft Table ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">📋</span> <span data-i18n="sectionB">Aircraft Table</span></summary>
+        <div class="card">
+          <div style="overflow-x:auto;">
+            <table id="aircraftTable" style="width:100%;border-collapse:collapse;font-family:Orbitron,monospace;font-size:.7rem;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--accent);text-align:left;">
+                  <th style="padding:4px 8px;" data-i18n="thCallsign">Callsign</th>
+                  <th style="padding:4px 8px;" data-i18n="thAlt">Alt (ft)</th>
+                  <th style="padding:4px 8px;" data-i18n="thSpeed">Speed (kt)</th>
+                  <th style="padding:4px 8px;" data-i18n="thHeading">Hdg</th>
+                  <th style="padding:4px 8px;" data-i18n="thSquawk">Squawk</th>
+                  <th style="padding:4px 8px;" data-i18n="thType">Type</th>
+                </tr>
+              </thead>
+              <tbody id="aircraftBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — ADS-B Info ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">📡</span> <span data-i18n="sectionC">ADS-B Explained</span></summary>
+        <div class="card">
+          <p style="line-height:1.6;font-size:.85rem;" data-i18n="adsbInfo">ADS-B (Automatic Dependent Surveillance-Broadcast) is a surveillance technology where aircraft broadcast their GPS position, altitude, speed, and identification. Operating on 1090 MHz, these unencrypted signals can be received with an RTL-SDR dongle and a simple antenna. This app simulates the decoded output of an ADS-B receiver, showing how each aircraft plots on a radar display.</p>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is this app?</summary>
+          <p data-i18n="faq_a1">An ADS-B aircraft radar simulator. It shows how SDR receivers decode aircraft transponder broadcasts to plot flights on a map in real time.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">Do I need real hardware?</summary>
+          <p data-i18n="faq_a2">No. This app simulates ADS-B reception with realistic aircraft data. In real life you would use an RTL-SDR dongle tuned to 1090 MHz.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is a squawk code?</summary>
+          <p data-i18n="faq_a3">A 4-digit octal code assigned by ATC. Special codes: 7500 (hijack), 7600 (radio failure), 7700 (emergency).</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p>
+        </details>
+      </div>
+
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click "Start Receiver" to begin simulated ADS-B reception.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Watch aircraft appear on the sky map with callsign labels.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click an aircraft icon to see detailed flight information.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Check the altitude chart and aircraft table for all tracked flights.</p></div>
+      </div>
+
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_adsb_title">📡 ADS-B</h3><p data-i18n="wiki_adsb">Automatic Dependent Surveillance-Broadcast on 1090 MHz. Aircraft broadcast position, altitude, speed, and identity.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_squawk_title">🔢 Squawk Codes</h3><p data-i18n="wiki_squawk">4-digit transponder codes. 7500=hijack, 7600=radio fail, 7700=emergency.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">Local-first, privacy-first. All data stays in your browser.</p></div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

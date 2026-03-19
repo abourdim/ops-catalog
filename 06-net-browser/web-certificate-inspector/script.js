@@ -1,0 +1,527 @@
+/**
+ * Workshop DIY — Certificate Inspector v1.2
+ * TLS Chain — Visualize TLS certificate chains from root to leaf
+ */
+
+const $ = id => document.getElementById(id);
+
+/* ═══════ LOGO SVG ═══════ */
+const LOGO_SVG = `<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77.14 78.32 253.99 136.25"><path style="stroke:none;fill:currentColor;fill-rule:evenodd" d="M187.42,152.87C187.48,152.74,187.66,152.63,187.82,152.63C188.09,152.63,190.48,151.54,191.62,150.9L194.17,149.21C197.43,146.97,199.24,146.24,202.59,145.78C203.8,145.62,204.63,145.62,205.93,145.78C212.62,146.63,217.42,150.72,219.33,157.2C219.72,158.55,219.77,162.69,219.41,163.88C218.19,167.86,216.58,170.3,213.79,172.41C209.46,175.7,203.83,176.56,198.81,174.72C197.24,174.15,196.14,173.54,194.48,172.35C191.91,170.51,190.53,169.74,188.03,168.75L187.29,168.46L187.31,160.79C187.32,156.56,187.37,153,187.42,152.87z"/><path style="stroke:none;fill:currentColor" d="M259.79,157.67L264.88,148.03L272.34,148.03L263.03,163.73L263.03,174.99L256.26,174.99L256.26,164.07L246.79,148.03L254.51,148.03z"/><path style="stroke:none;fill:currentColor" d="M240.37,152.74L236.5,152.74L236.5,170.28L240.37,170.28L240.37,174.99L225.85,174.99L225.85,170.28L229.72,170.28L229.72,152.74L225.85,152.74L225.85,148.03L240.37,148.03z"/><path style="stroke:none;fill:currentColor" d="M330.79,195.73L203.96,195.73L203.96,199.33L330.79,199.33z"/><path style="stroke:none;fill:currentColor" d="M330.79,203.35L161.69,203.35L161.69,206.96L330.79,206.96z"/><path style="stroke:none;fill:currentColor" d="M330.79,210.97L77.14,210.97L77.14,214.58L330.79,214.58z"/></svg>`;
+
+const FOOTER_ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH6gMKAjgH2Wn1xgAAAAxJREFUeNrtwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAvBm8AAAB8IkWQwAAAABJRU5ErkJggg==';
+const LIGHT_THEMES = ['riad', 'medina'];
+const APP_VERSION = '1.2';
+
+/* ═══════ SOUND ═══════ */
+let soundEnabled = false;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  if (!audioCtx) audioCtx = new AudioCtx();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  gain.gain.value = 0.08;
+  const t = audioCtx.currentTime;
+  switch (type) {
+    case 'click': osc.frequency.value=800;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.08);osc.start(t);osc.stop(t+0.08);break;
+    case 'success': osc.frequency.value=523;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.3);osc.start(t);osc.stop(t+0.3);
+      const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.connect(g2);g2.connect(audioCtx.destination);g2.gain.value=0.08;o2.frequency.value=659;o2.type='sine';g2.gain.exponentialRampToValueAtTime(0.001,t+0.4);o2.start(t+0.15);o2.stop(t+0.4);break;
+    case 'error': osc.frequency.value=200;osc.type='square';gain.gain.exponentialRampToValueAtTime(0.001,t+0.25);osc.start(t);osc.stop(t+0.25);break;
+  }
+}
+
+/* ═══════ i18n ═══════ */
+const LANG = {
+  en: {
+    title: 'Certificate Inspector', subtitle: 'Visualize TLS certificate chains from root to leaf',
+    disconnected: 'Disconnected', connected: 'Connected',
+    mainSection: 'Certificate Chain', mainDesc: 'TLS Chain Visualization',
+    sectionA: 'Certificate Fields Reference', sectionB: 'Security Best Practices', sectionC: 'Chain Comparison Tool',
+    activityLog: 'Activity Log', eventsMsg: 'Events & messages',
+    clear: 'Clear', copy: 'Copy', theme: 'Theme', export: 'Export', filterAll: 'All',
+    settings: 'Settings', language: 'Language',
+    help: 'Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
+    faq_q1: 'What is Certificate Inspector?', faq_a1: 'A TLS certificate chain visualizer showing trust from root CA to leaf certificate.',
+    faq_q2: 'Are these real certificates?', faq_a2: 'No, all data is simulated for educational purposes.',
+    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings and pick your language. Arabic enables RTL automatically.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select a preset domain scenario.', howto_2: 'Click Inspect Chain to visualize the TLS chain.',
+    howto_3: 'Review each certificate card details.', howto_4: 'Use Section C to compare all chain scenarios.',
+    wiki_themes_title: 'Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: 'Languages', wiki_i18n: 'Trilingual: EN, FR, AR with RTL.',
+    wiki_log_title: 'Activity Log', wiki_log: 'Timestamped, color-coded log.',
+    wiki_privacy_title: 'Privacy', wiki_privacy: 'Local-first. No data sent anywhere.',
+    working: 'Working...', ready: 'Certificate Inspector ready!',
+    t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',
+    logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
+    soundEffects:'Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',splashHint:'tap to skip',
+    newVersion:'UPDATE',langChanged:'Language > English',themeChanged:'Theme >',
+    chain0:'google.com (Valid)',chain1:'expired-cert.org (Expired)',chain2:'self-signed.dev (Invalid)',
+    inspectBtn:'Inspect Chain',compareBtn:'Compare All Chains',
+    certRefText:'TLS certificates contain Subject, Issuer, Validity, Public Key Algorithm, Serial Number, and SAN extensions. The chain goes Leaf > Intermediate CA > Root CA.',
+    securityText:'Verify certificate chains before trusting connections. Check for expired certs, self-signed certs, weak algorithms (SHA-1), and domain mismatches.',
+    comparisonText:'Compare certificate chains side by side to understand trust differences.',
+    inspecting:'Inspecting certificate chain...',chainValid:'Chain VALID',chainExpired:'Chain EXPIRED',chainInvalid:'Chain INVALID (Self-Signed)',
+    rootCA:'Root CA',intermediateCA:'Intermediate CA',leafCert:'Leaf Certificate',
+    issuer:'Issuer',subject:'Subject',validFrom:'Valid From',validTo:'Valid To',algorithm:'Algorithm',serial:'Serial',status:'Status',
+    valid:'Valid',expired:'Expired',selfSigned:'Self-Signed',comparing:'Comparing all chains...',comparisonDone:'Comparison complete!',
+  },
+  fr: {
+    title: 'Inspecteur de Certificats', subtitle: 'Visualiser les chaines de certificats TLS',
+    disconnected: 'Deconnecte', connected: 'Connecte',
+    mainSection: 'Chaine de Certificats', mainDesc: 'Visualisation de la chaine TLS',
+    sectionA: 'Reference des Champs', sectionB: 'Bonnes Pratiques', sectionC: 'Outil de Comparaison',
+    activityLog: 'Journal', eventsMsg: 'Evenements et messages',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme', export: 'Exporter', filterAll: 'Tout',
+    settings: 'Parametres', language: 'Langue',
+    help: 'Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
+    faq_q1: 'Qu\'est-ce que l\'Inspecteur ?', faq_a1: 'Un visualiseur de chaine de certificats TLS montrant la confiance du CA racine au certificat feuille.',
+    faq_q2: 'Ce sont de vrais certificats ?', faq_a2: 'Non, donnees simulees a des fins educatives.',
+    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvrez Parametres et choisissez votre langue.',
+    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Selectionnez un scenario de domaine.', howto_2: 'Cliquez Inspecter pour visualiser la chaine.',
+    howto_3: 'Examinez chaque carte de certificat.', howto_4: 'Utilisez la Section C pour comparer.',
+    wiki_themes_title: 'Themes', wiki_themes: '8 themes integres.',
+    wiki_i18n_title: 'Langues', wiki_i18n: 'Trilingue : EN, FR, AR.',
+    wiki_log_title: 'Journal', wiki_log: 'Journal horodate et colore.',
+    wiki_privacy_title: 'Confidentialite', wiki_privacy: 'Local-first. Aucune donnee envoyee.',
+    working: 'En cours...', ready: 'Inspecteur de Certificats pret !',
+    t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',
+    logCleared:'Journal efface',copied:'Copie !',copyFail:'Echec',
+    soundEffects:'Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Reactif musique',splashHint:'appuyer pour passer',
+    newVersion:'MAJ',langChanged:'Langue > Francais',themeChanged:'Theme >',
+    chain0:'google.com (Valide)',chain1:'expired-cert.org (Expire)',chain2:'self-signed.dev (Invalide)',
+    inspectBtn:'Inspecter la Chaine',compareBtn:'Comparer Toutes les Chaines',
+    certRefText:'Les certificats TLS contiennent Sujet, Emetteur, Validite, Algorithme, Numero de Serie et extensions SAN.',
+    securityText:'Verifiez les chaines de certificats avant de faire confiance. Verifiez expiration, auto-signature, algorithmes faibles.',
+    comparisonText:'Comparez les chaines de certificats cote a cote.',
+    inspecting:'Inspection de la chaine...',chainValid:'Chaine VALIDE',chainExpired:'Chaine EXPIREE',chainInvalid:'Chaine INVALIDE (Auto-signee)',
+    rootCA:'CA Racine',intermediateCA:'CA Intermediaire',leafCert:'Certificat Feuille',
+    issuer:'Emetteur',subject:'Sujet',validFrom:'Valide Depuis',validTo:'Valide Jusqu\'a',algorithm:'Algorithme',serial:'Serie',status:'Statut',
+    valid:'Valide',expired:'Expire',selfSigned:'Auto-signe',comparing:'Comparaison de toutes les chaines...',comparisonDone:'Comparaison terminee !',
+  },
+  ar: {
+    title: 'مفتش الشهادات', subtitle: 'تصور سلاسل شهادات TLS من الجذر الى الفرع',
+    disconnected: 'غير متصل', connected: 'متصل',
+    mainSection: 'سلسلة الشهادات', mainDesc: 'تصور سلسلة TLS',
+    sectionA: 'مرجع حقول الشهادة', sectionB: 'افضل الممارسات الامنية', sectionC: 'اداة مقارنة السلاسل',
+    activityLog: 'سجل النشاط', eventsMsg: 'الاحداث والرسائل',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', export: 'تصدير', filterAll: 'الكل',
+    settings: 'الاعدادات', language: 'اللغة',
+    help: 'مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
+    faq_q1: 'ما هو مفتش الشهادات؟', faq_a1: 'اداة لتصور سلسلة شهادات TLS من الجذر الى الفرع.',
+    faq_q2: 'هل هذه شهادات حقيقية؟', faq_a2: 'لا، جميع البيانات محاكاة لاغراض تعليمية.',
+    faq_q3: 'كيف اغير اللغة؟', faq_a3: 'افتح الاعدادات واختر لغتك.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليا.',
+    howto_1: 'اختر سيناريو نطاق محدد.', howto_2: 'انقر فحص السلسلة لتصور سلسلة TLS.',
+    howto_3: 'راجع تفاصيل كل بطاقة شهادة.', howto_4: 'استخدم القسم ج للمقارنة.',
+    wiki_themes_title: 'المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: 'اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: 'سجل النشاط', wiki_log: 'سجل مؤرخ وملون.',
+    wiki_privacy_title: 'الخصوصية', wiki_privacy: 'محلي اولا. لا بيانات مرسلة.',
+    working: 'جار...', ready: 'مفتش الشهادات جاهز!',
+    t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',
+    logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
+    soundEffects:'مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',splashHint:'انقر للتخطي',
+    newVersion:'تحديث',langChanged:'اللغة > العربية',themeChanged:'المظهر >',
+    chain0:'google.com (صالح)',chain1:'expired-cert.org (منتهي)',chain2:'self-signed.dev (غير صالح)',
+    inspectBtn:'فحص السلسلة',compareBtn:'مقارنة جميع السلاسل',
+    certRefText:'تحتوي شهادات TLS على الموضوع والمصدر والصلاحية والخوارزمية والرقم التسلسلي.',
+    securityText:'تحقق من سلاسل الشهادات قبل الثقة بالاتصالات.',
+    comparisonText:'قارن سلاسل الشهادات جنبا الى جنب.',
+    inspecting:'جاري فحص سلسلة الشهادات...',chainValid:'السلسلة صالحة',chainExpired:'السلسلة منتهية الصلاحية',chainInvalid:'السلسلة غير صالحة (موقعة ذاتيا)',
+    rootCA:'الجذر CA',intermediateCA:'CA الوسيط',leafCert:'شهادة الفرع',
+    issuer:'المصدر',subject:'الموضوع',validFrom:'صالح من',validTo:'صالح حتى',algorithm:'الخوارزمية',serial:'الرقم التسلسلي',status:'الحالة',
+    valid:'صالح',expired:'منتهي',selfSigned:'موقع ذاتيا',comparing:'جاري مقارنة جميع السلاسل...',comparisonDone:'اكتملت المقارنة!',
+  }
+};
+
+let currentLang = 'en';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  const s = LANG[lang]; if (!s) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => { const k=el.dataset.i18n; if(s[k]!=null) el.textContent=s[k]; });
+  document.querySelectorAll('[data-i18n-opt]').forEach(opt => { const k=opt.dataset.i18nOpt; if(s[k]!=null) opt.textContent=s[k]; });
+  document.title = `${s.title} — Workshop DIY`;
+  document.documentElement.dir = lang==='ar'?'rtl':'ltr';
+  document.documentElement.lang = lang;
+  const sel=$('langSelect'); if(sel) sel.value=lang;
+  try{localStorage.setItem('wdiy-lang',lang);}catch{}
+  log(s.langChanged,'info');
+}
+
+/* ═══════ THEMES ═══════ */
+function setTheme(name) {
+  document.documentElement.dataset.theme=name;
+  document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(name));
+  const sel=$('themeSelect'); if(sel) sel.value=name;
+  const s=LANG[currentLang]; const label=s['t_'+name]||name;
+  try{localStorage.setItem('wdiy-theme',name);}catch{}
+  playThemeMelody(name);
+  log(`${s.themeChanged} ${label}`,'info');
+}
+
+/* ═══════ LOG ═══════ */
+let logContainer;
+function log(msg, type='info') {
+  if(!logContainer) logContainer=$('logContainer'); if(!logContainer) return;
+  const d=document.createElement('div'); d.className=`log-line ${type}`;
+  const fullText=`[${new Date().toLocaleTimeString()}] ${msg}`;
+  if(typewriterEnabled){logContainer.appendChild(d);typewriterAppend(d,fullText);}
+  else{d.textContent=fullText;logContainer.appendChild(d);}
+  logContainer.scrollTop=logContainer.scrollHeight;
+  if(type==='success'){playSound('success');pulseBismillah('success');setPetState('happy');}
+  else if(type==='error'){playSound('error');pulseBismillah('error');setPetState('sad');}
+  logWithHistory(msg,type); applyLogFilter(); resetPetSleep();
+}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const t=Array.from(logContainer.children).map(d=>d.textContent).join('\n');try{await navigator.clipboard.writeText(t);log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+
+/* ═══════ TOAST ═══════ */
+let toastTimer=null;
+function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block';}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms);}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';if(toastTimer){clearTimeout(toastTimer);toastTimer=null;}}
+
+/* ═══════ STATUS ═══════ */
+function setStatus(c){const p=$('statusPill'),t=$('statusText'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c);}
+
+/* ═══════ SPLASH ═══════ */
+let splashTimer;
+function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click');}
+function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500);}
+
+/* ═══════ LOG FILTERS ═══════ */
+let activeLogFilter='all';
+function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();playSound('click');});});}
+function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(line=>{if(activeLogFilter==='all'){line.style.display='';return;}line.style.display=line.classList.contains(activeLogFilter)?'':'none';});}
+
+/* ═══════ EXPORT LOG ═══════ */
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const lines=Array.from(logContainer.children).map(d=>d.textContent);const blob=new Blob([lines.join('\n')],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(url);log(LANG[currentLang].copied,'success');}
+
+/* ═══════ VERSION CHECK ═══════ */
+function checkVersion(){try{const s=localStorage.getItem('wdiy-latest-version');if(s&&s!==APP_VERSION){const b=$('settingsBtn');if(b&&!b.querySelector('.version-update')){const bg=document.createElement('span');bg.className='version-update';bg.textContent=LANG[currentLang].newVersion||'UPDATE';b.style.position='relative';bg.style.cssText='position:absolute;top:-6px;inset-inline-end:-6px;';b.appendChild(bg);}}}catch{}}
+
+/* ═══════ APP MESSAGING ═══════ */
+const APP_MSG_KEY='wdiy-app-msg';
+function sendAppMessage(type,data){try{const msg={type,data,from:document.title,ts:Date.now()};localStorage.setItem(APP_MSG_KEY,JSON.stringify(msg));localStorage.removeItem(APP_MSG_KEY);}catch{}}
+function onAppMessage(cb){window.addEventListener('storage',e=>{if(e.key!==APP_MSG_KEY||!e.newValue)return;try{cb(JSON.parse(e.newValue));}catch{}});}
+
+/* ═══════ KONAMI ═══════ */
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let konamiIdx=0;
+function initKonami(){document.addEventListener('keydown',e=>{if(e.key===KONAMI[konamiIdx]){konamiIdx++;if(konamiIdx===KONAMI.length){konamiIdx=0;setTheme('retro');log('KONAMI CODE — RETRO MODE!','success');}}else konamiIdx=0;});}
+
+/* ═══════ BISMILLAH PULSE ═══════ */
+function pulseBismillah(type){const b=document.querySelector('.bismillah');if(!b)return;b.classList.remove('pulse-success','pulse-error');void b.offsetWidth;b.classList.add(type==='error'?'pulse-error':'pulse-success');setTimeout(()=>b.classList.remove('pulse-success','pulse-error'),700);}
+
+/* ═══════ MORSE ═══════ */
+const MORSE={'a':'.-','b':'-...','c':'-.-.','d':'-..','e':'.','f':'..-.','g':'--.','h':'....','i':'..','j':'.---','k':'-.-','l':'.-..','m':'--','n':'-.','o':'---','p':'.--.','q':'--.-','r':'.-.','s':'...','t':'-','u':'..-','v':'...-','w':'.--','x':'-..-','y':'-.--','z':'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.', ' ':'/'};
+let morseTimeout=null,morseActive=false;
+function textToMorse(t){return t.toLowerCase().split('').map(c=>MORSE[c]||'').join(' ');}
+async function blinkMorse(text){if(morseActive)return;morseActive=true;const dot=document.querySelector('.status-dot');if(!dot){morseActive=false;return;}const orig=dot.style.background;const morse=textToMorse(text.replace(/\[.*?\]\s*/g,''));for(const ch of morse){if(!morseActive)break;if(ch==='.'){dot.style.background='#33ff33';dot.style.boxShadow='0 0 8px #33ff33';await sleep(100);}else if(ch==='-'){dot.style.background='#33ff33';dot.style.boxShadow='0 0 8px #33ff33';await sleep(300);}else if(ch==='/'||ch===' '){await sleep(ch==='/'?400:200);continue;}dot.style.background=orig;dot.style.boxShadow='';await sleep(100);}dot.style.background='';dot.style.boxShadow='';morseActive=false;}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function initMorseLog(){document.addEventListener('mousedown',e=>{const line=e.target.closest('.log-line');if(!line)return;morseTimeout=setTimeout(()=>blinkMorse(line.textContent),600);});document.addEventListener('mouseup',()=>{if(morseTimeout){clearTimeout(morseTimeout);morseTimeout=null;}});}
+
+/* ═══════ MATRIX RAIN ═══════ */
+let matrixRunning=false,matrixAnim=null;
+const ARABIC_CHARS='بسمالرحنيوكلتعدفقثصضطظغشزخجذأؤئإءةىآ٠١٢٣٤٥٦٧٨٩';
+function toggleMatrix(){const c=$('matrixCanvas');if(!c)return;if(matrixRunning){matrixRunning=false;cancelAnimationFrame(matrixAnim);c.classList.remove('active');return;}matrixRunning=true;c.classList.add('active');const ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=Math.floor(c.width/16),drops=Array(cols).fill(1);function draw(){if(!matrixRunning)return;ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#33ff33';ctx.font='14px Amiri,serif';for(let i=0;i<drops.length;i++){ctx.fillText(ARABIC_CHARS[Math.floor(Math.random()*ARABIC_CHARS.length)],i*16,drops[i]*16);if(drops[i]*16>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;}matrixAnim=requestAnimationFrame(draw);}draw();}
+let logoClickCount=0,logoClickTimer=null;
+function initMatrixTrigger(){const l=$('logoWrap');if(!l)return;l.style.cursor='pointer';l.addEventListener('click',()=>{logoClickCount++;if(logoClickTimer)clearTimeout(logoClickTimer);if(logoClickCount>=3){logoClickCount=0;toggleMatrix();}else logoClickTimer=setTimeout(()=>logoClickCount=0,500);});}
+
+/* ═══════ DEBUG ═══════ */
+function initDebug(){if(!new URLSearchParams(window.location.search).has('debug'))return;const p=$('debugPanel');if(!p)return;p.classList.add('active');const f=$('debugFps'),m=$('debugMem');let frames=0,last=performance.now();function tick(){frames++;const now=performance.now();if(now-last>=1000){if(f)f.textContent=frames+' FPS';if(m&&performance.memory)m.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' MB';frames=0;last=now;}requestAnimationFrame(tick);}requestAnimationFrame(tick);}
+
+/* ═══════ SHAKE REPORT ═══════ */
+function initShakeReport(){if(!window.DeviceMotionEvent)return;let last=0;window.addEventListener('devicemotion',e=>{const a=e.accelerationIncludingGravity;if(!a)return;if(Math.abs(a.x)+Math.abs(a.y)+Math.abs(a.z)>25&&Date.now()-last>2000){last=Date.now();generateBugReport();}});}
+function generateBugReport(){if(!logContainer)logContainer=$('logContainer');const lines=logContainer?Array.from(logContainer.children).map(d=>d.textContent):[];const r={app:document.title,version:APP_VERSION,timestamp:new Date().toISOString(),userAgent:navigator.userAgent,screen:`${screen.width}x${screen.height}`,theme:document.documentElement.dataset.theme,lang:currentLang,log:lines.slice(-50)};const blob=new Blob([JSON.stringify(r,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`bug-report-${Date.now()}.json`;a.click();URL.revokeObjectURL(url);}
+
+/* ═══════ TIME-TRAVEL LOG ═══════ */
+const logHistory=[];
+function logWithHistory(msg,type){logHistory.push({msg,type,ts:Date.now()});}
+function initTimeTravel(){document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='z'){const p=$('logPanel');if(!p||!p.classList.contains('open'))return;e.preventDefault();if(!logContainer)logContainer=$('logContainer');if(logContainer&&logContainer.lastChild){logContainer.removeChild(logContainer.lastChild);logHistory.pop();playSound('click');}}});}
+
+/* ═══════ TYPEWRITER ═══════ */
+let typewriterEnabled=true;
+async function typewriterAppend(el,text){el.classList.add('typing');el.textContent='';for(let i=0;i<text.length;i++){el.textContent+=text[i];if(el.parentElement)el.parentElement.scrollTop=el.parentElement.scrollHeight;await sleep(12+Math.random()*18);}el.classList.remove('typing');}
+
+/* ═══════ HIJRI DATE ═══════ */
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date());}catch{}}
+
+/* ═══════ WHISPER ═══════ */
+let recognition=null,whisperActive=false;
+function toggleWhisper(){if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){log('Speech not supported','error');return;}if(whisperActive){if(recognition)recognition.stop();whisperActive=false;return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;recognition=new SR();recognition.continuous=true;recognition.interimResults=false;recognition.lang=currentLang==='ar'?'ar-DZ':currentLang==='fr'?'fr-FR':'en-US';recognition.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();if(t)log(t,'rx');}};recognition.onerror=e=>log(`Error: ${e.error}`,'error');recognition.onend=()=>{if(whisperActive)recognition.start();};recognition.start();whisperActive=true;}
+
+/* ═══════ GHOST USERS ═══════ */
+const GHOST_KEY='wdiy-ghost-cursor';
+let ghostCanvas,ghostCtx,myGhostId=Math.random().toString(36).slice(2,8);
+function initGhostUsers(){ghostCanvas=document.createElement('canvas');ghostCanvas.className='ghost-canvas';ghostCanvas.style.cssText='position:fixed;inset:0;z-index:9998;pointer-events:none;';document.body.appendChild(ghostCanvas);ghostCtx=ghostCanvas.getContext('2d');ghostCanvas.width=innerWidth;ghostCanvas.height=innerHeight;window.addEventListener('resize',()=>{ghostCanvas.width=innerWidth;ghostCanvas.height=innerHeight;});document.addEventListener('mousemove',e=>{try{localStorage.setItem(GHOST_KEY,JSON.stringify({id:myGhostId,x:e.clientX,y:e.clientY,ts:Date.now()}));}catch{}});const ghosts={};window.addEventListener('storage',e=>{if(e.key!==GHOST_KEY||!e.newValue)return;try{const d=JSON.parse(e.newValue);if(d.id===myGhostId)return;ghosts[d.id]={x:d.x,y:d.y,ts:d.ts};}catch{}});function draw(){ghostCtx.clearRect(0,0,ghostCanvas.width,ghostCanvas.height);const now=Date.now();const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';for(const[id,g]of Object.entries(ghosts)){if(now-g.ts>3000){delete ghosts[id];continue;}ghostCtx.globalAlpha=0.3*(1-(now-g.ts)/3000);ghostCtx.beginPath();ghostCtx.arc(g.x,g.y,6,0,Math.PI*2);ghostCtx.fillStyle=accent;ghostCtx.fill();}ghostCtx.globalAlpha=1;requestAnimationFrame(draw);}requestAnimationFrame(draw);}
+
+/* ═══════ THEME MELODIES ═══════ */
+const THEME_MELODIES={'mosque-gold':[330,392,523],'zellige':[440,523,659],'andalus':[294,370,440],'space':[523,659,784],'jungle':[262,330,392],'robot':[440,554,659],'riad':[349,440,523],'medina':[294,349,440],'retro':[523,262,523]};
+function playThemeMelody(name){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const notes=THEME_MELODIES[name];if(!notes)return;const t=audioCtx.currentTime;notes.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=freq;g.gain.value=0.06;g.gain.exponentialRampToValueAtTime(0.001,t+0.2+i*0.15+0.15);o.start(t+i*0.15);o.stop(t+i*0.15+0.2);});}
+
+/* ═══════ BREATHING + DHIKR ═══════ */
+let breathingActive=false,dhikrCount=0;
+function toggleBreathing(){const bands=document.querySelectorAll('.deco-band');breathingActive=!breathingActive;if(breathingActive)bands.forEach(b=>b.classList.add('breathing'));else{bands.forEach(b=>b.classList.remove('breathing'));if(dhikrCount>0)log(`Dhikr count: ${dhikrCount}`,'success');dhikrCount=0;}}
+function incrementDhikr(){if(!breathingActive)return;dhikrCount++;playSound('click');const c=$('dhikrCounter');if(c)c.textContent=dhikrCount;}
+
+/* ═══════ PIXEL PET ═══════ */
+const PET_STATES={idle:{class:'pet-idle',duration:0},happy:{class:'pet-happy',duration:3000},sad:{class:'pet-sad',duration:3000},sleep:{class:'pet-sleep',duration:0}};
+let petState='idle',petIdleTimer=null,petSleepTimer=null;
+function initPixelPet(){const pet=document.createElement('div');pet.id='pixelPet';pet.className='pixel-pet pet-idle';pet.innerHTML=`<img src="${FOOTER_ICON}" alt="Bot"/>`;pet.addEventListener('click',()=>{setPetState('happy');playSound('success');});const f=document.querySelector('.app-footer');if(f)f.insertBefore(pet,f.firstChild);}
+function setPetState(s){petState=s;const p=$('pixelPet');if(!p)return;p.classList.remove('pet-idle','pet-happy','pet-sad','pet-sleep');p.classList.add(PET_STATES[s].class);if(petIdleTimer)clearTimeout(petIdleTimer);if(PET_STATES[s].duration>0)petIdleTimer=setTimeout(()=>setPetState('idle'),PET_STATES[s].duration);}
+function resetPetSleep(){if(petSleepTimer)clearTimeout(petSleepTimer);if(petState==='sleep')setPetState('idle');petSleepTimer=setTimeout(()=>setPetState('sleep'),60000);}
+
+/* ═══════ LOGO TRACKER ═══════ */
+function initLogoTracker(){const l=$('logoWrap');if(!l)return;document.addEventListener('mousemove',e=>{const r=l.getBoundingClientRect();const dx=(e.clientX-(r.left+r.width/2))/(innerWidth/2);const dy=(e.clientY-(r.top+r.height/2))/(innerHeight/2);l.style.transform=`perspective(200px) rotateX(${dy*8}deg) rotateY(${-dx*8}deg)`;});document.addEventListener('mouseleave',()=>{l.style.transition='transform .5s ease-out';l.style.transform='';setTimeout(()=>l.style.transition='',500);});}
+
+/* ═══════ MUSIC MODE ═══════ */
+let musicAnalyser=null,musicActive=false,musicAnim=null;
+function toggleMusicMode(){if(musicActive){musicActive=false;if(musicAnim)cancelAnimationFrame(musicAnim);document.querySelectorAll('.deco-band').forEach(b=>{b.style.height='';b.style.opacity='';});document.querySelectorAll('.card').forEach(c=>c.style.transform='');document.documentElement.style.filter='';return;}navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{if(!audioCtx)audioCtx=new AudioCtx();const src=audioCtx.createMediaStreamSource(stream);musicAnalyser=audioCtx.createAnalyser();musicAnalyser.fftSize=256;src.connect(musicAnalyser);musicActive=true;const data=new Uint8Array(musicAnalyser.frequencyBinCount);function viz(){if(!musicActive)return;musicAnalyser.getByteFrequencyData(data);const bass=data.slice(0,10).reduce((a,b)=>a+b,0)/10/255;const mid=data.slice(10,50).reduce((a,b)=>a+b,0)/40/255;document.querySelectorAll('.deco-band').forEach((b,i)=>{const v=i===0?bass:mid;b.style.height=(2+v*10)+'px';b.style.opacity=0.4+v*0.6;});document.querySelectorAll('.card').forEach(c=>{c.style.transform=`scale(${1+bass*0.015})`;});document.documentElement.style.filter=`hue-rotate(${Math.round(mid*60)}deg)`;musicAnim=requestAnimationFrame(viz);}viz();}).catch(()=>log('Microphone access denied','error'));}
+
+/* ═══════ LOG RESIZE ═══════ */
+function initLogResize(){const h=$('logResizeHandle'),p=$('logPanel');if(!h||!p)return;let dragging=false,startX,startW;const isRtl=()=>document.documentElement.dir==='rtl';h.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;startW=p.offsetWidth;h.classList.add('active');document.body.style.cursor='col-resize';document.body.style.userSelect='none';e.preventDefault();});document.addEventListener('mousemove',e=>{if(!dragging)return;const dx=isRtl()?(e.clientX-startX):(startX-e.clientX);document.documentElement.style.setProperty('--log-width',Math.max(200,Math.min(startW+dx,window.innerWidth*0.6))+'px');});document.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;h.classList.remove('active');document.body.style.cursor='';document.body.style.userSelect='';try{localStorage.setItem('wdiy-log-width',getComputedStyle(document.documentElement).getPropertyValue('--log-width'));}catch{}});try{const saved=localStorage.getItem('wdiy-log-width');if(saved)document.documentElement.style.setProperty('--log-width',saved);}catch{}}
+
+/* ═══════ PANELS ═══════ */
+const FOCUSABLE='button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
+function openPanel(pid,oid){const sb=$(pid),ov=$(oid);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open');if(sb){const f=sb.querySelector(FOCUSABLE);if(f)f.focus();}}
+function closePanel(pid,oid,rid){const sb=$(pid),ov=$(oid);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open');const b=$(rid);if(b)b.focus();}
+function openHelp(){openPanel('helpPanel','helpOverlay');}
+function closeHelp(){closePanel('helpPanel','helpOverlay','helpBtn');}
+let logWasOpen=false;
+function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay');}
+function closeSettings(){closePanel('settingsPanel','settingsOverlay','settingsBtn');if(logWasOpen){openLog();logWasOpen=false;}}
+function openLog(){const sb=$('logPanel');if(sb)sb.classList.add('open');document.body.classList.add('log-open');}
+function closeLog(){const sb=$('logPanel');if(sb)sb.classList.remove('open');document.body.classList.remove('log-open');const b=$('logBtn');if(b)b.focus();}
+function toggleLog(){const sb=$('logPanel');if(sb&&sb.classList.contains('open'))closeLog();else openLog();}
+function closeAllPanels(){closeHelp();closeSettings();closeLog();}
+function initHelpTabs(){const tabs=document.querySelectorAll('.help-tab'),contents=document.querySelectorAll('.help-content');tabs.forEach(tab=>{tab.addEventListener('click',()=>{tabs.forEach(t=>t.classList.remove('active'));contents.forEach(c=>c.classList.remove('active'));tab.classList.add('active');const id='help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1);const target=$(id);if(target)target.classList.add('active');});});}
+function trapFocus(e){for(const id of['helpPanel','settingsPanel','logPanel']){const sb=$(id);if(!sb||!sb.classList.contains('open'))continue;const focusable=sb.querySelectorAll(FOCUSABLE);if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}return;}}
+
+/* ══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: CERTIFICATE INSPECTOR
+   ══════════════════════════════════════════════════════════════ */
+
+let selectedChain = 0;
+
+const CERT_CHAINS = [
+  // Chain 0: Valid (google.com)
+  {
+    domain: 'google.com',
+    status: 'valid',
+    certs: [
+      { type: 'root', issuer: 'GlobalSign Root CA', subject: 'GlobalSign Root CA', validFrom: '2020-06-19', validTo: '2028-01-28', algo: 'RSA-4096 / SHA-384', serial: 'AA:BB:CC:11:22:33:44:55' },
+      { type: 'intermediate', issuer: 'GlobalSign Root CA', subject: 'GTS CA 1C3', validFrom: '2023-01-11', validTo: '2027-01-10', algo: 'RSA-2048 / SHA-256', serial: 'DD:EE:FF:66:77:88:99:00' },
+      { type: 'leaf', issuer: 'GTS CA 1C3', subject: '*.google.com', validFrom: '2025-01-15', validTo: '2025-04-09', algo: 'ECDSA P-256 / SHA-256', serial: '11:22:33:AA:BB:CC:DD:EE' },
+    ]
+  },
+  // Chain 1: Expired
+  {
+    domain: 'expired-cert.org',
+    status: 'expired',
+    certs: [
+      { type: 'root', issuer: 'DigiCert Global Root G2', subject: 'DigiCert Global Root G2', validFrom: '2013-08-01', validTo: '2038-01-15', algo: 'RSA-2048 / SHA-256', serial: 'A1:B2:C3:D4:E5:F6:01:02' },
+      { type: 'intermediate', issuer: 'DigiCert Global Root G2', subject: 'DigiCert SHA2 Secure Server CA', validFrom: '2020-09-23', validTo: '2024-09-22', algo: 'RSA-2048 / SHA-256', serial: 'F1:E2:D3:C4:B5:A6:07:08' },
+      { type: 'leaf', issuer: 'DigiCert SHA2 Secure Server CA', subject: 'expired-cert.org', validFrom: '2022-03-15', validTo: '2023-03-15', algo: 'RSA-2048 / SHA-256', serial: '99:88:77:66:55:44:33:22' },
+    ]
+  },
+  // Chain 2: Self-Signed (Invalid)
+  {
+    domain: 'self-signed.dev',
+    status: 'invalid',
+    certs: [
+      { type: 'leaf', issuer: 'self-signed.dev', subject: 'self-signed.dev', validFrom: '2025-01-01', validTo: '2026-01-01', algo: 'RSA-1024 / SHA-1', serial: 'AA:00:BB:11:CC:22:DD:33' },
+    ]
+  }
+];
+
+function renderCertCard(cert, index, chainStatus) {
+  const s = LANG[currentLang];
+  const typeLabel = cert.type === 'root' ? s.rootCA : cert.type === 'intermediate' ? s.intermediateCA : s.leafCert;
+  const typeIcon = cert.type === 'root' ? '&#127967;' : cert.type === 'intermediate' ? '&#128279;' : '&#128196;';
+
+  let statusColor = '#4caf50';
+  let statusText = s.valid;
+  if (chainStatus === 'expired' && cert.type === 'leaf') {
+    statusColor = '#ff9800';
+    statusText = s.expired;
+  } else if (chainStatus === 'invalid') {
+    statusColor = '#f44336';
+    statusText = s.selfSigned;
+  }
+
+  return `
+    <div style="background:var(--glass-bg,rgba(255,255,255,0.05));border:2px solid ${statusColor}40;border-radius:12px;padding:1rem;margin-bottom:.5rem;position:relative;animation:fadeIn .5s ease ${index*0.3}s both;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;">
+        <span style="font-size:1.5rem;">${typeIcon}</span>
+        <div>
+          <div style="font-weight:bold;font-size:.95rem;">${typeLabel}</div>
+          <div style="font-size:.75rem;opacity:.7;">${cert.subject}</div>
+        </div>
+        <span style="margin-inline-start:auto;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:bold;background:${statusColor}30;color:${statusColor};border:1px solid ${statusColor}60;">${statusText}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;font-size:.8rem;">
+        <div><strong>${s.issuer}:</strong> ${cert.issuer}</div>
+        <div><strong>${s.subject}:</strong> ${cert.subject}</div>
+        <div><strong>${s.validFrom}:</strong> ${cert.validFrom}</div>
+        <div><strong>${s.validTo}:</strong> ${cert.validTo}</div>
+        <div><strong>${s.algorithm}:</strong> ${cert.algo}</div>
+        <div><strong>${s.serial}:</strong> <span style="font-family:monospace;font-size:.7rem;">${cert.serial}</span></div>
+      </div>
+    </div>`;
+}
+
+function renderChainArrow() {
+  return `<div style="text-align:center;padding:.25rem 0;font-size:1.2rem;opacity:.5;">&#11015;&#65039;</div>`;
+}
+
+async function inspectChain() {
+  const s = LANG[currentLang];
+  const chain = CERT_CHAINS[selectedChain];
+  const display = $('chainDisplay');
+  const statusEl = $('chainStatus');
+  if (!display || !statusEl) return;
+
+  showToast(s.inspecting);
+  log(`${s.inspecting} ${chain.domain}`, 'tx');
+  setStatus(true);
+
+  display.style.display = 'none';
+  statusEl.style.display = 'none';
+
+  await sleep(800);
+
+  // Build chain display
+  let html = '';
+  chain.certs.forEach((cert, i) => {
+    if (i > 0) html += renderChainArrow();
+    html += renderCertCard(cert, i, chain.status);
+  });
+
+  display.innerHTML = html;
+  display.style.display = 'block';
+
+  // Show validation status
+  let statusMsg, statusBg;
+  if (chain.status === 'valid') {
+    statusMsg = `&#9989; ${s.chainValid}`;
+    statusBg = 'rgba(76,175,80,0.15)';
+    statusEl.style.color = '#4caf50';
+    statusEl.style.border = '2px solid #4caf5060';
+  } else if (chain.status === 'expired') {
+    statusMsg = `&#9888;&#65039; ${s.chainExpired}`;
+    statusBg = 'rgba(255,152,0,0.15)';
+    statusEl.style.color = '#ff9800';
+    statusEl.style.border = '2px solid #ff980060';
+  } else {
+    statusMsg = `&#10060; ${s.chainInvalid}`;
+    statusBg = 'rgba(244,67,54,0.15)';
+    statusEl.style.color = '#f44336';
+    statusEl.style.border = '2px solid #f4433660';
+  }
+  statusEl.innerHTML = statusMsg;
+  statusEl.style.background = statusBg;
+  statusEl.style.display = 'block';
+
+  hideToast();
+  log(`${chain.domain}: ${chain.status === 'valid' ? s.chainValid : chain.status === 'expired' ? s.chainExpired : s.chainInvalid}`, chain.status === 'valid' ? 'success' : 'error');
+}
+
+async function compareAllChains() {
+  const s = LANG[currentLang];
+  const results = $('comparisonResults');
+  if (!results) return;
+
+  showToast(s.comparing);
+  log(s.comparing, 'tx');
+  await sleep(600);
+
+  let html = '<div style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">';
+  CERT_CHAINS.forEach((chain, ci) => {
+    const color = chain.status === 'valid' ? '#4caf50' : chain.status === 'expired' ? '#ff9800' : '#f44336';
+    html += `<div style="background:var(--glass-bg,rgba(255,255,255,0.05));border:2px solid ${color}40;border-radius:12px;padding:1rem;">`;
+    html += `<h4 style="margin:0 0 .5rem;color:${color};">${chain.domain}</h4>`;
+    html += `<div style="font-size:.8rem;margin-bottom:.5rem;"><strong>${s.status}:</strong> <span style="color:${color};">${chain.status === 'valid' ? s.valid : chain.status === 'expired' ? s.expired : s.selfSigned}</span></div>`;
+    html += `<div style="font-size:.75rem;opacity:.8;">Certs: ${chain.certs.length}</div>`;
+    chain.certs.forEach(cert => {
+      html += `<div style="font-size:.7rem;padding:.3rem;margin-top:.3rem;background:rgba(255,255,255,0.03);border-radius:4px;">${cert.type}: ${cert.subject}</div>`;
+    });
+    html += `</div>`;
+  });
+  html += '</div>';
+
+  results.innerHTML = html;
+  results.style.display = 'block';
+  hideToast();
+  log(s.comparisonDone, 'success');
+}
+
+function initCertInspector() {
+  // Chain selection buttons
+  document.querySelectorAll('[data-chain]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedChain = parseInt(btn.dataset.chain);
+      document.querySelectorAll('[data-chain]').forEach(b => b.classList.remove('primary'));
+      btn.classList.add('primary');
+      playSound('click');
+      log(`Selected: ${CERT_CHAINS[selectedChain].domain}`, 'info');
+    });
+  });
+
+  // Inspect button
+  const ib = $('inspectBtn');
+  if (ib) ib.addEventListener('click', inspectChain);
+
+  // Compare button
+  const cb = $('compareBtn');
+  if (cb) cb.addEventListener('click', compareAllChains);
+}
+
+// Add fadeIn animation via JS since we can't modify CSS
+const styleTag = document.createElement('style');
+styleTag.textContent = `@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}`;
+document.head.appendChild(styleTag);
+
+/* ═══════ INIT ═══════ */
+function init() {
+  initSplash();
+  const lw=$('logoWrap'); if(lw) lw.innerHTML=LOGO_SVG;
+  const cb=$('clearLogBtn'),cpb=$('copyLogBtn'),exb=$('exportLogBtn');
+  if(cb)cb.onclick=clearLog; if(cpb)cpb.onclick=copyLog; if(exb)exb.onclick=exportLog;
+  initLogFilters();
+  const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hOv=$('helpOverlay');
+  if(hBtn)hBtn.onclick=openHelp; if(hClose)hClose.onclick=closeHelp; if(hOv)hOv.onclick=closeHelp;
+  initHelpTabs();
+  const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sOv=$('settingsOverlay');
+  if(sBtn)sBtn.onclick=openSettings; if(sClose)sClose.onclick=closeSettings; if(sOv)sOv.onclick=closeSettings;
+  const lBtn=$('logBtn'),lClose=$('logCloseBtn');
+  if(lBtn)lBtn.onclick=toggleLog; if(lClose)lClose.onclick=closeLog;
+  initLogResize();
+  const soundTgl=$('soundToggle');
+  if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled);}catch{}if(soundEnabled)playSound('click');});}
+  const whisperBtn=$('whisperBtn'); if(whisperBtn)whisperBtn.onclick=toggleWhisper;
+  const breathBtn=$('breathingBtn'),dhikrDisp=$('dhikrDisplay'),dhikrBtn=$('dhikrBtn');
+  if(breathBtn)breathBtn.onclick=()=>{toggleBreathing();if(dhikrDisp)dhikrDisp.style.display=breathingActive?'flex':'none';};
+  if(dhikrBtn)dhikrBtn.onclick=incrementDhikr;
+  const musicBtn=$('musicBtn'); if(musicBtn)musicBtn.onclick=toggleMusicMode;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels();if(e.key==='Tab')trapFocus(e);});
+  const langSel=$('langSelect'); if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect'); if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sL=localStorage.getItem('wdiy-lang'),sT=localStorage.getItem('wdiy-theme');if(sT)setTheme(sT);if(sL)setLanguage(sL);}catch{}
+  checkVersion();
+  onAppMessage(msg=>log(`${msg.from}: ${msg.type}`,'rx'));
+  initKonami();initMorseLog();initMatrixTrigger();initDebug();initShakeReport();initTimeTravel();initHijriDate();
+  initGhostUsers();initPixelPet();initLogoTracker();
+
+  // App-specific init
+  initCertInspector();
+
+  log(LANG[currentLang].ready,'success');
+}
+
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

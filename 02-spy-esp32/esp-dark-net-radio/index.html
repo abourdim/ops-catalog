@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dark Net Radio — Workshop DIY</title>
+  <meta name="description" content="Build an offline encrypted WiFi mesh network with ESP32 — Workshop DIY" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dark Net Radio — Workshop DIY" />
+  <meta property="og:description" content="Build an offline encrypted WiFi mesh network with ESP32" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- App-specific minimal styles -->
+  <style>
+    #meshCanvas { width:100%; height:320px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.35); cursor:crosshair; display:block; }
+    .mesh-controls { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .mesh-controls button { flex:1; min-width:100px; }
+    .msg-row { display:flex; gap:6px; margin-top:10px; }
+    .msg-row input[type="text"] { flex:1; }
+    .step-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+    .step-card { border-radius:10px; border:1px solid var(--border); background:rgba(0,0,0,.2); padding:10px; text-align:center; }
+    .step-card .step-num { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--band2)); color:var(--bg); font-weight:700; font-size:.75rem; margin-bottom:6px; }
+    .step-card .step-icon { font-size:1.6rem; display:block; margin-bottom:4px; }
+    .step-card h4 { font-size:.76rem; margin:4px 0 2px; color:var(--text); }
+    .step-card p { font-size:.7rem; color:var(--text-muted); line-height:1.4; }
+    .lab-section { margin-top:10px; }
+    .lab-section .section-title { margin-bottom:8px; }
+    .challenge-list { display:flex; flex-direction:column; gap:8px; }
+    .challenge-item { border-radius:10px; border:1px solid var(--border); background:rgba(0,0,0,.2); padding:10px; display:flex; align-items:flex-start; gap:10px; }
+    .challenge-item .ch-num { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#ef4444,#f97316); color:#fff; font-weight:700; font-size:.72rem; flex-shrink:0; }
+    .challenge-item h4 { font-size:.78rem; color:var(--text); margin-bottom:2px; }
+    .challenge-item p { font-size:.72rem; color:var(--text-muted); line-height:1.4; }
+    .challenge-item .ch-status { margin-left:auto; font-size:.7rem; padding:2px 8px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); white-space:nowrap; }
+    .challenge-item .ch-status.done { border-color:rgba(34,197,94,.5); color:#22c55e; }
+    .voice-viz { width:100%; height:60px; border-radius:8px; border:1px solid var(--border); background:rgba(0,0,0,.3); margin-top:8px; display:block; }
+    .stats-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .stat-badge { font-size:.7rem; padding:3px 10px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); background:rgba(0,0,0,.2); }
+    .stat-badge strong { color:var(--accent); }
+    .encrypt-output { font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.72rem; color:var(--accent); background:rgba(0,0,0,.3); padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-top:6px; word-break:break-all; min-height:32px; }
+  </style>
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">Build an offline encrypted WiFi mesh network</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Dark Net Radio</h1>
+            <div class="subtitle" data-i18n="subtitle">Build an offline encrypted WiFi mesh network</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#x1F4DC;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#x1F4E1;</span> <span data-i18n="mainSection">Dark Net Radio &mdash; Private Mesh</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">ESP32 mesh topology: encrypted offline communication</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Mesh Canvas -->
+        <canvas id="meshCanvas" width="760" height="320"></canvas>
+
+        <!-- Stats -->
+        <div class="stats-row" id="statsRow">
+          <span class="stat-badge"><strong id="statNodes">0</strong> <span data-i18n="statNodes">nodes</span></span>
+          <span class="stat-badge"><strong id="statLinks">0</strong> <span data-i18n="statLinks">links</span></span>
+          <span class="stat-badge"><strong id="statMsgs">0</strong> <span data-i18n="statMsgs">messages</span></span>
+          <span class="stat-badge"><strong id="statPackets">0</strong> <span data-i18n="statPackets">voice pkts</span></span>
+        </div>
+
+        <!-- Controls -->
+        <div class="mesh-controls">
+          <button id="addNodeBtn" class="primary"><span class="btn-icon">&#x2795;</span> <span data-i18n="addNode">Add Node</span></button>
+          <button id="removeNodeBtn"><span class="btn-icon">&#x2796;</span> <span data-i18n="removeNode">Remove Node</span></button>
+          <button id="breakLinkBtn" class="fire-btn"><span class="btn-icon">&#x26A1;</span> <span data-i18n="breakLink">Break Link</span></button>
+          <button id="voiceBtn"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="voiceSim">Voice Sim</span></button>
+          <button id="discoverBtn"><span class="btn-icon">&#x1F50D;</span> <span data-i18n="discover">Discover</span></button>
+        </div>
+
+        <!-- Message Input -->
+        <div class="msg-row">
+          <input type="text" id="msgInput" placeholder="Type encrypted message..." data-i18n-placeholder="msgPlaceholder" />
+          <button id="sendMsgBtn" class="primary"><span class="btn-icon">&#x1F512;</span> <span data-i18n="sendMsg">Send</span></button>
+        </div>
+
+        <!-- Encryption output -->
+        <div class="encrypt-output" id="encryptOutput" data-i18n="encryptHint">Encrypted output appears here...</div>
+
+        <!-- Voice visualization -->
+        <canvas id="voiceCanvas" class="voice-viz" width="760" height="60"></canvas>
+      </div>
+
+      <!-- SECTION A: How It Works -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionA">A &mdash; How It Works</span></summary>
+        <div class="card">
+          <div class="step-grid">
+            <div class="step-card">
+              <span class="step-icon">&#x1F4F6;</span>
+              <span class="step-num">1</span>
+              <h4 data-i18n="step1Title">ESP32 Creates AP</h4>
+              <p data-i18n="step1Desc">Each ESP32 boots as a WiFi Access Point, broadcasting its own SSID. No internet needed.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-icon">&#x1F50D;</span>
+              <span class="step-num">2</span>
+              <h4 data-i18n="step2Title">Node Discovery</h4>
+              <p data-i18n="step2Desc">Nodes scan for nearby APs and auto-connect, building a mesh topology dynamically.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-icon">&#x1F510;</span>
+              <span class="step-num">3</span>
+              <h4 data-i18n="step3Title">E2E Encryption</h4>
+              <p data-i18n="step3Desc">Messages are encrypted end-to-end using AES-256. Only sender and receiver can read them.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-icon">&#x1F504;</span>
+              <span class="step-num">4</span>
+              <h4 data-i18n="step4Title">Mesh Routing</h4>
+              <p data-i18n="step4Desc">If a node fails, the mesh re-routes around it. Messages always find a path if one exists.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION B: Lab -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F3AC;</span> <span data-i18n="sectionB">B &mdash; Mesh Lab</span></summary>
+        <div class="card">
+          <div class="lab-section">
+            <div class="section-header">
+              <div class="section-title"><span class="icon">&#x1F9EA;</span> <span data-i18n="labTitle">Interactive Mesh Lab</span></div>
+              <div class="section-subtitle" data-i18n="labDesc">Add/remove nodes, send encrypted messages, simulate voice, and break links to test resilience.</div>
+            </div>
+
+            <div class="mesh-controls" style="margin-top:10px;">
+              <button id="labAddBtn" class="primary"><span class="btn-icon">&#x2795;</span> <span data-i18n="labAdd">Add Mesh Node</span></button>
+              <button id="labRemoveBtn"><span class="btn-icon">&#x2796;</span> <span data-i18n="labRemove">Remove Last Node</span></button>
+              <button id="labBreakBtn" class="fire-btn"><span class="btn-icon">&#x1F4A5;</span> <span data-i18n="labBreak">Break Random Link</span></button>
+              <button id="labHealBtn"><span class="btn-icon">&#x1FA79;</span> <span data-i18n="labHeal">Heal Network</span></button>
+            </div>
+
+            <div class="msg-row" style="margin-top:8px;">
+              <input type="text" id="labMsgInput" placeholder="Encrypted message..." data-i18n-placeholder="labMsgPlaceholder" />
+              <button id="labSendBtn" class="primary"><span class="btn-icon">&#x1F4E8;</span> <span data-i18n="labSend">Broadcast</span></button>
+            </div>
+
+            <div class="mesh-controls" style="margin-top:8px;">
+              <button id="labVoiceBtn"><span class="btn-icon">&#x1F3A7;</span> <span data-i18n="labVoice">Simulate Voice Packets</span></button>
+              <button id="labFloodBtn"><span class="btn-icon">&#x1F30A;</span> <span data-i18n="labFlood">Flood Test</span></button>
+            </div>
+
+            <div class="hint" data-i18n="labHint">Tip: Break links to test mesh resilience. The network auto-discovers new routes!</div>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION C: Challenges -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F3C6;</span> <span data-i18n="sectionC">C &mdash; Challenges</span></summary>
+        <div class="card">
+          <div class="challenge-list" id="challengeList">
+            <div class="challenge-item" id="ch1">
+              <span class="ch-num">1</span>
+              <div>
+                <h4 data-i18n="ch1Title">Build a 5-Node Mesh</h4>
+                <p data-i18n="ch1Desc">Create a mesh network with at least 5 nodes. All must be connected. Watch the topology form!</p>
+              </div>
+              <span class="ch-status" id="ch1Status" data-i18n="chPending">Pending</span>
+            </div>
+            <div class="challenge-item" id="ch2">
+              <span class="ch-num">2</span>
+              <div>
+                <h4 data-i18n="ch2Title">Survive a Link Failure</h4>
+                <p data-i18n="ch2Desc">Break a link and send a message that still arrives. Prove the mesh can route around failures!</p>
+              </div>
+              <span class="ch-status" id="ch2Status" data-i18n="chPending">Pending</span>
+            </div>
+            <div class="challenge-item" id="ch3">
+              <span class="ch-num">3</span>
+              <div>
+                <h4 data-i18n="ch3Title">Encrypted Voice Call</h4>
+                <p data-i18n="ch3Desc">Send 10 voice packets across at least 3 hops. All packets must arrive encrypted and intact.</p>
+              </div>
+              <span class="ch-status" id="ch3Status" data-i18n="chPending">Pending</span>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- LEFT PANEL — Help -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">&#x2753; Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is Dark Net Radio?</summary>
+          <p data-i18n="faq_a1">A simulator for ESP32-based private mesh networks. Build offline encrypted communication systems with no internet.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How do I add mesh nodes?</summary>
+          <p data-i18n="faq_a2">Click "Add Node" or click on the canvas. Nodes auto-connect to nearby peers forming a mesh topology.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">How does encryption work?</summary>
+          <p data-i18n="faq_a3">Messages are encrypted using simulated AES-256. Type a message and click Send to see the encrypted output.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">What happens when a link breaks?</summary>
+          <p data-i18n="faq_a4">The mesh automatically discovers alternative routes. Messages find a new path if one exists.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q5">Is any real data transmitted?</summary>
+          <p data-i18n="faq_a5">No. Everything is simulated in your browser. No data leaves your device. Fully offline and private.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Add ESP32 nodes by clicking "Add Node" or clicking on the canvas.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Watch nodes auto-discover each other and form mesh links (animated).</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Type a message and click Send to see AES-256 encryption in action.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Break links with "Break Link" and watch the mesh re-route around failures.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">5</span>
+          <p data-i18n="howto_5">Use "Voice Sim" to simulate encrypted voice packets traversing the mesh.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_mesh_title">&#x1F310; Mesh Networking</h3>
+          <p data-i18n="wiki_mesh">A mesh network is a decentralized topology where each node relays data. If one path fails, data routes around it. ESP32 nodes create WiFi APs to form these meshes.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_ap_title">&#x1F4F6; WiFi AP Mode</h3>
+          <p data-i18n="wiki_ap">In AP (Access Point) mode, the ESP32 creates its own WiFi network. Other devices connect directly — no router or internet needed. Range: ~50-100m outdoors.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_encrypt_title">&#x1F510; AES-256 Encryption</h3>
+          <p data-i18n="wiki_encrypt">AES-256 is a symmetric encryption standard used by governments. Each message is encrypted with a shared key, making interception useless without the key.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_offline_title">&#x1F4E1; Offline Communication</h3>
+          <p data-i18n="wiki_offline">The entire mesh operates without internet. Messages hop node-to-node using WiFi direct connections. Untraceable, uncensorable, and fully autonomous.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_privacy_title">&#x1F512; Privacy</h3>
+          <p data-i18n="wiki_privacy">This simulator runs 100% in your browser. No data is sent anywhere. No tracking, no analytics. Local-first, privacy-first.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL — Settings -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>&#x1F1EC;&#x1F1E7; EN</option>
+          <option value="fr">&#x1F1EB;&#x1F1F7; FR</option>
+          <option value="ar">&#x1F1E9;&#x1F1FF; &#x0639;&#x0631;&#x0628;&#x064A;</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">&#x1F50A; Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL — Activity Log (docked) -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">&#x1F4DC; Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#x2713;</button>
+      <button class="log-filter" data-filter="error">&#x2717;</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working&hellip;</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

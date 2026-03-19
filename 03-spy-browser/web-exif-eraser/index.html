@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EXIF Eraser — Workshop DIY</title>
+  <meta name="description" content="Strip hidden metadata from photos before sharing — privacy-first EXIF scrubber simulation." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="EXIF Eraser — Workshop DIY" />
+  <meta property="og:description" content="Strip hidden metadata from photos before sharing." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s, background 0.3s;
+      background: rgba(0,0,0,0.15);
+      margin-bottom: 10px;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--accent);
+      background: rgba(0,0,0,0.25);
+    }
+    .upload-zone .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
+    .upload-zone .upload-text { font-size: 0.8rem; color: var(--text-muted); }
+    .preview-canvas {
+      width: 100%;
+      max-height: 200px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+      display: block;
+      margin-bottom: 8px;
+      object-fit: contain;
+    }
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+      margin-top: 6px;
+    }
+    .meta-table th, .meta-table td {
+      padding: 4px 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    [dir="rtl"] .meta-table th, [dir="rtl"] .meta-table td { text-align: right; }
+    .meta-table th {
+      color: var(--accent);
+      font-weight: 600;
+      width: 35%;
+    }
+    .meta-table td { color: var(--text); word-break: break-all; }
+    .meta-table tr.scrubbed td {
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .compare-box {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 10px;
+      background: rgba(0,0,0,0.15);
+    }
+    .compare-box h4 {
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .scrub-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+    .risk-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .risk-high { background: #ef444433; color: #ef4444; border: 1px solid #ef444455; }
+    .risk-medium { background: #f9731633; color: #f97316; border: 1px solid #f9731655; }
+    .risk-low { background: #22c55e33; color: #22c55e; border: 1px solid #22c55e55; }
+    .risk-clean { background: #22c55e33; color: #22c55e; border: 1px solid #22c55e55; }
+    .diff-highlight { background: #ef444422; border-radius: 4px; padding: 0 2px; }
+    .stat-row {
+      display: flex;
+      justify-content: space-around;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .stat-item {
+      text-align: center;
+      flex: 1;
+    }
+    .stat-value {
+      font-family: var(--font-h);
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    @media (max-width: 500px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🧹 scan · 🔍 reveal · 🛡️ protect</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">EXIF Eraser</h1>
+            <div class="subtitle" data-i18n="subtitle">🧹 scan · 🔍 reveal · 🛡️ protect</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🧹</span> <span data-i18n="mainSection">EXIF Eraser — Metadata Scrubber</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Strip hidden data from photos before sharing</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <!-- Upload Zone -->
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text" data-i18n="uploadHint">Drop an image or click to upload (or use sample)</div>
+          <input type="file" id="fileInput" accept="image/*" style="display:none" />
+        </div>
+
+        <!-- Image Preview -->
+        <canvas id="previewCanvas" class="preview-canvas" style="display:none"></canvas>
+
+        <!-- Sample button -->
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <button id="sampleBtn" class="btn-sm"><span class="btn-icon">🖼️</span> <span data-i18n="useSample">Use sample image</span></button>
+          <button id="resetBtn" class="btn-sm" disabled><span class="btn-icon">🔄</span> <span data-i18n="reset">Reset</span></button>
+        </div>
+
+        <!-- Risk Badge -->
+        <div id="riskArea" style="display:none;margin-bottom:10px;">
+          <span data-i18n="privacyRisk">Privacy Risk:</span>
+          <span id="riskBadge" class="risk-badge risk-high">HIGH</span>
+        </div>
+
+        <!-- BEFORE metadata table -->
+        <div class="control-section" id="metaBefore" style="display:none">
+          <div class="section-header">
+            <div class="section-title">🔍 <span data-i18n="metadataBefore">Metadata (Before)</span></div>
+            <div class="section-subtitle" data-i18n="metaBeforeDesc">Hidden data found in this image</div>
+          </div>
+          <table class="meta-table" id="metaTableBefore"></table>
+        </div>
+
+        <!-- Scrub Button -->
+        <button id="scrubBtn" class="primary scrub-btn" disabled>
+          <span class="btn-icon">🧹</span> <span data-i18n="scrubNow">Scrub Metadata</span>
+        </button>
+
+        <!-- AFTER metadata table -->
+        <div class="control-section" id="metaAfter" style="display:none;margin-top:10px;">
+          <div class="section-header">
+            <div class="section-title">🛡️ <span data-i18n="metadataAfter">Metadata (After)</span></div>
+            <div class="section-subtitle" data-i18n="metaAfterDesc">Clean — no hidden data remains</div>
+          </div>
+          <table class="meta-table" id="metaTableAfter"></table>
+        </div>
+
+        <!-- Stats -->
+        <div class="stat-row" id="statsRow" style="display:none;">
+          <div class="stat-item">
+            <div class="stat-value" id="statFieldsBefore">0</div>
+            <div class="stat-label" data-i18n="fieldsBefore">Fields Before</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="statFieldsAfter">0</div>
+            <div class="stat-label" data-i18n="fieldsAfter">Fields After</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="statRemoved">0</div>
+            <div class="stat-label" data-i18n="fieldsRemoved">Removed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="control-section" style="margin-bottom:10px;">
+            <div class="section-header">
+              <div class="section-title">1️⃣ <span data-i18n="step1Title">What is EXIF Data?</span></div>
+            </div>
+            <p class="hint" data-i18n="step1Desc">EXIF (Exchangeable Image File Format) is metadata embedded in every photo. It includes camera settings, GPS location, timestamps, device info, and more. Most people have no idea this data exists.</p>
+          </div>
+          <div class="control-section" style="margin-bottom:10px;">
+            <div class="section-header">
+              <div class="section-title">2️⃣ <span data-i18n="step2Title">Why Is It Dangerous?</span></div>
+            </div>
+            <p class="hint" data-i18n="step2Desc">When you share a photo online, anyone can extract your GPS coordinates (where you were), your device model, exact time the photo was taken, and even your name. Stalkers, advertisers, and hackers love this data.</p>
+          </div>
+          <div class="control-section" style="margin-bottom:10px;">
+            <div class="section-header">
+              <div class="section-title">3️⃣ <span data-i18n="step3Title">How Scrubbing Works</span></div>
+            </div>
+            <p class="hint" data-i18n="step3Desc">EXIF data lives in specific byte ranges within the image file. Scrubbing removes those byte segments while preserving the visual image data. The result is a clean image with zero metadata leakage.</p>
+          </div>
+          <div class="control-section">
+            <div class="section-header">
+              <div class="section-title">4️⃣ <span data-i18n="step4Title">Best Practices</span></div>
+            </div>
+            <p class="hint" data-i18n="step4Desc">Always scrub metadata before sharing photos online. Disable GPS tagging in your camera app. Use EXIF erasers regularly. Be especially careful with photos that show your home, school, or regular locations.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Comparison Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔬</span> <span data-i18n="sectionB">Comparison Lab</span></summary>
+        <div class="card">
+          <div class="compare-grid" id="compareGrid">
+            <div class="compare-box">
+              <h4>🔴 <span data-i18n="beforeScrub">Before Scrub</span></h4>
+              <div id="compareBefore" class="hint" data-i18n="compareLoad">Load an image to see comparison</div>
+            </div>
+            <div class="compare-box">
+              <h4>🟢 <span data-i18n="afterScrub">After Scrub</span></h4>
+              <div id="compareAfter" class="hint" data-i18n="compareRun">Scrub the image first</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <button id="batchBtn" class="btn-sm" disabled><span class="btn-icon">📦</span> <span data-i18n="batchScrub">Batch Scrub (3 Samples)</span></button>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <div class="control-section" style="margin-bottom:10px;">
+            <div class="section-header">
+              <div class="section-title">🕵️ <span data-i18n="challenge1Title">Challenge 1: Find the Spy</span></div>
+            </div>
+            <p class="hint" data-i18n="challenge1Desc">A photo was posted online. Can you determine the GPS coordinates, device, and time it was taken? Click to generate a mystery image and analyze its metadata.</p>
+            <button id="challenge1Btn" class="btn-sm primary" style="margin-top:6px;"><span class="btn-icon">🔎</span> <span data-i18n="startChallenge">Start Challenge</span></button>
+            <div id="challenge1Result" class="hint" style="margin-top:6px;"></div>
+          </div>
+          <div class="control-section" style="margin-bottom:10px;">
+            <div class="section-header">
+              <div class="section-title">🧪 <span data-i18n="challenge2Title">Challenge 2: Spot the Difference</span></div>
+            </div>
+            <p class="hint" data-i18n="challenge2Desc">Two versions of the same image — one has metadata, one is clean. Can you tell which is which just by looking? (Hint: they look identical!)</p>
+            <button id="challenge2Btn" class="btn-sm primary" style="margin-top:6px;"><span class="btn-icon">👁️</span> <span data-i18n="startChallenge">Start Challenge</span></button>
+            <div id="challenge2Result" class="hint" style="margin-top:6px;"></div>
+          </div>
+          <div class="control-section">
+            <div class="section-header">
+              <div class="section-title">🛡️ <span data-i18n="challenge3Title">Challenge 3: Privacy Audit</span></div>
+            </div>
+            <p class="hint" data-i18n="challenge3Desc">Scrub 5 images as fast as you can. Each image has different metadata risks. Try to achieve a perfect privacy score!</p>
+            <button id="challenge3Btn" class="btn-sm primary" style="margin-top:6px;"><span class="btn-icon">⏱️</span> <span data-i18n="startChallenge">Start Challenge</span></button>
+            <div id="challenge3Result" class="hint" style="margin-top:6px;"></div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is EXIF Eraser?</summary>
+          <p data-i18n="faq_a1">A privacy tool that reveals and removes hidden metadata from photos. Learn what data your photos leak before sharing.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">Does it modify my real files?</summary>
+          <p data-i18n="faq_a2">No. Everything runs locally in simulation. No files are modified on disk. The app generates fake EXIF to demonstrate the concept.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What kind of data does EXIF contain?</summary>
+          <p data-i18n="faq_a3">GPS coordinates, camera model, timestamps, lens info, software used, orientation, copyright, and sometimes even your name.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Upload an image or click "Use sample image" to load a demo photo.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">View the metadata table to see what hidden data the image contains.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Click "Scrub Metadata" to remove all EXIF data and see the before/after comparison.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Try the challenges in Section C to test your privacy awareness skills.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_exif_title">📷 EXIF Data</h3>
+          <p data-i18n="wiki_exif">Exchangeable Image File Format — metadata standard embedded in JPEG, TIFF, and RAW files by cameras and phones.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_gps_title">📍 GPS Geotagging</h3>
+          <p data-i18n="wiki_gps">Most smartphones embed GPS coordinates in photos by default. This reveals exactly where a photo was taken.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3>
+          <p data-i18n="wiki_privacy">Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_scrub_title">🧹 Metadata Scrubbing</h3>
+          <p data-i18n="wiki_scrub">The process of removing EXIF, IPTC, and XMP metadata blocks from image files while preserving visual quality.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

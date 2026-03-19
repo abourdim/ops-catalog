@@ -1,0 +1,21 @@
+{
+  "name": "Ghost Box \u2014 SIGINT Case \u2014 Workshop DIY",
+  "short_name": "Ghost Box \u2014 SIGINT Case",
+  "description": "Complete Pelican case SIGINT platform",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

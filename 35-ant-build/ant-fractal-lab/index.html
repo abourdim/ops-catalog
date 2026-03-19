@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fractal Antenna Lab — Workshop DIY</title>
+  <meta name="description" content="Design fractal antennas with iteration control" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="Fractal Antenna Lab — Workshop DIY" />
+  <meta property="og:description" content="Design fractal antennas with iteration control" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #08091a; --surface: #101225; --card: #181a30; --text: #e8e6e3;
+      --accent: #d4a03c; --accent2: #e8c36a; --border: #2a2d45; --radius: 12px;
+      --success: #33ff33; --error: #ff4444; --font-main: 'Tajawal', sans-serif;
+      --font-display: 'Righteous', cursive; --log-width: 320px;
+    }
+    [data-theme="zellige"]  { --accent:#2ec4b6; --accent2:#3dd5c7; --surface:#0d1f2d; --card:#142836; --border:#1e3a4f; }
+    [data-theme="andalus"]  { --accent:#e07a3a; --accent2:#f0964e; --surface:#1a1008; --card:#261a0e; --border:#3d2a14; }
+    [data-theme="riad"]     { --bg:#f5f0e8; --surface:#ede7db; --card:#fff; --text:#2d2a24; --accent:#b8860b; --accent2:#d4a03c; --border:#d5cfc3; }
+    [data-theme="medina"]   { --bg:#faf7f2; --surface:#f0ece4; --card:#fff; --text:#33302b; --accent:#7b6b3a; --accent2:#a08c4a; --border:#ddd7cb; }
+    [data-theme="space"]    { --accent:#7c4dff; --accent2:#b388ff; --surface:#0a0a1a; --card:#12122a; --border:#252547; }
+    [data-theme="jungle"]   { --accent:#4caf50; --accent2:#81c784; --surface:#0a1a0a; --card:#122612; --border:#1e3a1e; }
+    [data-theme="robot"]    { --accent:#00bcd4; --accent2:#4dd0e1; --surface:#0a1a1d; --card:#11262b; --border:#1a3a42; }
+    body { font-family: var(--font-main); background: var(--bg); color: var(--text); min-height:100vh; overflow-x:hidden; }
+    .app { max-width:900px; margin:0 auto; padding:8px; }
+    .deco-band { height:3px; background:linear-gradient(90deg,transparent,var(--accent),transparent); margin:4px 0; }
+    .header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:8px 0; }
+    .bismillah { width:100%; text-align:center; font-family:'Amiri',serif; font-size:.85rem; opacity:.7; }
+    .bism-ornament { color:var(--accent); }
+    .title-block { display:flex; align-items:center; gap:10px; }
+    .logo-wrap { width:48px; height:48px; }
+    .logo-wrap svg { width:100%; height:100%; color:var(--accent); }
+    h1 { font-family:var(--font-display); font-size:1.25rem; color:var(--accent); }
+    .subtitle { font-size:.75rem; opacity:.7; }
+    .header-right { display:flex; align-items:center; gap:8px; }
+    .header-buttons { display:flex; gap:4px; }
+    .btn-icon-only { width:32px; height:32px; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+    .btn-icon-only:hover { border-color:var(--accent); }
+    .status-pill { display:flex; align-items:center; gap:5px; padding:3px 10px; border-radius:20px; background:var(--surface); border:1px solid var(--border); font-size:.7rem; }
+    .status-dot { width:8px; height:8px; border-radius:50%; background:var(--error); }
+    .status-pill.connected .status-dot { background:var(--success); }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin:8px 0; }
+    .card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+    .card-title { font-family:var(--font-display); font-size:1.05rem; color:var(--accent); }
+    .card-subtitle { font-size:.72rem; opacity:.6; margin-top:2px; }
+    .version-tag { background:var(--accent); color:#000; padding:1px 6px; border-radius:8px; font-size:.6rem; font-weight:700; }
+    .icon { margin-right:4px; }
+    .collapsible { margin:6px 0; }
+    .collapsible summary { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:10px 14px; cursor:pointer; font-family:var(--font-display); color:var(--accent); list-style:none; }
+    .collapsible summary::-webkit-details-marker { display:none; }
+    .collapsible .card { margin-top:6px; }
+    button, .btn-sm { font-family:var(--font-main); padding:6px 14px; border-radius:var(--radius); border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; font-size:.8rem; }
+    button:hover, .btn-sm:hover { border-color:var(--accent); }
+    button.primary, .btn-sm.primary { background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; }
+    select, input[type="number"], input[type="text"], input[type="range"], textarea { font-family:var(--font-main); padding:6px 10px; border-radius:var(--radius); border:1px solid var(--border); background:var(--surface); color:var(--text); font-size:.82rem; width:100%; }
+    textarea { min-height:60px; resize:vertical; }
+    label { font-size:.78rem; display:block; margin-bottom:3px; opacity:.8; }
+    .control-section { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:12px; margin:8px 0; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+    canvas { width:100%; border-radius:var(--radius); background:#000; display:block; }
+    .result-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:10px; margin-top:8px; font-size:.8rem; }
+    .result-row { display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid var(--border); }
+    .result-row:last-child { border-bottom:none; }
+    .result-label { opacity:.7; }
+    .result-value { color:var(--accent); font-weight:700; font-family:'Orbitron',monospace; }
+    .app-footer { text-align:center; padding:12px; font-size:.65rem; opacity:.5; }
+    .app-footer a { color:var(--accent); text-decoration:none; }
+    .splash { position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:opacity .5s; }
+    .splash.hidden { opacity:0; pointer-events:none; }
+    .splash-inner { text-align:center; }
+    .splash-logo { width:80px; height:80px; margin:0 auto 12px; }
+    .splash-logo svg { width:100%; height:100%; color:var(--accent); }
+    .splash-title { font-family:var(--font-display); font-size:1.4rem; color:var(--accent); }
+    .splash-sub { font-size:.8rem; margin-top:4px; opacity:.7; }
+    .splash-hint { font-size:.6rem; margin-top:16px; opacity:.4; }
+    .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:100; }
+    .sidebar-overlay.open { display:block; }
+    .sidebar { position:fixed; top:0; right:0; width:300px; max-width:85vw; height:100vh; background:var(--card); border-left:1px solid var(--border); z-index:101; transform:translateX(100%); transition:transform .3s; display:flex; flex-direction:column; }
+    .sidebar.open { transform:translateX(0); }
+    .sidebar-left { left:0; right:auto; border-left:none; border-right:1px solid var(--border); transform:translateX(-100%); }
+    .sidebar-left.open { transform:translateX(0); }
+    .sidebar-header { display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid var(--border); }
+    .sidebar-title { font-family:var(--font-display); color:var(--accent); font-size:.95rem; }
+    .sidebar-body { flex:1; overflow-y:auto; padding:12px; }
+    .sidebar-footer { padding:10px 12px; border-top:1px solid var(--border); font-size:.65rem; opacity:.5; display:flex; justify-content:space-between; }
+    .sidebar-group { margin-bottom:12px; }
+    .sidebar-label { font-size:.75rem; margin-bottom:4px; opacity:.7; }
+    .sidebar-select { width:100%; padding:6px 10px; border-radius:var(--radius); border:1px solid var(--border); background:var(--surface); color:var(--text); font-family:var(--font-main); }
+    .help-tabs { display:flex; border-bottom:1px solid var(--border); }
+    .help-tab { flex:1; padding:8px; text-align:center; cursor:pointer; border:none; background:none; color:var(--text); font-size:.75rem; opacity:.6; }
+    .help-tab.active { opacity:1; border-bottom:2px solid var(--accent); color:var(--accent); }
+    .help-content { display:none; }
+    .help-content.active { display:block; }
+    .help-item { margin:6px 0; }
+    .help-item summary { cursor:pointer; font-size:.8rem; color:var(--accent); }
+    .help-item p { font-size:.75rem; padding:6px 0; opacity:.8; }
+    .help-step { display:flex; align-items:flex-start; gap:8px; margin:8px 0; }
+    .help-step-num { width:24px; height:24px; border-radius:50%; background:var(--accent); color:#000; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.75rem; flex-shrink:0; }
+    .help-step p { font-size:.78rem; }
+    .wiki-entry { margin:10px 0; }
+    .wiki-entry h3 { font-size:.85rem; color:var(--accent); }
+    .wiki-entry p { font-size:.75rem; opacity:.8; margin-top:3px; }
+    .log-controls { display:flex; gap:4px; }
+    .log-filters { display:flex; gap:4px; padding:6px 12px; border-bottom:1px solid var(--border); }
+    .log-filter { padding:3px 8px; border-radius:8px; border:1px solid var(--border); background:none; color:var(--text); font-size:.65rem; cursor:pointer; }
+    .log-filter.active { background:var(--accent); color:#000; border-color:var(--accent); }
+    .log { font-family:'Orbitron',monospace; font-size:.65rem; }
+    .log-line { padding:3px 0; border-bottom:1px solid rgba(255,255,255,.04); word-break:break-all; }
+    .log-line.success { color:var(--success); }
+    .log-line.error { color:var(--error); }
+    .log-line.tx { color:var(--accent2); }
+    .log-line.rx { color:#64b5f6; }
+    .resize-handle { width:6px; position:absolute; left:0; top:0; bottom:0; cursor:col-resize; background:transparent; }
+    .resize-handle:hover, .resize-handle.active { background:var(--accent); opacity:.5; }
+    .badge { background:var(--accent); color:#000; padding:1px 6px; border-radius:8px; font-size:.55rem; }
+    .toggle-ctrl { display:flex; align-items:center; gap:6px; font-size:.8rem; cursor:pointer; }
+    .checkbox-ctrl { accent-color:var(--accent); }
+    .toast-indicator { display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:200; }
+    .toast-inner { background:var(--card); border:1px solid var(--accent); border-radius:var(--radius); padding:8px 16px; display:flex; align-items:center; gap:8px; }
+    .spinner { width:16px; height:16px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .toast-text { font-size:.75rem; }
+    .matrix-canvas { position:fixed; inset:0; z-index:9998; pointer-events:none; display:none; }
+    .matrix-canvas.active { display:block; }
+    .debug-panel { display:none; position:fixed; top:4px; right:4px; background:rgba(0,0,0,.8); color:#0f0; font-family:monospace; font-size:.6rem; padding:4px 8px; border-radius:4px; z-index:9999; }
+    .debug-panel.active { display:flex; gap:8px; }
+    .pixel-pet { cursor:pointer; }
+    .pixel-pet img { width:24px; height:24px; }
+    .pet-happy { animation:petBounce .4s; }
+    .pet-sad { opacity:.5; }
+    .pet-sleep { animation:petSleep 2s infinite; }
+    @keyframes petBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    @keyframes petSleep { 0%,100%{opacity:.3} 50%{opacity:.6} }
+    .dhikr-display { display:flex; align-items:center; gap:8px; margin-top:6px; }
+    .dhikr-label { font-family:'Amiri',serif; }
+    .dhikr-count { font-family:'Orbitron',monospace; font-size:1.1rem; color:var(--accent); }
+    .chat-input-row { display:flex; gap:4px; padding:6px 12px; }
+    .chat-input { flex:1; }
+    .breathing { animation:breathe 4s ease-in-out infinite; }
+    @keyframes breathe { 0%,100%{height:3px;opacity:.5} 50%{height:8px;opacity:1} }
+    .pulse-success { animation:pulseS .6s; }
+    .pulse-error { animation:pulseE .6s; }
+    @keyframes pulseS { 0%,100%{color:inherit} 50%{color:var(--success)} }
+    @keyframes pulseE { 0%,100%{color:inherit} 50%{color:var(--error)} }
+    body.log-open .app { margin-right:var(--log-width); }
+    #logPanel { width:var(--log-width); }
+    [dir="rtl"] .sidebar { left:0; right:auto; border-left:none; border-right:1px solid var(--border); transform:translateX(-100%); }
+    [dir="rtl"] .sidebar.open { transform:translateX(0); }
+    [dir="rtl"] .sidebar-left { left:auto; right:0; transform:translateX(100%); }
+    [dir="rtl"] .sidebar-left.open { transform:translateX(0); }
+    [dir="rtl"] body.log-open .app { margin-right:0; margin-left:var(--log-width); }
+    [dir="rtl"] #logPanel { left:auto; right:auto; }
+    [dir="rtl"] .resize-handle { left:auto; right:0; }
+    [dir="rtl"] .icon { margin-right:0; margin-left:4px; }
+    @media(max-width:600px) { .grid-2,.grid-3{grid-template-columns:1fr;} .header{flex-direction:column;align-items:flex-start;} }
+    .ant-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:8px; }
+    .ant-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:10px; text-align:center; cursor:pointer; transition:border-color .2s; }
+    .ant-card.active, .ant-card:hover { border-color:var(--accent); }
+    .ant-card .ant-name { font-size:.75rem; margin-top:4px; }
+    .meter { height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:4px 0; }
+    .meter-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .3s; }
+    .compass { position:relative; width:200px; height:200px; margin:0 auto; }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🌀 Fractal Antenna Lab</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div><h1 data-i18n="title">Fractal Antenna Lab</h1><div class="subtitle" data-i18n="subtitle">🌀 Koch, Sierpinski, Minkowski fractal design</div></div>
+        </div>
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button>
+          </div>
+          <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🌀</span> <span data-i18n="mainSection">Fractal Generator</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Design fractal antennas with iteration control</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+        <div id="mainControls"></div>
+        <div style="margin-top:10px;"><canvas id="mainCanvas" width="400" height="300"></canvas></div>
+        <div class="result-box" id="resultBox" style="display:none;"></div>
+      </div>
+
+      <!-- SECTION A -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Fractal Geometry</span></summary>
+        <div class="card"><div id="sectionAContent"></div><canvas id="canvasA" width="400" height="200"></canvas></div>
+      </details>
+
+      <!-- SECTION B -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Frequency Response</span></summary>
+        <div class="card"><div id="sectionBContent"></div><canvas id="canvasB" width="400" height="200"></canvas></div>
+      </details>
+
+      <!-- SECTION C -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Fractal Theory</span></summary>
+        <div class="card"><div id="sectionCContent" style="font-size:.78rem; line-height:1.6;"></div></div>
+      </details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+
+  <!-- Help Panel -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#10067; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is Fractal Lab?</summary><p data-i18n="faq_a1">Design fractal antennas with iteration control</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">How do I use this?</summary><p data-i18n="faq_a2">Use the controls in the main card. Results appear on the canvas and in the result box below.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">How accurate is the simulation?</summary><p data-i18n="faq_a3">Calculations use standard antenna formulas. Real results depend on environment and installation.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally. No data is sent anywhere.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Configure parameters in the main card controls.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click the action button to run the simulation.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">View results on the canvas and in expandable sections.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Settings to change theme and language.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">Themes</h3><p data-i18n="wiki_themes">8 built-in themes with dark and light options.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">Languages</h3><p data-i18n="wiki_i18n">Trilingual: English, Fran&#231;ais, &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; with RTL support.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <!-- Settings Panel -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#9881;&#65039; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">&#1593;&#1585;&#1576;&#1610;</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">&#1587;&#1576;&#1581;&#1575;&#1606; &#1575;&#1604;&#1604;&#1607;</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <!-- Log Panel -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">Activity Log</span>
+      <div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    </div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#10003;</button><button class="log-filter" data-filter="error">&#10007;</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

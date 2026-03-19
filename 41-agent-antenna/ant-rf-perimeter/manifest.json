@@ -1,0 +1,21 @@
+{
+  "name": "RF Perimeter \u2014 Workshop DIY",
+  "short_name": "RF Perimeter",
+  "description": "Multi-directional RF perimeter monitor",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

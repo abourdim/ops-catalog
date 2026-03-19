@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-ble-mesh-chat — Workshop DIY</title>
+  <meta name="description" content="BLE Mesh Chat — Multi-hop messaging network simulation for micro:bit" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-ble-mesh-chat — Workshop DIY" />
+  <meta property="og:description" content="BLE Mesh Chat — Multi-hop messaging network simulation for micro:bit" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .mesh-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+    .mesh-controls label { font-size: .75rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .mesh-controls select, .mesh-controls input[type="range"] { font-size: .75rem; }
+    .mesh-controls input[type="text"] { min-width: 0; flex: 1; }
+    .node-info { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .node-info .info-item { font-size: .74rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .hop-display {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border-radius: 999px;
+      border: 1px solid var(--border); background: rgba(0,0,0,.2);
+      font-size: .78rem; font-weight: 600; color: var(--text);
+    }
+    .hop-display .hop-label { color: var(--text-muted); font-weight: 400; }
+    #deliveryStatus {
+      font-size: .74rem; padding: 3px 10px; border-radius: 999px;
+      display: inline-block; margin-top: 4px;
+    }
+    #deliveryStatus.success { background: rgba(34,197,94,.15); color: #86efac; }
+    #deliveryStatus.expired { background: rgba(248,113,113,.15); color: #fca5a5; }
+    #deliveryStatus.unreachable { background: rgba(251,191,36,.15); color: #fbbf24; }
+    #deliveryStatus.idle { background: transparent; color: var(--text-muted); }
+    #meshCanvas { border-radius: 10px; border: 1px solid var(--border); background: rgba(0,0,0,.25); cursor: crosshair; display: block; width: 100%; touch-action: none; }
+    .mesh-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+    .step-list { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+    .step-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: .8rem; color: var(--text); line-height: 1.5; }
+    .step-list li::before { counter-increment: step; content: counter(step); width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--band2)); color: var(--bg); font-weight: 700; font-size: .72rem; }
+    .challenge-list { list-style: none; padding: 0; margin: 0; }
+    .challenge-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: .8rem; color: var(--text); line-height: 1.5; }
+    .challenge-list .ch-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .lab-tip { font-size: .78rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🕸️ mesh · 📡 relay · 💬 chat</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-ble-mesh-chat</h1>
+            <div class="subtitle" data-i18n="subtitle">🕸️ mesh · 📡 relay · 💬 chat</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🕸️</span> <span data-i18n="mainSection">BLE Mesh Chat — Multi-Hop Messaging</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Relay messages across a mesh network of nodes</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <canvas id="meshCanvas" height="280"></canvas>
+
+        <div class="mesh-controls">
+          <label data-i18n="nodeCountLabel">Nodes:</label>
+          <input type="range" id="nodeCount" class="range-ctrl" min="3" max="8" value="5" style="width:100px;" />
+          <span id="nodeCountVal">5</span>
+        </div>
+
+        <div class="mesh-row">
+          <label data-i18n="srcNodeLabel">From:</label>
+          <select id="srcNode" class="select-ctrl" style="width:auto;min-width:60px;" aria-label="Source node"></select>
+          <label data-i18n="destNodeLabel">To:</label>
+          <select id="destNode" class="select-ctrl" style="width:auto;min-width:60px;" aria-label="Destination node"></select>
+          <label data-i18n="ttlLabel">TTL:</label>
+          <select id="ttlSelect" class="select-ctrl" style="width:auto;min-width:50px;" aria-label="TTL">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="mesh-row">
+          <input type="text" id="meshMsgInput" placeholder="Type a message..." data-i18n-placeholder="msgPlaceholder" />
+          <button id="meshSendBtn" class="primary"><span data-i18n="sendBtn">Send</span></button>
+        </div>
+
+        <div class="node-info">
+          <div class="hop-display">
+            <span class="hop-label" data-i18n="hopsLabel">Hops:</span>
+            <span id="hopCount">0</span>
+          </div>
+          <span id="deliveryStatus" class="idle" data-i18n="statusIdle">Ready</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li><span data-i18n="step1">Each node discovers its neighbors within BLE range and builds a local neighbor table.</span></li>
+            <li><span data-i18n="step2">When a message is sent, it is tagged with a TTL (Time-To-Live) value that limits how far it can travel.</span></li>
+            <li><span data-i18n="step3">Each relay node decrements the TTL by 1 and forwards the message to all its neighbors (flooding).</span></li>
+            <li><span data-i18n="step4">The destination receives the message if reachable, or the message expires when TTL reaches zero.</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <p class="lab-tip" data-i18n="labTip1">Click on the canvas to add a new node. Right-click a node to remove it.</p>
+          <p class="lab-tip" data-i18n="labTip2">Drag nodes to change the topology and test different network layouts.</p>
+          <p class="lab-tip" data-i18n="labTip3">Click on a connection line to break or restore a link and test network resilience.</p>
+          <p class="lab-tip" data-i18n="labTip4">Watch message routing in real-time as colored dots travel between nodes.</p>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <ul class="challenge-list">
+            <li><span class="ch-icon">🎯</span> <span data-i18n="challenge1">Deliver a message from one end of the network to the other using the minimum number of hops.</span></li>
+            <li><span class="ch-icon">💥</span> <span data-i18n="challenge2">Remove a critical relay node and find an alternate path to still deliver the message.</span></li>
+            <li><span class="ch-icon">🧩</span> <span data-i18n="challenge3">Create a network partition (two disconnected groups) then add a bridge node to reconnect them.</span></li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is mesh networking?</summary>
+          <p data-i18n="faq_a1">Mesh networking connects devices in a web where each node can relay data for others. If one path fails, messages find another route.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">What is TTL (Time-To-Live)?</summary>
+          <p data-i18n="faq_a2">TTL limits how many times a message can be relayed. Each hop decrements the TTL by 1. When it reaches 0, the message is dropped to prevent infinite loops.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is the difference between flooding and routing?</summary>
+          <p data-i18n="faq_a3">Flooding sends a message to all neighbors blindly. Routing uses a table to forward messages along the best path. This app uses flooding for simplicity.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">What is the BLE range?</summary>
+          <p data-i18n="faq_a4">BLE (Bluetooth Low Energy) typically has a range of 10-30 meters indoors. In this simulation, nodes connect if they are within a configurable distance on the canvas.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Adjust the node count slider to create your mesh network, then observe the topology on the canvas.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Select a source and destination node, set the TTL, type a message and click Send.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Watch the message hop through the network as animated dots. Check the hop counter and delivery status.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Experiment by dragging nodes, breaking links, and adding/removing nodes to explore resilience.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_mesh_title">🕸️ Mesh Networks</h3>
+          <p data-i18n="wiki_mesh">A mesh network is a topology where each node relays data for the network. It provides redundancy and self-healing capabilities.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_ttl_title">⏱️ TTL (Time-To-Live)</h3>
+          <p data-i18n="wiki_ttl">TTL is a counter attached to each message that decrements at every hop. It prevents messages from circulating forever in the network.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_flooding_title">🌊 Flooding Algorithm</h3>
+          <p data-i18n="wiki_flooding">Flooding is a simple routing strategy where every node re-broadcasts received messages to all neighbors. Simple but uses more bandwidth.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_ble_title">📶 BLE Mesh Standard</h3>
+          <p data-i18n="wiki_ble">Bluetooth Mesh is an official standard (Mesh Profile 1.0) enabling many-to-many communication over BLE, used in IoT, smart buildings, and sensor networks.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

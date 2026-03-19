@@ -1,0 +1,257 @@
+/**
+ * Workshop DIY — Network Map v1.2
+ * Spy Graph — Map peer connections as a spy network
+ */
+const $=id=>document.getElementById(id);
+const LOGO_SVG=`<svg preserveAspectRatio="xMidYMid meet" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="77 78 254 137"><path style="stroke:none;fill:currentColor" d="M187.4,152.9c.1-.1.2-.2.4-.2c.3,0,2.7-1.1,3.8-1.7c3.3-2.2,5.1-3,8.4-3.4c1.2-.2,2.1-.2,3.3,0c6.7.8,11.5,4.9,13.4,11.4c.4,1.3.4,5.5.1,6.7c-1.2,4-2.8,6.4-5.6,8.5c-4.3,3.3-9.9,4.2-14.9,2.3l-6.5-2.4v-7.7z"/><path style="stroke:none;fill:currentColor" d="M259.8,157.7l5.1-9.6h7.4l-9.3,15.7v11.3h-6.8v-10.9l-9.5-16h7.7z"/><path style="stroke:none;fill:currentColor" d="M240.4,152.7h-3.9v17.5h3.9v4.7h-14.5v-4.7h3.9v-17.5h-3.9v-4.7h14.5z"/><path style="stroke:none;fill:currentColor" d="M330.8,195.7H204v3.6h126.8zM330.8,203.4H161.7v3.6h169.1zM330.8,211H77.1v3.6h253.7z"/></svg>`;
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.2';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(t){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const c=audioCtx.currentTime;if(t==='success'){o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,c+0.3);o.start(c);o.stop(c+0.3);}else if(t==='error'){o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,c+0.25);o.start(c);o.stop(c+0.25);}else{o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,c+0.08);o.start(c);o.stop(c+0.08);}}
+
+const LANG={
+  en:{title:'Network Map',subtitle:'🗺️ Map peer connections as a spy network',disconnected:'Disconnected',connected:'Connected',mainSection:'Spy Network Graph',mainDesc:'Build and explore a force-directed network graph',sectionA:'Network Graph Theory',sectionB:'Encrypted Communication',sectionC:'Network Analysis',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',theme:'Theme',export:'Export',filterAll:'All',settings:'⚙️ Settings',language:'Language',help:'❓ Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is Network Map?',faq_a1:'A spy network graph visualizer with force-directed layout.',faq_q2:'Is this real?',faq_a2:'No. Simulated network.',faq_q3:'How do I change the language?',faq_a3:'Open Settings.',faq_q4:'Is my data private?',faq_a4:'Yes. Local only.',howto_1:'Click Add Agent to create nodes.',howto_2:'Click Send Message to route between nodes.',howto_3:'Discover reveals hidden connections.',howto_4:'Analyze network in Section C.',wiki_themes_title:'🎨 Themes',wiki_themes:'8 themes.',wiki_i18n_title:'🌐 Languages',wiki_i18n:'Trilingual.',wiki_log_title:'📜 Activity Log',wiki_log:'Timestamped log.',wiki_privacy_title:'🔒 Privacy',wiki_privacy:'Local-first.',working:'Working…',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',ready:'🗺️ Network Map ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',addAgent:'Add Agent',sendMsg:'Send Message',discover:'Discover Node',resetBtn:'Reset',graphHint:'Click canvas to select nodes. Drag to move.',graphTheory:'Network graphs model relationships. Nodes=agents, edges=connections.',encComm:'Messages are encrypted and routed through intermediary nodes.',analysisText:'Analyze centrality, clustering, and vulnerabilities.',analyzeNetBtn:'Analyze Network',agentAdded:'Agent added',msgSent:'Message routed',discovered:'Connection discovered',networkReset:'Network reset',},
+  fr:{title:'Carte Reseau',subtitle:'🗺️ Cartographier les connexions comme un reseau d\'espions',disconnected:'Deconnecte',connected:'Connecte',mainSection:'Graphe Reseau Espion',mainDesc:'Construisez et explorez un graphe de reseau',sectionA:'Theorie des Graphes',sectionB:'Communication Chiffree',sectionC:'Analyse Reseau',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',theme:'Theme',export:'Exporter',filterAll:'Tout',settings:'⚙️ Parametres',language:'Langue',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:'Qu\'est-ce que Carte Reseau ?',faq_a1:'Un visualiseur de graphe reseau espion.',faq_q2:'C\'est reel ?',faq_a2:'Non. Reseau simule.',faq_q3:'Changer la langue ?',faq_a3:'Ouvrez Parametres.',faq_q4:'Donnees privees ?',faq_a4:'Oui. Local.',howto_1:'Cliquez Ajouter Agent.',howto_2:'Envoyez un message.',howto_3:'Decouvrez des connexions.',howto_4:'Analysez le reseau.',wiki_themes_title:'🎨 Themes',wiki_themes:'8 themes.',wiki_i18n_title:'🌐 Langues',wiki_i18n:'Trilingue.',wiki_log_title:'📜 Journal',wiki_log:'Journal horodate.',wiki_privacy_title:'🔒 Confidentialite',wiki_privacy:'Local-first.',working:'En cours…',t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',ready:'🗺️ Carte Reseau pret !',logCleared:'Journal efface',copied:'Copie !',copyFail:'Echec',soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Reactif musique',splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Francais',themeChanged:'🎨 Theme →',addAgent:'Ajouter Agent',sendMsg:'Envoyer Message',discover:'Decouvrir Noeud',resetBtn:'Reset',graphHint:'Cliquez pour selectionner. Glissez pour deplacer.',graphTheory:'Les graphes modelisent les relations.',encComm:'Les messages sont chiffres et routes.',analysisText:'Analysez centralite et vulnerabilites.',analyzeNetBtn:'Analyser Reseau',agentAdded:'Agent ajoute',msgSent:'Message route',discovered:'Connexion decouverte',networkReset:'Reseau reinitialise',},
+  ar:{title:'خريطة الشبكة',subtitle:'🗺️ رسم خريطة اتصالات كشبكة تجسس',disconnected:'غير متصل',connected:'متصل',mainSection:'رسم بياني لشبكة التجسس',mainDesc:'ابن واستكشف رسما بيانيا للشبكة',sectionA:'نظرية الرسوم البيانية',sectionB:'الاتصال المشفر',sectionC:'تحليل الشبكة',activityLog:'سجل النشاط',eventsMsg:'الاحداث',clear:'مسح',copy:'نسخ',theme:'المظهر',export:'تصدير',filterAll:'الكل',settings:'⚙️ الاعدادات',language:'اللغة',help:'❓ مساعدة',faq:'اسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',faq_q1:'ما هي خريطة الشبكة؟',faq_a1:'مصور رسم بياني لشبكة تجسس.',faq_q2:'هل هذا حقيقي؟',faq_a2:'لا. شبكة محاكاة.',faq_q3:'كيف اغير اللغة؟',faq_a3:'افتح الاعدادات.',faq_q4:'بياناتي خاصة؟',faq_a4:'نعم. محلي.',howto_1:'انقر اضافة عميل.',howto_2:'ارسل رسالة.',howto_3:'اكتشف اتصالات.',howto_4:'حلل الشبكة.',wiki_themes_title:'🎨 المظاهر',wiki_themes:'8 مظاهر.',wiki_i18n_title:'🌐 اللغات',wiki_i18n:'ثلاثي اللغات.',wiki_log_title:'📜 سجل النشاط',wiki_log:'سجل مؤرخ.',wiki_privacy_title:'🔒 الخصوصية',wiki_privacy:'محلي اولا.',working:'جار…',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',ready:'🗺️ خريطة الشبكة جاهزة!',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',addAgent:'اضافة عميل',sendMsg:'ارسال رسالة',discover:'اكتشاف عقدة',resetBtn:'اعادة',graphHint:'انقر لتحديد. اسحب للتحريك.',graphTheory:'الرسوم البيانية تمثل العلاقات.',encComm:'الرسائل مشفرة ومسارها عبر عقد وسيطة.',analysisText:'حلل المركزية والتجمع والثغرات.',analyzeNetBtn:'تحليل الشبكة',agentAdded:'تمت اضافة عميل',msgSent:'تم توجيه الرسالة',discovered:'تم اكتشاف اتصال',networkReset:'تمت اعادة تعيين الشبكة',}
+};
+
+let currentLang='en';
+function setLanguage(l){currentLang=l;const s=LANG[l];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.documentElement.lang=l;const sel=$('langSelect');if(sel)sel.value=l;try{localStorage.setItem('wdiy-lang',l);}catch{}log(s.langChanged,'info');}
+function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const sel=$('themeSelect');if(sel)sel.value=n;try{localStorage.setItem('wdiy-theme',n);}catch{}log(`${LANG[currentLang].themeChanged} ${LANG[currentLang]['t_'+n]||n}`,'info');}
+let logContainer;
+function log(m,t='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${t}`;d.textContent=`[${new Date().toLocaleTimeString()}] ${m}`;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(t==='success')playSound('success');else if(t==='error')playSound('error');applyLogFilter();}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const b=new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='log.txt';a.click();URL.revokeObjectURL(u);}
+function showToast(m,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=m;el.style.display='block';}if(ms>0)setTimeout(hideToast,ms);}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';}
+function setStatus(c){const t=$('statusText'),p=$('statusPill'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c);}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);}
+function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500);}
+let activeLogFilter='all';
+function initLogFilters(){document.querySelectorAll('.log-filter').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeLogFilter=b.dataset.filter;applyLogFilter();});});}
+function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(l=>{l.style.display=(activeLogFilter==='all'||l.classList.contains(activeLogFilter))?'':'none';});}
+function openPanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open');}
+function closePanel(p,o,r){const sb=$(p),ov=$(o);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open');const b=$(r);if(b)b.focus();}
+function openHelp(){openPanel('helpPanel','helpOverlay');}function closeHelp(){closePanel('helpPanel','helpOverlay','helpBtn');}
+let logWasOpen=false;
+function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay');}
+function closeSettings(){closePanel('settingsPanel','settingsOverlay','settingsBtn');if(logWasOpen){openLog();logWasOpen=false;}}
+function openLog(){const sb=$('logPanel');if(sb)sb.classList.add('open');document.body.classList.add('log-open');}
+function closeLog(){const sb=$('logPanel');if(sb)sb.classList.remove('open');document.body.classList.remove('log-open');}
+function toggleLog(){const sb=$('logPanel');if(sb&&sb.classList.contains('open'))closeLog();else openLog();}
+function closeAllPanels(){closeHelp();closeSettings();closeLog();}
+function initHelpTabs(){document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const id='help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1);const tgt=$(id);if(tgt)tgt.classList.add('active');});});}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date());}catch{}}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+/* ═══════ NETWORK MAP — FORCE-DIRECTED GRAPH ═══════ */
+
+const AGENT_NAMES=['Alpha','Bravo','Charlie','Delta','Echo','Foxtrot','Golf','Hotel','India','Juliet','Kilo','Lima','Mike','November','Oscar','Papa','Quebec','Romeo','Sierra','Tango'];
+const NODE_COLORS=['#ff4444','#33cc55','#4488ff','#ffaa00','#cc44ff','#00cccc','#ff6699','#88ff44'];
+let nodes=[],edges=[],animFrame=null,selectedNode=null,dragging=null,msgAnim=null;
+
+function addAgent(){
+  const s=LANG[currentLang];
+  const idx=nodes.length;
+  if(idx>=AGENT_NAMES.length)return;
+  const canvas=$('graphCanvas');if(!canvas)return;
+  const w=canvas.width,h=canvas.height;
+  const node={
+    id:idx,name:AGENT_NAMES[idx],
+    x:100+Math.random()*(w-200),y:100+Math.random()*(h-200),
+    vx:0,vy:0,
+    color:NODE_COLORS[idx%NODE_COLORS.length],
+    radius:16+Math.random()*8
+  };
+  nodes.push(node);
+  // Add random edges to existing nodes
+  if(nodes.length>1){
+    const target=nodes[Math.floor(Math.random()*(nodes.length-1))];
+    edges.push({from:node.id,to:target.id,strength:0.3+Math.random()*0.7});
+  }
+  if(nodes.length>2&&Math.random()>0.5){
+    const target=nodes[Math.floor(Math.random()*(nodes.length-1))];
+    if(target.id!==node.id&&!edges.find(e=>(e.from===node.id&&e.to===target.id)||(e.from===target.id&&e.to===node.id)))
+      edges.push({from:node.id,to:target.id,strength:0.2+Math.random()*0.5});
+  }
+  log(`➕ ${s.agentAdded}: ${node.name}`,'success');setStatus(true);
+}
+
+function discoverNode(){
+  const s=LANG[currentLang];
+  if(nodes.length<2)return;
+  // Add a random edge between existing nodes
+  let a,b,tries=0;
+  do{a=Math.floor(Math.random()*nodes.length);b=Math.floor(Math.random()*nodes.length);tries++;}
+  while((a===b||edges.find(e=>(e.from===a&&e.to===b)||(e.from===b&&e.to===a)))&&tries<50);
+  if(a!==b&&!edges.find(e=>(e.from===a&&e.to===b)||(e.from===b&&e.to===a))){
+    edges.push({from:a,to:b,strength:0.3+Math.random()*0.7});
+    log(`🔍 ${s.discovered}: ${nodes[a].name} ↔ ${nodes[b].name}`,'success');
+  }
+}
+
+function sendNetMessage(){
+  const s=LANG[currentLang];
+  if(nodes.length<2||edges.length<1)return;
+  const edge=edges[Math.floor(Math.random()*edges.length)];
+  edge.msgT=0;edge.msgDir=Math.random()>0.5?1:-1;
+  log(`📨 ${s.msgSent}: ${nodes[edge.from].name} → ${nodes[edge.to].name}`,'tx');
+}
+
+function resetNetwork(){
+  nodes=[];edges=[];selectedNode=null;
+  log(`🗑️ ${LANG[currentLang].networkReset}`,'info');
+}
+
+function analyzeNetwork(){
+  const results=$('netAnalysis');if(!results)return;results.style.display='block';
+  if(nodes.length===0){results.textContent='No nodes in network.';return;}
+  // Degree centrality
+  const degrees={};nodes.forEach(n=>degrees[n.id]=0);
+  edges.forEach(e=>{degrees[e.from]++;degrees[e.to]++;});
+  const maxDeg=Math.max(...Object.values(degrees),1);
+  const central=nodes.reduce((a,b)=>degrees[a.id]>=degrees[b.id]?a:b);
+  const density=nodes.length>1?(2*edges.length/(nodes.length*(nodes.length-1))):0;
+  results.innerHTML=`<div style="font-size:.8rem;"><div style="margin-bottom:.5rem;"><strong>Nodes:</strong> ${nodes.length} | <strong>Edges:</strong> ${edges.length}</div><div style="margin-bottom:.5rem;"><strong>Density:</strong> ${(density*100).toFixed(1)}%</div><div style="margin-bottom:.5rem;"><strong>Most connected:</strong> <span style="color:${central.color};">${central.name}</span> (${degrees[central.id]} connections)</div><div style="margin-bottom:.5rem;"><strong>Centrality ranking:</strong></div>${nodes.map(n=>`<div style="display:flex;align-items:center;gap:.3rem;margin:.2rem 0;"><span style="color:${n.color};font-weight:700;">${n.name}</span><div style="flex:1;height:6px;border-radius:3px;background:#1a1a2e;"><div style="height:100%;width:${degrees[n.id]/maxDeg*100}%;background:${n.color};border-radius:3px;"></div></div><span style="font-size:.7rem;">${degrees[n.id]}</span></div>`).join('')}</div>`;
+  log('📊 Network analysis complete','success');
+}
+
+/* Force-directed layout */
+function simulate(){
+  const canvas=$('graphCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height;
+
+  // Physics
+  const repulsion=5000,spring=0.005,damping=0.85,restLen=120;
+  // Repulsion between all nodes
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      let dx=nodes[j].x-nodes[i].x,dy=nodes[j].y-nodes[i].y;
+      let dist=Math.sqrt(dx*dx+dy*dy)||1;
+      let f=repulsion/(dist*dist);
+      let fx=dx/dist*f,fy=dy/dist*f;
+      nodes[i].vx-=fx;nodes[i].vy-=fy;
+      nodes[j].vx+=fx;nodes[j].vy+=fy;
+    }
+  }
+  // Spring forces along edges
+  edges.forEach(e=>{
+    const a=nodes[e.from],b=nodes[e.to];if(!a||!b)return;
+    let dx=b.x-a.x,dy=b.y-a.y;
+    let dist=Math.sqrt(dx*dx+dy*dy)||1;
+    let f=(dist-restLen)*spring*e.strength;
+    let fx=dx/dist*f,fy=dy/dist*f;
+    a.vx+=fx;a.vy+=fy;b.vx-=fx;b.vy-=fy;
+  });
+  // Center gravity
+  nodes.forEach(n=>{
+    n.vx+=(w/2-n.x)*0.0005;n.vy+=(h/2-n.y)*0.0005;
+    n.vx*=damping;n.vy*=damping;
+    if(n!==dragging){n.x+=n.vx;n.y+=n.vy;}
+    n.x=Math.max(n.radius,Math.min(w-n.radius,n.x));
+    n.y=Math.max(n.radius,Math.min(h-n.radius,n.y));
+  });
+
+  // Draw
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#060d1a';ctx.fillRect(0,0,w,h);
+  // Grid
+  ctx.strokeStyle='#0a1a30';ctx.lineWidth=0.5;
+  for(let i=0;i<w;i+=40){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,h);ctx.stroke();}
+  for(let i=0;i<h;i+=40){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(w,i);ctx.stroke();}
+
+  // Edges
+  edges.forEach(e=>{
+    const a=nodes[e.from],b=nodes[e.to];if(!a||!b)return;
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=`rgba(100,150,200,${0.2+e.strength*0.5})`;
+    ctx.lineWidth=1+e.strength*3;ctx.stroke();
+    // Message animation
+    if(e.msgT!=null&&e.msgT<1){
+      e.msgT+=0.02;
+      const t=e.msgDir>0?e.msgT:1-e.msgT;
+      const mx=a.x+(b.x-a.x)*t,my=a.y+(b.y-a.y)*t;
+      ctx.beginPath();ctx.arc(mx,my,6,0,Math.PI*2);
+      ctx.fillStyle='#ffcc00';ctx.fill();
+      ctx.fillStyle='#000';ctx.font='8px serif';ctx.textAlign='center';ctx.fillText('📨',mx,my+3);
+      if(e.msgT>=1)delete e.msgT;
+    }
+  });
+
+  // Nodes
+  nodes.forEach(n=>{
+    // Glow
+    ctx.beginPath();ctx.arc(n.x,n.y,n.radius+6,0,Math.PI*2);
+    ctx.fillStyle=n.color+'22';ctx.fill();
+    // Circle
+    ctx.beginPath();ctx.arc(n.x,n.y,n.radius,0,Math.PI*2);
+    ctx.fillStyle=n===selectedNode?n.color+'88':'#0d1522';ctx.fill();
+    ctx.strokeStyle=n.color;ctx.lineWidth=n===selectedNode?3:2;ctx.stroke();
+    // Label
+    ctx.fillStyle='#fff';ctx.font='10px Orbitron';ctx.textAlign='center';
+    ctx.fillText(n.name,n.x,n.y+3);
+    ctx.fillStyle=n.color;ctx.font='7px monospace';
+    ctx.fillText(`Agent-${String(n.id).padStart(2,'0')}`,n.x,n.y+n.radius+12);
+  });
+  ctx.textAlign='start';
+
+  animFrame=requestAnimationFrame(simulate);
+}
+
+function initCanvasInteraction(){
+  const canvas=$('graphCanvas');if(!canvas)return;
+  canvas.addEventListener('mousedown',e=>{
+    const rect=canvas.getBoundingClientRect();
+    const sx=canvas.width/rect.width,sy=canvas.height/rect.height;
+    const mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sy;
+    for(const n of nodes){
+      const dx=n.x-mx,dy=n.y-my;
+      if(Math.sqrt(dx*dx+dy*dy)<n.radius+5){dragging=n;selectedNode=n;canvas.style.cursor='grabbing';return;}
+    }
+    selectedNode=null;
+  });
+  canvas.addEventListener('mousemove',e=>{
+    if(!dragging)return;
+    const rect=canvas.getBoundingClientRect();
+    const sx=canvas.width/rect.width,sy=canvas.height/rect.height;
+    dragging.x=(e.clientX-rect.left)*sx;dragging.y=(e.clientY-rect.top)*sy;
+    dragging.vx=0;dragging.vy=0;
+  });
+  canvas.addEventListener('mouseup',()=>{dragging=null;canvas.style.cursor='grab';});
+  canvas.addEventListener('mouseleave',()=>{dragging=null;canvas.style.cursor='grab';});
+}
+
+/* ═══════ INIT ═══════ */
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  const cb=$('clearLogBtn'),cpb=$('copyLogBtn'),exb=$('exportLogBtn');
+  if(cb)cb.onclick=clearLog;if(cpb)cpb.onclick=copyLog;if(exb)exb.onclick=exportLog;initLogFilters();
+  const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hOv=$('helpOverlay');
+  if(hBtn)hBtn.onclick=openHelp;if(hClose)hClose.onclick=closeHelp;if(hOv)hOv.onclick=closeHelp;initHelpTabs();
+  const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sOv=$('settingsOverlay');
+  if(sBtn)sBtn.onclick=openSettings;if(sClose)sClose.onclick=closeSettings;if(sOv)sOv.onclick=closeSettings;
+  const lBtn=$('logBtn'),lClose=$('logCloseBtn');if(lBtn)lBtn.onclick=toggleLog;if(lClose)lClose.onclick=closeLog;
+  const soundTgl=$('soundToggle');if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled);}catch{}});}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels();});
+  const langSel=$('langSelect');if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect');if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sl=localStorage.getItem('wdiy-lang');const st=localStorage.getItem('wdiy-theme');if(st)setTheme(st);if(sl)setLanguage(sl);}catch{}
+  initHijriDate();
+
+  // App-specific
+  $('addAgentBtn')&&($('addAgentBtn').onclick=addAgent);
+  $('sendMsgBtn')&&($('sendMsgBtn').onclick=sendNetMessage);
+  $('discoverBtn')&&($('discoverBtn').onclick=discoverNode);
+  $('resetBtn')&&($('resetBtn').onclick=resetNetwork);
+  $('analyzeNetBtn')&&($('analyzeNetBtn').onclick=analyzeNetwork);
+  initCanvasInteraction();
+
+  // Seed initial agents
+  for(let i=0;i<4;i++)addAgent();
+  simulate();
+  setStatus(true);
+
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

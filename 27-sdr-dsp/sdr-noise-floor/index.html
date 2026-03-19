@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SDR Noise Floor — Workshop DIY</title>
+  <meta name="description" content="Analyze noise floor, thermal noise, noise figure, and MDS — understand receiver sensitivity."/>
+  <meta name="author" content="Workshop-DIY — abourdim"/>
+  <link rel="manifest" href="manifest.json"/><meta name="theme-color" content="#08091a"/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">📉 Noise Floor — Understand receiver sensitivity</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app"><div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">SDR Noise Floor</h1><div class="subtitle" data-i18n="subtitle">📉 Noise Floor — Understand receiver sensitivity</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">📉</span> <span data-i18n="mainSection">Noise Floor Analyzer</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Thermal noise, noise figure, MDS, dynamic range</span> <span class="version-tag">v1.0</span></div></div></div>
+        <canvas id="noiseCanvas" width="800" height="200" style="width:100%;border-radius:8px;margin:4px 0;background:#0a0a1a;cursor:crosshair;"></canvas>
+        <canvas id="waterfallCanvas" width="800" height="120" style="width:100%;border-radius:8px;margin:4px 0;background:#000;"></canvas>
+        <div class="control-section" style="margin-top:8px;">
+          <label data-i18n="tempLabel">Temperature (K)</label>
+          <input type="range" id="tempSlider" min="50" max="1000" value="290" style="width:100%"/><span id="tempVal">290 K</span>
+          <label data-i18n="bwLabel">Bandwidth (kHz)</label>
+          <input type="range" id="bwSlider" min="1" max="500" value="10" style="width:100%"/><span id="bwVal">10 kHz</span>
+          <label data-i18n="nfLabel">Noise Figure (dB)</label>
+          <input type="range" id="nfSlider" min="0" max="30" value="6" style="width:100%"/><span id="nfVal">6 dB</span>
+          <label data-i18n="sigLevel">Test Signal Level (dBm)</label>
+          <input type="range" id="sigSlider" min="-140" max="-50" value="-100" style="width:100%"/><span id="sigVal">-100 dBm</span>
+          <label data-i18n="avgLabel">Averaging</label>
+          <input type="range" id="avgSlider" min="1" max="64" value="8" style="width:100%"/><span id="avgVal">8x</span>
+          <div style="margin-top:8px;display:flex;gap:8px;">
+            <button class="btn-sm primary" id="startBtn" data-i18n="startNoise">▶ Start</button>
+            <button class="btn-sm" id="stopBtn" data-i18n="stopNoise">⏹ Stop</button>
+          </div>
+        </div>
+      </div>
+      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionA">Noise Calculations</span></summary>
+        <div class="card"><div style="font-family:monospace;font-size:13px;line-height:2;">
+          <div><span data-i18n="thermalNoise">Thermal Noise (kTB):</span> <strong id="ktbVal">-- dBm</strong></div>
+          <div><span data-i18n="noiseFloorCalc">Noise Floor (kTB + NF):</span> <strong id="nfloorVal">-- dBm</strong></div>
+          <div><span data-i18n="mdsLabel">MDS (Minimum Detectable Signal):</span> <strong id="mdsVal">-- dBm</strong></div>
+          <div><span data-i18n="snrResult">SNR at test signal:</span> <strong id="snrResVal">-- dB</strong></div>
+          <div><span data-i18n="dynRange">Dynamic Range:</span> <strong id="dynVal">-- dB</strong></div>
+          <div><span data-i18n="enb">Equivalent Noise BW:</span> <strong id="enbVal">-- Hz</strong></div>
+        </div></div>
+      </details>
+      <details class="collapsible"><summary><span class="icon">📈</span> <span data-i18n="sectionB">Noise Distribution</span></summary>
+        <div class="card"><canvas id="histCanvas" width="800" height="150" style="width:100%;border-radius:8px;background:#0a0a1a;"></canvas>
+          <p data-i18n="histDesc">Histogram of noise amplitude samples — should follow Gaussian distribution.</p></div>
+      </details>
+      <details class="collapsible"><summary><span class="icon">📖</span> <span data-i18n="sectionC">Noise Theory</span></summary>
+        <div class="card"><p data-i18n="theoryIntro">Understanding noise is critical for SDR receiver design:</p>
+          <ul style="margin:8px 0;padding-left:20px;line-height:1.8;">
+            <li data-i18n="theory1">Thermal noise: P = kTB (Boltzmann constant x Temperature x Bandwidth)</li>
+            <li data-i18n="theory2">Noise Figure: how much noise the receiver adds above thermal</li>
+            <li data-i18n="theory3">MDS: minimum signal level detectable above noise floor</li>
+            <li data-i18n="theory4">Averaging reduces noise by sqrt(N) — 3dB per doubling</li>
+            <li data-i18n="theory5">Dynamic range: span from noise floor to compression point</li>
+          </ul></div>
+      </details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is noise floor?</summary><p data-i18n="faq_a1">The minimum signal level a receiver can detect, determined by thermal noise and receiver noise figure.</p></details><details class="help-item"><summary data-i18n="faq_q2">What is noise figure?</summary><p data-i18n="faq_a2">How much additional noise the receiver adds above the theoretical thermal noise.</p></details><details class="help-item"><summary data-i18n="faq_q3">What is MDS?</summary><p data-i18n="faq_a3">Minimum Detectable Signal — weakest signal above noise floor, typically with 3dB SNR.</p></details><details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Set temperature (290K = room temp), bandwidth, and noise figure.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Adjust test signal level to see it emerge from noise.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Increase averaging to reduce noise floor.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Check Section A for computed noise values.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual with RTL.</p></div></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">عربي</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">Sound effects</span></label></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "Antenna Shootout \u2014 A/B Compare \u2014 Workshop DIY",
+  "short_name": "Antenna Shootout",
+  "description": "Workshop-DIY: Side-by-side comparison of two antennas: gain, SWR, bandwidth, radiation pattern",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

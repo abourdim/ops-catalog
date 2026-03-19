@@ -1,0 +1,199 @@
+/**
+ * WiFi Timeline — Event Reconstructor
+ * Timeline canvas, event markers
+ * Workshop DIY — Template v1.2 + App Logic
+ */
+const $=id=>document.getElementById(id);
+const LOGO_SVG=`<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77.14 78.32 253.99 136.25"><path style="stroke:none;fill:currentColor;fill-rule:evenodd" d="M187.4,152.9c.1-.1.2-.2.4-.2c.3,0,2.7-1.1,3.8-1.7c.3-.2,1.4-.9,2.6-1.7c3.3-2.2,5.1-3,8.4-3.4c1.2-.2,2.1-.2,3.4,0c6.7.8,11.5,4.9,13.4,11.4c.4,1.3.4,5.5.1,6.7c-1.2,4-2.8,6.4-5.6,8.5c-4.3,3.3-9.9,4.2-14.9,2.3c-1.6-.6-2.7-1.2-4.3-2.4c-2.6-1.8-4-2.6-6.5-3.6l-.7-.3v-7.7zm21,.-1.6h-6.5v3.2h6.5zm-13,.16.2h-3.2v-16.2h3.2zm19.5,0h-3.2v-16.2h3.2zm-13,6.5h-3.2v-9.7h6.5v-3.2h-3.2v-3.2h6.5v9.7h-6.5v6.5z"/></svg>`;
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.0';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(t){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const tt=audioCtx.currentTime;if(t==='click'){o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,tt+0.08);o.start(tt);o.stop(tt+0.08)}else if(t==='success'){o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,tt+0.3);o.start(tt);o.stop(tt+0.3)}else if(t==='error'){o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,tt+0.25);o.start(tt);o.stop(tt+0.25)}}
+const LANG={
+en:{title:'WiFi Timeline — Event Reconstructor',subtitle:'Reconstruct wireless events in chronological order',disconnected:'Disconnected',connected:'Recording',mainSection:'Event Timeline',mainDesc:'Interactive canvas with chronological event markers',sectionA:'Event Log',sectionB:'Event Distribution',sectionC:'How It Works',start:'Record',stop:'Stop',totalEvents:'Events',howItWorksText:'WiFi event reconstruction places all captured wireless events on a chronological timeline. This forensic technique helps security analysts understand the sequence of events during an incident — when devices connected, when authentication occurred, when deauthentication attacks happened, and how data flow patterns changed over time. The timeline visualization makes it easy to spot anomalies and correlate events across multiple devices.',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',export:'Export',filterAll:'All',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is event reconstruction?',faq_a1:'Placing wireless events on a timeline to understand sequences.',faq_q2:'Is this real monitoring?',faq_a2:'No, this is a simulation.',faq_q3:'What events are tracked?',faq_a3:'Beacons, probes, auth, deauth, data, and association frames.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'Click Record to start capturing events.',howto_2:'Watch events appear on the timeline canvas.',howto_3:'Hover over markers to see event details.',howto_4:'Check the Event Log for chronological list.',wiki_tl_title:'Timeline',wiki_tl:'Chronological event placement for forensic analysis.',wiki_forensics_title:'Forensics',wiki_forensics:'Event correlation helps identify attack patterns.',wiki_privacy_title:'Privacy',wiki_privacy:'All data stays in your browser.',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',ready:'WiFi Timeline ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',splashHint:'tap to skip',working:'Working...',langChanged:'Language → English',themeChanged:'Theme →',simStarted:'Recording started',simStopped:'Recording stopped',newEvent:'Event recorded'},
+fr:{title:'WiFi Timeline — Reconstructeur',subtitle:'Reconstituez les evenements sans fil chronologiquement',disconnected:'Deconnecte',connected:'Enregistrement',mainSection:'Chronologie des Evenements',mainDesc:'Canvas interactif avec marqueurs chronologiques',sectionA:'Journal des Evenements',sectionB:'Distribution des Evenements',sectionC:'Comment ca marche',start:'Enregistrer',stop:'Arreter',totalEvents:'Evenements',howItWorksText:'La reconstruction d\'evenements WiFi place les evenements sur une chronologie. Cette technique forensique aide les analystes a comprendre les sequences d\'incidents.',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',export:'Exporter',filterAll:'Tout',settings:'Parametres',language:'Langue',theme:'Theme',soundEffects:'Effets sonores',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:'Qu\'est-ce que la reconstruction?',faq_a1:'Placer les evenements sur une chronologie.',faq_q2:'Surveillance reelle?',faq_a2:'Non, simulation.',faq_q3:'Quels evenements?',faq_a3:'Balises, sondes, auth, deauth, donnees, association.',faq_q4:'Donnees privees?',faq_a4:'Oui.',howto_1:'Cliquez Enregistrer.',howto_2:'Observez la chronologie.',howto_3:'Survolez les marqueurs.',howto_4:'Consultez le journal.',wiki_tl_title:'Chronologie',wiki_tl:'Placement chronologique pour l\'analyse.',wiki_forensics_title:'Forensique',wiki_forensics:'Correlation des evenements.',wiki_privacy_title:'Confidentialite',wiki_privacy:'Tout reste local.',t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',ready:'Pret!',logCleared:'Efface',copied:'Copie!',copyFail:'Echec',splashHint:'appuyer pour passer',working:'En cours...',langChanged:'Langue → Francais',themeChanged:'Theme →',simStarted:'Enregistrement demarre',simStopped:'Arrete',newEvent:'Evenement enregistre'},
+ar:{title:'الجدول الزمني WiFi — معيد بناء الأحداث',subtitle:'أعد بناء الأحداث اللاسلكية بالترتيب الزمني',disconnected:'غير متصل',connected:'تسجيل',mainSection:'الجدول الزمني للأحداث',mainDesc:'لوحة تفاعلية مع علامات زمنية',sectionA:'سجل الأحداث',sectionB:'توزيع الأحداث',sectionC:'كيف يعمل',start:'تسجيل',stop:'إيقاف',totalEvents:'أحداث',howItWorksText:'إعادة بناء أحداث WiFi تضع جميع الأحداث الملتقطة على جدول زمني. هذه التقنية الجنائية تساعد المحللين على فهم تسلسل الأحداث أثناء الحوادث.',activityLog:'سجل النشاط',eventsMsg:'الأحداث',clear:'مسح',copy:'نسخ',export:'تصدير',filterAll:'الكل',settings:'الإعدادات',language:'اللغة',theme:'المظهر',soundEffects:'مؤثرات صوتية',help:'مساعدة',faq:'أسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',faq_q1:'ما هي إعادة بناء الأحداث؟',faq_a1:'وضع الأحداث على جدول زمني لفهم التسلسل.',faq_q2:'هل هذه مراقبة حقيقية؟',faq_a2:'لا، محاكاة.',faq_q3:'ما الأحداث المتتبعة؟',faq_a3:'إشارات، استكشاف، مصادقة، إلغاء مصادقة، بيانات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم.',howto_1:'انقر تسجيل.',howto_2:'شاهد الأحداث على الجدول الزمني.',howto_3:'مرر فوق العلامات.',howto_4:'تحقق من سجل الأحداث.',wiki_tl_title:'الجدول الزمني',wiki_tl:'ترتيب زمني للتحليل الجنائي.',wiki_forensics_title:'التحليل الجنائي',wiki_forensics:'ربط الأحداث يكشف أنماط الهجوم.',wiki_privacy_title:'الخصوصية',wiki_privacy:'كل البيانات في متصفحك.',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',ready:'الجدول الزمني جاهز!',logCleared:'تم المسح',copied:'تم النسخ!',copyFail:'فشل',splashHint:'انقر للتخطي',working:'جارٍ...',langChanged:'اللغة ← العربية',themeChanged:'المظهر ←',simStarted:'بدأ التسجيل',simStopped:'توقف',newEvent:'حدث مسجل'}
+};
+let currentLang='en';
+function setLanguage(l){currentLang=l;const s=LANG[l];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k]});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k]});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.documentElement.lang=l;const sel=$('langSelect');if(sel)sel.value=l;try{localStorage.setItem('wdiy-lang',l)}catch{}log(s.langChanged,'info')}
+const THEME_MELODIES={'mosque-gold':[330,392,523],'zellige':[440,523,659],'andalus':[294,370,440],'space':[523,659,784],'jungle':[262,330,392],'robot':[440,554,659],'riad':[349,440,523],'medina':[294,349,440]};
+function playThemeMelody(n){if(!soundEnabled||!audioCtx)return;const notes=THEME_MELODIES[n];if(!notes)return;const t=audioCtx.currentTime;notes.forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=f;g.gain.value=0.06;g.gain.exponentialRampToValueAtTime(0.001,t+0.2+i*0.15+0.15);o.start(t+i*0.15);o.stop(t+i*0.15+0.2)})}
+function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const sel=$('themeSelect');if(sel)sel.value=n;try{localStorage.setItem('wdiy-theme',n)}catch{}playThemeMelody(n);log(`${LANG[currentLang].themeChanged} ${LANG[currentLang]['t_'+n]||n}`,'info')}
+let logContainer;
+function log(m,t='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${t}`;d.textContent=`[${new Date().toLocaleTimeString()}] ${m}`;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(t==='success')playSound('success');else if(t==='error')playSound('error');applyLogFilter()}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared)}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success')}catch{log(LANG[currentLang].copyFail,'error')}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const b=new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`timeline-log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(u)}
+function showToast(m,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=m||LANG[currentLang].working;el.style.display='block'}if(ms>0)setTimeout(hideToast,ms)}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none'}
+function setStatus(c){const p=$('statusPill'),t=$('statusText'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c)}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click')}
+function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500)}
+let activeLogFilter='all';
+function initLogFilters(){document.querySelectorAll('.log-filter').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeLogFilter=b.dataset.filter;applyLogFilter();playSound('click')})})}
+function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(l=>{l.style.display=(activeLogFilter==='all'||l.classList.contains(activeLogFilter))?'':'none'})}
+function openPanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open')}function closePanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open')}
+function openHelp(){openPanel('helpPanel','helpOverlay')}function closeHelp(){closePanel('helpPanel','helpOverlay')}
+let logWasOpen=false;function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay')}function closeSettings(){closePanel('settingsPanel','settingsOverlay');if(logWasOpen){openLog();logWasOpen=false}}
+function openLog(){const s=$('logPanel');if(s)s.classList.add('open');document.body.classList.add('log-open')}function closeLog(){const s=$('logPanel');if(s)s.classList.remove('open');document.body.classList.remove('log-open')}function toggleLog(){const s=$('logPanel');if(s&&s.classList.contains('open'))closeLog();else openLog()}function closeAllPanels(){closeHelp();closeSettings();closeLog()}
+function initHelpTabs(){const tabs=document.querySelectorAll('.help-tab'),cs=document.querySelectorAll('.help-content');tabs.forEach(tab=>{tab.addEventListener('click',()=>{tabs.forEach(t=>t.classList.remove('active'));cs.forEach(c=>c.classList.remove('active'));tab.classList.add('active');const tgt=$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1));if(tgt)tgt.classList.add('active')})})}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date())}catch{}}
+function initLogResize(){const h=$('logResizeHandle'),p=$('logPanel');if(!h||!p)return;let d=false,sx,sw;const rtl=()=>document.documentElement.dir==='rtl';h.addEventListener('mousedown',e=>{d=true;sx=e.clientX;sw=p.offsetWidth;h.classList.add('active');document.body.style.cursor='col-resize';e.preventDefault()});document.addEventListener('mousemove',e=>{if(!d)return;const dx=rtl()?(e.clientX-sx):(sx-e.clientX);document.documentElement.style.setProperty('--log-width',Math.max(200,Math.min(sw+dx,window.innerWidth*0.6))+'px')});document.addEventListener('mouseup',()=>{if(!d)return;d=false;h.classList.remove('active');document.body.style.cursor=''})}
+
+/* ═══════ APP LOGIC — WiFi Timeline ═══════ */
+function randMAC(){return Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':')}
+const EVENT_TYPES=[
+  {type:'beacon',color:'#22c55e',label:'Beacon',yBand:0},
+  {type:'probe',color:'#3b82f6',label:'Probe',yBand:1},
+  {type:'auth',color:'#fbbf24',label:'Auth',yBand:2},
+  {type:'deauth',color:'#ef4444',label:'Deauth',yBand:3},
+  {type:'data',color:'#a855f7',label:'Data',yBand:4},
+  {type:'assoc',color:'#06b6d4',label:'Assoc',yBand:5},
+];
+let simRunning=false,simInterval=null,events=[],startTime=0,counts={beacon:0,probe:0,auth:0,deauth:0,data:0,assoc:0};
+
+function genEvent(){
+  const def=EVENT_TYPES[Math.floor(Math.random()*EVENT_TYPES.length)];
+  return{...def,time:Date.now(),timeStr:new Date().toLocaleTimeString(),src:randMAC(),dst:randMAC(),detail:`${def.label} frame: ${randMAC()} → ${randMAC()}`};
+}
+
+function drawTimeline(){
+  const canvas=$('timelineCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  ctx.fillStyle='rgba(0,0,0,.2)';ctx.fillRect(0,0,W,H);
+
+  if(events.length===0)return;
+  const tMin=events[0].time;const tMax=events[events.length-1].time;
+  const tRange=Math.max(tMax-tMin,1000);
+  const margin=30;const bandH=(H-margin*2)/6;
+
+  // Grid lines for each band
+  ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;
+  for(let i=0;i<6;i++){
+    const y=margin+i*bandH+bandH/2;
+    ctx.beginPath();ctx.moveTo(margin,y);ctx.lineTo(W-margin,y);ctx.stroke();
+  }
+
+  // Time axis
+  ctx.strokeStyle='rgba(255,255,255,.1)';
+  ctx.beginPath();ctx.moveTo(margin,H-margin+5);ctx.lineTo(W-margin,H-margin+5);ctx.stroke();
+
+  // Draw events
+  const visibleEvents=events.slice(-200);
+  visibleEvents.forEach(ev=>{
+    const x=margin+((ev.time-tMin)/tRange)*(W-margin*2);
+    const y=margin+ev.yBand*bandH+bandH/2;
+
+    ctx.fillStyle=ev.color;
+    ctx.globalAlpha=0.8;
+    ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+
+    // Glow
+    ctx.globalAlpha=0.2;
+    ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
+  });
+
+  // Band labels
+  ctx.font='9px monospace';ctx.textAlign='right';
+  EVENT_TYPES.forEach((et,i)=>{
+    ctx.fillStyle=et.color;
+    ctx.fillText(et.label,margin-4,margin+i*bandH+bandH/2+3);
+  });
+}
+
+function updateUI(){
+  $('totalEvents').textContent=events.length;
+  $('beaconCnt').textContent=counts.beacon;
+  $('probeCnt').textContent=counts.probe;
+  $('authCnt').textContent=counts.auth;
+  $('deauthCnt').textContent=counts.deauth;
+  $('dataCnt').textContent=counts.data;
+
+  drawTimeline();
+
+  // Event list
+  const list=$('eventList');
+  if(list){
+    list.innerHTML='';
+    events.slice(-40).reverse().forEach(ev=>{
+      const e=document.createElement('div');e.className='ev-entry';
+      e.innerHTML=`<span class="ev-dot ${ev.type}"></span><span class="ev-time">${ev.timeStr}</span><span class="ev-type" style="color:${ev.color}">${ev.label}</span><span style="font-size:.7rem;color:var(--text-muted)">${ev.src} → ${ev.dst}</span>`;
+      list.appendChild(e);
+    });
+  }
+
+  // Distribution
+  const dist=$('eventDist');
+  if(dist){
+    const total=events.length||1;
+    dist.innerHTML=EVENT_TYPES.map(et=>{
+      const c=counts[et.type]||0;const pct=Math.round(c/total*100);
+      return`<div style="display:flex;align-items:center;gap:8px;margin:4px 0"><span class="ev-dot ${et.type}"></span><span style="min-width:60px;font-weight:600">${et.label}</span><div style="flex:1;height:8px;border-radius:4px;background:rgba(0,0,0,.3)"><div style="height:100%;width:${pct}%;background:${et.color};border-radius:4px"></div></div><span style="min-width:50px;text-align:right">${c} (${pct}%)</span></div>`;
+    }).join('');
+  }
+}
+
+function addEvent(){
+  const ev=genEvent();events.push(ev);counts[ev.type]=(counts[ev.type]||0)+1;
+  log(`${LANG[currentLang].newEvent}: ${ev.label} ${ev.src}`,'rx');
+  updateUI();
+}
+
+// Canvas hover for details
+function initCanvasHover(){
+  const canvas=$('timelineCanvas');if(!canvas)return;
+  canvas.addEventListener('mousemove',e=>{
+    if(events.length===0)return;
+    const rect=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(canvas.width/rect.width);
+    const my=(e.clientY-rect.top)*(canvas.height/rect.height);
+    const tMin=events[0].time;const tMax=events[events.length-1].time;
+    const tRange=Math.max(tMax-tMin,1000);const margin=30;const bandH=(canvas.height-margin*2)/6;
+
+    let closest=null,minDist=20;
+    events.slice(-200).forEach(ev=>{
+      const x=margin+((ev.time-tMin)/tRange)*(canvas.width-margin*2);
+      const y=margin+ev.yBand*bandH+bandH/2;
+      const dist=Math.sqrt((mx-x)**2+(my-y)**2);
+      if(dist<minDist){minDist=dist;closest=ev}
+    });
+
+    const detail=$('evDetail');
+    if(closest&&detail){
+      detail.style.display='block';
+      detail.innerHTML=`<strong style="color:${closest.color}">${closest.label}</strong> at ${closest.timeStr}<br>${closest.src} → ${closest.dst}`;
+    }else if(detail){detail.style.display='none'}
+  });
+}
+
+function startSim(){
+  if(simRunning)return;simRunning=true;setStatus(true);
+  $('startBtn').disabled=true;$('stopBtn').disabled=false;
+  events=[];counts={beacon:0,probe:0,auth:0,deauth:0,data:0,assoc:0};startTime=Date.now();
+  const canvas=$('timelineCanvas');if(canvas){const ctx=canvas.getContext('2d');ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(0,0,canvas.width,canvas.height)}
+  log(LANG[currentLang].simStarted,'success');
+  simInterval=setInterval(()=>{const burst=1+Math.floor(Math.random()*3);for(let i=0;i<burst;i++)addEvent()},800);
+}
+function stopSim(){
+  simRunning=false;if(simInterval)clearInterval(simInterval);
+  setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;
+  log(LANG[currentLang].simStopped,'info');
+}
+
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  $('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();
+  $('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();
+  $('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;
+  $('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;initLogResize();
+  const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true'}catch{}st.checked=soundEnabled;st.addEventListener('change',()=>{soundEnabled=st.checked;try{localStorage.setItem('wdiy-sound',soundEnabled)}catch{}if(soundEnabled)playSound('click')})}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels()});
+  $('langSelect').addEventListener('change',()=>setLanguage($('langSelect').value));
+  $('themeSelect').addEventListener('change',()=>setTheme($('themeSelect').value));
+  try{const sl=localStorage.getItem('wdiy-lang');const st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl)}catch{}
+  initHijriDate();initCanvasHover();
+  $('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

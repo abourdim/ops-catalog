@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-agent-id — Workshop DIY</title>
+  <meta name="description" content="Agent ID — Create and verify encrypted agent identities via BLE simulation." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-agent-id — Workshop DIY" />
+  <meta property="og:description" content="Agent ID — Create and verify encrypted agent identities via BLE simulation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .agent-card {
+      background: linear-gradient(135deg, rgba(var(--accent-rgb, 200,170,100), 0.1), rgba(var(--accent-rgb, 200,170,100), 0.05));
+      border: 2px solid var(--accent, #c8aa64);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Orbitron', monospace;
+    }
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent, #c8aa64), transparent, var(--accent, #c8aa64));
+    }
+    .agent-card .badge-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .agent-card .photo-placeholder {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(var(--accent-rgb, 200,170,100), 0.15);
+      border: 2px solid var(--accent, #c8aa64);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .agent-card .badge-info { flex: 1; }
+    .agent-card .codename {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent, #c8aa64);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .agent-card .clearance {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-top: 2px;
+      letter-spacing: 1px;
+    }
+    .agent-card .uid-hash {
+      font-size: 0.65rem;
+      font-family: 'Courier New', monospace;
+      opacity: 0.5;
+      margin-top: 4px;
+      word-break: break-all;
+    }
+    .id-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .id-badge.level-alpha { background: #e74c3c33; color: #e74c3c; border: 1px solid #e74c3c55; }
+    .id-badge.level-beta { background: #f39c1233; color: #f39c12; border: 1px solid #f39c1255; }
+    .id-badge.level-gamma { background: #2ecc7133; color: #2ecc71; border: 1px solid #2ecc7155; }
+    .id-badge.level-omega { background: #9b59b633; color: #9b59b6; border: 1px solid #9b59b655; }
+    .verify-stamp {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg) scale(0);
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 8px 24px;
+      border: 4px solid;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: none;
+      font-family: 'Orbitron', monospace;
+    }
+    .verify-stamp.verified {
+      color: #2ecc71;
+      border-color: #2ecc71;
+      animation: stampIn 0.4s ease-out forwards;
+    }
+    .verify-stamp.impostor {
+      color: #e74c3c;
+      border-color: #e74c3c;
+      animation: stampIn 0.4s ease-out forwards;
+    }
+    @keyframes stampIn {
+      0%   { opacity: 0; transform: translate(-50%, -50%) rotate(-15deg) scale(2.5); }
+      60%  { opacity: 1; transform: translate(-50%, -50%) rotate(-15deg) scale(0.9); }
+      100% { opacity: 0.85; transform: translate(-50%, -50%) rotate(-15deg) scale(1); }
+    }
+    .key-hash {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      background: rgba(var(--accent-rgb, 200,170,100), 0.08);
+      border: 1px solid rgba(var(--accent-rgb, 200,170,100), 0.2);
+      border-radius: 6px;
+      padding: 0.5rem 0.8rem;
+      margin-top: 0.8rem;
+      word-break: break-all;
+      opacity: 0.7;
+    }
+    .key-hash .label { font-weight: 700; color: var(--accent, #c8aa64); font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; }
+    .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.8rem; }
+    .verify-result { margin-top: 1rem; min-height: 2rem; text-align: center; font-family: 'Orbitron', monospace; font-size: 0.85rem; }
+    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+    .step-card {
+      background: rgba(var(--accent-rgb, 200,170,100), 0.06);
+      border: 1px solid rgba(var(--accent-rgb, 200,170,100), 0.15);
+      border-radius: 8px;
+      padding: 0.8rem;
+      text-align: center;
+    }
+    .step-card .step-num {
+      display: inline-block;
+      width: 28px; height: 28px; line-height: 28px;
+      border-radius: 50%;
+      background: var(--accent, #c8aa64);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+    }
+    .step-card .step-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .step-card .step-desc { font-size: 0.75rem; opacity: 0.7; }
+    .lab-section { margin-top: 0.8rem; }
+    .lab-section h4 { font-size: 0.85rem; margin-bottom: 0.4rem; }
+    .challenge-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+    .challenge-list li {
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.4rem;
+      background: rgba(var(--accent-rgb, 200,170,100), 0.06);
+      border: 1px solid rgba(var(--accent-rgb, 200,170,100), 0.12);
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .challenge-list li .ch-icon { margin-inline-end: 0.5rem; }
+  </style>
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🪪 identity · 🔐 crypto · 📡 BLE</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-agent-id</h1>
+            <div class="subtitle" data-i18n="subtitle">🪪 identity · 🔐 crypto · 📡 BLE</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🪪</span> <span data-i18n="mainSection">Agent ID — Identity Auth</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Create and verify encrypted agent identities via BLE</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <!-- Agent Card Display -->
+        <div class="agent-card" id="agentCard">
+          <div class="badge-header">
+            <div class="photo-placeholder" id="agentPhoto">🕵️</div>
+            <div class="badge-info">
+              <div class="codename" id="agentCodename" data-i18n="noAgent">NO AGENT</div>
+              <div class="clearance" id="agentClearance" data-i18n="generateFirst">Generate an identity first</div>
+              <div class="uid-hash" id="agentUid">—</div>
+            </div>
+          </div>
+          <div class="verify-stamp" id="verifyStamp"></div>
+        </div>
+
+        <!-- Key Pair Display -->
+        <div class="key-hash" id="keyDisplay">
+          <div class="label" data-i18n="publicKeyLabel">Public Key</div>
+          <span id="pubKeyHash" data-i18n="noKeyYet">No key generated yet</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+          <button id="genBtn" class="primary" data-i18n="genBtn">Generate Identity</button>
+          <button id="broadcastBtn" data-i18n="broadcastBtn">Broadcast ID</button>
+          <button id="verifyBtn" data-i18n="verifyBtn">Verify Agent</button>
+        </div>
+
+        <!-- Verify Result -->
+        <div class="verify-result" id="verifyResult"></div>
+      </div>
+
+      <!-- SECTION A: How It Works -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="step-grid">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <div class="step-title" data-i18n="step1Title">Generate Keys</div>
+              <div class="step-desc" data-i18n="step1Desc">A public/private key pair is created. The private key stays secret, the public key is shared.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <div class="step-title" data-i18n="step2Title">Sign Identity</div>
+              <div class="step-desc" data-i18n="step2Desc">Your agent ID (codename + clearance + hash) is signed with the private key to create a token.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <div class="step-title" data-i18n="step3Title">Broadcast via BLE</div>
+              <div class="step-desc" data-i18n="step3Desc">The signed ID token is broadcast as a BLE advertisement packet for nearby agents to receive.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">4</div>
+              <div class="step-title" data-i18n="step4Title">Verify Signature</div>
+              <div class="step-desc" data-i18n="step4Desc">The receiver uses the sender's public key to verify the signature. Match = VERIFIED, mismatch = IMPOSTOR.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION B: Lab -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <div class="lab-section">
+            <h4 data-i18n="labExp1Title">Experiment 1: Multiple Identities</h4>
+            <p data-i18n="labExp1Desc">Generate several agent identities and observe how each has a unique key pair and hash. Notice that even small changes produce completely different hashes.</p>
+            <button id="labMultiGenBtn" class="btn-sm" data-i18n="labMultiGen">Generate 3 Agents</button>
+            <div id="labMultiResult"></div>
+          </div>
+          <div class="lab-section">
+            <h4 data-i18n="labExp2Title">Experiment 2: Forge an ID</h4>
+            <p data-i18n="labExp2Desc">Try to create a fake ID token by tampering with the signature. See what happens when verification is attempted on a forged identity.</p>
+            <button id="labForgeBtn" class="btn-sm" data-i18n="labForge">Forge Identity</button>
+            <div id="labForgeResult"></div>
+          </div>
+          <div class="lab-section">
+            <h4 data-i18n="labExp3Title">Experiment 3: Authentic vs Forged</h4>
+            <p data-i18n="labExp3Desc">Compare verification results of an authentic identity versus a forged one side by side. Understand why cryptographic signatures cannot be faked without the private key.</p>
+            <button id="labCompareBtn" class="btn-sm" data-i18n="labCompare">Compare Both</button>
+            <div id="labCompareResult"></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION C: Challenge -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <ul class="challenge-list">
+            <li>
+              <span class="ch-icon">1.</span>
+              <strong data-i18n="ch1Title">Fake ID Challenge</strong><br/>
+              <span data-i18n="ch1Desc">Try to create a fake agent ID that passes verification. Can you fool the system? Hint: you would need the original private key.</span>
+            </li>
+            <li>
+              <span class="ch-icon">2.</span>
+              <strong data-i18n="ch2Title">Multi-Factor Auth</strong><br/>
+              <span data-i18n="ch2Desc">Design a system where an agent must prove identity using both a signed token AND a time-based one-time code. How would you implement the second factor?</span>
+            </li>
+            <li>
+              <span class="ch-icon">3.</span>
+              <strong data-i18n="ch3Title">Revocation System</strong><br/>
+              <span data-i18n="ch3Desc">What happens if an agent's private key is compromised? Design a revocation list system that invalidates stolen identities. How would you distribute the revocation list via BLE?</span>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- LEFT PANEL: Help -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is Agent ID?</summary>
+          <p data-i18n="faq_a1">Agent ID simulates encrypted BLE identity authentication. Generate a key pair, sign your identity, broadcast it, and let others verify you.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does verification work?</summary>
+          <p data-i18n="faq_a2">The receiver uses the sender's public key to decrypt the signature and compare it to the ID hash. A match means VERIFIED; a mismatch means IMPOSTOR.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">Can I forge an identity?</summary>
+          <p data-i18n="faq_a3">Not without the private key! The Lab section lets you try forging to see why cryptographic signatures are tamper-proof.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere. Keys are generated client-side only.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Click "Generate Identity" to create your agent profile with a unique key pair.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Click "Broadcast ID" to simulate sending your signed identity via BLE.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Click "Verify Agent" to scan for a nearby agent and check their identity signature.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Open the Lab section to experiment with forging and comparing identities.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_sig_title">🔏 Digital Signatures</h3>
+          <p data-i18n="wiki_sig">A digital signature proves that a message was created by a known sender and was not altered. It uses asymmetric cryptography: the sender signs with a private key, and anyone can verify with the public key.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_pkcrypto_title">🔑 Public Key Cryptography</h3>
+          <p data-i18n="wiki_pkcrypto">Also called asymmetric cryptography. A key pair is generated: a public key (shared freely) and a private key (kept secret). Data encrypted with one can only be decrypted with the other.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_idverify_title">🪪 Identity Verification</h3>
+          <p data-i18n="wiki_idverify">Identity verification confirms that someone is who they claim to be. In digital systems, this often uses certificates, tokens, or challenge-response protocols tied to cryptographic keys.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_bleauth_title">📡 BLE Authentication</h3>
+          <p data-i18n="wiki_bleauth">Bluetooth Low Energy (BLE) can broadcast small data packets. By including a signed identity token in a BLE advertisement, nearby devices can verify the broadcaster's identity without pairing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: Settings -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: Activity Log -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

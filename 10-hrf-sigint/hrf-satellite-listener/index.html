@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Satellite Listener — Workshop DIY</title>
+  <meta name="description" content="Decode satellite weather images from NOAA — Workshop-DIY." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="Satellite Listener — Workshop DIY" />
+  <meta property="og:description" content="Decode satellite weather images from NOAA." />
+  <meta property="og:type" content="website" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Satellite Listener — NOAA Weather</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#x0628;&#x0650;&#x0633;&#x0652;&#x0645;&#x0650; &#x0671;&#x0644;&#x0644;&#x0651;&#x064E;&#x0647;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064E;&#x062D;&#x0652;&#x0645;&#x064E;&#x0640;&#x0670;&#x0646;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064E;&#x062D;&#x0650;&#x064A;&#x0645;&#x0650; <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Satellite Listener</h1><div class="subtitle" data-i18n="subtitle">Satellite Listener — NOAA Weather</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button><button id="logBtn" class="btn-icon-only" aria-label="Log">&#x1F4DC;</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">No Signal</span></div></div>
+      </div>
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F6F0;</span> <span data-i18n="mainSection">Satellite Listener</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Decode satellite weather images</span> <span class="version-tag">v1.2</span></div></div></div>
+        <!-- Satellite Info Bar -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;align-items:center;">
+          <div class="control-section" style="flex:1;min-width:150px;text-align:center;">
+            <div class="section-title" style="font-size:.75rem;">&#x1F6F0; <span data-i18n="satellite">Satellite</span></div>
+            <select id="satSelect" class="select-ctrl" style="width:100%;margin-top:4px;"><option value="noaa15">NOAA 15 (137.620 MHz)</option><option value="noaa18">NOAA 18 (137.9125 MHz)</option><option value="noaa19" selected>NOAA 19 (137.100 MHz)</option></select>
+          </div>
+          <div class="control-section" style="flex:1;min-width:120px;text-align:center;">
+            <div class="section-title" style="font-size:.75rem;">&#x1F4E1; <span data-i18n="elevation">Elevation</span></div>
+            <div id="elevDisplay" style="font-family:'Orbitron',monospace;font-size:1.2rem;color:var(--accent);margin-top:4px;">0&deg;</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:120px;text-align:center;">
+            <div class="section-title" style="font-size:.75rem;">&#x1F4F6; <span data-i18n="signalLabel">Signal</span></div>
+            <div id="sigStrength" style="font-family:'Orbitron',monospace;font-size:1.2rem;color:var(--accent2);margin-top:4px;">-120 dBm</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:120px;text-align:center;">
+            <div class="section-title" style="font-size:.75rem;">&#x23F1; <span data-i18n="progress">Progress</span></div>
+            <div id="passProgress" style="font-family:'Orbitron',monospace;font-size:1.2rem;color:#22c55e;margin-top:4px;">0%</div>
+          </div>
+        </div>
+        <!-- 137 MHz Waterfall -->
+        <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="waterfallCanvas" width="780" height="150" style="width:100%;display:block;background:#000;"></canvas>
+        </div>
+        <!-- APT Decoded Image -->
+        <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="imageCanvas" width="780" height="300" style="width:100%;display:block;background:#111;"></canvas>
+          <div style="text-align:center;padding:4px;font-size:.7rem;color:var(--text-muted);" data-i18n="aptImage">APT Decoded Weather Image</div>
+        </div>
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <button id="trackBtn" class="primary"><span class="btn-icon">&#x1F6F0;</span> <span data-i18n="trackSat">Track Satellite</span></button>
+          <button id="stopTrackBtn" disabled><span class="btn-icon">&#x23F9;</span> <span data-i18n="stopTrack">Stop</span></button>
+          <button id="clearImgBtn"><span class="btn-icon">&#x1F9F9;</span> <span data-i18n="clearImg">Clear Image</span></button>
+        </div>
+      </div>
+      <details class="collapsible" open><summary><span class="icon">&#x1F4CB;</span> <span data-i18n="sectionA">Reception Log</span></summary><div class="card"><div id="receptionLog" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div><div class="hint" data-i18n="rxHint">Track a satellite to begin receiving weather images.</div></div></details>
+      <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">How Satellite Reception Works</span></summary><div class="card"><div id="satGuide" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);"></div></div></details>
+      <details class="collapsible"><summary><span class="icon">&#x1F4CA;</span> <span data-i18n="sectionC">NOAA Satellite Database</span></summary><div class="card"><div id="noaaDB" style="font-size:.78rem;line-height:1.5;"></div></div></details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#x2753; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What satellites does this receive?</summary><p data-i18n="faq_a1">Simulated NOAA 15, 18, and 19 weather satellites at 137 MHz.</p></details><details class="help-item"><summary data-i18n="faq_q2">What is APT?</summary><p data-i18n="faq_a2">Automatic Picture Transmission - analog image format used by NOAA satellites.</p></details><details class="help-item"><summary data-i18n="faq_q3">Is this real satellite data?</summary><p data-i18n="faq_a3">No, this is a simulation. Real reception requires an SDR and V-dipole antenna.</p></details><details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select a NOAA satellite.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Track Satellite to begin.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Watch the waterfall as the signal appears.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">See the weather image build line by line.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_noaa_title">NOAA Satellites</h3><p data-i18n="wiki_noaa">Polar-orbiting weather satellites transmitting APT images at 137 MHz.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_apt_title">APT Format</h3><p data-i18n="wiki_apt">2080 pixels per line, 2 lines per second, AM subcarrier at 2400 Hz.</p></div></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div></aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">&#x0639;&#x0631;&#x0628;&#x064A;</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">Sound effects</span></label></div><div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div></aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#x2713;</button><button class="log-filter" data-filter="error">&#x2717;</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div></aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

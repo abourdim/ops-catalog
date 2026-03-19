@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Protocol Decoder — Workshop DIY</title>
+  <meta name="description" content="Paste hex and watch layer-by-layer protocol decoding." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="Protocol Decoder — Workshop DIY" />
+  <meta property="og:description" content="Paste hex and watch layer-by-layer protocol decoding." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">📋 Layer-by-layer packet decoding</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Protocol Decoder</h1><div class="subtitle" data-i18n="subtitle">📋 Layer-by-layer packet decoding</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">📋</span> <span data-i18n="mainSection">Packet Autopsy</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Paste hex and watch layer-by-layer decoding</span> <span class="version-tag">v1.2</span></div></div></div>
+        <div class="card-body" style="padding:1rem;">
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;">
+            <button class="btn-sm primary" id="sample1Btn">📦 <span data-i18n="sampleHTTP">HTTP GET</span></button>
+            <button class="btn-sm" id="sample2Btn">📦 <span data-i18n="sampleDNS">DNS Query</span></button>
+            <button class="btn-sm" id="sample3Btn">📦 <span data-i18n="sampleTCP">TCP SYN</span></button>
+          </div>
+          <textarea id="hexInput" rows="4" style="width:100%;font-family:monospace;font-size:.8rem;background:rgba(0,0,0,.4);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:.5rem;resize:vertical;" placeholder="Paste hex bytes here..." data-i18n-placeholder="hexPlaceholder"></textarea>
+          <button class="btn-sm primary" id="decodeBtn" style="margin-top:.5rem;">🔬 <span data-i18n="decodeBtn">Decode</span></button>
+          <div id="layerOutput" style="margin-top:1rem;"></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">OSI Model Layers</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;line-height:1.8;"><p data-i18n="osiText">The OSI model has 7 layers: Physical, Data Link, Network, Transport, Session, Presentation, Application. Network packets are encapsulated layer by layer. Ethernet wraps IP, IP wraps TCP/UDP, and TCP/UDP wraps application data like HTTP.</p></div></div></details>
+
+      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <details class="collapsible"><summary><span class="icon">🔢</span> <span data-i18n="sectionB">Hex Encoding Guide</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;line-height:1.8;"><p data-i18n="hexText">Hexadecimal (base-16) represents binary data using digits 0-9 and letters A-F. Each hex pair represents one byte (8 bits). For example, 0x48 0x54 0x54 0x50 spells "HTTP" in ASCII. Network analyzers like Wireshark display raw packet data in hex.</p></div></div></details>
+
+      <!-- ═══════════════════ SECTION C ═══════════════════ -->
+      <details class="collapsible"><summary><span class="icon">📖</span> <span data-i18n="sectionC">Protocol Reference</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;"><p data-i18n="protoRefText">Quick reference for common protocol fields and their byte positions in a packet.</p><div id="protoRef" style="margin-top:.5rem;"><button class="btn-sm primary" id="showRefBtn">📖 <span data-i18n="showRefBtn">Show Reference Table</span></button><div id="refResults" style="margin-top:.5rem;display:none;"></div></div></div></div></details>
+    </div>
+
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is Protocol Decoder?</summary><p data-i18n="faq_a1">A packet autopsy tool that decodes hex data into protocol layers with animated visualization.</p></details><details class="help-item"><summary data-i18n="faq_q2">Is this real packet analysis?</summary><p data-i18n="faq_a2">No, this is a simulation for educational purposes. Sample packets are pre-built to demonstrate decoding.</p></details><details class="help-item"><summary data-i18n="faq_q3">How do I change the language?</summary><p data-i18n="faq_a3">Open Settings and pick your language. Arabic enables RTL automatically.</p></details><details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser.</p></details></div>
+      <div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Paste hex bytes or click a sample button.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Decode to start layer-by-layer parsing.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Watch each protocol layer appear with color-coded fields.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Open Section C for protocol field reference.</p></div></div>
+      <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes including dark and light Islamic themes.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual: English, Francais, Arabic with RTL support.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_log_title">📜 Activity Log</h3><p data-i18n="wiki_log">Timestamped, color-coded log of decoding operations.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">Local-first. All data stays in your browser.</p></div></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select" aria-label="Language"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select" aria-label="Theme"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

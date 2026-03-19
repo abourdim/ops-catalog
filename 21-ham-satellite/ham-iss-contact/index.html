@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ham-iss-contact — Workshop DIY</title>
+  <meta name="description" content="ISS Contact — Track ISS position and tune 145.800 MHz for live amateur radio passes." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="ham-iss-contact — Workshop DIY" />
+  <meta property="og:description" content="ISS Contact — Track ISS position and tune 145.800 MHz for live amateur radio passes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .iss-map-wrap { width:100%; border-radius:10px; overflow:hidden; margin:.75rem 0; border:1px solid var(--border,#222); }
+    .iss-map-wrap canvas { width:100%; display:block; }
+    .sat-info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:.5rem; margin:.75rem 0; }
+    .sat-info-cell { background:rgba(0,0,0,.25); border:1px solid var(--border,#222); border-radius:8px; padding:.5rem .75rem; text-align:center; }
+    .sat-info-cell .info-label { font-size:.7rem; opacity:.6; text-transform:uppercase; letter-spacing:.5px; }
+    .sat-info-cell .info-value { font-family:'Orbitron',monospace; font-size:1rem; font-weight:700; color:var(--accent,#d4a03c); margin-top:.2rem; }
+    .pass-status { font-family:'Orbitron',monospace; font-size:1.1rem; font-weight:700; text-align:center; padding:.5rem; margin:.5rem 0; border-radius:8px; background:rgba(0,0,0,.3); }
+    .aprs-output { min-height:60px; max-height:120px; overflow-y:auto; padding:.5rem; border-radius:8px; background:rgba(0,0,0,.3); border:1px solid var(--border,#222); font-family:'Orbitron',monospace; font-size:.75rem; margin:.5rem 0; }
+    .sim-controls { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:.75rem 0; }
+    .freq-display { font-family:'Orbitron',monospace; font-size:1.6rem; font-weight:700; color:var(--accent,#d4a03c); text-align:center; text-shadow:0 0 12px var(--accent,#d4a03c); }
+    .step-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.75rem; margin:.75rem 0; }
+    .step-card { background:rgba(0,0,0,.2); border:1px solid var(--border,#222); border-radius:10px; padding:.75rem; text-align:center; }
+    .step-card .step-num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--accent,#d4a03c); color:var(--bg,#08091a); font-weight:700; margin-bottom:.4rem; }
+    .challenge-list { list-style:none; padding:0; margin:.5rem 0; }
+    .challenge-list li { background:rgba(0,0,0,.2); border:1px solid var(--border,#222); border-radius:8px; padding:.6rem .75rem; margin:.4rem 0; display:flex; align-items:center; gap:.5rem; }
+    .challenge-list li .badge-num { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--accent,#d4a03c); color:var(--bg,#08091a); font-weight:700; font-size:.85rem; flex-shrink:0; }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🛸 Track the ISS — tune 145.800 MHz!</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          &#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1649;&#1604;&#1604;&#1614;&#1617;&#1648;&#1607;&#1616; &#1649;&#1604;&#1585;&#1614;&#1617;&#1581;&#1618;&#1605;&#1614;&#1600;&#1648;&#1606;&#1616; &#1649;&#1604;&#1585;&#1614;&#1617;&#1581;&#1616;&#1610;&#1605;&#1616;
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">ham-iss-contact</h1>
+            <div class="subtitle" data-i18n="subtitle">🛸 Track the ISS — tune 145.800 MHz!</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🛸</span> <span data-i18n="mainSection">ISS Contact — Live Tracker</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Real-time ISS position with pass predictions and Doppler tuning</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <div class="pass-status" id="passStatus">🔴 No Pass</div>
+          <div class="freq-display" id="freqDisplay">145.800000 MHz</div>
+        </div>
+
+        <div class="iss-map-wrap">
+          <canvas id="issMap"></canvas>
+        </div>
+
+        <div class="sat-info-grid">
+          <div class="sat-info-cell">
+            <div class="info-label" data-i18n="latLabel">Latitude</div>
+            <div class="info-value" id="issLatDisplay">0.00 N</div>
+          </div>
+          <div class="sat-info-cell">
+            <div class="info-label" data-i18n="lonLabel">Longitude</div>
+            <div class="info-value" id="issLonDisplay">0.00 E</div>
+          </div>
+          <div class="sat-info-cell">
+            <div class="info-label" data-i18n="elevLabel">Elevation</div>
+            <div class="info-value" id="elevDisplay">0.0 deg</div>
+          </div>
+          <div class="sat-info-cell">
+            <div class="info-label" data-i18n="dopplerLabel">Doppler</div>
+            <div class="info-value" id="dopplerDisplay">0 Hz</div>
+          </div>
+          <div class="sat-info-cell">
+            <div class="info-label" data-i18n="pktLabel">Packets</div>
+            <div class="info-value" id="pktCount">0</div>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <label data-i18n="aprsLabel">APRS Packets Received</label>
+          <div class="aprs-output" id="aprsOutput"></div>
+        </div>
+
+        <div class="sim-controls">
+          <button class="btn-sm primary" id="decodeBtn"><span class="btn-icon">📦</span> <span data-i18n="decodeBtnLabel">Decode Packet</span></button>
+          <button class="btn-sm" id="resetSimBtn"><span class="btn-icon">🔄</span> <span data-i18n="resetBtnLabel">Reset Sim</span></button>
+        </div>
+      </div>
+
+      <details class="collapsible">
+        <summary><span class="icon">🔧</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="step-grid">
+            <div class="step-card"><div class="step-num">1</div><p data-i18n="stepA1">The ISS orbits Earth every ~92 minutes at 408 km altitude, traveling at 7.66 km/s.</p></div>
+            <div class="step-card"><div class="step-num">2</div><p data-i18n="stepA2">Amateur radio on ISS uses 145.800 MHz FM downlink for voice and packet.</p></div>
+            <div class="step-card"><div class="step-num">3</div><p data-i18n="stepA3">Doppler shift changes the frequency by up to +/-3.5 kHz during a pass.</p></div>
+            <div class="step-card"><div class="step-num">4</div><p data-i18n="stepA4">A pass lasts 5-10 minutes — the higher the max elevation, the longer and stronger.</p></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <div class="step-grid">
+            <div class="step-card"><div class="step-num">1</div><p data-i18n="labStep1">Track the ISS position on the world map and predict the next visible pass.</p></div>
+            <div class="step-card"><div class="step-num">2</div><p data-i18n="labStep2">Adjust the Doppler-corrected frequency as the ISS approaches and recedes.</p></div>
+            <div class="step-card"><div class="step-num">3</div><p data-i18n="labStep3">Decode simulated APRS packets from ISS using the built-in packet decoder.</p></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <ol class="challenge-list">
+            <li><span class="badge-num">1</span> <span data-i18n="challenge1">Predict the next ISS pass over your location within 2 minutes accuracy.</span></li>
+            <li><span class="badge-num">2</span> <span data-i18n="challenge2">Manually correct Doppler shift to stay within 500 Hz of the true signal.</span></li>
+            <li><span class="badge-num">3</span> <span data-i18n="challenge3">Decode 3 consecutive APRS packets during a simulated ISS pass.</span></li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">&#10067; Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is ISS Contact?</summary><p data-i18n="faq_a1">A simulator for tracking the ISS and practicing amateur radio contact procedures on 145.800 MHz.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">What frequency does ISS use?</summary><p data-i18n="faq_a2">The ISS uses 145.800 MHz FM downlink for voice and APRS packet radio.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What is Doppler shift?</summary><p data-i18n="faq_a3">As the ISS moves toward you, the signal frequency appears higher; as it moves away, it appears lower. The shift can reach +/-3.5 kHz.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Can I really contact the ISS?</summary><p data-i18n="faq_a4">Yes! With a Technician license and a handheld radio with a good antenna, you can hear and sometimes talk to astronauts.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Watch the ISS position on the world map as it orbits every 92 minutes.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">When a pass starts (elevation > 2 degrees), the status changes to PASS ACTIVE.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Monitor the Doppler-shifted frequency and APRS packets received during passes.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Click Decode Packet to process received APRS data from the ISS digipeater.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki1t">🛸 International Space Station</h3><p data-i18n="wiki1">The ISS orbits at ~408 km altitude with amateur radio equipment and automatic APRS digipeater.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki2t">📡 145.800 MHz</h3><p data-i18n="wiki2">Worldwide ISS downlink frequency for FM voice and APRS. Uplink is typically 145.990 MHz.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki3t">🔄 Doppler Effect</h3><p data-i18n="wiki3">Relative motion between ISS and ground station causes frequency shift that must be compensated.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki4t">📦 APRS on ISS</h3><p data-i18n="wiki4">The ISS carries a packet radio digipeater. Ground stations send APRS messages via ISS on 145.825 MHz.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">&#9881;&#65039; Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">&#1593;&#1585;&#1576;&#1610;</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">Sound effects</span></label>
+      </div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127908;</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#129707;</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">&#1587;&#1576;&#1581;&#1575;&#1606; &#1575;&#1604;&#1604;&#1607;</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127925;</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#129529;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#128203;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#128190;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+      </div>
+    </div>
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#10003;</button>
+      <button class="log-filter" data-filter="error">&#10007;</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

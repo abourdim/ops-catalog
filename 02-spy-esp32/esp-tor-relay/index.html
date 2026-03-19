@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tor Relay — Workshop DIY</title>
+  <meta name="description" content="Visualize multi-layer encrypted routing through relay nodes — Workshop DIY" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tor Relay — Workshop DIY" />
+  <meta property="og:description" content="Visualize multi-layer encrypted routing through relay nodes" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">Visualize multi-layer encrypted routing through relay nodes</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Tor Relay — Onion Routing</h1>
+            <div class="subtitle" data-i18n="subtitle">Visualize multi-layer encrypted routing through relay nodes</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#x1F4DC;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#x1F9C5;</span> <span data-i18n="mainSection">Onion Relay Network</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Build circuits &amp; send encrypted messages through relay nodes</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Network Canvas -->
+        <div style="position:relative;width:100%;padding:0;">
+          <canvas id="networkCanvas" style="width:100%;height:320px;display:block;border-radius:8px;background:rgba(0,0,0,.25);"></canvas>
+        </div>
+
+        <!-- Circuit Info Bar -->
+        <div class="control-section" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;">
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <span data-i18n="circuitLabel" style="opacity:.7;font-size:.85rem;">Circuit:</span>
+            <span id="circuitPath" style="font-family:'Orbitron',monospace;font-size:.85rem;color:var(--accent);">---</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <span data-i18n="latencyLabel" style="opacity:.7;font-size:.85rem;">Latency:</span>
+            <span id="latencyDisplay" style="font-family:'Orbitron',monospace;font-size:.85rem;color:var(--accent2);">0 ms</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <span data-i18n="hopsLabel" style="opacity:.7;font-size:.85rem;">Hops:</span>
+            <span id="hopsDisplay" style="font-family:'Orbitron',monospace;font-size:.85rem;color:var(--accent);">0</span>
+          </div>
+        </div>
+
+        <!-- Encryption Visualization -->
+        <div class="control-section" style="margin-top:10px;">
+          <div style="margin-bottom:8px;font-weight:600;font-size:.9rem;" data-i18n="encLayers">Encryption Layers (Onion)</div>
+          <div id="onionLayers" style="display:flex;flex-direction:column;gap:6px;font-family:monospace;font-size:.78rem;max-height:180px;overflow-y:auto;"></div>
+        </div>
+
+        <!-- Message Input + Controls -->
+        <div class="control-section" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <input type="text" id="messageInput" placeholder="Type a secret message..." data-i18n-placeholder="msgPlaceholder"
+            style="flex:1;min-width:150px;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.9rem;" />
+          <button id="sendBtn" class="btn-sm primary" style="white-space:nowrap;">
+            <span class="btn-icon">&#x1F9C5;</span> <span data-i18n="sendMsg">Send via Circuit</span>
+          </button>
+        </div>
+        <div class="control-section" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;">
+          <button id="buildCircuitBtn" class="btn-sm" style="flex:1;">
+            <span class="btn-icon">&#x1F504;</span> <span data-i18n="buildCircuit">New Circuit</span>
+          </button>
+          <button id="addNodeBtn" class="btn-sm" style="flex:1;">
+            <span class="btn-icon">&#x2795;</span> <span data-i18n="addNode">Add Node</span>
+          </button>
+          <button id="removeNodeBtn" class="btn-sm" style="flex:1;">
+            <span class="btn-icon">&#x2796;</span> <span data-i18n="removeNode">Remove Node</span>
+          </button>
+          <button id="resetNetBtn" class="btn-sm fire-btn" style="flex:1;">
+            <span class="btn-icon">&#x1F5D1;</span> <span data-i18n="resetNet">Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION A: Encryption Inspector -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F50D;</span> <span data-i18n="sectionA">Encryption Inspector</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <div style="margin-bottom:8px;font-weight:600;font-size:.9rem;" data-i18n="encInspTitle">Step-by-Step Decryption</div>
+            <p style="font-size:.82rem;opacity:.7;margin-bottom:10px;" data-i18n="encInspDesc">Watch how each relay node peels off one layer of encryption, like peeling an onion.</p>
+            <div id="decryptionSteps" style="display:flex;flex-direction:column;gap:8px;font-family:monospace;font-size:.78rem;"></div>
+          </div>
+          <div class="control-section" style="margin-top:10px;">
+            <div style="margin-bottom:8px;font-weight:600;font-size:.9rem;" data-i18n="xorDemo">XOR Encryption Demo</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+              <input type="text" id="xorPlain" placeholder="Plaintext" data-i18n-placeholder="plaintext" style="flex:1;min-width:100px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:monospace;font-size:.85rem;" />
+              <input type="text" id="xorKey" placeholder="Key" data-i18n-placeholder="key" style="width:80px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:monospace;font-size:.85rem;" />
+              <button id="xorEncBtn" class="btn-sm primary"><span data-i18n="encrypt">Encrypt</span></button>
+            </div>
+            <div id="xorResult" style="margin-top:8px;font-family:monospace;font-size:.82rem;word-break:break-all;color:var(--accent);"></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION B: Network Stats -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F4CA;</span> <span data-i18n="sectionB">Network Statistics</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;">
+              <div style="text-align:center;padding:12px;border-radius:8px;background:rgba(0,0,0,.2);">
+                <div style="font-size:1.5rem;font-weight:700;color:var(--accent);" id="statMsgCount">0</div>
+                <div style="font-size:.78rem;opacity:.7;" data-i18n="statMessages">Messages Sent</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:8px;background:rgba(0,0,0,.2);">
+                <div style="font-size:1.5rem;font-weight:700;color:var(--accent2);" id="statCircuits">0</div>
+                <div style="font-size:.78rem;opacity:.7;" data-i18n="statCircuits">Circuits Built</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:8px;background:rgba(0,0,0,.2);">
+                <div style="font-size:1.5rem;font-weight:700;color:var(--accent);" id="statAvgLatency">0</div>
+                <div style="font-size:.78rem;opacity:.7;" data-i18n="statAvgLat">Avg Latency (ms)</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:8px;background:rgba(0,0,0,.2);">
+                <div style="font-size:1.5rem;font-weight:700;color:var(--accent2);" id="statNodeCount">0</div>
+                <div style="font-size:.78rem;opacity:.7;" data-i18n="statNodes">Active Nodes</div>
+              </div>
+            </div>
+          </div>
+          <div class="control-section" style="margin-top:10px;">
+            <div style="margin-bottom:8px;font-weight:600;font-size:.9rem;" data-i18n="nodeTable">Node Directory</div>
+            <div id="nodeDirectory" style="max-height:200px;overflow-y:auto;font-size:.82rem;"></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION C: Learn Tor/Onion Routing -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F393;</span> <span data-i18n="sectionC">Learn: Tor &amp; Onion Routing</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <h3 style="margin:0 0 8px;font-size:1rem;" data-i18n="learnTitle">How Onion Routing Works</h3>
+            <p style="font-size:.85rem;line-height:1.5;opacity:.85;" data-i18n="learnP1">Onion routing encrypts your message in multiple layers, like an onion. Each relay node in the circuit only knows the previous and next hop, never the full path. This provides anonymity and privacy.</p>
+            <h4 style="margin:12px 0 6px;font-size:.92rem;" data-i18n="learnH2">The 3-Layer Process</h4>
+            <ol style="font-size:.85rem;line-height:1.6;padding-inline-start:20px;opacity:.85;">
+              <li data-i18n="learnS1">The sender encrypts the message with the Exit Node's key (Layer 3), then the Middle Node's key (Layer 2), then the Guard Node's key (Layer 1).</li>
+              <li data-i18n="learnS2">The Guard Node decrypts Layer 1 and forwards to the Middle Node. It knows the sender but not the destination.</li>
+              <li data-i18n="learnS3">The Middle Node decrypts Layer 2 and forwards to the Exit Node. It knows neither sender nor destination.</li>
+              <li data-i18n="learnS4">The Exit Node decrypts Layer 3, revealing the original message, and delivers it. It knows the destination but not the sender.</li>
+            </ol>
+            <h4 style="margin:12px 0 6px;font-size:.92rem;" data-i18n="learnH3">Key Concepts</h4>
+            <ul style="font-size:.85rem;line-height:1.6;padding-inline-start:20px;opacity:.85;">
+              <li data-i18n="learnC1"><strong>Guard/Entry Node:</strong> First hop, knows who you are but not what you send.</li>
+              <li data-i18n="learnC2"><strong>Middle/Relay Node:</strong> Intermediate hop, knows nothing about sender or destination.</li>
+              <li data-i18n="learnC3"><strong>Exit Node:</strong> Final hop, sees the message content but not who sent it.</li>
+              <li data-i18n="learnC4"><strong>Circuit:</strong> The full path through 3+ relay nodes, rebuilt periodically for security.</li>
+              <li data-i18n="learnC5"><strong>XOR Encryption:</strong> In this simulator, each layer uses XOR with a per-node key (real Tor uses AES).</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- LEFT PANEL -- Help -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">&#x2753; Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is this app?</summary>
+          <p data-i18n="faq_a1">An educational simulator of Tor/onion routing. Build relay circuits, send encrypted messages, and watch encryption layers peel off at each node.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does onion routing work?</summary>
+          <p data-i18n="faq_a2">Your message is encrypted in 3 layers. Each relay node decrypts one layer and forwards the result. No single node sees both the sender and the message.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is XOR encryption?</summary>
+          <p data-i18n="faq_a3">XOR is a simple bitwise operation used here for learning. Each byte of the message is combined with a key byte. Applying XOR twice with the same key recovers the original.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Click "New Circuit" to build a random path through 3 relay nodes.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Type a secret message and click "Send via Circuit" to encrypt and route it.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Watch the onion layers panel to see 3-layer encryption wrap and unwrap.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Use the Encryption Inspector section to try XOR encryption yourself.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_tor_title">&#x1F9C5; Tor Network</h3>
+          <p data-i18n="wiki_tor">Tor (The Onion Router) is free software that enables anonymous communication by routing traffic through a network of volunteer-operated relay nodes.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_onion_title">&#x1F50F; Onion Encryption</h3>
+          <p data-i18n="wiki_onion">Messages are wrapped in multiple encryption layers. Each relay peels one layer, learning only the next hop. This prevents any single node from knowing both source and destination.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_circuit_title">&#x1F504; Circuits</h3>
+          <p data-i18n="wiki_circuit">A Tor circuit is a path of 3 relays: Guard, Middle, and Exit. Circuits are rebuilt every ~10 minutes for added security.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_privacy_title">&#x1F512; Privacy</h3>
+          <p data-i18n="wiki_privacy">Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL -- Settings -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>&#x1F1EC;&#x1F1E7; EN</option>
+          <option value="fr">&#x1F1EB;&#x1F1F7; FR</option>
+          <option value="ar">&#x1F1E9;&#x1F1FF; &#x0639;&#x0631;&#x0628;&#x064A;</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">&#x1F50A; Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL -- Activity Log (docked) -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">&#x1F4DC; Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#x2713;</button>
+      <button class="log-filter" data-filter="error">&#x2717;</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working...</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

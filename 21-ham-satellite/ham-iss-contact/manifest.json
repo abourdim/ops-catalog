@@ -1,0 +1,13 @@
+{
+  "name": "ham-iss-contact — Workshop DIY",
+  "short_name": "ham-iss-contact",
+  "description": "ISS Contact — Track ISS position and tune 145.800 MHz for live amateur radio passes",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

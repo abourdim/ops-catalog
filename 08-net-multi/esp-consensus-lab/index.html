@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consensus Lab — Workshop DIY</title>
+  <meta name="description" content="Consensus Lab — Raft/PBFT: Visualize distributed consensus with elections and replication" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="esp-consensus-lab — Workshop DIY" />
+  <meta property="og:description" content="Visualize distributed consensus with elections and replication" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #clusterCanvas{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.25);cursor:pointer;display:block;width:100%;touch-action:none}
+    .raft-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+    .term-display{font-family:var(--font-h);font-size:1.4rem;color:var(--accent);text-align:center;margin:8px 0}
+    .node-status-bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .node-chip{padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:700;border:1px solid var(--border);background:rgba(0,0,0,.3);display:flex;align-items:center;gap:5px}
+    .node-chip .dot{width:8px;height:8px;border-radius:50%}
+    .log-replay{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.15);padding:10px;margin-top:10px;max-height:140px;overflow-y:auto;font-size:.74rem;font-family:monospace;color:var(--text-muted)}
+    .log-replay .entry{margin-bottom:4px;padding:3px 6px;border-radius:6px;background:rgba(0,0,0,.2)}
+    .log-replay .entry.leader{background:rgba(74,222,128,.15);color:#86efac}
+    .log-replay .entry.vote{background:rgba(56,189,248,.15);color:#7dd3fc}
+    .log-replay .entry.commit{background:rgba(192,132,252,.15);color:#c084fc}
+    .log-replay .entry.crash{background:rgba(248,113,113,.15);color:#fca5a5}
+    .step-list{list-style:none;padding:0;margin:0;counter-reset:step}
+    .step-list li{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:.8rem;color:var(--text);line-height:1.5}
+    .step-list li::before{counter-increment:step;content:counter(step);width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.72rem}
+    .challenge-list{list-style:none;padding:0;margin:0}
+    .challenge-list li{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:.8rem;color:var(--text);line-height:1.5}
+    .challenge-list .ch-icon{font-size:1.1rem;flex-shrink:0}
+    .lab-tip{font-size:.78rem;color:var(--text-muted);margin-bottom:8px;line-height:1.5}
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🗳️ Raft · 📋 Log · 💓 Heartbeat · ⚡ Election</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div><h1 data-i18n="title">Consensus Lab</h1><div class="subtitle" data-i18n="subtitle">🗳️ Raft · 📋 Log · 💓 Heartbeat · ⚡ Election</div></div>
+        </div>
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
+        </div>
+      </div>
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🗳️</span> <span data-i18n="mainSection">Consensus Lab — Raft/PBFT</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Visualize distributed consensus with elections and replication</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+        <div class="term-display">Term: <span id="termNum">0</span></div>
+        <canvas id="clusterCanvas" height="320"></canvas>
+        <div class="node-status-bar" id="nodeStatusBar"></div>
+        <div class="raft-controls">
+          <button id="electionBtn" class="primary"><span data-i18n="triggerElection">Trigger Election</span></button>
+          <button id="replicateBtn"><span data-i18n="replicateLog">Replicate Log</span></button>
+          <button id="crashBtn" class="fire-btn"><span data-i18n="crashNode">Crash Node</span></button>
+          <button id="healBtn"><span data-i18n="healNode">Heal Node</span></button>
+          <button id="splitBrainBtn"><span data-i18n="splitBrain">Split Brain</span></button>
+        </div>
+        <div class="log-replay" id="raftLog"></div>
+      </div>
+      <!-- SECTION A -->
+      <details class="collapsible">
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li><span data-i18n="step1">In Raft, nodes start as Followers. When a Follower times out waiting for a heartbeat, it becomes a Candidate and requests votes.</span></li>
+            <li><span data-i18n="step2">A Candidate wins the election by receiving votes from a majority of nodes. It then becomes the Leader for that term.</span></li>
+            <li><span data-i18n="step3">The Leader sends periodic heartbeats to all Followers and replicates log entries to maintain consistency.</span></li>
+            <li><span data-i18n="step4">If the Leader crashes, Followers detect the missing heartbeats and trigger a new election, incrementing the term number.</span></li>
+          </ol>
+        </div>
+      </details>
+      <!-- SECTION B -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <p class="lab-tip" data-i18n="labTip1">Click Trigger Election to start a leader election and watch nodes vote.</p>
+          <p class="lab-tip" data-i18n="labTip2">Use Replicate Log to see the leader push entries to followers.</p>
+          <p class="lab-tip" data-i18n="labTip3">Crash a node and observe how the cluster handles the failure.</p>
+          <p class="lab-tip" data-i18n="labTip4">Try Split Brain to partition the network and see what happens.</p>
+        </div>
+      </details>
+      <!-- SECTION C -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <ul class="challenge-list">
+            <li><span class="ch-icon">🎯</span> <span data-i18n="challenge1">Trigger an election and identify which node becomes Leader. Note the term number.</span></li>
+            <li><span class="ch-icon">💥</span> <span data-i18n="challenge2">Crash the Leader and observe how the cluster elects a new one automatically.</span></li>
+            <li><span class="ch-icon">🧩</span> <span data-i18n="challenge3">Create a split brain scenario and explain why neither partition can commit.</span></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <!-- Help Panel -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is Raft consensus?</summary><p data-i18n="faq_a1">Raft is a distributed consensus algorithm that elects a leader to manage log replication across a cluster of nodes.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">What is a term?</summary><p data-i18n="faq_a2">A term is a logical clock in Raft. Each election increments the term number, ensuring consistency across leadership changes.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What is split brain?</summary><p data-i18n="faq_a3">Split brain occurs when a network partition divides the cluster, potentially causing two partitions to operate independently.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">How does log replication work?</summary><p data-i18n="faq_a4">The leader appends entries to its log and sends them to followers. Once a majority acknowledges, the entry is committed.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Trigger Election to start a leader election among the 5 nodes.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Watch the voting animation as nodes send RequestVote messages.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Use Replicate Log to push new entries from leader to followers.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Crash or heal nodes to test fault tolerance of the cluster.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_raft_title">🗳️ Raft Algorithm</h3><p data-i18n="wiki_raft">Raft decomposes consensus into leader election, log replication, and safety. It guarantees that only one leader exists per term.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_pbft_title">🛡️ PBFT</h3><p data-i18n="wiki_pbft">Practical Byzantine Fault Tolerance handles malicious nodes. It requires 3f+1 nodes to tolerate f faulty nodes.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_hb_title">💓 Heartbeats</h3><p data-i18n="wiki_hb">Leaders send periodic heartbeats to maintain authority. Missing heartbeats trigger new elections.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_commit_title">📋 Log Commit</h3><p data-i18n="wiki_commit">An entry is committed once replicated to a majority. Committed entries are durable and applied to the state machine.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <!-- Settings Panel -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select" aria-label="Language"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select" aria-label="Theme"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <!-- Log Panel -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-rf-alarm-system — Workshop DIY</title>
+  <meta name="description" content="RF Alarm System — Jam & Spoof Lab. Build an alarm, then hack it to learn security." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-rf-alarm-system — Workshop DIY" />
+  <meta property="og:description" content="RF Alarm System — Jam & Spoof Lab. Build an alarm, then hack it to learn security." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Alarm panel */
+    .alarm-panel {
+      background: #0a0e1a;
+      border: 2px solid var(--accent, #d4a04a);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .alarm-panel .alarm-status {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 0.6rem 0;
+      transition: color 0.3s;
+    }
+    .alarm-panel .alarm-status.armed { color: #4caf50; }
+    .alarm-panel .alarm-status.disarmed { color: #888; }
+    .alarm-panel .alarm-status.alert { color: #ff1744; animation: alarm-flash 0.4s infinite alternate; }
+    @keyframes alarm-flash {
+      from { opacity: 1; }
+      to { opacity: 0.3; }
+    }
+    .alarm-panel.jamming {
+      border-color: #ff9800;
+      box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+    }
+
+    /* Keypad */
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-width: 200px;
+      margin: 0.8rem auto;
+    }
+    .keypad button {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--accent, #d4a04a);
+      background: rgba(255,255,255,0.05);
+      color: var(--text, #e8dcc8);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .keypad button:hover { background: rgba(255,255,255,0.12); }
+    .keypad-display {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 6px;
+      padding: 0.4rem;
+      margin-bottom: 0.4rem;
+      min-height: 1.8rem;
+      color: var(--accent, #d4a04a);
+    }
+
+    /* Attack tools */
+    .attack-tools {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0.8rem 0;
+    }
+
+    /* Signal meter */
+    .signal-meter {
+      margin: 0.8rem 0;
+      text-align: center;
+    }
+    .signal-meter .meter-bar {
+      width: 100%;
+      height: 10px;
+      background: #1a1e2e;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 0.3rem;
+    }
+    .signal-meter .meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff1744, #ff9800, #4caf50);
+      border-radius: 5px;
+      transition: width 0.3s;
+      width: 100%;
+    }
+    .signal-meter .meter-fill.poor { width: 20%; background: #ff1744; }
+
+    /* RF channel badge */
+    .rf-channel {
+      display: inline-block;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--accent, #d4a04a);
+      margin: 0.4rem 0;
+    }
+
+    /* Security mode toggle */
+    .security-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+    }
+    .security-toggle .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      background: #333;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .security-toggle .toggle-switch.active {
+      background: #4caf50;
+    }
+    .security-toggle .toggle-switch .toggle-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      transition: left 0.3s;
+    }
+    .security-toggle .toggle-switch.active .toggle-knob {
+      left: 26px;
+    }
+
+    /* Remote controls */
+    .remote-controls {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin: 0.8rem 0;
+    }
+
+    /* Rolling code display */
+    .rolling-code-display {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.3rem;
+      min-height: 1.2rem;
+    }
+
+    /* Step lists in sections */
+    .step-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: step-counter;
+    }
+    .step-list li {
+      counter-increment: step-counter;
+      padding: 0.6rem 0 0.6rem 2.4rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .step-list li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      background: var(--accent, #d4a04a);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* Challenge cards */
+    .challenge-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+    .challenge-card h4 { margin: 0 0 0.4rem; color: var(--accent, #d4a04a); }
+    .challenge-card p { margin: 0; opacity: 0.8; font-size: 0.9rem; }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🚨 Build · 📡 Jam · 🔐 Secure</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-rf-alarm-system</h1>
+            <div class="subtitle" data-i18n="subtitle">🚨 Build · 📡 Jam · 🔐 Secure</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🚨</span> <span data-i18n="mainSection">RF Alarm System — Jam & Spoof Lab</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Build an alarm, then hack it to learn security</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <!-- Alarm Panel Display -->
+        <div class="alarm-panel" id="alarmPanel">
+          <div class="alarm-status disarmed" id="alarmStatus" data-i18n="alarmDisarmed">DISARMED</div>
+          <div class="keypad-display" id="keypadDisplay"></div>
+          <div class="keypad" id="keypad">
+            <button onclick="keypadPress('1')">1</button>
+            <button onclick="keypadPress('2')">2</button>
+            <button onclick="keypadPress('3')">3</button>
+            <button onclick="keypadPress('4')">4</button>
+            <button onclick="keypadPress('5')">5</button>
+            <button onclick="keypadPress('6')">6</button>
+            <button onclick="keypadPress('7')">7</button>
+            <button onclick="keypadPress('8')">8</button>
+            <button onclick="keypadPress('9')">9</button>
+            <button onclick="keypadPress('C')">C</button>
+            <button onclick="keypadPress('0')">0</button>
+            <button onclick="keypadSubmit()">OK</button>
+          </div>
+        </div>
+
+        <!-- Remote Control -->
+        <div class="control-section">
+          <div class="remote-controls">
+            <button id="armRemoteBtn" onclick="armRemote()"><span data-i18n="armBtn">Arm</span></button>
+            <button id="disarmRemoteBtn" class="primary" onclick="disarmRemote()"><span data-i18n="disarmBtn">Disarm</span></button>
+          </div>
+
+          <!-- Attack Tools -->
+          <div class="attack-tools">
+            <button id="jamBtn" class="fire-btn" onclick="toggleJam()"><span data-i18n="jamBtn">Jam Signal</span></button>
+            <button id="replayBtn" onclick="toggleReplay()"><span data-i18n="replayBtn">Record & Replay</span></button>
+          </div>
+        </div>
+
+        <!-- RF Channel & Signal -->
+        <div style="text-align:center;">
+          <div class="rf-channel" id="rfChannel" data-i18n="rfChannelLabel">CH 7 — 433 MHz</div>
+          <div class="signal-meter" id="signalQuality">
+            <small data-i18n="signalLabel">Signal Quality</small>
+            <div class="meter-bar"><div class="meter-fill" id="signalFill"></div></div>
+          </div>
+          <div class="rolling-code-display" id="rollingCodeDisplay"></div>
+        </div>
+
+        <!-- Security Mode Toggle -->
+        <div class="security-toggle" id="securityMode">
+          <span data-i18n="basicMode">Basic (no encryption)</span>
+          <div class="toggle-switch" id="securitySwitch" onclick="toggleSecurityMode()">
+            <div class="toggle-knob"></div>
+          </div>
+          <span data-i18n="secureMode">Secure (rolling codes)</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li data-i18n="howwork_1">The alarm system sends and receives commands over RF (radio frequency) on a fixed channel (433 MHz). Pressing "Arm" or "Disarm" on the remote transmits a code wirelessly.</li>
+            <li data-i18n="howwork_2">In Basic mode, the system uses a fixed code ("1234") sent as plaintext. Any device on the same frequency can listen and read the code — no encryption, no protection.</li>
+            <li data-i18n="howwork_3">A jammer floods the RF channel with noise, drowning out legitimate signals. While jamming is active, the alarm cannot receive arm/disarm commands — signal quality drops to near zero.</li>
+            <li data-i18n="howwork_4">A replay attack records the disarm code when it is transmitted, then retransmits the captured frame later. In Basic mode this works perfectly — but Secure mode uses rolling codes that expire after one use.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li data-i18n="lab_1">Make sure the alarm is in Basic mode (toggle off). Arm the alarm, then press "Jam Signal" and try to disarm — notice the command fails while jamming is active.</li>
+            <li data-i18n="lab_2">Stop jamming, then press "Record & Replay". Disarm the alarm normally — the replay tool captures the disarm frame. Now arm the alarm again and press "Record & Replay" to retransmit the captured code — the alarm disarms!</li>
+            <li data-i18n="lab_3">Switch to Secure mode (rolling codes). Arm the alarm, then try the replay attack again — it fails! The code has already been used and is no longer valid.</li>
+            <li data-i18n="lab_4">Observe the rolling code display below the signal meter. Each arm/disarm command generates a unique code. Compare Basic mode (always "1234") with Secure mode (changes every time).</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <div class="challenge-card">
+            <h4 data-i18n="challenge_1_title">Challenge 1 — Disarm Without the Code</h4>
+            <p data-i18n="challenge_1_desc">The alarm is armed in Basic mode. Use only the attack tools (jam and replay) to disarm it without knowing the code. Hint: record first, then replay.</p>
+          </div>
+          <div class="challenge-card">
+            <h4 data-i18n="challenge_2_title">Challenge 2 — Defeat Rolling Codes</h4>
+            <p data-i18n="challenge_2_desc">Switch to Secure mode. Can you still disarm the alarm with a replay attack? Why does it fail? Discuss how rolling codes prevent replay attacks.</p>
+          </div>
+          <div class="challenge-card">
+            <h4 data-i18n="challenge_3_title">Challenge 3 — Design an Unbreakable Alarm</h4>
+            <p data-i18n="challenge_3_desc">Imagine you are building a real alarm system. What features would you add beyond rolling codes? Think about encryption, frequency hopping, two-factor authentication, and tamper detection.</p>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is this app?</summary>
+          <p data-i18n="faq_a1">An RF alarm simulator that teaches you how wireless alarm systems work — and how attackers exploit them using jamming and replay attacks.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">Do I need a real micro:bit?</summary>
+          <p data-i18n="faq_a2">No! This app simulates everything in your browser. But you can build a real version with two micro:bits using the radio blocks.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">Is this legal to try on real alarms?</summary>
+          <p data-i18n="faq_a3">No. Jamming and spoofing real radio signals is illegal in most countries. This simulation is for educational purposes only.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">What are rolling codes?</summary>
+          <p data-i18n="faq_a4">Rolling codes generate a new unique code for every transmission. Even if an attacker captures a code, it cannot be reused — the system has already moved to the next code.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Start by arming the alarm using the "Arm" remote button or enter code 1234 on the keypad and press OK.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Try the "Jam Signal" button while armed — watch the signal quality drop and commands fail.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Use "Record & Replay" to capture a disarm code, then replay it to disarm without knowing the code.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Switch to Secure mode and try the same attacks again — see how rolling codes defeat replay attacks.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_jamming_title">📡 RF Jamming</h3>
+          <p data-i18n="wiki_jamming">RF jamming floods a radio channel with noise, preventing legitimate devices from communicating. Attackers use it to block alarm disarm signals, keeping alarms from responding to commands.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_replay_title">🔄 Replay Attacks</h3>
+          <p data-i18n="wiki_replay">A replay attack records a valid wireless transmission and retransmits it later. If the system uses fixed codes, the replayed signal is accepted as genuine — the receiver cannot tell the difference.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_rolling_title">🔑 Rolling Codes</h3>
+          <p data-i18n="wiki_rolling">Rolling codes (also called hopping codes) use a synchronized counter between transmitter and receiver. Each code is valid only once, making captured codes useless for replay attacks.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_secure_title">🔒 Secure RF Protocols</h3>
+          <p data-i18n="wiki_secure">Modern secure RF protocols combine rolling codes with AES encryption, frequency hopping, and challenge-response authentication. This makes jamming, replay, and spoofing attacks extremely difficult.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

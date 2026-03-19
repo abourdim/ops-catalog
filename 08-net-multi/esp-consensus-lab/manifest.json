@@ -1,0 +1,13 @@
+{
+  "name": "esp-consensus-lab — Workshop DIY",
+  "short_name": "Consensus Lab",
+  "description": "Consensus Lab — Raft/PBFT: Visualize distributed consensus with elections and replication",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

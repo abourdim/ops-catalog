@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-panic-button — Workshop DIY</title>
+  <meta name="description" content="Panic Button — Emergency alert system and secure data wipe simulation for micro:bit." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-panic-button — Workshop DIY" />
+  <meta property="og:description" content="Panic Button — Emergency alert system and secure data wipe simulation for micro:bit." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .panic-btn-large {
+      display: block;
+      margin: 1.5rem auto;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ff4444, #cc0000 60%, #880000);
+      border: 6px solid #ff6666;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4), inset 0 -4px 8px rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: transform .1s, box-shadow .2s;
+      user-select: none;
+    }
+    .panic-btn-large:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(255, 0, 0, 0.7), inset 0 -4px 8px rgba(0,0,0,0.3);
+    }
+    .panic-btn-large:active {
+      transform: scale(0.95);
+    }
+    .panic-btn-large.active {
+      animation: panic-pulse 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes panic-pulse {
+      from { box-shadow: 0 0 30px rgba(255,0,0,0.5); }
+      to   { box-shadow: 0 0 80px rgba(255,0,0,1), 0 0 120px rgba(255,0,0,0.5); }
+    }
+
+    .countdown {
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent, #ff4444);
+      min-height: 4rem;
+      line-height: 4rem;
+      margin: 0.5rem 0;
+    }
+    .countdown.flashing {
+      animation: countdown-flash 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes countdown-flash {
+      from { color: #ff4444; text-shadow: 0 0 10px #ff0000; }
+      to   { color: #ff0000; text-shadow: 0 0 30px #ff0000, 0 0 60px #cc0000; }
+    }
+
+    .data-vault {
+      background: var(--card-bg, rgba(0,0,0,0.3));
+      border: 1px solid var(--border, rgba(255,255,255,0.1));
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+    .data-vault .vault-file {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0.5rem;
+      margin: 0.2rem 0;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.05);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .data-vault .vault-file.wiped {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    .data-vault .vault-file .file-icon { margin-inline-end: 0.5rem; }
+    .data-vault .vault-file .file-name { flex: 1; }
+    .data-vault .vault-file .file-class {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      background: rgba(255,0,0,0.2);
+      color: #ff6666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .data-vault .vault-status {
+      text-align: center;
+      padding: 1rem;
+      font-weight: 700;
+      color: #ff4444;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .wipe-progress {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    .wipe-progress .wipe-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ff4444, #ff8800);
+      border-radius: 4px;
+      transition: width 0.3s linear;
+    }
+
+    .broadcast-pulse {
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      min-height: 2rem;
+      line-height: 2rem;
+      margin: 0.5rem 0;
+      color: #ff8800;
+    }
+    .broadcast-pulse.active {
+      animation: broadcast-blink 0.6s ease-in-out infinite alternate;
+    }
+    @keyframes broadcast-blink {
+      from { opacity: 1; text-shadow: 0 0 8px #ff8800; }
+      to   { opacity: 0.4; text-shadow: 0 0 20px #ff4400; }
+    }
+
+    .cancel-btn {
+      display: block;
+      margin: 0.5rem auto;
+      padding: 0.6rem 2rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--text, #fff);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cancel-btn:hover { background: rgba(255,255,255,0.2); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .step-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border, rgba(255,255,255,0.1));
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .step-card .step-num {
+      display: inline-block;
+      width: 28px; height: 28px; line-height: 28px;
+      border-radius: 50%;
+      background: var(--accent, #d4a03c);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+    }
+    .step-card .step-title { font-weight: 600; margin-bottom: 0.25rem; }
+    .step-card .step-desc { font-size: 0.82rem; opacity: 0.75; }
+
+    .lab-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .lab-controls .btn-lab {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      background: var(--accent, #d4a03c);
+      color: #000;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .lab-controls .btn-lab:hover { opacity: 0.85; }
+
+    .lab-config {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .lab-config label { font-size: 0.85rem; font-weight: 600; }
+    .lab-config input[type="range"] { flex: 1; min-width: 120px; }
+    .lab-config .config-val {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      min-width: 2rem;
+      text-align: center;
+    }
+
+    .challenge-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0 0;
+    }
+    .challenge-list li {
+      padding: 0.6rem 0.75rem;
+      margin: 0.3rem 0;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border-left: 3px solid var(--accent, #d4a03c);
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .challenge-list li .ch-num {
+      font-weight: 700;
+      color: var(--accent, #d4a03c);
+      font-family: 'Orbitron', monospace;
+    }
+    .challenge-list li .ch-title { font-weight: 600; }
+    .challenge-list li .ch-desc { font-size: 0.82rem; opacity: 0.75; }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🆘 alert · 🔐 wipe · 📡 broadcast</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-panic-button</h1>
+            <div class="subtitle" data-i18n="subtitle">🆘 alert · 🔐 wipe · 📡 broadcast</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🆘</span> <span data-i18n="mainSection">Panic Button — Emergency Alert</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Broadcast emergency alerts and wipe sensitive data</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <!-- Panic Button -->
+        <button id="panicBtn" class="panic-btn-large fire-btn" data-i18n="panicLabel">PANIC</button>
+
+        <!-- Countdown Timer -->
+        <div class="countdown" id="countdownDisplay"></div>
+
+        <!-- Cancel Button -->
+        <button id="cancelBtn" class="cancel-btn" style="display:none" data-i18n="cancelBtn">CANCEL</button>
+
+        <!-- Broadcast Status -->
+        <div class="broadcast-pulse" id="broadcastStatus"></div>
+
+        <!-- Wipe Progress -->
+        <div class="wipe-progress" id="wipeProgress" style="display:none">
+          <div class="wipe-bar" id="wipeBar"></div>
+        </div>
+
+        <!-- Data Vault -->
+        <div class="data-vault" id="dataVault">
+          <div class="vault-status" data-i18n="vaultEmpty">No files loaded. Use Lab to load secret files.</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <div class="step-title" data-i18n="step1_title">Panic Detected</div>
+              <div class="step-desc" data-i18n="step1_desc">User presses the emergency button triggering the panic protocol.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <div class="step-title" data-i18n="step2_title">Countdown Starts</div>
+              <div class="step-desc" data-i18n="step2_desc">A 5-second countdown gives you a window to cancel if triggered by mistake.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <div class="step-title" data-i18n="step3_title">Alert Broadcast</div>
+              <div class="step-desc" data-i18n="step3_desc">Emergency signal is broadcast on all radio channels simultaneously.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">4</div>
+              <div class="step-title" data-i18n="step4_title">Secure Data Wipe</div>
+              <div class="step-desc" data-i18n="step4_desc">All sensitive files are overwritten with random data then deleted permanently.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <p data-i18n="labDesc">Load fake secret files, configure the countdown, test the panic sequence, and verify data destruction.</p>
+
+          <div class="lab-config">
+            <label data-i18n="countdownLabel">Countdown (s):</label>
+            <input type="range" id="countdownSlider" min="3" max="15" value="5" />
+            <span class="config-val" id="countdownVal">5</span>
+          </div>
+
+          <div class="lab-controls">
+            <button class="btn-lab" id="loadFilesBtn" data-i18n="loadFiles">Load Secret Files</button>
+            <button class="btn-lab" id="testPanicBtn" data-i18n="testPanic">Test Panic Sequence</button>
+            <button class="btn-lab" id="verifyWipeBtn" data-i18n="verifyWipe">Verify Wipe</button>
+            <button class="btn-lab" id="resetLabBtn" data-i18n="resetLab">Reset</button>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <p data-i18n="challengeDesc">Push your skills further with these advanced challenges.</p>
+          <ul class="challenge-list">
+            <li>
+              <span class="ch-num">#1</span>
+              <div>
+                <div class="ch-title" data-i18n="ch1_title">Cancel Before Wipe</div>
+                <div class="ch-desc" data-i18n="ch1_desc">Start a panic sequence and cancel it before the data wipe completes. Can you beat the clock?</div>
+              </div>
+            </li>
+            <li>
+              <span class="ch-num">#2</span>
+              <div>
+                <div class="ch-title" data-i18n="ch2_title">Silent Panic Mode</div>
+                <div class="ch-desc" data-i18n="ch2_desc">Design a silent panic that wipes data without broadcasting an alert. No one sees the signal.</div>
+              </div>
+            </li>
+            <li>
+              <span class="ch-num">#3</span>
+              <div>
+                <div class="ch-title" data-i18n="ch3_title">Dead-Man Switch</div>
+                <div class="ch-desc" data-i18n="ch3_desc">Implement a dead-man switch: if the user does NOT press a button every 30 seconds, panic triggers automatically.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What happens when data is wiped?</summary>
+          <p data-i18n="faq_a1">Files are overwritten with random data, then deleted. This simulates a secure erase so data cannot be recovered.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">What is the broadcast range?</summary>
+          <p data-i18n="faq_a2">The micro:bit radio has a range of about 70 meters. The alert is sent on all configured channels simultaneously.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What if I trigger a false alarm?</summary>
+          <p data-i18n="faq_a3">You have a countdown window to cancel. Press Cancel before the timer reaches zero to abort the sequence.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Can wiped data be recovered?</summary>
+          <p data-i18n="faq_a4">No. After a secure wipe with overwrite, the original data is gone forever. Always double-check before confirming.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Load secret files into the data vault using the Lab section.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Press the big red PANIC button to start the emergency sequence.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Watch the countdown, broadcast alert, and data wipe in action.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Verify that all data has been securely destroyed after the wipe.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_emergency_title">📡 Emergency Broadcast</h3>
+          <p data-i18n="wiki_emergency">An emergency broadcast sends a distress signal on all available radio channels so any nearby device can receive the alert.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_secureerase_title">🗑️ Secure Erase</h3>
+          <p data-i18n="wiki_secureerase">Secure erase overwrites data with random bytes before deletion, making recovery impossible even with forensic tools.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_deadman_title">💀 Dead Man Switch</h3>
+          <p data-i18n="wiki_deadman">A dead-man switch triggers automatically when a user fails to perform a periodic action, used as a safety mechanism.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_radio_title">📻 micro:bit Radio Broadcast</h3>
+          <p data-i18n="wiki_radio">The micro:bit radio module uses 2.4 GHz to send and receive messages between devices within range, on configurable groups.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

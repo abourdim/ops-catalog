@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USB Rubber Ducky — Workshop DIY</title>
+  <meta name="description" content="Write and simulate USB keyboard payloads — learn USB HID attack vectors safely." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="USB Rubber Ducky — Workshop DIY" />
+  <meta property="og:description" content="Write and simulate USB keyboard payloads — learn USB HID attack vectors safely." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">Write and simulate USB keyboard payloads</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">USB Rubber Ducky — Keystroke Injector</h1>
+            <div class="subtitle" data-i18n="subtitle">Write and simulate USB keyboard payloads</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD — Payload Editor ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#9000;&#65039;</span> <span data-i18n="mainSection">Payload Editor</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Write DuckyScript payloads and simulate keystroke injection</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Payload Library -->
+        <div class="payload-library" id="payloadLibrary">
+          <label class="sidebar-label" data-i18n="payloadLibrary">Payload Library</label>
+          <div class="payload-presets">
+            <button class="btn-sm payload-preset-btn" data-preset="hello" data-i18n="presetHello">Hello World</button>
+            <button class="btn-sm payload-preset-btn" data-preset="sysinfo" data-i18n="presetSysinfo">System Info</button>
+            <button class="btn-sm payload-preset-btn" data-preset="rickroll" data-i18n="presetRickroll">Rick Roll</button>
+          </div>
+        </div>
+
+        <!-- Code Editor -->
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span class="editor-label" data-i18n="duckyScript">DuckyScript</span>
+            <div class="editor-actions">
+              <button id="clearEditorBtn" class="btn-sm" title="Clear"><span class="btn-icon">&#128465;&#65039;</span></button>
+              <button id="copyPayloadBtn" class="btn-sm" title="Copy"><span class="btn-icon">&#128203;</span></button>
+            </div>
+          </div>
+          <div class="line-numbers" id="lineNumbers">1</div>
+          <textarea id="payloadEditor" class="payload-editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+            placeholder="REM Hello World payload&#10;DELAY 1000&#10;GUI r&#10;DELAY 500&#10;STRING notepad&#10;ENTER&#10;DELAY 500&#10;STRING Hello from USB Rubber Ducky!&#10;ENTER"></textarea>
+        </div>
+
+        <!-- Controls -->
+        <div class="deploy-controls">
+          <div class="speed-control">
+            <label data-i18n="speed">Speed</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="5" />
+            <span id="speedLabel">5x</span>
+          </div>
+          <div class="deploy-buttons">
+            <button id="deployBtn" class="btn-sm primary deploy-btn">
+              <span class="btn-icon">&#9654;&#65039;</span> <span data-i18n="deploy">Deploy</span>
+            </button>
+            <button id="stopBtn" class="btn-sm stop-btn" disabled>
+              <span class="btn-icon">&#9209;&#65039;</span> <span data-i18n="stop">Stop</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Virtual Terminal -->
+        <div class="terminal-wrap">
+          <div class="terminal-header">
+            <span class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </span>
+            <span class="terminal-title" data-i18n="virtualTerminal">Virtual Terminal</span>
+            <button id="clearTermBtn" class="btn-sm" title="Clear terminal"><span class="btn-icon">&#128465;&#65039;</span></button>
+          </div>
+          <div class="terminal" id="virtualTerminal">
+            <div class="terminal-line">
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-cursor" id="terminalCursor">_</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Execution Progress -->
+        <div class="exec-progress" id="execProgress" style="display:none">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span class="progress-text" id="progressText">0%</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — USB HID Theory ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128218;</span> <span data-i18n="sectionA">USB HID Fundamentals</span></summary>
+        <div class="card">
+          <div class="theory-grid">
+            <div class="theory-card">
+              <h3 data-i18n="hidTitle">What is USB HID?</h3>
+              <p data-i18n="hidDesc">HID (Human Interface Device) is a USB class that allows keyboards, mice, and gamepads to communicate with computers. The ESP32-S2 can emulate a USB HID keyboard, sending keystrokes as if a real keyboard were typing.</p>
+            </div>
+            <div class="theory-card">
+              <h3 data-i18n="attackTitle">Keystroke Injection Attacks</h3>
+              <p data-i18n="attackDesc">A USB Rubber Ducky exploits the trust computers place in USB keyboards. When plugged in, it is recognized as a keyboard and can type commands faster than any human, potentially opening terminals, downloading files, or changing settings.</p>
+            </div>
+            <div class="theory-card">
+              <h3 data-i18n="duckyTitle">DuckyScript Language</h3>
+              <p data-i18n="duckyDesc">DuckyScript is a simple scripting language for keystroke injection. Commands include STRING (type text), DELAY (wait ms), GUI/WINDOWS (Win key), ENTER, TAB, and modifier combos like CTRL+ALT+DELETE.</p>
+            </div>
+            <div class="theory-card">
+              <h3 data-i18n="defenseTitle">Defense Strategies</h3>
+              <p data-i18n="defenseDesc">Protect against HID attacks by: disabling USB ports via Group Policy, using USB device whitelisting, monitoring new HID device connections, employing USB firewalls, and training users to never plug in unknown USB devices.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — DuckyScript Reference ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">&#127916;</span> <span data-i18n="sectionB">DuckyScript Reference</span></summary>
+        <div class="card">
+          <div class="reference-table-wrap">
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th data-i18n="refCommand">Command</th>
+                  <th data-i18n="refSyntax">Syntax</th>
+                  <th data-i18n="refDescription">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>REM</code></td><td>REM comment text</td><td data-i18n="refRem">Comment line, ignored during execution</td></tr>
+                <tr><td><code>STRING</code></td><td>STRING hello world</td><td data-i18n="refString">Types the text as keyboard input</td></tr>
+                <tr><td><code>DELAY</code></td><td>DELAY 1000</td><td data-i18n="refDelay">Waits specified milliseconds</td></tr>
+                <tr><td><code>ENTER</code></td><td>ENTER</td><td data-i18n="refEnter">Presses the Enter key</td></tr>
+                <tr><td><code>GUI</code></td><td>GUI r</td><td data-i18n="refGui">Windows/Super key (+ optional key)</td></tr>
+                <tr><td><code>CTRL</code></td><td>CTRL c</td><td data-i18n="refCtrl">Ctrl key combo</td></tr>
+                <tr><td><code>ALT</code></td><td>ALT F4</td><td data-i18n="refAlt">Alt key combo</td></tr>
+                <tr><td><code>SHIFT</code></td><td>SHIFT TAB</td><td data-i18n="refShift">Shift key combo</td></tr>
+                <tr><td><code>TAB</code></td><td>TAB</td><td data-i18n="refTab">Presses the Tab key</td></tr>
+                <tr><td><code>ESCAPE</code></td><td>ESCAPE</td><td data-i18n="refEscape">Presses the Escape key</td></tr>
+                <tr><td><code>UPARROW</code></td><td>UPARROW</td><td data-i18n="refUp">Presses Up arrow key</td></tr>
+                <tr><td><code>DOWNARROW</code></td><td>DOWNARROW</td><td data-i18n="refDown">Presses Down arrow key</td></tr>
+                <tr><td><code>REPEAT</code></td><td>REPEAT 3</td><td data-i18n="refRepeat">Repeats last command N times</td></tr>
+                <tr><td><code>DEFAULTDELAY</code></td><td>DEFAULTDELAY 100</td><td data-i18n="refDefaultDelay">Sets default delay between commands</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — ESP32-S2 Wiring & Setup ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128268;</span> <span data-i18n="sectionC">ESP32-S2 Setup Guide</span></summary>
+        <div class="card">
+          <div class="setup-guide">
+            <div class="setup-step">
+              <span class="setup-step-num">1</span>
+              <div>
+                <h3 data-i18n="setupStep1Title">Hardware Requirements</h3>
+                <p data-i18n="setupStep1Desc">ESP32-S2 board (e.g., ESP32-S2-Saola, Lolin S2 Mini). The S2 variant has native USB support which is essential for HID emulation. A USB-C cable is needed for both programming and deployment.</p>
+              </div>
+            </div>
+            <div class="setup-step">
+              <span class="setup-step-num">2</span>
+              <div>
+                <h3 data-i18n="setupStep2Title">Arduino IDE Setup</h3>
+                <p data-i18n="setupStep2Desc">Install ESP32 board support in Arduino IDE. Go to Tools > Board > ESP32S2 Dev Module. Enable USB CDC On Boot and set USB Mode to USB-OTG (TinyUSB). Install the TinyUSB library.</p>
+              </div>
+            </div>
+            <div class="setup-step">
+              <span class="setup-step-num">3</span>
+              <div>
+                <h3 data-i18n="setupStep3Title">Flash the Firmware</h3>
+                <p data-i18n="setupStep3Desc">Upload the USB HID keyboard firmware. The ESP32-S2 will appear as a standard USB keyboard when plugged into any computer. Use the DuckyScript parser to convert payloads into keypress sequences.</p>
+              </div>
+            </div>
+            <div class="setup-step">
+              <span class="setup-step-num">4</span>
+              <div>
+                <h3 data-i18n="setupStep4Title">Deploy & Test</h3>
+                <p data-i18n="setupStep4Desc">Write your payload in the editor above, export it, and flash to the ESP32-S2. Plug the device into a target machine. The payload executes immediately, typing keystrokes at machine speed. Always test on your own machines only!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wiring Diagram (ASCII) -->
+          <div class="wiring-diagram">
+            <h3 data-i18n="wiringTitle">Connection Diagram</h3>
+            <pre class="wiring-ascii" id="wiringDiagram">
+  ┌─────────────────────────────┐
+  │        ESP32-S2             │
+  │                             │
+  │   USB-C ◄──── To Target PC │
+  │   (Native USB / TinyUSB)   │
+  │                             │
+  │   GPIO 0  ── Button (Arm)  │
+  │   GPIO 2  ── LED (Status)  │
+  │   GND     ── GND           │
+  │                             │
+  │   [Onboard LED] = Activity │
+  └─────────────────────────────┘
+
+  Button press arms the payload.
+  LED blinks during execution.
+  USB appears as standard HID keyboard.
+            </pre>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">&#10067; Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is USB Rubber Ducky?</summary>
+          <p data-i18n="faq_a1">A USB Rubber Ducky is a keystroke injection tool disguised as a USB flash drive. It exploits the trust computers place in USB keyboards to execute pre-programmed payloads at superhuman typing speed.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">Is this app safe to use?</summary>
+          <p data-i18n="faq_a2">Yes! This app only simulates payloads in a virtual terminal. No real keystrokes are sent to your system. The preset payloads are harmless educational examples.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is DuckyScript?</summary>
+          <p data-i18n="faq_a3">DuckyScript is a simple scripting language for keystroke injection. Commands like STRING, DELAY, ENTER, GUI let you script keyboard actions. This app parses and simulates DuckyScript.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Can I use this with a real ESP32-S2?</summary>
+          <p data-i18n="faq_a4">Yes! The ESP32-S2 has native USB support. You can flash TinyUSB firmware to make it act as a USB HID keyboard. Export your payload from this editor and deploy it to real hardware.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Write or select a DuckyScript payload from the library presets.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Adjust execution speed using the slider (1x = slow, 10x = instant).</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Click Deploy to simulate the payload in the virtual terminal below.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Watch the keystrokes appear in real-time. Study the DuckyScript Reference for all commands.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_hid_title">&#9000;&#65039; USB HID Protocol</h3>
+          <p data-i18n="wiki_hid">USB HID (Human Interface Device) class allows peripherals to send input reports to a host. Keyboards send scancodes for each key press/release. The host OS trusts HID devices implicitly — no driver installation needed.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_injection_title">&#128274; Keystroke Injection</h3>
+          <p data-i18n="wiki_injection">Keystroke injection attacks exploit the implicit trust in USB keyboards. A malicious device can type commands to open terminals, download malware, or exfiltrate data — all within seconds of being plugged in.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_esp32_title">&#128268; ESP32-S2 as HID</h3>
+          <p data-i18n="wiki_esp32">The ESP32-S2 features a native USB peripheral (not USB-to-UART). With TinyUSB, it can enumerate as a standard USB keyboard. Combined with WiFi, it can receive payloads wirelessly for remote execution.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_defense_title">&#128737;&#65039; USB Security</h3>
+          <p data-i18n="wiki_defense">Defenses include: USB port lockdown policies, device whitelisting (USBGuard on Linux), monitoring for new HID enumeration events, physical USB port blockers, and user awareness training about rogue USB devices.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">&#9881;&#65039; Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>&#127468;&#127463; EN</option>
+          <option value="fr">&#127467;&#127479; FR</option>
+          <option value="ar">&#127465;&#127487; &#1593;&#1585;&#1576;&#1610;</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">&#128266; Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127908;</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#129707;</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">&#1587;&#1576;&#1581;&#1575;&#1606; &#1575;&#1604;&#1604;&#1607;</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127925;</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">&#128220; Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#129529;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#128203;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#128190;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#10003;</button>
+      <button class="log-filter" data-filter="error">&#10007;</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working...</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

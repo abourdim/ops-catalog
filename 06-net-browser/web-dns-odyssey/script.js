@@ -1,0 +1,429 @@
+/**
+ * Workshop DIY — DNS Odyssey v1.2
+ * Resolution Journey — Watch full recursive DNS resolution step by step
+ */
+const $ = id => document.getElementById(id);
+const LOGO_SVG = `<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77.14 78.32 253.99 136.25"><path style="stroke:none;fill:currentColor;fill-rule:evenodd" d="M187.42,152.87C187.48,152.74,187.66,152.63,187.82,152.63C188.09,152.63,190.48,151.54,191.62,150.9L194.17,149.21C197.43,146.97,199.24,146.24,202.59,145.78C203.8,145.62,204.63,145.62,205.93,145.78C212.62,146.63,217.42,150.72,219.33,157.2C219.72,158.55,219.77,162.69,219.41,163.88C218.19,167.86,216.58,170.3,213.79,172.41C209.46,175.7,203.83,176.56,198.81,174.72C197.24,174.15,196.14,173.54,194.48,172.35C191.91,170.51,190.53,169.74,188.03,168.75L187.29,168.46L187.31,160.79C187.32,156.56,187.37,153,187.42,152.87z"/><path style="stroke:none;fill:currentColor" d="M259.79,157.67L264.88,148.03L272.34,148.03L263.03,163.73L263.03,174.99L256.26,174.99L256.26,164.07L246.79,148.03L254.51,148.03z"/><path style="stroke:none;fill:currentColor" d="M240.37,152.74L236.5,152.74L236.5,170.28L240.37,170.28L240.37,174.99L225.85,174.99L225.85,170.28L229.72,170.28L229.72,152.74L225.85,152.74L225.85,148.03L240.37,148.03z"/><path style="stroke:none;fill:currentColor" d="M330.79,195.73L203.96,195.73L203.96,199.33L330.79,199.33z"/><path style="stroke:none;fill:currentColor" d="M330.79,203.35L161.69,203.35L161.69,206.96L330.79,206.96z"/><path style="stroke:none;fill:currentColor" d="M330.79,210.97L77.14,210.97L77.14,214.58L330.79,214.58z"/></svg>`;
+const FOOTER_ICON='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH6gMKAjgH2Wn1xgAAAAxJREFUeNrtwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAvBm8AAAB8IkWQwAAAABJRU5ErkJggg==';
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.2';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const osc=audioCtx.createOscillator();const gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);gain.gain.value=0.08;const t=audioCtx.currentTime;switch(type){case'click':osc.frequency.value=800;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.08);osc.start(t);osc.stop(t+0.08);break;case'success':osc.frequency.value=523;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.3);osc.start(t);osc.stop(t+0.3);const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.connect(g2);g2.connect(audioCtx.destination);g2.gain.value=0.08;o2.frequency.value=659;o2.type='sine';g2.gain.exponentialRampToValueAtTime(0.001,t+0.4);o2.start(t+0.15);o2.stop(t+0.4);break;case'error':osc.frequency.value=200;osc.type='square';gain.gain.exponentialRampToValueAtTime(0.001,t+0.25);osc.start(t);osc.stop(t+0.25);break;}}
+
+/* ═══════ i18n ═══════ */
+const LANG={
+  en:{
+    title:'DNS Odyssey',subtitle:'Watch full recursive DNS resolution step by step',
+    disconnected:'Disconnected',connected:'Connected',
+    mainSection:'DNS Resolution Journey',mainDesc:'Recursive DNS resolution step by step',
+    sectionA:'DNS Record Types',sectionB:'DNS Security',sectionC:'Resolution History',
+    activityLog:'Activity Log',eventsMsg:'Events & messages',
+    clear:'Clear',copy:'Copy',theme:'Theme',export:'Export',filterAll:'All',
+    settings:'Settings',language:'Language',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',
+    faq_q1:'What is DNS Odyssey?',faq_a1:'A DNS resolution visualizer showing step-by-step recursive resolution.',
+    faq_q2:'Is this real DNS?',faq_a2:'No, all data is simulated for educational purposes.',
+    faq_q3:'How do I change the language?',faq_a3:'Open Settings and pick your language.',
+    faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',
+    howto_1:'Enter a domain name.',howto_2:'Click Resolve to start.',howto_3:'Watch animated resolution.',howto_4:'Check TTL cache and history.',
+    wiki_themes_title:'Themes',wiki_themes:'8 built-in themes.',wiki_i18n_title:'Languages',wiki_i18n:'Trilingual: EN, FR, AR.',
+    wiki_log_title:'Activity Log',wiki_log:'Timestamped, color-coded log.',wiki_privacy_title:'Privacy',wiki_privacy:'Local-first. No data sent.',
+    working:'Working...',ready:'DNS Odyssey ready!',
+    t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',
+    logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
+    soundEffects:'Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',splashHint:'tap to skip',
+    newVersion:'UPDATE',langChanged:'Language > English',themeChanged:'Theme >',
+    resolveBtn:'Resolve',ttlCache:'TTL Cache',
+    dnsRefText:'DNS uses record types: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), NS (nameserver), TXT (text), SOA, PTR. Each has a TTL for caching.',
+    secText:'DNSSEC adds signatures to prevent spoofing. DoH and DoT encrypt queries for privacy.',
+    historyText:'View previously resolved domains and cached results.',
+    resolving:'Resolving domain...',resolved:'Resolution complete!',
+    step1:'Browser checks local cache',step2:'Query sent to recursive resolver',step3:'Resolver queries root server (.)',
+    step4:'Root refers to TLD server',step5:'Resolver queries TLD server',step6:'TLD refers to authoritative server',
+    step7:'Resolver queries authoritative server',step8:'Authoritative returns IP address',step9:'Resolver caches and returns to browser',
+    browser:'Browser',resolver:'Resolver',rootSrv:'Root (.)',tldSrv:'TLD',authSrv:'Auth NS',
+    cached:'CACHED',ttl:'TTL',ip:'IP',noCache:'Not in cache',
+  },
+  fr:{
+    title:'DNS Odyssee',subtitle:'Suivez la resolution DNS recursive etape par etape',
+    disconnected:'Deconnecte',connected:'Connecte',
+    mainSection:'Voyage de Resolution DNS',mainDesc:'Resolution DNS recursive etape par etape',
+    sectionA:'Types d\'Enregistrements DNS',sectionB:'Securite DNS',sectionC:'Historique de Resolution',
+    activityLog:'Journal',eventsMsg:'Evenements et messages',
+    clear:'Effacer',copy:'Copier',theme:'Theme',export:'Exporter',filterAll:'Tout',
+    settings:'Parametres',language:'Langue',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',
+    faq_q1:'Qu\'est-ce que DNS Odyssee?',faq_a1:'Un visualiseur de resolution DNS recursive etape par etape.',
+    faq_q2:'C\'est du vrai DNS?',faq_a2:'Non, donnees simulees pour l\'education.',
+    faq_q3:'Comment changer la langue?',faq_a3:'Ouvrez Parametres et choisissez.',
+    faq_q4:'Mes donnees sont privees?',faq_a4:'Oui. Tout fonctionne localement.',
+    howto_1:'Entrez un nom de domaine.',howto_2:'Cliquez Resoudre.',howto_3:'Regardez l\'animation.',howto_4:'Verifiez le cache TTL et l\'historique.',
+    wiki_themes_title:'Themes',wiki_themes:'8 themes.',wiki_i18n_title:'Langues',wiki_i18n:'Trilingue.',
+    wiki_log_title:'Journal',wiki_log:'Journal horodate.',wiki_privacy_title:'Confidentialite',wiki_privacy:'Local-first.',
+    working:'En cours...',ready:'DNS Odyssee pret!',
+    t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',
+    logCleared:'Journal efface',copied:'Copie!',copyFail:'Echec',
+    soundEffects:'Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Reactif musique',splashHint:'appuyer pour passer',
+    newVersion:'MAJ',langChanged:'Langue > Francais',themeChanged:'Theme >',
+    resolveBtn:'Resoudre',ttlCache:'Cache TTL',
+    dnsRefText:'DNS utilise les types A, AAAA, CNAME, MX, NS, TXT, SOA, PTR. Chaque enregistrement a un TTL.',
+    secText:'DNSSEC ajoute des signatures. DoH et DoT chiffrent les requetes.',
+    historyText:'Historique des domaines resolus.',
+    resolving:'Resolution en cours...',resolved:'Resolution terminee!',
+    step1:'Le navigateur verifie le cache local',step2:'Requete envoyee au resolveur recursif',step3:'Le resolveur interroge le serveur racine (.)',
+    step4:'Racine renvoie vers le serveur TLD',step5:'Le resolveur interroge le serveur TLD',step6:'TLD renvoie vers le serveur autoritaire',
+    step7:'Le resolveur interroge le serveur autoritaire',step8:'Le serveur autoritaire retourne l\'adresse IP',step9:'Le resolveur met en cache et retourne au navigateur',
+    browser:'Navigateur',resolver:'Resolveur',rootSrv:'Racine (.)',tldSrv:'TLD',authSrv:'NS Auth',
+    cached:'EN CACHE',ttl:'TTL',ip:'IP',noCache:'Pas en cache',
+  },
+  ar:{
+    title:'رحلة DNS',subtitle:'شاهد حل DNS التكراري خطوة بخطوة',
+    disconnected:'غير متصل',connected:'متصل',
+    mainSection:'رحلة حل DNS',mainDesc:'حل DNS التكراري خطوة بخطوة',
+    sectionA:'انواع سجلات DNS',sectionB:'امان DNS',sectionC:'سجل الحلول',
+    activityLog:'سجل النشاط',eventsMsg:'الاحداث والرسائل',
+    clear:'مسح',copy:'نسخ',theme:'المظهر',export:'تصدير',filterAll:'الكل',
+    settings:'الاعدادات',language:'اللغة',help:'مساعدة',faq:'اسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',
+    faq_q1:'ما هي رحلة DNS؟',faq_a1:'اداة تصور حل DNS التكراري خطوة بخطوة.',
+    faq_q2:'هل هذا DNS حقيقي؟',faq_a2:'لا، بيانات محاكاة لاغراض تعليمية.',
+    faq_q3:'كيف اغير اللغة؟',faq_a3:'افتح الاعدادات واختر لغتك.',
+    faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محليا.',
+    howto_1:'ادخل اسم نطاق.',howto_2:'انقر حل للبدء.',howto_3:'شاهد الرسوم المتحركة.',howto_4:'تحقق من ذاكرة TTL والسجل.',
+    wiki_themes_title:'المظاهر',wiki_themes:'8 مظاهر.',wiki_i18n_title:'اللغات',wiki_i18n:'ثلاثي اللغات.',
+    wiki_log_title:'سجل النشاط',wiki_log:'سجل مؤرخ.',wiki_privacy_title:'الخصوصية',wiki_privacy:'محلي اولا.',
+    working:'جار...',ready:'رحلة DNS جاهزة!',
+    t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',
+    logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
+    soundEffects:'مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',splashHint:'انقر للتخطي',
+    newVersion:'تحديث',langChanged:'اللغة > العربية',themeChanged:'المظهر >',
+    resolveBtn:'حل',ttlCache:'ذاكرة TTL',
+    dnsRefText:'يستخدم DNS انواع السجلات A و AAAA و CNAME و MX و NS و TXT. لكل سجل TTL.',
+    secText:'يضيف DNSSEC توقيعات رقمية. DoH و DoT يشفران الاستعلامات.',
+    historyText:'عرض النطاقات المحلولة سابقا.',
+    resolving:'جاري الحل...',resolved:'اكتمل الحل!',
+    step1:'المتصفح يتحقق من الذاكرة المحلية',step2:'ارسال الاستعلام الى المحلل التكراري',step3:'المحلل يستعلم خادم الجذر',
+    step4:'الجذر يحيل الى خادم TLD',step5:'المحلل يستعلم خادم TLD',step6:'TLD يحيل الى الخادم المعتمد',
+    step7:'المحلل يستعلم الخادم المعتمد',step8:'الخادم المعتمد يعيد عنوان IP',step9:'المحلل يخزن ويعيد للمتصفح',
+    browser:'المتصفح',resolver:'المحلل',rootSrv:'الجذر (.)',tldSrv:'TLD',authSrv:'NS المعتمد',
+    cached:'مخزن',ttl:'TTL',ip:'IP',noCache:'غير مخزن',
+  }
+};
+
+let currentLang='en';
+function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(opt=>{const k=opt.dataset.i18nOpt;if(s[k]!=null)opt.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
+function setTheme(name){document.documentElement.dataset.theme=name;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(name));const sel=$('themeSelect');if(sel)sel.value=name;const s=LANG[currentLang];try{localStorage.setItem('wdiy-theme',name);}catch{}playThemeMelody(name);log(`${s.themeChanged} ${s['t_'+name]||name}`,'info');}
+let logContainer;
+function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${type}`;const ft=`[${new Date().toLocaleTimeString()}] ${msg}`;if(typewriterEnabled){logContainer.appendChild(d);typewriterAppend(d,ft);}else{d.textContent=ft;logContainer.appendChild(d);}logContainer.scrollTop=logContainer.scrollHeight;if(type==='success'){playSound('success');pulseBismillah('success');setPetState('happy');}else if(type==='error'){playSound('error');pulseBismillah('error');setPetState('sad');}logWithHistory(msg,type);applyLogFilter();resetPetSleep();}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const t=Array.from(logContainer.children).map(d=>d.textContent).join('\n');try{await navigator.clipboard.writeText(t);log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+let toastTimer=null;
+function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block';}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms);}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';if(toastTimer){clearTimeout(toastTimer);toastTimer=null;}}
+function setStatus(c){const p=$('statusPill'),t=$('statusText'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c);}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click');}function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500);}
+let activeLogFilter='all';function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();playSound('click');});});}function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(line=>{if(activeLogFilter==='all'){line.style.display='';return;}line.style.display=line.classList.contains(activeLogFilter)?'':'none';});}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const blob=new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(url);}
+function checkVersion(){try{const s=localStorage.getItem('wdiy-latest-version');if(s&&s!==APP_VERSION){const b=$('settingsBtn');if(b&&!b.querySelector('.version-update')){const bg=document.createElement('span');bg.className='version-update';bg.textContent=LANG[currentLang].newVersion;b.style.position='relative';bg.style.cssText='position:absolute;top:-6px;inset-inline-end:-6px;';b.appendChild(bg);}}}catch{}}
+const APP_MSG_KEY='wdiy-app-msg';function sendAppMessage(type,data){try{const msg={type,data,from:document.title,ts:Date.now()};localStorage.setItem(APP_MSG_KEY,JSON.stringify(msg));localStorage.removeItem(APP_MSG_KEY);}catch{}}function onAppMessage(cb){window.addEventListener('storage',e=>{if(e.key!==APP_MSG_KEY||!e.newValue)return;try{cb(JSON.parse(e.newValue));}catch{}});}
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let konamiIdx=0;function initKonami(){document.addEventListener('keydown',e=>{if(e.key===KONAMI[konamiIdx]){konamiIdx++;if(konamiIdx===KONAMI.length){konamiIdx=0;setTheme('retro');log('KONAMI CODE — RETRO!','success');}}else konamiIdx=0;});}
+function pulseBismillah(type){const b=document.querySelector('.bismillah');if(!b)return;b.classList.remove('pulse-success','pulse-error');void b.offsetWidth;b.classList.add(type==='error'?'pulse-error':'pulse-success');setTimeout(()=>b.classList.remove('pulse-success','pulse-error'),700);}
+const MORSE={'a':'.-','b':'-...','c':'-.-.','d':'-..','e':'.','f':'..-.','g':'--.','h':'....','i':'..','j':'.---','k':'-.-','l':'.-..','m':'--','n':'-.','o':'---','p':'.--.','q':'--.-','r':'.-.','s':'...','t':'-','u':'..-','v':'...-','w':'.--','x':'-..-','y':'-.--','z':'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.',' ':'/'};let morseTimeout=null,morseActive=false;function sleep(ms){return new Promise(r=>setTimeout(r,ms));}function initMorseLog(){document.addEventListener('mousedown',e=>{const line=e.target.closest('.log-line');if(!line)return;morseTimeout=setTimeout(()=>{},600);});document.addEventListener('mouseup',()=>{if(morseTimeout){clearTimeout(morseTimeout);morseTimeout=null;}});}
+let matrixRunning=false,matrixAnim=null;const ARABIC_CHARS='بسمالرحنيوكلتعدفقثصضطظغشزخجذأؤئإءةىآ٠١٢٣٤٥٦٧٨٩';function toggleMatrix(){const c=$('matrixCanvas');if(!c)return;if(matrixRunning){matrixRunning=false;cancelAnimationFrame(matrixAnim);c.classList.remove('active');return;}matrixRunning=true;c.classList.add('active');const ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=Math.floor(c.width/16),drops=Array(cols).fill(1);function draw(){if(!matrixRunning)return;ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#33ff33';ctx.font='14px Amiri,serif';for(let i=0;i<drops.length;i++){ctx.fillText(ARABIC_CHARS[Math.floor(Math.random()*ARABIC_CHARS.length)],i*16,drops[i]*16);if(drops[i]*16>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;}matrixAnim=requestAnimationFrame(draw);}draw();}
+let logoClickCount=0,logoClickTimer=null;function initMatrixTrigger(){const l=$('logoWrap');if(!l)return;l.style.cursor='pointer';l.addEventListener('click',()=>{logoClickCount++;if(logoClickTimer)clearTimeout(logoClickTimer);if(logoClickCount>=3){logoClickCount=0;toggleMatrix();}else logoClickTimer=setTimeout(()=>logoClickCount=0,500);});}
+function initDebug(){if(!new URLSearchParams(window.location.search).has('debug'))return;const p=$('debugPanel');if(!p)return;p.classList.add('active');const f=$('debugFps'),m=$('debugMem');let frames=0,last=performance.now();function tick(){frames++;const now=performance.now();if(now-last>=1000){if(f)f.textContent=frames+' FPS';if(m&&performance.memory)m.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' MB';frames=0;last=now;}requestAnimationFrame(tick);}requestAnimationFrame(tick);}
+function initShakeReport(){if(!window.DeviceMotionEvent)return;let last=0;window.addEventListener('devicemotion',e=>{const a=e.accelerationIncludingGravity;if(!a)return;if(Math.abs(a.x)+Math.abs(a.y)+Math.abs(a.z)>25&&Date.now()-last>2000){last=Date.now();generateBugReport();}});}
+function generateBugReport(){if(!logContainer)logContainer=$('logContainer');const lines=logContainer?Array.from(logContainer.children).map(d=>d.textContent):[];const r={app:document.title,version:APP_VERSION,timestamp:new Date().toISOString(),userAgent:navigator.userAgent,theme:document.documentElement.dataset.theme,lang:currentLang,log:lines.slice(-50)};const blob=new Blob([JSON.stringify(r,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`bug-report-${Date.now()}.json`;a.click();URL.revokeObjectURL(url);}
+const logHistory=[];function logWithHistory(msg,type){logHistory.push({msg,type,ts:Date.now()});}function initTimeTravel(){document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='z'){const p=$('logPanel');if(!p||!p.classList.contains('open'))return;e.preventDefault();if(!logContainer)logContainer=$('logContainer');if(logContainer&&logContainer.lastChild){logContainer.removeChild(logContainer.lastChild);logHistory.pop();playSound('click');}}});}
+let typewriterEnabled=true;async function typewriterAppend(el,text){el.classList.add('typing');el.textContent='';for(let i=0;i<text.length;i++){el.textContent+=text[i];if(el.parentElement)el.parentElement.scrollTop=el.parentElement.scrollHeight;await sleep(12+Math.random()*18);}el.classList.remove('typing');}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date());}catch{}}
+let recognition=null,whisperActive=false;function toggleWhisper(){if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){log('Speech not supported','error');return;}if(whisperActive){if(recognition)recognition.stop();whisperActive=false;return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;recognition=new SR();recognition.continuous=true;recognition.interimResults=false;recognition.lang=currentLang==='ar'?'ar-DZ':currentLang==='fr'?'fr-FR':'en-US';recognition.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();if(t)log(t,'rx');}};recognition.onerror=e=>log(`Error: ${e.error}`,'error');recognition.onend=()=>{if(whisperActive)recognition.start();};recognition.start();whisperActive=true;}
+const GHOST_KEY='wdiy-ghost-cursor';let ghostCanvas,ghostCtx,myGhostId=Math.random().toString(36).slice(2,8);function initGhostUsers(){ghostCanvas=document.createElement('canvas');ghostCanvas.style.cssText='position:fixed;inset:0;z-index:9998;pointer-events:none;';document.body.appendChild(ghostCanvas);ghostCtx=ghostCanvas.getContext('2d');ghostCanvas.width=innerWidth;ghostCanvas.height=innerHeight;window.addEventListener('resize',()=>{ghostCanvas.width=innerWidth;ghostCanvas.height=innerHeight;});document.addEventListener('mousemove',e=>{try{localStorage.setItem(GHOST_KEY,JSON.stringify({id:myGhostId,x:e.clientX,y:e.clientY,ts:Date.now()}));}catch{}});const ghosts={};window.addEventListener('storage',e=>{if(e.key!==GHOST_KEY||!e.newValue)return;try{const d=JSON.parse(e.newValue);if(d.id===myGhostId)return;ghosts[d.id]={x:d.x,y:d.y,ts:d.ts};}catch{}});function draw(){ghostCtx.clearRect(0,0,ghostCanvas.width,ghostCanvas.height);const now=Date.now();for(const[id,g]of Object.entries(ghosts)){if(now-g.ts>3000){delete ghosts[id];continue;}ghostCtx.globalAlpha=0.3*(1-(now-g.ts)/3000);ghostCtx.beginPath();ghostCtx.arc(g.x,g.y,6,0,Math.PI*2);ghostCtx.fillStyle='#d4a03c';ghostCtx.fill();}ghostCtx.globalAlpha=1;requestAnimationFrame(draw);}requestAnimationFrame(draw);}
+const THEME_MELODIES={'mosque-gold':[330,392,523],'zellige':[440,523,659],'andalus':[294,370,440],'space':[523,659,784],'jungle':[262,330,392],'robot':[440,554,659],'riad':[349,440,523],'medina':[294,349,440],'retro':[523,262,523]};function playThemeMelody(name){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const notes=THEME_MELODIES[name];if(!notes)return;const t=audioCtx.currentTime;notes.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=freq;g.gain.value=0.06;g.gain.exponentialRampToValueAtTime(0.001,t+0.2+i*0.15+0.15);o.start(t+i*0.15);o.stop(t+i*0.15+0.2);});}
+let breathingActive=false,dhikrCount=0;function toggleBreathing(){const bands=document.querySelectorAll('.deco-band');breathingActive=!breathingActive;if(breathingActive)bands.forEach(b=>b.classList.add('breathing'));else{bands.forEach(b=>b.classList.remove('breathing'));dhikrCount=0;}}function incrementDhikr(){if(!breathingActive)return;dhikrCount++;playSound('click');const c=$('dhikrCounter');if(c)c.textContent=dhikrCount;}
+const PET_STATES={idle:{class:'pet-idle',duration:0},happy:{class:'pet-happy',duration:3000},sad:{class:'pet-sad',duration:3000},sleep:{class:'pet-sleep',duration:0}};let petState='idle',petIdleTimer=null,petSleepTimer=null;function initPixelPet(){const pet=document.createElement('div');pet.id='pixelPet';pet.className='pixel-pet pet-idle';pet.innerHTML=`<img src="${FOOTER_ICON}" alt="Bot"/>`;pet.addEventListener('click',()=>{setPetState('happy');playSound('success');});const f=document.querySelector('.app-footer');if(f)f.insertBefore(pet,f.firstChild);}function setPetState(s){petState=s;const p=$('pixelPet');if(!p)return;p.classList.remove('pet-idle','pet-happy','pet-sad','pet-sleep');p.classList.add(PET_STATES[s].class);if(petIdleTimer)clearTimeout(petIdleTimer);if(PET_STATES[s].duration>0)petIdleTimer=setTimeout(()=>setPetState('idle'),PET_STATES[s].duration);}function resetPetSleep(){if(petSleepTimer)clearTimeout(petSleepTimer);if(petState==='sleep')setPetState('idle');petSleepTimer=setTimeout(()=>setPetState('sleep'),60000);}
+function initLogoTracker(){const l=$('logoWrap');if(!l)return;document.addEventListener('mousemove',e=>{const r=l.getBoundingClientRect();const dx=(e.clientX-(r.left+r.width/2))/(innerWidth/2);const dy=(e.clientY-(r.top+r.height/2))/(innerHeight/2);l.style.transform=`perspective(200px) rotateX(${dy*8}deg) rotateY(${-dx*8}deg)`;});document.addEventListener('mouseleave',()=>{l.style.transition='transform .5s ease-out';l.style.transform='';setTimeout(()=>l.style.transition='',500);});}
+let musicAnalyser=null,musicActive=false,musicAnim=null;function toggleMusicMode(){if(musicActive){musicActive=false;if(musicAnim)cancelAnimationFrame(musicAnim);document.querySelectorAll('.deco-band').forEach(b=>{b.style.height='';b.style.opacity='';});document.querySelectorAll('.card').forEach(c=>c.style.transform='');document.documentElement.style.filter='';return;}navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{if(!audioCtx)audioCtx=new AudioCtx();const src=audioCtx.createMediaStreamSource(stream);musicAnalyser=audioCtx.createAnalyser();musicAnalyser.fftSize=256;src.connect(musicAnalyser);musicActive=true;const data=new Uint8Array(musicAnalyser.frequencyBinCount);function viz(){if(!musicActive)return;musicAnalyser.getByteFrequencyData(data);const bass=data.slice(0,10).reduce((a,b)=>a+b,0)/10/255;document.querySelectorAll('.deco-band').forEach(b=>{b.style.height=(2+bass*10)+'px';});document.querySelectorAll('.card').forEach(c=>{c.style.transform=`scale(${1+bass*0.015})`;});musicAnim=requestAnimationFrame(viz);}viz();}).catch(()=>log('Microphone denied','error'));}
+function initLogResize(){const h=$('logResizeHandle'),p=$('logPanel');if(!h||!p)return;let dragging=false,startX,startW;h.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;startW=p.offsetWidth;document.body.style.cursor='col-resize';document.body.style.userSelect='none';e.preventDefault();});document.addEventListener('mousemove',e=>{if(!dragging)return;const dx=(document.documentElement.dir==='rtl')?(e.clientX-startX):(startX-e.clientX);document.documentElement.style.setProperty('--log-width',Math.max(200,Math.min(startW+dx,window.innerWidth*0.6))+'px');});document.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;document.body.style.cursor='';document.body.style.userSelect='';});try{const saved=localStorage.getItem('wdiy-log-width');if(saved)document.documentElement.style.setProperty('--log-width',saved);}catch{}}
+const FOCUSABLE='button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';function openPanel(pid,oid){const sb=$(pid),ov=$(oid);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open');}function closePanel(pid,oid,rid){const sb=$(pid),ov=$(oid);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open');const b=$(rid);if(b)b.focus();}function openHelp(){openPanel('helpPanel','helpOverlay');}function closeHelp(){closePanel('helpPanel','helpOverlay','helpBtn');}let logWasOpen=false;function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay');}function closeSettings(){closePanel('settingsPanel','settingsOverlay','settingsBtn');if(logWasOpen){openLog();logWasOpen=false;}}function openLog(){const sb=$('logPanel');if(sb)sb.classList.add('open');document.body.classList.add('log-open');}function closeLog(){const sb=$('logPanel');if(sb)sb.classList.remove('open');document.body.classList.remove('log-open');}function toggleLog(){const sb=$('logPanel');if(sb&&sb.classList.contains('open'))closeLog();else openLog();}function closeAllPanels(){closeHelp();closeSettings();closeLog();}function initHelpTabs(){document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const id='help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1);const target=$(id);if(target)target.classList.add('active');});});}function trapFocus(e){for(const id of['helpPanel','settingsPanel','logPanel']){const sb=$(id);if(!sb||!sb.classList.contains('open'))continue;const focusable=sb.querySelectorAll(FOCUSABLE);if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}return;}}
+
+/* ══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: DNS ODYSSEY
+   ══════════════════════════════════════════════════════════════ */
+
+const DNS_DB = {
+  'www.example.com': { ip: '93.184.216.34', tld: '.com', ns: 'ns1.example.com', ttl: 3600 },
+  'www.google.com': { ip: '142.250.80.46', tld: '.com', ns: 'ns1.google.com', ttl: 300 },
+  'www.wikipedia.org': { ip: '208.80.154.224', tld: '.org', ns: 'ns0.wikimedia.org', ttl: 600 },
+  'mail.yahoo.com': { ip: '98.137.11.164', tld: '.com', ns: 'ns1.yahoo.com', ttl: 1800 },
+  'cdn.jsdelivr.net': { ip: '104.16.85.20', tld: '.net', ns: 'ns1.jsdelivr.net', ttl: 900 },
+};
+
+let dnsCache = {};
+let resolveHistory = [];
+let dnsResolving = false;
+let dnsCanvas, dnsCtx;
+
+const DNS_NODES = [
+  { id: 'browser', x: 70, y: 175, color: '#4fc3f7', label: 'browser' },
+  { id: 'resolver', x: 230, y: 175, color: '#ffa726', label: 'resolver' },
+  { id: 'root', x: 390, y: 70, color: '#ef5350', label: 'rootSrv' },
+  { id: 'tld', x: 520, y: 175, color: '#ab47bc', label: 'tldSrv' },
+  { id: 'auth', x: 630, y: 280, color: '#66bb6a', label: 'authSrv' },
+];
+
+function drawDnsBase() {
+  if (!dnsCtx) return;
+  const c = dnsCanvas, ctx = dnsCtx;
+  ctx.clearRect(0, 0, c.width, c.height);
+  ctx.fillStyle = '#0a0e1a';
+  ctx.fillRect(0, 0, c.width, c.height);
+
+  // Draw connections
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  const pairs = [[0,1],[1,2],[1,3],[1,4]];
+  pairs.forEach(([a,b]) => {
+    ctx.beginPath();
+    ctx.moveTo(DNS_NODES[a].x, DNS_NODES[a].y);
+    ctx.lineTo(DNS_NODES[b].x, DNS_NODES[b].y);
+    ctx.stroke();
+  });
+  ctx.setLineDash([]);
+
+  // Draw nodes
+  const s = LANG[currentLang];
+  DNS_NODES.forEach(node => {
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, 22, 0, Math.PI * 2);
+    ctx.fillStyle = node.color + '30';
+    ctx.fill();
+    ctx.strokeStyle = node.color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '11px Orbitron, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(s[node.label] || node.label, node.x, node.y + 38);
+
+    // Icon inside
+    ctx.font = '16px sans-serif';
+    const icons = { browser: '\uD83C\uDF10', resolver: '\uD83D\uDD0D', root: '\uD83C\uDFE0', tld: '\uD83C\uDFF7', auth: '\uD83D\uDCE6' };
+    ctx.fillText(icons[node.id] || '', node.x, node.y + 6);
+  });
+}
+
+function animatePacket(fromIdx, toIdx, color, duration = 600) {
+  return new Promise(resolve => {
+    const from = DNS_NODES[fromIdx];
+    const to = DNS_NODES[toIdx];
+    const startTime = performance.now();
+
+    function frame(now) {
+      const t = Math.min((now - startTime) / duration, 1);
+      drawDnsBase();
+
+      // Draw packet
+      const x = from.x + (to.x - from.x) * t;
+      const y = from.y + (to.y - from.y) * t;
+
+      // Trail
+      dnsCtx.beginPath();
+      dnsCtx.moveTo(from.x, from.y);
+      dnsCtx.lineTo(x, y);
+      dnsCtx.strokeStyle = color;
+      dnsCtx.lineWidth = 2;
+      dnsCtx.stroke();
+
+      // Packet dot
+      dnsCtx.beginPath();
+      dnsCtx.arc(x, y, 6, 0, Math.PI * 2);
+      dnsCtx.fillStyle = color;
+      dnsCtx.fill();
+      dnsCtx.beginPath();
+      dnsCtx.arc(x, y, 10, 0, Math.PI * 2);
+      dnsCtx.strokeStyle = color + '80';
+      dnsCtx.lineWidth = 2;
+      dnsCtx.stroke();
+
+      if (t < 1) requestAnimationFrame(frame);
+      else resolve();
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+async function resolveDomain() {
+  if (dnsResolving) return;
+  dnsResolving = true;
+  const s = LANG[currentLang];
+  const domain = $('domainInput').value.trim().toLowerCase() || 'www.example.com';
+  const stepEl = $('stepDisplay');
+  const cacheEl = $('cacheDisplay');
+
+  showToast(s.resolving);
+  log(`${s.resolving} ${domain}`, 'tx');
+  setStatus(true);
+
+  if (stepEl) { stepEl.style.display = 'block'; stepEl.innerHTML = ''; }
+
+  function addStep(text, color) {
+    if (!stepEl) return;
+    const div = document.createElement('div');
+    div.style.cssText = `padding:.4rem .6rem;margin-bottom:.3rem;border-radius:6px;border-left:3px solid ${color};background:${color}15;animation:fadeIn .3s ease;`;
+    div.textContent = text;
+    stepEl.appendChild(div);
+  }
+
+  // Lookup in our DB or generate random
+  let record = DNS_DB[domain];
+  if (!record) {
+    record = {
+      ip: `${Math.floor(Math.random()*223)+1}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`,
+      tld: '.' + domain.split('.').pop(),
+      ns: `ns1.${domain.split('.').slice(-2).join('.')}`,
+      ttl: Math.floor(Math.random() * 3600) + 300
+    };
+  }
+
+  // Check cache first
+  if (dnsCache[domain] && Date.now() - dnsCache[domain].ts < dnsCache[domain].ttl * 1000) {
+    addStep(`${s.step1} — ${s.cached}! ${domain} -> ${dnsCache[domain].ip}`, '#66bb6a');
+    log(`${s.cached}: ${domain} -> ${dnsCache[domain].ip}`, 'success');
+    drawDnsBase();
+    hideToast();
+    dnsResolving = false;
+    return;
+  }
+
+  // Step 1: Browser checks cache
+  addStep(s.step1 + ' — ' + s.noCache, '#4fc3f7');
+  await sleep(500);
+
+  // Step 2: Query to resolver
+  addStep(s.step2, '#ffa726');
+  await animatePacket(0, 1, '#4fc3f7', 800);
+  log(`Browser -> Resolver: ${domain}?`, 'tx');
+  await sleep(300);
+
+  // Step 3: Resolver queries root
+  addStep(s.step3, '#ef5350');
+  await animatePacket(1, 2, '#ffa726', 800);
+  log(`Resolver -> Root: ${domain}?`, 'tx');
+  await sleep(400);
+
+  // Step 4: Root refers to TLD
+  addStep(`${s.step4} (${record.tld})`, '#ef5350');
+  await animatePacket(2, 1, '#ef5350', 600);
+  log(`Root -> Resolver: Go to ${record.tld} TLD`, 'rx');
+  await sleep(300);
+
+  // Step 5: Resolver queries TLD
+  addStep(s.step5, '#ab47bc');
+  await animatePacket(1, 3, '#ffa726', 800);
+  log(`Resolver -> TLD: ${domain}?`, 'tx');
+  await sleep(400);
+
+  // Step 6: TLD refers to authoritative
+  addStep(`${s.step6} (${record.ns})`, '#ab47bc');
+  await animatePacket(3, 1, '#ab47bc', 600);
+  log(`TLD -> Resolver: Go to ${record.ns}`, 'rx');
+  await sleep(300);
+
+  // Step 7: Resolver queries authoritative
+  addStep(s.step7, '#66bb6a');
+  await animatePacket(1, 4, '#ffa726', 800);
+  log(`Resolver -> Auth: ${domain}?`, 'tx');
+  await sleep(400);
+
+  // Step 8: Authoritative returns IP
+  addStep(`${s.step8}: ${record.ip}`, '#66bb6a');
+  await animatePacket(4, 1, '#66bb6a', 600);
+  log(`Auth -> Resolver: A ${record.ip}`, 'rx');
+  await sleep(300);
+
+  // Step 9: Resolver returns to browser
+  addStep(`${s.step9}: ${record.ip} (TTL: ${record.ttl}s)`, '#4fc3f7');
+  await animatePacket(1, 0, '#66bb6a', 800);
+  log(`Resolver -> Browser: ${record.ip} (TTL ${record.ttl}s)`, 'rx');
+
+  // Cache the result
+  dnsCache[domain] = { ip: record.ip, ttl: record.ttl, ts: Date.now() };
+  resolveHistory.push({ domain, ip: record.ip, time: new Date().toLocaleTimeString() });
+  updateCacheDisplay();
+  updateHistoryDisplay();
+
+  hideToast();
+  log(`${s.resolved} ${domain} -> ${record.ip}`, 'success');
+  dnsResolving = false;
+}
+
+function updateCacheDisplay() {
+  const el = $('cacheDisplay');
+  const table = $('cacheTable');
+  if (!el || !table) return;
+  el.style.display = 'block';
+
+  const s = LANG[currentLang];
+  let html = '<div style="display:grid;gap:.3rem;">';
+  for (const [domain, rec] of Object.entries(dnsCache)) {
+    const remaining = Math.max(0, Math.round(rec.ttl - (Date.now() - rec.ts) / 1000));
+    const pct = remaining / rec.ttl * 100;
+    const color = pct > 50 ? '#66bb6a' : pct > 20 ? '#ffa726' : '#ef5350';
+    html += `<div style="display:flex;align-items:center;gap:.5rem;padding:.3rem .5rem;background:rgba(255,255,255,0.03);border-radius:4px;font-family:monospace;">
+      <span style="flex:1;">${domain}</span>
+      <span style="color:#4fc3f7;">${rec.ip}</span>
+      <span style="color:${color};min-width:60px;text-align:right;">${s.ttl}: ${remaining}s</span>
+    </div>`;
+  }
+  html += '</div>';
+  table.innerHTML = html;
+}
+
+function updateHistoryDisplay() {
+  const el = $('historyList');
+  if (!el) return;
+  let html = '';
+  resolveHistory.slice(-10).reverse().forEach(h => {
+    html += `<div style="padding:.3rem .5rem;margin-bottom:.2rem;background:rgba(255,255,255,0.03);border-radius:4px;font-size:.8rem;">
+      <strong>${h.domain}</strong> -> ${h.ip} <span style="opacity:.5;margin-inline-start:.5rem;">${h.time}</span>
+    </div>`;
+  });
+  el.innerHTML = html || '<em style="opacity:.5;">No history yet</em>';
+}
+
+function initDnsOdyssey() {
+  dnsCanvas = $('dnsCanvas');
+  if (dnsCanvas) {
+    dnsCtx = dnsCanvas.getContext('2d');
+    drawDnsBase();
+  }
+  const rb = $('resolveBtn');
+  if (rb) rb.addEventListener('click', resolveDomain);
+  const input = $('domainInput');
+  if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') resolveDomain(); });
+}
+
+const styleTag = document.createElement('style');
+styleTag.textContent = `@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}`;
+document.head.appendChild(styleTag);
+
+/* ═══════ INIT ═══════ */
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  const cb=$('clearLogBtn'),cpb=$('copyLogBtn'),exb=$('exportLogBtn');if(cb)cb.onclick=clearLog;if(cpb)cpb.onclick=copyLog;if(exb)exb.onclick=exportLog;initLogFilters();
+  const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hOv=$('helpOverlay');if(hBtn)hBtn.onclick=openHelp;if(hClose)hClose.onclick=closeHelp;if(hOv)hOv.onclick=closeHelp;initHelpTabs();
+  const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sOv=$('settingsOverlay');if(sBtn)sBtn.onclick=openSettings;if(sClose)sClose.onclick=closeSettings;if(sOv)sOv.onclick=closeSettings;
+  const lBtn=$('logBtn'),lClose=$('logCloseBtn');if(lBtn)lBtn.onclick=toggleLog;if(lClose)lClose.onclick=closeLog;initLogResize();
+  const soundTgl=$('soundToggle');if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled);}catch{}if(soundEnabled)playSound('click');});}
+  const whisperBtn=$('whisperBtn');if(whisperBtn)whisperBtn.onclick=toggleWhisper;
+  const breathBtn=$('breathingBtn'),dhikrDisp=$('dhikrDisplay'),dhikrBtn=$('dhikrBtn');if(breathBtn)breathBtn.onclick=()=>{toggleBreathing();if(dhikrDisp)dhikrDisp.style.display=breathingActive?'flex':'none';};if(dhikrBtn)dhikrBtn.onclick=incrementDhikr;
+  const musicBtn=$('musicBtn');if(musicBtn)musicBtn.onclick=toggleMusicMode;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels();if(e.key==='Tab')trapFocus(e);});
+  const langSel=$('langSelect');if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect');if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sL=localStorage.getItem('wdiy-lang'),sT=localStorage.getItem('wdiy-theme');if(sT)setTheme(sT);if(sL)setLanguage(sL);}catch{}
+  checkVersion();onAppMessage(msg=>log(`${msg.from}: ${msg.type}`,'rx'));
+  initKonami();initMorseLog();initMatrixTrigger();initDebug();initShakeReport();initTimeTravel();initHijriDate();initGhostUsers();initPixelPet();initLogoTracker();
+  initDnsOdyssey();
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

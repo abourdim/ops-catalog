@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>esp-swarm-net — Workshop DIY</title>
+  <meta name="description" content="Swarm Net — Coordinated swarm intelligence with browser command center" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="esp-swarm-net — Workshop DIY" />
+  <meta property="og:description" content="Swarm Net — Coordinated swarm intelligence with browser command center" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .swarm-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+    .swarm-controls label { font-size: .75rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .swarm-controls select, .swarm-controls input[type="range"] { font-size: .75rem; }
+    #swarmCanvas { border-radius: 10px; border: 1px solid var(--border); background: rgba(0,0,0,.25); cursor: crosshair; display: block; width: 100%; touch-action: none; }
+    .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 8px; margin-top: 10px; }
+    .tele-card { border-radius: 10px; border: 1px solid var(--border); background: rgba(0,0,0,.15); padding: 8px 10px; text-align: center; }
+    .tele-label { font-size: .68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+    .tele-value { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-top: 2px; font-family: var(--font-h); }
+    .cmd-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .formation-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .formation-btns button.active { background: linear-gradient(135deg, var(--accent), var(--band2)); color: var(--bg); border-color: var(--accent); }
+    .step-list { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+    .step-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: .8rem; color: var(--text); line-height: 1.5; }
+    .step-list li::before { counter-increment: step; content: counter(step); width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--band2)); color: var(--bg); font-weight: 700; font-size: .72rem; }
+    .challenge-list { list-style: none; padding: 0; margin: 0; }
+    .challenge-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: .8rem; color: var(--text); line-height: 1.5; }
+    .challenge-list .ch-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .lab-tip { font-size: .78rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; }
+  </style>
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🐝 swarm · 📡 ESP-NOW · 🎯 formation</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Swarm Net</h1>
+            <div class="subtitle" data-i18n="subtitle">🐝 swarm · 📡 ESP-NOW · 🎯 formation</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🐝</span> <span data-i18n="mainSection">Swarm Net — ESP-NOW Fleet</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Coordinated swarm intelligence with browser command center</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <canvas id="swarmCanvas" height="320"></canvas>
+
+        <div class="formation-btns">
+          <button class="active" data-formation="scatter" data-i18n="fScatter">Scatter</button>
+          <button data-formation="line" data-i18n="fLine">Line</button>
+          <button data-formation="circle" data-i18n="fCircle">Circle</button>
+          <button data-formation="vshape" data-i18n="fVshape">V-Shape</button>
+          <button data-formation="grid" data-i18n="fGrid">Grid</button>
+        </div>
+
+        <div class="swarm-controls">
+          <label data-i18n="speedLabel">Speed:</label>
+          <input type="range" id="swarmSpeed" class="range-ctrl" min="1" max="10" value="5" style="width:100px;" />
+          <label data-i18n="countLabel">Nodes:</label>
+          <input type="range" id="swarmCount" class="range-ctrl" min="3" max="12" value="6" style="width:100px;" />
+          <span id="countVal">6</span>
+        </div>
+
+        <div class="cmd-row">
+          <input type="text" id="cmdInput" placeholder="Command (e.g. rotate, halt, patrol)..." data-i18n-placeholder="cmdPlaceholder" />
+          <button id="cmdSendBtn" class="primary"><span data-i18n="sendCmd">Send</span></button>
+        </div>
+
+        <div class="telemetry-grid">
+          <div class="tele-card"><div class="tele-label" data-i18n="teleFormation">Formation</div><div class="tele-value" id="teleFormation">Scatter</div></div>
+          <div class="tele-card"><div class="tele-label" data-i18n="teleNodes">Active Nodes</div><div class="tele-value" id="teleNodes">6</div></div>
+          <div class="tele-card"><div class="tele-label" data-i18n="teleMessages">Messages</div><div class="tele-value" id="teleMessages">0</div></div>
+          <div class="tele-card"><div class="tele-label" data-i18n="teleCoherence">Coherence</div><div class="tele-value" id="teleCoherence">100%</div></div>
+        </div>
+      </div>
+
+      <!-- SECTION A — How It Works -->
+      <details class="collapsible">
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li><span data-i18n="step1">Each ESP32 node broadcasts its position via ESP-NOW, a low-latency peer-to-peer protocol.</span></li>
+            <li><span data-i18n="step2">The command center sends formation orders (line, circle, scatter) to all nodes simultaneously.</span></li>
+            <li><span data-i18n="step3">Nodes calculate their target position based on formation type and smoothly move toward it.</span></li>
+            <li><span data-i18n="step4">Telemetry (position, battery, signal) flows back to the dashboard in real-time via ESP-NOW relay.</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- SECTION B — Lab -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <p class="lab-tip" data-i18n="labTip1">Use formation buttons to see how nodes reorganize in real-time.</p>
+          <p class="lab-tip" data-i18n="labTip2">Adjust the speed slider to control how fast nodes converge to their target positions.</p>
+          <p class="lab-tip" data-i18n="labTip3">Type commands like "rotate", "halt", or "patrol" to send orders to the swarm.</p>
+          <p class="lab-tip" data-i18n="labTip4">Click on the canvas to set a rally point — all nodes will converge there.</p>
+        </div>
+      </details>
+
+      <!-- SECTION C — Challenge -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <ul class="challenge-list">
+            <li><span class="ch-icon">🎯</span> <span data-i18n="challenge1">Get all nodes into circle formation with 100% coherence in under 5 seconds.</span></li>
+            <li><span class="ch-icon">💥</span> <span data-i18n="challenge2">Send a "patrol" command and observe how nodes sweep the canvas area systematically.</span></li>
+            <li><span class="ch-icon">🧩</span> <span data-i18n="challenge3">Set a rally point, then switch to V-shape formation — watch the swarm reorganize mid-flight.</span></li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- LEFT PANEL — Help -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is swarm intelligence?</summary>
+          <p data-i18n="faq_a1">Swarm intelligence is collective behavior of decentralized agents following simple rules to achieve complex coordinated movement, inspired by bees and birds.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">What is ESP-NOW?</summary>
+          <p data-i18n="faq_a2">ESP-NOW is a low-power, peer-to-peer wireless protocol by Espressif for ESP32 chips. It enables fast, connectionless communication without Wi-Fi infrastructure.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">How do formations work?</summary>
+          <p data-i18n="faq_a3">Each node is assigned a target position based on the formation type (line, circle, grid, V-shape). Nodes smoothly interpolate toward their targets.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">What commands can I send?</summary>
+          <p data-i18n="faq_a4">Try: rotate (spin formation), halt (freeze), patrol (sweep area), scatter (random positions), rally (converge to center).</p>
+        </details>
+      </div>
+
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Choose a formation using the buttons below the canvas to command the swarm.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Adjust speed and node count to see different swarm behaviors.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Type commands in the input field and press Send to issue orders.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Click on the canvas to set a rally point and watch nodes converge.</p></div>
+      </div>
+
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_swarm_title">🐝 Swarm Robotics</h3><p data-i18n="wiki_swarm">Swarm robotics coordinates large numbers of simple robots to perform tasks through local interactions, without centralized control.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_espnow_title">📡 ESP-NOW Protocol</h3><p data-i18n="wiki_espnow">ESP-NOW supports up to 20 encrypted peers with 250-byte payloads at sub-millisecond latency. No router needed.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_formation_title">🎯 Formation Control</h3><p data-i18n="wiki_formation">Formation control assigns each agent a unique slot in a geometric pattern. Consensus algorithms keep the group coherent.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_telemetry_title">📊 Telemetry</h3><p data-i18n="wiki_telemetry">Telemetry is the automatic measurement and wireless transmission of data from remote sources to a monitoring station.</p></div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <!-- RIGHT PANEL — Settings -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select" aria-label="Language"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select" aria-label="Theme"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <!-- RIGHT PANEL — Activity Log -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

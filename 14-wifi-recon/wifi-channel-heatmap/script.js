@@ -1,0 +1,184 @@
+/**
+ * Channel Heatmap — Congestion Map
+ * 14-channel bar chart with congestion coloring
+ * Workshop DIY — Template v1.2 + App Logic
+ */
+const $=id=>document.getElementById(id);
+const LOGO_SVG=`<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77.14 78.32 253.99 136.25"><path style="stroke:none;fill:currentColor;fill-rule:evenodd" d="M187.4,152.9c.1-.1.2-.2.4-.2c.3,0,2.7-1.1,3.8-1.7c.3-.2,1.4-.9,2.6-1.7c3.3-2.2,5.1-3,8.4-3.4c1.2-.2,2.1-.2,3.4,0c6.7.8,11.5,4.9,13.4,11.4c.4,1.3.4,5.5.1,6.7c-1.2,4-2.8,6.4-5.6,8.5c-4.3,3.3-9.9,4.2-14.9,2.3c-1.6-.6-2.7-1.2-4.3-2.4c-2.6-1.8-4-2.6-6.5-3.6l-.7-.3v-7.7zm21,.-1.6h-6.5v3.2h6.5zm-13,.16.2h-3.2v-16.2h3.2zm19.5,0h-3.2v-16.2h3.2zm-13,6.5h-3.2v-9.7h6.5v-3.2h-3.2v-3.2h6.5v9.7h-6.5v6.5z"/></svg>`;
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.0';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(t){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const tt=audioCtx.currentTime;if(t==='click'){o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,tt+0.08);o.start(tt);o.stop(tt+0.08)}else if(t==='success'){o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,tt+0.3);o.start(tt);o.stop(tt+0.3)}else if(t==='error'){o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,tt+0.25);o.start(tt);o.stop(tt+0.25)}}
+
+const LANG={
+en:{title:'Channel Heatmap — Congestion Map',subtitle:'Visualize WiFi channel congestion',disconnected:'Disconnected',connected:'Scanning',mainSection:'Channel Heatmap',mainDesc:'14-channel congestion visualization',sectionA:'Signal Strength Chart',sectionB:'AP List by Channel',sectionC:'How It Works',start:'Scan',stop:'Stop',totalAPs:'Total APs',busiestChannel:'Busiest',freestChannel:'Freest',avgNoise:'Avg dBm',legendLow:'Low',legendMedium:'Medium',legendHigh:'High',howItWorksText:'WiFi channels in the 2.4 GHz band overlap significantly. Channels 1, 6, and 11 are the only non-overlapping channels. When multiple APs use the same or adjacent channels, they compete for airtime, causing congestion and reduced throughput. A channel heatmap reveals which channels are overloaded, helping you pick the least congested channel for your own AP. This simulation scans all 14 channels and color-codes them by congestion level.',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',export:'Export',filterAll:'All',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is a channel heatmap?',faq_a1:'A visualization showing WiFi congestion levels across all 14 channels.',faq_q2:'Is this scanning real WiFi?',faq_a2:'No, this is a simulation.',faq_q3:'Which channels should I use?',faq_a3:'In 2.4 GHz, channels 1, 6, and 11 are non-overlapping.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'Click Scan to start channel analysis.',howto_2:'Green = low, yellow = medium, red = high congestion.',howto_3:'Click a channel cell for detailed info.',howto_4:'Check Signal Strength Chart for dBm comparison.',wiki_ch_title:'WiFi Channels',wiki_ch:'2.4 GHz has 14 channels, each 22 MHz wide.',wiki_cong_title:'Congestion',wiki_cong:'Too many APs on one channel cause interference.',wiki_privacy_title:'Privacy',wiki_privacy:'All data stays in your browser.',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',ready:'Channel Heatmap ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',splashHint:'tap to skip',working:'Working...',langChanged:'Language → English',themeChanged:'Theme →',simStarted:'Channel scan started',simStopped:'Channel scan stopped',chScanned:'Channel scanned'},
+fr:{title:'Heatmap des Canaux — Carte de Congestion',subtitle:'Visualisez la congestion WiFi par canal',disconnected:'Deconnecte',connected:'Balayage',mainSection:'Heatmap des Canaux',mainDesc:'Visualisation de congestion sur 14 canaux',sectionA:'Graphique de Signal',sectionB:'Liste AP par Canal',sectionC:'Comment ca marche',start:'Scanner',stop:'Arreter',totalAPs:'Total AP',busiestChannel:'Plus charge',freestChannel:'Plus libre',avgNoise:'Moy dBm',legendLow:'Faible',legendMedium:'Moyen',legendHigh:'Eleve',howItWorksText:'Les canaux WiFi en 2,4 GHz se chevauchent. Les canaux 1, 6 et 11 sont les seuls non superposés. Cette simulation scanne les 14 canaux et les colore par niveau de congestion.',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',export:'Exporter',filterAll:'Tout',settings:'Parametres',language:'Langue',theme:'Theme',soundEffects:'Effets sonores',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:'Qu\'est-ce qu\'un heatmap?',faq_a1:'Visualisation de la congestion par canal.',faq_q2:'Scan reel?',faq_a2:'Non, simulation.',faq_q3:'Quels canaux utiliser?',faq_a3:'Canaux 1, 6, 11 en 2,4 GHz.',faq_q4:'Donnees privees?',faq_a4:'Oui.',howto_1:'Cliquez Scanner.',howto_2:'Vert = faible, jaune = moyen, rouge = eleve.',howto_3:'Cliquez une cellule pour les details.',howto_4:'Consultez le graphique.',wiki_ch_title:'Canaux WiFi',wiki_ch:'14 canaux en 2,4 GHz.',wiki_cong_title:'Congestion',wiki_cong:'Trop d\'AP causent des interferences.',wiki_privacy_title:'Confidentialite',wiki_privacy:'Tout reste local.',t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',ready:'Pret!',logCleared:'Efface',copied:'Copie!',copyFail:'Echec',splashHint:'appuyer pour passer',working:'En cours...',langChanged:'Langue → Francais',themeChanged:'Theme →',simStarted:'Scan demarre',simStopped:'Scan arrete',chScanned:'Canal scanne'},
+ar:{title:'خريطة حرارية للقنوات — خريطة الازدحام',subtitle:'تصور ازدحام قنوات WiFi',disconnected:'غير متصل',connected:'مسح',mainSection:'خريطة حرارية للقنوات',mainDesc:'تصور الازدحام على 14 قناة',sectionA:'مخطط قوة الإشارة',sectionB:'قائمة AP حسب القناة',sectionC:'كيف يعمل',start:'مسح',stop:'إيقاف',totalAPs:'إجمالي AP',busiestChannel:'الأكثر ازدحاماً',freestChannel:'الأقل',avgNoise:'متوسط dBm',legendLow:'منخفض',legendMedium:'متوسط',legendHigh:'مرتفع',howItWorksText:'قنوات WiFi في نطاق 2.4 GHz تتداخل بشكل كبير. القنوات 1 و6 و11 هي الوحيدة التي لا تتداخل. هذه المحاكاة تمسح 14 قناة وتلونها حسب مستوى الازدحام.',activityLog:'سجل النشاط',eventsMsg:'الأحداث',clear:'مسح',copy:'نسخ',export:'تصدير',filterAll:'الكل',settings:'الإعدادات',language:'اللغة',theme:'المظهر',soundEffects:'مؤثرات صوتية',help:'مساعدة',faq:'أسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',faq_q1:'ما هي الخريطة الحرارية؟',faq_a1:'تصور يوضح ازدحام القنوات.',faq_q2:'هل هذا مسح حقيقي؟',faq_a2:'لا، هذه محاكاة.',faq_q3:'أي قنوات يجب استخدامها؟',faq_a3:'القنوات 1، 6، 11.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم.',howto_1:'انقر مسح.',howto_2:'أخضر = منخفض، أصفر = متوسط، أحمر = مرتفع.',howto_3:'انقر خلية لمزيد من التفاصيل.',howto_4:'تحقق من مخطط الإشارة.',wiki_ch_title:'قنوات WiFi',wiki_ch:'14 قناة في 2.4 GHz.',wiki_cong_title:'الازدحام',wiki_cong:'كثرة AP تسبب تداخل.',wiki_privacy_title:'الخصوصية',wiki_privacy:'كل البيانات في متصفحك.',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',ready:'خريطة القنوات جاهزة!',logCleared:'تم المسح',copied:'تم النسخ!',copyFail:'فشل',splashHint:'انقر للتخطي',working:'جارٍ...',langChanged:'اللغة ← العربية',themeChanged:'المظهر ←',simStarted:'بدأ المسح',simStopped:'توقف المسح',chScanned:'قناة ممسوحة'}
+};
+
+let currentLang='en';
+function setLanguage(l){currentLang=l;const s=LANG[l];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k]});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k]});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.documentElement.lang=l;const sel=$('langSelect');if(sel)sel.value=l;try{localStorage.setItem('wdiy-lang',l)}catch{}log(s.langChanged,'info')}
+const THEME_MELODIES={'mosque-gold':[330,392,523],'zellige':[440,523,659],'andalus':[294,370,440],'space':[523,659,784],'jungle':[262,330,392],'robot':[440,554,659],'riad':[349,440,523],'medina':[294,349,440]};
+function playThemeMelody(n){if(!soundEnabled||!audioCtx)return;const notes=THEME_MELODIES[n];if(!notes)return;const t=audioCtx.currentTime;notes.forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=f;g.gain.value=0.06;g.gain.exponentialRampToValueAtTime(0.001,t+0.2+i*0.15+0.15);o.start(t+i*0.15);o.stop(t+i*0.15+0.2)})}
+function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const sel=$('themeSelect');if(sel)sel.value=n;try{localStorage.setItem('wdiy-theme',n)}catch{}playThemeMelody(n);log(`${LANG[currentLang].themeChanged} ${LANG[currentLang]['t_'+n]||n}`,'info')}
+let logContainer;
+function log(m,t='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${t}`;d.textContent=`[${new Date().toLocaleTimeString()}] ${m}`;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(t==='success')playSound('success');else if(t==='error')playSound('error');applyLogFilter()}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared)}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success')}catch{log(LANG[currentLang].copyFail,'error')}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const b=new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`channel-log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(u)}
+function showToast(m,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=m||LANG[currentLang].working;el.style.display='block'}if(ms>0)setTimeout(hideToast,ms)}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none'}
+function setStatus(c){const p=$('statusPill'),t=$('statusText'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c)}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click')}
+function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500)}
+let activeLogFilter='all';
+function initLogFilters(){document.querySelectorAll('.log-filter').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeLogFilter=b.dataset.filter;applyLogFilter();playSound('click')})})}
+function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(l=>{l.style.display=(activeLogFilter==='all'||l.classList.contains(activeLogFilter))?'':'none'})}
+function openPanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open')}
+function closePanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open')}
+function openHelp(){openPanel('helpPanel','helpOverlay')}function closeHelp(){closePanel('helpPanel','helpOverlay')}
+let logWasOpen=false;function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay')}
+function closeSettings(){closePanel('settingsPanel','settingsOverlay');if(logWasOpen){openLog();logWasOpen=false}}
+function openLog(){const s=$('logPanel');if(s)s.classList.add('open');document.body.classList.add('log-open')}
+function closeLog(){const s=$('logPanel');if(s)s.classList.remove('open');document.body.classList.remove('log-open')}
+function toggleLog(){const s=$('logPanel');if(s&&s.classList.contains('open'))closeLog();else openLog()}
+function closeAllPanels(){closeHelp();closeSettings();closeLog()}
+function initHelpTabs(){const tabs=document.querySelectorAll('.help-tab'),cs=document.querySelectorAll('.help-content');tabs.forEach(tab=>{tab.addEventListener('click',()=>{tabs.forEach(t=>t.classList.remove('active'));cs.forEach(c=>c.classList.remove('active'));tab.classList.add('active');const tgt=$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1));if(tgt)tgt.classList.add('active')})})}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date())}catch{}}
+function initLogResize(){const h=$('logResizeHandle'),p=$('logPanel');if(!h||!p)return;let d=false,sx,sw;const rtl=()=>document.documentElement.dir==='rtl';h.addEventListener('mousedown',e=>{d=true;sx=e.clientX;sw=p.offsetWidth;h.classList.add('active');document.body.style.cursor='col-resize';e.preventDefault()});document.addEventListener('mousemove',e=>{if(!d)return;const dx=rtl()?(e.clientX-sx):(sx-e.clientX);document.documentElement.style.setProperty('--log-width',Math.max(200,Math.min(sw+dx,window.innerWidth*0.6))+'px')});document.addEventListener('mouseup',()=>{if(!d)return;d=false;h.classList.remove('active');document.body.style.cursor=''})}
+
+/* ═══════ APP LOGIC — Channel Heatmap ═══════ */
+const SSIDS=['HomeNet','CoffeeShop','NETGEAR','xfinity','TP-Link','Linksys','FiOS','ATT','Comcast','Spectrum','GoogleFi','Verizon','TMobile','Cox','Charter'];
+function randMAC(){return Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':')}
+
+let simRunning=false,simInterval=null,channels=[];
+
+function initChannels(){
+  channels=[];
+  for(let i=1;i<=14;i++){
+    // Realistic distribution: 1,6,11 are most popular
+    let baseAPs=Math.floor(Math.random()*3);
+    if(i===1||i===6||i===11)baseAPs+=Math.floor(Math.random()*8)+3;
+    else if(i===2||i===3||i===5||i===7||i===10)baseAPs+=Math.floor(Math.random()*3);
+    const aps=[];
+    for(let j=0;j<baseAPs;j++){
+      aps.push({ssid:SSIDS[Math.floor(Math.random()*SSIDS.length)]+'_'+Math.floor(Math.random()*100),mac:randMAC(),signal:-25-Math.floor(Math.random()*55)});
+    }
+    channels.push({num:i,aps,avgSignal:0});
+  }
+  recalc();
+}
+
+function recalc(){
+  channels.forEach(ch=>{
+    if(ch.aps.length>0)ch.avgSignal=Math.round(ch.aps.reduce((s,a)=>s+a.signal,0)/ch.aps.length);
+    else ch.avgSignal=-100;
+  });
+}
+
+function congestionColor(count){
+  if(count<=2)return '#22c55e';
+  if(count<=5)return '#fbbf24';
+  return '#ef4444';
+}
+
+function updateUI(){
+  const grid=$('heatmapGrid');
+  if(grid){
+    grid.innerHTML='';
+    channels.forEach(ch=>{
+      const cell=document.createElement('div');
+      cell.className='heat-cell';
+      const color=congestionColor(ch.aps.length);
+      cell.style.background=color+'20';cell.style.borderColor=color+'60';cell.style.color=color;
+      cell.innerHTML=`<div class="ch-num">${ch.num}</div><div class="ch-aps">${ch.aps.length} AP${ch.aps.length!==1?'s':''}</div>`;
+      cell.onclick=()=>showDetail(ch);
+      grid.appendChild(cell);
+    });
+  }
+
+  // Stats
+  const totalAPs=channels.reduce((s,c)=>s+c.aps.length,0);
+  $('totalAPs').textContent=totalAPs;
+  const busiest=channels.reduce((a,b)=>a.aps.length>b.aps.length?a:b);
+  const freest=channels.reduce((a,b)=>a.aps.length<b.aps.length?a:b);
+  $('busiestCh').textContent='Ch '+busiest.num;
+  $('freestCh').textContent='Ch '+freest.num;
+  const allSignals=channels.flatMap(c=>c.aps.map(a=>a.signal));
+  $('avgNoise').textContent=allSignals.length>0?Math.round(allSignals.reduce((a,b)=>a+b,0)/allSignals.length):'N/A';
+
+  // Bar chart
+  const chart=$('barChart');
+  if(chart){
+    const max=Math.max(...channels.map(c=>c.aps.length),1);
+    chart.innerHTML='';
+    channels.forEach(ch=>{
+      const bar=document.createElement('div');bar.className='bar-col';
+      bar.style.height=Math.max(2,ch.aps.length/max*100)+'%';
+      bar.style.background=congestionColor(ch.aps.length);
+      bar.innerHTML=`<span class="bar-val">${ch.aps.length}</span><span class="bar-label">${ch.num}</span>`;
+      chart.appendChild(bar);
+    });
+  }
+
+  // AP list
+  const apList=$('apListByChannel');
+  if(apList){
+    apList.innerHTML='';
+    channels.forEach(ch=>{
+      if(ch.aps.length===0)return;
+      const section=document.createElement('div');
+      section.innerHTML=`<div style="font-weight:700;color:var(--accent);margin:6px 0 2px">Channel ${ch.num} (${ch.aps.length} APs)</div>`;
+      ch.aps.forEach(ap=>{
+        section.innerHTML+=`<div style="padding:2px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="font-family:monospace;font-size:.68rem">${ap.mac}</span><span>${ap.ssid}</span><span style="color:var(--text-muted)">${ap.signal} dBm</span></div>`;
+      });
+      apList.appendChild(section);
+    });
+  }
+}
+
+function showDetail(ch){
+  const detail=$('channelDetail');
+  if(!detail)return;
+  detail.style.display='block';
+  const color=congestionColor(ch.aps.length);
+  detail.innerHTML=`<strong style="color:${color}">Channel ${ch.num}</strong> — ${ch.aps.length} APs — Avg: ${ch.avgSignal} dBm<br>${ch.aps.map(a=>`<span style="font-family:monospace;font-size:.7rem">${a.mac}</span> ${a.ssid} (${a.signal} dBm)`).join('<br>')}`;
+}
+
+function addRandomAP(){
+  const ch=channels[Math.floor(Math.random()*channels.length)];
+  const ap={ssid:SSIDS[Math.floor(Math.random()*SSIDS.length)]+'_'+Math.floor(Math.random()*100),mac:randMAC(),signal:-25-Math.floor(Math.random()*55)};
+  ch.aps.push(ap);
+  recalc();
+  log(`${LANG[currentLang].chScanned}: Ch ${ch.num} — ${ap.ssid} (${ap.signal} dBm)`,'rx');
+}
+
+function startSim(){
+  if(simRunning)return;simRunning=true;setStatus(true);
+  $('startBtn').disabled=true;$('stopBtn').disabled=false;
+  initChannels();updateUI();
+  log(LANG[currentLang].simStarted,'success');
+  simInterval=setInterval(()=>{addRandomAP();updateUI()},1200);
+}
+
+function stopSim(){
+  simRunning=false;if(simInterval)clearInterval(simInterval);
+  setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;
+  log(LANG[currentLang].simStopped,'info');
+}
+
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  $('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;
+  initLogFilters();
+  $('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();
+  $('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;
+  $('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;initLogResize();
+  const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true'}catch{}st.checked=soundEnabled;st.addEventListener('change',()=>{soundEnabled=st.checked;try{localStorage.setItem('wdiy-sound',soundEnabled)}catch{}if(soundEnabled)playSound('click')})}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels()});
+  $('langSelect').addEventListener('change',()=>setLanguage($('langSelect').value));
+  $('themeSelect').addEventListener('change',()=>setTheme($('themeSelect').value));
+  try{const sl=localStorage.getItem('wdiy-lang');const st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl)}catch{}
+  initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

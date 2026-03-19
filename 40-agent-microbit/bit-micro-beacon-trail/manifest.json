@@ -1,0 +1,13 @@
+{
+  "name": "bit-micro-beacon-trail — Workshop DIY",
+  "short_name": "beacon-trail",
+  "description": "Drop BLE beacons to mark and follow paths — a micro:bit BLE breadcrumb trail simulator",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

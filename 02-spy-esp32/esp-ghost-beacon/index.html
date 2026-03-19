@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ghost Beacon — Workshop DIY</title>
+  <meta name="description" content="ESP32 Ghost Beacon — Broadcast invisible messages in BLE beacons. Learn BLE advertising, iBeacon/Eddystone, steganography &amp; proximity messaging." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ghost Beacon — Workshop DIY" />
+  <meta property="og:description" content="ESP32 Ghost Beacon — Broadcast invisible messages in BLE beacons. Learn BLE advertising, steganography &amp; proximity messaging." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">👻 Broadcast invisible messages in BLE beacons</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">👻 Ghost Beacon — Hidden BLE Messages</h1>
+            <div class="subtitle" data-i18n="subtitle">👻 Broadcast invisible messages in BLE beacons</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD — Ghost Beacon Broadcaster ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">👻</span> <span data-i18n="mainSection">Ghost Beacon Broadcaster</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Encode hidden messages into BLE beacon advertisements</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Beacon Broadcaster -->
+        <div class="control-section">
+          <h3 data-i18n="broadcasterTitle">📡 Beacon Broadcaster</h3>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label" data-i18n="secretMessage">Secret Message</label>
+            <input type="text" id="messageInput" class="sidebar-select" maxlength="20" placeholder="Type your hidden message..." data-i18n-placeholder="msgPlaceholder" style="font-family:inherit" />
+          </div>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label" data-i18n="beaconProtocol">Beacon Protocol</label>
+            <select id="protocolSelect" class="sidebar-select">
+              <option value="ibeacon">iBeacon (Apple)</option>
+              <option value="eddystone">Eddystone (Google)</option>
+              <option value="custom">Custom BLE ADV</option>
+            </select>
+          </div>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label" data-i18n="encodingMethod">Encoding Method</label>
+            <select id="encodingSelect" class="sidebar-select">
+              <option value="uuid-stego" data-i18n="encUuidStego">UUID Steganography</option>
+              <option value="major-minor" data-i18n="encMajorMinor">Major/Minor Fields</option>
+              <option value="namespace" data-i18n="encNamespace">Namespace Encoding</option>
+              <option value="txpower" data-i18n="encTxPower">TX Power Modulation</option>
+            </select>
+          </div>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label" data-i18n="txPower">TX Power (dBm)</label>
+            <input type="range" id="txPowerSlider" min="-40" max="4" value="-12" style="width:100%" />
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;opacity:0.7">
+              <span>-40 dBm</span>
+              <span id="txPowerValue">-12 dBm</span>
+              <span>+4 dBm</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <button id="encodeBtn" class="btn-sm primary"><span class="btn-icon">🔐</span> <span data-i18n="encode">Encode &amp; Broadcast</span></button>
+            <button id="stopBroadcastBtn" class="btn-sm fire-btn" disabled><span class="btn-icon">⏹️</span> <span data-i18n="stopBroadcast">Stop</span></button>
+          </div>
+        </div>
+
+        <!-- Broadcast Animation -->
+        <div id="broadcastAnimation" style="position:relative;height:180px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:8px;margin-top:1rem;background:rgba(0,0,0,0.15)">
+          <div id="pulseContainer" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <div id="beaconIcon" style="font-size:2.5rem;z-index:2;position:relative">👻</div>
+            <div id="pulseRing1" class="pulse-ring" style="display:none"></div>
+            <div id="pulseRing2" class="pulse-ring" style="display:none"></div>
+            <div id="pulseRing3" class="pulse-ring" style="display:none"></div>
+          </div>
+          <div id="broadcastStatus" style="position:absolute;bottom:8px;font-size:0.8rem;opacity:0.7" data-i18n="notBroadcasting">Not broadcasting</div>
+        </div>
+
+        <!-- Beacon Scanner -->
+        <div class="control-section" style="margin-top:1rem">
+          <h3 data-i18n="scannerTitle">📶 Beacon Scanner</h3>
+          <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+            <button id="scanBtn" class="btn-sm primary"><span class="btn-icon">🔍</span> <span data-i18n="startScan">Start Scan</span></button>
+            <button id="stopScanBtn" class="btn-sm fire-btn" disabled><span class="btn-icon">⏹️</span> <span data-i18n="stopScan">Stop</span></button>
+            <button id="clearScanBtn" class="btn-sm"><span class="btn-icon">🧹</span> <span data-i18n="clear">Clear</span></button>
+          </div>
+          <div id="beaconList" style="max-height:220px;overflow-y:auto;font-size:0.82rem"></div>
+          <div id="scanStatus" style="font-size:0.75rem;opacity:0.7;margin-top:0.5rem" data-i18n="scanIdle">Scanner idle</div>
+        </div>
+
+        <!-- Hidden Message Decoder -->
+        <div class="control-section" style="margin-top:1rem">
+          <h3 data-i18n="decoderTitle">🔓 Hidden Message Decoder</h3>
+          <div class="sidebar-group">
+            <label class="sidebar-label" data-i18n="selectBeacon">Select a detected beacon to decode</label>
+            <select id="decodeBeaconSelect" class="sidebar-select">
+              <option value="" data-i18n="noBeacons">-- No beacons detected --</option>
+            </select>
+          </div>
+          <button id="decodeBtn" class="btn-sm primary" disabled><span class="btn-icon">🔓</span> <span data-i18n="decodeMessage">Decode Message</span></button>
+          <div id="decodedOutput" style="margin-top:0.5rem;padding:0.75rem;border-radius:6px;background:rgba(0,0,0,0.2);font-family:'Orbitron',monospace;font-size:0.85rem;min-height:2rem;display:none"></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works (4 steps) ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="help-step">
+            <span class="help-step-num">1</span>
+            <div>
+              <strong data-i18n="stepA1Title">BLE Advertising Basics</strong>
+              <p data-i18n="stepA1Desc">BLE devices broadcast advertisement packets every 20ms-10s. These packets contain up to 31 bytes of data visible to any scanner in range. ESP32 can both advertise and scan simultaneously.</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">2</span>
+            <div>
+              <strong data-i18n="stepA2Title">Beacon Protocols (iBeacon &amp; Eddystone)</strong>
+              <p data-i18n="stepA2Desc">iBeacon uses UUID (16 bytes) + Major (2 bytes) + Minor (2 bytes). Eddystone-UID uses Namespace (10 bytes) + Instance (6 bytes). Both protocols have reserved fields we can hide data in.</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">3</span>
+            <div>
+              <strong data-i18n="stepA3Title">Steganography in Beacons</strong>
+              <p data-i18n="stepA3Desc">We encode secret messages into UUID bytes, major/minor fields, or namespace data. A normal scanner sees a valid beacon; only our decoder extracts the hidden message from the right fields.</p>
+            </div>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">4</span>
+            <div>
+              <strong data-i18n="stepA4Title">Proximity &amp; RSSI</strong>
+              <p data-i18n="stepA4Desc">RSSI (Received Signal Strength Indicator) measures signal power in dBm. Closer beacons have stronger signals (-30 dBm = very close, -90 dBm = far away). We use this for proximity-based message reveal.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab — Beacon Experiments</span></summary>
+        <div class="card">
+          <!-- Lab 1: RSSI Distance Estimator -->
+          <div class="control-section">
+            <h3 data-i18n="lab1Title">📏 RSSI Distance Estimator</h3>
+            <p style="font-size:0.82rem;opacity:0.8;margin-bottom:0.75rem" data-i18n="lab1Desc">Adjust RSSI and TX Power to estimate distance. Uses the log-distance path loss model.</p>
+            <div class="sidebar-group">
+              <label class="sidebar-label" data-i18n="measuredRssi">Measured RSSI (dBm)</label>
+              <input type="range" id="labRssiSlider" min="-100" max="-20" value="-65" style="width:100%" />
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;opacity:0.7">
+                <span>-100</span><span id="labRssiValue">-65 dBm</span><span>-20</span>
+              </div>
+            </div>
+            <div class="sidebar-group">
+              <label class="sidebar-label" data-i18n="refTxPower">Reference TX Power at 1m (dBm)</label>
+              <input type="range" id="labRefPowerSlider" min="-70" max="-30" value="-59" style="width:100%" />
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;opacity:0.7">
+                <span>-70</span><span id="labRefPowerValue">-59 dBm</span><span>-30</span>
+              </div>
+            </div>
+            <div id="distanceResult" style="text-align:center;padding:1rem;border-radius:8px;background:rgba(0,0,0,0.2);font-family:'Orbitron',monospace;font-size:1.2rem;margin-top:0.5rem">
+              <span data-i18n="estimatedDist">Estimated Distance:</span> <strong id="distValue">1.4 m</strong>
+              <div style="font-size:0.75rem;opacity:0.6;margin-top:4px" id="distZone" data-i18n="zoneNear">Zone: Near</div>
+            </div>
+          </div>
+
+          <!-- Lab 2: Packet Builder -->
+          <div class="control-section" style="margin-top:1rem">
+            <h3 data-i18n="lab2Title">🧬 BLE Packet Builder</h3>
+            <p style="font-size:0.82rem;opacity:0.8;margin-bottom:0.75rem" data-i18n="lab2Desc">Build a raw BLE advertisement packet byte by byte. See how iBeacon and Eddystone frames are structured.</p>
+            <div class="sidebar-group">
+              <label class="sidebar-label" data-i18n="packetType">Packet Type</label>
+              <select id="packetTypeSelect" class="sidebar-select">
+                <option value="ibeacon">iBeacon Frame</option>
+                <option value="eddystone-uid">Eddystone-UID Frame</option>
+                <option value="eddystone-url">Eddystone-URL Frame</option>
+              </select>
+            </div>
+            <button id="buildPacketBtn" class="btn-sm primary"><span class="btn-icon">🧬</span> <span data-i18n="buildPacket">Build Packet</span></button>
+            <div id="packetDisplay" style="margin-top:0.5rem;padding:0.75rem;border-radius:6px;background:rgba(0,0,0,0.25);font-family:'Orbitron',monospace;font-size:0.7rem;word-break:break-all;line-height:1.8;display:none"></div>
+            <div id="packetLegend" style="font-size:0.72rem;margin-top:0.5rem;display:none"></div>
+          </div>
+
+          <!-- Lab 3: Multi-Beacon Radar -->
+          <div class="control-section" style="margin-top:1rem">
+            <h3 data-i18n="lab3Title">📡 Multi-Beacon Radar</h3>
+            <p style="font-size:0.82rem;opacity:0.8;margin-bottom:0.75rem" data-i18n="lab3Desc">Visualize multiple beacons on a radar display. Distance is based on simulated RSSI values.</p>
+            <button id="radarStartBtn" class="btn-sm primary"><span class="btn-icon">📡</span> <span data-i18n="startRadar">Start Radar</span></button>
+            <button id="radarStopBtn" class="btn-sm fire-btn" disabled><span class="btn-icon">⏹️</span> <span data-i18n="stopRadar">Stop Radar</span></button>
+            <canvas id="radarCanvas" width="300" height="300" style="display:block;margin:0.75rem auto;max-width:100%;border-radius:50%;background:rgba(0,0,0,0.3)"></canvas>
+            <div id="radarInfo" style="text-align:center;font-size:0.75rem;opacity:0.7" data-i18n="radarIdle">Radar idle</div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenges ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenges</span></summary>
+        <div class="card">
+          <!-- Challenge 1 -->
+          <div class="control-section">
+            <h3 data-i18n="ch1Title">🏅 Challenge 1: Decode the Ghost</h3>
+            <p style="font-size:0.82rem;opacity:0.8;margin-bottom:0.5rem" data-i18n="ch1Desc">A mystery beacon is broadcasting. Scan, find the ghost beacon, and decode its hidden message. The message is a secret word.</p>
+            <button id="ch1StartBtn" class="btn-sm primary"><span class="btn-icon">▶️</span> <span data-i18n="startChallenge">Start Challenge</span></button>
+            <div id="ch1Status" style="margin-top:0.5rem;font-size:0.82rem;display:none"></div>
+            <div class="sidebar-group" style="margin-top:0.5rem" id="ch1AnswerGroup" style="display:none">
+              <input type="text" id="ch1Answer" class="sidebar-select" placeholder="Enter decoded word..." style="font-family:inherit;display:none" />
+              <button id="ch1SubmitBtn" class="btn-sm" style="margin-top:0.25rem;display:none"><span class="btn-icon">✅</span> <span data-i18n="submit">Submit</span></button>
+            </div>
+            <div id="ch1Result" style="margin-top:0.5rem;font-size:0.85rem;font-weight:bold;display:none"></div>
+          </div>
+
+          <!-- Challenge 2 -->
+          <div class="control-section" style="margin-top:1rem">
+            <h3 data-i18n="ch2Title">🏅 Challenge 2: Proximity Treasure Hunt</h3>
+            <p style="font-size:0.82rem;opacity:0.8;margin-bottom:0.5rem" data-i18n="ch2Desc">A hidden beacon is out there. Use the RSSI meter to get closer. The message only reveals when you're within 1 meter (simulated).</p>
+            <button id="ch2StartBtn" class="btn-sm primary"><span class="btn-icon">▶️</span> <span data-i18n="startChallenge">Start Challenge</span></button>
+            <div id="ch2Proximity" style="margin-top:0.5rem;display:none">
+              <div style="display:flex;align-items:center;gap:0.5rem">
+                <span data-i18n="distance">Distance:</span>
+                <div style="flex:1;height:20px;border-radius:10px;background:rgba(0,0,0,0.3);overflow:hidden">
+                  <div id="ch2ProxBar" style="width:10%;height:100%;border-radius:10px;background:linear-gradient(90deg,#ff4444,#ffaa00,#44ff44);transition:width 0.3s"></div>
+                </div>
+                <span id="ch2DistLabel" style="font-family:'Orbitron',monospace;font-size:0.8rem">-- m</span>
+              </div>
+              <button id="ch2WalkBtn" class="btn-sm" style="margin-top:0.5rem;width:100%"><span class="btn-icon">🚶</span> <span data-i18n="walkCloser">Walk Closer (simulate)</span></button>
+            </div>
+            <div id="ch2Result" style="margin-top:0.5rem;font-size:0.85rem;font-weight:bold;display:none"></div>
+          </div>
+
+          <!-- Challenge 3 -->
+          <div class="control-section" style="margin-top:1rem">
+            <h3 data-i18n="ch3Title">🏅 Challenge 3: Beacon Flood Detection</h3>
+            <p style="font-size:0.82rem;opacity:0.8;margin-bottom:0.5rem" data-i18n="ch3Desc">Someone is flooding the airspace with fake beacons! Identify the suspicious beacon among the legitimate ones. Look for anomalies in UUID patterns and broadcast intervals.</p>
+            <button id="ch3StartBtn" class="btn-sm primary"><span class="btn-icon">▶️</span> <span data-i18n="startChallenge">Start Challenge</span></button>
+            <div id="ch3BeaconList" style="margin-top:0.5rem;max-height:200px;overflow-y:auto;font-size:0.78rem;display:none"></div>
+            <div class="sidebar-group" style="margin-top:0.5rem">
+              <select id="ch3SuspectSelect" class="sidebar-select" style="display:none">
+                <option value="" data-i18n="selectSuspect">-- Select suspicious beacon --</option>
+              </select>
+              <button id="ch3SubmitBtn" class="btn-sm" style="margin-top:0.25rem;display:none"><span class="btn-icon">🚨</span> <span data-i18n="reportBeacon">Report Beacon</span></button>
+            </div>
+            <div id="ch3Result" style="margin-top:0.5rem;font-size:0.85rem;font-weight:bold;display:none"></div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is BLE advertising?</summary>
+          <p data-i18n="faq_a1">BLE (Bluetooth Low Energy) advertising is a one-way broadcast mechanism. Devices send small packets of data that any nearby scanner can receive, without pairing. ESP32 supports both advertising and scanning.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">What are iBeacon and Eddystone?</summary>
+          <p data-i18n="faq_a2">iBeacon (Apple) and Eddystone (Google) are standardized beacon protocols. iBeacon uses UUID + Major + Minor fields. Eddystone supports UID, URL, and TLM frames. Both ride on BLE advertisement packets.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is steganography in beacons?</summary>
+          <p data-i18n="faq_a3">Steganography hides messages in plain sight. In beacon context, we embed secret data within standard beacon fields (like UUID bytes) so normal scanners see a valid beacon but miss the hidden message.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">How does RSSI relate to distance?</summary>
+          <p data-i18n="faq_a4">RSSI (Received Signal Strength Indicator) decreases with distance. Using the log-distance path loss model: d = 10^((TxPower - RSSI) / (10 * n)), where n is the path loss exponent (typically 2-4).</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Type a secret message and select a beacon protocol (iBeacon, Eddystone, or Custom).</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Choose an encoding method (UUID Steganography, Major/Minor, Namespace, or TX Power).</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Click "Encode &amp; Broadcast" to start transmitting. Use the scanner to detect beacons.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Select a detected beacon and click "Decode Message" to reveal the hidden content.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_ble_title">📡 BLE Advertising</h3>
+          <p data-i18n="wiki_ble">BLE advertisement packets are 31 bytes max. They contain AD structures with type and data fields. The ESP32 BLE stack allows custom advertisement data for creative applications.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_beacon_title">📍 Beacon Protocols</h3>
+          <p data-i18n="wiki_beacon">iBeacon: 0x4C000215 prefix + 16-byte UUID + 2-byte Major + 2-byte Minor + 1-byte TX. Eddystone-UID: 0xAAFE service UUID + 10-byte Namespace + 6-byte Instance ID.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_stego_title">🕵️ Steganography</h3>
+          <p data-i18n="wiki_stego">Steganography is the art of hiding information in plain sight. In BLE beacons, we can encode ASCII characters into UUID bytes, spread bits across Major/Minor fields, or modulate TX power patterns.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3>
+          <p data-i18n="wiki_privacy">This app runs entirely in your browser with simulated BLE. No real Bluetooth signals are transmitted. All data stays local. No tracking, no analytics, no external calls.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

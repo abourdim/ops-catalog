@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shadow Cam — Workshop DIY</title>
+  <meta name="description" content="ESP32-CAM with motion detection, image encryption, and auto-delete. A Workshop-DIY educational web app." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Shadow Cam — Workshop DIY" />
+  <meta property="og:description" content="ESP32-CAM with motion detection, image encryption, and auto-delete." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">Motion-triggered capture with encryption and auto-delete</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Shadow Cam — Encrypted Surveillance</h1>
+            <div class="subtitle" data-i18n="subtitle">Motion-triggered capture with encryption and auto-delete</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#128247;</span> <span data-i18n="mainSection">Shadow Cam Control</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Motion detection, encrypted capture &amp; auto-delete</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Viewfinder -->
+        <div style="display:flex;flex-direction:column;gap:10px;padding:12px 0;">
+          <div style="position:relative;border-radius:8px;overflow:hidden;border:2px solid var(--border);background:#000;">
+            <canvas id="viewfinder" width="480" height="320" style="width:100%;display:block;cursor:crosshair;"></canvas>
+            <div id="motionBadge" style="position:absolute;top:8px;right:8px;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:var(--font-h);background:rgba(0,0,0,.6);color:var(--text-muted);transition:all .3s;" data-i18n="noMotion">NO MOTION</div>
+            <div id="recDot" style="position:absolute;top:10px;left:10px;width:10px;height:10px;border-radius:50%;background:#555;transition:background .3s;"></div>
+            <div style="position:absolute;bottom:8px;left:8px;font-size:.65rem;font-family:var(--font-h);color:var(--text-muted);opacity:.7;" id="camTimestamp"></div>
+          </div>
+
+          <!-- Controls row -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <button id="armBtn" class="btn-sm"><span class="btn-icon">&#128737;&#65039;</span> <span data-i18n="armSystem">Arm System</span></button>
+            <button id="captureBtn" class="btn-sm"><span class="btn-icon">&#128247;</span> <span data-i18n="manualCapture">Capture</span></button>
+            <button id="faceBlurBtn" class="btn-sm"><span class="btn-icon">&#128100;</span> <span data-i18n="faceBlur">Face Blur: OFF</span></button>
+            <button id="encryptToggleBtn" class="btn-sm"><span class="btn-icon">&#128274;</span> <span data-i18n="encryptionLabel">Encryption: XOR</span></button>
+            <div style="flex:1;"></div>
+            <span style="font-size:.7rem;color:var(--text-muted);font-family:var(--font-b);" id="motionLevel" data-i18n="motionLevel">Motion: 0%</span>
+          </div>
+
+          <!-- Sensitivity slider -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label style="font-size:.75rem;color:var(--text-muted);font-family:var(--font-b);white-space:nowrap;" data-i18n="sensitivity">Sensitivity</label>
+            <input type="range" id="sensitivitySlider" min="1" max="100" value="40" style="flex:1;accent-color:var(--accent);" />
+            <span id="sensitivityVal" style="font-size:.7rem;color:var(--text-muted);width:30px;text-align:right;">40</span>
+          </div>
+
+          <!-- Gallery -->
+          <div style="border-top:1px solid var(--border);padding-top:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <span style="font-size:.8rem;font-weight:700;font-family:var(--font-h);color:var(--accent);" data-i18n="gallery">Capture Gallery</span>
+              <button id="clearGalleryBtn" class="btn-sm" style="font-size:.65rem;"><span class="btn-icon">&#128465;&#65039;</span> <span data-i18n="clearGallery">Clear All</span></button>
+            </div>
+            <div id="gallery" style="display:flex;gap:8px;flex-wrap:wrap;min-height:60px;"></div>
+            <div id="galleryEmpty" style="font-size:.7rem;color:var(--text-muted);font-style:italic;text-align:center;padding:16px 0;" data-i18n="noCaptures">No captures yet. Arm the system and move your mouse over the viewfinder.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION A: How It Works -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128218;</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div style="padding:8px 0;font-family:var(--font-b);color:var(--text);font-size:.85rem;line-height:1.7;">
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:0 0 8px;" data-i18n="howMotionTitle">Motion Detection</h3>
+            <p data-i18n="howMotionDesc">The ESP32-CAM compares consecutive frames pixel-by-pixel. When the difference exceeds a threshold, motion is detected. In this simulation, mouse movement over the viewfinder triggers the same logic -- pixel regions near the cursor change, and the delta is measured.</p>
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:16px 0 8px;" data-i18n="howEncTitle">XOR Image Encryption</h3>
+            <p data-i18n="howEncDesc">Each captured image is encrypted using XOR with a pseudorandom key stream. XOR encryption is symmetric -- the same key encrypts and decrypts. Click on an encrypted thumbnail to decrypt and view it. This teaches students the basics of stream ciphers.</p>
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:16px 0 8px;" data-i18n="howAutoDelTitle">Auto-Delete Mechanism</h3>
+            <p data-i18n="howAutoDelDesc">Each capture has a self-destruct timer (default 30s). Once the countdown reaches zero, the image data is permanently erased from memory. Viewing the image does not reset the timer -- it is truly ephemeral. This teaches data lifecycle management.</p>
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:16px 0 8px;" data-i18n="howBlurTitle">Face Blur (Privacy)</h3>
+            <p data-i18n="howBlurDesc">When face blur is enabled, simulated face regions are pixelated before encryption. On a real ESP32-CAM, lightweight face detection (MTMNN) identifies bounding boxes and applies Gaussian blur before saving. This demonstrates privacy-preserving surveillance.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION B: ESP32-CAM Wiring -->
+      <details class="collapsible">
+        <summary><span class="icon">&#127916;</span> <span data-i18n="sectionB">ESP32-CAM Wiring &amp; Code</span></summary>
+        <div class="card">
+          <div style="padding:8px 0;font-family:var(--font-b);color:var(--text);font-size:.85rem;line-height:1.7;">
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:0 0 8px;" data-i18n="wiringTitle">Wiring Diagram</h3>
+            <pre style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px;overflow-x:auto;font-size:.75rem;color:var(--text);line-height:1.5;">
+ESP32-CAM          PIR Sensor (HC-SR501)
+---------          ---------------------
+  5V  ────────────  VCC
+  GND ────────────  GND
+  GPIO13 ─────────  OUT
+
+ESP32-CAM          MicroSD (built-in)
+---------          ------------------
+  Built-in SD slot for image storage
+
+ESP32-CAM          FTDI Programmer
+---------          ----------------
+  U0R ────────────  TX
+  U0T ────────────  RX
+  GND ────────────  GND
+  5V  ────────────  VCC
+  IO0 ──── GND     (for flash mode)
+            </pre>
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:16px 0 8px;" data-i18n="codeSnippetTitle">Arduino Sketch (Key Parts)</h3>
+            <pre style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px;overflow-x:auto;font-size:.72rem;color:var(--text);line-height:1.5;">
+#include "esp_camera.h"
+#include "FS.h"
+#include "SD_MMC.h"
+
+#define PIR_PIN 13
+volatile bool motionDetected = false;
+
+void IRAM_ATTR onMotion() {
+  motionDetected = true;
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIR_PIN, INPUT);
+  attachInterrupt(PIR_PIN, onMotion, RISING);
+  initCamera();   // configure OV2640
+  SD_MMC.begin(); // mount SD card
+}
+
+void loop() {
+  if (motionDetected) {
+    motionDetected = false;
+    camera_fb_t *fb = esp_camera_fb_get();
+    if (fb) {
+      xorEncrypt(fb->buf, fb->len, SECRET_KEY);
+      saveToSD(fb);
+      esp_camera_fb_return(fb);
+    }
+  }
+  deleteExpiredFiles(); // auto-cleanup
+  delay(100);
+}
+            </pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- SECTION C: Privacy & Ethics -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128272;</span> <span data-i18n="sectionC">Privacy, Ethics &amp; Challenges</span></summary>
+        <div class="card">
+          <div style="padding:8px 0;font-family:var(--font-b);color:var(--text);font-size:.85rem;line-height:1.7;">
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:0 0 8px;" data-i18n="ethicsTitle">Ethical Surveillance</h3>
+            <p data-i18n="ethicsDesc">Surveillance technology carries responsibility. Always obtain consent before recording. Use encryption to protect captured data. Auto-delete ensures data minimization. Face blur protects identities when full video is not needed. These principles align with GDPR and Islamic ethics of respecting privacy (hurma).</p>
+
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:16px 0 8px;" data-i18n="challengesTitle">Student Challenges</h3>
+            <ul style="padding-inline-start:20px;margin:0;">
+              <li data-i18n="challenge1">Modify the sensitivity to detect only large movements (filter out small changes).</li>
+              <li data-i18n="challenge2">Add a second encryption layer (double-XOR with different keys).</li>
+              <li data-i18n="challenge3">Implement a "panic button" that instantly deletes all captures.</li>
+              <li data-i18n="challenge4">Add timestamp watermark on each capture before encryption.</li>
+              <li data-i18n="challenge5">Create an alert system that logs motion events to the Activity Log with location info.</li>
+            </ul>
+
+            <h3 style="color:var(--accent);font-family:var(--font-h);margin:16px 0 8px;" data-i18n="realWorldTitle">Real-World Applications</h3>
+            <p data-i18n="realWorldDesc">Wildlife cameras use motion detection to capture animal behavior without human presence. Security cameras in banks encrypt footage to prevent tampering. Hospital monitoring systems blur patient faces in corridor cameras. Understanding these systems helps students build responsible IoT devices.</p>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- LEFT PANEL: Help -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">&#10067; Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is Shadow Cam?</summary>
+          <p data-i18n="faq_a1">A simulated ESP32-CAM surveillance system with motion detection, XOR encryption, auto-delete, and face blur for learning about privacy-preserving surveillance.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does motion detection work?</summary>
+          <p data-i18n="faq_a2">Move your mouse over the viewfinder canvas. The system compares pixel changes frame-by-frame. When changes exceed the sensitivity threshold, motion is detected and a capture is triggered.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">How does encryption work?</summary>
+          <p data-i18n="faq_a3">Each capture is XOR-encrypted with a random key. XOR is a symmetric cipher -- the same operation encrypts and decrypts. Click an encrypted thumbnail to decrypt and view it.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">What is auto-delete?</summary>
+          <p data-i18n="faq_a4">Each capture has a 30-second countdown. When it reaches zero, the image is permanently erased. This demonstrates ephemeral data storage and data lifecycle management.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Click "Arm System" to enable motion detection on the viewfinder canvas.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Move your mouse over the viewfinder to simulate motion. Watch the motion bar and badge.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">When motion exceeds the threshold, a capture is automatically taken, encrypted, and added to the gallery.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Click any encrypted thumbnail to decrypt and view it. Watch the auto-delete countdown.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_motion_title">&#128065; Motion Detection</h3>
+          <p data-i18n="wiki_motion">Frame differencing compares pixel values between consecutive frames. High delta = motion. ESP32-CAM uses OV2640 sensor with JPEG compression.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_xor_title">&#128274; XOR Encryption</h3>
+          <p data-i18n="wiki_xor">XOR (exclusive or) flips bits using a key stream. plaintext XOR key = ciphertext. ciphertext XOR key = plaintext. Fast, simple, symmetric.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_autodel_title">&#9200; Auto-Delete</h3>
+          <p data-i18n="wiki_autodel">Ephemeral storage erases data after a time limit. Used in secure messaging (Signal), surveillance regulations, and GDPR compliance.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_privacy_title">&#128272; Privacy</h3>
+          <p data-i18n="wiki_privacy">Face blur, encryption at rest, auto-delete, and consent are pillars of ethical surveillance. Local-first processing prevents data leaks.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: Settings -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">&#9881;&#65039; Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>&#127468;&#127463; EN</option>
+          <option value="fr">&#127467;&#127479; FR</option>
+          <option value="ar">&#127465;&#127487; &#1593;&#1585;&#1576;&#1610;</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">&#128266; Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127908;</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#129707;</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">&#1587;&#1576;&#1581;&#1575;&#1606; &#1575;&#1604;&#1604;&#1607;</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127925;</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: Activity Log (docked) -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">&#128220; Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#129529;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#128203;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#128190;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#10003;</button>
+      <button class="log-filter" data-filter="error">&#10007;</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working...</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

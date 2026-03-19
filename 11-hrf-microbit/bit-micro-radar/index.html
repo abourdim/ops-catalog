@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-micro-radar — Workshop DIY</title>
+  <meta name="description" content="Micro Radar EM Map — Build a radar display from sensor data with micro:bit." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-micro-radar — Workshop DIY" />
+  <meta property="og:description" content="Micro Radar EM Map — Build a radar display from sensor data with micro:bit." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .radar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 0;
+    }
+    #radarCanvas {
+      border-radius: 50%;
+      border: 2px solid rgba(0,255,0,0.3);
+      background: #0a1a0a;
+    }
+    .object-list {
+      width: 100%;
+      max-height: 160px;
+      overflow-y: auto;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      padding: 0.5rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+    }
+    .object-list .obj-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.15rem 0.4rem;
+      border-bottom: 1px solid rgba(0,255,0,0.1);
+    }
+    .range-display {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .radar-controls {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .radar-stat {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .mode-toggle label { cursor: pointer; }
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 500px) {
+      .lab-grid { grid-template-columns: 1fr; }
+    }
+    .lab-card {
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+    .lab-card h4 { margin: 0 0 0.4rem; font-size: 0.9rem; }
+    .lab-card p { margin: 0; font-size: 0.8rem; opacity: 0.8; }
+    .challenge-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .challenge-list li {
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 0.5rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .challenge-num {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent, #f0c040);
+      min-width: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">📡 scan · 🗺️ map · 🎯 detect</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-micro-radar</h1>
+            <div class="subtitle" data-i18n="subtitle">📡 scan · 🗺️ map · 🎯 detect</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">📡</span> <span data-i18n="mainSection">Micro Radar — EM Map</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Build a radar display from sensor data</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <div class="radar-container">
+          <canvas id="radarCanvas" width="300" height="300"></canvas>
+
+          <div class="radar-controls">
+            <button id="sweepBtn" class="btn-sm primary"><span data-i18n="startSweep">Start Sweep</span></button>
+            <button id="stopSweepBtn" class="btn-sm"><span data-i18n="stopSweep">Stop</span></button>
+          </div>
+
+          <div class="range-display">
+            <label class="radar-stat" data-i18n="rangeLabel">Range:</label>
+            <select id="rangeSelect" class="sidebar-select" style="width:auto;min-width:80px;" aria-label="Range">
+              <option value="10">10 m</option>
+              <option value="50" selected>50 m</option>
+              <option value="100">100 m</option>
+            </select>
+
+            <span class="radar-stat"><span data-i18n="detectedLabel">Detected:</span> <strong id="detectCount">0</strong></span>
+
+            <div class="mode-toggle">
+              <label for="radarMode" data-i18n="modeLabel">Mode:</label>
+              <select id="radarMode" class="sidebar-select" style="width:auto;min-width:100px;" aria-label="Radar Mode">
+                <option value="active" data-i18n-opt="modeActive">Active</option>
+                <option value="passive" data-i18n-opt="modePassive">Passive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="object-list" id="objectList">
+          <em data-i18n="noObjects" style="opacity:0.5;">No objects detected yet.</em>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="help-step">
+            <span class="help-step-num">1</span>
+            <p data-i18n="step1">The sweep line rotates, simulating antenna direction scanning across 360 degrees.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">2</span>
+            <p data-i18n="step2">At each angle, sensors detect reflected or emitted electromagnetic signals from objects.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">3</span>
+            <p data-i18n="step3">Detected signals are plotted on polar coordinates — angle determines direction, distance determines radius.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">4</span>
+            <p data-i18n="step4">Over a full rotation, the radar builds a complete map of all surrounding objects.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <p data-i18n="labIntro" style="margin:0 0 0.75rem;font-size:0.9rem;">Experiment with the radar simulation. Click the canvas to place virtual objects, then watch them appear as blips during a sweep.</p>
+          <div class="lab-grid">
+            <div class="lab-card">
+              <h4 data-i18n="labPlace">🎯 Place Objects</h4>
+              <p data-i18n="labPlaceDesc">Click on the radar canvas to place virtual objects at any position. Each click adds a new target.</p>
+            </div>
+            <div class="lab-card">
+              <h4 data-i18n="labWatch">📡 Watch Detection</h4>
+              <p data-i18n="labWatchDesc">Start a sweep and observe how objects light up as bright blips when the sweep line passes over them.</p>
+            </div>
+            <div class="lab-card">
+              <h4 data-i18n="labRange">📏 Adjust Range</h4>
+              <p data-i18n="labRangeDesc">Change the range selector to zoom in (10m) or out (100m). Range rings rescale to match.</p>
+            </div>
+            <div class="lab-card">
+              <h4 data-i18n="labMode">🔄 Compare Modes</h4>
+              <p data-i18n="labModeDesc">In Active mode, all objects are visible. In Passive mode, only emitting objects appear on the radar.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <ul class="challenge-list">
+            <li>
+              <span class="challenge-num">1</span>
+              <div>
+                <strong data-i18n="ch1Title">Full Sweep Identification</strong>
+                <p data-i18n="ch1Desc" style="margin:0.25rem 0 0;font-size:0.85rem;opacity:0.8;">Identify all objects in a single 360-degree sweep. Can you name every detected target before the sweep completes?</p>
+              </div>
+            </li>
+            <li>
+              <span class="challenge-num">2</span>
+              <div>
+                <strong data-i18n="ch2Title">Moving Target Tracker</strong>
+                <p data-i18n="ch2Desc" style="margin:0.25rem 0 0;font-size:0.85rem;opacity:0.8;">Track a moving target across multiple sweeps. Predict its next position based on observed bearing and distance changes.</p>
+              </div>
+            </li>
+            <li>
+              <span class="challenge-num">3</span>
+              <div>
+                <strong data-i18n="ch3Title">Stealth Detection</strong>
+                <p data-i18n="ch3Desc" style="margin:0.25rem 0 0;font-size:0.85rem;opacity:0.8;">Detect the stealth object that only appears as a faint blip. Switch between Active and Passive modes to find it.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is this app?</summary>
+          <p data-i18n="faq_a1">A micro:bit radar simulator that teaches electromagnetic detection, polar coordinates, and sensor-based mapping.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does the radar work?</summary>
+          <p data-i18n="faq_a2">The sweep line rotates 360 degrees. Objects are detected as blips when the line passes their angular position. Blips fade over time like a real radar.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is the difference between Active and Passive mode?</summary>
+          <p data-i18n="faq_a3">Active mode detects all objects by sending out signals. Passive mode only detects objects that emit their own electromagnetic signals.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Can I place my own objects?</summary>
+          <p data-i18n="faq_a4">Yes! Click anywhere on the radar canvas to place a virtual object. It will appear on the next sweep pass.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Press "Start Sweep" to begin the radar rotation and scan for objects.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Click on the radar canvas to place virtual objects at specific positions.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Adjust the range selector (10m, 50m, 100m) to zoom in or out of the scan area.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Switch between Active and Passive modes to compare detection capabilities.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_radar_title">📡 Radar Principles</h3>
+          <p data-i18n="wiki_radar">Radar (Radio Detection and Ranging) works by sending out electromagnetic waves and measuring reflections. The time delay and angle reveal object position and distance.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_polar_title">🎯 Polar Coordinates</h3>
+          <p data-i18n="wiki_polar">Unlike Cartesian (x,y) grids, polar coordinates use angle and distance from a center point. This is natural for radar displays where the antenna is at the origin.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_em_title">⚡ EM Detection</h3>
+          <p data-i18n="wiki_em">Electromagnetic detection includes both active (sending signals and listening for echoes) and passive (listening for signals emitted by objects) methods.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_microbit_title">🤖 micro:bit Sensors</h3>
+          <p data-i18n="wiki_microbit">The micro:bit has an accelerometer (motion/tilt) and magnetometer (compass/direction). These can simulate radar antenna orientation and sweep control.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

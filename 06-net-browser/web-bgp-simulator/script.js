@@ -1,0 +1,207 @@
+/**
+ * Workshop DIY — BGP Simulator v1.2
+ * Route Hijacking — Run autonomous systems, inject bad routes, hijack traffic
+ */
+const $=id=>document.getElementById(id);
+const LOGO_SVG=`<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77.14 78.32 253.99 136.25"><path style="stroke:none;fill:currentColor;fill-rule:evenodd" d="M187.42,152.87C187.48,152.74,187.66,152.63,187.82,152.63C188.09,152.63,190.48,151.54,191.62,150.9L194.17,149.21C197.43,146.97,199.24,146.24,202.59,145.78C203.8,145.62,204.63,145.62,205.93,145.78C212.62,146.63,217.42,150.72,219.33,157.2C219.72,158.55,219.77,162.69,219.41,163.88C218.19,167.86,216.58,170.3,213.79,172.41C209.46,175.7,203.83,176.56,198.81,174.72C197.24,174.15,196.14,173.54,194.48,172.35C191.91,170.51,190.53,169.74,188.03,168.75L187.29,168.46L187.31,160.79C187.32,156.56,187.37,153,187.42,152.87z"/><path style="stroke:none;fill:currentColor" d="M259.79,157.67L264.88,148.03L272.34,148.03L263.03,163.73L263.03,174.99L256.26,174.99L256.26,164.07L246.79,148.03L254.51,148.03z"/><path style="stroke:none;fill:currentColor" d="M240.37,152.74L236.5,152.74L236.5,170.28L240.37,170.28L240.37,174.99L225.85,174.99L225.85,170.28L229.72,170.28L229.72,152.74L225.85,152.74L225.85,148.03L240.37,148.03z"/><path style="stroke:none;fill:currentColor" d="M330.79,195.73L203.96,195.73L203.96,199.33L330.79,199.33z"/><path style="stroke:none;fill:currentColor" d="M330.79,203.35L161.69,203.35L161.69,206.96L330.79,206.96z"/><path style="stroke:none;fill:currentColor" d="M330.79,210.97L77.14,210.97L77.14,214.58L330.79,214.58z"/></svg>`;
+const FOOTER_ICON='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH6gMKAjgH2Wn1xgAAAAxJREFUeNrtwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAvBm8AAAB8IkWQwAAAABJRU5ErkJggg==';
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.2';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);gain.gain.value=0.08;const t=audioCtx.currentTime;switch(type){case'click':osc.frequency.value=800;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.08);osc.start(t);osc.stop(t+0.08);break;case'success':osc.frequency.value=523;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.3);osc.start(t);osc.stop(t+0.3);break;case'error':osc.frequency.value=200;osc.type='square';gain.gain.exponentialRampToValueAtTime(0.001,t+0.25);osc.start(t);osc.stop(t+0.25);break;}}
+const LANG={
+  en:{title:'BGP Simulator',subtitle:'Run autonomous systems, inject bad routes, hijack traffic',disconnected:'Disconnected',connected:'Connected',mainSection:'AS Topology',mainDesc:'BGP route hijacking simulation',sectionA:'BGP Protocol Reference',sectionB:'BGP Security',sectionC:'Attack Analysis',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',theme:'Theme',export:'Export',filterAll:'All',settings:'Settings',language:'Language',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is BGP Simulator?',faq_a1:'A BGP route hijacking simulator showing how bad routes redirect traffic.',faq_q2:'Is this a real attack?',faq_a2:'No, all routing is simulated.',faq_q3:'How do I change the language?',faq_a3:'Open Settings and pick your language.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'View the AS topology.',howto_2:'Click Inject Bad Route.',howto_3:'Click Send Traffic.',howto_4:'Analyze attack in Section C.',wiki_themes_title:'Themes',wiki_themes:'8 built-in themes.',wiki_i18n_title:'Languages',wiki_i18n:'Trilingual.',wiki_log_title:'Activity Log',wiki_log:'Timestamped log.',wiki_privacy_title:'Privacy',wiki_privacy:'Local-first.',working:'Working...',ready:'BGP Simulator ready!',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',soundEffects:'Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'Language > English',themeChanged:'Theme >',injectBtn:'Inject Bad Route',resetBtn:'Reset Network',trafficBtn:'Send Traffic',analyzeBtn:'Analyze Attack',bgpRefText:'BGP exchanges routing info between Autonomous Systems. Each AS announces IP prefixes. Route hijacking occurs when an AS announces prefixes it does not own.',secText:'RPKI validates route announcements. BGPsec adds path validation. Route Origin Validation filters invalid prefixes.',analysisText:'Analyze the impact of route hijacking on network traffic.',injecting:'Injecting bad route...',injected:'Bad route injected! Traffic hijacked!',routeNormal:'Normal routing active',routeHijacked:'HIJACKED routing active',resetDone:'Network reset to normal',trafficSent:'Traffic sent',trafficHijacked:'Traffic redirected through attacker!',trafficNormal:'Traffic following normal path',analyzing:'Analyzing attack...',analysisDone:'Attack analysis complete',asLabel:'AS',prefix:'Prefix',path:'Path',nextHop:'Next Hop',status:'Status',legitimate:'Legitimate',malicious:'Malicious',},
+  fr:{title:'Simulateur BGP',subtitle:'Gerez les systemes autonomes, injectez des routes, detournez le trafic',disconnected:'Deconnecte',connected:'Connecte',mainSection:'Topologie AS',mainDesc:'Simulation de detournement BGP',sectionA:'Reference BGP',sectionB:'Securite BGP',sectionC:'Analyse d\'Attaque',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',theme:'Theme',export:'Exporter',filterAll:'Tout',settings:'Parametres',language:'Langue',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:'Qu\'est-ce que le Simulateur BGP?',faq_a1:'Un simulateur de detournement de routes BGP.',faq_q2:'C\'est une vraie attaque?',faq_a2:'Non, tout est simule.',faq_q3:'Comment changer la langue?',faq_a3:'Ouvrez Parametres.',faq_q4:'Donnees privees?',faq_a4:'Oui. Tout est local.',howto_1:'Voir la topologie AS.',howto_2:'Cliquer Injecter Route.',howto_3:'Envoyer du Trafic.',howto_4:'Analyser l\'attaque.',wiki_themes_title:'Themes',wiki_themes:'8 themes.',wiki_i18n_title:'Langues',wiki_i18n:'Trilingue.',wiki_log_title:'Journal',wiki_log:'Journal horodate.',wiki_privacy_title:'Confidentialite',wiki_privacy:'Local-first.',working:'En cours...',ready:'Simulateur BGP pret!',t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',logCleared:'Journal efface',copied:'Copie!',copyFail:'Echec',soundEffects:'Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Reactif musique',splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'Langue > Francais',themeChanged:'Theme >',injectBtn:'Injecter Mauvaise Route',resetBtn:'Reinitialiser',trafficBtn:'Envoyer Trafic',analyzeBtn:'Analyser Attaque',bgpRefText:'BGP echange des infos de routage entre systemes autonomes. Le detournement se produit quand un AS annonce des prefixes qu\'il ne possede pas.',secText:'RPKI valide les annonces. BGPsec ajoute la validation de chemin.',analysisText:'Analyser l\'impact du detournement sur le trafic.',injecting:'Injection en cours...',injected:'Route injectee! Trafic detourne!',routeNormal:'Routage normal actif',routeHijacked:'Routage DETOURNE actif',resetDone:'Reseau reinitialise',trafficSent:'Trafic envoye',trafficHijacked:'Trafic redirige via l\'attaquant!',trafficNormal:'Trafic suivant le chemin normal',analyzing:'Analyse en cours...',analysisDone:'Analyse terminee',asLabel:'AS',prefix:'Prefixe',path:'Chemin',nextHop:'Prochain Saut',status:'Statut',legitimate:'Legitime',malicious:'Malveillant',},
+  ar:{title:'محاكي BGP',subtitle:'ادر انظمة مستقلة واحقن مسارات سيئة واختطف حركة المرور',disconnected:'غير متصل',connected:'متصل',mainSection:'طوبولوجيا AS',mainDesc:'محاكاة اختطاف مسارات BGP',sectionA:'مرجع بروتوكول BGP',sectionB:'امان BGP',sectionC:'تحليل الهجوم',activityLog:'سجل النشاط',eventsMsg:'الاحداث',clear:'مسح',copy:'نسخ',theme:'المظهر',export:'تصدير',filterAll:'الكل',settings:'الاعدادات',language:'اللغة',help:'مساعدة',faq:'اسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',faq_q1:'ما هو محاكي BGP؟',faq_a1:'محاكي اختطاف مسارات BGP يوضح كيف تعيد المسارات السيئة توجيه حركة المرور.',faq_q2:'هل هذا هجوم حقيقي؟',faq_a2:'لا، كل شيء محاكاة.',faq_q3:'كيف اغير اللغة؟',faq_a3:'افتح الاعدادات.',faq_q4:'بياناتي خاصة؟',faq_a4:'نعم. كل شيء محلي.',howto_1:'عرض طوبولوجيا AS.',howto_2:'انقر حقن مسار سيء.',howto_3:'ارسل حركة مرور.',howto_4:'حلل الهجوم.',wiki_themes_title:'المظاهر',wiki_themes:'8 مظاهر.',wiki_i18n_title:'اللغات',wiki_i18n:'ثلاثي اللغات.',wiki_log_title:'سجل النشاط',wiki_log:'سجل مؤرخ.',wiki_privacy_title:'الخصوصية',wiki_privacy:'محلي اولا.',working:'جار...',ready:'محاكي BGP جاهز!',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل',soundEffects:'مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'اللغة > العربية',themeChanged:'المظهر >',injectBtn:'حقن مسار سيء',resetBtn:'اعادة ضبط',trafficBtn:'ارسال حركة مرور',analyzeBtn:'تحليل الهجوم',bgpRefText:'يتبادل BGP معلومات التوجيه بين الانظمة المستقلة. يحدث الاختطاف عندما يعلن AS عن بادئات لا يملكها.',secText:'RPKI يتحقق من الاعلانات. BGPsec يضيف التحقق من المسار.',analysisText:'تحليل تاثير اختطاف المسار على حركة المرور.',injecting:'جاري الحقن...',injected:'تم حقن المسار! تم اختطاف حركة المرور!',routeNormal:'التوجيه الطبيعي نشط',routeHijacked:'التوجيه المختطف نشط',resetDone:'تم اعادة ضبط الشبكة',trafficSent:'تم ارسال حركة المرور',trafficHijacked:'تم اعادة توجيه حركة المرور عبر المهاجم!',trafficNormal:'حركة المرور تتبع المسار الطبيعي',analyzing:'جاري التحليل...',analysisDone:'اكتمل تحليل الهجوم',asLabel:'AS',prefix:'البادئة',path:'المسار',nextHop:'القفزة التالية',status:'الحالة',legitimate:'شرعي',malicious:'خبيث',}
+};
+let currentLang='en';
+function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(opt=>{const k=opt.dataset.i18nOpt;if(s[k]!=null)opt.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
+function setTheme(name){document.documentElement.dataset.theme=name;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(name));const sel=$('themeSelect');if(sel)sel.value=name;const s=LANG[currentLang];try{localStorage.setItem('wdiy-theme',name);}catch{}playThemeMelody(name);log(`${s.themeChanged} ${s['t_'+name]||name}`,'info');}
+let logContainer;function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${type}`;const ft=`[${new Date().toLocaleTimeString()}] ${msg}`;if(typewriterEnabled){logContainer.appendChild(d);typewriterAppend(d,ft);}else{d.textContent=ft;logContainer.appendChild(d);}logContainer.scrollTop=logContainer.scrollHeight;if(type==='success'){playSound('success');pulseBismillah('success');setPetState('happy');}else if(type==='error'){playSound('error');pulseBismillah('error');setPetState('sad');}logWithHistory(msg,type);applyLogFilter();resetPetSleep();}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+let toastTimer=null;function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block';}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms);}function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';if(toastTimer){clearTimeout(toastTimer);toastTimer=null;}}
+function setStatus(c){const p=$('statusPill'),t=$('statusText'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c);}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click');}function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500);}
+let activeLogFilter='all';function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();playSound('click');});});}function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(line=>{if(activeLogFilter==='all'){line.style.display='';return;}line.style.display=line.classList.contains(activeLogFilter)?'':'none';});}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const blob=new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(url);}
+function checkVersion(){try{const s=localStorage.getItem('wdiy-latest-version');if(s&&s!==APP_VERSION){const b=$('settingsBtn');if(b&&!b.querySelector('.version-update')){const bg=document.createElement('span');bg.className='version-update';bg.textContent='UPDATE';b.style.position='relative';bg.style.cssText='position:absolute;top:-6px;inset-inline-end:-6px;';b.appendChild(bg);}}}catch{}}
+const APP_MSG_KEY='wdiy-app-msg';function sendAppMessage(type,data){try{localStorage.setItem(APP_MSG_KEY,JSON.stringify({type,data,from:document.title,ts:Date.now()}));localStorage.removeItem(APP_MSG_KEY);}catch{}}function onAppMessage(cb){window.addEventListener('storage',e=>{if(e.key!==APP_MSG_KEY||!e.newValue)return;try{cb(JSON.parse(e.newValue));}catch{}});}
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let konamiIdx=0;function initKonami(){document.addEventListener('keydown',e=>{if(e.key===KONAMI[konamiIdx]){konamiIdx++;if(konamiIdx===KONAMI.length){konamiIdx=0;setTheme('retro');log('KONAMI!','success');}}else konamiIdx=0;});}
+function pulseBismillah(type){const b=document.querySelector('.bismillah');if(!b)return;b.classList.remove('pulse-success','pulse-error');void b.offsetWidth;b.classList.add(type==='error'?'pulse-error':'pulse-success');setTimeout(()=>b.classList.remove('pulse-success','pulse-error'),700);}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function initMorseLog(){document.addEventListener('mousedown',e=>{const line=e.target.closest('.log-line');if(!line)return;});document.addEventListener('mouseup',()=>{});}
+let matrixRunning=false,matrixAnim=null;const ARABIC_CHARS='بسمالرحنيوكلتعدفقثصضطظغشزخجذأؤئإءةىآ٠١٢٣٤٥٦٧٨٩';function toggleMatrix(){const c=$('matrixCanvas');if(!c)return;if(matrixRunning){matrixRunning=false;cancelAnimationFrame(matrixAnim);c.classList.remove('active');return;}matrixRunning=true;c.classList.add('active');const ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=Math.floor(c.width/16),drops=Array(cols).fill(1);function draw(){if(!matrixRunning)return;ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#33ff33';ctx.font='14px Amiri,serif';for(let i=0;i<drops.length;i++){ctx.fillText(ARABIC_CHARS[Math.floor(Math.random()*ARABIC_CHARS.length)],i*16,drops[i]*16);if(drops[i]*16>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;}matrixAnim=requestAnimationFrame(draw);}draw();}
+let logoClickCount=0,logoClickTimer=null;function initMatrixTrigger(){const l=$('logoWrap');if(!l)return;l.style.cursor='pointer';l.addEventListener('click',()=>{logoClickCount++;if(logoClickTimer)clearTimeout(logoClickTimer);if(logoClickCount>=3){logoClickCount=0;toggleMatrix();}else logoClickTimer=setTimeout(()=>logoClickCount=0,500);});}
+function initDebug(){if(!new URLSearchParams(window.location.search).has('debug'))return;const p=$('debugPanel');if(!p)return;p.classList.add('active');const f=$('debugFps'),m=$('debugMem');let frames=0,last=performance.now();function tick(){frames++;const now=performance.now();if(now-last>=1000){if(f)f.textContent=frames+' FPS';if(m&&performance.memory)m.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' MB';frames=0;last=now;}requestAnimationFrame(tick);}requestAnimationFrame(tick);}
+function initShakeReport(){if(!window.DeviceMotionEvent)return;let last=0;window.addEventListener('devicemotion',e=>{const a=e.accelerationIncludingGravity;if(!a)return;if(Math.abs(a.x)+Math.abs(a.y)+Math.abs(a.z)>25&&Date.now()-last>2000){last=Date.now();generateBugReport();}});}
+function generateBugReport(){if(!logContainer)logContainer=$('logContainer');const r={app:document.title,version:APP_VERSION,timestamp:new Date().toISOString(),userAgent:navigator.userAgent,theme:document.documentElement.dataset.theme,lang:currentLang,log:(logContainer?Array.from(logContainer.children).map(d=>d.textContent):[]).slice(-50)};const blob=new Blob([JSON.stringify(r,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`bug-report-${Date.now()}.json`;a.click();URL.revokeObjectURL(url);}
+const logHistory=[];function logWithHistory(msg,type){logHistory.push({msg,type,ts:Date.now()});}function initTimeTravel(){document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='z'){const p=$('logPanel');if(!p||!p.classList.contains('open'))return;e.preventDefault();if(!logContainer)logContainer=$('logContainer');if(logContainer&&logContainer.lastChild){logContainer.removeChild(logContainer.lastChild);logHistory.pop();playSound('click');}}});}
+let typewriterEnabled=true;async function typewriterAppend(el,text){el.classList.add('typing');el.textContent='';for(let i=0;i<text.length;i++){el.textContent+=text[i];if(el.parentElement)el.parentElement.scrollTop=el.parentElement.scrollHeight;await sleep(12+Math.random()*18);}el.classList.remove('typing');}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date());}catch{}}
+let recognition=null,whisperActive=false;function toggleWhisper(){if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){log('Speech not supported','error');return;}if(whisperActive){if(recognition)recognition.stop();whisperActive=false;return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;recognition=new SR();recognition.continuous=true;recognition.interimResults=false;recognition.lang=currentLang==='ar'?'ar-DZ':currentLang==='fr'?'fr-FR':'en-US';recognition.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();if(t)log(t,'rx');}};recognition.onerror=e=>log(`Error: ${e.error}`,'error');recognition.onend=()=>{if(whisperActive)recognition.start();};recognition.start();whisperActive=true;}
+function initGhostUsers(){const gc=document.createElement('canvas');gc.style.cssText='position:fixed;inset:0;z-index:9998;pointer-events:none;';document.body.appendChild(gc);const gctx=gc.getContext('2d');gc.width=innerWidth;gc.height=innerHeight;window.addEventListener('resize',()=>{gc.width=innerWidth;gc.height=innerHeight;});function draw(){gctx.clearRect(0,0,gc.width,gc.height);requestAnimationFrame(draw);}requestAnimationFrame(draw);}
+const THEME_MELODIES={'mosque-gold':[330,392,523],'zellige':[440,523,659],'andalus':[294,370,440],'space':[523,659,784],'jungle':[262,330,392],'robot':[440,554,659],'riad':[349,440,523],'medina':[294,349,440],'retro':[523,262,523]};function playThemeMelody(name){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const notes=THEME_MELODIES[name];if(!notes)return;const t=audioCtx.currentTime;notes.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=freq;g.gain.value=0.06;g.gain.exponentialRampToValueAtTime(0.001,t+0.2+i*0.15+0.15);o.start(t+i*0.15);o.stop(t+i*0.15+0.2);});}
+let breathingActive=false,dhikrCount=0;function toggleBreathing(){const bands=document.querySelectorAll('.deco-band');breathingActive=!breathingActive;if(breathingActive)bands.forEach(b=>b.classList.add('breathing'));else{bands.forEach(b=>b.classList.remove('breathing'));dhikrCount=0;}}function incrementDhikr(){if(!breathingActive)return;dhikrCount++;playSound('click');const c=$('dhikrCounter');if(c)c.textContent=dhikrCount;}
+const PET_STATES={idle:{class:'pet-idle',duration:0},happy:{class:'pet-happy',duration:3000},sad:{class:'pet-sad',duration:3000},sleep:{class:'pet-sleep',duration:0}};let petState='idle',petIdleTimer=null,petSleepTimer=null;function initPixelPet(){const pet=document.createElement('div');pet.id='pixelPet';pet.className='pixel-pet pet-idle';pet.innerHTML=`<img src="${FOOTER_ICON}" alt="Bot"/>`;pet.addEventListener('click',()=>{setPetState('happy');playSound('success');});const f=document.querySelector('.app-footer');if(f)f.insertBefore(pet,f.firstChild);}function setPetState(s){petState=s;const p=$('pixelPet');if(!p)return;p.classList.remove('pet-idle','pet-happy','pet-sad','pet-sleep');p.classList.add(PET_STATES[s].class);if(petIdleTimer)clearTimeout(petIdleTimer);if(PET_STATES[s].duration>0)petIdleTimer=setTimeout(()=>setPetState('idle'),PET_STATES[s].duration);}function resetPetSleep(){if(petSleepTimer)clearTimeout(petSleepTimer);if(petState==='sleep')setPetState('idle');petSleepTimer=setTimeout(()=>setPetState('sleep'),60000);}
+function initLogoTracker(){const l=$('logoWrap');if(!l)return;document.addEventListener('mousemove',e=>{const r=l.getBoundingClientRect();const dx=(e.clientX-(r.left+r.width/2))/(innerWidth/2);const dy=(e.clientY-(r.top+r.height/2))/(innerHeight/2);l.style.transform=`perspective(200px) rotateX(${dy*8}deg) rotateY(${-dx*8}deg)`;});document.addEventListener('mouseleave',()=>{l.style.transition='transform .5s';l.style.transform='';setTimeout(()=>l.style.transition='',500);});}
+let musicActive=false,musicAnim=null;function toggleMusicMode(){if(musicActive){musicActive=false;if(musicAnim)cancelAnimationFrame(musicAnim);document.querySelectorAll('.deco-band').forEach(b=>{b.style.height='';b.style.opacity='';});document.documentElement.style.filter='';return;}log('Music mode requires microphone','info');}
+function initLogResize(){const h=$('logResizeHandle'),p=$('logPanel');if(!h||!p)return;let dragging=false,startX,startW;h.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;startW=p.offsetWidth;document.body.style.cursor='col-resize';document.body.style.userSelect='none';e.preventDefault();});document.addEventListener('mousemove',e=>{if(!dragging)return;const dx=(document.documentElement.dir==='rtl')?(e.clientX-startX):(startX-e.clientX);document.documentElement.style.setProperty('--log-width',Math.max(200,Math.min(startW+dx,window.innerWidth*0.6))+'px');});document.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;document.body.style.cursor='';document.body.style.userSelect='';});try{const saved=localStorage.getItem('wdiy-log-width');if(saved)document.documentElement.style.setProperty('--log-width',saved);}catch{}}
+const FOCUSABLE='button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';function openPanel(pid,oid){const sb=$(pid),ov=$(oid);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open');}function closePanel(pid,oid,rid){const sb=$(pid),ov=$(oid);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open');const b=$(rid);if(b)b.focus();}function openHelp(){openPanel('helpPanel','helpOverlay');}function closeHelp(){closePanel('helpPanel','helpOverlay','helpBtn');}let logWasOpen=false;function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay');}function closeSettings(){closePanel('settingsPanel','settingsOverlay','settingsBtn');if(logWasOpen){openLog();logWasOpen=false;}}function openLog(){const sb=$('logPanel');if(sb)sb.classList.add('open');document.body.classList.add('log-open');}function closeLog(){const sb=$('logPanel');if(sb)sb.classList.remove('open');document.body.classList.remove('log-open');}function toggleLog(){const sb=$('logPanel');if(sb&&sb.classList.contains('open'))closeLog();else openLog();}function closeAllPanels(){closeHelp();closeSettings();closeLog();}function initHelpTabs(){document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const id='help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1);const target=$(id);if(target)target.classList.add('active');});});}function trapFocus(e){for(const id of['helpPanel','settingsPanel','logPanel']){const sb=$(id);if(!sb||!sb.classList.contains('open'))continue;const focusable=sb.querySelectorAll(FOCUSABLE);if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}return;}}
+
+/* ══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: BGP SIMULATOR
+   ══════════════════════════════════════════════════════════════ */
+const AS_NODES=[
+  {id:0,label:'AS 100',x:100,y:200,color:'#4fc3f7',prefix:'10.0.0.0/8',role:'origin'},
+  {id:1,label:'AS 200',x:250,y:80,color:'#66bb6a',prefix:'172.16.0.0/12',role:'transit'},
+  {id:2,label:'AS 300',x:400,y:80,color:'#ffa726',prefix:'192.168.0.0/16',role:'transit'},
+  {id:3,label:'AS 400',x:550,y:200,color:'#ab47bc',prefix:'203.0.113.0/24',role:'destination'},
+  {id:4,label:'AS 500',x:250,y:320,color:'#ef5350',prefix:'198.51.100.0/24',role:'attacker'},
+  {id:5,label:'AS 600',x:400,y:320,color:'#78909c',prefix:'100.64.0.0/10',role:'transit'},
+];
+const AS_LINKS=[[0,1],[0,4],[1,2],[2,3],[4,5],[5,3],[1,5]];
+let hijacked=false,bgpCanvas,bgpCtx,selectedAS=null,trafficAnim=null;
+
+function drawBgpTopology(){
+  if(!bgpCtx)return;const c=bgpCanvas,ctx=bgpCtx;
+  ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#0a0e1a';ctx.fillRect(0,0,c.width,c.height);
+  // Links
+  AS_LINKS.forEach(([a,b])=>{
+    ctx.beginPath();ctx.moveTo(AS_NODES[a].x,AS_NODES[a].y);ctx.lineTo(AS_NODES[b].x,AS_NODES[b].y);
+    const isHijackPath=hijacked&&((a===4||b===4)||(a===5||b===5));
+    ctx.strokeStyle=isHijackPath?'rgba(244,67,54,0.6)':'rgba(255,255,255,0.15)';ctx.lineWidth=isHijackPath?3:1;ctx.stroke();
+  });
+  // Nodes
+  AS_NODES.forEach((node,i)=>{
+    const isSelected=selectedAS===i;const isAttacker=node.role==='attacker';
+    ctx.beginPath();ctx.arc(node.x,node.y,28,0,Math.PI*2);
+    ctx.fillStyle=(isAttacker&&hijacked)?'rgba(244,67,54,0.3)':node.color+'25';ctx.fill();
+    ctx.strokeStyle=isSelected?'#fff':node.color;ctx.lineWidth=isSelected?3:2;ctx.stroke();
+    if(isAttacker&&hijacked){ctx.beginPath();ctx.arc(node.x,node.y,34,0,Math.PI*2);ctx.strokeStyle='#ef535080';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);}
+    ctx.fillStyle='#fff';ctx.font='bold 11px Orbitron,sans-serif';ctx.textAlign='center';ctx.fillText(node.label,node.x,node.y+4);
+    ctx.font='9px monospace';ctx.fillStyle=node.color;ctx.fillText(node.prefix,node.x,node.y+44);
+    const icons={origin:'\uD83C\uDFE2',transit:'\uD83D\uDD00',destination:'\uD83C\uDFAF',attacker:'\uD83D\uDC80'};
+    ctx.font='14px sans-serif';ctx.fillText(icons[node.role]||'',node.x,node.y-18);
+  });
+}
+
+function animateTraffic(pathIndices,color,duration=1500){
+  return new Promise(resolve=>{
+    const start=performance.now();const pts=pathIndices.map(i=>AS_NODES[i]);
+    function frame(now){
+      const t=Math.min((now-start)/duration,1);drawBgpTopology();
+      const totalSegs=pts.length-1;const seg=Math.min(Math.floor(t*totalSegs),totalSegs-1);
+      const segT=(t*totalSegs)-seg;
+      if(seg<pts.length-1){
+        const x=pts[seg].x+(pts[seg+1].x-pts[seg].x)*segT;
+        const y=pts[seg].y+(pts[seg+1].y-pts[seg].y)*segT;
+        bgpCtx.beginPath();bgpCtx.arc(x,y,8,0,Math.PI*2);bgpCtx.fillStyle=color;bgpCtx.fill();
+        bgpCtx.beginPath();bgpCtx.arc(x,y,12,0,Math.PI*2);bgpCtx.strokeStyle=color+'80';bgpCtx.lineWidth=2;bgpCtx.stroke();
+        // Trail
+        for(let s=0;s<=seg;s++){bgpCtx.beginPath();bgpCtx.moveTo(pts[s].x,pts[s].y);bgpCtx.lineTo(s<seg?pts[s+1].x:x,s<seg?pts[s+1].y:y);bgpCtx.strokeStyle=color;bgpCtx.lineWidth=3;bgpCtx.stroke();}
+      }
+      if(t<1)requestAnimationFrame(frame);else resolve();
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+async function injectBadRoute(){
+  if(hijacked)return;const s=LANG[currentLang];
+  showToast(s.injecting);log(s.injecting,'error');
+  await sleep(800);
+  hijacked=true;drawBgpTopology();
+  hideToast();log(s.injected,'error');
+  updateRouteTable();setStatus(true);
+}
+
+async function sendTraffic(){
+  const s=LANG[currentLang];log(s.trafficSent,'tx');
+  if(hijacked){
+    await animateTraffic([0,4,5,3],'#ef5350',2000);
+    log(s.trafficHijacked,'error');
+  }else{
+    await animateTraffic([0,1,2,3],'#4fc3f7',2000);
+    log(s.trafficNormal,'success');
+  }
+  drawBgpTopology();
+}
+
+function resetNetwork(){
+  const s=LANG[currentLang];hijacked=false;drawBgpTopology();updateRouteTable();
+  log(s.resetDone,'success');
+}
+
+function updateRouteTable(){
+  const el=$('routeTable');if(!el)return;el.style.display='block';const s=LANG[currentLang];
+  let html=`<h3 style="margin:0 0 .5rem;">${s.asLabel} Route Tables</h3>`;
+  const normalPath='AS100 > AS200 > AS300 > AS400';
+  const hijackPath='AS100 > AS500 > AS600 > AS400';
+  html+=`<div style="display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">`;
+  AS_NODES.forEach(node=>{
+    const isAttacker=node.role==='attacker';
+    const border=isAttacker&&hijacked?'#ef5350':node.color;
+    html+=`<div style="background:var(--glass-bg,rgba(255,255,255,0.05));border:1px solid ${border}40;border-radius:8px;padding:.5rem;font-size:.75rem;">
+      <strong style="color:${node.color};">${node.label}</strong>
+      <div style="margin-top:.3rem;">${s.prefix}: ${node.prefix}</div>
+      <div>${s.path}: ${hijacked&&isAttacker?hijackPath:normalPath}</div>
+      <div>${s.status}: <span style="color:${isAttacker&&hijacked?'#ef5350':'#66bb6a'};">${isAttacker&&hijacked?s.malicious:s.legitimate}</span></div>
+    </div>`;
+  });
+  html+='</div>';el.innerHTML=html;
+}
+
+async function analyzeAttack(){
+  const s=LANG[currentLang];const el=$('analysisResults');if(!el)return;
+  showToast(s.analyzing);log(s.analyzing,'tx');await sleep(1000);
+  const affected=hijacked?4:0;const color=hijacked?'#ef5350':'#66bb6a';
+  el.innerHTML=`<div style="background:var(--glass-bg,rgba(255,255,255,0.05));border:2px solid ${color}40;border-radius:12px;padding:1rem;">
+    <h4 style="color:${color};margin:0 0 .5rem;">${hijacked?'ATTACK DETECTED':'Network Healthy'}</h4>
+    <div style="font-size:.85rem;line-height:1.8;">
+      <div>Status: <strong style="color:${color};">${hijacked?s.routeHijacked:s.routeNormal}</strong></div>
+      <div>Affected ASes: <strong>${affected}</strong></div>
+      <div>Attacker: <strong>${hijacked?'AS 500 (198.51.100.0/24)':'None'}</strong></div>
+      <div>Hijacked prefix: <strong>${hijacked?'203.0.113.0/24 (AS 400)':'None'}</strong></div>
+      <div>Normal path: AS100 > AS200 > AS300 > AS400</div>
+      ${hijacked?'<div style="color:#ef5350;">Hijacked path: AS100 > AS500 > AS600 > AS400</div>':''}
+      <div style="margin-top:.5rem;padding:.5rem;background:rgba(255,255,255,0.03);border-radius:4px;">${hijacked?'Recommendation: Deploy RPKI and ROV filters to prevent route hijacking.':'All routes are validated. No anomalies detected.'}</div>
+    </div>
+  </div>`;
+  el.style.display='block';hideToast();log(s.analysisDone,'success');
+}
+
+function initBgpSimulator(){
+  bgpCanvas=$('bgpCanvas');if(bgpCanvas){bgpCtx=bgpCanvas.getContext('2d');drawBgpTopology();
+    bgpCanvas.addEventListener('click',e=>{const rect=bgpCanvas.getBoundingClientRect();const mx=(e.clientX-rect.left)*(bgpCanvas.width/rect.width);const my=(e.clientY-rect.top)*(bgpCanvas.height/rect.height);
+      selectedAS=null;AS_NODES.forEach((node,i)=>{const dx=mx-node.x,dy=my-node.y;if(Math.sqrt(dx*dx+dy*dy)<30)selectedAS=i;});drawBgpTopology();if(selectedAS!==null)log(`Selected ${AS_NODES[selectedAS].label}`,'info');});
+  }
+  const ib=$('injectBtn');if(ib)ib.addEventListener('click',injectBadRoute);
+  const rb=$('resetBtn');if(rb)rb.addEventListener('click',resetNetwork);
+  const tb=$('trafficBtn');if(tb)tb.addEventListener('click',sendTraffic);
+  const ab=$('analyzeBtn');if(ab)ab.addEventListener('click',analyzeAttack);
+  updateRouteTable();
+}
+
+const styleTag=document.createElement('style');styleTag.textContent=`@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}`;document.head.appendChild(styleTag);
+
+/* ═══════ INIT ═══════ */
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  const cb=$('clearLogBtn'),cpb=$('copyLogBtn'),exb=$('exportLogBtn');if(cb)cb.onclick=clearLog;if(cpb)cpb.onclick=copyLog;if(exb)exb.onclick=exportLog;initLogFilters();
+  const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hOv=$('helpOverlay');if(hBtn)hBtn.onclick=openHelp;if(hClose)hClose.onclick=closeHelp;if(hOv)hOv.onclick=closeHelp;initHelpTabs();
+  const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sOv=$('settingsOverlay');if(sBtn)sBtn.onclick=openSettings;if(sClose)sClose.onclick=closeSettings;if(sOv)sOv.onclick=closeSettings;
+  const lBtn=$('logBtn'),lClose=$('logCloseBtn');if(lBtn)lBtn.onclick=toggleLog;if(lClose)lClose.onclick=closeLog;initLogResize();
+  const soundTgl=$('soundToggle');if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled);}catch{}if(soundEnabled)playSound('click');});}
+  const whisperBtn=$('whisperBtn');if(whisperBtn)whisperBtn.onclick=toggleWhisper;
+  const breathBtn=$('breathingBtn'),dhikrDisp=$('dhikrDisplay'),dhikrBtn=$('dhikrBtn');if(breathBtn)breathBtn.onclick=()=>{toggleBreathing();if(dhikrDisp)dhikrDisp.style.display=breathingActive?'flex':'none';};if(dhikrBtn)dhikrBtn.onclick=incrementDhikr;
+  const musicBtn=$('musicBtn');if(musicBtn)musicBtn.onclick=toggleMusicMode;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels();if(e.key==='Tab')trapFocus(e);});
+  const langSel=$('langSelect');if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect');if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sL=localStorage.getItem('wdiy-lang'),sT=localStorage.getItem('wdiy-theme');if(sT)setTheme(sT);if(sL)setLanguage(sL);}catch{}
+  checkVersion();onAppMessage(msg=>log(`${msg.from}: ${msg.type}`,'rx'));
+  initKonami();initMorseLog();initMatrixTrigger();initDebug();initShakeReport();initTimeTravel();initHijriDate();initGhostUsers();initPixelPet();initLogoTracker();
+  initBgpSimulator();
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

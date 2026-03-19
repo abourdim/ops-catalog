@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RF Waterfall — Workshop DIY</title>
+  <meta name="description" content="Live waterfall showing WiFi, Bluetooth, FM, keyfobs — Workshop-DIY educational web app." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="RF Waterfall — Workshop DIY" />
+  <meta property="og:description" content="Live waterfall showing WiFi, Bluetooth, FM, keyfobs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">RF Waterfall — Spectrum Display</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">RF Waterfall</h1>
+            <div class="subtitle" data-i18n="subtitle">RF Waterfall — Spectrum Display</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#x1F4DC;</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#x1F30A;</span> <span data-i18n="mainSection">RF Waterfall Display</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Live waterfall showing WiFi, Bluetooth, FM, keyfobs</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Waterfall Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="waterfallCanvas" width="780" height="300" style="width:100%;display:block;background:#000;"></canvas>
+          <!-- Signal labels overlay -->
+          <div id="signalLabels" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;"></div>
+        </div>
+
+        <!-- Controls row -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="startBtn" class="primary"><span class="btn-icon">&#x25B6;</span> <span data-i18n="startScan">Start Scan</span></button>
+          <button id="stopBtn" disabled><span class="btn-icon">&#x23F9;</span> <span data-i18n="stopScan">Stop</span></button>
+          <button id="clearWfBtn"><span class="btn-icon">&#x1F9F9;</span> <span data-i18n="clearWf">Clear</span></button>
+          <div style="flex:1;"></div>
+          <label class="ctrl-label" style="margin:0;" data-i18n="speed">Speed:</label>
+          <input type="range" id="speedSlider" class="range-ctrl" min="20" max="200" value="60" style="width:100px;">
+        </div>
+
+        <!-- Frequency tuner -->
+        <div class="control-section" style="margin-bottom:8px;">
+          <div class="section-header">
+            <div class="section-title">&#x1F50D; <span data-i18n="freqTuner">Frequency Tuner</span></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <label class="ctrl-label" style="margin:0;" data-i18n="centerFreq">Center (MHz):</label>
+            <input type="range" id="centerFreq" class="range-ctrl" min="0" max="6000" value="2450" step="10" style="flex:1;">
+            <span id="centerFreqVal" style="font-family:var(--font-h);font-size:.85rem;min-width:70px;text-align:center;">2450 MHz</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;">
+            <label class="ctrl-label" style="margin:0;" data-i18n="spanLabel">Span (MHz):</label>
+            <input type="range" id="spanSlider" class="range-ctrl" min="50" max="6000" value="500" step="50" style="flex:1;">
+            <span id="spanVal" style="font-family:var(--font-h);font-size:.85rem;min-width:70px;text-align:center;">500 MHz</span>
+          </div>
+          <!-- Quick presets -->
+          <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
+            <button class="btn-sm preset-btn" data-center="98" data-span="40">FM</button>
+            <button class="btn-sm preset-btn" data-center="433" data-span="20">ISM 433</button>
+            <button class="btn-sm preset-btn" data-center="915" data-span="50">ISM 915</button>
+            <button class="btn-sm preset-btn" data-center="2450" data-span="100">WiFi 2.4</button>
+            <button class="btn-sm preset-btn" data-center="5500" data-span="500">WiFi 5</button>
+            <button class="btn-sm preset-btn" data-center="3000" data-span="6000" data-i18n="fullSpan">Full 0-6GHz</button>
+          </div>
+        </div>
+
+        <!-- Color scale legend -->
+        <div class="control-section">
+          <div class="section-header">
+            <div class="section-title">&#x1F3A8; <span data-i18n="colorScale">Color Scale (dBm)</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:.7rem;color:var(--text-muted);">-120</span>
+            <canvas id="legendCanvas" width="300" height="16" style="flex:1;height:16px;border-radius:4px;"></canvas>
+            <span style="font-size:.7rem;color:var(--text-muted);">0 dBm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — Signal List ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F4E1;</span> <span data-i18n="sectionA">Detected Signals</span></summary>
+        <div class="card">
+          <div id="signalList" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="signalHint">Signals are detected automatically during scanning.</div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Learn ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">RF Spectrum Guide</span></summary>
+        <div class="card">
+          <div id="spectrumGuide" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);"></div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Frequency Database ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">&#x1F4CA;</span> <span data-i18n="sectionC">Frequency Database</span></summary>
+        <div class="card">
+          <div id="freqDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">&#x2753; Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is RF Waterfall?</summary>
+          <p data-i18n="faq_a1">A simulated spectrum display that shows radio frequency activity as a scrolling waterfall plot. Colors indicate signal strength.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">Are these real signals?</summary>
+          <p data-i18n="faq_a2">No. This is a simulation for learning purposes. Real signals require an SDR dongle (like RTL-SDR).</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">How do I tune to a frequency?</summary>
+          <p data-i18n="faq_a3">Use the frequency tuner sliders or click a preset button (FM, WiFi, ISM) to jump to common bands.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Start Scan to begin the waterfall display.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Adjust center frequency and span to zoom into bands.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Use presets to quickly jump to FM, WiFi, or ISM bands.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Watch the signal list for detected transmissions.</p></div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_waterfall_title">Waterfall Display</h3>
+          <p data-i18n="wiki_waterfall">A waterfall plot scrolls downward over time. Each horizontal line represents power across the frequency range. Brighter/warmer colors mean stronger signals.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_bands_title">Common Bands</h3>
+          <p data-i18n="wiki_bands">FM Radio: 88-108 MHz, ISM: 433/915 MHz, WiFi 2.4 GHz: 2400-2483 MHz, BLE: 2402-2480 MHz, WiFi 5 GHz: 5150-5850 MHz.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>EN</option>
+          <option value="fr">FR</option>
+          <option value="ar">&#x1F1E9;&#x1F1FF; &#x0639;&#x0631;&#x0628;&#x064A;</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#x2713;</button>
+      <button class="log-filter" data-filter="error">&#x2717;</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working...</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

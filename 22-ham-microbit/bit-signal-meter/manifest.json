@@ -1,0 +1,13 @@
+{
+  "name": "bit-signal-meter — Workshop DIY",
+  "short_name": "bit-signal-meter",
+  "description": "Signal meter S-meter display on micro:bit 5x5 LED matrix — Workshop-DIY educational web app",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

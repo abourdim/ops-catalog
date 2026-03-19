@@ -1,0 +1,13 @@
+{
+  "name": "ISM Band Explorer — Workshop DIY",
+  "short_name": "ISM Explorer",
+  "description": "Explore 433/868/915 MHz ISM band devices — Workshop-DIY SIGINT app",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

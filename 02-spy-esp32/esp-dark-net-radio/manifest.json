@@ -1,0 +1,13 @@
+{
+  "name": "Dark Net Radio — Private Mesh — Workshop DIY",
+  "short_name": "Dark Net Radio",
+  "description": "Build an offline encrypted WiFi mesh network with ESP32. Learn mesh networking, WiFi AP mode, encryption, and offline communication.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

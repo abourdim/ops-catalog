@@ -1,0 +1,265 @@
+/**
+ * RF Time Machine — Spectrum DVR — Workshop DIY
+ * Record, rewind, and replay RF spectrum waterfall
+ */
+const $=id=>document.getElementById(id);
+const LOGO_SVG=`<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77.14 78.32 253.99 136.25"><path style="stroke:none;fill:currentColor;fill-rule:evenodd" d="M187.4,152.9c.1-.1.2-.2.4-.2c.3,0,2.7-1.1,3.8-1.7l2.6-1.7c3.3-2.2,5.1-3,8.4-3.4c1.2-.2,2.1-.2,3.4,0c6.7.8,11.5,4.9,13.4,11.4c.4,1.3.4,5.5.1,6.7c-1.2,4-2.8,6.4-5.6,8.5c-4.3,3.3-9.9,4.2-14.9,2.3c-1.6-.6-2.7-1.2-4.3-2.4c-2.6-1.8-4-2.6-6.5-3.6l-.7-.3v-7.7z"/></svg>`;
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.2';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(t){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const c=audioCtx.currentTime;switch(t){case'click':o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,c+0.08);o.start(c);o.stop(c+0.08);break;case'success':o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,c+0.3);o.start(c);o.stop(c+0.3);break;case'error':o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,c+0.25);o.start(c);o.stop(c+0.25);break;}}
+
+const LANG={
+  en:{title:'RF Time Machine',subtitle:'⏪ Record and replay spectrum',disconnected:'Disconnected',connected:'Connected',mainSection:'RF Time Machine — Spectrum DVR',mainDesc:'Record, rewind, and replay RF spectrum',sectionA:'Live Spectrum',sectionB:'Recording Info',sectionC:'Spectrum DVR Explained',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',export:'Export',filterAll:'All',theme:'Theme',settings:'⚙️ Settings',language:'Language',help:'❓ Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is a Spectrum DVR?',faq_a1:'A tool that records RF spectrum over time, allowing you to rewind and replay signals.',faq_q2:'Do I need hardware?',faq_a2:'No, this is a simulator. Real spectrum DVR uses an SDR receiver.',faq_q3:'What is a waterfall display?',faq_a3:'A 2D plot: frequency on X, time on Y, signal power as color.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'Click Record to start capturing spectrum frames.',howto_2:'Watch the waterfall build up with simulated signals.',howto_3:'Click Stop then use the timeline scrubber to rewind.',howto_4:'Click Play to replay the recorded spectrum.',wiki_dvr_title:'⏪ Spectrum DVR',wiki_dvr:'Record and replay RF spectrum.',wiki_privacy_title:'🔒 Privacy',wiki_privacy:'All data stays in your browser.',working:'Working...',ready:'⏪ RF Time Machine ready!',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',record:'⏺ Record',stopScan:'⏹ Stop',play:'▶ Play',rewind:'⏪ Rewind',timeline:'Timeline:',framesLabel:'Frames',durationLabel:'Duration',centerLabel:'Center (MHz)',bwLabel:'BW (MHz)',dvrInfo:'A Spectrum DVR records FFT frames over time, creating a rewindable waterfall display. This allows you to go back and analyze signals you may have missed.',recStarted:'⏺ Recording started — 100.0 MHz center',recStopped:'⏹ Recording stopped',playStarted:'▶ Playback started',rewinding:'⏪ Rewinding',signalDetected:'📡 Signal detected at'},
+  fr:{title:'Machine a remonter le temps RF',subtitle:'⏪ Enregistrer et rejouer le spectre',disconnected:'Deconnecte',connected:'Connecte',mainSection:'Machine RF — DVR Spectral',mainDesc:'Enregistrer, rembobiner et rejouer le spectre',sectionA:'Spectre en direct',sectionB:'Info enregistrement',sectionC:'DVR Spectral explique',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',export:'Exporter',filterAll:'Tout',theme:'Theme',settings:'⚙️ Parametres',language:'Langue',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:'Qu\'est-ce qu\'un DVR spectral ?',faq_a1:'Un outil qui enregistre le spectre RF dans le temps pour rembobiner et rejouer.',faq_q2:'Ai-je besoin de materiel ?',faq_a2:'Non, c\'est un simulateur.',faq_q3:'Qu\'est-ce qu\'un waterfall ?',faq_a3:'Un affichage 2D: frequence en X, temps en Y, puissance en couleur.',faq_q4:'Mes donnees sont privees ?',faq_a4:'Oui. Tout est local.',howto_1:'Cliquez Enregistrer pour capturer des trames spectrales.',howto_2:'Observez le waterfall se construire.',howto_3:'Arretez puis utilisez la timeline pour rembobiner.',howto_4:'Cliquez Lecture pour rejouer le spectre.',wiki_dvr_title:'⏪ DVR Spectral',wiki_dvr:'Enregistrer et rejouer le spectre RF.',wiki_privacy_title:'🔒 Confidentialite',wiki_privacy:'Tout reste local.',working:'En cours...',ready:'⏪ Machine RF prete !',t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',logCleared:'Journal efface',copied:'Copie !',copyFail:'Echec',soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Reactif musique',splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Francais',themeChanged:'🎨 Theme →',record:'⏺ Enregistrer',stopScan:'⏹ Arreter',play:'▶ Lecture',rewind:'⏪ Rembobiner',timeline:'Timeline :',framesLabel:'Trames',durationLabel:'Duree',centerLabel:'Centre (MHz)',bwLabel:'BW (MHz)',dvrInfo:'Un DVR spectral enregistre des trames FFT dans le temps pour creer un waterfall rembobinable.',recStarted:'⏺ Enregistrement demarre',recStopped:'⏹ Enregistrement arrete',playStarted:'▶ Lecture demarree',rewinding:'⏪ Rembobinage',signalDetected:'📡 Signal detecte a'},
+  ar:{title:'آلة الزمن RF',subtitle:'⏪ تسجيل واعادة الطيف',disconnected:'غير متصل',connected:'متصل',mainSection:'آلة الزمن RF — مسجل الطيف',mainDesc:'تسجيل وترجيع واعادة تشغيل الطيف',sectionA:'الطيف المباشر',sectionB:'معلومات التسجيل',sectionC:'شرح مسجل الطيف',activityLog:'سجل النشاط',eventsMsg:'الاحداث',clear:'مسح',copy:'نسخ',export:'تصدير',filterAll:'الكل',theme:'المظهر',settings:'⚙️ الاعدادات',language:'اللغة',help:'❓ مساعدة',faq:'اسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',faq_q1:'ما هو مسجل الطيف؟',faq_a1:'اداة تسجل طيف RF عبر الزمن لترجيعه واعادة تشغيله.',faq_q2:'هل احتاج اجهزة؟',faq_a2:'لا، هذا محاكي.',faq_q3:'ما هو عرض الشلال؟',faq_a3:'رسم ثنائي الابعاد: التردد على X، الزمن على Y، القدرة كلون.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء محلي.',howto_1:'اضغط تسجيل لبدء التقاط اطارات الطيف.',howto_2:'شاهد الشلال يتشكل مع الاشارات.',howto_3:'اوقف ثم استخدم شريط الوقت للترجيع.',howto_4:'اضغط تشغيل لاعادة عرض الطيف.',wiki_dvr_title:'⏪ مسجل الطيف',wiki_dvr:'تسجيل واعادة الطيف RF.',wiki_privacy_title:'🔒 الخصوصية',wiki_privacy:'كل البيانات محلية.',working:'جارٍ...',ready:'⏪ آلة الزمن RF جاهزة!',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل',soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',record:'⏺ تسجيل',stopScan:'⏹ ايقاف',play:'▶ تشغيل',rewind:'⏪ ترجيع',timeline:'الجدول الزمني:',framesLabel:'اطارات',durationLabel:'المدة',centerLabel:'المركز (MHz)',bwLabel:'عرض النطاق (MHz)',dvrInfo:'مسجل الطيف يسجل اطارات FFT عبر الزمن لانشاء عرض شلال قابل للترجيع.',recStarted:'⏺ بدا التسجيل',recStopped:'⏹ توقف التسجيل',playStarted:'▶ بدا التشغيل',rewinding:'⏪ ترجيع',signalDetected:'📡 اشارة مكتشفة عند'}
+};
+
+let currentLang='en';
+function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(opt=>{const k=opt.dataset.i18nOpt;if(s[k]!=null)opt.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
+const THEME_MELODIES={'mosque-gold':[330,392,523],'zellige':[440,523,659],'andalus':[294,370,440],'space':[523,659,784],'jungle':[262,330,392],'robot':[440,554,659],'riad':[349,440,523],'medina':[294,349,440],'retro':[523,262,523]};
+function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const sel=$('themeSelect');if(sel)sel.value=n;try{localStorage.setItem('wdiy-theme',n);}catch{}playThemeMelody(n);log(`${LANG[currentLang].themeChanged} ${LANG[currentLang]['t_'+n]||n}`,'info');}
+function playThemeMelody(n){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const notes=THEME_MELODIES[n];if(!notes)return;const t=audioCtx.currentTime;notes.forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=f;g.gain.value=0.06;g.gain.exponentialRampToValueAtTime(0.001,t+0.2+i*0.15+0.15);o.start(t+i*0.15);o.stop(t+i*0.15+0.2);});}
+
+let logContainer,typewriterEnabled=true;const logHistory=[];
+function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${type}`;const ft=`[${new Date().toLocaleTimeString()}] ${msg}`;if(typewriterEnabled){logContainer.appendChild(d);typewriterAppend(d,ft);}else{d.textContent=ft;logContainer.appendChild(d);}logContainer.scrollTop=logContainer.scrollHeight;if(type==='success')playSound('success');else if(type==='error')playSound('error');logHistory.push({msg,type,ts:Date.now()});applyLogFilter();}
+async function typewriterAppend(el,text){el.classList.add('typing');el.textContent='';for(let i=0;i<text.length;i++){el.textContent+=text[i];if(el.parentElement)el.parentElement.scrollTop=el.parentElement.scrollHeight;await new Promise(r=>setTimeout(r,8+Math.random()*12));}el.classList.remove('typing');}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const t=Array.from(logContainer.children).map(d=>d.textContent).join('\n');try{await navigator.clipboard.writeText(t);log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const text=Array.from(logContainer.children).map(d=>d.textContent).join('\n');const blob=new Blob([text],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`rf-timemachine-log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(url);}
+let activeLogFilter='all';
+function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();playSound('click');});});}
+function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(line=>{if(activeLogFilter==='all'){line.style.display='';return;}line.style.display=line.classList.contains(activeLogFilter)?'':'none';});}
+function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block';}if(ms>0)setTimeout(()=>{const e=$('toastIndicator');if(e)e.style.display='none';},ms);}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';}
+function setStatus(c){const pill=$('statusPill'),txt=$('statusText'),s=LANG[currentLang];if(txt)txt.textContent=c?s.connected:s.disconnected;if(pill)pill.classList.toggle('connected',c);}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click');}function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500);}
+function openPanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open');}function closePanel(p,o,r){const sb=$(p),ov=$(o);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open');const btn=$(r);if(btn)btn.focus();}
+function openHelp(){openPanel('helpPanel','helpOverlay');}function closeHelp(){closePanel('helpPanel','helpOverlay','helpBtn');}
+let logWasOpen=false;function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay');}function closeSettings(){closePanel('settingsPanel','settingsOverlay','settingsBtn');if(logWasOpen){openLog();logWasOpen=false;}}
+function openLog(){const sb=$('logPanel');if(sb)sb.classList.add('open');document.body.classList.add('log-open');}function closeLog(){const sb=$('logPanel');if(sb)sb.classList.remove('open');document.body.classList.remove('log-open');}function toggleLog(){const sb=$('logPanel');if(sb&&sb.classList.contains('open'))closeLog();else openLog();}function closeAllPanels(){closeHelp();closeSettings();closeLog();}
+function initHelpTabs(){document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const n=tab.dataset.tab,tid='help'+n.charAt(0).toUpperCase()+n.slice(1);const target=$(tid);if(target)target.classList.add('active');});});}
+function initLogResize(){const handle=$('logResizeHandle'),panel=$('logPanel');if(!handle||!panel)return;let dragging=false,startX,startW;const isRtl=()=>document.documentElement.dir==='rtl';handle.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;startW=panel.offsetWidth;e.preventDefault();});document.addEventListener('mousemove',e=>{if(!dragging)return;const dx=isRtl()?(e.clientX-startX):(startX-e.clientX);document.documentElement.style.setProperty('--log-width',Math.max(200,Math.min(startW+dx,window.innerWidth*0.6))+'px');});document.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;});}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date());}catch{}}
+let whisperActive=false;function toggleWhisper(){whisperActive=!whisperActive;log(whisperActive?'🎤 Whisper on':'🎤 Whisper off','info');}
+let breathingActive=false;function toggleBreathing(){breathingActive=!breathingActive;document.querySelectorAll('.deco-band').forEach(b=>b.classList.toggle('breathing',breathingActive));log(breathingActive?'🫁 Breathing on':'🫁 Breathing off','info');}
+let dhikrCount=0;function incrementDhikr(){if(!breathingActive)return;dhikrCount++;const c=$('dhikrCounter');if(c)c.textContent=dhikrCount;playSound('click');}
+function toggleMusicMode(){log('🎵 Music toggled','info');}
+let matrixRunning=false,matrixAnim=null;const ARABIC_CHARS='بسمالرحنيوكلتعدفقثصضطظغشزخجذأؤئإءةىآ٠١٢٣٤٥٦٧٨٩';
+function toggleMatrix(){const cv=$('matrixCanvas');if(!cv)return;if(matrixRunning){matrixRunning=false;cancelAnimationFrame(matrixAnim);cv.classList.remove('active');return;}matrixRunning=true;cv.classList.add('active');const ctx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const cols=Math.floor(cv.width/16),drops=Array(cols).fill(1);function draw(){if(!matrixRunning)return;ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,cv.width,cv.height);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#33ff33';ctx.font='14px Amiri,serif';for(let i=0;i<drops.length;i++){ctx.fillText(ARABIC_CHARS[Math.floor(Math.random()*ARABIC_CHARS.length)],i*16,drops[i]*16);if(drops[i]*16>cv.height&&Math.random()>0.975)drops[i]=0;drops[i]++;}matrixAnim=requestAnimationFrame(draw);}draw();}
+let logoClickCount=0,logoClickTimer=null;function initMatrixTrigger(){const logo=$('logoWrap');if(!logo)return;logo.style.cursor='pointer';logo.addEventListener('click',()=>{logoClickCount++;if(logoClickTimer)clearTimeout(logoClickTimer);if(logoClickCount>=3){logoClickCount=0;toggleMatrix();}else logoClickTimer=setTimeout(()=>logoClickCount=0,500);});}
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let konamiIdx=0;function initKonami(){document.addEventListener('keydown',e=>{if(e.key===KONAMI[konamiIdx]){konamiIdx++;if(konamiIdx===KONAMI.length){konamiIdx=0;setTheme('retro');log('🕹️ KONAMI!','success');}}else konamiIdx=0;});}
+
+/* =======================================================================
+   RF TIME MACHINE — SPECTRUM DVR SIMULATION ENGINE
+   ======================================================================= */
+const NUM_BINS=256;
+const CENTER_FREQ=100.0; // MHz
+const BW=2.4; // MHz
+const MAX_FRAMES=300; // max recorded frames
+
+let recording=false,playing=false,animFrame=null,simInterval=null;
+let frames=[]; // array of Float32Array(NUM_BINS)
+let playIdx=0;
+let currentFrame=new Float32Array(NUM_BINS);
+
+// Simulated signal sources that come and go
+let signals=[];
+function genSignals(){
+  signals=[];
+  // Persistent FM station
+  signals.push({bin:Math.floor(NUM_BINS*0.5),width:6,power:25+Math.random()*10,drift:0,life:Infinity,age:0});
+  // Some intermittent signals
+  for(let i=0;i<3;i++){
+    signals.push({bin:20+Math.floor(Math.random()*(NUM_BINS-40)),width:2+Math.random()*5,power:10+Math.random()*20,drift:(Math.random()-0.5)*0.3,life:20+Math.floor(Math.random()*60),age:0});
+  }
+}
+
+function gaussNoise(){let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+function generateFrame(){
+  const data=new Float32Array(NUM_BINS);
+  for(let i=0;i<NUM_BINS;i++)data[i]=-90+gaussNoise()*3;
+  signals.forEach(sig=>{
+    if(sig.age>sig.life)return;
+    sig.age++;sig.bin+=sig.drift;
+    for(let i=0;i<NUM_BINS;i++){
+      const dist=(i-sig.bin)/sig.width;
+      data[i]+=sig.power*Math.exp(-0.5*dist*dist);
+    }
+  });
+  // Remove dead signals and occasionally add new ones
+  signals=signals.filter(s=>s.age<=s.life);
+  if(Math.random()<0.05){
+    const newSig={bin:20+Math.floor(Math.random()*(NUM_BINS-40)),width:2+Math.random()*5,power:10+Math.random()*20,drift:(Math.random()-0.5)*0.3,life:15+Math.floor(Math.random()*40),age:0};
+    signals.push(newSig);
+    const freq=(CENTER_FREQ-BW/2+(newSig.bin/NUM_BINS)*BW).toFixed(3);
+    log(`${LANG[currentLang].signalDetected} ${freq} MHz (${newSig.power.toFixed(0)} dB)`,'rx');
+  }
+  return data;
+}
+
+function formatTime(sec){const m=Math.floor(sec/60),s=sec%60;return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+
+function updateInfo(){
+  const rf=$('recFrames');if(rf)rf.textContent=frames.length;
+  const rd=$('recDuration');if(rd)rd.textContent=frames.length+'s';
+  const rc=$('recCenter');if(rc)rc.textContent=CENTER_FREQ.toFixed(1);
+  const rb=$('recBW');if(rb)rb.textContent=BW.toFixed(1);
+  const td=$('timeDisplay');
+  if(td){
+    if(recording)td.textContent=`${formatTime(frames.length)} (REC)`;
+    else if(playing)td.textContent=`${formatTime(playIdx)} / ${formatTime(frames.length)}`;
+    else td.textContent=`${formatTime(frames.length)} / ${formatTime(frames.length)}`;
+  }
+}
+
+function recordTick(){
+  const frame=generateFrame();
+  currentFrame=frame;
+  frames.push(new Float32Array(frame));
+  if(frames.length>MAX_FRAMES)frames.shift();
+  const scrubber=$('timelineScrubber');
+  if(scrubber){scrubber.max=frames.length;scrubber.value=frames.length;}
+  const st=$('scrubTime');if(st)st.textContent='LIVE';
+  updateInfo();
+}
+
+/* ======= WATERFALL DRAWING ======= */
+function powerToColor(power){
+  const norm=Math.max(0,Math.min(1,(power+90)/50));
+  if(norm<0.33)return `rgb(0,0,${Math.floor(norm*3*255)})`;
+  if(norm<0.66){const v=(norm-0.33)*3;return `rgb(${Math.floor(v*255)},${Math.floor(v*200)},${Math.floor((1-v)*255)})`;}
+  const v=(norm-0.66)*3;return `rgb(255,${Math.floor(255-v*100)},${Math.floor(v*255)})`;
+}
+
+function drawWaterfall(){
+  const cv=$('waterfallCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');const W=cv.width,H=cv.height;
+  ctx.fillStyle='#0a0e1a';ctx.fillRect(0,0,W,H);
+
+  const startIdx=playing?Math.max(0,playIdx-H):Math.max(0,frames.length-H);
+  const endIdx=playing?playIdx:frames.length;
+  const visibleFrames=frames.slice(startIdx,endIdx);
+
+  for(let row=0;row<visibleFrames.length;row++){
+    const frame=visibleFrames[row];
+    const y=H-(visibleFrames.length-row);
+    for(let i=0;i<NUM_BINS;i++){
+      const x=(i/NUM_BINS)*W;
+      const w=Math.ceil(W/NUM_BINS)+1;
+      ctx.fillStyle=powerToColor(frame[i]);
+      ctx.fillRect(x,y,w,1);
+    }
+  }
+
+  // Frequency labels
+  ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='center';
+  for(let i=0;i<=6;i++){
+    const f=CENTER_FREQ-BW/2+(i/6)*BW;
+    ctx.fillText(f.toFixed(2),(i/6)*W,H-4);
+  }
+  // Status
+  ctx.textAlign='left';ctx.fillStyle=recording?'rgba(255,80,80,0.8)':'rgba(100,200,255,0.4)';
+  ctx.fillText(recording?'⏺ RECORDING':'DVR — '+formatTime(frames.length),8,14);
+  if(playing){ctx.fillStyle='rgba(80,255,80,0.8)';ctx.fillText(`▶ PLAYING ${formatTime(playIdx)}`,8,26);}
+}
+
+function drawSpectrum(){
+  const cv=$('spectrumCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');const W=cv.width,H=cv.height;
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  ctx.fillStyle='#0a0e1a';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(100,200,255,0.06)';ctx.lineWidth=1;
+  for(let i=0;i<=8;i++){ctx.beginPath();ctx.moveTo((i/8)*W,0);ctx.lineTo((i/8)*W,H);ctx.stroke();}
+  const minDb=-95,maxDb=-40;
+  ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();
+  for(let i=0;i<NUM_BINS;i++){const x=(i/NUM_BINS)*W;const y=H-((currentFrame[i]-minDb)/(maxDb-minDb))*(H-20);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  ctx.stroke();ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fillStyle=accent.replace(')',',0.08)').replace('rgb','rgba');ctx.fill();
+}
+
+function drawLoop(){
+  drawWaterfall();drawSpectrum();
+  if(recording||playing)animFrame=requestAnimationFrame(drawLoop);
+}
+
+function startRecording(){
+  if(recording)return;recording=true;playing=false;setStatus(true);
+  genSignals();frames=[];
+  log(LANG[currentLang].recStarted,'success');
+  simInterval=setInterval(recordTick,200);
+  drawLoop();
+}
+
+function stopAll(){
+  recording=false;playing=false;setStatus(false);
+  if(simInterval){clearInterval(simInterval);simInterval=null;}
+  if(animFrame){cancelAnimationFrame(animFrame);animFrame=null;}
+  log(LANG[currentLang].recStopped,'info');
+  drawWaterfall();drawSpectrum();
+}
+
+function startPlayback(){
+  if(frames.length===0)return;
+  if(recording)stopAll();
+  playing=true;playIdx=0;setStatus(true);
+  log(LANG[currentLang].playStarted,'success');
+  function playTick(){
+    if(!playing||playIdx>=frames.length){playing=false;setStatus(false);updateInfo();drawWaterfall();drawSpectrum();return;}
+    currentFrame=frames[playIdx];playIdx++;
+    const scrubber=$('timelineScrubber');if(scrubber)scrubber.value=playIdx;
+    const st=$('scrubTime');if(st)st.textContent=formatTime(playIdx);
+    updateInfo();
+    setTimeout(playTick,100);
+  }
+  drawLoop();playTick();
+}
+
+function rewindToStart(){
+  if(recording)stopAll();
+  playIdx=0;playing=false;
+  if(frames.length>0)currentFrame=frames[0];
+  const scrubber=$('timelineScrubber');if(scrubber)scrubber.value=0;
+  const st=$('scrubTime');if(st)st.textContent=formatTime(0);
+  log(LANG[currentLang].rewinding,'info');
+  updateInfo();drawWaterfall();drawSpectrum();
+}
+
+function scrubTo(idx){
+  if(frames.length===0)return;
+  idx=Math.max(0,Math.min(idx,frames.length-1));
+  playIdx=idx;currentFrame=frames[idx];
+  const st=$('scrubTime');if(st)st.textContent=formatTime(idx);
+  updateInfo();drawWaterfall();drawSpectrum();
+}
+
+/* ======= INIT ======= */
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  const cb=$('clearLogBtn'),cpb=$('copyLogBtn'),exb=$('exportLogBtn');if(cb)cb.onclick=clearLog;if(cpb)cpb.onclick=copyLog;if(exb)exb.onclick=exportLog;initLogFilters();
+  const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hOv=$('helpOverlay');if(hBtn)hBtn.onclick=openHelp;if(hClose)hClose.onclick=closeHelp;if(hOv)hOv.onclick=closeHelp;initHelpTabs();
+  const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sOv=$('settingsOverlay');if(sBtn)sBtn.onclick=openSettings;if(sClose)sClose.onclick=closeSettings;if(sOv)sOv.onclick=closeSettings;
+  const lBtn=$('logBtn'),lClose=$('logCloseBtn');if(lBtn)lBtn.onclick=toggleLog;if(lClose)lClose.onclick=closeLog;initLogResize();
+  const soundTgl=$('soundToggle');if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled);}catch{}});}
+  const whisperBtn=$('whisperBtn');if(whisperBtn)whisperBtn.onclick=toggleWhisper;
+  const breathBtn=$('breathingBtn'),dhikrDisp=$('dhikrDisplay'),dhikrBtn=$('dhikrBtn');if(breathBtn)breathBtn.onclick=()=>{toggleBreathing();if(dhikrDisp)dhikrDisp.style.display=breathingActive?'flex':'none';};if(dhikrBtn)dhikrBtn.onclick=incrementDhikr;
+  const musicBtn=$('musicBtn');if(musicBtn)musicBtn.onclick=toggleMusicMode;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels();});
+  const langSel=$('langSelect');if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect');if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sL=localStorage.getItem('wdiy-lang'),sT=localStorage.getItem('wdiy-theme');if(sT)setTheme(sT);if(sL)setLanguage(sL);}catch{}
+  initKonami();initMatrixTrigger();initHijriDate();
+
+  // App-specific buttons
+  const recBtn=$('recordBtn'),stopBtn=$('stopBtn'),playBtn=$('playBtn'),rewBtn=$('rewindBtn');
+  if(recBtn)recBtn.onclick=startRecording;
+  if(stopBtn)stopBtn.onclick=stopAll;
+  if(playBtn)playBtn.onclick=startPlayback;
+  if(rewBtn)rewBtn.onclick=rewindToStart;
+
+  const scrubber=$('timelineScrubber');
+  if(scrubber)scrubber.addEventListener('input',()=>{if(!recording)scrubTo(parseInt(scrubber.value));});
+
+  drawWaterfall();drawSpectrum();
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

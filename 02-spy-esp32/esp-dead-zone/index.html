@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dead Zone — Device Detector — Workshop DIY</title>
+  <meta name="description" content="Detect all WiFi devices in range. Find hidden phones, spot cameras, discover who's nearby. Learn about WiFi probe requests, device fingerprinting and wireless surveillance." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dead Zone — Device Detector — Workshop DIY" />
+  <meta property="og:description" content="Detect all WiFi devices in range. Find hidden phones, spot cameras, discover who's nearby." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">📵 Find every WiFi device around you</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">Dead Zone — Device Detector</h1>
+            <div class="subtitle" data-i18n="subtitle">📵 Find every WiFi device around you</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD — DEVICE RADAR ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">📵</span> <span data-i18n="mainSection">Device Radar</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Scan for WiFi devices in range</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Radar Canvas -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;padding:0.5rem 0;">
+          <canvas id="radarCanvas" width="340" height="340" style="width:100%;max-width:340px;border-radius:50%;border:2px solid var(--accent, #d4a03c);background:rgba(0,0,0,0.3);"></canvas>
+        </div>
+
+        <!-- Scan Controls -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;padding:0.5rem 0;">
+          <button id="scanBtn" class="btn-sm primary"><span class="btn-icon">📡</span> <span data-i18n="startScan">Start Scan</span></button>
+          <button id="clearDevicesBtn" class="btn-sm"><span class="btn-icon">🗑️</span> <span data-i18n="clearDevices">Clear</span></button>
+          <button id="exportDevicesBtn" class="btn-sm"><span class="btn-icon">💾</span> <span data-i18n="exportDevices">Export</span></button>
+        </div>
+
+        <!-- Stats Row -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;padding:0.5rem 0;">
+          <div class="stat-box" style="text-align:center;padding:0.5rem 1rem;border-radius:8px;background:rgba(255,255,255,0.05);min-width:80px;">
+            <div style="font-size:1.6rem;font-weight:bold;font-family:'Orbitron',monospace;color:var(--accent,#d4a03c);" id="deviceCount">0</div>
+            <div style="font-size:0.7rem;opacity:0.7;" data-i18n="devicesFound">Devices Found</div>
+          </div>
+          <div class="stat-box" style="text-align:center;padding:0.5rem 1rem;border-radius:8px;background:rgba(255,255,255,0.05);min-width:80px;">
+            <div style="font-size:1.6rem;font-weight:bold;font-family:'Orbitron',monospace;color:var(--accent,#d4a03c);" id="probeCount">0</div>
+            <div style="font-size:0.7rem;opacity:0.7;" data-i18n="probeRequests">Probe Requests</div>
+          </div>
+          <div class="stat-box" style="text-align:center;padding:0.5rem 1rem;border-radius:8px;background:rgba(255,255,255,0.05);min-width:80px;">
+            <div style="font-size:1.6rem;font-weight:bold;font-family:'Orbitron',monospace;color:var(--accent,#d4a03c);" id="vendorCount">0</div>
+            <div style="font-size:0.7rem;opacity:0.7;" data-i18n="uniqueVendors">Unique Vendors</div>
+          </div>
+          <div class="stat-box" style="text-align:center;padding:0.5rem 1rem;border-radius:8px;background:rgba(255,255,255,0.05);min-width:80px;">
+            <div style="font-size:1.6rem;font-weight:bold;font-family:'Orbitron',monospace;" id="scanStatus" data-i18n="idle">IDLE</div>
+            <div style="font-size:0.7rem;opacity:0.7;" data-i18n="scanState">Scan State</div>
+          </div>
+        </div>
+
+        <!-- Vendor Lookup -->
+        <div style="display:flex;gap:0.5rem;padding:0.5rem 0;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="macLookupInput" class="chat-input" placeholder="AA:BB:CC:DD:EE:FF" style="flex:1;min-width:150px;font-family:'Orbitron',monospace;font-size:0.8rem;" />
+          <button id="macLookupBtn" class="btn-sm"><span class="btn-icon">🔍</span> <span data-i18n="lookupVendor">Lookup</span></button>
+        </div>
+        <div id="lookupResult" style="font-size:0.8rem;padding:0.25rem 0;opacity:0.8;font-family:'Orbitron',monospace;"></div>
+
+        <!-- Discovered Devices Table -->
+        <div style="overflow-x:auto;margin-top:0.5rem;">
+          <table id="deviceTable" style="width:100%;border-collapse:collapse;font-size:0.75rem;font-family:'Orbitron',monospace;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--accent, #d4a03c);text-align:left;opacity:0.8;">
+                <th style="padding:0.4rem 0.3rem;" data-i18n="thMAC">MAC</th>
+                <th style="padding:0.4rem 0.3rem;" data-i18n="thVendor">Vendor</th>
+                <th style="padding:0.4rem 0.3rem;" data-i18n="thRSSI">RSSI</th>
+                <th style="padding:0.4rem 0.3rem;" data-i18n="thType">Type</th>
+                <th style="padding:0.4rem 0.3rem;" data-i18n="thProbes">Probes</th>
+                <th style="padding:0.4rem 0.3rem;" data-i18n="thSeen">Last Seen</th>
+              </tr>
+            </thead>
+            <tbody id="deviceTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — Probe Request Analysis ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">📡</span> <span data-i18n="sectionA">Probe Request Analysis</span></summary>
+        <div class="card">
+          <p style="font-size:0.85rem;opacity:0.85;margin-bottom:0.75rem;" data-i18n="probeDesc">Probe requests reveal which networks a device has previously connected to. This exposes travel history, home/work locations, and personal habits.</p>
+
+          <!-- Probe request live feed -->
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="probeFeed">Live Probe Feed</div>
+            <div id="probeFeed" style="max-height:200px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:0.5rem;font-family:'Orbitron',monospace;font-size:0.7rem;"></div>
+          </div>
+
+          <!-- SSID History Cloud -->
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="ssidCloud">Discovered SSIDs</div>
+            <div id="ssidCloud" style="display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.5rem;background:rgba(0,0,0,0.2);border-radius:8px;min-height:40px;"></div>
+          </div>
+
+          <!-- Privacy Risk Meter -->
+          <div>
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="privacyRisk">Privacy Risk Assessment</div>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;" id="riskCards"></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Device Fingerprinting ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔬</span> <span data-i18n="sectionB">Device Fingerprinting</span></summary>
+        <div class="card">
+          <p style="font-size:0.85rem;opacity:0.85;margin-bottom:0.75rem;" data-i18n="fingerprintDesc">Each device has unique characteristics beyond its MAC address. Analyze vendor patterns, signal behavior, and probe timing to identify device types.</p>
+
+          <!-- Device type breakdown -->
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="deviceBreakdown">Device Type Breakdown</div>
+            <div id="typeBreakdown" style="display:flex;flex-wrap:wrap;gap:0.5rem;"></div>
+          </div>
+
+          <!-- Vendor distribution -->
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="vendorDist">Vendor Distribution</div>
+            <div id="vendorBars" style="display:flex;flex-direction:column;gap:0.3rem;"></div>
+          </div>
+
+          <!-- Signal strength histogram -->
+          <div>
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="signalHist">Signal Strength Map</div>
+            <canvas id="signalCanvas" width="600" height="160" style="width:100%;max-width:600px;border-radius:8px;background:rgba(0,0,0,0.2);"></canvas>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Surveillance Detection ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🕵️</span> <span data-i18n="sectionC">Surveillance Detection</span></summary>
+        <div class="card">
+          <p style="font-size:0.85rem;opacity:0.85;margin-bottom:0.75rem;" data-i18n="survDesc">Identify hidden cameras, tracking devices, and suspicious always-on devices. Learn how to detect covert wireless surveillance equipment.</p>
+
+          <!-- Threat level indicator -->
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="threatLevel">Threat Level</div>
+            <div id="threatMeter" style="height:30px;border-radius:8px;background:rgba(0,0,0,0.3);overflow:hidden;position:relative;">
+              <div id="threatBar" style="height:100%;width:0%;transition:width 0.5s;border-radius:8px;background:linear-gradient(90deg,#33ff33,#ffcc00,#ff3333);"></div>
+              <span id="threatLabel" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:bold;font-family:'Orbitron',monospace;" data-i18n="safe">SAFE</span>
+            </div>
+          </div>
+
+          <!-- Suspicious devices list -->
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="suspDevices">Suspicious Devices</div>
+            <div id="suspiciousList" style="display:flex;flex-direction:column;gap:0.4rem;"></div>
+            <div id="noSuspicious" style="font-size:0.8rem;opacity:0.6;padding:0.5rem;" data-i18n="noSuspicious">No suspicious devices detected yet. Start a scan.</div>
+          </div>
+
+          <!-- Detection tips -->
+          <div>
+            <div style="font-weight:bold;margin-bottom:0.5rem;font-size:0.85rem;" data-i18n="detectionTips">Detection Tips</div>
+            <div style="font-size:0.8rem;opacity:0.8;display:flex;flex-direction:column;gap:0.3rem;">
+              <div data-i18n="tip1">🔴 Hidden cameras often use MAC prefixes from Shenzhen manufacturers</div>
+              <div data-i18n="tip2">🔴 Tracking devices probe very few SSIDs but have strong, constant signals</div>
+              <div data-i18n="tip3">🔴 Suspicious devices often have randomized MACs (local bit set)</div>
+              <div data-i18n="tip4">🔴 Look for devices that appear only when you move to a new location</div>
+              <div data-i18n="tip5">🔴 WiFi cameras typically maintain a persistent connection to one SSID</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is Dead Zone?</summary>
+          <p data-i18n="faq_a1">Dead Zone is an educational WiFi device detector simulator. It teaches you how ESP32-based scanners discover nearby wireless devices by capturing probe requests and beacon frames.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">What are probe requests?</summary>
+          <p data-i18n="faq_a2">Probe requests are WiFi frames that devices send to discover known networks. They reveal previously connected SSIDs, exposing your travel and location history.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">Can this detect hidden cameras?</summary>
+          <p data-i18n="faq_a3">Yes! Hidden WiFi cameras emit detectable wireless signals. This tool identifies suspicious devices by analyzing MAC vendor prefixes, signal patterns, and probe behavior.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation for learning purposes.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q5">What is MAC address randomization?</summary>
+          <p data-i18n="faq_a5">Modern devices use random MAC addresses when scanning for WiFi to prevent tracking. The local bit (second hex character is 2,6,A,E) indicates a randomized address.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Click "Start Scan" to begin detecting nearby WiFi devices (simulated).</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Watch the radar map as devices appear at varying distances based on signal strength.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Open "Probe Request Analysis" to see which networks devices are searching for.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Check "Device Fingerprinting" to analyze vendor patterns and device types.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">5</span>
+          <p data-i18n="howto_5">Review "Surveillance Detection" to identify hidden cameras and tracking devices.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">6</span>
+          <p data-i18n="howto_6">Use the MAC Lookup field to identify any device manufacturer by its MAC address.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_probe_title">📡 Probe Requests</h3>
+          <p data-i18n="wiki_probe">WiFi devices constantly send probe requests to find known networks. Each probe contains the device MAC and often the SSID it is looking for, creating a wireless fingerprint.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_mac_title">🏷️ MAC Addresses</h3>
+          <p data-i18n="wiki_mac">The first 3 bytes (OUI) of a MAC address identify the manufacturer. This allows vendor identification even without connecting to the device.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_fingerprint_title">🔬 Device Fingerprinting</h3>
+          <p data-i18n="wiki_fingerprint">Beyond MAC addresses, devices can be identified by probe timing patterns, supported rates, HT capabilities, and other 802.11 frame fields.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_surveillance_title">🕵️ Surveillance Detection</h3>
+          <p data-i18n="wiki_surveillance">Hidden cameras and tracking devices emit WiFi signals that can be detected. Look for always-on devices with strong signals from surveillance equipment manufacturers.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3>
+          <p data-i18n="wiki_privacy">Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.2</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

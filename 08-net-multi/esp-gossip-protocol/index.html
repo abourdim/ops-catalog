@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>esp-gossip-protocol — Workshop DIY</title>
+  <meta name="description" content="Gossip Protocol — Data spreads like infection through the network" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="esp-gossip-protocol — Workshop DIY" />
+  <meta property="og:description" content="Gossip Protocol — Epidemic data spreading simulation" />
+  <meta property="og:type" content="website" /><meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" /><link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" /><meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #gossipCanvas{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.25);display:block;width:100%;touch-action:none;cursor:pointer;}
+    .gossip-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;}
+    .gossip-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:10px;}
+    .gs-card{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.15);padding:8px 10px;text-align:center;}
+    .gs-label{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;}
+    .gs-value{font-size:1rem;font-weight:700;color:var(--accent);font-family:var(--font-h);}
+    .timeline-bar{height:30px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.15);margin-top:10px;position:relative;overflow:hidden;}
+    .timeline-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:7px;transition:width .3s;}
+    .step-list{list-style:none;padding:0;margin:0;counter-reset:step;}
+    .step-list li{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:.8rem;color:var(--text);line-height:1.5;}
+    .step-list li::before{counter-increment:step;content:counter(step);width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.72rem;}
+    .challenge-list{list-style:none;padding:0;margin:0;}.challenge-list li{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:.8rem;color:var(--text);line-height:1.5;}.challenge-list .ch-icon{font-size:1.1rem;flex-shrink:0;}
+    .lab-tip{font-size:.78rem;color:var(--text-muted);margin-bottom:8px;line-height:1.5;}
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">💬 gossip · 🦠 epidemic · 📊 convergence</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Gossip Protocol</h1><div class="subtitle" data-i18n="subtitle">💬 gossip · 🦠 epidemic · 📊 convergence</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">💬</span> <span data-i18n="mainSection">Gossip Protocol — Epidemic Spread</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Data spreads like infection through the network</span> <span class="version-tag">v1.0</span></div></div></div>
+        <canvas id="gossipCanvas" height="300"></canvas>
+        <div class="gossip-controls">
+          <label data-i18n="nodesLabel">Nodes:</label>
+          <input type="range" id="nodeSlider" class="range-ctrl" min="6" max="25" value="12" style="width:80px;" />
+          <span id="nodeVal">12</span>
+          <label data-i18n="probLabel">Spread %:</label>
+          <input type="range" id="probSlider" class="range-ctrl" min="10" max="100" value="60" style="width:80px;" />
+          <span id="probVal">60%</span>
+          <button id="seedBtn" class="primary"><span data-i18n="seedBtn">Seed Node</span></button>
+          <button id="resetBtn"><span data-i18n="resetBtn">Reset</span></button>
+        </div>
+        <div class="timeline-bar"><div class="timeline-fill" id="timelineFill" style="width:0%"></div></div>
+        <div class="gossip-stats">
+          <div class="gs-card"><div class="gs-label" data-i18n="statRound">Round</div><div class="gs-value" id="statRound">0</div></div>
+          <div class="gs-card"><div class="gs-label" data-i18n="statInfected">Infected</div><div class="gs-value" id="statInfected">0</div></div>
+          <div class="gs-card"><div class="gs-label" data-i18n="statTotal">Total</div><div class="gs-value" id="statTotal">12</div></div>
+          <div class="gs-card"><div class="gs-label" data-i18n="statConverged">Converged</div><div class="gs-value" id="statConverged">No</div></div>
+        </div>
+      </div>
+      <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary><div class="card"><ol class="step-list">
+        <li><span data-i18n="step1">One node is "seeded" with data (infected). It knows information that others do not.</span></li>
+        <li><span data-i18n="step2">Each round, every infected node randomly picks a neighbor and shares (gossips) the data.</span></li>
+        <li><span data-i18n="step3">The neighbor becomes infected with a probability based on the spread percentage.</span></li>
+        <li><span data-i18n="step4">After enough rounds, all nodes converge — everyone has the data. This is epidemic dissemination.</span></li>
+      </ol></div></details>
+      <details class="collapsible"><summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary><div class="card">
+        <p class="lab-tip" data-i18n="labTip1">Click any node on the canvas to seed it with data and start the gossip rounds.</p>
+        <p class="lab-tip" data-i18n="labTip2">Adjust the spread probability to see how it affects convergence speed.</p>
+        <p class="lab-tip" data-i18n="labTip3">Try with few nodes (6) vs many (25) to compare epidemic behavior.</p>
+        <p class="lab-tip" data-i18n="labTip4">Watch the timeline bar fill up as more nodes get infected each round.</p>
+      </div></details>
+      <details class="collapsible"><summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary><div class="card"><ul class="challenge-list">
+        <li><span class="ch-icon">🎯</span> <span data-i18n="challenge1">Achieve 100% convergence in the fewest rounds possible. What spread probability is needed?</span></li>
+        <li><span class="ch-icon">💥</span> <span data-i18n="challenge2">Set spread probability to 10% and observe how many rounds it takes vs 90%.</span></li>
+        <li><span class="ch-icon">🧩</span> <span data-i18n="challenge3">With 25 nodes, predict how many rounds to full convergence at 50% spread rate.</span></li>
+      </ul></div></details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is a gossip protocol?</summary><p data-i18n="faq_a1">A gossip protocol spreads information through a network like a rumor. Each node tells random neighbors, and the data eventually reaches everyone.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">Why is it called epidemic?</summary><p data-i18n="faq_a2">The spreading pattern resembles how diseases spread: one infected node infects neighbors, who infect their neighbors, exponentially.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What is convergence?</summary><p data-i18n="faq_a3">Convergence is when all nodes in the network have received the data. The protocol converges when infection reaches 100%.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Where is gossip used?</summary><p data-i18n="faq_a4">Gossip protocols are used in distributed databases (Cassandra), blockchain networks, cluster membership, and failure detection.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click a node or press Seed Node to start the gossip with one infected node.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Watch as infected nodes (colored) spread data to neighbors each round.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Adjust the spread probability slider to control infection chance per contact.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Monitor the stats: round count, infected nodes, and convergence status.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_gossip_title">💬 Gossip Protocols</h3><p data-i18n="wiki_gossip">Gossip (epidemic) protocols achieve eventual consistency by random peer-to-peer information exchange. Simple, scalable, and fault-tolerant.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_epidemic_title">🦠 Epidemic Models</h3><p data-i18n="wiki_epidemic">SI (Susceptible-Infected) model: once a node is infected, it stays infected and keeps spreading. SIR adds recovery.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_convergence_title">📊 Convergence</h3><p data-i18n="wiki_convergence">Gossip converges in O(log N) rounds for N nodes, making it very efficient for large networks.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_apps_title">🔧 Applications</h3><p data-i18n="wiki_apps">Used in Apache Cassandra, Amazon DynamoDB, Bitcoin network, and Kubernetes cluster management.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-field-scanner — Workshop DIY</title>
+  <meta name="description" content="Field Scanner — Multi-sensor threat assessment HUD for micro:bit" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-field-scanner — Workshop DIY" />
+  <meta property="og:description" content="Field Scanner — Multi-sensor threat assessment HUD for micro:bit" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Threat Indicator ── */
+    .threat-indicator {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid rgba(255,255,255,0.1);
+      transition: all 0.4s ease;
+    }
+    .threat-indicator.green {
+      background: linear-gradient(135deg, rgba(0,200,83,0.2), rgba(0,200,83,0.05));
+      color: #00c853;
+      border-color: #00c853;
+      box-shadow: 0 0 20px rgba(0,200,83,0.2), inset 0 0 20px rgba(0,200,83,0.05);
+    }
+    .threat-indicator.yellow {
+      background: linear-gradient(135deg, rgba(255,214,0,0.2), rgba(255,214,0,0.05));
+      color: #ffd600;
+      border-color: #ffd600;
+      box-shadow: 0 0 20px rgba(255,214,0,0.2), inset 0 0 20px rgba(255,214,0,0.05);
+    }
+    .threat-indicator.red {
+      background: linear-gradient(135deg, rgba(255,23,68,0.2), rgba(255,23,68,0.05));
+      color: #ff1744;
+      border-color: #ff1744;
+      box-shadow: 0 0 20px rgba(255,23,68,0.2), inset 0 0 20px rgba(255,23,68,0.05);
+      animation: threatPulse 1s ease-in-out infinite;
+    }
+    @keyframes threatPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(255,23,68,0.2); }
+      50% { box-shadow: 0 0 40px rgba(255,23,68,0.5); }
+    }
+
+    /* ── HUD Grid ── */
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Sensor Gauge ── */
+    .sensor-gauge {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 0.75rem;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      position: relative;
+      overflow: hidden;
+    }
+    .sensor-gauge .gauge-label {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+    .sensor-gauge .gauge-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .sensor-gauge .gauge-bar-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .sensor-gauge .gauge-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease, background 0.3s ease;
+      width: 0%;
+    }
+    .sensor-gauge .gauge-range {
+      font-size: 0.55rem;
+      opacity: 0.5;
+      margin-top: 0.3rem;
+    }
+
+    /* ── Scan Line Animation ── */
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,200,83,0.6), transparent);
+      animation: scanDown 2s linear infinite;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .scanning .scan-line { opacity: 1; }
+    @keyframes scanDown {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+
+    /* ── Threat Log ── */
+    .threat-log {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 0.75rem;
+      max-height: 180px;
+      overflow-y: auto;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      line-height: 1.6;
+    }
+    .threat-log .log-entry { opacity: 0.8; }
+    .threat-log .log-entry.red { color: #ff1744; }
+    .threat-log .log-entry.yellow { color: #ffd600; }
+    .threat-log .log-entry.green { color: #00c853; }
+
+    /* ── HUD Canvas ── */
+    .hud-canvas-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .hud-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
+
+    /* ── Slider Group ── */
+    .slider-group {
+      margin-bottom: 0.75rem;
+    }
+    .slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+      font-family: 'Orbitron', monospace;
+    }
+    .slider-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent, #d4a03c);
+    }
+
+    /* ── Rules Editor ── */
+    .rules-editor {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .rules-editor textarea {
+      width: 100%;
+      min-height: 80px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: inherit;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      padding: 0.5rem;
+      resize: vertical;
+    }
+
+    /* ── Challenge Cards ── */
+    .challenge-card {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .challenge-card h4 {
+      margin: 0 0 0.5rem 0;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+    }
+    .challenge-card p {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    /* ── Scan Buttons ── */
+    .scan-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .scan-controls button { flex: 1; }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">📡 scan · 🔐 assess · 🛡️ protect</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-field-scanner</h1>
+            <div class="subtitle" data-i18n="subtitle">📡 scan · 🔐 assess · 🛡️ protect</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">📡</span> <span data-i18n="mainSection">Field Scanner — Threat HUD</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Multi-sensor threat assessment dashboard</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <!-- Threat Level Indicator -->
+        <div class="threat-indicator green" id="threatLevel">
+          <span data-i18n="threatGreen">THREAT LEVEL: GREEN</span>
+        </div>
+
+        <!-- 5 Sensor Gauges -->
+        <div class="hud-grid">
+          <div class="sensor-gauge" id="lightGauge">
+            <div class="scan-line"></div>
+            <div class="gauge-label" data-i18n="gaugeLight">Light</div>
+            <div class="gauge-value" id="lightValue">0</div>
+            <div class="gauge-bar-track"><div class="gauge-bar-fill" id="lightBar"></div></div>
+            <div class="gauge-range">0 — 255</div>
+          </div>
+          <div class="sensor-gauge" id="tempGauge">
+            <div class="scan-line"></div>
+            <div class="gauge-label" data-i18n="gaugeTemp">Temperature</div>
+            <div class="gauge-value" id="tempValue">0°C</div>
+            <div class="gauge-bar-track"><div class="gauge-bar-fill" id="tempBar"></div></div>
+            <div class="gauge-range">-10 — 50°C</div>
+          </div>
+          <div class="sensor-gauge" id="motionGauge">
+            <div class="scan-line"></div>
+            <div class="gauge-label" data-i18n="gaugeMotion">Motion</div>
+            <div class="gauge-value" id="motionValue">0 mg</div>
+            <div class="gauge-bar-track"><div class="gauge-bar-fill" id="motionBar"></div></div>
+            <div class="gauge-range">0 — 2000 mg</div>
+          </div>
+          <div class="sensor-gauge" id="soundGauge">
+            <div class="scan-line"></div>
+            <div class="gauge-label" data-i18n="gaugeSound">Sound</div>
+            <div class="gauge-value" id="soundValue">0</div>
+            <div class="gauge-bar-track"><div class="gauge-bar-fill" id="soundBar"></div></div>
+            <div class="gauge-range">0 — 255</div>
+          </div>
+          <div class="sensor-gauge" id="magGauge">
+            <div class="scan-line"></div>
+            <div class="gauge-label" data-i18n="gaugeMag">Magnetic</div>
+            <div class="gauge-value" id="magValue">0°</div>
+            <div class="gauge-bar-track"><div class="gauge-bar-fill" id="magBar"></div></div>
+            <div class="gauge-range">0 — 360°</div>
+          </div>
+        </div>
+
+        <!-- Scan Controls -->
+        <div class="scan-controls">
+          <button class="btn-sm primary" id="scanBtn" data-i18n="startScan">Start Scan</button>
+          <button class="btn-sm" id="stopBtn" data-i18n="stopScan">Stop</button>
+        </div>
+
+        <!-- Threat Assessment Log -->
+        <div class="threat-log" id="threatLog"></div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="help-step">
+            <span class="help-step-num">1</span>
+            <p data-i18n="howItWorks1">All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">2</span>
+            <p data-i18n="howItWorks2">Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">3</span>
+            <p data-i18n="howItWorks3">The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">4</span>
+            <p data-i18n="howItWorks4">The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <!-- Sensor Simulators -->
+          <h3 data-i18n="labSimulators" style="margin-top:0">Sensor Simulators</h3>
+          <div class="slider-group">
+            <label><span data-i18n="gaugeLight">Light</span> <span id="simLightVal">128</span></label>
+            <input type="range" id="simLight" min="0" max="255" value="128" />
+          </div>
+          <div class="slider-group">
+            <label><span data-i18n="gaugeTemp">Temperature</span> <span id="simTempVal">22</span></label>
+            <input type="range" id="simTemp" min="-10" max="50" value="22" />
+          </div>
+          <div class="slider-group">
+            <label><span data-i18n="gaugeMotion">Motion</span> <span id="simMotionVal">100</span></label>
+            <input type="range" id="simMotion" min="0" max="2000" value="100" />
+          </div>
+          <div class="slider-group">
+            <label><span data-i18n="gaugeSound">Sound</span> <span id="simSoundVal">30</span></label>
+            <input type="range" id="simSound" min="0" max="255" value="30" />
+          </div>
+          <div class="slider-group">
+            <label><span data-i18n="gaugeMag">Magnetic</span> <span id="simMagVal">180</span></label>
+            <input type="range" id="simMag" min="0" max="360" value="180" />
+          </div>
+
+          <!-- Custom Threat Rules -->
+          <h3 data-i18n="labRules">Custom Threat Rules</h3>
+          <div class="rules-editor">
+            <textarea id="rulesEditor" data-i18n-placeholder="rulesPlaceholder" placeholder="light > 80 => +20&#10;motion > 60 => +30&#10;sound > 70 => +25"></textarea>
+            <button class="btn-sm primary" id="applyRulesBtn" style="margin-top:0.5rem" data-i18n="applyRules">Apply Rules</button>
+          </div>
+
+          <!-- Real-time HUD Canvas -->
+          <h3 data-i18n="labHud">Real-Time HUD</h3>
+          <div class="hud-canvas-wrap">
+            <canvas id="hudCanvas"></canvas>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <div class="challenge-card">
+            <h4>🎯 <span data-i18n="challenge1Title">Challenge 1: Room Calibration</span></h4>
+            <p data-i18n="challenge1Desc">Calibrate the sensor thresholds for your current room. Adjust sliders in the Lab until the HUD reads GREEN for normal conditions and YELLOW when you open a window or turn on a light.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>🚶 <span data-i18n="challenge2Title">Challenge 2: Intruder Detection</span></h4>
+            <p data-i18n="challenge2Desc">Configure the scanner to detect when a person enters the room. Use motion and sound thresholds to trigger a RED alert only when someone walks in, not from ambient noise.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>🧠 <span data-i18n="challenge3Title">Challenge 3: Custom Threat Category</span></h4>
+            <p data-i18n="challenge3Desc">Design a new threat category (e.g., ORANGE for weather events) using the rules editor. Combine at least 3 sensors and write custom rules that trigger your new alert level.</p>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is the Field Scanner?</summary>
+          <p data-i18n="faq_a1">A multi-sensor threat assessment HUD that combines all micro:bit sensors into a single dashboard for environmental monitoring.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does the threat level work?</summary>
+          <p data-i18n="faq_a2">Each sensor reading is normalized to 0–100, then combined with weights. The sum determines GREEN (safe), YELLOW (caution), or RED (alert).</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">Can I customize the threat thresholds?</summary>
+          <p data-i18n="faq_a3">Yes! Open the Lab section and use the rules editor to define custom threat conditions and adjust sensor weights.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Press "Start Scan" on the main card to begin polling all sensors simultaneously.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Watch the gauges update in real time and observe the threat level change based on readings.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Open the Lab to manually adjust sensor values and experiment with custom threat rules.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Try the Challenges to test your understanding of sensor fusion and threat classification.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_fusion_title">🔗 Sensor Fusion</h3>
+          <p data-i18n="wiki_fusion">Sensor fusion combines data from multiple sensors to produce more accurate and reliable information than any single sensor alone.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_threat_title">🚨 Threat Assessment</h3>
+          <p data-i18n="wiki_threat">Threat assessment uses weighted algorithms to classify environmental conditions into safety levels based on sensor data.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_hud_title">🖥️ HUD Design</h3>
+          <p data-i18n="wiki_hud">A heads-up display presents critical data in a clear, scannable format using gauges, color coding, and real-time updates.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_microbit_title">🤖 micro:bit Sensors</h3>
+          <p data-i18n="wiki_microbit">The micro:bit v2 includes light, temperature, accelerometer, compass, and microphone sensors, all accessible via simple APIs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>esp-mesh-whisper — Workshop DIY</title>
+  <meta name="description" content="Self-healing ESP32 mesh network simulation — messages hop node to node, mesh reroutes around failures." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <meta property="og:title" content="esp-mesh-whisper — Workshop DIY" />
+  <meta property="og:description" content="Self-healing ESP32 mesh network simulation — messages hop node to node." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .mesh-area { padding: 1rem; }
+    .mesh-area canvas { width: 100%; border-radius: 8px; background: #0a0a1a; border: 1px solid var(--border, #222); cursor: crosshair; }
+    .mesh-controls { display: flex; gap: .5rem; flex-wrap: wrap; padding: .5rem 1rem 1rem; }
+    .mesh-controls input[type="text"] {
+      flex: 1; min-width: 120px; padding: .5rem .8rem; border: 1px solid var(--border, #333);
+      border-radius: 8px; background: var(--bg, #111); color: var(--text, #eee);
+      font-family: 'Orbitron', monospace; font-size: .8rem;
+    }
+    .mesh-controls input::placeholder { color: var(--text-muted, #666); }
+    .node-info { padding: .5rem 1rem; font-size: .75rem; color: var(--text-muted, #888); font-family: 'Orbitron', monospace; }
+    .how-steps { padding: 1rem; }
+    .how-step-item { display: flex; gap: .8rem; margin-bottom: .8rem; align-items: flex-start; }
+    .how-step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent, #d4a03c); color: var(--bg, #000); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem; }
+    .how-step-text { font-size: .85rem; line-height: 1.5; }
+    .challenge-card { padding: .8rem; margin-bottom: .5rem; border-radius: 8px; background: var(--bg, #111); border: 1px solid var(--border, #222); }
+    .challenge-card p { margin: 0 0 .5rem; font-size: .85rem; }
+    .challenge-answer { display: none; padding: .5rem; margin-top: .5rem; border-radius: 6px; background: var(--bg, #000); font-size: .8rem; color: var(--accent, #33ff33); border-left: 3px solid var(--accent, #d4a03c); }
+    .challenge-answer.visible { display: block; }
+    .topology-info { padding: 1rem; }
+    .topology-info canvas { width: 100%; border-radius: 8px; background: #0a0a1a; border: 1px solid var(--border, #222); }
+    .stat-row { display: flex; justify-content: space-between; padding: .3rem 1rem; font-size: .75rem; color: var(--text-muted, #888); }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🕸️ mesh · 🔄 heal · 💬 whisper</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">esp-mesh-whisper</h1>
+            <div class="subtitle" data-i18n="subtitle">🕸️ mesh · 🔄 heal · 💬 whisper</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🕸️</span> <span data-i18n="mainSection">Mesh Whisper — Self-Healing Mesh</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Messages hop node to node, mesh reroutes around failures</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+        <div class="mesh-area">
+          <canvas id="meshCanvas" height="300"></canvas>
+        </div>
+        <div class="node-info" id="nodeInfo">Nodes: 0 | Links: 0 | Path: —</div>
+        <div class="mesh-controls">
+          <input type="text" id="msgInput" placeholder="Message to whisper..." data-i18n-placeholder="msgPlaceholder" maxlength="40" />
+          <button id="sendBtn" class="button primary" data-i18n="sendBtn">Send</button>
+          <button id="killBtn" class="button" style="background:#c0392b" data-i18n="killBtn">Kill Node</button>
+          <button id="healBtn" class="button" data-i18n="healBtn">Heal All</button>
+          <button id="resetBtn" class="button" data-i18n="resetBtn">Reset</button>
+        </div>
+      </div>
+
+      <details class="collapsible">
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="how-steps">
+            <div class="how-step-item"><span class="how-step-num">1</span><span class="how-step-text" data-i18n="howStep1">ESP32 nodes form a mesh network, each connecting to nearby neighbors.</span></div>
+            <div class="how-step-item"><span class="how-step-num">2</span><span class="how-step-text" data-i18n="howStep2">Messages use BFS routing to find the shortest path between nodes.</span></div>
+            <div class="how-step-item"><span class="how-step-num">3</span><span class="how-step-text" data-i18n="howStep3">When a node dies, the mesh detects the failure and reroutes traffic.</span></div>
+            <div class="how-step-item"><span class="how-step-num">4</span><span class="how-step-text" data-i18n="howStep4">Self-healing rebuilds links automatically when nodes come back online.</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Topology Lab</span></summary>
+        <div class="card">
+          <div class="topology-info">
+            <canvas id="topoCanvas" height="200"></canvas>
+            <div class="stat-row"><span data-i18n="avgHops">Avg Hops:</span> <span id="avgHops">—</span></div>
+            <div class="stat-row"><span data-i18n="meshDensity">Mesh Density:</span> <span id="meshDensity">—</span></div>
+            <div class="stat-row"><span data-i18n="deadNodes">Dead Nodes:</span> <span id="deadNodes">0</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <div style="padding:1rem">
+            <div class="challenge-card">
+              <p data-i18n="challenge1">What happens when you kill a critical bridge node?</p>
+              <button class="button" onclick="revealChallenge(0)" data-i18n="revealBtn">Reveal Answer</button>
+              <div class="challenge-answer" id="answer0" data-i18n="challengeReveal1">The mesh splits into two partitions. Messages between partitions fail until the node heals or new links form.</div>
+            </div>
+            <div class="challenge-card">
+              <p data-i18n="challenge2">Why does BFS find the shortest path?</p>
+              <button class="button" onclick="revealChallenge(1)" data-i18n="revealBtn">Reveal Answer</button>
+              <div class="challenge-answer" id="answer1" data-i18n="challengeReveal2">BFS explores all neighbors at distance 1 before distance 2, guaranteeing the first path found is the shortest in an unweighted graph.</div>
+            </div>
+            <div class="challenge-card">
+              <p data-i18n="challenge3">How can a mesh network survive multiple node failures?</p>
+              <button class="button" onclick="revealChallenge(2)" data-i18n="revealBtn">Reveal Answer</button>
+              <div class="challenge-answer" id="answer2" data-i18n="challengeReveal3">Redundancy! Each node connects to multiple neighbors, creating alternate paths. The more connections, the more resilient the mesh.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item"><summary data-i18n="faq_q1">What is a mesh network?</summary><p data-i18n="faq_a1">A mesh network connects devices to each other, not to a central router. Each node can relay messages for others, creating a resilient web.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">What is ESP-MESH?</summary><p data-i18n="faq_a2">ESP-MESH is Espressif's protocol for ESP32 chips. It builds a self-organizing, self-healing mesh over WiFi.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">How does self-healing work?</summary><p data-i18n="faq_a3">When a node fails, neighbors detect the loss and reroute traffic through alternate paths automatically.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p></details>
+      </div>
+      <div class="help-content" id="helpHowto">
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click on the mesh canvas to select source and destination nodes.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Type a message and click Send to watch it hop through the mesh.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Kill Node to destroy a node and see the mesh reroute.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Click Heal All to restore dead nodes and watch links rebuild.</p></div>
+      </div>
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry"><h3 data-i18n="wiki_mesh_title">🕸️ Mesh Topology</h3><p data-i18n="wiki_mesh">Each node connects to nearby neighbors. Messages hop from node to node using BFS routing.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_bfs_title">🔍 BFS Routing</h3><p data-i18n="wiki_bfs">Breadth-First Search explores all neighbors before going deeper, finding the shortest path in unweighted graphs.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_heal_title">🔄 Self-Healing</h3><p data-i18n="wiki_heal">When nodes fail, the mesh detects broken links and finds alternate routes. Recovered nodes rejoin automatically.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_esp_title">📡 ESP-MESH</h3><p data-i18n="wiki_esp">ESP-MESH supports up to 1000 nodes. Each node can be both a station and an AP simultaneously.</p></div>
+      </div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select" aria-label="Language"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select" aria-label="Theme"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+  </aside>
+
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

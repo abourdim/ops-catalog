@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Collision Visualizer — Workshop DIY</title>
+  <meta name="description" content="2.4GHz signal collision visualizer — Workshop DIY" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <link rel="manifest" href="manifest.json" /><meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#08091a;--surface:#111328;--card:#181b3a;--text:#e8e6e3;--accent:#d4a017;--accent2:#f0c040;--border:rgba(212,160,23,.18);--radius:14px;--shadow:0 2px 16px rgba(0,0,0,.4);--font-head:'Righteous',sans-serif;--font-body:'Tajawal',sans-serif;--font-mono:'Orbitron',monospace}[data-theme=zellige]{--bg:#0a1a2e;--surface:#122240;--card:#1a2d50;--accent:#3ba5f7;--accent2:#68c4ff;--border:rgba(59,165,247,.18)}[data-theme=andalus]{--bg:#1a0a0a;--surface:#2a1215;--card:#381820;--accent:#e63946;--accent2:#ff6b6b;--border:rgba(230,57,70,.18)}[data-theme=riad]{--bg:#faf5ee;--surface:#fff;--card:#fff8ef;--accent:#c87533;--accent2:#e09050;--text:#2a1a0a;--border:rgba(200,117,51,.18)}[data-theme=medina]{--bg:#f4f1eb;--surface:#fff;--card:#faf7f0;--accent:#5b8c5a;--accent2:#7ab87a;--text:#1a2e1a;--border:rgba(91,140,90,.18)}[data-theme=space]{--bg:#05050f;--surface:#0a0a20;--card:#10103a;--accent:#a855f7;--accent2:#c084fc;--border:rgba(168,85,247,.18)}[data-theme=jungle]{--bg:#0a1a0a;--surface:#0f2a0f;--card:#153015;--accent:#22c55e;--accent2:#4ade80;--border:rgba(34,197,94,.18)}[data-theme=robot]{--bg:#0f0f14;--surface:#18181f;--card:#1f1f28;--accent:#f97316;--accent2:#fb923c;--border:rgba(249,115,22,.18)}body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.5}.splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .5s;cursor:pointer}.splash-inner{text-align:center}.splash-logo{margin:0 auto 16px;font-size:4em}.splash-title{font-family:var(--font-head);font-size:1.6em;color:var(--accent)}.splash-sub{margin-top:8px;opacity:.8}.splash-hint{margin-top:16px;opacity:.4;font-size:.85em}.app{max-width:960px;margin:0 auto;padding:12px}.deco-band{height:4px;background:linear-gradient(90deg,transparent,var(--accent),transparent);border-radius:2px;margin:8px 0}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0}.bismillah{width:100%;text-align:center;font-family:'Amiri',serif;font-size:1.1em;opacity:.7;margin-bottom:4px}.bism-ornament{color:var(--accent);margin:0 6px}.title-block{display:flex;align-items:center;gap:12px}h1{font-family:var(--font-head);font-size:1.4em;color:var(--accent)}.subtitle{font-size:.85em;opacity:.7}.header-right{display:flex;align-items:center;gap:10px}.header-buttons{display:flex;gap:4px}.btn-icon-only{width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;font-size:1em;display:flex;align-items:center;justify-content:center;transition:all .2s}.btn-icon-only:hover{background:var(--accent);color:#fff}.status-pill{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:var(--surface);border:1px solid var(--border);font-size:.82em}.status-dot{width:8px;height:8px;border-radius:50%;background:#f44}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}.card-header{margin-bottom:12px}.card-title{font-family:var(--font-head);font-size:1.1em;color:var(--accent)}.icon{margin-right:6px}.card-subtitle{font-size:.8em;opacity:.6;margin-top:2px}.version-tag{font-size:.7em;background:var(--accent);color:#000;padding:1px 6px;border-radius:8px}.control-section{background:rgba(0,0,0,.2);border-radius:10px;padding:14px}.collapsible{margin-bottom:12px}.collapsible summary{font-family:var(--font-head);padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}.collapsible summary::-webkit-details-marker{display:none}.collapsible .card{margin-top:8px}.btn-sm{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:.85em;transition:all .2s}.btn-sm:hover{background:var(--accent);color:#000}.btn-sm.primary{background:var(--accent);color:#000;border-color:var(--accent)}.sidebar-select{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:.9em}.app-footer{text-align:center;padding:16px 0;font-size:.8em;opacity:.5}.app-footer a{color:var(--accent)}.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}.sidebar-overlay.show{opacity:1;pointer-events:auto}.sidebar{position:fixed;top:0;right:0;width:min(360px,85vw);height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:200;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}.sidebar-left{right:auto;left:0;border-left:none;border-right:1px solid var(--border);transform:translateX(-100%)}.sidebar.open,.sidebar-left.open{transform:translateX(0)}.sidebar-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border)}.sidebar-title{font-family:var(--font-head);font-size:1.1em;color:var(--accent)}.sidebar-body{flex:1;overflow-y:auto;padding:16px}.sidebar-footer{padding:10px 16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.8em;opacity:.6}.sidebar-group{margin-bottom:16px}.sidebar-label{display:block;margin-bottom:6px;font-weight:600;font-size:.9em}.help-tabs{display:flex;border-bottom:1px solid var(--border)}.help-tab{flex:1;padding:10px;text-align:center;background:transparent;border:none;color:var(--text);cursor:pointer;font-size:.9em;opacity:.6}.help-tab.active{opacity:1;border-bottom:2px solid var(--accent);color:var(--accent)}.help-content{display:none}.help-content.active{display:block}.help-item{margin-bottom:8px}.help-item summary{cursor:pointer;font-weight:600;padding:8px 0}.help-item p{padding:4px 0 8px 12px;opacity:.8;font-size:.9em}.help-step{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}.help-step-num{min-width:28px;height:28px;background:var(--accent);color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em}.wiki-entry{margin-bottom:16px}.wiki-entry h3{color:var(--accent);margin-bottom:4px}.toggle-ctrl{display:flex;align-items:center;gap:8px;cursor:pointer}.checkbox-ctrl{accent-color:var(--accent)}.log-controls{display:flex;gap:4px}.log-filters{display:flex;padding:4px 8px;gap:4px;border-bottom:1px solid var(--border)}.log-filter{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:.78em}.log-filter.active{background:var(--accent);color:#000}.log-body{flex:1;overflow-y:auto}.log{font-family:var(--font-mono);font-size:.75em;line-height:1.8}.log-line{padding:2px 8px;border-bottom:1px solid rgba(255,255,255,.04)}.log-ts{opacity:.5;margin-right:6px}.log-badge{font-size:.7em;padding:1px 5px;border-radius:4px;background:var(--accent);color:#000;margin-right:6px}.toast-indicator{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);z-index:9000;transition:transform .3s}.toast-indicator.show{transform:translateX(-50%) translateY(0)}.toast-inner{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--surface);border:1px solid var(--accent);border-radius:12px;box-shadow:var(--shadow)}.spinner{width:16px;height:16px;border:2px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}[dir=rtl] .sidebar{right:auto;left:0;transform:translateX(-100%)}[dir=rtl] .sidebar-left{left:auto;right:0;transform:translateX(100%)}[dir=rtl] .sidebar.open,[dir=rtl] .sidebar-left.open{transform:translateX(0)}[dir=rtl] .icon{margin-right:0;margin-left:6px}.light-theme{--shadow:0 2px 16px rgba(0,0,0,.08)}@media(max-width:600px){.header{flex-direction:column;align-items:flex-start}h1{font-size:1.2em}.sidebar{width:100vw}}
+    .ber-display{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px}
+    .ber-box{background:rgba(0,0,0,.3);border-radius:8px;padding:10px;text-align:center}
+    .ber-value{font-family:var(--font-mono);font-size:1.4em;display:block}
+    .ber-label{font-size:.78em;opacity:.6;margin-top:2px}
+    .bit-stream{font-family:'Courier New',monospace;font-size:.75em;letter-spacing:1px;line-height:1.4;word-break:break-all;padding:8px;background:#000;border-radius:6px;max-height:80px;overflow-y:auto}
+    .bit-ok{color:#0f0}.bit-err{color:#f44;font-weight:700;background:rgba(255,0,0,.2);border-radius:2px}
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo">💥</div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">2.4GHz Signal Collision</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div><h1 data-i18n="title">💥 Collision Visualizer</h1><div class="subtitle" data-i18n="subtitle">2.4GHz Signal Collision</div></div></div>
+        <div class="header-right">
+          <div class="header-buttons"><button id="helpBtn" class="btn-icon-only">?</button><button id="settingsBtn" class="btn-icon-only">&#9881;</button><button id="logBtn" class="btn-icon-only">&#128220;</button></div>
+          <div class="status-pill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Idle</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div>
+          <div class="card-title"><span class="icon">💥</span><span data-i18n="mainSection">Dual TX Collision Zone</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Two transmitters, one frequency — watch bits collide</span> <span class="version-tag">v1.2</span></div>
+        </div></div>
+        <div class="control-section">
+          <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center">
+            <button id="simBtn" class="btn-sm primary" data-i18n="startSim">Start Simulation</button>
+            <button id="stopBtn" class="btn-sm" data-i18n="stop">Stop</button>
+            <label style="font-weight:600">TX1 Power:</label>
+            <input type="range" id="tx1Power" min="1" max="20" value="10" style="width:80px" />
+            <span id="tx1Val">10</span>dBm
+            <label style="font-weight:600">TX2 Power:</label>
+            <input type="range" id="tx2Power" min="1" max="20" value="10" style="width:80px" />
+            <span id="tx2Val">10</span>dBm
+          </div>
+          <canvas id="collisionCanvas" width="800" height="200" style="width:100%;border-radius:8px;background:#000"></canvas>
+          <div class="ber-display">
+            <div class="ber-box"><span class="ber-value" id="berVal" style="color:#f44">0%</span><span class="ber-label">Bit Error Rate</span></div>
+            <div class="ber-box"><span class="ber-value" id="collisions" style="color:#f90">0</span><span class="ber-label">Collisions</span></div>
+            <div class="ber-box"><span class="ber-value" id="goodBits" style="color:#0f0">0</span><span class="ber-label">Good Bits</span></div>
+            <div class="ber-box"><span class="ber-value" id="totalBits">0</span><span class="ber-label">Total Bits</span></div>
+          </div>
+          <div style="margin-top:10px"><strong>Bit Stream (errors in red):</strong></div>
+          <div id="bitStream" class="bit-stream"></div>
+        </div>
+      </div>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">📊</span><span data-i18n="sectionA">BER Over Time</span></summary>
+        <div class="card"><canvas id="berCanvas" width="800" height="160" style="width:100%;border-radius:8px;background:#000"></canvas></div>
+      </details>
+      <details class="collapsible">
+        <summary><span class="icon">📋</span><span data-i18n="sectionB">Collision Analysis</span></summary>
+        <div class="card"><div id="analysisPanel" style="font-family:monospace;font-size:.85em;line-height:1.8;padding:8px"></div></div>
+      </details>
+      <details class="collapsible">
+        <summary><span class="icon">📖</span><span data-i18n="sectionC">Collision Theory</span></summary>
+        <div class="card"><div style="padding:8px;line-height:1.7">
+          <p data-i18n="theory1">When two transmitters broadcast on the same frequency simultaneously, their signals overlap and interfere, causing bit errors in the received data.</p>
+          <p data-i18n="theory2">The Bit Error Rate (BER) depends on the relative power of the two signals. Equal power causes maximum interference (capture effect threshold).</p>
+          <p data-i18n="theory3">CSMA/CA (WiFi) and frequency hopping (BLE) are designed to minimize collisions, but cannot eliminate them in the crowded 2.4 GHz band.</p>
+          <p data-i18n="theory4">The simulation shows how power difference between TX1 and TX2 affects BER — stronger signals dominate weaker ones (capture effect).</p>
+        </div></div>
+      </details>
+    </div>
+    <footer class="app-footer"><a href="https://workshop-diy.org" target="_blank">workshop-diy.org</a></footer>
+    <div class="deco-band" aria-hidden="true"></div>
+  </div>
+
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel"><div class="sidebar-header"><span class="sidebar-title">Help</span><button id="helpCloseBtn" class="btn-icon-only">&#10005;</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq">FAQ</button><button class="help-tab" data-tab="howto">How-To</button><button class="help-tab" data-tab="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq"><details class="help-item"><summary>What is Collision Visualizer?</summary><p>A simulator showing what happens when two 2.4 GHz signals collide on the same frequency.</p></details><details class="help-item"><summary>What is BER?</summary><p>Bit Error Rate — percentage of bits received incorrectly due to collision.</p></details><details class="help-item"><summary>What is capture effect?</summary><p>When one signal is much stronger, the receiver locks onto it, ignoring the weaker one.</p></details></div>
+      <div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p>Click Start Simulation.</p></div><div class="help-step"><span class="help-step-num">2</span><p>Adjust TX1 and TX2 power sliders.</p></div><div class="help-step"><span class="help-step-num">3</span><p>Watch collision zone on canvas.</p></div><div class="help-step"><span class="help-step-num">4</span><p>See bit errors appear in red.</p></div></div>
+      <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3>CSMA/CA</h3><p>WiFi listens before transmitting to avoid collisions.</p></div><div class="wiki-entry"><h3>Capture Effect</h3><p>Stronger signal dominates when power difference exceeds ~3-6 dB.</p></div></div>
+    </div><div class="sidebar-footer"><span>Workshop DIY</span><span class="version-tag">v1.2</span></div></aside>
+
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel"><div class="sidebar-header"><span class="sidebar-title">Settings</span><button id="settingsCloseBtn" class="btn-icon-only">&#10005;</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label">Language</label><select id="langSelect" class="sidebar-select"><option value="en">EN</option><option value="fr">FR</option><option value="ar">عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span>Sound effects</span></label></div>
+    </div><div class="sidebar-footer"><span>Workshop DIY</span><span class="version-tag">v1.2</span></div></aside>
+
+  <aside class="sidebar" id="logPanel"><div class="sidebar-header"><span class="sidebar-title">Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm">Clear</button><button id="copyLogBtn" class="btn-sm">Copy</button><button id="logCloseBtn" class="btn-icon-only">&#10005;</button></div></div>
+    <div class="log-filters"><button class="log-filter active" data-filter="all">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">OK</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer"></div></div></aside>
+
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage">Working...</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>

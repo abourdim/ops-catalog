@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-fox-hunt-compass — Workshop DIY</title>
+  <meta name="description" content="Fox Hunt Compass — Find the hidden radio transmitter using signal strength and direction finding." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-fox-hunt-compass — Workshop DIY" />
+  <meta property="og:description" content="Fox Hunt Compass — Find the hidden radio transmitter using signal strength and direction finding." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .field-canvas {
+      width: 100%;
+      height: 350px;
+      border: 2px solid var(--accent, #d4af37);
+      border-radius: 8px;
+      background: #0a1a0a;
+      display: block;
+      cursor: crosshair;
+    }
+    .signal-bar-wrap {
+      margin: 0.5rem 0;
+    }
+    .signal-bar-track {
+      width: 100%;
+      height: 22px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 11px;
+      overflow: hidden;
+      position: relative;
+    }
+    .signal-bar-fill {
+      height: 100%;
+      border-radius: 11px;
+      transition: width 0.3s, background 0.3s;
+      width: 0%;
+      background: #3399ff;
+    }
+    .signal-bar-label {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 2px;
+    }
+    .dir-arrow {
+      font-size: 3rem;
+      display: inline-block;
+      transition: transform 0.3s;
+      line-height: 1;
+    }
+    .move-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-width: 220px;
+      margin: 0.75rem auto;
+    }
+    .move-grid .empty-cell {
+      visibility: hidden;
+    }
+    .move-btn {
+      padding: 10px 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: 1px solid var(--accent, #d4af37);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text, #eee);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .move-btn:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .move-btn:active {
+      transform: scale(0.95);
+    }
+    .hunt-stats {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+    .hunt-stat {
+      text-align: center;
+    }
+    .hunt-stat-value {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent, #d4af37);
+    }
+    .hunt-controls {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 0.75rem;
+    }
+    .fox-found-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      border-radius: 8px;
+      font-size: 2.5rem;
+      animation: foxReveal 0.5s ease-out;
+      pointer-events: none;
+    }
+    @keyframes foxReveal {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.3); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .canvas-wrap {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    .step-list {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+    }
+    .step-list li {
+      counter-increment: step;
+      padding: 0.5rem 0;
+      padding-inline-start: 2.2rem;
+      position: relative;
+    }
+    .step-list li::before {
+      content: counter(step);
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0.45rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      background: var(--accent, #d4af37);
+      color: #000;
+      font-weight: bold;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .challenge-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .challenge-item:last-child { border-bottom: none; }
+    .challenge-title {
+      font-weight: bold;
+      color: var(--accent, #d4af37);
+    }
+    .challenge-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🦊 hunt · 📡 find · 🎯 locate</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-fox-hunt-compass</h1>
+            <div class="subtitle" data-i18n="subtitle">🦊 hunt · 📡 find · 🎯 locate</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CARD -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🦊</span> <span data-i18n="mainSection">Fox Hunt — Transmitter Finder</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Find the hidden radio transmitter</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <!-- Hunting field canvas -->
+          <div class="canvas-wrap" id="canvasWrap">
+            <canvas id="fieldCanvas" class="field-canvas"></canvas>
+          </div>
+
+          <!-- Signal strength bar -->
+          <div class="signal-bar-wrap">
+            <div class="signal-bar-label" data-i18n="signalStrength">Signal Strength</div>
+            <div class="signal-bar-track">
+              <div class="signal-bar-fill" id="signalBar"></div>
+            </div>
+          </div>
+
+          <!-- Direction arrow and stats -->
+          <div class="hunt-stats">
+            <div class="hunt-stat">
+              <div data-i18n="directionLabel">Direction</div>
+              <div class="dir-arrow" id="dirArrow">&#x2191;</div>
+            </div>
+            <div class="hunt-stat">
+              <div data-i18n="distanceLabel">Distance</div>
+              <div class="hunt-stat-value" id="distEstimate">--</div>
+            </div>
+            <div class="hunt-stat">
+              <div data-i18n="stepsLabel">Steps</div>
+              <div class="hunt-stat-value" id="stepCount">0</div>
+            </div>
+            <div class="hunt-stat">
+              <div data-i18n="bearingLabel">Bearing</div>
+              <div class="hunt-stat-value" id="bearingDisplay">--</div>
+            </div>
+          </div>
+
+          <!-- Move buttons -->
+          <div class="move-grid">
+            <div class="empty-cell"></div>
+            <button class="move-btn" id="moveN" data-i18n="moveN">N</button>
+            <div class="empty-cell"></div>
+            <button class="move-btn" id="moveW" data-i18n="moveW">W</button>
+            <button class="move-btn" id="newHuntBtn" style="font-size:0.8rem;" data-i18n="newHunt">New Hunt</button>
+            <button class="move-btn" id="moveE" data-i18n="moveE">E</button>
+            <div class="empty-cell"></div>
+            <button class="move-btn" id="moveS" data-i18n="moveS">S</button>
+            <div class="empty-cell"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION A: How It Works -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li data-i18n="howworks_1">The fox (hidden transmitter) broadcasts a periodic radio beacon signal at a known frequency.</li>
+            <li data-i18n="howworks_2">The hunter uses a directional antenna or signal strength meter to measure the received signal.</li>
+            <li data-i18n="howworks_3">Move toward the direction where the signal is strongest — the signal follows the inverse square law.</li>
+            <li data-i18n="howworks_4">Triangulate from multiple readings to pinpoint the exact location of the hidden transmitter.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- SECTION B: Lab -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <ol class="step-list">
+            <li data-i18n="lab_1">Multiple foxes can be placed on the field simultaneously — each transmits on a different frequency.</li>
+            <li data-i18n="lab_2">Use the body-shielding technique: rotate your body to attenuate the signal and find the direction of strongest reception.</li>
+            <li data-i18n="lab_3">Log signal readings at different positions to build a signal map of the area.</li>
+            <li data-i18n="lab_4">Triangulate from at least 3 measurement points to calculate the fox's precise coordinates.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- SECTION C: Challenge -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <div class="challenge-item">
+            <div class="challenge-title" data-i18n="challenge1_title">Challenge 1: Speed Hunter</div>
+            <div class="challenge-desc" data-i18n="challenge1_desc">Find the fox in under 20 steps. Use signal gradient and bearing to optimize your path.</div>
+          </div>
+          <div class="challenge-item">
+            <div class="challenge-title" data-i18n="challenge2_title">Challenge 2: Triple Fox</div>
+            <div class="challenge-desc" data-i18n="challenge2_desc">Find 3 foxes hidden in the same field in a single hunt session. Each fox reveals the next.</div>
+          </div>
+          <div class="challenge-item">
+            <div class="challenge-title" data-i18n="challenge3_title">Challenge 3: Moving Fox</div>
+            <div class="challenge-desc" data-i18n="challenge3_desc">Find a fox that changes position every 5 steps. Requires fast triangulation and prediction.</div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- LEFT PANEL — Help -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is a fox hunt?</summary>
+          <p data-i18n="faq_a1">A fox hunt (transmitter hunt) is a ham radio sport where you locate a hidden transmitter using signal strength and direction finding techniques.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does the signal strength work?</summary>
+          <p data-i18n="faq_a2">Signal strength follows the inverse square law: it decreases with the square of the distance. Closer to the fox means stronger signal.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is the arrow pointing at?</summary>
+          <p data-i18n="faq_a3">The direction arrow indicates the signal gradient — it points toward where the signal gets stronger, guiding you toward the fox.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">How do I win?</summary>
+          <p data-i18n="faq_a4">Get close enough to the fox to find it. Fewer steps means a better score — like golf!</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Press "New Hunt" to hide a fox at a random location on the field.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Use N/S/E/W buttons to move your position on the map.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Watch the signal bar and direction arrow — move toward stronger signal.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">When you are close enough, the fox is revealed. Try to find it in as few steps as possible!</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_foxhunt_title">🦊 Fox Hunting</h3>
+          <p data-i18n="wiki_foxhunt">Transmitter hunting (fox hunting / ARDF) is a competitive sport where participants use radio direction finding to locate hidden transmitters in an outdoor area.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_df_title">🧭 Direction Finding</h3>
+          <p data-i18n="wiki_df">Radio direction finding uses directional antennas (Yagi, loop, Adcock) to determine the bearing toward a signal source by rotating for maximum or null signal.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_atten_title">📉 Signal Attenuation</h3>
+          <p data-i18n="wiki_atten">Signal strength decreases with distance following the inverse square law. Obstacles like buildings and terrain cause additional attenuation and multipath effects.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_tri_title">📐 Triangulation</h3>
+          <p data-i18n="wiki_tri">Triangulation uses bearing measurements from two or more known positions to calculate the location of an unknown signal source by finding where the bearing lines intersect.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL — Settings -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL — Activity Log (docked) -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+/**
+ * Workshop DIY — Dark Profile v1.2
+ * Digital Footprint — Search usernames across platforms
+ */
+const $ = id => document.getElementById(id);
+const LOGO_SVG = `<svg preserveAspectRatio="xMidYMid meet" role="img" aria-label="Workshop DIY" xmlns="http://www.w3.org/2000/svg" viewBox="77 78 254 137"><path style="stroke:none;fill:currentColor" d="M187.4,152.9c.1-.1.2-.2.4-.2c.3,0,2.7-1.1,3.8-1.7l2.6-1.7c3.3-2.2,5.1-3,8.4-3.4c1.2-.2,2.1-.2,3.3,0c6.7.8,11.5,4.9,13.4,11.4c.4,1.3.4,5.5.1,6.7c-1.2,4-2.8,6.4-5.6,8.5c-4.3,3.3-9.9,4.2-14.9,2.3l-6.5-2.4l-.7-.3v-7.7z"/><path style="stroke:none;fill:currentColor" d="M259.8,157.7l5.1-9.6h7.4l-9.3,15.7v11.3h-6.8v-10.9l-9.5-16h7.7z"/><path style="stroke:none;fill:currentColor" d="M240.4,152.7h-3.9v17.5h3.9v4.7h-14.5v-4.7h3.9v-17.5h-3.9v-4.7h14.5z"/><path style="stroke:none;fill:currentColor" d="M330.8,195.7H204v3.6h126.8zM330.8,203.4H161.7v3.6h169.1zM330.8,211H77.1v3.6h253.7z"/></svg>`;
+const LIGHT_THEMES = ['riad','medina'];
+const APP_VERSION = '1.2';
+let soundEnabled = false;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const t=audioCtx.currentTime;if(type==='click'){o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,t+0.08);o.start(t);o.stop(t+0.08);}else if(type==='success'){o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,t+0.3);o.start(t);o.stop(t+0.3);}else if(type==='error'){o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,t+0.25);o.start(t);o.stop(t+0.25);}}
+
+const LANG = {
+  en: {
+    title:'Dark Profile', subtitle:'🕵️ Search usernames across platforms',
+    disconnected:'Disconnected', connected:'Connected',
+    mainSection:'Digital Footprint Scanner', mainDesc:'Enter a username to search across platforms',
+    sectionA:'Platform Database', sectionB:'Privacy Protection', sectionC:'Exposure Analysis',
+    activityLog:'Activity Log', eventsMsg:'Events & messages',
+    clear:'Clear', copy:'Copy', theme:'Theme', export:'Export', filterAll:'All',
+    settings:'⚙️ Settings', language:'Language',
+    help:'❓ Help', faq:'FAQ', howto:'How-To', wiki:'Wiki',
+    faq_q1:'What is Dark Profile?', faq_a1:'A digital footprint simulator that searches usernames across platforms.',
+    faq_q2:'Is this a real search?', faq_a2:'No. All results are simulated locally.',
+    faq_q3:'How do I change the language?', faq_a3:'Open Settings and pick your language.',
+    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally.',
+    howto_1:'Type a username in the search field.', howto_2:'Click Search to scan platforms.',
+    howto_3:'View results and risk score.', howto_4:'Generate an exposure report.',
+    wiki_themes_title:'🎨 Themes', wiki_themes:'8 built-in themes.',
+    wiki_i18n_title:'🌐 Languages', wiki_i18n:'Trilingual: EN, FR, AR.',
+    wiki_log_title:'📜 Activity Log', wiki_log:'Timestamped log.',
+    wiki_privacy_title:'🔒 Privacy', wiki_privacy:'Local-first.',
+    working:'Working…',
+    t_mosque:'Mosque', t_zellige:'Zellige', t_andalus:'Andalus', t_riad:'Riad', t_medina:'Medina',
+    t_space:'Space', t_jungle:'Jungle', t_robot:'Robot',
+    ready:'🕵️ Dark Profile ready!',
+    logCleared:'Log cleared', copied:'Copied!', copyFail:'Copy failed',
+    soundEffects:'🔊 Sound effects', whisperMode:'Whisper mode', breathingGuide:'Breathing guide',
+    dhikrTap:'Tap', musicMode:'Music reactive', splashHint:'tap to skip',
+    langChanged:'🌐 Language → English', themeChanged:'🎨 Theme →',
+    searchBtn:'Search', enterUsername:'Enter a username first',
+    searching:'Searching platforms...', searchDone:'Search complete!',
+    found:'FOUND', notFound:'NOT FOUND', riskLabel:'Privacy Risk Score',
+    platformText:'The scanner checks 15+ platforms including social media, coding sites, forums, and messaging apps.',
+    privacyText:'Use unique usernames per platform, enable 2FA, review privacy settings regularly.',
+    exposureText:'Cross-referencing usernames across platforms can reveal identity clusters.',
+    exposureBtn:'Generate Exposure Report', generating:'Generating report...',
+    reportDone:'Exposure report generated!',
+    riskLow:'LOW RISK', riskMed:'MEDIUM RISK', riskHigh:'HIGH RISK', riskCritical:'CRITICAL RISK',
+  },
+  fr: {
+    title:'Profil Sombre', subtitle:'🕵️ Rechercher des pseudos sur les plateformes',
+    disconnected:'Deconnecte', connected:'Connecte',
+    mainSection:'Scanner Empreinte Numerique', mainDesc:'Entrez un pseudo pour rechercher sur les plateformes',
+    sectionA:'Base de Plateformes', sectionB:'Protection Vie Privee', sectionC:'Analyse Exposition',
+    activityLog:'Journal', eventsMsg:'Evenements et messages',
+    clear:'Effacer', copy:'Copier', theme:'Theme', export:'Exporter', filterAll:'Tout',
+    settings:'⚙️ Parametres', language:'Langue',
+    help:'❓ Aide', faq:'FAQ', howto:'Guide', wiki:'Wiki',
+    faq_q1:'Qu\'est-ce que Profil Sombre ?', faq_a1:'Un simulateur d\'empreinte numerique.',
+    faq_q2:'C\'est une vraie recherche ?', faq_a2:'Non. Tout est simule localement.',
+    faq_q3:'Comment changer la langue ?', faq_a3:'Ouvrez Parametres et choisissez.',
+    faq_q4:'Mes donnees sont privees ?', faq_a4:'Oui. Tout fonctionne localement.',
+    howto_1:'Tapez un pseudo.', howto_2:'Cliquez Rechercher.',
+    howto_3:'Voyez les resultats et le score.', howto_4:'Generez un rapport.',
+    wiki_themes_title:'🎨 Themes', wiki_themes:'8 themes.',
+    wiki_i18n_title:'🌐 Langues', wiki_i18n:'Trilingue.',
+    wiki_log_title:'📜 Journal', wiki_log:'Journal horodate.',
+    wiki_privacy_title:'🔒 Confidentialite', wiki_privacy:'Local-first.',
+    working:'En cours…',
+    t_mosque:'Mosquee', t_zellige:'Zellige', t_andalus:'Andalous', t_riad:'Riad', t_medina:'Medina',
+    t_space:'Espace', t_jungle:'Jungle', t_robot:'Robot',
+    ready:'🕵️ Profil Sombre pret !',
+    logCleared:'Journal efface', copied:'Copie !', copyFail:'Echec',
+    soundEffects:'🔊 Effets sonores', whisperMode:'Mode murmure', breathingGuide:'Guide respiratoire',
+    dhikrTap:'Tap', musicMode:'Reactif musique', splashHint:'appuyer pour passer',
+    langChanged:'🌐 Langue → Francais', themeChanged:'🎨 Theme →',
+    searchBtn:'Rechercher', enterUsername:'Entrez un pseudo d\'abord',
+    searching:'Recherche en cours...', searchDone:'Recherche terminee !',
+    found:'TROUVE', notFound:'NON TROUVE', riskLabel:'Score de Risque',
+    platformText:'Le scanner verifie 15+ plateformes.',
+    privacyText:'Utilisez des pseudos uniques par plateforme.',
+    exposureText:'Le croisement des pseudos peut reveler des clusters d\'identite.',
+    exposureBtn:'Generer Rapport', generating:'Generation...',
+    reportDone:'Rapport genere !',
+    riskLow:'RISQUE FAIBLE', riskMed:'RISQUE MOYEN', riskHigh:'RISQUE ELEVE', riskCritical:'RISQUE CRITIQUE',
+  },
+  ar: {
+    title:'الملف المظلم', subtitle:'🕵️ البحث عن اسماء المستخدمين عبر المنصات',
+    disconnected:'غير متصل', connected:'متصل',
+    mainSection:'ماسح البصمة الرقمية', mainDesc:'ادخل اسم مستخدم للبحث عبر المنصات',
+    sectionA:'قاعدة المنصات', sectionB:'حماية الخصوصية', sectionC:'تحليل التعرض',
+    activityLog:'سجل النشاط', eventsMsg:'الاحداث والرسائل',
+    clear:'مسح', copy:'نسخ', theme:'المظهر', export:'تصدير', filterAll:'الكل',
+    settings:'⚙️ الاعدادات', language:'اللغة',
+    help:'❓ مساعدة', faq:'اسئلة شائعة', howto:'كيف تستخدم', wiki:'ويكي',
+    faq_q1:'ما هو الملف المظلم؟', faq_a1:'محاكي بصمة رقمية يبحث عن اسماء المستخدمين.',
+    faq_q2:'هل هذا بحث حقيقي؟', faq_a2:'لا. كل النتائج محاكاة محليا.',
+    faq_q3:'كيف اغير اللغة؟', faq_a3:'افتح الاعدادات واختر لغتك.',
+    faq_q4:'هل بياناتي خاصة؟', faq_a4:'نعم. كل شيء يعمل محليا.',
+    howto_1:'اكتب اسم مستخدم.', howto_2:'انقر بحث.',
+    howto_3:'شاهد النتائج ودرجة المخاطر.', howto_4:'ولد تقرير التعرض.',
+    wiki_themes_title:'🎨 المظاهر', wiki_themes:'8 مظاهر.',
+    wiki_i18n_title:'🌐 اللغات', wiki_i18n:'ثلاثي اللغات.',
+    wiki_log_title:'📜 سجل النشاط', wiki_log:'سجل مؤرخ.',
+    wiki_privacy_title:'🔒 الخصوصية', wiki_privacy:'محلي اولا.',
+    working:'جار…',
+    t_mosque:'مسجد', t_zellige:'زليج', t_andalus:'اندلس', t_riad:'رياض', t_medina:'مدينة',
+    t_space:'فضاء', t_jungle:'ادغال', t_robot:'روبوت',
+    ready:'🕵️ الملف المظلم جاهز!',
+    logCleared:'تم مسح السجل', copied:'تم النسخ!', copyFail:'فشل النسخ',
+    soundEffects:'🔊 مؤثرات صوتية', whisperMode:'وضع الهمس', breathingGuide:'دليل التنفس',
+    dhikrTap:'اضغط', musicMode:'تفاعل موسيقي', splashHint:'انقر للتخطي',
+    langChanged:'🌐 اللغة ← العربية', themeChanged:'🎨 المظهر ←',
+    searchBtn:'بحث', enterUsername:'ادخل اسم مستخدم اولا',
+    searching:'جاري البحث...', searchDone:'اكتمل البحث!',
+    found:'موجود', notFound:'غير موجود', riskLabel:'درجة مخاطر الخصوصية',
+    platformText:'الماسح يفحص 15+ منصة.',
+    privacyText:'استخدم اسماء فريدة لكل منصة.',
+    exposureText:'مقارنة الاسماء عبر المنصات يكشف مجموعات الهوية.',
+    exposureBtn:'توليد تقرير التعرض', generating:'جاري التوليد...',
+    reportDone:'تم توليد التقرير!',
+    riskLow:'خطر منخفض', riskMed:'خطر متوسط', riskHigh:'خطر مرتفع', riskCritical:'خطر حرج',
+  }
+};
+
+let currentLang='en';
+function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
+function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const sel=$('themeSelect');if(sel)sel.value=n;const s=LANG[currentLang];try{localStorage.setItem('wdiy-theme',n);}catch{}log(`${s.themeChanged} ${s['t_'+n]||n}`,'info');}
+
+let logContainer;
+function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${type}`;d.textContent=`[${new Date().toLocaleTimeString()}] ${msg}`;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(type==='success')playSound('success');else if(type==='error')playSound('error');applyLogFilter();}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const t=Array.from(logContainer.children).map(d=>d.textContent).join('\n');try{await navigator.clipboard.writeText(t);log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const t=Array.from(logContainer.children).map(d=>d.textContent).join('\n');const b=new Blob([t],{type:'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`log-${new Date().toISOString().slice(0,10)}.txt`;a.click();URL.revokeObjectURL(u);}
+
+let toastTimer=null;
+function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block';}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms);}
+function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';}
+function setStatus(c){const txt=$('statusText'),pill=$('statusPill'),s=LANG[currentLang];if(txt)txt.textContent=c?s.connected:s.disconnected;if(pill)pill.classList.toggle('connected',c);}
+let splashTimer;
+function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);}
+function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500);}
+
+let activeLogFilter='all';
+function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();});});}
+function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(l=>{l.style.display=(activeLogFilter==='all'||l.classList.contains(activeLogFilter))?'':'none';});}
+
+function openPanel(p,o){const sb=$(p),ov=$(o);if(sb)sb.classList.add('open');if(ov)ov.classList.add('open');}
+function closePanel(p,o,r){const sb=$(p),ov=$(o);if(sb)sb.classList.remove('open');if(ov)ov.classList.remove('open');const b=$(r);if(b)b.focus();}
+function openHelp(){openPanel('helpPanel','helpOverlay');}
+function closeHelp(){closePanel('helpPanel','helpOverlay','helpBtn');}
+let logWasOpen=false;
+function openSettings(){const l=$('logPanel');logWasOpen=l&&l.classList.contains('open');if(logWasOpen)closeLog();openPanel('settingsPanel','settingsOverlay');}
+function closeSettings(){closePanel('settingsPanel','settingsOverlay','settingsBtn');if(logWasOpen){openLog();logWasOpen=false;}}
+function openLog(){const sb=$('logPanel');if(sb)sb.classList.add('open');document.body.classList.add('log-open');}
+function closeLog(){const sb=$('logPanel');if(sb)sb.classList.remove('open');document.body.classList.remove('log-open');}
+function toggleLog(){const sb=$('logPanel');if(sb&&sb.classList.contains('open'))closeLog();else openLog();}
+function closeAllPanels(){closeHelp();closeSettings();closeLog();}
+function initHelpTabs(){document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const id='help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1);const target=$(id);if(target)target.classList.add('active');});});}
+function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date());}catch{}}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+/* ═══════ DARK PROFILE SIMULATION ═══════ */
+
+const PLATFORMS = [
+  { name: 'Twitter/X', icon: '🐦', category: 'social' },
+  { name: 'Instagram', icon: '📸', category: 'social' },
+  { name: 'Facebook', icon: '👤', category: 'social' },
+  { name: 'TikTok', icon: '🎵', category: 'social' },
+  { name: 'LinkedIn', icon: '💼', category: 'professional' },
+  { name: 'GitHub', icon: '💻', category: 'coding' },
+  { name: 'GitLab', icon: '🦊', category: 'coding' },
+  { name: 'Stack Overflow', icon: '📚', category: 'coding' },
+  { name: 'Reddit', icon: '🤖', category: 'forum' },
+  { name: 'Discord', icon: '🎮', category: 'messaging' },
+  { name: 'Telegram', icon: '✈️', category: 'messaging' },
+  { name: 'YouTube', icon: '▶️', category: 'media' },
+  { name: 'Twitch', icon: '🟣', category: 'media' },
+  { name: 'Pinterest', icon: '📌', category: 'social' },
+  { name: 'Spotify', icon: '🎧', category: 'media' },
+  { name: 'Steam', icon: '🎮', category: 'gaming' },
+  { name: 'Medium', icon: '📝', category: 'blog' },
+  { name: 'Keybase', icon: '🔑', category: 'security' },
+];
+
+function hashUsername(username, platform) {
+  let h = 0;
+  const str = username.toLowerCase() + platform;
+  for (let i = 0; i < str.length; i++) { h = ((h << 5) - h) + str.charCodeAt(i); h |= 0; }
+  return Math.abs(h);
+}
+
+function isFoundOnPlatform(username, platform) {
+  const h = hashUsername(username, platform.name);
+  // ~50-70% hit rate depending on username
+  const threshold = 0.35 + (username.length % 5) * 0.07;
+  return (h % 100) / 100 > threshold;
+}
+
+let lastResults = [];
+
+async function searchUsername() {
+  const s = LANG[currentLang];
+  const input = $('usernameInput');
+  const username = input ? input.value.trim() : '';
+  if (!username) { log(s.enterUsername, 'error'); return; }
+
+  const grid = $('platformGrid');
+  const statusEl = $('searchStatus');
+  const riskEl = $('riskScore');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = s.searching; }
+  if (riskEl) riskEl.style.display = 'none';
+  showToast(s.searching);
+  log(`🔍 ${s.searching} "${username}"`, 'tx');
+  setStatus(true);
+
+  lastResults = [];
+  let foundCount = 0;
+
+  for (let i = 0; i < PLATFORMS.length; i++) {
+    const p = PLATFORMS[i];
+    const found = isFoundOnPlatform(username, p);
+    lastResults.push({ ...p, found });
+    if (found) foundCount++;
+
+    const card = document.createElement('div');
+    card.style.cssText = `padding:.6rem;border-radius:6px;border:1px solid ${found ? '#33cc5566' : '#ff444466'};background:${found ? '#33cc5511' : '#ff444411'};font-size:.8rem;display:flex;align-items:center;gap:.4rem;opacity:0;transition:opacity .3s;`;
+    card.innerHTML = `<span style="font-size:1.2rem;">${p.icon}</span><div><strong>${p.name}</strong><br><span style="color:${found?'#33cc55':'#ff4444'};font-weight:700;font-size:.75rem;">${found ? '✅ '+s.found : '❌ '+s.notFound}</span></div>`;
+    grid.appendChild(card);
+    await sleep(80);
+    card.style.opacity = '1';
+  }
+
+  // Risk score
+  const ratio = foundCount / PLATFORMS.length;
+  const score = Math.round(ratio * 100);
+  let riskLevel, riskColor;
+  if (score < 25) { riskLevel = s.riskLow; riskColor = '#33cc55'; }
+  else if (score < 50) { riskLevel = s.riskMed; riskColor = '#ffaa00'; }
+  else if (score < 75) { riskLevel = s.riskHigh; riskColor = '#ff6600'; }
+  else { riskLevel = s.riskCritical; riskColor = '#ff2222'; }
+
+  if (riskEl) {
+    riskEl.style.display = 'block';
+    riskEl.style.background = riskColor + '22';
+    riskEl.style.border = `2px solid ${riskColor}`;
+    riskEl.innerHTML = `<div style="font-size:2rem;font-weight:900;color:${riskColor};font-family:Orbitron,monospace;">${score}%</div><div style="font-size:.9rem;font-weight:700;">${s.riskLabel}</div><div style="font-size:1.1rem;color:${riskColor};font-weight:700;margin-top:.3rem;">${riskLevel}</div><div style="font-size:.75rem;opacity:.7;margin-top:.3rem;">${foundCount}/${PLATFORMS.length} platforms</div>`;
+  }
+
+  if (statusEl) statusEl.textContent = `${s.searchDone} — ${foundCount}/${PLATFORMS.length}`;
+  hideToast();
+  log(`${s.searchDone} ${foundCount}/${PLATFORMS.length} — ${riskLevel}`, foundCount > PLATFORMS.length * 0.5 ? 'error' : 'success');
+}
+
+async function generateExposureReport() {
+  const s = LANG[currentLang];
+  const results = $('exposureResults');
+  if (!results) return;
+  if (lastResults.length === 0) { log(s.enterUsername, 'error'); return; }
+
+  results.style.display = 'block';
+  results.innerHTML = '';
+  showToast(s.generating);
+  log(s.generating, 'tx');
+  await sleep(800);
+
+  const found = lastResults.filter(r => r.found);
+  const categories = {};
+  found.forEach(r => { if (!categories[r.category]) categories[r.category] = []; categories[r.category].push(r.name); });
+
+  // Category breakdown
+  for (const [cat, platforms] of Object.entries(categories)) {
+    const div = document.createElement('div');
+    div.style.cssText = 'padding:.5rem;margin:.3rem 0;border-radius:4px;border-left:3px solid var(--accent);font-size:.8rem;';
+    div.innerHTML = `<strong style="text-transform:capitalize;">${cat}</strong>: ${platforms.join(', ')}`;
+    results.appendChild(div);
+    await sleep(200);
+  }
+
+  // Recommendations
+  const recs = document.createElement('div');
+  recs.style.cssText = 'margin-top:.8rem;padding:.6rem;border-radius:6px;background:var(--glass-bg);font-size:.8rem;';
+  recs.innerHTML = `<strong>⚠️ Recommendations:</strong><ul style="margin:.3rem 0 0 1rem;padding:0;"><li>Use different usernames per platform</li><li>Enable 2FA on all ${found.length} found accounts</li><li>Review privacy settings on each platform</li><li>Remove unused accounts</li><li>Limit public bio information</li></ul>`;
+  results.appendChild(recs);
+
+  hideToast();
+  log(s.reportDone, 'success');
+}
+
+/* ═══════ INIT ═══════ */
+function init(){
+  initSplash();
+  const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  const cb=$('clearLogBtn'),cpb=$('copyLogBtn'),exb=$('exportLogBtn');
+  if(cb)cb.onclick=clearLog;if(cpb)cpb.onclick=copyLog;if(exb)exb.onclick=exportLog;
+  initLogFilters();
+  const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hOv=$('helpOverlay');
+  if(hBtn)hBtn.onclick=openHelp;if(hClose)hClose.onclick=closeHelp;if(hOv)hOv.onclick=closeHelp;
+  initHelpTabs();
+  const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sOv=$('settingsOverlay');
+  if(sBtn)sBtn.onclick=openSettings;if(sClose)sClose.onclick=closeSettings;if(sOv)sOv.onclick=closeSettings;
+  const lBtn=$('logBtn'),lClose=$('logCloseBtn');
+  if(lBtn)lBtn.onclick=toggleLog;if(lClose)lClose.onclick=closeLog;
+  const soundTgl=$('soundToggle');
+  if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled);}catch{}});}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPanels();});
+  const langSel=$('langSelect');if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect');if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sl=localStorage.getItem('wdiy-lang');const st=localStorage.getItem('wdiy-theme');if(st)setTheme(st);if(sl)setLanguage(sl);}catch{}
+  initHijriDate();
+
+  // App-specific
+  const searchBtn=$('searchBtn');if(searchBtn)searchBtn.onclick=searchUsername;
+  const input=$('usernameInput');if(input)input.addEventListener('keydown',e=>{if(e.key==='Enter')searchUsername();});
+  const exposureBtn=$('exposureBtn');if(exposureBtn)exposureBtn.onclick=generateExposureReport;
+
+  log(LANG[currentLang].ready,'success');
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

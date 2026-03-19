@@ -1,0 +1,13 @@
+{
+  "name": "esp-mesh-whisper — Workshop DIY",
+  "short_name": "esp-mesh-whisper",
+  "description": "Self-healing ESP32 mesh network simulation — messages hop node to node",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

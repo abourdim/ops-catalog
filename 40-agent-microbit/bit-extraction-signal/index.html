@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bit-extraction-signal — Workshop DIY</title>
+  <meta name="description" content="Emergency extraction beacon simulation — encode, broadcast, and rescue." />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bit-extraction-signal — Workshop DIY" />
+  <meta property="og:description" content="Emergency extraction beacon simulation — encode, broadcast, and rescue." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon-512.png" />
+
+  <!-- PWA -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .beacon-display {
+      text-align: center;
+      padding: 1.2rem;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.25);
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .beacon-display .beacon-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.7;
+      margin-bottom: 0.3rem;
+    }
+    .beacon-display .beacon-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+    .beacon-display.standby .beacon-value { color: #888; }
+    .beacon-display.broadcasting .beacon-value { color: #ff4444; animation: beacon-blink 0.8s infinite; }
+    .beacon-display.acknowledged .beacon-value { color: #44ff44; }
+
+    @keyframes beacon-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .pulse-ring {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 1.5rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pulse-ring .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .pulse-ring.active .ring {
+      animation: pulse-expand var(--pulse-speed, 2s) ease-out infinite;
+    }
+    .pulse-ring .ring:nth-child(2) { animation-delay: calc(var(--pulse-speed, 2s) * 0.33); }
+    .pulse-ring .ring:nth-child(3) { animation-delay: calc(var(--pulse-speed, 2s) * 0.66); }
+    .pulse-ring .core {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: currentColor;
+      z-index: 1;
+    }
+
+    @keyframes pulse-expand {
+      0% { transform: scale(0.15); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    .priority-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+    .priority-indicator.low { background: #44cc44; }
+    .priority-indicator.medium { background: #cccc00; }
+    .priority-indicator.high { background: #ff8800; }
+    .priority-indicator.mayday { background: #ff0000; animation: mayday-flash 0.4s infinite; }
+
+    @keyframes mayday-flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .frame-hex {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.72rem;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.8rem;
+      word-break: break-all;
+      line-height: 1.6;
+      color: #0f0;
+      min-height: 3rem;
+      margin-top: 0.8rem;
+    }
+
+    .timer-display {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3rem;
+      text-align: center;
+      padding: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .form-row label {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .form-row .field { flex: 1; min-width: 120px; }
+    .form-row input, .form-row select {
+      width: 100%;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.3);
+      color: inherit;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner">
+      <div class="splash-logo" id="splashLogo"></div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🚁 extraction signal — emergency beacon</div>
+      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+
+    <div class="rows-container">
+
+      <!-- ═══════════════════ HEADER ═══════════════════ -->
+      <div class="header">
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
+
+        <div class="title-block">
+          <div class="logo-wrap" id="logoWrap"></div>
+          <div>
+            <h1 data-i18n="title">bit-extraction-signal</h1>
+            <div class="subtitle" data-i18n="subtitle">🚁 extraction signal — emergency beacon</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-buttons">
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+          </div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <div class="card" id="mainCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🚁</span> <span data-i18n="mainSection">Extraction Signal — Emergency Beacon</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Broadcast coded emergency extraction requests</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+
+        <!-- Beacon Status -->
+        <div class="beacon-display standby" id="beaconStatus">
+          <div class="beacon-label" data-i18n="beaconLabel">BEACON STATUS</div>
+          <div class="beacon-value" id="beaconValue" data-i18n="standby">STANDBY</div>
+        </div>
+
+        <!-- Priority Selector -->
+        <div class="control-section">
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="priorityLabel">Priority Level</label>
+              <select id="prioritySelect">
+                <option value="low" data-i18n-opt="priorityLow">Low (routine)</option>
+                <option value="medium" data-i18n-opt="priorityMedium">Medium (urgent)</option>
+                <option value="high" data-i18n-opt="priorityHigh">High (critical)</option>
+                <option value="mayday" data-i18n-opt="priorityMayday">MAYDAY</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Encoded Message Builder -->
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="agentIdLabel">Agent ID</label>
+              <input type="text" id="agentIdInput" placeholder="ALPHA-7" maxlength="12" />
+            </div>
+            <div class="field">
+              <label data-i18n="statusLabel">Status</label>
+              <select id="statusSelect">
+                <option value="ok" data-i18n-opt="statusOk">OK</option>
+                <option value="injured" data-i18n-opt="statusInjured">Injured</option>
+                <option value="compromised" data-i18n-opt="statusCompromised">Compromised</option>
+                <option value="underfire" data-i18n-opt="statusUnderfire">Under fire</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="gridLabel">Grid Coordinates</label>
+              <input type="text" id="gridInput" placeholder="37N 4512 7834" maxlength="20" />
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="btn-row">
+            <button id="activateBtn" class="primary fire-btn" style="flex:2;padding:0.7rem 1.2rem;font-size:1rem" data-i18n="activateBtn">Activate Beacon</button>
+            <button id="cancelBtn" style="flex:1;padding:0.7rem 1.2rem;font-size:1rem" data-i18n="cancelBtn">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Signal Pulse Animation -->
+        <div class="pulse-ring" id="pulseDisplay">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="core"></div>
+        </div>
+
+        <!-- Response Timer -->
+        <div class="timer-display" id="responseTimer">00:00:00</div>
+
+        <!-- Encoded Frame Display -->
+        <div>
+          <div style="font-size:0.75rem;opacity:0.7;margin-bottom:0.3rem" data-i18n="frameLabel">ENCODED EMERGENCY PACKET</div>
+          <div class="frame-hex" id="frameDisplay">--</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ SECTION A — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
+        <div class="card">
+          <div class="help-step">
+            <span class="help-step-num">1</span>
+            <p data-i18n="howItWorks1">Encode agent ID, status, and location into a compact binary frame.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">2</span>
+            <p data-i18n="howItWorks2">The beacon transmits the frame on the emergency frequency.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">3</span>
+            <p data-i18n="howItWorks3">The signal repeats every N seconds (faster for higher priority).</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">4</span>
+            <p data-i18n="howItWorks4">The rescue team receives, decodes, and acknowledges the beacon.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION B — Lab ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🧪</span> <span data-i18n="sectionB">Lab</span></summary>
+        <div class="card">
+          <div class="help-step">
+            <span class="help-step-num">1</span>
+            <p data-i18n="lab1">Build different emergency messages and observe the encoded frames.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">2</span>
+            <p data-i18n="lab2">Compare priority levels: see how pulse speed and color change.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">3</span>
+            <p data-i18n="lab3">Decode an intercepted beacon: paste hex in Agent ID and observe.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">4</span>
+            <p data-i18n="lab4">Measure response time: activate and watch the rescue acknowledgment timer.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Challenge ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary>
+        <div class="card">
+          <div class="help-step">
+            <span class="help-step-num">1</span>
+            <p data-i18n="challenge1">Encode a MAYDAY signal using the minimum number of bytes possible.</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">2</span>
+            <p data-i18n="challenge2">Decode an unknown beacon frame: what agent, status, and location does it contain?</p>
+          </div>
+          <div class="help-step">
+            <span class="help-step-num">3</span>
+            <p data-i18n="challenge3">Design a stealth extraction protocol that minimizes signal detectability.</p>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
+
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+
+  <!-- Matrix rain canvas (hidden by default) -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Debug panel (hidden, ?debug=1 to show) -->
+  <div id="debugPanel" class="debug-panel">
+    <span id="debugFps">0 FPS</span>
+    <span id="debugMem">0 MB</span>
+  </div>
+
+  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="help">❓ Help</span>
+      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- FAQ -->
+      <div class="help-content active" id="helpFaq">
+        <details class="help-item">
+          <summary data-i18n="faq_q1">What is an extraction beacon?</summary>
+          <p data-i18n="faq_a1">An extraction beacon is a coded emergency signal that broadcasts your identity, status, and location to a rescue team.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q2">How does priority affect the signal?</summary>
+          <p data-i18n="faq_a2">Higher priority means faster pulse rate, red color coding, and shorter simulated response time from rescue teams.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q3">What is the encoded frame?</summary>
+          <p data-i18n="faq_a3">The encoded frame is a compact binary packet containing your agent ID, status code, priority level, and grid coordinates in hexadecimal format.</p>
+        </details>
+        <details class="help-item">
+          <summary data-i18n="faq_q4">Is my data private?</summary>
+          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.</p>
+        </details>
+      </div>
+
+      <!-- How-To -->
+      <div class="help-content" id="helpHowto">
+        <div class="help-step">
+          <span class="help-step-num">1</span>
+          <p data-i18n="howto_1">Enter your Agent ID, select your status, and type grid coordinates.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">2</span>
+          <p data-i18n="howto_2">Choose a priority level from Low to MAYDAY.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">3</span>
+          <p data-i18n="howto_3">Click "Activate Beacon" to start broadcasting. Watch the pulse animation and encoded frame.</p>
+        </div>
+        <div class="help-step">
+          <span class="help-step-num">4</span>
+          <p data-i18n="howto_4">Wait for rescue acknowledgment or click "Cancel" to stop the beacon.</p>
+        </div>
+      </div>
+
+      <!-- Wiki -->
+      <div class="help-content" id="helpWiki">
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_beacons_title">🚨 Emergency Beacons</h3>
+          <p data-i18n="wiki_beacons">Emergency beacons (ELT, PLB, EPIRB) are devices that transmit distress signals on 406 MHz to satellites in the COSPAS-SARSAT system for search and rescue.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_elt_title">🛩️ ELT / PLB</h3>
+          <p data-i18n="wiki_elt">ELT (Emergency Locator Transmitter) is for aircraft. PLB (Personal Locator Beacon) is portable. Both encode a unique ID and GPS coordinates into a digital burst.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_encoding_title">🔢 Signal Encoding</h3>
+          <p data-i18n="wiki_encoding">Emergency signals encode identity, location, and status into compact binary frames using bit-packing, checksums, and error correction codes.</p>
+        </div>
+        <div class="wiki-entry">
+          <h3 data-i18n="wiki_rescue_title">🚁 Rescue Protocols</h3>
+          <p data-i18n="wiki_rescue">Rescue protocols define priority triage (routine, urgent, critical, MAYDAY), response times, and acknowledgment procedures for extraction operations.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇩🇿 عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+          <option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option>
+          <option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+          <option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group">
+        <label class="toggle-ctrl">
+          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
+          <span data-i18n="soundEffects">🔊 Sound effects</span>
+        </label>
+      </div>
+      <div class="sidebar-group">
+        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
+      </div>
+      <div class="sidebar-group">
+        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
+          <span class="dhikr-label">سبحان الله</span>
+          <span class="dhikr-count" id="dhikrCounter">0</span>
+          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span>Workshop DIY</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">✓</button>
+      <button class="log-filter" data-filter="error">✗</button>
+      <button class="log-filter" data-filter="tx">TX</button>
+      <button class="log-filter" data-filter="rx">RX</button>
+    </div>
+
+    <div class="sidebar-body log-body">
+      <div class="log" id="logContainer" aria-live="polite"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span data-i18n="eventsMsg">Events &amp; messages</span>
+      <span class="badge"><strong>v1.0</strong></span>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toastIndicator" class="toast-indicator">
+    <div class="toast-inner">
+      <div class="spinner"></div>
+      <div id="toastMessage" class="toast-text">Working…</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
