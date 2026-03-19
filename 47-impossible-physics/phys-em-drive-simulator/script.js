@@ -75,3 +75,177 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();$('powerSlider').value=700;$('powerVal').textContent='700 W';$('qSlider').value=50000;$('qVal').textContent='50000';$('taperSlider').value=60;$('taperVal').textContent='0.60';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('thrustVal').textContent='-- μN';$('tpVal').textContent='-- mN/kW';$('cavEVal').textContent='-- J';$('statusVal').textContent='⚠️ Unverified';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('powerSlider').oninput=function(){$('powerVal').textContent=this.value+' W';};$('qSlider').oninput=function(){$('qVal').textContent=this.value;};$('taperSlider').oninput=function(){$('taperVal').textContent=(this.value/100).toFixed(2);};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — EM Drive Simulator
+   Animated frustum cavity with microwave resonance, radiation
+   pressure asymmetry, and thrust measurement visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simEMDrive';let cv,cx,W,H,af=null,t=0;
+  const microwaves=[];const MAX_WAVES=60;
+  let power=700,qFactor=50000,taper=0.6,thrust=0;
+  const thrustHistory=[];
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#06080e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function drawFrustum(){
+    const fcx=W*0.35,fcy=H/2;
+    const bigR=100,smallR=bigR*taper,length=180;
+    // Cavity outline
+    cx.beginPath();
+    cx.moveTo(fcx-length/2,fcy-bigR);
+    cx.lineTo(fcx+length/2,fcy-smallR);
+    cx.lineTo(fcx+length/2,fcy+smallR);
+    cx.lineTo(fcx-length/2,fcy+bigR);
+    cx.closePath();
+    cx.fillStyle='rgba(100,80,50,0.08)';cx.fill();
+    cx.strokeStyle='rgba(200,150,80,0.4)';cx.lineWidth=2;cx.stroke();
+    // Endcaps
+    cx.fillStyle='rgba(200,150,80,0.15)';
+    cx.fillRect(fcx-length/2-3,fcy-bigR,6,bigR*2);
+    cx.fillRect(fcx+length/2-3,fcy-smallR,6,smallR*2);
+    // Internal resonance glow
+    const pulse=0.1+Math.sin(t*8)*0.05;
+    const grad=cx.createLinearGradient(fcx-length/2,0,fcx+length/2,0);
+    grad.addColorStop(0,'rgba(255,150,0,'+pulse+')');
+    grad.addColorStop(1,'rgba(255,50,0,'+(pulse*0.5)+')');
+    cx.fillStyle=grad;
+    cx.beginPath();
+    cx.moveTo(fcx-length/2+5,fcy-bigR+5);
+    cx.lineTo(fcx+length/2-5,fcy-smallR+5);
+    cx.lineTo(fcx+length/2-5,fcy+smallR-5);
+    cx.lineTo(fcx-length/2+5,fcy+bigR-5);
+    cx.closePath();cx.fill();
+    // Labels
+    cx.fillStyle='rgba(200,150,80,0.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('BIG END',fcx-length/2,fcy+bigR+15);
+    cx.fillText('SMALL END',fcx+length/2,fcy+smallR+15);
+  }
+
+  function drawMicrowaves(){
+    const fcx=W*0.35,fcy=H/2,length=180;
+    const bigR=100,smallR=bigR*taper;
+    // Bounce microwaves inside cavity
+    if(Math.random()<0.15&&microwaves.length<MAX_WAVES){
+      const side=Math.random()>0.5;
+      const yOff=(Math.random()-.5)*(side?bigR:smallR)*1.5;
+      microwaves.push({x:side?fcx-length/2+10:fcx+length/2-10,y:fcy+yOff,
+        vx:side?2:-2,vy:(Math.random()-.5)*1,
+        age:0,life:50+Math.random()*40,hue:30+Math.random()*20});
+    }
+    for(let i=microwaves.length-1;i>=0;i--){
+      const w=microwaves[i];
+      w.age++;w.x+=w.vx;w.y+=w.vy;
+      // Reflect off walls
+      const progress=(w.x-(fcx-length/2))/length;
+      const wallR=bigR-(bigR-smallR)*progress;
+      if(Math.abs(w.y-fcy)>wallR){w.vy*=-1;w.y=fcy+(w.y>fcy?wallR:-wallR);}
+      if(w.x<fcx-length/2+5){w.vx=Math.abs(w.vx);w.x=fcx-length/2+5;}
+      if(w.x>fcx+length/2-5){w.vx=-Math.abs(w.vx);w.x=fcx+length/2-5;}
+      if(w.age>w.life){microwaves.splice(i,1);continue;}
+      const alpha=Math.sin(w.age/w.life*Math.PI)*0.5;
+      cx.fillStyle='hsla('+w.hue+',80%,60%,'+alpha+')';
+      cx.beginPath();cx.arc(w.x,w.y,2,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  function drawThrustArrow(){
+    const fcx=W*0.35,fcy=H/2;
+    const arrowLen=Math.min(60,thrust*5000);
+    if(arrowLen>2){
+      cx.strokeStyle='rgba(0,255,100,0.4)';cx.lineWidth=3;
+      cx.beginPath();cx.moveTo(fcx+100,fcy);cx.lineTo(fcx+100+arrowLen,fcy);cx.stroke();
+      cx.fillStyle='rgba(0,255,100,0.4)';
+      cx.beginPath();cx.moveTo(fcx+100+arrowLen,fcy-5);
+      cx.lineTo(fcx+105+arrowLen,fcy);cx.lineTo(fcx+100+arrowLen,fcy+5);cx.fill();
+      cx.fillStyle='rgba(0,255,100,0.4)';cx.font='8px monospace';cx.textAlign='left';
+      cx.fillText('THRUST?',fcx+100+arrowLen+8,fcy+4);
+    }
+  }
+
+  function drawThrustGraph(){
+    const gx=W*0.65,gy=20,gw=W*0.32,gh=100;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(gx,gy,gw,gh);
+    thrustHistory.push(thrust);
+    if(thrustHistory.length>200)thrustHistory.shift();
+    if(thrustHistory.length>1){
+      const maxT=Math.max(...thrustHistory,0.001);
+      cx.strokeStyle='rgba(0,255,100,0.5)';cx.lineWidth=1.5;cx.beginPath();
+      const step=gw/Math.max(1,thrustHistory.length-1);
+      thrustHistory.forEach((v,i)=>{
+        const x=gx+i*step;const y=gy+gh-v/maxT*gh*0.8;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    cx.fillStyle='rgba(0,255,100,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('THRUST MEASUREMENT',gx+8,gy+12);
+    cx.fillText((thrust*1e6).toFixed(2)+' uN',gx+8,gy+gh+10);
+  }
+
+  function drawParameters(){
+    const px=W*0.65,py=140,pw=W*0.32,ph=80;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(px,py,pw,ph);
+    cx.fillStyle='rgba(200,150,80,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('EM DRIVE PARAMETERS',px+8,py+14);
+    cx.fillStyle='#aaa';
+    cx.fillText('Power: '+power+' W',px+8,py+30);
+    cx.fillText('Q Factor: '+qFactor,px+8,py+44);
+    cx.fillText('Taper Ratio: '+taper.toFixed(2),px+8,py+58);
+    cx.fillText('Status: UNVERIFIED',px+8,py+72);
+  }
+
+  function drawCavityModes(){
+    const mx=W*0.65,my=230,mw=W*0.32,mh=50;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(mx,my,mw,mh);
+    // Resonance modes
+    for(let n=1;n<=8;n++){
+      const freq=n*2.45;
+      const amp=1/(1+Math.pow((freq-7)/2,2));
+      const bh=amp*mh*0.7;
+      const hue=30+n*20;
+      cx.fillStyle='hsla('+hue+',70%,50%,'+(0.3+amp*0.4)+')';
+      cx.fillRect(mx+n*mw/9,my+mh-bh,mw/10-2,bh);
+    }
+    cx.fillStyle='rgba(200,150,80,0.3)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('CAVITY RESONANCE MODES',mx+8,my-4);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,200,54);
+    cx.strokeStyle='rgba(200,150,80,0.15)';cx.strokeRect(8,8,200,54);
+    cx.font='10px monospace';cx.fillStyle='#f59e0b';cx.textAlign='left';
+    cx.fillText('EM DRIVE SIMULATOR',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Microwave Cavity Thruster',16,40);
+    cx.fillText('Controversial Propulsion',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,8,14,0.12)';cx.fillRect(0,0,W,H);
+
+    // Vary parameters
+    power=700+Math.sin(t*0.2)*100;
+    thrust=power*1e-9*qFactor/50000*(1+Math.sin(t*3)*0.2)+(Math.random()-0.5)*1e-9;
+
+    drawFrustum();drawMicrowaves();drawThrustArrow();
+    drawThrustGraph();drawParameters();drawCavityModes();drawHUD();
+
+    cx.fillStyle='rgba(200,150,80,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('EM Drive — Microwave Cavity Resonance Propulsion (Unverified)',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

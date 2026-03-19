@@ -77,3 +77,191 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('clearLogBtn').onclick=()=>{$('logContainer').innerHTML='';log('Log cleared')};$('copyLogBtn').onclick=async()=>{try{await navigator.clipboard.writeText(Array.from($('logContainer').children).map(d=>d.textContent).join('\n'));log('Copied!','success')}catch{log('Copy failed','error')}};
   document.querySelectorAll('.help-tab').forEach(tab=>{tab.onclick=()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1)).classList.add('active')}});
   buildControls();buildHelp();buildRef();buildMath();findCurvePoints();log(LANG[currentLang].ready,'success');drawCanvas()});
+
+/* ═══════ ENHANCED ELLIPTIC CURVE VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Real-valued EC curve (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Elliptic Curve (real plane): y^2 = x^3 + ax + b',10,16);
+
+  const ecW=w*0.45,ecH=140,ecX=20,ecY=28;
+  const a=-1,b=1;
+  // Draw axes
+  _x.strokeStyle=mut+'44';_x.lineWidth=1;
+  _x.beginPath();_x.moveTo(ecX+ecW/2,ecY);_x.lineTo(ecX+ecW/2,ecY+ecH);_x.stroke();
+  _x.beginPath();_x.moveTo(ecX,ecY+ecH/2);_x.lineTo(ecX+ecW,ecY+ecH/2);_x.stroke();
+
+  // Plot curve
+  _x.strokeStyle='#60a5fa';_x.lineWidth=2;
+  const scale=ecH/6;
+  for(let sign=-1;sign<=1;sign+=2){
+    _x.beginPath();let started=false;
+    for(let px=-2;px<=3;px+=0.02){
+      const rhs=px*px*px+a*px+b;
+      if(rhs<0)continue;
+      const py=sign*Math.sqrt(rhs);
+      const sx=ecX+ecW/2+px*scale*0.9;
+      const sy=ecY+ecH/2-py*scale*0.6;
+      if(sx<ecX||sx>ecX+ecW||sy<ecY||sy>ecY+ecH)continue;
+      if(!started){_x.moveTo(sx,sy);started=true}else _x.lineTo(sx,sy);
+    }
+    _x.stroke();
+  }
+  _x.lineWidth=1;
+
+  // Animate point addition P+Q=R
+  const phase=_t*0.01;
+  const Px=-0.5+Math.sin(phase)*0.3;
+  const Pyrhs=Px*Px*Px+a*Px+b;
+  if(Pyrhs>=0){
+    const Py=Math.sqrt(Pyrhs);
+    const Qx=1.2;const Qyrhs=Qx*Qx*Qx+a*Qx+b;
+    if(Qyrhs>=0){
+      const Qy=Math.sqrt(Qyrhs);
+      // Draw P
+      const spx=ecX+ecW/2+Px*scale*0.9,spy=ecY+ecH/2-Py*scale*0.6;
+      _x.fillStyle='#4ade80';_x.beginPath();_x.arc(spx,spy,4,0,Math.PI*2);_x.fill();
+      _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';_x.fillText('P',spx+6,spy-2);
+      // Draw Q
+      const sqx=ecX+ecW/2+Qx*scale*0.9,sqy=ecY+ecH/2-Qy*scale*0.6;
+      _x.fillStyle='#fbbf24';_x.beginPath();_x.arc(sqx,sqy,4,0,Math.PI*2);_x.fill();
+      _x.fillText('Q',sqx+6,sqy-2);
+      // Line through P and Q
+      _x.strokeStyle='#f8717144';_x.setLineDash([3,3]);
+      _x.beginPath();_x.moveTo(spx-50,spy+(sqy-spy)/(sqx-spx)*(-50));_x.lineTo(sqx+50,sqy-(sqy-spy)/(sqx-spx)*(-50));_x.stroke();
+      _x.setLineDash([]);
+    }
+  }
+
+  // === Group Order and Subgroups (top-right) ===
+  const goX=w*0.52,goY=10;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Curve Point Group Structure',goX,16);
+
+  const p=curveP;
+  const nPts=points.length||50;
+  const goW=w*0.46,goH=140;
+  const radius=Math.min(goW,goH)*0.35;
+  const cx=goX+goW/2,cy=goY+goH/2+10;
+
+  // Draw cyclic group as circle
+  _x.strokeStyle=mut+'33';_x.lineWidth=1;
+  _x.beginPath();_x.arc(cx,cy,radius,0,Math.PI*2);_x.stroke();
+
+  // Place points around circle
+  const displayPts=Math.min(nPts,60);
+  for(let i=0;i<displayPts;i++){
+    const angle=(i/displayPts)*Math.PI*2-Math.PI/2;
+    const px=cx+Math.cos(angle)*radius;
+    const py=cy+Math.sin(angle)*radius;
+    const isGenerator=i===0;
+    const isActive=i<=(_t%displayPts);
+    const sz=isGenerator?5:isActive?3:2;
+    _x.fillStyle=isGenerator?'#f87171':isActive?'#4ade80':`${acc}33`;
+    _x.beginPath();_x.arc(px,py,sz,0,Math.PI*2);_x.fill();
+
+    // Scalar multiplication path
+    if(isActive&&i>0){
+      const prevAngle=((i-1)/displayPts)*Math.PI*2-Math.PI/2;
+      const ppx=cx+Math.cos(prevAngle)*radius;
+      const ppy=cy+Math.sin(prevAngle)*radius;
+      _x.strokeStyle='#4ade8022';_x.beginPath();_x.moveTo(ppx,ppy);_x.lineTo(px,py);_x.stroke();
+    }
+  }
+  _x.fillStyle=mut;_x.font='9px SF Mono';_x.textAlign='center';
+  _x.fillText(`|E| = ${nPts} points`,cx,cy+4);
+  _x.fillText(`GF(${p})`,cx,cy+16);_x.textAlign='left';
+
+  // === BSGS Algorithm Steps (bottom-left) ===
+  const bsY=ecY+ecH+20,bsW=w*0.48,bsH=h-bsY-25;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Baby-Step Giant-Step Algorithm',10,bsY);
+
+  const m=Math.ceil(Math.sqrt(nPts));
+  const babyW=bsW*0.48,giantW=bsW*0.48;
+
+  // Baby steps table
+  _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';_x.fillText(`Baby Steps (0..${m})`,10,bsY+14);
+  const bRows=Math.min(m,12);
+  for(let j=0;j<bRows;j++){
+    const y=bsY+22+j*12;
+    const active=j<=(_t%(bRows+5));
+    _x.fillStyle=active?'#4ade8033':'rgba(255,255,255,.02)';
+    _x.fillRect(10,y,babyW,10);
+    _x.fillStyle=active?'#4ade80':mut;_x.font='7px SF Mono';
+    _x.fillText(`j=${j}: jG = (${(j*7+3)%p}, ${(j*11+5)%p})`,12,y+8);
+  }
+
+  // Giant steps table
+  _x.fillStyle='#f87171';_x.font='bold 9px SF Mono';_x.fillText(`Giant Steps (0..${m})`,10+babyW+10,bsY+14);
+  for(let i=0;i<bRows;i++){
+    const y=bsY+22+i*12;
+    const active=i<=(_t%(bRows+5));
+    _x.fillStyle=active?'#f8717133':'rgba(255,255,255,.02)';
+    _x.fillRect(10+babyW+10,y,giantW,10);
+    _x.fillStyle=active?'#f87171':mut;_x.font='7px SF Mono';
+    _x.fillText(`i=${i}: Q-imG = (${(i*13+2)%p}, ${(i*17+1)%p})`,12+babyW+10,y+8);
+  }
+
+  // Match indicator
+  if(_t%80>60){
+    const matchY=bsY+22+5*12;
+    _x.strokeStyle='#fbbf24';_x.lineWidth=2;
+    _x.strokeRect(10,matchY,babyW,10);
+    _x.strokeRect(10+babyW+10,matchY,giantW,10);
+    _x.fillStyle='#fbbf24';_x.font='bold 9px SF Mono';
+    _x.fillText('MATCH! k = im + j',10+bsW/2-40,bsY+bsH-5);
+    _x.lineWidth=1;
+  }
+
+  // === Key Size Security Levels (bottom-right) ===
+  const ksX=w*0.52,ksY=bsY,ksW=w*0.46;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('ECC vs RSA Key Size Comparison',ksX,ksY);
+
+  const comparisons=[
+    {ecc:160,rsa:1024,aes:80,color:'#f87171'},
+    {ecc:224,rsa:2048,aes:112,color:'#fbbf24'},
+    {ecc:256,rsa:3072,aes:128,color:'#4ade80'},
+    {ecc:384,rsa:7680,aes:192,color:'#60a5fa'},
+    {ecc:521,rsa:15360,aes:256,color:'#c084fc'}
+  ];
+
+  const maxRSA=15360,barMaxW=ksW-100;
+  _x.fillStyle=mut;_x.font='8px SF Mono';_x.fillText('ECC   RSA      Security',ksX,ksY+14);
+
+  comparisons.forEach((c,i)=>{
+    const y=ksY+22+i*24;
+    // ECC bar
+    const eccW=(c.ecc/521)*barMaxW*0.15;
+    _x.fillStyle=c.color+'66';_x.fillRect(ksX,y,eccW,10);
+    _x.fillStyle=c.color;_x.font='bold 7px SF Mono';_x.fillText(`${c.ecc}`,ksX+eccW+3,y+8);
+    // RSA bar
+    const rsaW=(c.rsa/maxRSA)*barMaxW*0.7;
+    _x.fillStyle=c.color+'33';_x.fillRect(ksX,y+11,rsaW,8);
+    _x.fillStyle=mut;_x.font='7px SF Mono';_x.fillText(`RSA-${c.rsa}`,ksX+rsaW+3,y+18);
+    // AES equivalent
+    _x.fillStyle=c.color;_x.font='bold 7px SF Mono';
+    _x.fillText(`= AES-${c.aes}`,ksX+barMaxW+10,y+12);
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

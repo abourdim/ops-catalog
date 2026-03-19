@@ -414,3 +414,164 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildHelp();buildRef();buildMath();
   log(LANG[currentLang].ready,'success');drawCanvas();
 });
+
+/* ═══════ ENHANCED BLEICHENBACHER VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === PKCS#1 v1.5 Padding Detail (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('PKCS#1 v1.5 Encryption Block (k bytes)',10,16);
+
+  const kBytes=16;// simplified
+  const cellW=Math.min(30,(w-20)/kBytes);
+  const padLen=kBytes-3-4;// 4 byte message
+  for(let i=0;i<kBytes;i++){
+    const x=10+i*cellW;
+    let color,label;
+    if(i===0){color='#f87171';label='00'}
+    else if(i===1){color='#fbbf24';label='02'}
+    else if(i<2+padLen){color='#60a5fa';label=((Math.random()*254+1)|0).toString(16).padStart(2,'0')}
+    else if(i===2+padLen){color='#f87171';label='00'}
+    else{color='#4ade80';label=String.fromCharCode(0x41+i-2-padLen-1)}
+
+    _x.fillStyle=color+'33';_x.fillRect(x,24,cellW-2,30);
+    _x.strokeStyle=color+'66';_x.strokeRect(x,24,cellW-2,30);
+    _x.fillStyle=color;_x.font='bold 7px SF Mono';_x.textAlign='center';
+    _x.fillText(label,x+cellW/2-1,40);
+    _x.textAlign='left';
+  }
+  // Bracket labels
+  _x.fillStyle=mut;_x.font='8px Tajawal';
+  _x.fillText('00 02',10,62);_x.fillText('PS (random, >= 8 bytes)',10+3*cellW,62);
+  _x.fillText('00',10+(2+padLen)*cellW,62);_x.fillText('Message',10+(3+padLen)*cellW,62);
+
+  // === Oracle Response Model (middle-left) ===
+  const orY=75,orW=w*0.45;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Padding Oracle Decision',10,orY);
+
+  const responses=[
+    {test:'Starts with 00 02?',result:_t%3!==0,y:0},
+    {test:'PS length >= 8?',result:_t%5!==0,y:1},
+    {test:'Separator 00 found?',result:_t%4!==0,y:2}
+  ];
+  responses.forEach((r,i)=>{
+    const y=orY+12+i*22;
+    _x.fillStyle=r.result?'#4ade8033':'#f8717133';
+    _x.fillRect(10,y,orW,20);
+    _x.fillStyle=r.result?'#4ade80':'#f87171';_x.font='9px SF Mono';
+    _x.fillText(`${r.test} ${r.result?'YES':'NO'}`,14,y+14);
+    _x.fillStyle=r.result?'#4ade80':'#f87171';
+    _x.beginPath();_x.arc(orW-5,y+10,5,0,Math.PI*2);_x.fill();
+  });
+  const allPass=responses.every(r=>r.result);
+  _x.fillStyle=allPass?'#4ade80':'#f87171';_x.font='bold 10px SF Mono';
+  _x.fillText(allPass?'PKCS CONFORMING':'NON-CONFORMING',10,orY+80);
+
+  // === Interval Narrowing Animation (middle-right) ===
+  const inX=w*0.52,inY=orY;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Interval Narrowing Over Queries',inX,inY);
+
+  const inW=w*0.46,inH=80;
+  const nSteps=12;
+  for(let i=0;i<nSteps;i++){
+    const y=inY+10+i*(inH/nSteps);
+    const shrink=Math.pow(0.7,i);
+    const center=0.5+Math.sin(i*0.8)*0.1;
+    const lo=Math.max(0,center-shrink/2);
+    const hi=Math.min(1,center+shrink/2);
+    const isActive=i<=(_t%nSteps);
+    _x.fillStyle=isActive?'#4ade8022':'rgba(255,255,255,.02)';
+    _x.fillRect(inX+lo*inW,y,Math.max(2,(hi-lo)*inW),inH/nSteps-2);
+    _x.strokeStyle=isActive?'#4ade80':mut+'22';
+    _x.strokeRect(inX+lo*inW,y,Math.max(2,(hi-lo)*inW),inH/nSteps-2);
+    if(isActive){
+      _x.fillStyle=mut;_x.font='6px SF Mono';
+      _x.fillText(`q${i+1}`,inX-14,y+inH/nSteps/2+2);
+    }
+  }
+  // Plaintext marker
+  const pmX=inX+0.48*inW;
+  _x.strokeStyle='#f87171';_x.setLineDash([2,2]);
+  _x.beginPath();_x.moveTo(pmX,inY+10);_x.lineTo(pmX,inY+inH+8);_x.stroke();
+  _x.setLineDash([]);
+  _x.fillStyle='#f87171';_x.font='bold 7px SF Mono';_x.fillText('m',pmX-3,inY+inH+16);
+
+  // === Multiplier Search (bottom-left) ===
+  const msY=orY+95,msW=w*0.48,msH=h-msY-55;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Adaptive Multiplier Search: c\'= c * s^e mod N',10,msY);
+
+  const sVals=30;
+  const sBarW=msW/sVals;
+  for(let i=0;i<sVals;i++){
+    const isConforming=(i+_t)%7===0;
+    const barH=Math.random()*msH*0.7+5;
+    _x.fillStyle=isConforming?'#4ade8066':'#60a5fa22';
+    _x.fillRect(10+i*sBarW,msY+10+msH-barH,sBarW-2,barH);
+    if(isConforming){
+      _x.fillStyle='#4ade80';_x.font='bold 7px SF Mono';_x.textAlign='center';
+      _x.fillText('!',10+i*sBarW+sBarW/2,msY+10+msH-barH-3);_x.textAlign='left';
+    }
+  }
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText('Green = PKCS conforming (oracle says YES)',10,msY+msH+16);
+
+  // === RSA Homomorphic Property (bottom-right) ===
+  const rpX=w*0.52,rpY=msY;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('RSA Malleability (homomorphic)',rpX,rpY);
+
+  const formulas=[
+    {text:'c = m^e mod N',color:'#60a5fa'},
+    {text:"c' = c * s^e mod N",color:'#fbbf24'},
+    {text:"(c')^d = (c * s^e)^d mod N",color:'#c084fc'},
+    {text:"      = c^d * (s^e)^d mod N",color:'#c084fc'},
+    {text:'      = m * s mod N',color:'#f87171'},
+    {text:'',color:mut},
+    {text:'If m*s has valid padding:',color:mut},
+    {text:'  2B <= m*s < 3B',color:'#4ade80'},
+    {text:'  => m in [2B/s, 3B/s]',color:'#4ade80'}
+  ];
+
+  formulas.forEach((f,i)=>{
+    const y=rpY+14+i*14;
+    const isActive=Math.floor(_t/30)%formulas.length===i;
+    if(isActive&&f.text){
+      _x.fillStyle=f.color+'22';_x.fillRect(rpX,y-2,w*0.46,13);
+    }
+    _x.fillStyle=f.color;_x.font='9px SF Mono';
+    _x.fillText(f.text,rpX+4,y+8);
+  });
+
+  // === Attack Progress Indicator (bottom) ===
+  const apY=h-35;
+  const progress=(_t%300)/300;
+  _x.fillStyle='rgba(255,255,255,.04)';_x.fillRect(10,apY,w-20,20);
+  const color=progress<0.3?'#f87171':progress<0.7?'#fbbf24':'#4ade80';
+  _x.fillStyle=color+'44';_x.fillRect(10,apY,progress*(w-20),20);
+  _x.strokeStyle=color;_x.strokeRect(10,apY,w-20,20);
+  _x.fillStyle=txt;_x.font='bold 9px SF Mono';_x.textAlign='center';
+  _x.fillText(`Oracle Queries: ~${Math.floor(progress*1000000)} / 1,000,000  (${Math.floor(progress*100)}%)`,w/2,apY+14);
+  _x.textAlign='left';
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

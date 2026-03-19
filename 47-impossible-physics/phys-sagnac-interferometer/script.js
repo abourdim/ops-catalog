@@ -72,3 +72,151 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();$('rotSlider').value=15;$('rotVal').textContent='15 °/s';$('areaSlider').value=10;$('areaVal').textContent='10 m²';$('wlSlider').value=633;$('wlVal').textContent='633 nm';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('phaseVal').textContent='-- rad';$('fringeVal').textContent='-- fringes';$('beatVal').textContent='-- Hz';$('sensVal').textContent='-- rad/(°/s)';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('rotSlider').oninput=function(){$('rotVal').textContent=this.value+' °/s';};$('areaSlider').oninput=function(){$('areaVal').textContent=this.value+' m²';};$('wlSlider').oninput=function(){$('wlVal').textContent=this.value+' nm';};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Sagnac Interferometer
+   Animated counter-propagating beams in rotating loop with
+   fringe pattern, phase shift, and rotation sensing
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simSagnac';let cv,cx,W,H,af=null,t=0;
+  let rotRate=15,loopArea=10,wavelength=633,phaseShift=0;
+  const cwPhotons=[];const ccwPhotons=[];const fringeHistory=[];
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#04060e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function drawInterferometerLoop(){
+    const lcx=W*0.35,lcy=H/2,lr=100;
+    // Rotating ring
+    cx.save();cx.translate(lcx,lcy);cx.rotate(t*rotRate*Math.PI/180*0.01);
+    cx.strokeStyle='rgba(100,200,255,0.2)';cx.lineWidth=2;
+    cx.beginPath();cx.arc(0,0,lr,0,Math.PI*2);cx.stroke();
+    // Mirrors at cardinal points
+    const mirrors=[0,Math.PI/2,Math.PI,Math.PI*3/2];
+    mirrors.forEach(a=>{
+      const mx=Math.cos(a)*lr,my=Math.sin(a)*lr;
+      cx.save();cx.translate(mx,my);cx.rotate(a+Math.PI/4);
+      cx.fillStyle='rgba(200,200,220,0.5)';cx.fillRect(-5,-8,10,3);
+      cx.restore();
+    });
+    cx.restore();
+    // Beam splitter
+    cx.save();cx.translate(lcx+lr,lcy);cx.rotate(Math.PI/4);
+    cx.fillStyle='rgba(100,200,255,0.3)';cx.fillRect(-4,-8,8,16);
+    cx.restore();
+    // CW beam (clockwise)
+    cx.strokeStyle='rgba(255,100,100,0.4)';cx.lineWidth=1.5;
+    const cwPhase=t*3;
+    cx.beginPath();
+    for(let a=0;a<Math.PI*2;a+=0.05){
+      const r=lr+Math.sin(a*20+cwPhase)*3;
+      const x=lcx+Math.cos(a)*r;const y=lcy+Math.sin(a)*r;
+      if(a===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+    }
+    cx.stroke();
+    // CCW beam (counter-clockwise)
+    cx.strokeStyle='rgba(100,255,100,0.4)';cx.lineWidth=1.5;
+    const ccwPhase=-t*3+phaseShift;
+    cx.beginPath();
+    for(let a=Math.PI*2;a>0;a-=0.05){
+      const r=lr-3+Math.sin(a*20+ccwPhase)*3;
+      const x=lcx+Math.cos(a)*r;const y=lcy+Math.sin(a)*r;
+      if(a===Math.PI*2)cx.moveTo(x,y);else cx.lineTo(x,y);
+    }
+    cx.stroke();
+    // Rotation indicator
+    cx.strokeStyle='rgba(255,200,0,0.3)';cx.lineWidth=1;
+    const arrowA=t*0.5;
+    cx.beginPath();cx.arc(lcx,lcy,lr+20,arrowA,arrowA+0.3);cx.stroke();
+    cx.fillStyle='rgba(255,200,0,0.3)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('Rotation: '+rotRate+' deg/s',lcx,lcy-lr-12);
+    cx.fillText('CW',lcx+lr+15,lcy-lr/2);cx.fillText('CCW',lcx-lr-15,lcy+lr/2);
+  }
+
+  function drawFringePattern(){
+    const fx=W*0.65,fy=20,fw=W*0.32,fh=110;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(fx,fy,fw,fh);
+    // Interference fringes
+    for(let x=0;x<fw;x++){
+      const phase=x/fw*Math.PI*10+phaseShift*5;
+      const intensity=(Math.cos(phase)+1)/2;
+      const r=Math.floor(intensity*200);
+      const g=Math.floor(intensity*255);
+      const b=Math.floor(intensity*100);
+      cx.fillStyle='rgb('+r+','+g+','+b+')';
+      cx.fillRect(fx+x,fy+20,1,fh-30);
+    }
+    cx.fillStyle='rgba(100,255,100,0.4)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('INTERFERENCE FRINGES',fx+8,fy+12);
+    cx.fillText('Phase shift: '+phaseShift.toFixed(4)+' rad',fx+8,fy+fh+10);
+  }
+
+  function drawPhaseGraph(){
+    const gx=W*0.65,gy=150,gw=W*0.32,gh=70;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(gx,gy,gw,gh);
+    fringeHistory.push(phaseShift);
+    if(fringeHistory.length>150)fringeHistory.shift();
+    if(fringeHistory.length>1){
+      cx.strokeStyle='rgba(100,255,100,0.5)';cx.lineWidth=1.5;cx.beginPath();
+      const maxP=Math.max(...fringeHistory.map(Math.abs),0.01);
+      const step=gw/Math.max(1,fringeHistory.length-1);
+      fringeHistory.forEach((v,i)=>{
+        const x=gx+i*step;const y=gy+gh/2-v/maxP*gh*0.4;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    cx.strokeStyle='rgba(255,255,255,0.05)';cx.lineWidth=0.5;
+    cx.beginPath();cx.moveTo(gx,gy+gh/2);cx.lineTo(gx+gw,gy+gh/2);cx.stroke();
+    cx.fillStyle='rgba(100,255,100,0.3)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('SAGNAC PHASE vs TIME',gx+8,gy-4);
+  }
+
+  function drawMetrics(){
+    const mx=W*0.65,my=230,mw=W*0.32,mh=55;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(mx,my,mw,mh);
+    const beatFreq=(4*loopArea*rotRate*Math.PI/180)/(wavelength*1e-9*2*Math.PI*Math.sqrt(loopArea));
+    cx.fillStyle='rgba(100,200,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('SAGNAC METRICS',mx+8,my+14);
+    cx.fillStyle='#aaa';
+    cx.fillText('lambda = '+wavelength+' nm  A = '+loopArea+' m^2',mx+8,my+28);
+    cx.fillText('Beat freq: '+beatFreq.toFixed(2)+' Hz',mx+8,my+42);
+    cx.fillText('Fringes: '+(phaseShift/(2*Math.PI)).toFixed(3),mx+8,my+54);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,210,42);
+    cx.strokeStyle='rgba(100,255,100,0.15)';cx.strokeRect(8,8,210,42);
+    cx.font='10px monospace';cx.fillStyle='#22c55e';cx.textAlign='left';
+    cx.fillText('SAGNAC INTERFEROMETER',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Counter-Propagating Beam Rotation Sensor',16,40);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(4,6,14,0.12)';cx.fillRect(0,0,W,H);
+
+    // Vary rotation
+    rotRate=15+Math.sin(t*0.3)*10;
+    phaseShift=8*Math.PI*loopArea*rotRate*Math.PI/180/(wavelength*1e-9*3e8);
+
+    drawInterferometerLoop();drawFringePattern();
+    drawPhaseGraph();drawMetrics();drawHUD();
+
+    cx.fillStyle='rgba(100,255,100,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Sagnac Interferometer — Rotation Sensing with Counter-Propagating Beams',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

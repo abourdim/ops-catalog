@@ -460,3 +460,149 @@ document.addEventListener('DOMContentLoaded',()=>{
   log(LANG[currentLang].ready,'success');
   drawCanvas();
 });
+
+/* ═══════ ENHANCED PKI CERTIFICATE VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === X.509 Certificate Fields (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('X.509 Certificate Structure (ASN.1 DER)',10,16);
+
+  const fields=[
+    {name:'Version',val:'v3',color:'#60a5fa',w:40},
+    {name:'Serial',val:randomHex(4),color:'#c084fc',w:60},
+    {name:'Sig Algorithm',val:'SHA-256/RSA',color:'#fbbf24',w:80},
+    {name:'Issuer',val:'Root CA',color:'#4ade80',w:60},
+    {name:'Validity',val:'2024-2025',color:'#60a5fa',w:65},
+    {name:'Subject',val:'*.example.com',color:'#f87171',w:85},
+    {name:'Public Key',val:'RSA-2048',color:'#c084fc',w:65}
+  ];
+  let fx=10;
+  const certY=24;
+  fields.forEach((f,i)=>{
+    const isActive=Math.floor(_t/30)%fields.length===i;
+    _x.fillStyle=isActive?f.color+'44':f.color+'15';
+    _x.fillRect(fx,certY,f.w,40);_x.strokeStyle=f.color+'66';_x.strokeRect(fx,certY,f.w,40);
+    _x.fillStyle=f.color;_x.font='bold 7px SF Mono';_x.textAlign='center';
+    _x.fillText(f.name,fx+f.w/2,certY+14);
+    _x.fillStyle=mut;_x.font='6px SF Mono';
+    _x.fillText(f.val,fx+f.w/2,certY+30);_x.textAlign='left';
+    fx+=f.w+3;
+  });
+  // Signature
+  _x.fillStyle='#f8717133';_x.fillRect(fx,certY,w-fx-10,40);
+  _x.strokeStyle='#f87171';_x.strokeRect(fx,certY,w-fx-10,40);
+  _x.fillStyle='#f87171';_x.font='bold 7px SF Mono';_x.textAlign='center';
+  _x.fillText('Signature',fx+(w-fx-10)/2,certY+14);
+  _x.fillStyle=mut;_x.font='6px SF Mono';
+  _x.fillText(randomHex(8)+'...',fx+(w-fx-10)/2,certY+30);_x.textAlign='left';
+
+  // === Trust Chain Tree (middle-left) ===
+  const tcY=certY+55,tcW=w*0.48,tcH=120;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('PKI Trust Hierarchy',10,tcY);
+
+  const tree=[
+    {level:0,x:tcW/2,y:tcY+15,label:'Root CA',color:'#4ade80',children:[1,2]},
+    {level:1,x:tcW*0.25,y:tcY+55,label:'Int CA-1',color:'#60a5fa',children:[3,4]},
+    {level:1,x:tcW*0.75,y:tcY+55,label:'Int CA-2',color:'#60a5fa',children:[5]},
+    {level:2,x:tcW*0.1,y:tcY+95,label:'site-a.com',color:'#fbbf24',children:[]},
+    {level:2,x:tcW*0.35,y:tcY+95,label:'site-b.com',color:'#fbbf24',children:[]},
+    {level:2,x:tcW*0.7,y:tcY+95,label:'site-c.com',color:'#fbbf24',children:[]}
+  ];
+  // Draw edges
+  tree.forEach((node,i)=>{
+    node.children.forEach(ci=>{
+      _x.strokeStyle=node.color+'66';_x.lineWidth=1;
+      _x.beginPath();_x.moveTo(node.x+10,node.y+10);_x.lineTo(tree[ci].x+10,tree[ci].y);_x.stroke();
+    });
+  });
+  // Draw nodes
+  tree.forEach(node=>{
+    const isActive=Math.floor(_t/25)%3===node.level;
+    _x.fillStyle=isActive?node.color+'44':node.color+'22';
+    _x.fillRect(node.x-20,node.y,60,18);_x.strokeStyle=node.color;_x.strokeRect(node.x-20,node.y,60,18);
+    _x.fillStyle=node.color;_x.font='bold 7px SF Mono';_x.textAlign='center';
+    _x.fillText(node.label,node.x+10,node.y+12);_x.textAlign='left';
+  });
+
+  // === Attack Types Comparison (middle-right) ===
+  const atX=w*0.52,atY=tcY;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Certificate Attack Vectors',atX,atY);
+
+  const attacks=[
+    {name:'Self-Signed',desc:'No trusted CA chain',severity:0.3,era:'Basic',color:'#fbbf24'},
+    {name:'Null-Byte CN',desc:'Parser truncation trick',severity:0.7,era:'CVE-2009',color:'#f87171'},
+    {name:'MD5 Collision',desc:'Rogue CA certificate',severity:0.9,era:'Flame 2012',color:'#f87171'},
+    {name:'Chain Break',desc:'Fake intermediate CA',severity:0.5,era:'Ongoing',color:'#fb923c'},
+    {name:'BGP Hijack+CA',desc:'Domain validation bypass',severity:0.8,era:'2018+',color:'#f87171'},
+    {name:'CT Log Bypass',desc:'Avoid transparency',severity:0.4,era:'Theoretical',color:'#fbbf24'}
+  ];
+
+  const atW=w*0.46;
+  attacks.forEach((a,i)=>{
+    const y=atY+12+i*19;
+    const barW=a.severity*atW*0.5;
+    const isActive=Math.floor(_t/40)%attacks.length===i;
+    _x.fillStyle=isActive?a.color+'44':'rgba(255,255,255,.02)';
+    _x.fillRect(atX,y,atW,17);
+    _x.fillStyle=a.color+'44';_x.fillRect(atX+90,y+2,barW,13);
+    _x.fillStyle=isActive?a.color:mut;_x.font='bold 8px SF Mono';
+    _x.fillText(a.name,atX+3,y+12);
+    _x.fillStyle=mut;_x.font='7px SF Mono';
+    _x.fillText(a.era,atX+atW-35,y+12);
+  });
+
+  // === TLS Handshake (bottom) ===
+  const tlsY=tcY+tcH+10;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('TLS Certificate Verification Flow',10,tlsY);
+
+  const tlsSteps=[
+    {label:'ClientHello',from:0.1,to:0.5,color:'#4ade80',y:0},
+    {label:'ServerHello + Cert',from:0.5,to:0.1,color:'#60a5fa',y:1},
+    {label:'Verify Cert Chain',from:0.1,to:0.1,color:'#fbbf24',y:2},
+    {label:'Check Revocation (CRL/OCSP)',from:0.1,to:0.3,color:'#c084fc',y:3},
+    {label:'Key Exchange',from:0.1,to:0.5,color:'#4ade80',y:4},
+    {label:'Encrypted Session',from:0.1,to:0.5,color:'#4ade80',y:5}
+  ];
+
+  const tlsW=w-20,tlsH=h-tlsY-20;
+  const stepH=Math.min(16,tlsH/tlsSteps.length);
+  const activeStep=Math.floor(_t/40)%tlsSteps.length;
+  tlsSteps.forEach((s,i)=>{
+    const y=tlsY+8+i*stepH;
+    _x.fillStyle=i===activeStep?s.color+'33':'rgba(255,255,255,.02)';
+    _x.fillRect(10,y,tlsW,stepH-2);
+    // Arrow
+    const ax=10+s.from*tlsW,bx=10+s.to*tlsW;
+    _x.strokeStyle=i<=activeStep?s.color:mut+'44';_x.lineWidth=i===activeStep?2:1;
+    _x.beginPath();_x.moveTo(ax,y+stepH/2);_x.lineTo(bx,y+stepH/2);_x.stroke();
+    const dir=bx>ax?1:-1;
+    _x.fillStyle=s.color;_x.beginPath();_x.moveTo(bx,y+stepH/2);_x.lineTo(bx-dir*6,y+stepH/2-3);_x.lineTo(bx-dir*6,y+stepH/2+3);_x.fill();
+    _x.lineWidth=1;
+    // Label
+    _x.fillStyle=i<=activeStep?s.color:mut;_x.font='bold 8px SF Mono';
+    _x.fillText(s.label,Math.min(ax,bx)+Math.abs(bx-ax)/2-30,y+stepH/2-5);
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

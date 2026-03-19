@@ -68,3 +68,183 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.help-tab').forEach(tab=>{tab.onclick=()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1)).classList.add('active')}});
   $('hashBtn').onclick=computeMAC;$('forgeBtn').onclick=forgeMAC;
   buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawCanvas()});
+
+/* ═══════ ENHANCED LENGTH EXTENSION VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Merkle-Damgard Architecture (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Merkle-Damgard Hash Construction',10,16);
+
+  const nBlocks=7,bW=Math.min(85,(w-60)/(nBlocks+1)),bH=30,bY=30;
+  // IV
+  _x.fillStyle='#c084fc33';_x.fillRect(5,bY,bW*0.6,bH);_x.strokeStyle='#c084fc66';_x.strokeRect(5,bY,bW*0.6,bH);
+  _x.fillStyle='#c084fc';_x.font='bold 8px SF Mono';_x.textAlign='center';_x.fillText('IV',5+bW*0.3,bY+12);
+  const animState=(0x67452301+_t*137)>>>0;
+  _x.fillStyle=mut;_x.font='7px SF Mono';_x.fillText(`0x${(animState&0xFFFF).toString(16)}`,5+bW*0.3,bY+24);_x.textAlign='left';
+
+  for(let i=0;i<nBlocks;i++){
+    const x=5+bW*0.6+5+i*bW;
+    const isSecret=i<2;
+    const isMsg=i>=2&&i<5;
+    const isPad=i===5;
+    const isExt=i===6;
+    const color=isSecret?'#f87171':isMsg?'#4ade80':isPad?'#fbbf24':'#c084fc';
+
+    // Compression function box
+    _x.fillStyle=color+'22';_x.fillRect(x,bY,bW-5,bH);_x.strokeStyle=color+'66';_x.strokeRect(x,bY,bW-5,bH);
+
+    // Arrow from previous
+    _x.strokeStyle=color+'88';_x.beginPath();_x.moveTo(x-5,bY+bH/2);_x.lineTo(x,bY+bH/2);_x.stroke();
+    _x.fillStyle=color;_x.beginPath();_x.moveTo(x,bY+bH/2);_x.lineTo(x-4,bY+bH/2-3);_x.lineTo(x-4,bY+bH/2+3);_x.fill();
+
+    // Block label
+    _x.fillStyle=color;_x.font='bold 7px SF Mono';_x.textAlign='center';
+    const label=isSecret?`SECRET[${i}]`:isMsg?`MSG[${i-2}]`:isPad?'PAD':'EXTEND';
+    _x.fillText(label,x+bW/2-2.5,bY+12);
+
+    // State value
+    const state=((_t*31+i*0x9E3779B9)>>>0)&0xFFFF;
+    _x.fillStyle=mut;_x.font='7px SF Mono';
+    _x.fillText(`h=${state.toString(16)}`,x+bW/2-2.5,bY+24);
+    _x.textAlign='left';
+
+    // Input from top (message block)
+    _x.strokeStyle=color+'44';
+    _x.beginPath();_x.moveTo(x+bW/2-2.5,bY-5);_x.lineTo(x+bW/2-2.5,bY);_x.stroke();
+    _x.fillStyle=color+'33';_x.fillRect(x+5,bY-18,bW-15,13);
+    _x.fillStyle=color;_x.font='6px SF Mono';_x.textAlign='center';
+    _x.fillText(isSecret?'[secret]':isMsg?`m${i-2}`:'pad/ext',x+bW/2-2.5,bY-9);_x.textAlign='left';
+  }
+
+  // Output label
+  const outX=5+bW*0.6+5+nBlocks*bW;
+  _x.fillStyle='#f87171';_x.font='bold 9px SF Mono';
+  _x.fillText('MAC',outX,bY+18);
+
+  // === Attack Anatomy (middle) ===
+  const aaY=bY+bH+30;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Length Extension Attack Steps',10,aaY);
+
+  const attackSteps=[
+    {step:'1',desc:'Attacker knows: H(secret || msg), len(secret), msg',color:'#60a5fa'},
+    {step:'2',desc:'Reconstruct padding: msg || 0x80 || zeros || length',color:'#fbbf24'},
+    {step:'3',desc:'Set internal state = known MAC output value',color:'#f87171'},
+    {step:'4',desc:'Continue hashing: H_state(appended_data)',color:'#c084fc'},
+    {step:'5',desc:'Result = valid MAC for (secret||msg||pad||append)',color:'#4ade80'}
+  ];
+
+  attackSteps.forEach((s,i)=>{
+    const y=aaY+10+i*20;
+    const isActive=Math.floor(_t/50)%attackSteps.length===i;
+    _x.fillStyle=isActive?s.color+'33':'rgba(255,255,255,.02)';
+    _x.fillRect(10,y,w*0.48-5,18);
+    _x.fillStyle=isActive?s.color:mut;_x.font='9px SF Mono';
+    _x.fillText(`[${s.step}] ${s.desc}`,14,y+13);
+    if(isActive){
+      _x.fillStyle=s.color;
+      _x.beginPath();_x.arc(w*0.48,y+9,3,0,Math.PI*2);_x.fill();
+    }
+  });
+
+  // === Vulnerable vs Immune Hashes (middle-right) ===
+  const vhX=w*0.52,vhY=aaY;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Hash Function Vulnerability',vhX,vhY);
+
+  const hashes=[
+    {name:'MD5',bits:128,vulnerable:true,broken:true},
+    {name:'SHA-1',bits:160,vulnerable:true,broken:true},
+    {name:'SHA-256',bits:256,vulnerable:true,broken:false},
+    {name:'SHA-512',bits:512,vulnerable:true,broken:false},
+    {name:'SHA-3',bits:256,vulnerable:false,broken:false},
+    {name:'BLAKE2',bits:256,vulnerable:false,broken:false},
+    {name:'HMAC-*',bits:0,vulnerable:false,broken:false}
+  ];
+
+  const hhW=w*0.46,hhBarW=hhW-80;
+  hashes.forEach((hf,i)=>{
+    const y=vhY+10+i*16;
+    _x.fillStyle=hf.vulnerable?'#f8717122':'#4ade8022';
+    _x.fillRect(vhX,y,hhW,14);
+    _x.fillStyle=hf.vulnerable?(hf.broken?'#f87171':'#fbbf24'):'#4ade80';
+    _x.font='bold 8px SF Mono';_x.fillText(hf.name,vhX+4,y+10);
+    // Status
+    const status=hf.vulnerable?(hf.broken?'VULNERABLE+BROKEN':'VULNERABLE (MD construct)'):'IMMUNE';
+    _x.fillStyle=mut;_x.font='7px SF Mono';_x.fillText(status,vhX+60,y+10);
+    // Indicator
+    _x.fillStyle=hf.vulnerable?'#f87171':'#4ade80';
+    _x.beginPath();_x.arc(vhX+hhW-10,y+7,4,0,Math.PI*2);_x.fill();
+  });
+
+  // === MD Padding Visualization (bottom) ===
+  const pdY=Math.max(aaY+115,vhY+130);
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Merkle-Damgard Padding (64-byte block)',10,pdY);
+
+  const totalBytes=64;
+  const byteW=Math.min(12,(w-20)/totalBytes);
+  const msgLen=(_t%30)+5;
+  for(let i=0;i<totalBytes;i++){
+    const x=10+i*byteW;
+    let color,label;
+    if(i<msgLen){color='#4ade80';label=((0x41+i)&0x7F).toString(16)}
+    else if(i===msgLen){color='#fbbf24';label='80'}
+    else if(i<56){color=mut+'22';label='00'}
+    else{color='#c084fc';label=((msgLen*8)>>(56-i)*8&0xFF).toString(16).padStart(2,'0').slice(-2)}
+    _x.fillStyle=typeof color==='string'&&color.length<8?color+'33':color;
+    _x.fillRect(x,pdY+10,byteW-1,18);
+    _x.fillStyle=typeof color==='string'&&color.length<8?color:mut;
+    _x.font='bold 6px SF Mono';_x.textAlign='center';
+    _x.fillText(label,x+byteW/2,pdY+22);_x.textAlign='left';
+  }
+
+  // Legend
+  const legY=pdY+34;
+  [{c:'#4ade80',t:'Message'},{c:'#fbbf24',t:'0x80'},{c:mut,t:'Zero fill'},{c:'#c084fc',t:'Length (bits)'}].forEach((l,i)=>{
+    const lx=10+i*90;
+    _x.fillStyle=l.c;_x.fillRect(lx,legY,8,8);
+    _x.fillStyle=mut;_x.font='8px Tajawal';_x.fillText(l.t,lx+12,legY+8);
+  });
+
+  // === HMAC Defense Diagram (bottom-right) ===
+  const hmY=pdY+50;
+  if(hmY+40<h){
+    _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+    _x.fillText('HMAC = H(K xor opad || H(K xor ipad || msg))  -- immune to extension',10,hmY);
+    const pipeW=w-20,pipeH=20;
+    const stages=['K xor ipad','H_inner(msg)','K xor opad','H_outer','HMAC'];
+    const stW=pipeW/stages.length;
+    stages.forEach((s,i)=>{
+      const x=10+i*stW;
+      const progress=(_t%100)/100;
+      const active=progress*stages.length>i&&progress*stages.length<i+1;
+      _x.fillStyle=active?'#4ade8044':'rgba(255,255,255,.03)';
+      _x.fillRect(x,hmY+8,stW-4,pipeH);
+      _x.strokeStyle=active?'#4ade80':mut+'33';_x.strokeRect(x,hmY+8,stW-4,pipeH);
+      _x.fillStyle=active?'#4ade80':mut;_x.font='bold 7px SF Mono';_x.textAlign='center';
+      _x.fillText(s,x+stW/2-2,hmY+22);_x.textAlign='left';
+      if(i<stages.length-1){_x.fillStyle=acc;_x.beginPath();_x.moveTo(x+stW-4,hmY+18);_x.lineTo(x+stW,hmY+15);_x.lineTo(x+stW,hmY+21);_x.fill()}
+    });
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

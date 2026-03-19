@@ -55,3 +55,185 @@ document.addEventListener('DOMContentLoaded',()=>{splashTimer=setTimeout(dismiss
   $('langSelect').onchange=e=>setLanguage(e.target.value);$('themeSelect').onchange=e=>setTheme(e.target.value);$('soundToggle').onchange=e=>{soundEnabled=e.target.checked};$('clearLogBtn').onclick=()=>{$('logContainer').innerHTML='';log('Log cleared')};$('copyLogBtn').onclick=async()=>{try{await navigator.clipboard.writeText(Array.from($('logContainer').children).map(d=>d.textContent).join('\n'));log('Copied!','success')}catch{log('Copy failed','error')}};
   document.querySelectorAll('.help-tab').forEach(tab=>{tab.onclick=()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1)).classList.add('active')}});
   buildControls();buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawCanvas()});
+
+/* ═══════ ENHANCED KPA VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === XOR Truth Table (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('XOR Operation Properties',10,16);
+
+  const ttW=w*0.3;
+  const rows=[['A','B','A^B'],['0','0','0'],['0','1','1'],['1','0','1'],['1','1','0']];
+  rows.forEach((row,i)=>{
+    const y=24+i*16;
+    const isHeader=i===0;
+    row.forEach((cell,j)=>{
+      const x=10+j*(ttW/3);
+      _x.fillStyle=isHeader?acc+'44':'rgba(255,255,255,.03)';
+      _x.fillRect(x,y,ttW/3-2,14);
+      _x.fillStyle=isHeader?acc:cell==='1'?'#4ade80':'#f87171';
+      _x.font=isHeader?'bold 9px SF Mono':'9px SF Mono';_x.textAlign='center';
+      _x.fillText(cell,x+ttW/6,y+11);_x.textAlign='left';
+    });
+  });
+  // Key property
+  _x.fillStyle='#fbbf24';_x.font='bold 9px SF Mono';
+  _x.fillText('P XOR K = C',10,110);
+  _x.fillText('C XOR P = K',10,124);
+  _x.fillText('C XOR K = P',10,138);
+  _x.fillStyle=mut;_x.font='8px Tajawal';
+  _x.fillText('XOR is self-inverse!',10,154);
+
+  // === Binary XOR Animation (top-middle) ===
+  const bxX=w*0.33,bxW=w*0.34;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Byte-level XOR Recovery',bxX,16);
+
+  const animByte=(_t%8);
+  const plainByte=0x48+animByte;// 'H','e','l','l','o'...
+  const keyByte=0x53+animByte;
+  const cipherByte=plainByte^keyByte;
+
+  for(let bit=7;bit>=0;bit--){
+    const x=bxX+(7-bit)*18;
+    const pBit=(plainByte>>bit)&1;
+    const kBit=(keyByte>>bit)&1;
+    const cBit=(cipherByte>>bit)&1;
+    // Plaintext bit
+    _x.fillStyle=pBit?'#4ade8066':'rgba(255,255,255,.05)';
+    _x.fillRect(x,28,16,16);_x.fillStyle=pBit?'#4ade80':mut;_x.font='bold 9px SF Mono';_x.textAlign='center';
+    _x.fillText(pBit.toString(),x+8,40);
+    // XOR symbol
+    _x.fillStyle='#fbbf24';_x.font='bold 10px SF Mono';_x.fillText('\u2295',x+8,58);
+    // Key bit
+    _x.fillStyle=kBit?'#f8717166':'rgba(255,255,255,.05)';
+    _x.fillRect(x,64,16,16);_x.fillStyle=kBit?'#f87171':mut;_x.font='bold 9px SF Mono';
+    _x.fillText(kBit.toString(),x+8,76);
+    // Equals
+    _x.fillStyle=mut;_x.font='bold 10px SF Mono';_x.fillText('=',x+8,94);
+    // Cipher bit
+    _x.fillStyle=cBit?'#60a5fa66':'rgba(255,255,255,.05)';
+    _x.fillRect(x,100,16,16);_x.fillStyle=cBit?'#60a5fa':mut;_x.font='bold 9px SF Mono';
+    _x.fillText(cBit.toString(),x+8,112);
+    _x.textAlign='left';
+  }
+
+  // Labels
+  _x.fillStyle='#4ade80';_x.font='8px SF Mono';_x.fillText(`P=0x${plainByte.toString(16)}='${String.fromCharCode(plainByte)}'`,bxX,126);
+  _x.fillStyle='#f87171';_x.fillText(`K=0x${keyByte.toString(16)}`,bxX+80,126);
+  _x.fillStyle='#60a5fa';_x.fillText(`C=0x${cipherByte.toString(16)}`,bxX+140,126);
+
+  // === Key Stream Reuse Vulnerability (top-right) ===
+  const krX=w*0.68,krW=w*0.3;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Key Reuse Attack',krX,16);
+
+  _x.fillStyle='#f87171';_x.font='9px SF Mono';
+  _x.fillText('If K reused:',krX,30);
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText('C1 = P1 ^ K',krX,44);
+  _x.fillText('C2 = P2 ^ K',krX,58);
+  _x.fillText('C1^C2 = P1^P2',krX,76);
+  _x.fillStyle='#fbbf24';_x.font='bold 8px SF Mono';
+  _x.fillText('Key cancels out!',krX,92);
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText('If P1 known:',krX,110);
+  _x.fillText('P2 = C1^C2^P1',krX,124);
+  _x.fillStyle='#4ade80';_x.font='bold 8px SF Mono';
+  _x.fillText('All messages exposed!',krX,140);
+
+  // === Frequency Analysis (bottom-left) ===
+  const faY=164,faW=w*0.48,faH=h-faY-25;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Ciphertext Frequency Analysis (XOR cipher)',10,faY);
+
+  // Generate frequency data for a simple XOR cipher
+  const msg='The quick brown fox jumps over the lazy dog. Crypto is fun!';
+  const key='KEY';
+  const freq=new Array(256).fill(0);
+  for(let i=0;i<msg.length;i++){
+    const c=msg.charCodeAt(i)^key.charCodeAt(i%key.length);
+    freq[c]++;
+  }
+  const maxFreq=Math.max(...freq,1);
+  const barW=faW/128;
+  for(let i=0;i<128;i++){
+    if(freq[i]>0){
+      const barH=(freq[i]/maxFreq)*(faH-20);
+      const hue=(i/128)*360;
+      _x.fillStyle=`hsla(${hue},60%,50%,.5)`;
+      _x.fillRect(10+i*barW,faY+10+faH-20-barH,barW-1,barH);
+    }
+  }
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText('Non-uniform distribution reveals patterns',10,faY+faH-2);
+
+  // === Stream Cipher Architecture (bottom-right) ===
+  const scX=w*0.52,scY=faY,scW=w*0.46,scH=faH;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Stream Cipher Key Stream',scX,scY);
+
+  // PRNG box
+  _x.fillStyle='#c084fc33';_x.fillRect(scX,scY+12,80,35);_x.strokeStyle='#c084fc';_x.strokeRect(scX,scY+12,80,35);
+  _x.fillStyle='#c084fc';_x.font='bold 9px SF Mono';_x.textAlign='center';
+  _x.fillText('PRNG',scX+40,scY+25);
+  _x.fillStyle=mut;_x.font='7px SF Mono';_x.fillText('(seed=key)',scX+40,scY+38);_x.textAlign='left';
+
+  // Key stream output
+  const ksY=scY+55;
+  const streamLen=Math.min(16,Math.floor(scW/22));
+  for(let i=0;i<streamLen;i++){
+    const x=scX+i*22;
+    const val=((0xAB*(_t+i)+0x37)&0xFF);
+    const active=i<=(_t%streamLen);
+    _x.fillStyle=active?'#c084fc33':'rgba(255,255,255,.03)';
+    _x.fillRect(x,ksY,20,16);
+    if(active){_x.fillStyle='#c084fc';_x.font='bold 7px SF Mono';_x.textAlign='center';_x.fillText(val.toString(16),x+10,ksY+12);_x.textAlign='left'}
+  }
+  _x.fillStyle=mut;_x.font='8px Tajawal';_x.fillText('Key stream bytes',scX,ksY+28);
+
+  // XOR with plaintext
+  const xorY=ksY+35;
+  _x.fillStyle='#fbbf24';_x.font='bold 10px SF Mono';
+  for(let i=0;i<Math.min(streamLen,8);i++){
+    _x.fillText('\u2295',scX+i*22+6,xorY+10);
+  }
+
+  // Plaintext row
+  const ptY=xorY+18;
+  for(let i=0;i<Math.min(streamLen,8);i++){
+    const x=scX+i*22;
+    const ch=msg.charCodeAt(i);
+    _x.fillStyle='#4ade8033';_x.fillRect(x,ptY,20,16);
+    _x.fillStyle='#4ade80';_x.font='7px SF Mono';_x.textAlign='center';
+    _x.fillText(ch.toString(16),x+10,ptY+12);_x.textAlign='left';
+  }
+  _x.fillStyle=mut;_x.font='8px Tajawal';_x.fillText('= Ciphertext',scX,ptY+28);
+
+  // Defense note
+  const defY=ptY+38;
+  if(defY+15<h){
+    _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';
+    _x.fillText('Defense: Never reuse nonce/key (AES-GCM, ChaCha20-Poly1305)',scX,defY);
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

@@ -79,3 +79,151 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();$('bSlider').value=50;$('bVal').textContent='0.50 T';$('wlSlider').value=30;$('wlVal').textContent='30 cm';$('pathSlider').value=50;$('pathVal').textContent='5.0 m';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('rotVal').textContent='-- °';$('rmVal').textContent='-- rad/m²';$('neVal').textContent='-- /m³';$('verdetVal').textContent='-- rad/(T·m)';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('bSlider').oninput=function(){$('bVal').textContent=(this.value/100).toFixed(2)+' T';};$('wlSlider').oninput=function(){$('wlVal').textContent=this.value+' cm';};$('pathSlider').oninput=function(){$('pathVal').textContent=(this.value/10).toFixed(1)+' m';};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Faraday Rotation Lab
+   Animated polarization rotation through magnetized plasma with
+   rotating E-field vector, magnetic field lines, and rotation angle
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simFaradayRotation';let cv,cx,W,H,af=null,t=0;
+  let bField=0.5,wavelength=30,pathLength=5,rotAngle=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060812;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function drawMagneticField(){
+    cx.strokeStyle='rgba(100,150,255,0.08)';cx.lineWidth=1;
+    for(let y=-20;y<H+20;y+=30){
+      cx.beginPath();
+      for(let x=0;x<W;x+=5){
+        const yy=y+Math.sin(x*0.02+t)*8;
+        if(x===0)cx.moveTo(x,yy);else cx.lineTo(x,yy);
+      }
+      cx.stroke();
+    }
+    // B-field arrows
+    for(let x=100;x<W-100;x+=120){
+      cx.fillStyle='rgba(100,150,255,0.2)';cx.font='10px sans-serif';cx.textAlign='center';
+      cx.fillText('B-->',x,25);
+    }
+  }
+
+  function drawPlasmaRegion(){
+    const px=200,py=40,pw=380,ph=H-80;
+    cx.fillStyle='rgba(100,50,200,0.06)';cx.fillRect(px,py,pw,ph);
+    cx.strokeStyle='rgba(100,50,200,0.15)';cx.lineWidth=1;cx.setLineDash([4,4]);
+    cx.strokeRect(px,py,pw,ph);cx.setLineDash([]);
+    // Plasma particles
+    for(let i=0;i<40;i++){
+      const x=px+Math.random()*pw;
+      const y=py+Math.random()*ph;
+      cx.fillStyle='rgba(150,100,255,'+(0.1+Math.random()*0.1)+')';
+      cx.beginPath();cx.arc(x,y,1+Math.random(),0,Math.PI*2);cx.fill();
+    }
+    cx.fillStyle='rgba(150,100,255,0.3)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('MAGNETIZED PLASMA',px+pw/2,py-5);
+  }
+
+  function drawLightBeam(){
+    const startX=30,endX=W-30,y=H/2;
+    // Incoming polarized beam
+    cx.strokeStyle='rgba(255,200,0,0.4)';cx.lineWidth=2;cx.beginPath();
+    for(let x=startX;x<200;x+=3){
+      const amp=15*Math.sin((x-startX)*0.1+t*5);
+      cx.lineTo(x,y+amp);
+    }
+    cx.stroke();
+    // Through plasma (rotating polarization)
+    cx.strokeStyle='rgba(255,100,100,0.4)';cx.lineWidth=2;cx.beginPath();
+    for(let x=200;x<580;x+=3){
+      const progress=(x-200)/380;
+      const currentRot=rotAngle*progress;
+      const amp=15*Math.sin((x-200)*0.1+t*5)*Math.cos(currentRot);
+      if(x===200)cx.moveTo(x,y+amp);else cx.lineTo(x,y+amp);
+    }
+    cx.stroke();
+    // Outgoing rotated beam
+    cx.strokeStyle='rgba(100,255,100,0.4)';cx.lineWidth=2;cx.beginPath();
+    for(let x=580;x<endX;x+=3){
+      const amp=15*Math.sin((x-580)*0.1+t*5)*Math.cos(rotAngle);
+      if(x===580)cx.moveTo(x,y+amp);else cx.lineTo(x,y+amp);
+    }
+    cx.stroke();
+  }
+
+  function drawPolarizationVectors(){
+    // Input polarization
+    const inX=80,inY=H-60;
+    cx.save();cx.translate(inX,inY);
+    cx.strokeStyle='rgba(255,200,0,0.6)';cx.lineWidth=2;
+    cx.beginPath();cx.moveTo(0,-20);cx.lineTo(0,20);cx.stroke();
+    cx.beginPath();cx.moveTo(-2,-20);cx.lineTo(0,-25);cx.lineTo(2,-20);cx.fill();
+    cx.fillStyle='rgba(255,200,0,0.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('INPUT',0,32);cx.restore();
+
+    // Output polarization (rotated)
+    const outX=W-80,outY=H-60;
+    cx.save();cx.translate(outX,outY);cx.rotate(rotAngle);
+    cx.strokeStyle='rgba(100,255,100,0.6)';cx.lineWidth=2;
+    cx.beginPath();cx.moveTo(0,-20);cx.lineTo(0,20);cx.stroke();
+    cx.beginPath();cx.moveTo(-2,-20);cx.lineTo(0,-25);cx.lineTo(2,-20);cx.fill();
+    cx.restore();
+    cx.fillStyle='rgba(100,255,100,0.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('OUTPUT',outX,outY+32);
+    cx.fillText((rotAngle*180/Math.PI).toFixed(1)+'deg',outX,outY+42);
+  }
+
+  function drawRotationAngleGauge(){
+    const gx=W-160,gy=30,gr=50;
+    cx.strokeStyle='rgba(255,255,255,0.1)';cx.lineWidth=1;
+    cx.beginPath();cx.arc(gx,gy+gr,gr,0,Math.PI*2);cx.stroke();
+    // Angle arc
+    cx.strokeStyle='rgba(100,255,100,0.5)';cx.lineWidth=3;
+    cx.beginPath();cx.arc(gx,gy+gr,gr,-Math.PI/2,-Math.PI/2+rotAngle);cx.stroke();
+    // Needle
+    cx.strokeStyle='rgba(255,255,255,0.6)';cx.lineWidth=1.5;
+    cx.beginPath();cx.moveTo(gx,gy+gr);
+    cx.lineTo(gx+Math.cos(-Math.PI/2+rotAngle)*gr*0.9,gy+gr+Math.sin(-Math.PI/2+rotAngle)*gr*0.9);
+    cx.stroke();
+    cx.fillStyle='rgba(100,255,100,0.5)';cx.font='9px monospace';cx.textAlign='center';
+    cx.fillText('ROTATION',(gx),gy+gr+gr+14);
+    cx.fillText((rotAngle*180/Math.PI).toFixed(1)+' deg',gx,gy+gr);
+  }
+
+  function drawInfoPanel(){
+    const px=20,py=20,pw=150,ph=70;
+    cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(px,py,pw,ph);
+    cx.fillStyle='rgba(100,200,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('FARADAY ROTATION',px+8,py+14);
+    cx.fillStyle='#aaa';
+    cx.fillText('B = '+bField.toFixed(2)+' T',px+8,py+28);
+    cx.fillText('lambda = '+wavelength+' cm',px+8,py+42);
+    cx.fillText('Path = '+pathLength.toFixed(1)+' m',px+8,py+56);
+    cx.fillText('theta = '+rotAngle.toFixed(3)+' rad',px+8,py+68);
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,8,18,0.12)';cx.fillRect(0,0,W,H);
+
+    // Slowly vary parameters
+    bField=0.5+Math.sin(t*0.2)*0.3;
+    rotAngle=2.6*bField*pathLength*(wavelength/100)*(wavelength/100);
+
+    drawMagneticField();drawPlasmaRegion();drawLightBeam();
+    drawPolarizationVectors();drawRotationAngleGauge();drawInfoPanel();
+
+    cx.fillStyle='rgba(150,100,255,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Faraday Rotation — Polarization Through Magnetized Plasma',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

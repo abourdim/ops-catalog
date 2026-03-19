@@ -182,3 +182,126 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();setInterval(updateTargetList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — DIRECTED ENERGY ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _thermalData=[];let _phasedArray=[];let _atmosphericLoss=new Array(200).fill(0);
+let _beamProfile=new Float32Array(200).fill(0);let _heatParticles=[];
+
+class HeatParticle{constructor(x,y){this.x=x;this.y=y;this.vx=(Math.random()-0.5)*1.5;this.vy=-1-Math.random()*2;this.life=1;this.decay=0.02+Math.random()*0.02;this.size=2+Math.random()*3;}
+update(){this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;return this.life>0;}
+draw(ctx){ctx.beginPath();ctx.arc(this.x,this.y,this.size*this.life,0,Math.PI*2);
+  const r=255,g=Math.floor(200*this.life),b=0;ctx.fillStyle='rgba('+r+','+g+','+b+','+this.life*0.4+')';ctx.fill();}}
+
+/* ── Phased Array Element Visualization ── */
+function drawPhasedArray(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('PHASED ARRAY ELEMENT STATUS',5,12);
+  const isFire=typeof firing!=='undefined'&&firing;
+  const angle=parseInt(_$('angleInput')?.value||0);
+  const rows=8,cols=16;const elemW=Math.min(12,(W-20)/cols-2);const elemH=Math.min(12,(H-30)/rows-2);
+  for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){
+    const x=10+c*(elemW+2);const y=25+r*(elemH+2);
+    const phase=(c-cols/2)*angle*0.02;const amplitude=isFire?0.5+Math.sin(phase+_t*10)*0.5:0.2;
+    const red=isFire?Math.floor(amplitude*255):50;const grn=isFire?Math.floor(200-amplitude*150):100;
+    ctx.fillStyle='rgba('+red+','+grn+',50,'+(0.3+amplitude*0.6)+')';
+    ctx.fillRect(x,y,elemW,elemH);
+    if(isFire&&amplitude>0.7){ctx.strokeStyle='rgba(255,200,0,0.4)';ctx.lineWidth=1;ctx.strokeRect(x,y,elemW,elemH);}
+  }}
+  if(isFire){ctx.fillStyle='rgba(255,100,0,0.5)';ctx.font='8px Orbitron,monospace';ctx.textAlign='right';
+    ctx.fillText('BEAM ANGLE: '+angle+'°',W-10,H-5);}
+}
+
+/* ── Thermal Loading Profile ── */
+function drawThermalProfile(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('THERMAL LOADING (%)',5,12);
+  const isFire=typeof firing!=='undefined'&&firing;
+  const power=parseInt(_$('powerInput')?.value||100);
+  const thermalLoad=isFire?Math.min(100,power*0.3+_t*0.5+Math.random()*5):Math.max(0,(_thermalData[_thermalData.length-1]||20)-0.3);
+  _thermalData.push(thermalLoad);if(_thermalData.length>200)_thermalData.shift();
+  // Background zones
+  ctx.fillStyle='rgba(255,50,50,0.05)';ctx.fillRect(0,20,W,(H-30)*0.3);
+  ctx.fillStyle='rgba(255,200,0,0.05)';ctx.fillRect(0,20+(H-30)*0.3,W,(H-30)*0.3);
+  ctx.fillStyle='rgba(0,200,100,0.05)';ctx.fillRect(0,20+(H-30)*0.6,W,(H-30)*0.4);
+  ctx.beginPath();
+  _thermalData.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  const color=thermalLoad>80?'rgba(255,50,50,0.8)':thermalLoad>50?'rgba(255,200,0,0.7)':'rgba(0,200,100,0.6)';
+  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle=color;ctx.font='14px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(thermalLoad.toFixed(0)+'%',W-10,30);
+  if(thermalLoad>80){ctx.fillStyle='rgba(255,50,50,'+Math.abs(Math.sin(_t*5))*0.5+')';ctx.font='10px Orbitron,monospace';ctx.textAlign='center';ctx.fillText('⚠ OVERHEAT WARNING',W/2,H/2);}
+}
+
+/* ── Power Density at Range ── */
+function drawPowerDensity(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('POWER DENSITY AT TARGET (W/m²)',5,12);
+  const power=parseInt(_$('powerInput')?.value||100);
+  const freq=parseFloat(_$('freqInput')?.value||10);
+  const beamW=parseInt(_$('widthInput')?.value||10);
+  ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const range=(x/W)*20;const area=Math.PI*(range*1000*Math.tan(beamW*Math.PI/360))**2||1;
+    const pd=power*1000/area;
+    const logPd=Math.log10(Math.max(pd,0.001))*10;
+    const y=H-10-((logPd+20)/60)*(H-25);
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='rgba(255,100,0,0.7)';ctx.lineWidth=2;ctx.stroke();
+  // Damage thresholds
+  [{name:'Electronics Damage',val:100,color:'rgba(255,50,50,0.4)'},{name:'Sensor Disruption',val:10,color:'rgba(255,200,0,0.4)'},{name:'Comm Degradation',val:1,color:'rgba(0,200,255,0.4)'}].forEach(th=>{
+    const logTh=Math.log10(th.val)*10;const y=H-10-((logTh+20)/60)*(H-25);
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.strokeStyle=th.color;ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=th.color;ctx.font='7px Orbitron,monospace';ctx.textAlign='right';ctx.fillText(th.name,W-5,y-3);
+  });
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+  for(let r=0;r<=20;r+=5){ctx.fillText(r+'km',(r/20)*W,H-1);}
+}
+
+/* ── Atmospheric Absorption Graph ── */
+function drawAtmosphericLoss(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('ATMOSPHERIC ABSORPTION (dB/km)',5,12);
+  ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const freq=x/W*300;// 0-300 GHz
+    let loss=0.01;
+    // Water vapor peaks
+    if(Math.abs(freq-22)<3)loss+=0.2;if(Math.abs(freq-183)<5)loss+=3;if(Math.abs(freq-325)<10)loss+=5;
+    // Oxygen peaks
+    if(Math.abs(freq-60)<10)loss+=15;if(Math.abs(freq-118)<5)loss+=1;
+    loss+=freq*0.001;
+    const y=H-10-(Math.min(loss,20)/20)*(H-25);
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  // Current frequency marker
+  const freq=parseFloat(_$('freqInput')?.value||10);const markerX=(freq/300)*W;
+  ctx.beginPath();ctx.moveTo(markerX,20);ctx.lineTo(markerX,H-10);
+  ctx.strokeStyle='rgba(255,200,0,0.6)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='rgba(255,200,0,0.6)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText(freq+' GHz',markerX,18);
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  for(let i=_heatParticles.length-1;i>=0;i--)if(!_heatParticles[i].update())_heatParticles.splice(i,1);
+  const bc=_$('beamCanvas');
+  if(bc){const ctx=bc.getContext('2d');
+    if(typeof firing!=='undefined'&&firing&&typeof targets!=='undefined'){
+      targets.forEach(tgt=>{if(tgt.engaged&&tgt.health>0){
+        for(let i=0;i<3;i++)_heatParticles.push(new HeatParticle(tgt.x,tgt.y));
+      }});
+      _heatParticles.forEach(p=>p.draw(ctx));
+    }
+  }
+  const pc=_$('powerCanvas');
+  if(pc){const ctx=pc.getContext('2d');const W=pc.width,H=pc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawThermalProfile(ctx,W,H);}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

@@ -119,3 +119,137 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();setInterval(updateSignalList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — MEACONING ATTACK ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _posErrorTrail=[];let _delayCorrelation=new Array(200).fill(0);
+let _signalCompare=[];let _driftHistory=new Array(200).fill(0);
+
+/* ── Position Drift Trail Map ── */
+function drawPositionDrift(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('VICTIM POSITION DRIFT MAP',5,12);
+  const cx=W/2,cy=H/2;const R=Math.min(W,H)/2-25;
+  for(let i=1;i<=4;i++){ctx.beginPath();ctx.arc(cx,cy,R*i/4,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.08)';ctx.lineWidth=1;ctx.stroke();}
+  const isMeacon=typeof meaconing!=='undefined'&&meaconing;
+  const delay=parseInt(_$('delayInput')?.value||200);
+  // True position
+  ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.8)';ctx.fill();
+  ctx.fillStyle='rgba(0,200,255,0.5)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';ctx.fillText('TRUE POS',cx,cy+15);
+  if(isMeacon){
+    const drift=delay*0.3;const driftAngle=_t*0.2;
+    const dx=Math.cos(driftAngle)*drift*0.3;const dy=Math.sin(driftAngle)*drift*0.2;
+    _posErrorTrail.push({x:cx+dx+Math.random()*5,y:cy+dy+Math.random()*5});
+    if(_posErrorTrail.length>100)_posErrorTrail.shift();
+    // Trail
+    _posErrorTrail.forEach((p,i)=>{
+      const alpha=i/_posErrorTrail.length;
+      ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,80,80,'+alpha*0.6+')';ctx.fill();
+    });
+    // Current spoofed position
+    const last=_posErrorTrail[_posErrorTrail.length-1];
+    if(last){ctx.beginPath();ctx.arc(last.x,last.y,8,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,50,50,0.8)';ctx.fill();
+      ctx.beginPath();ctx.arc(last.x,last.y,14+Math.sin(_t*4)*4,0,Math.PI*2);
+      ctx.strokeStyle='rgba(255,50,50,0.4)';ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle='rgba(255,50,50,0.6)';ctx.font='8px Orbitron,monospace';ctx.fillText('SPOOFED',last.x,last.y-14);
+      // Error line
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(last.x,last.y);
+      ctx.strokeStyle='rgba(255,200,0,0.5)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+      const errM=(Math.sqrt((last.x-cx)**2+(last.y-cy)**2)*2).toFixed(0);
+      ctx.fillStyle='rgba(255,200,0,0.6)';ctx.fillText(errM+'m error',(cx+last.x)/2,(cy+last.y)/2-8);
+    }
+    // Scale labels
+    [50,100,200].forEach(m=>{const pr=m/(delay*0.6)*R;
+      ctx.fillStyle='rgba(255,255,255,0.15)';ctx.font='7px Orbitron,monospace';ctx.fillText(m+'m',cx+pr+3,cy);});
+  }
+}
+
+/* ── Signal Delay Correlation ── */
+function drawDelayCorrelation(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('CROSS-CORRELATION — ORIGINAL vs MEACONED',5,12);
+  const isMeacon=typeof meaconing!=='undefined'&&meaconing;
+  const delay=parseInt(_$('delayInput')?.value||200);
+  // Generate correlation function
+  ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const tau=(x/W-0.5)*1000;// -500 to +500 us
+    let corr=Math.exp(-tau*tau/2000);// Original peak at 0
+    if(isMeacon)corr+=0.7*Math.exp(-(tau-delay)*(tau-delay)/3000);// Meaconed peak at delay
+    const y=H-10-(corr)*(H-30);
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='rgba(0,200,255,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+  // Zero line
+  ctx.beginPath();ctx.moveTo(0,H-10);ctx.lineTo(W,H-10);ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;ctx.stroke();
+  // Markers
+  ctx.beginPath();ctx.moveTo(W/2,20);ctx.lineTo(W/2,H-10);ctx.strokeStyle='rgba(0,255,136,0.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';ctx.fillText('τ=0',W/2,H-1);
+  if(isMeacon){const delayX=W/2+(delay/1000)*W;
+    ctx.beginPath();ctx.moveTo(delayX,20);ctx.lineTo(delayX,H-10);ctx.strokeStyle='rgba(255,50,50,0.5)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(255,50,50,0.5)';ctx.fillText('τ='+delay+'μs',delayX,H-1);}
+}
+
+/* ── Navigation Accuracy Degradation ── */
+function drawAccuracyDegradation(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('NAVIGATION ACCURACY DEGRADATION',5,12);
+  const isMeacon=typeof meaconing!=='undefined'&&meaconing;
+  const delay=parseInt(_$('delayInput')?.value||200);
+  const drift=isMeacon?Math.min(500,delay*0.8+_t*2+Math.random()*10):Math.random()*3;
+  _driftHistory.push(drift);if(_driftHistory.length>200)_driftHistory.shift();
+  // Background zones
+  ctx.fillStyle='rgba(255,50,50,0.04)';ctx.fillRect(0,20,W,(H-30)*0.3);
+  ctx.fillStyle='rgba(255,200,0,0.04)';ctx.fillRect(0,20+(H-30)*0.3,W,(H-30)*0.35);
+  ctx.fillStyle='rgba(0,200,100,0.04)';ctx.fillRect(0,20+(H-30)*0.65,W,(H-30)*0.35);
+  ctx.beginPath();
+  _driftHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/500)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=drift>200?'rgba(255,50,50,0.8)':drift>50?'rgba(255,200,0,0.7)':'rgba(0,200,100,0.6)';
+  ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle=drift>200?'rgba(255,50,50,0.7)':'rgba(255,200,0,0.7)';ctx.font='12px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(drift.toFixed(0)+'m',W-10,30);
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('0m',3,H-8);ctx.fillText('500m',3,23);
+}
+
+/* ── Signal Capture Chain Diagram ── */
+function drawCaptureChain(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('MEACONING SIGNAL CHAIN',5,12);
+  const stages=['SAT Signal','High-Gain\nCapture','Amplify','Delay\nInjection','Rebroadcast','Victim\nReceiver'];
+  const isMeacon=typeof meaconing!=='undefined'&&meaconing;
+  const isCap=typeof captured!=='undefined'&&captured;
+  const stageW=Math.min(80,(W-20)/stages.length-10);
+  stages.forEach((s,i)=>{
+    const x=10+i*(stageW+10);const y=H/2-15;
+    const isActive=(isCap&&i<=2)||(isMeacon&&i<=5);
+    ctx.fillStyle=isActive?'rgba(0,200,255,0.15)':'rgba(50,50,50,0.2)';
+    ctx.fillRect(x,y,stageW,30);ctx.strokeStyle=isActive?'rgba(0,200,255,0.5)':'rgba(100,100,100,0.3)';
+    ctx.lineWidth=1;ctx.strokeRect(x,y,stageW,30);
+    if(isActive&&isMeacon){ctx.fillStyle='rgba(0,200,255,0.1)';
+      const pulse=Math.sin(_t*4+i)*3;ctx.fillRect(x-pulse,y-pulse,stageW+pulse*2,30+pulse*2);}
+    ctx.fillStyle=isActive?'rgba(0,255,136,0.7)':'rgba(100,100,100,0.4)';
+    ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+    const lines=s.split('\n');lines.forEach((l,li)=>ctx.fillText(l,x+stageW/2,y+12+li*9));
+    if(i<stages.length-1){ctx.beginPath();ctx.moveTo(x+stageW+2,H/2);ctx.lineTo(x+stageW+8,H/2);
+      ctx.strokeStyle=isActive?'rgba(0,200,255,0.5)':'rgba(100,100,100,0.2)';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.moveTo(x+stageW+6,H/2-3);ctx.lineTo(x+stageW+10,H/2);ctx.lineTo(x+stageW+6,H/2+3);
+      ctx.fillStyle=isActive?'rgba(0,200,255,0.5)':'rgba(100,100,100,0.2)';ctx.fill();}
+  });
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const mc=_$('meaconCanvas');
+  if(mc){const ctx=mc.getContext('2d');drawPositionDrift(ctx,mc.width,mc.height);}
+  const dc=_$('delayCanvas');
+  if(dc){const ctx=dc.getContext('2d');const W=dc.width,H=dc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawAccuracyDegradation(ctx,W,H);}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

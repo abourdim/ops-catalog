@@ -221,3 +221,120 @@ document.addEventListener('DOMContentLoaded',()=>{
   animate();
   setInterval(updateZoneList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — SPECTRUM DENIAL ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _coverageHistory=new Array(200).fill(0);let _denialParticles=[];
+let _signalAttempts=[];let _interferenceMap=[];
+
+class DenialParticle{constructor(x,y){this.x=x;this.y=y;this.vx=(Math.random()-0.5)*3;this.vy=(Math.random()-0.5)*3;this.life=1;this.decay=0.015+Math.random()*0.015;this.size=1+Math.random()*3;}
+update(){this.x+=this.vx;this.y+=this.vy;this.vx*=0.98;this.vy*=0.98;this.life-=this.decay;return this.life>0;}
+draw(ctx){ctx.beginPath();ctx.arc(this.x,this.y,this.size*this.life,0,Math.PI*2);ctx.fillStyle='rgba(255,80,50,'+this.life*0.5+')';ctx.fill();}}
+
+/* ── Signal Attempt Monitoring ── */
+function drawSignalAttempts(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('SIGNAL PENETRATION ATTEMPTS',5,12);
+  const isDeny=typeof denialActive!=='undefined'&&denialActive;
+  if(isDeny&&Math.random()>0.92){
+    _signalAttempts.push({x:Math.random()*W,freq:100+Math.random()*5800,power:-60+Math.random()*40,blocked:Math.random()>0.2,time:_t});
+    if(_signalAttempts.length>40)_signalAttempts.shift();
+  }
+  _signalAttempts.forEach((a,i)=>{
+    const y=25+((a.freq-100)/5800)*(H-35);const age=_t-a.time;const alpha=Math.max(0.1,1-age*0.3);
+    ctx.beginPath();ctx.arc(a.x,y,4,0,Math.PI*2);
+    ctx.fillStyle=a.blocked?'rgba(255,50,50,'+alpha+')':'rgba(0,255,136,'+alpha+')';ctx.fill();
+    if(a.blocked){ctx.beginPath();ctx.moveTo(a.x-4,y-4);ctx.lineTo(a.x+4,y+4);ctx.moveTo(a.x+4,y-4);ctx.lineTo(a.x-4,y+4);
+      ctx.strokeStyle='rgba(255,50,50,'+alpha+')';ctx.lineWidth=2;ctx.stroke();}
+  });
+  const blocked=_signalAttempts.filter(a=>a.blocked).length;
+  const total=_signalAttempts.length||1;
+  ctx.fillStyle='rgba(255,50,50,0.5)';ctx.font='8px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText('BLOCKED: '+blocked+'/'+total+' ('+(blocked/total*100).toFixed(0)+'%)',W-10,H-5);
+}
+
+/* ── Coverage Effectiveness Timeline ── */
+function drawCoverageTimeline(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DENIAL COVERAGE EFFECTIVENESS',5,12);
+  const isDeny=typeof denialActive!=='undefined'&&denialActive;
+  const zoneCount=typeof zones!=='undefined'?zones.filter(z=>z.active).length:0;
+  const eff=isDeny?Math.min(99,zoneCount*25+Math.random()*10):Math.random()*3;
+  _coverageHistory.push(eff);if(_coverageHistory.length>200)_coverageHistory.shift();
+  // Fill area
+  ctx.beginPath();ctx.moveTo(0,H-10);
+  _coverageHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);ctx.lineTo(x,y);});
+  ctx.lineTo(W,H-10);ctx.closePath();
+  ctx.fillStyle=isDeny?'rgba(255,50,50,0.1)':'rgba(0,200,255,0.05)';ctx.fill();
+  // Line
+  ctx.beginPath();
+  _coverageHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=isDeny?'rgba(255,80,80,0.8)':'rgba(0,200,255,0.5)';ctx.lineWidth=2;ctx.stroke();
+  const last=_coverageHistory[_coverageHistory.length-1];
+  ctx.fillStyle=last>60?'rgba(255,50,50,0.7)':'rgba(255,200,0,0.7)';ctx.font='14px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(last.toFixed(0)+'%',W-10,30);
+}
+
+/* ── Spectral Occupancy Heatmap ── */
+function drawSpectralHeatmap(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('SPECTRAL OCCUPANCY HEATMAP',5,12);
+  const isDeny=typeof denialActive!=='undefined'&&denialActive;
+  const step=8;const rows=Math.floor((H-25)/step);const cols=Math.floor(W/step);
+  for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){
+    const freq=(c/cols)*6000;const tSlot=r;
+    let occ=Math.random()*20;
+    if(isDeny&&typeof zones!=='undefined'){zones.forEach(z=>{if(z.active&&freq>=z.freqStart&&freq<=z.freqEnd)occ+=60+Math.random()*30;});}
+    const norm=Math.min(1,occ/100);
+    const red=norm>0.5?255:norm*500;const grn=norm<0.4?150:150*(1-norm);const blu=norm<0.3?200:0;
+    ctx.fillStyle='rgba('+Math.floor(red)+','+Math.floor(grn)+','+Math.floor(blu)+',0.6)';
+    ctx.fillRect(c*step,20+r*step,step-1,step-1);
+  }}
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+  for(let f=0;f<=6000;f+=1000){const x=(f/6000)*W;ctx.fillText(f+'',x,H-2);}
+}
+
+/* ── Zone Overlap Analysis ── */
+function drawZoneOverlap(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('ZONE FREQUENCY OVERLAP MATRIX',5,12);
+  if(typeof zones==='undefined'||zones.length===0)return;
+  const n=zones.length;const cellW=Math.min(40,(W-40)/n);const cellH=Math.min(25,(H-40)/n);
+  zones.forEach((za,i)=>{
+    zones.forEach((zb,j)=>{
+      const x=30+j*cellW;const y=30+i*cellH;
+      let overlap=0;
+      if(i===j)overlap=1;
+      else{const s=Math.max(za.freqStart,zb.freqStart);const e=Math.min(za.freqEnd,zb.freqEnd);
+        if(s<e)overlap=(e-s)/Math.max(za.freqEnd-za.freqStart,1);}
+      ctx.fillStyle=overlap>0.5?'rgba(255,50,50,0.5)':overlap>0?'rgba(255,200,0,0.3)':'rgba(0,200,255,0.1)';
+      ctx.fillRect(x,y,cellW-2,cellH-2);
+      if(overlap>0){ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText((overlap*100).toFixed(0)+'%',x+cellW/2,y+cellH/2+3);}
+    });
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='7px Orbitron,monospace';ctx.textAlign='right';
+    ctx.fillText(zones[i].id,28,30+i*cellH+cellH/2+3);
+    ctx.textAlign='center';ctx.fillText(zones[i].id,30+i*cellW+cellW/2,28);
+  });
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  for(let i=_denialParticles.length-1;i>=0;i--)if(!_denialParticles[i].update())_denialParticles.splice(i,1);
+  const zc=_$('zoneCanvas');
+  if(zc){const ctx=zc.getContext('2d');
+    if(typeof denialActive!=='undefined'&&denialActive&&typeof zones!=='undefined'){
+      zones.forEach(z=>{if(z.active){for(let i=0;i<2;i++)_denialParticles.push(new DenialParticle(z.cx,z.cy));}});
+      _denialParticles.forEach(p=>p.draw(ctx));
+    }
+  }
+  const bc=_$('bandCanvas');
+  if(bc){const ctx=bc.getContext('2d');const W=bc.width,H=bc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawCoverageTimeline(ctx,W,H*0.5);
+    ctx.save();ctx.translate(0,H*0.5);drawSignalAttempts(ctx,W,H*0.5);ctx.restore();}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

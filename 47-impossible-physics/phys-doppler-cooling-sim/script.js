@@ -66,3 +66,174 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();temperature=300000;atoms.forEach(a=>{a.x=400+(Math.random()-.5)*300;a.y=175+(Math.random()-.5)*200;a.vx=(Math.random()-.5)*6;a.vy=(Math.random()-.5)*6;});$('detuneSlider').value=-15;$('detuneVal').textContent='-15 MHz';$('powerSlider').value=30;$('powerVal').textContent='30 mW';$('atomSelect').value='rb';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('tempVal').textContent='-- μK';$('dopLimVal').textContent='-- μK';$('atomCntVal').textContent='--';$('psdVal').textContent='--';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('detuneSlider').oninput=function(){$('detuneVal').textContent=this.value+' MHz';};$('powerSlider').oninput=function(){$('powerVal').textContent=this.value+' mW';};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Doppler Cooling Simulator
+   Animated laser cooling of atoms with counter-propagating beams,
+   atom velocity distribution, and temperature evolution
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simDopplerCooling';let cv,cx,W,H,af=null,t=0;
+  const atoms=[];const MAX_ATOMS=150;const laserPhotons=[];
+  let temperature=300000,dopplerLimit=146;const tempHistory=[];
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#040608;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+    for(let i=0;i<MAX_ATOMS;i++){
+      atoms.push({x:W*0.35+(Math.random()-.5)*200,y:H/2+(Math.random()-.5)*150,
+        vx:(Math.random()-.5)*4,vy:(Math.random()-.5)*4,
+        lastAbsorb:0,excited:false});
+    }
+  }
+
+  function drawTrapRegion(){
+    const tcx=W*0.35,tcy=H/2;
+    cx.strokeStyle='rgba(255,50,50,0.1)';cx.lineWidth=1;cx.setLineDash([4,4]);
+    cx.strokeRect(tcx-150,tcy-120,300,240);cx.setLineDash([]);
+  }
+
+  function drawLaserBeams(){
+    const tcx=W*0.35,tcy=H/2;
+    // Horizontal beams
+    const beamAlpha=0.15+Math.sin(t*5)*0.05;
+    cx.fillStyle='rgba(255,0,0,'+beamAlpha+')';
+    cx.fillRect(0,tcy-2,tcx+150,4);
+    cx.fillRect(tcx-150,tcy-2,W*0.35+150,4);
+    // Vertical beams
+    cx.fillStyle='rgba(255,0,0,'+beamAlpha+')';
+    cx.fillRect(tcx-2,0,4,H);
+    // Arrows showing beam direction
+    cx.fillStyle='rgba(255,100,100,0.3)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('>>> LASER',80,tcy-8);
+    cx.fillText('LASER <<<',tcx+220,tcy-8);
+    // Photon packets along beams
+    for(let i=0;i<6;i++){
+      const px=(t*200+i*100)%(tcx+150);
+      cx.fillStyle='rgba(255,100,100,0.4)';
+      cx.beginPath();cx.arc(px,tcy,2,0,Math.PI*2);cx.fill();
+      const px2=tcx+150-(t*200+i*100)%(tcx+150);
+      cx.beginPath();cx.arc(px2,tcy,2,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  function updateAtoms(){
+    const coolingRate=0.998;
+    atoms.forEach(a=>{
+      // Apply Doppler cooling effect
+      if(Math.random()<0.05){
+        const speed=Math.sqrt(a.vx*a.vx+a.vy*a.vy);
+        if(speed>0.3){
+          a.vx*=coolingRate;a.vy*=coolingRate;
+          a.excited=true;a.lastAbsorb=t;
+        }
+      }
+      if(t-a.lastAbsorb>0.1)a.excited=false;
+      a.x+=a.vx;a.y+=a.vy;
+      // Soft boundary
+      const tcx=W*0.35,tcy=H/2;
+      if(a.x<tcx-145){a.x=tcx-145;a.vx*=-0.8;}
+      if(a.x>tcx+145){a.x=tcx+145;a.vx*=-0.8;}
+      if(a.y<tcy-115){a.y=tcy-115;a.vy*=-0.8;}
+      if(a.y>tcy+115){a.y=tcy+115;a.vy*=-0.8;}
+    });
+    // Calculate temperature from kinetic energy
+    let ke=0;atoms.forEach(a=>{ke+=a.vx*a.vx+a.vy*a.vy;});
+    temperature=Math.max(dopplerLimit,ke/atoms.length*50000);
+  }
+
+  function drawAtoms(){
+    atoms.forEach(a=>{
+      const speed=Math.sqrt(a.vx*a.vx+a.vy*a.vy);
+      const hue=240-speed*40;
+      if(a.excited){
+        cx.save();cx.shadowColor='#ff6600';cx.shadowBlur=8;
+        cx.fillStyle='rgba(255,150,0,0.7)';cx.beginPath();cx.arc(a.x,a.y,4,0,Math.PI*2);cx.fill();
+        cx.restore();
+      }else{
+        cx.fillStyle='hsla('+hue+',60%,50%,0.6)';
+        cx.beginPath();cx.arc(a.x,a.y,2+speed*0.5,0,Math.PI*2);cx.fill();
+      }
+    });
+  }
+
+  function drawVelocityDistribution(){
+    const vx=W*0.72,vy=20,vw=W*0.26,vh=110;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(vx,vy,vw,vh);
+    // Histogram of speeds
+    const bins=30;const hist=new Array(bins).fill(0);
+    atoms.forEach(a=>{
+      const speed=Math.sqrt(a.vx*a.vx+a.vy*a.vy);
+      const bin=Math.min(bins-1,Math.floor(speed/6*bins));
+      hist[bin]++;
+    });
+    const maxH=Math.max(...hist,1);
+    const barW=vw/bins;
+    for(let i=0;i<bins;i++){
+      const h2=hist[i]/maxH*vh*0.7;
+      const hue=240-i/bins*200;
+      cx.fillStyle='hsla('+hue+',60%,50%,0.5)';
+      cx.fillRect(vx+i*barW,vy+vh-h2,barW-1,h2);
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('VELOCITY DISTRIBUTION',vx+8,vy+10);
+    cx.fillText('0               v_max',vx+8,vy+vh+10);
+  }
+
+  function drawTemperatureGraph(){
+    const gx=W*0.72,gy=H-110,gw=W*0.26,gh=80;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(gx,gy,gw,gh);
+    tempHistory.push(temperature);
+    if(tempHistory.length>200)tempHistory.shift();
+    if(tempHistory.length>1){
+      const maxT=Math.max(...tempHistory);
+      cx.strokeStyle='rgba(255,100,50,0.6)';cx.lineWidth=1.5;cx.beginPath();
+      const step=gw/Math.max(1,tempHistory.length-1);
+      tempHistory.forEach((v,i)=>{
+        const x=gx+i*step;const y=gy+gh-(v/maxT)*gh*0.85;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    // Doppler limit line
+    const maxT=Math.max(...tempHistory,1);
+    const limY=gy+gh-(dopplerLimit/maxT)*gh*0.85;
+    cx.strokeStyle='rgba(0,255,100,0.3)';cx.lineWidth=1;cx.setLineDash([3,3]);
+    cx.beginPath();cx.moveTo(gx,limY);cx.lineTo(gx+gw,limY);cx.stroke();
+    cx.setLineDash([]);
+    cx.fillStyle='rgba(0,255,100,0.3)';cx.font='6px monospace';cx.fillText('Doppler limit',gx+gw-60,limY-4);
+    cx.fillStyle='rgba(255,100,50,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('TEMPERATURE vs TIME',gx+8,gy-4);
+    cx.fillText('T = '+(temperature>1000?(temperature/1000).toFixed(0)+' mK':temperature.toFixed(0)+' uK'),gx+8,gy+gh+10);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,220,54);
+    cx.strokeStyle='rgba(255,100,50,0.15)';cx.strokeRect(8,8,220,54);
+    cx.font='10px monospace';cx.fillStyle='#ef4444';cx.textAlign='left';
+    cx.fillText('DOPPLER COOLING SIMULATOR',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Atoms: '+atoms.length+'  T: '+(temperature>1e3?(temperature/1e3).toFixed(0)+'mK':temperature.toFixed(0)+'uK'),16,40);
+    cx.fillText('Doppler Limit: '+dopplerLimit+' uK',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(4,6,8,0.12)';cx.fillRect(0,0,W,H);
+
+    drawTrapRegion();drawLaserBeams();updateAtoms();drawAtoms();
+    drawVelocityDistribution();drawTemperatureGraph();drawHUD();
+
+    cx.fillStyle='rgba(255,100,50,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Doppler Cooling — Laser Atom Trapping & Velocity Reduction',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

@@ -73,3 +73,171 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();$('sepSlider').value=200;$('sepVal').textContent='200 nm';$('areaSlider').value=50;$('areaVal').textContent='50 μm²';$('tempSlider').value=300;$('tempVal').textContent='300 K';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('forceVal').textContent='-- N';$('pressVal').textContent='-- Pa';$('edensVal').textContent='-- J/m³';$('deflVal').textContent='-- pm';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('sepSlider').oninput=function(){$('sepVal').textContent=this.value+' nm';};$('areaSlider').oninput=function(){$('areaVal').textContent=this.value+' μm²';};$('tempSlider').oninput=function(){$('tempVal').textContent=this.value+' K';};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Casimir Effect Detector
+   Animated parallel conducting plates with vacuum mode exclusion,
+   virtual photon visualization, and force measurement
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simCasimirDetector';let cv,cx,W,H,af=null,t=0;
+  const virtualPhotons=[];const MAX_PHOTONS=100;
+  let plateSep=200,plateArea=50,temperature=300,casimirForce=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#04060e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  class VirtualPhoton{
+    constructor(region){
+      this.region=region;
+      if(region==='between'){
+        this.x=W/2-30+Math.random()*60;this.y=40+Math.random()*(H-80);
+      }else{
+        this.x=region==='left'?50+Math.random()*120:W-170+Math.random()*120;
+        this.y=40+Math.random()*(H-80);
+      }
+      this.vx=(Math.random()-.5)*1.5;this.vy=(Math.random()-.5)*1.5;
+      this.wavelength=region==='between'?(10+Math.random()*40):(5+Math.random()*60);
+      this.life=40+Math.random()*60;this.age=0;
+      this.hue=region==='between'?200:280;
+    }
+    update(){
+      this.age++;this.x+=this.vx;this.y+=this.vy;
+      // Bounce off boundaries
+      if(this.region==='between'){
+        const leftPlate=W/2-plateSep/8;const rightPlate=W/2+plateSep/8;
+        if(this.x<leftPlate||this.x>rightPlate)this.vx*=-1;
+      }
+      if(this.y<40||this.y>H-40)this.vy*=-1;
+      return this.age<this.life;
+    }
+    draw(){
+      const alpha=Math.sin(this.age/this.life*Math.PI)*0.5;
+      const r=1+this.wavelength/30;
+      cx.fillStyle='hsla('+this.hue+',60%,60%,'+alpha+')';
+      cx.beginPath();cx.arc(this.x,this.y,r,0,Math.PI*2);cx.fill();
+      // Wave oscillation
+      cx.strokeStyle='hsla('+this.hue+',60%,60%,'+(alpha*0.3)+')';cx.lineWidth=0.5;
+      cx.beginPath();
+      cx.arc(this.x,this.y,r+3+Math.sin(t*5+this.age)*2,0,Math.PI*2);cx.stroke();
+    }
+  }
+
+  function drawPlates(){
+    const leftX=W/2-plateSep/8;const rightX=W/2+plateSep/8;
+    const py=30,ph=H-60;
+    // Left plate
+    cx.fillStyle='rgba(180,180,200,0.3)';cx.fillRect(leftX-3,py,6,ph);
+    cx.strokeStyle='rgba(200,200,220,0.4)';cx.strokeRect(leftX-3,py,6,ph);
+    // Right plate
+    cx.fillStyle='rgba(180,180,200,0.3)';cx.fillRect(rightX-3,py,6,ph);
+    cx.strokeStyle='rgba(200,200,220,0.4)';cx.strokeRect(rightX-3,py,6,ph);
+    // Force arrows (plates attract)
+    cx.strokeStyle='rgba(255,200,0,0.4)';cx.lineWidth=1.5;
+    const acy=H/2;
+    cx.beginPath();cx.moveTo(leftX-30,acy);cx.lineTo(leftX-3,acy);cx.stroke();
+    cx.beginPath();cx.moveTo(leftX-3,acy-3);cx.lineTo(leftX-8,acy);cx.lineTo(leftX-3,acy+3);cx.fill();
+    cx.beginPath();cx.moveTo(rightX+30,acy);cx.lineTo(rightX+3,acy);cx.stroke();
+    cx.beginPath();cx.moveTo(rightX+3,acy-3);cx.lineTo(rightX+8,acy);cx.lineTo(rightX+3,acy+3);cx.fill();
+    // Separation label
+    cx.fillStyle='rgba(255,200,0,0.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText(plateSep+' nm',W/2,py-8);
+    cx.fillText('<-- F_Casimir -->',W/2,acy-15);
+  }
+
+  function drawModeExclusion(){
+    const leftX=W/2-plateSep/8;const rightX=W/2+plateSep/8;
+    const gap=rightX-leftX;
+    // Standing wave modes that fit between plates
+    const maxModes=Math.floor(gap/15);
+    for(let n=1;n<=Math.min(maxModes,5);n++){
+      const wl=2*gap/n;
+      cx.strokeStyle='rgba(100,200,255,'+(0.08/n)+')';cx.lineWidth=1;
+      cx.beginPath();
+      for(let y=30;y<H-30;y+=3){
+        const x=leftX+gap/2+Math.sin(y/wl*Math.PI*2+t*2)*gap*0.3/n;
+        if(y===30)cx.moveTo(x,y);else cx.lineTo(x,y);
+      }
+      cx.stroke();
+    }
+  }
+
+  function drawForceGraph(){
+    const gx=20,gy=H-90,gw=200,gh=70;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(gx,gy,gw,gh);
+    // F ~ 1/d^4 curve
+    cx.strokeStyle='rgba(255,200,0,0.5)';cx.lineWidth=1.5;cx.beginPath();
+    for(let i=0;i<gw;i++){
+      const d=50+i/gw*400;
+      const f=1e8/Math.pow(d,4);
+      const y=gy+gh-Math.min(gh*0.9,f*gh*1000);
+      if(i===0)cx.moveTo(gx+i,y);else cx.lineTo(gx+i,y);
+    }
+    cx.stroke();
+    // Current position marker
+    const markerX=gx+(plateSep-50)/400*gw;
+    cx.strokeStyle='rgba(255,255,255,0.4)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(markerX,gy);cx.lineTo(markerX,gy+gh);cx.stroke();
+    cx.fillStyle='rgba(255,200,0,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('CASIMIR FORCE vs SEPARATION',gx+8,gy-4);
+    cx.fillText('F ~ 1/d^4',gx+8,gy+gh+10);
+  }
+
+  function drawMetrics(){
+    const mx=W-200,my=20,mw=180,mh=90;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(mx,my,mw,mh);
+    casimirForce=Math.PI*Math.PI/(240)*1/(Math.pow(plateSep*1e-9,4))*plateArea*1e-12;
+    cx.fillStyle='rgba(100,200,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('CASIMIR DETECTOR',mx+8,my+14);
+    cx.fillStyle='#aaa';
+    cx.fillText('Sep: '+plateSep+' nm',mx+8,my+30);
+    cx.fillText('Area: '+plateArea+' um^2',mx+8,my+44);
+    cx.fillText('Temp: '+temperature+' K',mx+8,my+58);
+    cx.fillText('Force: '+(casimirForce*1e12).toExponential(2)+' pN',mx+8,my+72);
+    cx.fillText('Deflection: '+(casimirForce*1e15).toFixed(1)+' pm',mx+8,my+84);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,210,42);
+    cx.strokeStyle='rgba(100,200,255,0.15)';cx.strokeRect(8,8,210,42);
+    cx.font='10px monospace';cx.fillStyle='#3b82f6';cx.textAlign='left';
+    cx.fillText('CASIMIR EFFECT DETECTOR',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Vacuum Force Between Plates',16,40);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(4,6,14,0.1)';cx.fillRect(0,0,W,H);
+
+    // Oscillate plate separation
+    plateSep=200+Math.sin(t*0.3)*80;
+
+    // Spawn virtual photons
+    if(Math.random()<0.15)virtualPhotons.push(new VirtualPhoton('between'));
+    if(Math.random()<0.08)virtualPhotons.push(new VirtualPhoton('left'));
+    if(Math.random()<0.08)virtualPhotons.push(new VirtualPhoton('right'));
+
+    while(virtualPhotons.length>MAX_PHOTONS)virtualPhotons.shift();
+    for(let i=virtualPhotons.length-1;i>=0;i--){
+      if(!virtualPhotons[i].update())virtualPhotons.splice(i,1);
+      else virtualPhotons[i].draw();
+    }
+
+    drawModeExclusion();drawPlates();drawForceGraph();drawMetrics();drawHUD();
+
+    cx.fillStyle='rgba(100,200,255,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Casimir Effect — Vacuum Mode Exclusion Between Conducting Plates',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

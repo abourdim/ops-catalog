@@ -206,3 +206,126 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();setInterval(updateAlertList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — SPOOFING DETECTOR ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _directionData=new Array(360).fill(0);let _confHistory=new Array(200).fill(0);
+let _signatureLib=[];let _corrMatrix=[];
+
+/* ── Direction of Arrival Analysis ── */
+function drawDOA(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DIRECTION OF ARRIVAL ANALYSIS',5,12);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-25;
+  for(let i=1;i<=3;i++){ctx.beginPath();ctx.arc(cx,cy,R*i/3,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();}
+  const isScan=typeof scanning!=='undefined'&&scanning;
+  const spoofType=_$('spoofTypeSelect')?.value||'none';
+  // Update DOA data
+  for(let i=0;i<360;i++){
+    let level=-80+Math.random()*3;
+    if(isScan){
+      [45,120,200,280,330].forEach(sat=>{if(Math.abs(i-sat)<15)level+=20+Math.random()*5;});
+      if(spoofType!=='none'){const spoofDir=150+Math.sin(_t)*20;if(Math.abs(i-spoofDir)<25)level+=30+Math.random()*10;}
+    }
+    _directionData[i]=_directionData[i]*0.9+level*0.1;
+  }
+  // Draw polar plot
+  ctx.beginPath();
+  for(let i=0;i<360;i++){
+    const a=i*Math.PI/180-Math.PI/2;const r=Math.max(0,(_directionData[i]+85)/50)*R;
+    const px=cx+Math.cos(a)*r;const py=cy+Math.sin(a)*r;
+    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(0,200,255,0.1)';ctx.fill();
+  ctx.strokeStyle='rgba(0,200,255,0.5)';ctx.lineWidth=1;ctx.stroke();
+  // Spoof indicator
+  if(isScan&&spoofType!=='none'){
+    const spoofDir=(150+Math.sin(_t)*20)*Math.PI/180-Math.PI/2;
+    const sr=R*0.8;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(spoofDir)*sr,cy+Math.sin(spoofDir)*sr);
+    ctx.strokeStyle='rgba(255,50,50,0.7)';ctx.lineWidth=3;ctx.stroke();
+    ctx.fillStyle='rgba(255,50,50,0.6)';ctx.font='8px Orbitron,monospace';
+    ctx.fillText('SPOOF',cx+Math.cos(spoofDir)*sr,cy+Math.sin(spoofDir)*sr-8);
+  }
+  ctx.fillStyle='rgba(0,255,136,0.3)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText('N',cx,cy-R-5);ctx.fillText('S',cx,cy+R+10);ctx.fillText('E',cx+R+8,cy+3);ctx.fillText('W',cx-R-8,cy+3);
+}
+
+/* ── Confidence Level Timeline ── */
+function drawConfidenceTimeline(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DETECTION CONFIDENCE TIMELINE',5,12);
+  const isScan=typeof scanning!=='undefined'&&scanning;
+  const spoofType=_$('spoofTypeSelect')?.value||'none';
+  const strength=parseInt(_$('spoofStrength')?.value||50)/100;
+  let conf=0;
+  if(isScan&&spoofType!=='none')conf=40+strength*50+Math.random()*10;
+  else if(isScan)conf=Math.random()*8;
+  _confHistory.push(conf);if(_confHistory.length>200)_confHistory.shift();
+  // Color zones
+  ctx.fillStyle='rgba(255,50,50,0.05)';ctx.fillRect(0,20,W,(H-30)*0.3);
+  ctx.fillStyle='rgba(255,200,0,0.05)';ctx.fillRect(0,20+(H-30)*0.3,W,(H-30)*0.3);
+  ctx.fillStyle='rgba(0,200,100,0.05)';ctx.fillRect(0,20+(H-30)*0.6,W,(H-30)*0.4);
+  // Labels
+  ctx.fillStyle='rgba(255,50,50,0.3)';ctx.font='7px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText('CRITICAL',W-5,30);ctx.fillStyle='rgba(255,200,0,0.3)';ctx.fillText('WARNING',W-5,30+(H-30)*0.3);
+  ctx.fillStyle='rgba(0,200,100,0.3)';ctx.fillText('NORMAL',W-5,30+(H-30)*0.6);
+  // Line
+  ctx.beginPath();
+  _confHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=conf>60?'rgba(255,50,50,0.8)':conf>30?'rgba(255,200,0,0.7)':'rgba(0,200,255,0.6)';ctx.lineWidth=2;ctx.stroke();
+}
+
+/* ── Multi-Parameter Correlation Grid ── */
+function drawCorrelationGrid(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('MULTI-PARAMETER ANOMALY CORRELATION',5,12);
+  const params=['Power','Timing','DoA','C/No','Doppler','Code Phase'];
+  const n=params.length;const cellW=Math.min(50,(W-60)/n);const cellH=Math.min(22,(H-40)/n);
+  const isScan=typeof scanning!=='undefined'&&scanning;
+  const spoofType=_$('spoofTypeSelect')?.value||'none';
+  params.forEach((pa,i)=>{
+    params.forEach((pb,j)=>{
+      const x=50+j*cellW;const y=30+i*cellH;
+      let corr=i===j?1:Math.random()*0.3;
+      if(isScan&&spoofType!=='none'&&i<4&&j<4)corr=0.5+Math.random()*0.5;
+      ctx.fillStyle=corr>0.7?'rgba(255,50,50,0.5)':corr>0.4?'rgba(255,200,0,0.3)':'rgba(0,200,255,0.15)';
+      ctx.fillRect(x,y,cellW-2,cellH-2);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='6px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText(corr.toFixed(1),x+cellW/2,y+cellH/2+2);
+    });
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='7px Orbitron,monospace';ctx.textAlign='right';
+    ctx.fillText(params[i],48,30+i*cellH+cellH/2+3);
+    ctx.textAlign='center';ctx.fillText(params[i],50+i*cellW+cellW/2,28);
+  });
+}
+
+/* ── Signal Authentication Status ── */
+function drawAuthStatus(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('SIGNAL AUTHENTICATION STATUS',5,12);
+  const isScan=typeof scanning!=='undefined'&&scanning;
+  const spoofType=_$('spoofTypeSelect')?.value||'none';
+  const checks=[{name:'OSNMA Signature',pass:spoofType==='none'},{name:'Time Consistency',pass:spoofType!=='replay'},{name:'Power Level Check',pass:spoofType==='none'},{name:'Doppler Verification',pass:spoofType!=='meaconing'&&spoofType!=='gps'},{name:'Code Phase Alignment',pass:spoofType==='none'},{name:'Clock Drift Pattern',pass:spoofType!=='wifi'},{name:'Navigation Message Auth',pass:spoofType==='none'},{name:'Cross-Satellite Check',pass:Math.random()>0.3||spoofType==='none'}];
+  checks.forEach((chk,i)=>{
+    const y=25+i*20;const pass=!isScan||chk.pass;
+    ctx.fillStyle=pass?'rgba(0,200,100,0.1)':'rgba(255,50,50,0.15)';ctx.fillRect(5,y,W-10,17);
+    ctx.fillStyle=pass?'rgba(0,200,100,0.7)':'rgba(255,50,50,0.7)';ctx.font='8px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText((pass?'✓':'✗')+' '+chk.name,10,y+12);
+    ctx.textAlign='right';ctx.fillText(pass?'PASS':'FAIL',W-10,y+12);
+  });
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const dc=_$('detectorCanvas');
+  if(dc){const ctx=dc.getContext('2d');drawDOA(ctx,dc.width,dc.height);}
+  const ac=_$('anomalyCanvas');
+  if(ac){const ctx=ac.getContext('2d');const W=ac.width,H=ac.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawConfidenceTimeline(ctx,W,H);}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

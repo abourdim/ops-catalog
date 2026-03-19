@@ -357,3 +357,146 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildHelp();buildRef();buildMath();
   log(LANG[currentLang].ready,'success');drawCanvas();
 });
+
+/* ═══════ ENHANCED TIMING ORACLE VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Naive vs Constant-Time Comparison (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Naive vs Constant-Time String Comparison',10,16);
+
+  const secret='S3cR3tKy';
+  const nBytes=secret.length;
+  const cellW=Math.min(45,(w-20)/(nBytes+1));
+
+  // Naive comparison (top row)
+  const naiveY=30;
+  _x.fillStyle='#f87171';_x.font='bold 9px SF Mono';_x.fillText('NAIVE (vulnerable):',10,naiveY);
+  const matchPos=_t%nBytes;
+  for(let i=0;i<nBytes;i++){
+    const x=10+i*cellW;
+    const isChecked=i<=matchPos;
+    const isMatch=i<matchPos;
+    const isMismatch=i===matchPos;
+    _x.fillStyle=isMatch?'#4ade8044':isMismatch?'#f8717144':'rgba(255,255,255,.03)';
+    _x.fillRect(x,naiveY+6,cellW-3,28);
+    _x.strokeStyle=isChecked?(isMatch?'#4ade80':'#f87171'):mut+'22';_x.strokeRect(x,naiveY+6,cellW-3,28);
+    // Byte
+    _x.fillStyle=isChecked?(isMatch?'#4ade80':'#f87171'):mut;_x.font='bold 10px SF Mono';_x.textAlign='center';
+    _x.fillText(isChecked?(isMatch?'=':'X'):'?',x+cellW/2-1.5,naiveY+24);
+    _x.textAlign='left';
+  }
+  // Early exit arrow
+  const exitX=10+matchPos*cellW+cellW/2;
+  _x.fillStyle='#f87171';_x.font='bold 8px SF Mono';
+  _x.fillText('RETURN false',exitX+5,naiveY+42);
+  _x.strokeStyle='#f87171';_x.beginPath();_x.moveTo(exitX,naiveY+34);_x.lineTo(exitX,naiveY+44);_x.stroke();
+
+  // Constant time (second row)
+  const constY=naiveY+55;
+  _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';_x.fillText('CONSTANT-TIME (secure):',10,constY);
+  for(let i=0;i<nBytes;i++){
+    const x=10+i*cellW;
+    const phase=(_t*0.1+i)%1;
+    _x.fillStyle=`rgba(96,165,250,${0.2+phase*0.3})`;
+    _x.fillRect(x,constY+6,cellW-3,28);
+    _x.strokeStyle='#60a5fa66';_x.strokeRect(x,constY+6,cellW-3,28);
+    _x.fillStyle='#60a5fa';_x.font='bold 10px SF Mono';_x.textAlign='center';
+    _x.fillText('XOR',x+cellW/2-1.5,constY+24);_x.textAlign='left';
+  }
+  _x.fillStyle='#4ade80';_x.font='8px SF Mono';
+  _x.fillText('Always checks ALL bytes, same time regardless of match position',10,constY+42);
+
+  // === Timing Distribution per Position (middle) ===
+  const tdY=constY+55;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Measured Response Time per Secret Position',10,tdY);
+
+  const tdW=w-20,tdH=80;
+  const posCount=8;
+  const barGroupW=tdW/posCount;
+
+  for(let pos=0;pos<posCount;pos++){
+    const groupX=10+pos*barGroupW;
+    // Draw multiple measurements as dots
+    for(let trial=0;trial<20;trial++){
+      const baseTime=10+pos*DELAY_PER_MATCH;
+      const noise=(Math.random()-0.5)*15;
+      const time=baseTime+noise;
+      const y=tdY+10+tdH-(time/(posCount*DELAY_PER_MATCH+20))*tdH;
+      _x.fillStyle=`rgba(96,165,250,${0.3+trial*0.03})`;
+      _x.beginPath();_x.arc(groupX+barGroupW/2+(Math.random()-0.5)*barGroupW*0.6,y,2,0,Math.PI*2);_x.fill();
+    }
+    // Mean line
+    const meanTime=10+pos*DELAY_PER_MATCH;
+    const meanY=tdY+10+tdH-(meanTime/(posCount*DELAY_PER_MATCH+20))*tdH;
+    _x.strokeStyle='#f87171';_x.lineWidth=2;
+    _x.beginPath();_x.moveTo(groupX+5,meanY);_x.lineTo(groupX+barGroupW-5,meanY);_x.stroke();_x.lineWidth=1;
+    // Position label
+    _x.fillStyle=mut;_x.font='8px SF Mono';_x.textAlign='center';
+    _x.fillText(`pos ${pos}`,groupX+barGroupW/2,tdY+tdH+14);_x.textAlign='left';
+  }
+  // Trend line
+  _x.strokeStyle='#fbbf24';_x.setLineDash([3,3]);_x.lineWidth=1.5;_x.beginPath();
+  for(let pos=0;pos<posCount;pos++){
+    const x=10+pos*barGroupW+barGroupW/2;
+    const y=tdY+10+tdH-((10+pos*DELAY_PER_MATCH)/(posCount*DELAY_PER_MATCH+20))*tdH;
+    if(pos===0)_x.moveTo(x,y);else _x.lineTo(x,y);
+  }
+  _x.stroke();_x.setLineDash([]);_x.lineWidth=1;
+  _x.fillStyle='#fbbf24';_x.font='8px SF Mono';
+  _x.fillText('Linear trend = timing leak!',w-160,tdY+15);
+
+  // === Attack Complexity (bottom) ===
+  const acY=tdY+tdH+22;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Attack Complexity Reduction',10,acY);
+
+  const secretLen=8,alphabetSize=62;
+  const bruteForce=Math.pow(alphabetSize,secretLen);
+  const timingAttack=secretLen*alphabetSize;
+  const bfLog=Math.log10(bruteForce);
+  const taLog=Math.log10(timingAttack);
+  const maxLog=bfLog;
+  const barMaxW=w-180;
+
+  // Brute force bar
+  const bfBarW=(bfLog/maxLog)*barMaxW;
+  _x.fillStyle='#f8717133';_x.fillRect(140,acY+8,bfBarW,18);
+  _x.fillStyle='#f87171';_x.font='bold 9px SF Mono';
+  _x.fillText(`Brute: ${alphabetSize}^${secretLen}`,10,acY+20);
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText(`= ${bruteForce.toExponential(1)}`,140+bfBarW+5,acY+20);
+
+  // Timing attack bar
+  const taBarW=(taLog/maxLog)*barMaxW;
+  _x.fillStyle='#4ade8033';_x.fillRect(140,acY+30,taBarW,18);
+  _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';
+  _x.fillText(`Timing: ${secretLen}*${alphabetSize}`,10,acY+42);
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText(`= ${timingAttack}`,140+taBarW+5,acY+42);
+
+  // Speedup
+  const speedup=bruteForce/timingAttack;
+  _x.fillStyle='#fbbf24';_x.font='bold 10px SF Mono';
+  _x.fillText(`${speedup.toExponential(1)}x faster!`,w/2,acY+58);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

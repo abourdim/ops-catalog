@@ -214,3 +214,367 @@ function init(){
   setTimeout(initSweatApp,50);
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ SWEAT SENSOR CRYPTO ADVANCED CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootSweatViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(0,200,255,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- biochemical parameters --- */
+    var sweatPH2=6.2,sweatNaCl2=45,skinTemp2=33.2,humidity2=40,lactate=2.5,urea=18;
+    var exercising=false,exerciseTimer=0;
+
+    /* --- history buffers --- */
+    var phHistory=[],naclHistory=[],tempHistory=[],humHistory=[],lactateHistory=[];
+    var MAX_HIST=200;
+
+    /* --- seed & key state --- */
+    var seedPool=[];var MAX_SEED=128;
+    var generatedSeeds=[];var MAX_SEEDS=4;
+    var seedBits=[];
+
+    /* --- body silhouette with sweat zones --- */
+    var sweatZones=[
+      {name:'Forehead',x:0.50,y:0.08,rate:1.0,active:true},
+      {name:'Palm L',x:0.30,y:0.50,rate:0.8,active:true},
+      {name:'Palm R',x:0.70,y:0.50,rate:0.8,active:false},
+      {name:'Underarm',x:0.35,y:0.35,rate:1.2,active:false},
+      {name:'Back',x:0.50,y:0.40,rate:0.9,active:false},
+      {name:'Foot',x:0.45,y:0.90,rate:0.7,active:false}
+    ];
+    var activeZone=0;
+
+    function drawBodySilhouette(ox,oy,w,h){
+      /* body outline */
+      ctx.strokeStyle='rgba(0,200,255,0.15)';ctx.lineWidth=1.5;
+      /* head */
+      ctx.beginPath();ctx.ellipse(ox+w*0.50,oy+h*0.08,w*0.08,h*0.06,0,0,Math.PI*2);ctx.stroke();
+      /* torso */
+      ctx.beginPath();ctx.moveTo(ox+w*0.42,oy+h*0.14);ctx.lineTo(ox+w*0.38,oy+h*0.45);
+      ctx.lineTo(ox+w*0.43,oy+h*0.55);ctx.lineTo(ox+w*0.57,oy+h*0.55);
+      ctx.lineTo(ox+w*0.62,oy+h*0.45);ctx.lineTo(ox+w*0.58,oy+h*0.14);ctx.closePath();
+      ctx.fillStyle='rgba(0,150,255,0.02)';ctx.fill();ctx.stroke();
+      /* arms */
+      ctx.beginPath();ctx.moveTo(ox+w*0.38,oy+h*0.18);ctx.lineTo(ox+w*0.22,oy+h*0.50);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox+w*0.62,oy+h*0.18);ctx.lineTo(ox+w*0.78,oy+h*0.50);ctx.stroke();
+      /* legs */
+      ctx.beginPath();ctx.moveTo(ox+w*0.45,oy+h*0.55);ctx.lineTo(ox+w*0.42,oy+h*0.90);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox+w*0.55,oy+h*0.55);ctx.lineTo(ox+w*0.58,oy+h*0.90);ctx.stroke();
+
+      /* sweat zones */
+      sweatZones.forEach(function(z,zi){
+        var zx=ox+z.x*w,zy=oy+z.y*h;
+        var isAct=zi===activeZone;
+        var sweatIntensity=exercising?z.rate*1.5:z.rate*0.5;
+
+        /* zone circle */
+        ctx.beginPath();ctx.arc(zx,zy,isAct?10:6,0,Math.PI*2);
+        ctx.fillStyle=isAct?'rgba(0,204,255,0.4)':'rgba(0,204,255,0.15)';ctx.fill();
+        ctx.strokeStyle=isAct?'#00ccff':'rgba(0,204,255,0.3)';ctx.lineWidth=1;ctx.stroke();
+
+        /* sweat droplet animation */
+        if(sweatIntensity>0.5){
+          for(var di=0;di<2;di++){
+            var dropY=zy+((t*20+di*15)%30);
+            var dropA=1-(((t*20+di*15)%30)/30);
+            ctx.beginPath();ctx.arc(zx+Math.sin(di*3)*3,dropY,1.5,0,Math.PI*2);
+            ctx.fillStyle='rgba(0,204,255,'+(dropA*0.4).toFixed(2)+')';ctx.fill();
+          }
+        }
+
+        /* label */
+        if(isAct){
+          ctx.fillStyle='#00ccff';ctx.font='7px Orbitron,monospace';
+          ctx.fillText(z.name,zx+14,zy+3);
+        }
+      });
+
+      /* emission rings from active zone */
+      var az=sweatZones[activeZone];
+      var azx=ox+az.x*w,azy=oy+az.y*h;
+      for(var ri=0;ri<3;ri++){
+        var rr=12+ri*10+Math.sin(t*3)*4;
+        ctx.beginPath();ctx.arc(azx,azy,rr,0,Math.PI*2);
+        ctx.strokeStyle='rgba(0,204,255,'+(0.15-ri*0.04).toFixed(2)+')';ctx.lineWidth=1;ctx.stroke();
+      }
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('SWEAT ZONE MAP',ox+5,oy-8);
+      ctx.fillText('Click to select zone',ox+5,oy+h+10);
+    }
+
+    /* --- draw chemical gauges --- */
+    function drawChemGauges(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('BIOCHEMICAL ANALYSIS',ox+5,oy+12);
+
+      var gauges=[
+        {label:'pH',val:sweatPH2,min:4,max:8,color:'#33ff33',unit:''},
+        {label:'NaCl',val:sweatNaCl2,min:10,max:90,color:'#6699ff',unit:'mM'},
+        {label:'Temp',val:skinTemp2,min:28,max:40,color:'#ff6633',unit:'\u00b0C'},
+        {label:'Humid',val:humidity2,min:10,max:90,color:'#ffcc00',unit:'%'},
+        {label:'Lactate',val:lactate,min:0,max:15,color:'#ff33cc',unit:'mM'},
+        {label:'Urea',val:urea,min:5,max:50,color:'#33ffcc',unit:'mg/dL'}
+      ];
+
+      var gw2=(w-20)/gauges.length-3;
+      gauges.forEach(function(g,gi){
+        var gx=ox+10+gi*(gw2+3),gy=oy+20;
+        var norm=(g.val-g.min)/(g.max-g.min);
+        var barH2=Math.max(0,Math.min(1,norm))*(h-45);
+
+        var grad=ctx.createLinearGradient(gx,oy+h-5,gx,oy+h-5-barH2);
+        grad.addColorStop(0,g.color);grad.addColorStop(1,g.color+'33');
+        ctx.fillStyle=grad;ctx.fillRect(gx,oy+h-5-barH2,gw2,barH2);
+
+        /* animated cap */
+        ctx.fillStyle=g.color;ctx.fillRect(gx,oy+h-8-barH2,gw2,3);
+
+        ctx.fillStyle='#fff';ctx.font='bold 7px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText(g.label,gx+gw2/2,gy);
+        ctx.fillStyle=g.color;ctx.font='7px Orbitron,monospace';
+        ctx.fillText(g.val.toFixed(1),gx+gw2/2,oy+h+6);
+        ctx.textAlign='left';
+      });
+    }
+
+    /* --- draw multi-trace history --- */
+    function drawHistory(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('SENSOR TIMELINE',ox+5,oy+12);
+
+      var traces=[
+        {data:phHistory,color:'#33ff33',min:4,max:8,label:'pH'},
+        {data:naclHistory,color:'#6699ff',min:10,max:90,label:'NaCl'},
+        {data:tempHistory,color:'#ff6633',min:28,max:40,label:'Temp'},
+        {data:lactateHistory,color:'#ff33cc',min:0,max:15,label:'Lac'}
+      ];
+
+      traces.forEach(function(tr){
+        if(tr.data.length<2)return;
+        ctx.beginPath();ctx.strokeStyle=tr.color+'88';ctx.lineWidth=1;
+        tr.data.forEach(function(v,i){
+          var x=ox+(i/MAX_HIST)*w;
+          var y=oy+h-((v-tr.min)/(tr.max-tr.min))*(h-20)-5;
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+      });
+
+      /* legend */
+      traces.forEach(function(tr2,i){
+        ctx.fillStyle=tr2.color;ctx.font='6px Orbitron,monospace';
+        ctx.fillText(tr2.label,ox+w-80+i*20,oy+h-3);
+      });
+    }
+
+    /* --- draw seed visualization --- */
+    function drawSeedViz(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('CRYPTO SEED GENERATION',ox+5,oy+12);
+
+      /* entropy pool as colored grid */
+      var sqSize=4,cols2=Math.floor((w-10)/(sqSize+1));
+      for(var i=0;i<seedPool.length&&i<cols2*6;i++){
+        var col2=i%cols2,row2=Math.floor(i/cols2);
+        var hue3=seedPool[i]/255*360;
+        ctx.fillStyle='hsla('+hue3+',70%,50%,0.8)';
+        ctx.fillRect(ox+5+col2*(sqSize+1),oy+22+row2*(sqSize+1),sqSize,sqSize);
+      }
+
+      /* progress */
+      ctx.fillStyle='rgba(255,255,255,0.1)';ctx.fillRect(ox+5,oy+60,w-10,4);
+      ctx.fillStyle='#33ffcc';ctx.fillRect(ox+5,oy+60,(w-10)*seedPool.length/MAX_SEED,4);
+
+      /* generated seeds */
+      generatedSeeds.forEach(function(s,si){
+        var sy=oy+72+si*22;
+        if(sy+15>oy+h)return;
+        ctx.fillStyle='#33ffcc';ctx.font='6px monospace';
+        ctx.fillText('#'+(si+1)+': '+s.hex.substring(0,40)+'...',ox+5,sy);
+        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='6px Orbitron,monospace';
+        ctx.fillText(s.bits+' bits  |  ent: '+s.entropy.toFixed(1),ox+5,sy+10);
+      });
+    }
+
+    /* --- draw molecular diagram --- */
+    function drawMolecules(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('SWEAT COMPOSITION',ox+5,oy+12);
+
+      var molecules=[
+        {name:'NaCl',pct:sweatNaCl2/90,color:'#6699ff',x:0.15,y:0.45},
+        {name:'H\u2082O',pct:0.95,color:'#33ffcc',x:0.50,y:0.35},
+        {name:'Lactate',pct:lactate/15,color:'#ff33cc',x:0.35,y:0.65},
+        {name:'Urea',pct:urea/50,color:'#ffcc00',x:0.70,y:0.55},
+        {name:'K\u207a',pct:0.3,color:'#ff6633',x:0.80,y:0.40}
+      ];
+
+      molecules.forEach(function(m,mi){
+        var mx2=ox+m.x*w,my2=oy+m.y*h;
+        var r=5+m.pct*15;
+
+        /* molecule circle */
+        ctx.beginPath();ctx.arc(mx2,my2,r,0,Math.PI*2);
+        ctx.fillStyle=m.color+'33';ctx.fill();
+        ctx.strokeStyle=m.color;ctx.lineWidth=1;ctx.stroke();
+
+        /* brownian motion */
+        var bx=mx2+Math.sin(t*2+mi*1.5)*5;
+        var by=my2+Math.cos(t*1.8+mi*2)*4;
+        ctx.beginPath();ctx.arc(bx,by,3,0,Math.PI*2);
+        ctx.fillStyle=m.color+'88';ctx.fill();
+
+        ctx.fillStyle=m.color;ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText(m.name,mx2,my2+r+10);ctx.textAlign='left';
+      });
+    }
+
+    /* --- main frame --- */
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* auto exercise toggle */
+      exerciseTimer+=0.016;
+      if(exerciseTimer>10){exerciseTimer=0;exercising=!exercising;}
+
+      /* simulate biochem */
+      var ex=exercising?1:0;
+      sweatPH2=5.5+Math.sin(t*0.3)*0.8+Math.random()*0.2-ex*0.3;
+      sweatNaCl2=40+Math.sin(t*0.2)*15+Math.random()*5+ex*20;
+      skinTemp2=33+Math.sin(t*0.1)*1.5+Math.random()*0.3+ex*2;
+      humidity2=35+Math.sin(t*0.15)*20+Math.random()*3+ex*15;
+      lactate=2+Math.sin(t*0.25)*1.5+Math.random()*0.5+ex*5;
+      urea=15+Math.sin(t*0.18)*8+Math.random()*2+ex*5;
+
+      /* record history */
+      phHistory.push(sweatPH2);naclHistory.push(sweatNaCl2);
+      tempHistory.push(skinTemp2);humHistory.push(humidity2);
+      lactateHistory.push(lactate);
+      [phHistory,naclHistory,tempHistory,humHistory,lactateHistory].forEach(function(h2){if(h2.length>MAX_HIST)h2.shift();});
+
+      /* seed collection */
+      var seedByte=((Math.round(sweatPH2*100))^(Math.round(sweatNaCl2*7))^(Math.round(skinTemp2*13))^(Math.round(lactate*31))^(Math.round(urea*3)))&0xFF;
+      seedPool.push(seedByte);if(seedPool.length>MAX_SEED)seedPool.shift();
+
+      /* auto generate seed */
+      if(seedPool.length>=MAX_SEED&&t%4<0.02){
+        var keyBytes2=[];
+        for(var i=0;i<32;i++){
+          keyBytes2.push((seedPool[i]^seedPool[(i*7+3)%MAX_SEED]^(seedPool[(i*13+11)%MAX_SEED]>>1))&0xFF);
+        }
+        var hex2=keyBytes2.map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+        var counts={};keyBytes2.forEach(function(v){counts[v]=(counts[v]||0)+1;});
+        var ent2=0,n2=keyBytes2.length;
+        Object.values(counts).forEach(function(c){var p=c/n2;ent2-=p*Math.log2(p);});
+        generatedSeeds.unshift({hex:hex2,bits:256,entropy:ent2});
+        if(generatedSeeds.length>MAX_SEEDS)generatedSeeds.pop();
+        seedBits=keyBytes2;
+      }
+
+      /* ---- LAYOUT ---- */
+
+      /* Top-left: Body silhouette with sweat zones */
+      var bodyW2=W*0.30,bodyH2=H*0.52;
+      drawBodySilhouette(15,20,bodyW2,bodyH2);
+
+      /* Top-center: Chemical gauges */
+      drawChemGauges(W*0.32,0,W*0.35,H*0.30);
+
+      /* Top-right: Molecular diagram */
+      drawMolecules(W*0.68,0,W*0.32-5,H*0.30);
+
+      /* Middle: Sensor timeline */
+      drawHistory(W*0.32,H*0.32,W*0.68-5,H*0.20);
+
+      /* Bottom-left: Seed visualization */
+      drawSeedViz(0,H*0.55,W*0.50,H*0.30);
+
+      /* Bottom-right: Stats */
+      var stX2=W*0.52,stY2=H*0.55,stW2=W*0.48-5,stH2=H*0.30;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(stX2,stY2,stW2,stH2);
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('SWEAT CRYPTO METRICS',stX2+10,stY2+14);
+
+      var stats5=[
+        ['pH',sweatPH2.toFixed(2)],
+        ['NaCl',Math.round(sweatNaCl2)+' mM'],
+        ['Skin Temp',skinTemp2.toFixed(1)+' \u00b0C'],
+        ['Humidity',Math.round(humidity2)+'%'],
+        ['Lactate',lactate.toFixed(1)+' mM'],
+        ['Urea',Math.round(urea)+' mg/dL'],
+        ['Exercise',exercising?'ACTIVE':'REST'],
+        ['Seeds',generatedSeeds.length.toString()],
+        ['Pool',seedPool.length+'/'+MAX_SEED],
+        ['Zone',sweatZones[activeZone].name]
+      ];
+      stats5.forEach(function(s,si){
+        var sx=stX2+10+(si%2)*stW2*0.48;
+        var sy=stY2+30+Math.floor(si/2)*14;
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(s[0]+':',sx,sy);
+        ctx.fillStyle='#33ffcc';ctx.fillText(s[1],sx+72,sy);
+      });
+
+      /* Very bottom: seed bit bars */
+      var bbY=H*0.87;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(0,bbY,W,H-bbY);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('SEED ENTROPY VISUALIZATION',5,bbY+10);
+      if(seedBits.length>0){
+        for(var sb2=0;sb2<Math.min(seedBits.length,64);sb2++){
+          var sbx=80+sb2*(W-90)/64;
+          var sbh=seedBits[sb2]/255*(H-bbY-15);
+          ctx.fillStyle='hsla('+(seedBits[sb2]/255*180)+',60%,50%,0.7)';
+          ctx.fillRect(sbx,H-3-sbh,Math.max(1,(W-90)/64-1),sbh);
+        }
+      }
+
+      /* HUD */
+      ctx.strokeStyle='rgba(0,200,255,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl5=18;ctx.strokeStyle='rgba(0,200,255,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl5);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl5,c[1]);ctx.stroke();
+      });
+      ctx.fillStyle='rgba(0,200,255,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('SWEAT',W-65,17);
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to select sweat zone */
+    cvs.addEventListener('click',function(e){
+      var rect=cvs.getBoundingClientRect();
+      var mx=(e.clientX-rect.left)*(W/rect.width);
+      var my=(e.clientY-rect.top)*(H/rect.height);
+      var bodyW3=W*0.30;
+      if(mx<bodyW3+30){
+        sweatZones.forEach(function(z,zi){
+          var zx=15+z.x*bodyW3,zy=20+z.y*(H*0.52);
+          if(Math.sqrt((mx-zx)*(mx-zx)+(my-zy)*(my-zy))<20)activeZone=zi;
+        });
+      }
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootSweatViz);
+  else setTimeout(bootSweatViz,200);
+})();

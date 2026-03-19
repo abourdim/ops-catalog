@@ -396,3 +396,328 @@ function initGSRApp() {
     sendAppMessage('key-generated', { bits: 256 });
   };
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ GALVANIC SKIN KEY ADVANCED CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootGSRViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(0,204,255,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- state --- */
+    var gsrBuffer=new Float32Array(W);
+    var scrBuffer=new Float32Array(W); /* skin conductance response */
+    var stressLevel2=30;
+    var entropyPool=[];var MAX_POOL=256;
+    var keyHistory=[];var MAX_KEYS=5;
+    var arousalLevel=0.3;
+    var eda_tonic=4.5; /* tonic level (SCL) */
+    var eda_phasic=0;  /* phasic (SCR) */
+    var spectrogramData=[];var MAX_SPEC=60;
+    var autoStress=true,stressWave=0;
+    var keyBits=[];
+    var gsrMode2='normal';
+    var modeTimer=0;
+
+    /* --- hand diagram with electrode positions --- */
+    function drawHand(ox,oy,w,h,conductance){
+      /* palm outline */
+      ctx.strokeStyle='rgba(0,204,255,'+(0.2+conductance*0.02)+')';ctx.lineWidth=1.5;
+      ctx.beginPath();
+      ctx.moveTo(ox+w*0.3,oy+h*0.1);
+      /* fingers */
+      ctx.lineTo(ox+w*0.22,oy-h*0.15);ctx.lineTo(ox+w*0.18,oy-h*0.15);ctx.lineTo(ox+w*0.20,oy+h*0.08);
+      ctx.lineTo(ox+w*0.12,oy-h*0.20);ctx.lineTo(ox+w*0.08,oy-h*0.18);ctx.lineTo(ox+w*0.12,oy+h*0.05);
+      ctx.lineTo(ox+w*0.05,oy-h*0.10);ctx.lineTo(ox+w*0.01,oy-h*0.07);ctx.lineTo(ox+w*0.08,oy+h*0.12);
+      ctx.lineTo(ox+w*0.01,oy+h*0.05);ctx.lineTo(ox-w*0.02,oy+h*0.10);ctx.lineTo(ox+w*0.05,oy+h*0.20);
+      /* palm */
+      ctx.lineTo(ox+w*0.02,oy+h*0.55);ctx.lineTo(ox+w*0.08,oy+h*0.70);
+      ctx.lineTo(ox+w*0.25,oy+h*0.72);ctx.lineTo(ox+w*0.35,oy+h*0.55);
+      ctx.closePath();ctx.stroke();
+
+      /* palm fill with conductance glow */
+      ctx.fillStyle='rgba(0,204,255,'+(0.02+conductance*0.008)+')';ctx.fill();
+
+      /* electrode positions */
+      var e1x=ox+w*0.10,e1y=oy+h*0.35;
+      var e2x=ox+w*0.28,e2y=oy+h*0.35;
+
+      /* electrode A (red) */
+      ctx.beginPath();ctx.arc(e1x,e1y,6,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,50,50,'+(0.5+Math.sin(t*3)*0.2)+')';ctx.fill();
+      ctx.strokeStyle='#ff3333';ctx.lineWidth=1;ctx.stroke();
+
+      /* electrode B (green) */
+      ctx.beginPath();ctx.arc(e2x,e2y,6,0,Math.PI*2);
+      ctx.fillStyle='rgba(50,255,50,'+(0.5+Math.sin(t*3+1)*0.2)+')';ctx.fill();
+      ctx.strokeStyle='#33ff33';ctx.lineWidth=1;ctx.stroke();
+
+      /* sweat droplets animation */
+      if(stressLevel2>40){
+        for(var d=0;d<3;d++){
+          var dx=ox+w*0.05+Math.random()*w*0.25;
+          var dy=oy+h*0.1+Math.random()*h*0.4;
+          var ds=1+Math.random()*2;
+          ctx.beginPath();ctx.arc(dx,dy,ds,0,Math.PI*2);
+          ctx.fillStyle='rgba(0,204,255,'+(0.1+Math.random()*0.15)+')';ctx.fill();
+        }
+      }
+
+      /* current flow arrow */
+      ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(e1x+8,e1y);ctx.lineTo(e2x-8,e2y);ctx.stroke();ctx.setLineDash([]);
+      var arrowX=(e1x+e2x)/2,arrowY=e1y-8;
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText('I = '+(conductance*0.1).toFixed(1)+'\u00b5A',arrowX,arrowY);ctx.textAlign='left';
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('ELECTRODE PLACEMENT',ox-10,oy-h*0.22);
+    }
+
+    /* --- draw entropy visualization --- */
+    function drawEntropyViz(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('ENTROPY POOL ('+entropyPool.length+'/'+MAX_POOL+')',ox+5,oy+12);
+
+      /* colored squares */
+      var sqSize=5;
+      var cols=Math.floor((w-10)/(sqSize+1));
+      var rows=Math.floor((h-25)/(sqSize+1));
+      for(var i=0;i<entropyPool.length&&i<cols*rows;i++){
+        var col=i%cols,row=Math.floor(i/cols);
+        var val=entropyPool[i];
+        var hue2=val/255*360;
+        ctx.fillStyle='hsla('+hue2+',70%,50%,0.8)';
+        ctx.fillRect(ox+5+col*(sqSize+1),oy+18+row*(sqSize+1),sqSize,sqSize);
+      }
+
+      /* progress bar */
+      var progY=oy+h-8;
+      ctx.fillStyle='rgba(255,255,255,0.1)';ctx.fillRect(ox+5,progY,w-10,5);
+      ctx.fillStyle=entropyPool.length>=MAX_POOL?'#33ff33':'#00ccff';
+      ctx.fillRect(ox+5,progY,(w-10)*entropyPool.length/MAX_POOL,5);
+    }
+
+    /* --- draw key history --- */
+    function drawKeyHistory(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('GENERATED KEYS',ox+5,oy+12);
+
+      keyHistory.forEach(function(k,i){
+        var ky=oy+24+i*28;
+        if(ky+20>oy+h)return;
+        ctx.fillStyle='rgba(0,204,255,0.6)';ctx.font='7px monospace';
+        ctx.fillText('#'+(i+1)+': '+k.hex.substring(0,32)+'...',ox+5,ky);
+        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='6px Orbitron,monospace';
+        ctx.fillText(k.bits+' bits | entropy: '+k.entropy.toFixed(1),ox+5,ky+12);
+        /* mini bit visualization */
+        for(var bi=0;bi<Math.min(32,k.bits/8);bi++){
+          var bval=parseInt(k.hex.substring(bi*2,bi*2+2),16);
+          ctx.fillStyle='hsla('+(bval/255*180)+',60%,50%,0.5)';
+          ctx.fillRect(ox+w-40-bi*3,ky-4,2,10);
+        }
+      });
+    }
+
+    /* --- draw GSR spectrogram --- */
+    function drawGSRSpectrogram(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('EDA SPECTROGRAM (0-2Hz)',ox+5,oy+12);
+
+      var cellW=w/32,cellH=(h-16)/MAX_SPEC;
+      for(var row=0;row<spectrogramData.length;row++){
+        for(var col2=0;col2<32;col2++){
+          var v=spectrogramData[row][col2];
+          ctx.fillStyle='rgb('+(Math.min(255,v*500)|0)+','+(Math.min(255,Math.max(0,(v-0.2)*600))|0)+','+(Math.max(0,(0.5-v)*300)|0)+')';
+          ctx.fillRect(ox+col2*cellW,oy+16+row*cellH,cellW+0.5,cellH+0.5);
+        }
+      }
+    }
+
+    /* --- generate crypto key from pool --- */
+    function generateKey(){
+      if(entropyPool.length<32)return;
+      var keyBytes=[];
+      for(var i=0;i<32;i++){
+        var b1=entropyPool[i%entropyPool.length];
+        var b2=entropyPool[(i*7+3)%entropyPool.length];
+        var b3=entropyPool[(i*13+11)%entropyPool.length];
+        keyBytes.push((b1^b2^(b3>>1))&0xFF);
+      }
+      var hex=keyBytes.map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+
+      /* calc entropy */
+      var counts={};keyBytes.forEach(function(v2){counts[v2]=(counts[v2]||0)+1;});
+      var ent=0,n=keyBytes.length;
+      Object.values(counts).forEach(function(c){var p=c/n;ent-=p*Math.log2(p);});
+
+      keyHistory.unshift({hex:hex,bits:256,entropy:ent});
+      if(keyHistory.length>MAX_KEYS)keyHistory.pop();
+      keyBits=keyBytes;
+    }
+
+    /* --- main frame --- */
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* auto stress cycling */
+      modeTimer+=0.016;
+      if(modeTimer>8){modeTimer=0;gsrMode2=gsrMode2==='calm'?'stress':'calm';}
+      stressWave=gsrMode2==='stress'?0.7:0.2;
+
+      /* simulate GSR */
+      arousalLevel+=(stressWave-arousalLevel)*0.01+(Math.random()-0.5)*0.02;
+      arousalLevel=Math.max(0,Math.min(1,arousalLevel));
+      eda_tonic=3+arousalLevel*10+Math.sin(t*0.05)*0.5;
+      eda_phasic=Math.random()<0.05?arousalLevel*3*(1+Math.random()):eda_phasic*0.95;
+      var gsrVal2=eda_tonic+eda_phasic+(Math.random()-0.5)*0.2;
+      gsrVal2=Math.max(0.5,Math.min(20,gsrVal2));
+      stressLevel2=Math.round(Math.min(100,Math.max(0,(gsrVal2-2)/16*100)));
+
+      /* shift buffers */
+      for(var i=0;i<W-1;i++){gsrBuffer[i]=gsrBuffer[i+1];scrBuffer[i]=scrBuffer[i+1];}
+      gsrBuffer[W-1]=gsrVal2;
+      scrBuffer[W-1]=eda_phasic;
+
+      /* entropy collection */
+      var lsb=(Math.round(gsrVal2*1000))&0xFF;
+      entropyPool.push(lsb);if(entropyPool.length>MAX_POOL)entropyPool.shift();
+
+      /* auto key generation every 200 samples */
+      if(entropyPool.length>=MAX_POOL&&t%3<0.02)generateKey();
+
+      /* spectrogram row */
+      var specRow=[];
+      for(var sb=0;sb<32;sb++){
+        var freq2=sb*2/32;var amp2=0.02;
+        amp2+=Math.exp(-(freq2-0.3)*(freq2-0.3)/0.05)*arousalLevel*0.5;
+        amp2+=Math.exp(-(freq2-0.8)*(freq2-0.8)/0.1)*eda_phasic*0.3;
+        amp2+=Math.random()*0.02;
+        specRow.push(Math.min(1,amp2));
+      }
+      spectrogramData.push(specRow);if(spectrogramData.length>MAX_SPEC)spectrogramData.shift();
+
+      /* ---- LAYOUT ---- */
+
+      /* Top: GSR trace */
+      var traceH=H*0.22;
+      ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(0,0,W,traceH);
+      /* tonic baseline */
+      ctx.beginPath();ctx.strokeStyle='rgba(0,204,255,0.15)';ctx.lineWidth=1;ctx.setLineDash([4,8]);
+      var baseY=traceH-eda_tonic/20*(traceH-10)-5;
+      ctx.moveTo(0,baseY);ctx.lineTo(W,baseY);ctx.stroke();ctx.setLineDash([]);
+      /* GSR trace */
+      ctx.beginPath();ctx.strokeStyle='#00ccff';ctx.lineWidth=2;ctx.shadowColor='#00ccff';ctx.shadowBlur=6;
+      for(var i2=0;i2<W;i2++){
+        var y=traceH-gsrBuffer[i2]/20*(traceH-10)-5;
+        if(i2===0)ctx.moveTo(i2,y);else ctx.lineTo(i2,y);
+      }
+      ctx.stroke();ctx.shadowBlur=0;
+      /* SCR overlay */
+      ctx.beginPath();ctx.strokeStyle='#ff6633';ctx.lineWidth=1;
+      for(var i3=0;i3<W;i3++){
+        var y2=traceH-scrBuffer[i3]/5*(traceH*0.3)-5;
+        if(i3===0)ctx.moveTo(i3,y2);else ctx.lineTo(i3,y2);
+      }
+      ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('ELECTRODERMAL ACTIVITY (EDA)',5,12);
+      ctx.fillStyle='#00ccff';ctx.fillText('SCL: '+eda_tonic.toFixed(1)+'\u00b5S',5,traceH-5);
+      ctx.fillStyle='#ff6633';ctx.fillText('SCR: '+eda_phasic.toFixed(2)+'\u00b5S',120,traceH-5);
+      ctx.fillStyle='rgba(255,255,255,0.2)';ctx.fillText('0\u00b5S',W-30,traceH-5);ctx.fillText('20\u00b5S',W-35,14);
+
+      /* Middle-left: Hand diagram */
+      var handOX=100,handOY=traceH+80,handW=120,handH=160;
+      drawHand(handOX,handOY,handW,handH,gsrVal2);
+
+      /* Middle-center: Entropy pool */
+      drawEntropyViz(W*0.32,traceH+8,W*0.33,H*0.28);
+
+      /* Middle-right: Spectrogram */
+      drawGSRSpectrogram(W*0.66,traceH+8,W*0.34-5,H*0.28);
+
+      /* Bottom-left: Key history */
+      drawKeyHistory(0,traceH+H*0.30+12,W*0.50,H*0.28);
+
+      /* Bottom-right: Stats & stress meter */
+      var stX=W*0.52,stY=traceH+H*0.30+12,stW=W*0.48-5,stH=H*0.28;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(stX,stY,stW,stH);
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('BIOMETRIC CRYPTO METRICS',stX+10,stY+14);
+
+      /* stress meter */
+      var meterY=stY+22;
+      ctx.fillStyle='rgba(255,255,255,0.1)';ctx.fillRect(stX+10,meterY,stW-20,12);
+      var sg=ctx.createLinearGradient(stX+10,0,stX+stW-10,0);
+      sg.addColorStop(0,'#33ff33');sg.addColorStop(0.5,'#ffcc00');sg.addColorStop(1,'#ff3333');
+      ctx.fillStyle=sg;ctx.fillRect(stX+10,meterY,(stW-20)*stressLevel2/100,12);
+      ctx.fillStyle='#fff';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText('Arousal: '+stressLevel2+'%',stX+stW/2,meterY+10);ctx.textAlign='left';
+
+      var stats4=[
+        ['GSR Value',gsrVal2.toFixed(1)+' \u00b5S'],
+        ['Tonic (SCL)',eda_tonic.toFixed(1)+' \u00b5S'],
+        ['Phasic (SCR)',eda_phasic.toFixed(2)+' \u00b5S'],
+        ['Entropy Pool',entropyPool.length+'/'+MAX_POOL],
+        ['Keys Generated',keyHistory.length.toString()],
+        ['Mode',gsrMode2.toUpperCase()],
+        ['Key Size','256 bits'],
+        ['LSB Byte','0x'+(lsb<16?'0':'')+lsb.toString(16)]
+      ];
+      stats4.forEach(function(s,si){
+        var sx=stX+10+(si%2)*stW*0.48;
+        var sy=stY+48+Math.floor(si/2)*16;
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(s[0]+':',sx,sy);
+        ctx.fillStyle='#00ccff';ctx.fillText(s[1],sx+85,sy);
+      });
+
+      /* Very bottom: Key bit visualization */
+      var kbY=H-30;
+      ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fillRect(0,kbY,W,30);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('LAST KEY BITS:',5,kbY+12);
+      if(keyBits.length>0){
+        for(var kb=0;kb<Math.min(keyBits.length,64);kb++){
+          var kx=75+kb*(W-85)/64;
+          var kh=keyBits[kb]/255*18;
+          ctx.fillStyle='hsla('+(keyBits[kb]/255*180)+',60%,50%,0.7)';
+          ctx.fillRect(kx,kbY+22-kh,Math.max(1,(W-85)/64-1),kh);
+        }
+      }
+
+      /* HUD */
+      ctx.strokeStyle='rgba(0,204,255,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl4=18;ctx.strokeStyle='rgba(0,204,255,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl4);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl4,c[1]);ctx.stroke();
+      });
+      ctx.fillStyle='rgba(0,204,255,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('GSR',W-55,17);
+
+      requestAnimationFrame(frame);
+    }
+
+    cvs.addEventListener('click',function(){
+      gsrMode2=gsrMode2==='calm'?'stress':'calm';modeTimer=0;
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootGSRViz);
+  else setTimeout(bootGSRViz,200);
+})();

@@ -70,3 +70,158 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();time=0;$('massSlider').value=30;$('massVal').textContent='30 M☉';$('distSlider').value=100;$('distVal').textContent='100 Mpc';$('srcSelect').value='binary';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('strainVal').textContent='--';$('gwFreqVal').textContent='-- Hz';$('chirpVal').textContent='-- M☉';$('snrVal').textContent='--';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('massSlider').oninput=function(){$('massVal').textContent=this.value+' M☉';};$('distSlider').oninput=function(){$('distVal').textContent=this.value+' Mpc';};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Gravitational Wave Simulator
+   Animated spacetime grid distortion with binary inspiral,
+   LIGO interferometer arms, and strain waveform
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simGravWave';let cv,cx,W,H,af=null,t=0;
+  let orbitPhase=0,orbitRadius=60,frequency=0.5,strain=0;
+  const strainHistory=[];
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#030408;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function drawSpacetimeGrid(){
+    const gcx=W*0.35,gcy=H/2-10,gs=160;
+    cx.strokeStyle='rgba(100,200,255,0.08)';cx.lineWidth=0.5;
+    const gridSize=20;
+    for(let gx=-gs;gx<=gs;gx+=gridSize){
+      cx.beginPath();
+      for(let gy=-gs;gy<=gs;gy+=4){
+        const dx=gx-0,dy=gy-0;
+        const dist=Math.sqrt(dx*dx+dy*dy)+1;
+        const distort=strain*500/(dist+10);
+        const stretch=gx*(1+distort*Math.cos(orbitPhase*2));
+        const squeeze=gy*(1-distort*Math.cos(orbitPhase*2));
+        const px=gcx+stretch;const py=gcy+squeeze;
+        if(gy===-gs)cx.moveTo(px,py);else cx.lineTo(px,py);
+      }
+      cx.stroke();
+    }
+    for(let gy=-gs;gy<=gs;gy+=gridSize){
+      cx.beginPath();
+      for(let gx=-gs;gx<=gs;gx+=4){
+        const dx=gx-0,dy=gy-0;
+        const dist=Math.sqrt(dx*dx+dy*dy)+1;
+        const distort=strain*500/(dist+10);
+        const stretch=gx*(1+distort*Math.cos(orbitPhase*2));
+        const squeeze=gy*(1-distort*Math.cos(orbitPhase*2));
+        const px=gcx+stretch;const py=gcy+squeeze;
+        if(gx===-gs)cx.moveTo(px,py);else cx.lineTo(px,py);
+      }
+      cx.stroke();
+    }
+  }
+
+  function drawBinarySystem(){
+    const bcx=W*0.35,bcy=H/2-10;
+    const x1=bcx+Math.cos(orbitPhase)*orbitRadius;
+    const y1=bcy+Math.sin(orbitPhase)*orbitRadius*0.4;
+    const x2=bcx+Math.cos(orbitPhase+Math.PI)*orbitRadius;
+    const y2=bcy+Math.sin(orbitPhase+Math.PI)*orbitRadius*0.4;
+    // Orbit trail
+    cx.strokeStyle='rgba(255,200,100,0.1)';cx.lineWidth=1;
+    cx.beginPath();cx.ellipse(bcx,bcy,orbitRadius,orbitRadius*0.4,0,0,Math.PI*2);cx.stroke();
+    // Stars
+    const sz=6+4*(60/Math.max(20,orbitRadius));
+    cx.save();cx.shadowColor='#f59e0b';cx.shadowBlur=10;
+    cx.fillStyle='#f59e0b';cx.beginPath();cx.arc(x1,y1,sz,0,Math.PI*2);cx.fill();
+    cx.fillStyle='#ef4444';cx.beginPath();cx.arc(x2,y2,sz*0.8,0,Math.PI*2);cx.fill();
+    cx.restore();
+    // Gravitational wave ripples
+    for(let w=0;w<4;w++){
+      const r=(t*80+w*40)%200;
+      cx.strokeStyle='rgba(100,200,255,'+(0.08*(1-r/200))+')';cx.lineWidth=1;
+      cx.beginPath();cx.arc(bcx,bcy,r,0,Math.PI*2);cx.stroke();
+    }
+  }
+
+  function drawLIGO(){
+    const lx=W*0.75,ly=50,ls=80;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(lx-ls-10,ly-10,ls*2+20,ls*2+20);
+    // Beam splitter
+    cx.fillStyle='rgba(100,200,255,0.3)';
+    cx.save();cx.translate(lx,ly+ls);cx.rotate(Math.PI/4);
+    cx.fillRect(-5,-8,10,16);cx.restore();
+    // Arms
+    const armStretch=strain*2000;
+    cx.strokeStyle='rgba(100,255,100,0.4)';cx.lineWidth=3;
+    cx.beginPath();cx.moveTo(lx,ly+ls);cx.lineTo(lx,ly+ls-ls*(1+armStretch));cx.stroke();
+    cx.strokeStyle='rgba(255,100,100,0.4)';cx.lineWidth=3;
+    cx.beginPath();cx.moveTo(lx,ly+ls);cx.lineTo(lx+ls*(1-armStretch),ly+ls);cx.stroke();
+    // Mirrors
+    cx.fillStyle='rgba(200,200,220,0.5)';
+    cx.fillRect(lx-4,ly-5,8,6);cx.fillRect(lx+ls-3,ly+ls-4,6,8);
+    // Laser source
+    cx.fillStyle='rgba(255,0,0,0.3)';cx.beginPath();cx.arc(lx-ls,ly+ls,5,0,Math.PI*2);cx.fill();
+    // Detector
+    cx.fillStyle='rgba(0,255,0,0.3)';cx.beginPath();cx.arc(lx,ly+ls+ls,5,0,Math.PI*2);cx.fill();
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('LIGO INTERFEROMETER',lx,ly-15);
+    cx.fillText('Laser',lx-ls,ly+ls+15);cx.fillText('Detector',lx,ly+ls+ls+15);
+  }
+
+  function drawStrainWaveform(){
+    const wx=20,wy=H-80,ww=W-40,wh=60;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(wx,wy,ww,wh);
+    cx.strokeStyle='rgba(255,255,255,0.05)';cx.lineWidth=0.5;
+    cx.beginPath();cx.moveTo(wx,wy+wh/2);cx.lineTo(wx+ww,wy+wh/2);cx.stroke();
+    if(strainHistory.length>1){
+      cx.strokeStyle='rgba(100,200,255,0.6)';cx.lineWidth=1.5;cx.beginPath();
+      const step=ww/Math.max(1,strainHistory.length-1);
+      strainHistory.forEach((v,i)=>{
+        const x=wx+i*step;const y=wy+wh/2-v*wh*200;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('STRAIN h(t) — Chirp Waveform',wx+8,wy-4);
+    cx.fillText('h = '+strain.toExponential(2),wx+ww-100,wy-4);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,200,54);
+    cx.strokeStyle='rgba(100,200,255,0.15)';cx.strokeRect(8,8,200,54);
+    cx.font='10px monospace';cx.fillStyle='#3b82f6';cx.textAlign='left';
+    cx.fillText('GRAVITATIONAL WAVE SIM',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Binary Inspiral + LIGO',16,40);
+    cx.fillText('Orbit R: '+orbitRadius.toFixed(0)+'  f: '+frequency.toFixed(2)+' Hz',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(3,4,8,0.12)';cx.fillRect(0,0,W,H);
+
+    // Inspiral: orbit shrinks, frequency increases
+    frequency=0.5+t*0.02;
+    orbitRadius=Math.max(15,60-t*0.8);
+    orbitPhase+=frequency*0.1;
+    strain=0.001*Math.pow(60/Math.max(15,orbitRadius),2)*Math.sin(orbitPhase*2);
+    strainHistory.push(strain);
+    if(strainHistory.length>400)strainHistory.shift();
+    // Reset inspiral
+    if(orbitRadius<=15){t=0;orbitRadius=60;frequency=0.5;strainHistory.length=0;}
+
+    drawSpacetimeGrid();drawBinarySystem();drawLIGO();
+    drawStrainWaveform();drawHUD();
+
+    cx.fillStyle='rgba(100,200,255,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Gravitational Waves — Binary Inspiral Spacetime Distortion',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

@@ -98,3 +98,191 @@ function stopSim(){running=false;if(animFrame)cancelAnimationFrame(animFrame);se
 function resetSim(){stopSim();coincidences=0;pairs.length=0;$('angleASlider').value=0;$('angleAVal').textContent='0°';$('angleBSlider').value=45;$('angleBVal').textContent='45°';$('rateSlider').value=50;$('rateVal').textContent='50/s';$('simCanvas')?.getContext('2d').clearRect(0,0,800,350);$('chshVal').textContent='--';$('coincVal').textContent='0';$('violVal').textContent='--';log(LANG[currentLang].simReset,'info');}
 function init(){initSplash();$('logoWrap').innerHTML=LOGO_SVG;$('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;$('exportLogBtn').onclick=exportLog;initLogFilters();$('helpBtn').onclick=openHelp;$('helpCloseBtn').onclick=closeHelp;$('helpOverlay').onclick=closeHelp;initHelpTabs();$('settingsBtn').onclick=openSettings;$('settingsCloseBtn').onclick=closeSettings;$('settingsOverlay').onclick=closeSettings;$('logBtn').onclick=toggleLog;$('logCloseBtn').onclick=closeLog;const st=$('soundToggle');if(st){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true';}catch{}st.checked=soundEnabled;st.onchange=()=>{soundEnabled=st.checked;};}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog();}});$('langSelect').onchange=function(){setLanguage(this.value);};$('themeSelect').onchange=function(){setTheme(this.value);};try{const sl=localStorage.getItem('wdiy-lang'),st2=localStorage.getItem('wdiy-theme');if(st2)setTheme(st2);if(sl)setLanguage(sl);}catch{}initHijriDate();$('startBtn').onclick=startSim;$('stopBtn').onclick=stopSim;$('resetBtn').onclick=resetSim;$('angleASlider').oninput=function(){$('angleAVal').textContent=this.value+'°';};$('angleBSlider').oninput=function(){$('angleBVal').textContent=this.value+'°';};$('rateSlider').oninput=function(){$('rateVal').textContent=this.value+'/s';};log(LANG[currentLang].ready,'success');}
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Bell Inequality RF
+   Animated entangled photon pairs with detector angles,
+   correlation curves, and CHSH inequality visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simBellInequality';let cv,cx,W,H,af=null,t=0;
+  const photonPairs=[];const correlationData=[];
+  let totalPairs=0,coincidences=0,angleA=0,angleB=45,chshValue=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060812;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  class PhotonPair{
+    constructor(){
+      this.x=W/2;this.y=H/2-20;
+      this.angle=Math.random()*Math.PI;
+      this.leftX=this.x;this.rightX=this.x;
+      this.speed=3+Math.random()*2;
+      this.age=0;this.maxAge=80;
+      this.leftResult=null;this.rightResult=null;
+      this.measured=false;
+    }
+    update(){
+      this.age++;
+      this.leftX-=this.speed;this.rightX+=this.speed;
+      if(!this.measured&&this.leftX<120){
+        const probA=Math.cos((this.angle-angleA*Math.PI/180))**2;
+        this.leftResult=Math.random()<probA?1:-1;
+        const probB=Math.cos((this.angle-angleB*Math.PI/180))**2;
+        this.rightResult=Math.random()<probB?1:-1;
+        this.measured=true;
+        if(this.leftResult===this.rightResult)coincidences++;
+        totalPairs++;
+      }
+      return this.age<this.maxAge;
+    }
+    draw(){
+      const alpha=1-this.age/this.maxAge;
+      // Left photon
+      cx.fillStyle='rgba(59,130,246,'+(alpha*0.7)+')';
+      cx.beginPath();cx.arc(this.leftX,this.y,3,0,Math.PI*2);cx.fill();
+      // Right photon
+      cx.fillStyle='rgba(239,68,68,'+(alpha*0.7)+')';
+      cx.beginPath();cx.arc(this.rightX,this.y,3,0,Math.PI*2);cx.fill();
+      // Entanglement line
+      if(this.leftX>120&&this.rightX<W-120){
+        cx.strokeStyle='rgba(200,100,255,'+(alpha*0.1)+')';cx.lineWidth=0.5;cx.setLineDash([2,4]);
+        cx.beginPath();cx.moveTo(this.leftX,this.y);cx.lineTo(this.rightX,this.y);cx.stroke();
+        cx.setLineDash([]);
+      }
+      // Measurement results
+      if(this.measured){
+        cx.fillStyle=this.leftResult>0?'rgba(0,255,0,'+alpha*0.5+')':'rgba(255,0,0,'+alpha*0.5+')';
+        cx.font='10px monospace';cx.textAlign='center';
+        cx.fillText(this.leftResult>0?'+':'-',this.leftX,this.y-10);
+        cx.fillStyle=this.rightResult>0?'rgba(0,255,0,'+alpha*0.5+')':'rgba(255,0,0,'+alpha*0.5+')';
+        cx.fillText(this.rightResult>0?'+':'-',this.rightX,this.y-10);
+      }
+    }
+  }
+
+  function drawSource(){
+    const sx=W/2,sy=H/2-20;
+    cx.save();cx.shadowColor='#8b5cf6';cx.shadowBlur=8+Math.sin(t*3)*4;
+    cx.fillStyle='rgba(139,92,246,0.3)';cx.beginPath();cx.arc(sx,sy,12,0,Math.PI*2);cx.fill();
+    cx.strokeStyle='#8b5cf6';cx.lineWidth=2;cx.beginPath();cx.arc(sx,sy,12,0,Math.PI*2);cx.stroke();
+    cx.restore();
+    cx.fillStyle='rgba(200,150,255,0.5)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('ENTANGLED SOURCE',sx,sy+22);
+  }
+
+  function drawDetector(x,y,angle,label,color){
+    cx.save();cx.translate(x,y);
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(-25,-30,50,60);
+    cx.strokeStyle=color;cx.lineWidth=1.5;cx.strokeRect(-25,-30,50,60);
+    // Polarizer angle
+    cx.rotate(angle*Math.PI/180);
+    cx.strokeStyle=color;cx.lineWidth=2;
+    cx.beginPath();cx.moveTo(-15,0);cx.lineTo(15,0);cx.stroke();
+    cx.restore();
+    cx.fillStyle=color;cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText(label,x,y+42);
+    cx.fillText(angle+'deg',x,y+52);
+  }
+
+  function drawCorrelationCurve(){
+    const gx=20,gy=H-110,gw=300,gh=80;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(gx,gy,gw,gh);
+    cx.strokeStyle='rgba(255,255,255,0.05)';cx.lineWidth=0.5;
+    cx.beginPath();cx.moveTo(gx,gy+gh/2);cx.lineTo(gx+gw,gy+gh/2);cx.stroke();
+    // QM prediction: -cos(a-b)
+    cx.strokeStyle='rgba(139,92,246,0.6)';cx.lineWidth=1.5;cx.beginPath();
+    for(let i=0;i<gw;i++){
+      const theta=i/gw*360;
+      const corr=-Math.cos(theta*Math.PI/180);
+      const y=gy+gh/2-corr*gh*0.4;
+      if(i===0)cx.moveTo(gx+i,y);else cx.lineTo(gx+i,y);
+    }
+    cx.stroke();
+    // Classical bound
+    cx.strokeStyle='rgba(255,200,0,0.3)';cx.lineWidth=1;cx.setLineDash([4,4]);
+    cx.beginPath();cx.moveTo(gx,gy+gh/2-gh*0.28);cx.lineTo(gx+gw,gy+gh/2-gh*0.28);cx.stroke();
+    cx.beginPath();cx.moveTo(gx,gy+gh/2+gh*0.28);cx.lineTo(gx+gw,gy+gh/2+gh*0.28);cx.stroke();
+    cx.setLineDash([]);
+    // Current angle marker
+    const diff=Math.abs(angleA-angleB);
+    const markerX=gx+(diff/360)*gw;
+    cx.strokeStyle='rgba(255,255,255,0.5)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(markerX,gy);cx.lineTo(markerX,gy+gh);cx.stroke();
+    cx.fillStyle='rgba(139,92,246,0.5)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('CORRELATION E(a,b) vs angle diff',gx+8,gy-4);
+    cx.fillText('Purple: QM  Yellow: Classical bound',gx+8,gy+gh+10);
+  }
+
+  function drawCHSHPanel(){
+    const px=340,py=H-110,pw=200,ph=80;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(px,py,pw,ph);
+    // Calculate CHSH
+    const diff=(angleA-angleB)*Math.PI/180;
+    chshValue=2*Math.sqrt(2)*Math.abs(Math.cos(diff));
+    const violated=chshValue>2;
+    cx.fillStyle=violated?'rgba(239,68,68,0.5)':'rgba(34,197,94,0.5)';
+    cx.font='9px monospace';cx.textAlign='left';
+    cx.fillText('CHSH INEQUALITY TEST',px+8,py+14);
+    cx.fillStyle='#aaa';cx.font='8px monospace';
+    cx.fillText('S = '+chshValue.toFixed(3),px+8,py+30);
+    cx.fillText('Classical bound: S <= 2',px+8,py+44);
+    cx.fillText('QM max: S = 2*sqrt(2) = 2.828',px+8,py+58);
+    cx.fillStyle=violated?'#ef4444':'#22c55e';
+    cx.fillText(violated?'BELL VIOLATION!':'Within classical bound',px+8,py+72);
+    // Bar
+    const barW=pw-16;const barX=px+8;const barY=py+ph-12;
+    cx.fillStyle='rgba(255,255,255,0.1)';cx.fillRect(barX,barY,barW,8);
+    const sNorm=Math.min(1,chshValue/3);
+    cx.fillStyle=violated?'#ef4444':'#22c55e';
+    cx.fillRect(barX,barY,barW*sNorm,8);
+    // Classical limit line
+    cx.strokeStyle='#f59e0b';cx.lineWidth=2;
+    cx.beginPath();cx.moveTo(barX+barW*(2/3),barY);cx.lineTo(barX+barW*(2/3),barY+8);cx.stroke();
+  }
+
+  function drawStats(){
+    const sx=560,sy=H-110,sw=200,sh=80;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(sx,sy,sw,sh);
+    cx.fillStyle='rgba(100,200,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('STATISTICS',sx+8,sy+14);
+    cx.fillStyle='#aaa';
+    const corrRate=totalPairs>0?(coincidences/totalPairs*100).toFixed(1):'--';
+    cx.fillText('Total Pairs: '+totalPairs,sx+8,sy+30);
+    cx.fillText('Coincidences: '+coincidences,sx+8,sy+44);
+    cx.fillText('Correlation: '+corrRate+'%',sx+8,sy+58);
+    cx.fillText('Angle A-B: '+(angleA-angleB)+'deg',sx+8,sy+72);
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,8,18,0.1)';cx.fillRect(0,0,W,H);
+
+    // Slowly sweep angles
+    angleA=Math.floor(Math.sin(t*0.15)*45+45);
+    angleB=Math.floor(Math.cos(t*0.1)*45+45);
+
+    if(Math.random()<0.12)photonPairs.push(new PhotonPair());
+    for(let i=photonPairs.length-1;i>=0;i--){
+      if(!photonPairs[i].update())photonPairs.splice(i,1);
+      else photonPairs[i].draw();
+    }
+
+    drawSource();
+    drawDetector(100,H/2-20,angleA,'DETECTOR A','rgba(59,130,246,0.7)');
+    drawDetector(W-100,H/2-20,angleB,'DETECTOR B','rgba(239,68,68,0.7)');
+    drawCorrelationCurve();drawCHSHPanel();drawStats();
+
+    cx.fillStyle='rgba(139,92,246,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Bell Inequality RF — Entangled Photon Pair Correlation Test',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

@@ -353,3 +353,119 @@ document.addEventListener('DOMContentLoaded',()=>{
   animate();
   setInterval(updateEmitterList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — ELECTRONIC WARFARE ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _threatBearing=new Array(360).fill(-90);
+let _jamEfficiency=new Array(200).fill(0);
+let _freqHopLog=[];let _ewParticles=[];
+
+class EWParticle{constructor(x,y,vx,vy,c){this.x=x;this.y=y;this.vx=vx;this.vy=vy;this.c=c;this.life=1;this.decay=0.02+Math.random()*0.02;}
+update(){this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;return this.life>0;}
+draw(ctx){ctx.beginPath();ctx.arc(this.x,this.y,2*this.life,0,Math.PI*2);ctx.fillStyle=this.c.replace('1)',this.life*0.6+')');ctx.fill();}}
+
+/* ── Threat Bearing Display (RWR) ── */
+function drawRWR(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('RADAR WARNING RECEIVER',5,12);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-25;
+  for(let i=1;i<=3;i++){ctx.beginPath();ctx.arc(cx,cy,R*i/3,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();}
+  ctx.beginPath();ctx.moveTo(cx-R,cy);ctx.lineTo(cx+R,cy);ctx.moveTo(cx,cy-R);ctx.lineTo(cx,cy+R);ctx.strokeStyle='rgba(0,255,136,0.06)';ctx.stroke();
+  ctx.fillStyle='rgba(0,255,136,0.3)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText('N',cx,cy-R-5);ctx.fillText('S',cx,cy+R+10);ctx.fillText('E',cx+R+8,cy+3);ctx.fillText('W',cx-R-8,cy+3);
+  if(typeof emitters!=='undefined'){
+    emitters.forEach((em,i)=>{
+      const bearing=(i*45+_t*10)%360;const br=bearing*Math.PI/180;
+      const threat=(em.power+60)/100;const dist=0.3+threat*0.5;
+      const ex=cx+Math.cos(br-Math.PI/2)*dist*R;const ey=cy+Math.sin(br-Math.PI/2)*dist*R;
+      const symbol=em.name.includes('Radar')?'▲':em.name.includes('Comms')?'◆':'●';
+      ctx.fillStyle=em.jammed?'rgba(100,100,100,0.5)':threat>0.6?'rgba(255,50,50,0.8)':threat>0.3?'rgba(255,200,0,0.7)':'rgba(0,200,255,0.6)';
+      ctx.font='12px Orbitron,monospace';ctx.textAlign='center';ctx.fillText(symbol,ex,ey+4);
+      ctx.font='7px Orbitron,monospace';ctx.fillText(em.id,ex,ey-8);
+      if(!em.jammed&&threat>0.5){ctx.beginPath();ctx.arc(ex,ey,8+Math.sin(_t*4+i)*3,0,Math.PI*2);ctx.strokeStyle='rgba(255,50,50,0.4)';ctx.lineWidth=1;ctx.stroke();}
+    });
+  }
+  ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fillStyle='rgba(0,255,136,0.8)';ctx.fill();
+}
+
+/* ── Jamming Efficiency Chart ── */
+function drawJamEfficiency(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('JAMMING EFFICIENCY OVER TIME',5,12);
+  const isJam=typeof jamming!=='undefined'&&jamming;
+  const pwr=parseFloat(_$('powerInput')?.value||20);
+  const eff=isJam?Math.min(99,pwr*2+Math.random()*15):Math.random()*5;
+  _jamEfficiency.push(eff);if(_jamEfficiency.length>200)_jamEfficiency.shift();
+  ctx.beginPath();
+  _jamEfficiency.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=isJam?'rgba(255,100,0,0.7)':'rgba(0,200,255,0.5)';ctx.lineWidth=2;ctx.stroke();
+  ctx.lineTo(W,H-10);ctx.lineTo(0,H-10);ctx.closePath();
+  ctx.fillStyle=isJam?'rgba(255,100,0,0.08)':'rgba(0,200,255,0.04)';ctx.fill();
+  const lastEff=_jamEfficiency[_jamEfficiency.length-1];
+  ctx.fillStyle=lastEff>60?'rgba(0,200,100,0.7)':'rgba(255,200,0,0.7)';ctx.font='14px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(lastEff.toFixed(0)+'%',W-10,30);
+}
+
+/* ── ECCM Frequency Hopping Visualization ── */
+function drawECCMHopping(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('ECCM FREQUENCY HOPPING',5,12);
+  const isECCM=typeof eccmActive!=='undefined'&&eccmActive;
+  if(isECCM&&_t%0.08<0.02){
+    _freqHopLog.push({f:100+Math.random()*5800,t:_t});
+    if(_freqHopLog.length>120)_freqHopLog.shift();
+  }
+  _freqHopLog.forEach((h,i)=>{
+    const x=(i/120)*W;const y=20+((h.f-100)/5800)*(H-30);
+    ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);
+    const alpha=1-i/120;
+    ctx.fillStyle='rgba(0,255,200,'+alpha*0.7+')';ctx.fill();
+    if(i>0){const prev=_freqHopLog[i-1];ctx.beginPath();
+      ctx.moveTo(((i-1)/120)*W,20+((prev.f-100)/5800)*(H-30));ctx.lineTo(x,y);
+      ctx.strokeStyle='rgba(0,255,200,'+alpha*0.2+')';ctx.lineWidth=0.5;ctx.stroke();}
+  });
+  if(!isECCM){ctx.fillStyle='rgba(100,100,100,0.4)';ctx.font='11px Orbitron,monospace';ctx.textAlign='center';ctx.fillText('ECCM INACTIVE',W/2,H/2);}
+}
+
+/* ── Power Spectral Density 3D View ── */
+function drawPSD3D(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('POWER SPECTRAL DENSITY',5,12);
+  const isJam=typeof jamming!=='undefined'&&jamming;
+  const rows=20;
+  for(let r=rows-1;r>=0;r--){
+    ctx.beginPath();
+    const yOffset=20+r*(H-30)/rows;
+    for(let x=0;x<W;x++){
+      const f=(x/W)*6000;let psd=-80+Math.random()*3;
+      if(typeof emitters!=='undefined')emitters.forEach(em=>{if(Math.abs(f-em.freq)<em.bw)psd+=20;});
+      if(isJam){const cf=parseFloat(_$('freqInput')?.value||2400);const bw=parseFloat(_$('bwInput')?.value||50);if(Math.abs(f-cf)<bw*1.5)psd+=15;}
+      const h=(psd+85)/50*15;
+      const y=yOffset-h+Math.sin(_t+r*0.3)*0.5;
+      if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    const alpha=0.1+((rows-r)/rows)*0.4;
+    ctx.strokeStyle=isJam?'rgba(255,100,0,'+alpha+')':'rgba(0,200,255,'+alpha+')';ctx.lineWidth=1;ctx.stroke();
+  }
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  for(let i=_ewParticles.length-1;i>=0;i--)if(!_ewParticles[i].update())_ewParticles.splice(i,1);
+  const specC=_$('spectrumCanvas');
+  if(specC){const ctx=specC.getContext('2d');
+    drawRWR(ctx,specC.width,specC.height);
+    if(typeof jamming!=='undefined'&&jamming){
+      for(let i=0;i<2;i++){const a=Math.random()*Math.PI*2;
+        _ewParticles.push(new EWParticle(specC.width/2,specC.height/2,Math.cos(a)*2,Math.sin(a)*2,'rgba(255,100,0,1)'));}
+      _ewParticles.forEach(p=>p.draw(ctx));
+    }
+  }
+  const wfC=_$('waterfallCanvas');
+  if(wfC){const ctx=wfC.getContext('2d');
+    drawJamEfficiency(ctx,wfC.width,wfC.height);}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();
