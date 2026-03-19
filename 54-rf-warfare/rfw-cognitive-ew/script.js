@@ -1,0 +1,126 @@
+/**
+ * Workshop DIY — Cognitive EW v1.2
+ */
+const $=id=>document.getElementById(id);const LIGHT_THEMES=['riad','medina'];
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);gain.gain.value=0.08;const t=audioCtx.currentTime;if(type==='click'){osc.frequency.value=800;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.08);osc.start(t);osc.stop(t+0.08);}else if(type==='success'){osc.frequency.value=523;osc.type='sine';gain.gain.exponentialRampToValueAtTime(0.001,t+0.3);osc.start(t);osc.stop(t+0.3);}else if(type==='error'){osc.frequency.value=200;osc.type='square';gain.gain.exponentialRampToValueAtTime(0.001,t+0.25);osc.start(t);osc.stop(t+0.25);}}
+const LANG={
+  en:{title:'Cognitive EW',subtitle:'Cognitive Electronic Warfare',disconnected:'Idle',connected:'Learning',mainSection:'Cognitive EW Engine',mainDesc:'AI-driven adaptive electronic warfare with learning algorithms',sectionA:'AI Decision Log',sectionB:'Cognitive EW Theory',activityLog:'Activity Log',eventsMsg:'Events',clear:'Clear',copy:'Copy',theme:'Theme',settings:'Settings',language:'Language',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is this app?',faq_a1:'A cognitive EW simulator with AI-driven adaptive responses.',faq_q2:'What is Cognitive EW?',faq_a2:'EW systems that learn and adapt to adversary behavior in real-time.',faq_q3:'Is this real?',faq_a3:'No. Visual simulation only.',faq_q4:'Data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'Set AI learning rate and speed.',howto_2:'Configure threat environment.',howto_3:'Train the AI model first.',howto_4:'Engage Cognitive EW to adapt.',working:'Working...',ready:'Cognitive EW ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',export:'Export',filterAll:'All',soundEffects:'Sound effects',splashHint:'tap to skip',langChanged:'Language: English',themeChanged:'Theme:',engageCEW:'Engage Cognitive EW',disengageCEW:'Disengage',trainAI:'Train AI Model',resetSim:'Reset',aiParams:'AI Parameters',threatParams:'Threat Environment',learningRate:'Learning Rate:',adaptSpeed:'Adaptation Speed:',threatDensity:'Threat Density:',threatAgility:'Threat Agility:',cogStatus:'Cognitive Status',decisionHint:'Real-time AI decisions and adaptations.'},
+  fr:{title:'GE Cognitive',subtitle:'Guerre Electronique Cognitive',disconnected:'Inactif',connected:'Apprentissage',mainSection:'Moteur GE Cognitive',mainDesc:'Guerre electronique adaptative pilotee par IA',sectionA:'Journal Decisions IA',sectionB:'Theorie GE Cognitive',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',theme:'Theme',settings:'Parametres',language:'Langue',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',working:'En cours...',ready:'GE Cognitive pret!',logCleared:'Journal efface',copied:'Copie!',copyFail:'Echec',export:'Exporter',filterAll:'Tout',soundEffects:'Effets sonores',splashHint:'appuyer pour passer',langChanged:'Langue: Francais',themeChanged:'Theme:',engageCEW:'Activer GE Cognitive',disengageCEW:'Desactiver',trainAI:'Entrainer IA',resetSim:'Reinitialiser'},
+  ar:{title:'\u0627\u0644\u062d\u0631\u0628 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0639\u0631\u0641\u064a\u0629',subtitle:'\u0627\u0644\u062d\u0631\u0628 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0639\u0631\u0641\u064a\u0629',disconnected:'\u062e\u0627\u0645\u0644',connected:'\u062a\u0639\u0644\u0645',mainSection:'\u0645\u062d\u0631\u0643 \u0627\u0644\u062d\u0631\u0628 \u0627\u0644\u0645\u0639\u0631\u0641\u064a\u0629',mainDesc:'\u062d\u0631\u0628 \u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u062a\u0643\u064a\u0641\u064a\u0629 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a',sectionA:'\u0633\u062c\u0644 \u0642\u0631\u0627\u0631\u0627\u062a \u0627\u0644\u0630\u0643\u0627\u0621',sectionB:'\u0646\u0638\u0631\u064a\u0629 \u0627\u0644\u062d\u0631\u0628 \u0627\u0644\u0645\u0639\u0631\u0641\u064a\u0629',activityLog:'\u0633\u062c\u0644',eventsMsg:'\u0623\u062d\u062f\u0627\u062b',clear:'\u0645\u0633\u062d',copy:'\u0646\u0633\u062e',theme:'\u0627\u0644\u0645\u0638\u0647\u0631',settings:'\u0625\u0639\u062f\u0627\u062f\u0627\u062a',language:'\u0627\u0644\u0644\u063a\u0629',help:'\u0645\u0633\u0627\u0639\u062f\u0629',faq:'\u0623\u0633\u0626\u0644\u0629',howto:'\u0643\u064a\u0641',wiki:'\u0648\u064a\u0643\u064a',working:'\u062c\u0627\u0631\u064d...',ready:'\u0627\u0644\u0645\u062d\u0631\u0643 \u062c\u0627\u0647\u0632!',logCleared:'\u062a\u0645 \u0627\u0644\u0645\u0633\u062d',copied:'\u062a\u0645!',copyFail:'\u0641\u0634\u0644',export:'\u062a\u0635\u062f\u064a\u0631',filterAll:'\u0627\u0644\u0643\u0644',soundEffects:'\u0645\u0624\u062b\u0631\u0627\u062a',splashHint:'\u0627\u0646\u0642\u0631',langChanged:'\u0627\u0644\u0644\u063a\u0629: \u0627\u0644\u0639\u0631\u0628\u064a\u0629',themeChanged:'\u0627\u0644\u0645\u0638\u0647\u0631:',engageCEW:'\u062a\u0634\u063a\u064a\u0644',disengageCEW:'\u0625\u064a\u0642\u0627\u0641',trainAI:'\u062a\u062f\u0631\u064a\u0628 \u0627\u0644\u0630\u0643\u0627\u0621',resetSim:'\u0625\u0639\u0627\u062f\u0629 \u062a\u0639\u064a\u064a\u0646'}
+};
+let currentLang='en';function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.title=s.title+' — Workshop DIY';document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
+function setTheme(name){document.documentElement.dataset.theme=name;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(name));const sel=$('themeSelect');if(sel)sel.value=name;try{localStorage.setItem('wdiy-theme',name);}catch{}log(LANG[currentLang].themeChanged+' '+name,'info');}
+let logContainer;function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className='log-line '+type;d.textContent='['+new Date().toLocaleTimeString()+'] '+msg;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(type==='success')playSound('success');else if(type==='error')playSound('error');applyLogFilter();}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared);}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success');}catch{log(LANG[currentLang].copyFail,'error');}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const blob=new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cew-log-'+new Date().toISOString().slice(0,10)+'.txt';a.click();}
+let toastTimer=null;function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block';}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms);}function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none';if(toastTimer){clearTimeout(toastTimer);toastTimer=null;}}
+function setStatus(on){const pill=$('statusPill'),txt=$('statusText'),s=LANG[currentLang];if(txt)txt.textContent=on?s.connected:s.disconnected;if(pill)pill.classList.toggle('connected',on);}
+let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600);playSound('click');}function initSplash(){const s=$('splash');if(!s)return;splashTimer=setTimeout(dismissSplash,2500);}
+let activeLogFilter='all';function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();playSound('click');});});}function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(line=>{if(activeLogFilter==='all'){line.style.display='';return;}line.style.display=line.classList.contains(activeLogFilter)?'':'none';});}
+function initPanels(){const hBtn=$('helpBtn'),hClose=$('helpCloseBtn'),hPanel=$('helpPanel'),hOver=$('helpOverlay');const sBtn=$('settingsBtn'),sClose=$('settingsCloseBtn'),sPanel=$('settingsPanel'),sOver=$('settingsOverlay');const lBtn=$('logBtn'),lClose=$('logCloseBtn'),lPanel=$('logPanel');if(hBtn)hBtn.onclick=()=>{hPanel.classList.toggle('open');hOver.classList.toggle('active');playSound('click');};if(hClose)hClose.onclick=()=>{hPanel.classList.remove('open');hOver.classList.remove('active');};if(hOver)hOver.onclick=()=>{hPanel.classList.remove('open');hOver.classList.remove('active');};if(sBtn)sBtn.onclick=()=>{sPanel.classList.toggle('open');sOver.classList.toggle('active');playSound('click');};if(sClose)sClose.onclick=()=>{sPanel.classList.remove('open');sOver.classList.remove('active');};if(sOver)sOver.onclick=()=>{sPanel.classList.remove('open');sOver.classList.remove('active');};if(lBtn)lBtn.onclick=()=>{lPanel.classList.toggle('open');playSound('click');};if(lClose)lClose.onclick=()=>lPanel.classList.remove('open');const langSel=$('langSelect'),themeSel=$('themeSelect'),sndTog=$('soundToggle');if(langSel)langSel.onchange=()=>setLanguage(langSel.value);if(themeSel)themeSel.onchange=()=>setTheme(themeSel.value);if(sndTog)sndTog.onchange=()=>{soundEnabled=sndTog.checked;};if($('clearLogBtn'))$('clearLogBtn').onclick=clearLog;if($('copyLogBtn'))$('copyLogBtn').onclick=copyLog;if($('exportLogBtn'))$('exportLogBtn').onclick=exportLog;document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));const target=$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1));if(target)target.classList.add('active');playSound('click');});});}
+
+/* ═══════ COGNITIVE EW DATA ═══════ */
+let engaged=false,trained=false,time=0,epoch=0;
+let threats=[],decisions=[];
+let effectivenessHistory=new Array(300).fill(50);
+let lossHistory=new Array(200).fill(1);
+let neuralNodes=[];
+
+function initThreats(){threats=[];const n=parseInt($('densityInput')?.value||8);for(let i=0;i<n;i++){threats.push({id:'THR-'+(i+1),freq:100+Math.random()*5800,type:['Radar','Comms','Jammer','FHSS','Burst'][Math.floor(Math.random()*5)],power:-40+Math.random()*60,agile:Math.random()>0.5,countered:false,confidence:0});}}
+
+function initNeuralNet(){neuralNodes=[];for(let layer=0;layer<4;layer++){const n=layer===0?6:layer===3?3:8;for(let i=0;i<n;i++){neuralNodes.push({layer,idx:i,x:0,y:0,activation:Math.random(),connections:[]});}}}
+
+function drawCognitive(){
+  const c=$('cogCanvas');if(!c)return;const ctx=c.getContext('2d');const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+
+  // Left side: threat environment spectrum
+  const specW=W*0.5;
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='10px Orbitron,monospace';ctx.textAlign='left';ctx.fillText('THREAT ENVIRONMENT',10,16);
+  // Noise floor
+  ctx.beginPath();for(let x=0;x<specW;x++){let y=H*0.7+Math.random()*8;threats.forEach(t=>{const tx=(t.freq/6000)*specW;if(Math.abs(x-tx)<10)y-=((t.power+40)/100)*H*0.3;});if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  ctx.strokeStyle='rgba(0,200,255,0.5)';ctx.lineWidth=1;ctx.stroke();
+  // Threat markers
+  threats.forEach(t=>{
+    const tx=(t.freq/6000)*specW;const ty=H*0.7-((t.power+40)/100)*H*0.3;
+    ctx.beginPath();ctx.arc(tx,ty,t.countered?4:6,0,Math.PI*2);
+    ctx.fillStyle=t.countered?'rgba(0,255,136,0.7)':'rgba(255,50,50,0.8)';ctx.fill();
+    if(engaged&&!t.countered){ctx.beginPath();ctx.arc(tx,ty,10+Math.sin(time*4)*3,0,Math.PI*2);ctx.strokeStyle='rgba(255,50,50,0.4)';ctx.lineWidth=1;ctx.stroke();}
+    ctx.fillStyle=t.countered?'#00ff88':'#ff6666';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';ctx.fillText(t.type,tx,ty-10);
+  });
+  // AI response beams
+  if(engaged){threats.forEach(t=>{if(t.countered){const tx=(t.freq/6000)*specW;const ty=H*0.7-((t.power+40)/100)*H*0.3;ctx.beginPath();ctx.moveTo(tx,H);ctx.lineTo(tx,ty);ctx.strokeStyle='rgba(0,255,136,0.3)';ctx.lineWidth=3;ctx.stroke();}});}
+
+  // Right side: neural network visualization
+  const nnX=specW+40;const nnW=W-nnX-20;
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='10px Orbitron,monospace';ctx.textAlign='left';ctx.fillText('NEURAL NETWORK',nnX,16);
+  const layers=[6,8,8,3];const layerLabels=['Input','Hidden 1','Hidden 2','Output'];
+  layers.forEach((n,l)=>{
+    const lx=nnX+l*(nnW/(layers.length-1));
+    ctx.fillStyle='rgba(0,255,136,0.3)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';ctx.fillText(layerLabels[l],lx,H-5);
+    for(let i=0;i<n;i++){
+      const ly=40+i*(H-60)/n;
+      const activation=engaged?0.3+Math.random()*0.7:0.2;
+      // Connections to next layer
+      if(l<layers.length-1){const nextN=layers[l+1];for(let j=0;j<nextN;j++){const nx=nnX+(l+1)*(nnW/(layers.length-1));const ny=40+j*(H-60)/nextN;const w=engaged?Math.random():0.1;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(nx,ny);ctx.strokeStyle='rgba(0,200,255,'+(w*0.3)+')';ctx.lineWidth=w*2;ctx.stroke();}}
+      ctx.beginPath();ctx.arc(lx,ly,5+activation*4,0,Math.PI*2);
+      const g=Math.floor(activation*255);
+      ctx.fillStyle='rgba('+Math.floor(g*0.3)+','+g+','+(255-g)+','+(0.4+activation*0.5)+')';ctx.fill();
+      ctx.strokeStyle='rgba(0,200,255,0.4)';ctx.lineWidth=1;ctx.stroke();
+    }
+  });
+  if(engaged){ctx.fillStyle='rgba(0,255,136,0.7)';ctx.fillText('EPOCH: '+epoch,nnX+nnW/2,30);}
+}
+
+function drawLearning(){
+  const c=$('learnCanvas');if(!c)return;const ctx=c.getContext('2d');const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+  // Effectiveness curve (left half)
+  const halfW=W/2;
+  const lr=parseInt($('lrInput')?.value||50)/100;
+  if(engaged){const eff=Math.min(99,effectivenessHistory[effectivenessHistory.length-1]+lr*2+Math.random()*3-1);effectivenessHistory.push(eff);if(effectivenessHistory.length>300)effectivenessHistory.shift();}
+  ctx.beginPath();effectivenessHistory.forEach((v,i)=>{const x=i*(halfW/300);const y=H-10-v/100*H*0.8;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(0,255,136,0.7)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='rgba(0,255,136,0.5)';ctx.font='10px Orbitron,monospace';ctx.textAlign='left';ctx.fillText('EFFECTIVENESS %',5,14);
+  // Loss curve (right half)
+  if(engaged){const loss=Math.max(0.01,lossHistory[lossHistory.length-1]-lr*0.005+Math.random()*0.01-0.005);lossHistory.push(loss);if(lossHistory.length>200)lossHistory.shift();}
+  ctx.beginPath();lossHistory.forEach((v,i)=>{const x=halfW+20+i*((halfW-20)/200);const y=H-10-v*H*0.7;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(255,200,0,0.7)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='rgba(255,200,0,0.5)';ctx.font='10px Orbitron,monospace';ctx.textAlign='left';ctx.fillText('TRAINING LOSS',halfW+25,14);
+}
+
+function animate(){
+  time+=0.016;
+  if(engaged){
+    epoch++;
+    const lr=parseInt($('lrInput')?.value||50)/100;const adapt=parseInt($('adaptInput')?.value||70)/100;
+    threats.forEach(t=>{
+      if(!t.countered){t.confidence+=lr*adapt*0.5+Math.random()*0.3;if(t.confidence>60+Math.random()*30){t.countered=true;const actions=['Spot jamming','Null steering','Frequency hopping','Waveform adaptation','Power adjustment'];const action=actions[Math.floor(Math.random()*actions.length)];decisions.unshift({time:new Date().toLocaleTimeString(),threat:t.id,action,confidence:t.confidence.toFixed(0)});if(decisions.length>30)decisions.pop();log('AI: '+action+' on '+t.id+' ('+t.type+') — confidence '+t.confidence.toFixed(0)+'%','success');}}
+      if(t.agile&&t.countered&&Math.random()>0.998){t.countered=false;t.confidence=0;t.freq=100+Math.random()*5800;log('THREAT '+t.id+' adapted — changing frequency','error');}
+    });
+  }
+  drawCognitive();drawLearning();updateStats();requestAnimationFrame(animate);
+}
+
+function updateStats(){const stats=$('cogStats');if(!stats)return;const countered=threats.filter(t=>t.countered).length;const eff=effectivenessHistory[effectivenessHistory.length-1];stats.innerHTML='<b>Threats:</b> '+threats.length+' ('+countered+' countered)<br><b>Effectiveness:</b> '+eff.toFixed(0)+'%<br><b>Epoch:</b> '+epoch+'<br><b>Trained:</b> '+(trained?'<span style="color:#00ff88">YES</span>':'<span style="color:#888">NO</span>')+'<br><b>Status:</b> '+(engaged?'<span style="color:#00ff88">ENGAGED</span>':'<span style="color:#888">STANDBY</span>');}
+function updateDecisionList(){const lib=$('decisionList');if(!lib)return;lib.innerHTML='';decisions.slice(0,15).forEach(d=>{const row=document.createElement('div');row.style.cssText='display:flex;justify-content:space-between;padding:3px 6px;border-radius:4px;font-size:.78rem;background:rgba(0,255,136,0.05)';row.innerHTML='<span style="color:#00ff88">'+d.threat+'</span><span>'+d.action+'</span><span>'+d.confidence+'%</span><span style="color:#888">'+d.time+'</span>';lib.appendChild(row);});}
+function initTechDatabase(){const db=$('techDatabase');if(!db)return;db.innerHTML=['<b>Cognitive EW:</b> AI systems that sense, learn, and adapt to the EM environment.','<b>Reinforcement Learning:</b> AI learns optimal jamming strategies through trial and error.','<b>Waveform Synthesis:</b> Generating optimal countermeasure waveforms in real-time.','<b>Threat Classification:</b> Neural networks identify and categorize emitter types.','<b>Adaptive Response:</b> Automatically adjusting power, frequency, and technique.','<b>Adversarial Learning:</b> Both attacker and defender AI evolve simultaneously.'].join('<br><br>');}
+
+function initControls(){
+  $('lrInput').oninput=()=>{$('lrLabel').textContent=$('lrInput').value+'%';};
+  $('adaptInput').oninput=()=>{$('adaptLabel').textContent=$('adaptInput').value+'%';};
+  $('densityInput').oninput=()=>{$('densityLabel').textContent=$('densityInput').value;};
+  $('agilityInput').oninput=()=>{$('agilityLabel').textContent=$('agilityInput').value+'%';};
+  $('engageBtn').onclick=()=>{if(!trained){showToast('Train AI model first!',1500);return;}engaged=!engaged;setStatus(engaged);$('engageBtn').querySelector('[data-i18n]').textContent=engaged?LANG[currentLang].disengageCEW:LANG[currentLang].engageCEW;log(engaged?'Cognitive EW ENGAGED — AI adapting to threats':'Cognitive EW DISENGAGED',engaged?'success':'info');if(engaged)showToast('AI engaged...',2000);};
+  $('trainBtn').onclick=()=>{showToast('Training neural network...',2500);setTimeout(()=>{trained=true;lossHistory=new Array(200).fill(1);for(let i=0;i<200;i++)lossHistory[i]=Math.max(0.05,1-i*0.004+Math.random()*0.05);log('AI model trained — '+200+' epochs, loss: '+lossHistory[lossHistory.length-1].toFixed(3),'success');hideToast();},2500);};
+  $('resetBtn').onclick=()=>{engaged=false;trained=false;epoch=0;decisions=[];effectivenessHistory=new Array(300).fill(50);lossHistory=new Array(200).fill(1);setStatus(false);initThreats();$('engageBtn').querySelector('[data-i18n]').textContent=LANG[currentLang].engageCEW;log('Reset','info');playSound('click');};
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initSplash();initPanels();initLogFilters();initThreats();initNeuralNet();initTechDatabase();initControls();
+  try{const l=localStorage.getItem('wdiy-lang');if(l)setLanguage(l);}catch{}
+  try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
+  log(LANG[currentLang].ready,'success');animate();setInterval(updateDecisionList,1000);
+});
