@@ -1,137 +1,242 @@
-# Workshop-Diy — Ops Catalog
+# Workshop-DIY Ops Catalog
 
-**293 project ideas across 42 categories** for the Workshop-Diy educational hardware lab.
-
-A team voting app to decide what gets built first.
+> Interactive catalog of 413 hands-on DIY hardware, radio, and security projects across 50 categories. Trilingual (EN/FR/AR) with a built-in voting system.
 
 ---
 
-## Hardware Inventory
+## Overview
 
-| Device | Role |
-|---|---|
-| **micro:bit** | Wearable sensors, BLE mesh, CW paddle, field agent gadget |
-| **ESP32** | WiFi/BLE scanner, mesh nodes, honeypots, IoT bridge |
-| **HackRF One** | 1 MHz–6 GHz SDR transceiver, spectrum analysis, signal decoding |
-| **WiFi Monitor Adapter** | 802.11 packet capture, probe tracking, deauth detection |
-| **Raspberry Pi** | SDR server, repeater, SIGINT station, Tor router, mesh node |
-| **Antennas** | Yagi, dipole, loop, fractal, PCB, covert — build, test, compare |
+The **Ops Catalog** is a self-contained, single-page web application that serves as the master directory for the Workshop-DIY educational lab. It organizes 413 project ideas into 50 categories spanning radio frequency engineering, cybersecurity, embedded hardware, signal intelligence, acoustic science, swarm computing, and more.
+
+Every project targets real hardware (BBC micro:bit, ESP32, HackRF One, Raspberry Pi, WiFi adapters) or runs entirely in the browser. The catalog supports **English**, **French**, and **Arabic** (with full RTL support), and includes a voting system so teams can collectively decide which projects to build first.
 
 ---
 
-## Categories (42)
+## Quick Start
 
-### Spy Ops (4)
-- **Spy Ops — micro:bit** — dead-drop, shake-cipher, stealth-alarm, spy-compass, micro-wire, panic-button, field-scanner, agent-id, invisible-ink
-- **Spy Ops — ESP32** — dark-net-radio, packet-sniffer-101, ghost-beacon, dead-zone, shadow-cam, frequency-hunter, usb-rubber-ducky, vault, wifi-jammer-detector, tor-relay-visual
-- **Spy Ops — Browser** — cipher-suite, steganography-lab, metadata-detective, dark-profile, onion-simulator, phishing-trainer, burner-chat, password-cracker-sim, network-map, exif-eraser
-- **Spy Ops — Combos** — spy-kit-pro, capture-the-flag, escape-hq
+**No build step required.** The catalog is a single `index.html` file with zero dependencies.
 
-### Network Security (5)
-- **Network — ESP32** — mesh-whisper, dead-letter-box, packet-storm, rogue-ap-detector, network-cartographer, signal-ghost, esp-honeypot, dns-playground, arp-detective, captive-portal-lab, wifi-thermometer, spectrum-wars
-- **Network — Browser** — traceroute-quest, protocol-decoder, subnet-architect, firewall-fortress, port-scanner-sim, vpn-tunnel-visual, man-in-the-middle-sim, certificate-inspector, dns-odyssey, bgp-simulator, darknet-simulator, botnet-defense, blockchain-messenger, packet-racer
-- **Network — micro:bit** — ble-mesh-chat, radio-sniffer, micro-vpn, mesh-rescue, radio-cartographer
-- **Network — Multi-Node ESP32** — swarm-net, internet-simulator, tor-in-a-box, cyber-range, gossip-protocol, consensus-lab, network-time-machine
-- **Network — Ultimate** — cyber-academy, hackathon-arena, operation-blackout
+```bash
+# Option 1 -- just open in any browser
+open index.html            # macOS
+xdg-open index.html        # Linux
+start index.html           # Windows
 
-### HackRF SDR (4)
-- **HackRF — Signal Intel** — rf-waterfall, fm-pirate-radio, signal-hunter, rf-fingerprinter, replay-lab, spectrum-wars, satellite-listener, aircraft-radar, pager-decoder, radio-telescope, ism-band-explorer, signal-zoo, gsm-tower-mapper, rf-time-machine
-- **HackRF + micro:bit** — rf-remote-control, frequency-duel, rf-alarm-system, micro-radar
-- **HackRF + ESP32** — lora-lab, wifi-dissector, ble-xray, esp-rf-bridge, rf-iot-audit, collision-visualizer
-- **HackRF — Spy Ops** — bug-sweeper, tracker-hunter, rf-cloak, covert-channel, direction-finder, rf-jail, signal-forge
+# Option 2 -- serve locally (useful for team access on LAN)
+python3 -m http.server 8000
+# then visit http://localhost:8000
+```
 
-### WiFi Monitor (5)
-- **WiFi — Recon** — wifi-sonar, probe-tracker, handshake-theater, beacon-flood-viz, deauth-detector, channel-heatmap, client-fingerprinter, evil-twin-spotter, packet-microscope, wifi-timeline
-- **WiFi — Spy** — ghost-detector, movement-tracker, persona-builder, invisibility-test, covert-exfil-lab, rf-lineup
-- **WiFi + HackRF** — full-spectrum-dashboard, protocol-rainbow, frequency-forensics, jamming-lab, hidden-network-revealer
-- **WiFi — Classroom** — wifi-101-lab, network-detective, wifi-escape-room, security-audit-sim, attack-defense-arena
-- **WiFi + ESP32** — honeypot-network, wifi-canary, roaming-visualizer, captive-portal-attack-defense, mesh-vs-traditional
+---
 
-### Ham Radio (8)
-- **Ham — Core** — band-explorer, cw-decoder, cw-keyer, ssb-visualizer, qso-logger, propagation-monitor, repeater-map, waterfall-art
-- **Ham — Digital Modes** — digi-mode-zoo, ft8-world-map, ft8-station, js8-messenger, psk31-chat, aprs-dashboard, aprs-tracker, packet-radio-station, winlink-gateway, wspr-beacon, sstv-gallery
-- **Ham — Satellites** — iss-contact, satellite-commander, noaa-weather-lab, meteor-m2-hd, cubesat-telemetry, moon-bounce-viz, graves-radar-meteor
-- **Ham + micro:bit** — cw-paddle, signal-meter, satellite-alarm, fox-hunt-compass
-- **Ham + ESP32** — aprs-igate, digi-repeater, remote-sdr, antenna-analyzer, beacon-controller, solar-monitor
-- **Ham — Emergency** — go-box-dashboard, mesh-emergency-net, field-day-station, skywarn-station
-- **Ham — Learning** — ham-exam-trainer, band-condition-game, antenna-sim-vs-real, qsl-card-maker
-- **Ham — God-Tier** — all-band-all-mode, ionosphere-mapper, radio-observatory-365, contest-station
+## Categories
 
-### SDR Advanced (8)
-- **SDR — DSP** — dsp-workbench, filter-forge, modulation-lab, iq-explorer, fft-racing, signal-generator, demod-challenge, noise-floor-lab
-- **SDR — Multi-Receiver** — coherent-sdr, wideband-recorder, sdr-farm, tdoa-locator, doppler-tracker, correlation-detector
-- **SDR — Aviation/Maritime** — vhf-airband, acars-decoder, ais-maritime, vdl-mode2, navtex-decoder, radiosondes-tracker, lightning-detector
-- **SDR — Science** — radio-spectrometer, solar-flare-monitor, jupiter-receiver, rfi-hunter, propagation-beacon-net
-- **SDR — IoT/Industrial** — lorawan-decoder, zigbee-sniffer, smart-meter-reader, tpms-scanner, keyfob-analyzer, industrial-scanner
-- **SDR — Tools** — antenna-profiler, oscilloscope-mode, signal-classifier, band-allocator, interference-finder, sdr-benchmark
-- **SDR — Learning** — rf-101, sdr-sandbox, build-a-receiver, protocol-reverse-lab, exam-lab-sdr
-- **SDR — God-Tier** — universal-decoder, sdr-server, spectrum-observatory, sdr-os
+### Spy Ops (4 categories)
 
-### Antenna (2)
-- **Antenna — Build & Test** — antenna-forge, antenna-range, yagi-optimizer, antenna-shootout, sdr-antenna-tuner, fractal-antenna-lab, wire-antenna-wizard, pcb-antenna-studio, antenna-farm-manager, satellite-antenna-tracker, fox-antenna-builder, magnetic-loop-tuner, antenna-graveyard
-- **Antenna + Raspberry Pi** — pi-antenna-switch, pi-rotator-controller, pi-remote-station, pi-phased-array, pi-nec-simulator
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 01 | :detective: | Spy Ops -- micro:bit | 9 | micro:bit |
+| 02 | :closed_lock_with_key: | Spy Ops -- ESP32 | 10 | ESP32 |
+| 03 | :dark_sunglasses: | Spy Ops -- Browser | 10 | None |
+| 04 | :dart: | Spy Ops -- Combos | 3 | Mixed |
 
-### Raspberry Pi (2)
-- **Raspberry Pi — Core** — pi-sdr-station, pi-war-room, pi-mesh-node, pi-radio-recorder, pi-packet-bbs, pi-repeater, pi-igate-digipeater, pi-camera-trap, pi-kiosk, pi-tor-router, pi-vpn-gateway, pi-honeypot-server, pi-nas-vault, pi-print-server, pi-clock-station
-- **Raspberry Pi + Antenna** — pi-remote-antenna-station
+### Network (5 categories)
 
-### Secret Agent (4)
-- **Agent — Field Gear** — dead-drop-pi, covert-radio, field-comms-kit, spy-pi-zero, pi-surveillance-drone, counter-surveillance-kit, pi-faraday-test, agent-communicator, burst-transmitter, stealth-ap, signal-intercept-station, pi-lockpick-trainer
-- **Agent + micro:bit** — wrist-communicator, dead-man-switch, invisible-fence, micro-beacon-trail, extraction-signal
-- **Agent + Antenna** — direction-finder-pro, covert-antenna, antenna-in-a-bag, rf-perimeter, satellite-comms-station
-- **Agent — Ultimate Kits** — ghost-box, safe-house-kit, agent-onboarding, red-team-toolkit, blue-team-sentinel, mission-impossible-box, mobile-command
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 05 | :globe_with_meridians: | Network -- ESP32 | 12 | ESP32 |
+| 06 | :spider_web: | Network -- Browser | 14 | None |
+| 07 | :signal_strength: | Network -- micro:bit | 5 | micro:bit |
+| 08 | :link: | Network -- Multi-Node | 7 | ESP32 x3+ |
+| 09 | :trophy: | Network -- Ultimate | 3 | Mixed |
+
+### HackRF (4 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 10 | :satellite: | HackRF -- Signal Intel | 14 | HackRF |
+| 11 | :radio: | HackRF + micro:bit | 4 | HackRF + micro:bit |
+| 12 | :zap: | HackRF + ESP32 | 6 | HackRF + ESP32 |
+| 13 | :shield: | HackRF -- Spy Ops | 7 | HackRF |
+
+### WiFi (5 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 14 | :mag: | WiFi Monitor -- Recon | 10 | WiFi Adapter |
+| 15 | :ghost: | WiFi Monitor -- Spy | 7 | WiFi Adapter |
+| 16 | :bar_chart: | WiFi + HackRF | 5 | WiFi + HackRF |
+| 17 | :school: | WiFi -- Classroom | 5 | WiFi Adapter |
+| 18 | :honey_pot: | WiFi + ESP32 | 5 | WiFi + ESP32 |
+
+### Ham Radio (8 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 19 | :radio: | Ham Radio -- Core | 8 | HackRF |
+| 20 | :speech_balloon: | Ham -- Digital Modes | 11 | HackRF |
+| 21 | :artificial_satellite: | Ham -- Satellites | 7 | HackRF |
+| 22 | :robot: | Ham + micro:bit | 4 | HackRF + micro:bit |
+| 23 | :gear: | Ham + ESP32 | 6 | HackRF + ESP32 |
+| 24 | :camping: | Ham -- Emergency | 5 | Mixed |
+| 25 | :mortar_board: | Ham -- Learning | 4 | HackRF |
+| 26 | :crown: | Ham -- God-Tier | 4 | Full Stack |
+
+### SDR (8 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 27 | :wrench: | SDR -- DSP & Processing | 8 | HackRF |
+| 28 | :bar_chart: | SDR -- Multi-Receiver | 6 | HackRF x2+ |
+| 29 | :small_airplane: | SDR -- Aviation/Maritime | 7 | HackRF |
+| 30 | :microscope: | SDR -- Science | 5 | HackRF |
+| 31 | :factory: | SDR -- IoT/Industrial | 6 | HackRF |
+| 32 | :hammer_and_wrench: | SDR -- Tools | 6 | HackRF |
+| 33 | :mortar_board: | SDR -- Learning | 5 | HackRF |
+| 34 | :crown: | SDR -- God-Tier | 4 | Full Stack |
+
+### Antenna (2 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 35 | :satellite: | Antenna -- Build & Test | 10 | HackRF |
+| 36 | :satellite: | Antenna + Raspberry Pi | 5 | RPi + HackRF |
+
+### Raspberry Pi (2 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 37 | :pie: | Raspberry Pi -- Core | 15 | Raspberry Pi |
+| 38 | :pie: | Raspberry Pi + Antenna | 1 | RPi + Antenna |
+
+### Secret Agent (4 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 39 | :detective: | Agent -- Field Gear | 12 | RPi + Mixed |
+| 40 | :robot: | Agent + micro:bit | 5 | RPi + micro:bit |
+| 41 | :satellite: | Agent + Antenna | 4 | RPi + HackRF |
+| 42 | :skull: | Agent -- Ultimate Kits | 6 | Full Stack |
+
+### Frontier Categories (8 categories)
+
+| # | Icon | Category | Apps | Hardware |
+|---|------|----------|------|----------|
+| 43 | :dna: | Bio-Radio -- Body as Antenna | 15 | Mixed |
+| 44 | :loud_sound: | Acoustic Warfare -- Sound Weapons | 15 | Mixed |
+| 45 | :stopwatch: | Time Manipulation -- Chrono Hacks | 15 | Mixed |
+| 46 | :bee: | Swarm Intelligence -- Hive Mind | 15 | ESP32 / micro:bit |
+| 47 | :atom_symbol: | Impossible Physics -- Reality Hacks | 15 | HackRF / RPi |
+| 48 | :skull: | Dark Arts -- Offensive Security | 15 | Mixed |
+| 49 | :robot: | AI Radio -- Neural RF | 15 | RPi / HackRF |
+| 50 | :earth_africa: | Civilization Hacks -- Save the World | 15 | Mixed |
+
+---
+
+## Hardware Requirements
+
+| Device | Description | Link |
+|--------|-------------|------|
+| **BBC micro:bit v2** | Wearable sensors, BLE mesh, CW paddle, field agent gadget | [microbit.org](https://microbit.org) |
+| **ESP32 DevKit** | WiFi/BLE scanner, mesh nodes, honeypots, IoT bridge, LoRa | [espressif.com](https://www.espressif.com/en/products/socs/esp32) |
+| **HackRF One** | 1 MHz -- 6 GHz SDR transceiver for spectrum analysis and signal work | [greatscottgadgets.com](https://greatscottgadgets.com/hackrf/) |
+| **RTL-SDR v3/v4** | Budget wideband receiver for aviation, weather satellites, ham | [rtl-sdr.com](https://www.rtl-sdr.com/) |
+| **WiFi Monitor Adapter** | 802.11 packet capture, probe tracking, deauth detection | Atheros / Realtek chipset |
+| **Raspberry Pi 4/5** | SDR server, repeater, SIGINT station, Tor router, mesh node | [raspberrypi.com](https://www.raspberrypi.com/) |
+| **Antennas** | Yagi, dipole, magnetic loop, fractal, PCB, covert -- build, test, compare | DIY / commercial |
+
+Many browser-only projects (categories 03, 06, 09, 17, 25, 33) require **no hardware at all**.
+
+---
+
+## File Structure
+
+Each of the 50 category folders contains individual app directories. The file layout depends on the target hardware:
+
+```
+ops-catalog/
+  index.html                          # Main catalog (single-page app)
+  README.md
+  01-spy-microbit/
+    bit-dead-drop/
+      index.html                      # App UI (browser dashboard)
+      script.js                       # Browser-side logic
+      makecode.js                     # MakeCode / micro:bit firmware
+    bit-shake-cipher/
+      ...
+  02-spy-esp32/
+    esp-ghost-beacon/
+      index.html                      # App UI
+      script.js                       # Browser-side logic
+      firmware.ino                    # Arduino/ESP32 firmware
+    ...
+  10-hrf-sigint/
+    hrf-rf-waterfall/
+      index.html
+      script.js
+      hackrf.py                       # HackRF Python control script
+    ...
+  37-pi-core/
+    pi-sdr-station/
+      index.html
+      script.js
+      main.py                         # Raspberry Pi Python service
+    ...
+  50-civilization-hacks/
+    civ-mesh-internet-disaster/
+      index.html
+      script.js
+      firmware.ino
+      hackrf.py
+      main.py
+    ...
+```
+
+### File types by hardware target
+
+| File | Purpose | Hardware |
+|------|---------|----------|
+| `index.html` | App dashboard and UI | Browser |
+| `script.js` | Browser-side logic, Web Bluetooth/Serial, visualization | Browser |
+| `makecode.js` | MakeCode firmware for micro:bit | BBC micro:bit |
+| `firmware.ino` | Arduino sketch for ESP32 boards | ESP32 |
+| `hackrf.py` | Python script for HackRF SDR control | HackRF One |
+| `main.py` | Python service for Raspberry Pi | Raspberry Pi |
 
 ---
 
 ## Features
 
-- **Single HTML file** — no build step, no dependencies, runs from `file://`
-- **3 languages** — English, French, Arabic (full RTL support)
-- **8 themes** — Terminal, Midnight, Ember, Phosphor, Signal, Redshift, Arctic, Sand
-- **Hardware filter** — filter by: Browser, micro:bit, ESP32, HackRF, WiFi, Raspberry Pi, Mixed
-- **Search** — instant search across all project names and descriptions
-- **Sort** — by category or by most-voted
-- **Expand/Collapse** — per-category accordion with expand/collapse all
-- **Vote counter** — global and per-category vote tallies
-- **Skip vote** — browse-only mode for non-voting users
-- **Export** — download votes as `.txt` file with voter name
+- **8 visual themes** -- Terminal (green), Midnight (purple), Ember (orange), Arctic (light), Phosphor (retro green), Signal (cyan), Redshift (red), Sand (warm light)
+- **3 languages** -- English, French, Arabic with full RTL layout support
+- **Voting system** -- Enter your agent codename, vote on projects, export results as JSON
+- **Live search** -- Filter projects instantly by keyword across all 413 entries
+- **Hardware filters** -- Show only projects for a specific board (micro:bit, ESP32, HackRF, WiFi, RPi, Browser-only, Mixed)
+- **Sort modes** -- By category (default) or by vote count
+- **Split-click navigation** -- Click a project card to open its dedicated app page
+- **Collapsible categories** -- Expand/collapse individual sections or all at once
 
 ---
 
-## Usage
+## Stats
 
-Open `index.html` in any browser. No server required.
-
-1. Select language and theme on the splash screen
-2. Enter your name (or skip to browse without voting)
-3. Click any project card to vote/unvote
-4. Use filters and search to navigate 293 projects
-5. Export your votes when done
-
-Share the file with your team — each person votes independently and exports their picks.
-
----
-
-## Tech Stack
-
-- HTML5 + CSS3 + Vanilla JavaScript
-- Zero dependencies
-- Google Fonts: IBM Plex Mono, Outfit, Noto Sans Arabic
-- CSS custom properties for theming
-- ~150 KB total
+| Metric | Count |
+|--------|-------|
+| Total projects | **413** |
+| Categories | **50** |
+| Hardware firmware files | **508+** |
+| Languages | **3** (EN, FR, AR) |
+| Visual themes | **8** |
+| External dependencies | **0** |
 
 ---
 
-## Project Structure
+## License
 
-```
-ops-catalog/
-├── index.html    ← everything (HTML + CSS + JS + data)
-└── README.md     ← this file
-```
+MIT
 
 ---
 
-## Workshop-Diy
+## Credits
 
-Part of the [Workshop-Diy](https://github.com/abourdim/all) educational platform — browser-based apps for kids learning hardware, networking, radio, and cybersecurity.
+Built by the **Workshop-DIY** team.
