@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>GPS Spoofing Sim — Workshop DIY</title>
+  <meta name="description" content="Simulate GPS signal spoofing attacks and countermeasures — Workshop-DIY."/>
+  <meta name="author" content="Workshop-DIY — abourdim"/>
+  <meta property="og:title" content="GPS Spoofing Sim — Workshop DIY"/>
+  <meta property="og:description" content="Simulate GPS spoofing vectors, satellite constellations and fake signal injection."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="icon-512.png"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#08091a"/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">GPS Spoofing Simulator</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1649;&#1604;&#1604;&#1617;&#1614;&#1648;&#1607;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1600;&#1648;&#1606;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616; <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">GPS Spoofing Sim</h1><div class="subtitle" data-i18n="subtitle">GPS Spoofing Simulator</div></div></div>
+        <div class="header-right">
+          <div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button></div>
+          <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Idle</span></div>
+        </div>
+      </div>
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F6F0;</span> <span data-i18n="mainSection">GPS Spoofing Simulator</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Simulate satellite spoofing and position manipulation</span> <span class="version-tag">v1.2</span></div></div></div>
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="skyCanvas" width="780" height="350" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="signalCanvas" width="780" height="120" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;margin-bottom:8px;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="spoofTarget">Spoof Target</div>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="latitude">Latitude:</label>
+            <input id="latInput" type="range" min="-90" max="90" value="36" step="0.1" style="width:100%;"/>
+            <span id="latLabel" style="font-size:.75rem;color:var(--accent);">36.0</span>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="longitude">Longitude:</label>
+            <input id="lonInput" type="range" min="-180" max="180" value="3" step="0.1" style="width:100%;"/>
+            <span id="lonLabel" style="font-size:.75rem;color:var(--accent);">3.0</span>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="spoofParams">Spoof Parameters</div>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="power">Spoof Power (dBm):</label>
+            <input id="powerInput" type="range" min="-30" max="10" value="-10" style="width:100%;"/>
+            <span id="powerLabel" style="font-size:.75rem;color:var(--accent);">-10 dBm</span>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="satellites">Spoofed Sats:</label>
+            <input id="satCount" type="range" min="1" max="12" value="4" style="width:100%;"/>
+            <span id="satLabel" style="font-size:.75rem;color:var(--accent);">4</span>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="sigInfo">Position Info</div>
+            <div id="posStats" style="font-size:.78rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="spoofBtn" class="primary"><span class="btn-icon">&#x1F6F0;</span> <span data-i18n="startSpoof">Start Spoofing</span></button>
+          <button id="detectBtn"><span class="btn-icon">&#x1F6E1;</span> <span data-i18n="detectSpoof">Detect Spoof</span></button>
+          <button id="resetBtn"><span class="btn-icon">&#x1F504;</span> <span data-i18n="resetSim">Reset</span></button>
+        </div>
+      </div>
+      <details class="collapsible" open><summary><span class="icon">&#x1F4E1;</span> <span data-i18n="sectionA">Satellite Constellation</span></summary><div class="card"><div id="satLibrary" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div><div class="hint" data-i18n="satHint">GPS satellites and their spoofed status.</div></div></details>
+      <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">Spoofing Techniques</span></summary><div class="card"><div id="techDatabase" style="font-size:.78rem;line-height:1.5;"></div></div></details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is this app?</summary><p data-i18n="faq_a1">A GPS spoofing simulator for educational RF warfare studies.</p></details><details class="help-item"><summary data-i18n="faq_q2">How does GPS spoofing work?</summary><p data-i18n="faq_a2">By broadcasting fake GPS signals stronger than real ones.</p></details><details class="help-item"><summary data-i18n="faq_q3">Is this real?</summary><p data-i18n="faq_a3">No. Visual simulation only.</p></details><details class="help-item"><summary data-i18n="faq_q4">Data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details></div>
+      <div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Set target coordinates.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Adjust power and satellite count.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Start Spoofing.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Detect to analyze anomalies.</p></div></div>
+      <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_themes_title">Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">Languages</h3><p data-i18n="wiki_i18n">EN, FR, AR.</p></div></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">AR</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">Sound effects</span></label></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">OK</button><button class="log-filter" data-filter="error">Err</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
