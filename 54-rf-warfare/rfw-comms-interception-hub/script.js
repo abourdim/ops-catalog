@@ -99,3 +99,122 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();setInterval(updateChannelList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — COMMS INTERCEPTION HUB ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _modHistory=[];let _bitstream=new Array(400).fill(0);
+let _directionBearings=[];let _dataRate=new Array(200).fill(0);
+
+/* ── Modulation Analysis View ── */
+function drawModAnalysis(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DEMODULATION — SIGNAL ANALYSIS',5,12);
+  const isInt=typeof intercepting!=='undefined'&&intercepting;
+  const mod=_$('modSelect')?.value||'AM';
+  // Time domain waveform
+  ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const t=x/W*20;let y=H/2;
+    if(mod==='AM')y=H/2+Math.sin(t*10)*(15+10*Math.sin(t*1.5))+Math.random()*(isInt?2:8);
+    else if(mod==='FM')y=H/2+Math.sin(t*10+5*Math.sin(t*2))*20+Math.random()*(isInt?2:8);
+    else if(mod==='PSK')y=H/2+Math.sin(t*10+(Math.floor(t*3)%2)*Math.PI)*18+Math.random()*(isInt?2:8);
+    else y=H/2+Math.sin(t*8)*15+Math.random()*5;
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle=isInt?'rgba(0,255,136,0.7)':'rgba(0,200,255,0.4)';ctx.lineWidth=1;ctx.stroke();
+  // Mod type label
+  ctx.fillStyle='rgba(255,200,0,0.5)';ctx.font='10px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(mod+' DEMOD',W-10,25);
+  if(isInt){ctx.fillStyle='rgba(0,255,136,0.4)';ctx.fillText('LOCKED',W-10,38);}
+}
+
+/* ── Direction Finding Compass ── */
+function drawDFCompass(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DIRECTION FINDING',5,12);
+  const cx=W/2,cy=H/2+5,R=Math.min(W,H)/2-22;
+  for(let i=1;i<=3;i++){ctx.beginPath();ctx.arc(cx,cy,R*i/3,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();}
+  ctx.beginPath();ctx.moveTo(cx-R,cy);ctx.lineTo(cx+R,cy);ctx.moveTo(cx,cy-R);ctx.lineTo(cx,cy+R);ctx.strokeStyle='rgba(0,255,136,0.06)';ctx.stroke();
+  ctx.fillStyle='rgba(0,255,136,0.3)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText('N',cx,cy-R-3);ctx.fillText('S',cx,cy+R+9);ctx.fillText('E',cx+R+7,cy+3);ctx.fillText('W',cx-R-7,cy+3);
+  const isInt=typeof intercepting!=='undefined'&&intercepting;
+  if(isInt&&typeof channels!=='undefined'){
+    channels.forEach((ch,i)=>{
+      if(!ch.intercepted)return;
+      const bearing=(i*50+30+Math.sin(_t+i)*5)*Math.PI/180-Math.PI/2;
+      const dist=0.4+Math.random()*0.4;
+      const bx=cx+Math.cos(bearing)*dist*R;const by=cy+Math.sin(bearing)*dist*R;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(bx,by);
+      ctx.strokeStyle='rgba(0,255,136,0.5)';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.arc(bx,by,5,0,Math.PI*2);ctx.fillStyle='rgba(0,255,136,0.8)';ctx.fill();
+      ctx.fillStyle='rgba(0,255,136,0.6)';ctx.font='7px Orbitron,monospace';ctx.fillText(ch.id,bx,by-8);
+    });
+  }
+  ctx.beginPath();ctx.arc(cx,cy,4,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.8)';ctx.fill();
+}
+
+/* ── Bitstream Visualization ── */
+function drawBitstream(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('INTERCEPTED BITSTREAM',5,12);
+  const isInt=typeof intercepting!=='undefined'&&intercepting;
+  if(isInt&&_t%0.05<0.02){_bitstream.push(Math.random()>0.5?1:0);if(_bitstream.length>400)_bitstream.shift();}
+  const bitW=W/50;const rows=Math.floor((H-25)/14);
+  for(let r=0;r<rows;r++){for(let c=0;c<50;c++){
+    const idx=r*50+c;if(idx>=_bitstream.length)break;
+    const x=c*bitW;const y=22+r*14;
+    ctx.fillStyle=_bitstream[idx]?'rgba(0,255,136,'+(isInt?0.6:0.15)+')':'rgba(0,100,200,'+(isInt?0.3:0.08)+')';
+    ctx.fillRect(x,y,bitW-1,12);
+    if(isInt){ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText(_bitstream[idx],x+bitW/2,y+10);}
+  }}
+}
+
+/* ── Data Rate Monitor ── */
+function drawDataRate(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DATA THROUGHPUT (kbps)',5,12);
+  const isInt=typeof intercepting!=='undefined'&&intercepting;
+  const intCount=typeof channels!=='undefined'?channels.filter(c=>c.intercepted).length:0;
+  const rate=isInt?intCount*15+Math.random()*20:Math.random()*2;
+  _dataRate.push(rate);if(_dataRate.length>200)_dataRate.shift();
+  // Bar chart
+  const barW=W/200;
+  _dataRate.forEach((v,i)=>{const bh=v/100*(H-25);
+    ctx.fillStyle=v>50?'rgba(0,255,136,0.5)':v>20?'rgba(0,200,255,0.4)':'rgba(100,100,100,0.2)';
+    ctx.fillRect(i*barW,H-10-bh,barW,bh);});
+  ctx.fillStyle='rgba(0,255,136,0.5)';ctx.font='12px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(rate.toFixed(0)+' kbps',W-10,28);
+}
+
+/* ── Frequency Activity Matrix ── */
+function drawFreqActivityMatrix(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('FREQUENCY ACTIVITY MATRIX',5,12);
+  const isInt=typeof intercepting!=='undefined'&&intercepting;
+  const cols=60;const rows=20;const cellW=W/cols;const cellH=(H-25)/rows;
+  for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){
+    let activity=Math.random()*10;
+    if(isInt&&typeof channels!=='undefined'){
+      channels.forEach(ch=>{if(ch.active){const chCol=Math.floor(parseFloat(ch.freq)/6000*cols);
+        if(Math.abs(c-chCol)<2)activity+=40+Math.random()*30;}});}
+    const norm=Math.min(1,activity/80);
+    const g=Math.floor(norm*255);const b=Math.floor((1-norm)*200);
+    ctx.fillStyle='rgba(0,'+g+','+b+','+(0.2+norm*0.5)+')';
+    ctx.fillRect(c*cellW,20+r*cellH,cellW-0.5,cellH-0.5);
+  }}
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const sc=_$('sigintCanvas');
+  if(sc){const ctx=sc.getContext('2d');drawDFCompass(ctx,sc.width,sc.height);}
+  const tc=_$('trafficCanvas');
+  if(tc){const ctx=tc.getContext('2d');const W=tc.width,H=tc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawDataRate(ctx,W,H);}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

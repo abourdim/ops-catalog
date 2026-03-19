@@ -88,3 +88,127 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();setInterval(updateDroneList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — ANTI-DRONE SYSTEM ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _detectionHist=new Array(200).fill(0);let _neutralizeHist=new Array(200).fill(0);
+let _radarParticles=[];let _threatLevel=new Array(200).fill(0);
+
+class RadarPulse{constructor(cx,cy){this.cx=cx;this.cy=cy;this.r=0;this.maxR=200;this.speed=3;this.life=1;}
+update(){this.r+=this.speed;this.life=1-this.r/this.maxR;return this.r<this.maxR;}
+draw(ctx){ctx.beginPath();ctx.arc(this.cx,this.cy,this.r,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,'+this.life*0.3+')';ctx.lineWidth=2;ctx.stroke();}}
+
+/* ── Threat Assessment Gauge ── */
+function drawThreatGauge(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('THREAT LEVEL ASSESSMENT',5,12);
+  const isDet=typeof detecting!=='undefined'&&detecting;
+  const isJam=typeof jamming!=='undefined'&&jamming;
+  const highCount=typeof drones!=='undefined'?drones.filter(d=>d.threat==='HIGH'&&!d.neutralized).length:0;
+  const totalActive=typeof drones!=='undefined'?drones.filter(d=>!d.neutralized).length:0;
+  const threat=isDet?Math.min(100,highCount*30+totalActive*10+Math.random()*5):0;
+  _threatLevel.push(threat);if(_threatLevel.length>200)_threatLevel.shift();
+  // Gauge arc
+  const cx=W/2,cy=H*0.7,R=Math.min(W,H)*0.35;
+  const startA=Math.PI*0.8,endA=Math.PI*2.2;
+  // Background arc
+  ctx.beginPath();ctx.arc(cx,cy,R,startA,endA);ctx.strokeStyle='rgba(50,50,50,0.3)';ctx.lineWidth=12;ctx.stroke();
+  // Color zones
+  const greenEnd=startA+(endA-startA)*0.4;const yellowEnd=startA+(endA-startA)*0.7;
+  ctx.beginPath();ctx.arc(cx,cy,R,startA,greenEnd);ctx.strokeStyle='rgba(0,200,100,0.3)';ctx.lineWidth=12;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R,greenEnd,yellowEnd);ctx.strokeStyle='rgba(255,200,0,0.3)';ctx.lineWidth=12;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R,yellowEnd,endA);ctx.strokeStyle='rgba(255,50,50,0.3)';ctx.lineWidth=12;ctx.stroke();
+  // Needle
+  const needleA=startA+(threat/100)*(endA-startA);
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(needleA)*R*0.9,cy+Math.sin(needleA)*R*0.9);
+  ctx.strokeStyle=threat>70?'rgba(255,50,50,0.9)':threat>40?'rgba(255,200,0,0.8)':'rgba(0,200,100,0.7)';
+  ctx.lineWidth=3;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fill();
+  ctx.fillStyle=threat>70?'rgba(255,50,50,0.8)':'rgba(255,200,0,0.7)';ctx.font='18px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText(threat.toFixed(0),cx,cy+R*0.4);
+  ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';ctx.fillText('THREAT LEVEL',cx,cy+R*0.55);
+}
+
+/* ── Kill Chain Timeline ── */
+function drawKillChain(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('C-UAS KILL CHAIN',5,12);
+  const isDet=typeof detecting!=='undefined'&&detecting;
+  const isJam=typeof jamming!=='undefined'&&jamming;
+  const stages=['DETECT','CLASSIFY','TRACK','IDENTIFY','ENGAGE','NEUTRALIZE'];
+  const activeStage=!isDet?-1:!isJam?2:5;
+  const stageW=(W-20)/stages.length;
+  stages.forEach((s,i)=>{
+    const x=10+i*stageW;const y=28;const isActive=i<=activeStage;
+    ctx.fillStyle=isActive?(i>=4?'rgba(255,50,50,0.2)':'rgba(0,200,255,0.15)'):'rgba(50,50,50,0.15)';
+    ctx.fillRect(x,y,stageW-4,40);
+    if(isActive&&i===activeStage){ctx.strokeStyle='rgba(255,200,0,0.6)';ctx.lineWidth=2;ctx.strokeRect(x,y,stageW-4,40);}
+    ctx.fillStyle=isActive?(i>=4?'#ff6666':'#66ccff'):'rgba(100,100,100,0.4)';
+    ctx.font='8px Orbitron,monospace';ctx.textAlign='center';ctx.fillText(s,x+stageW/2-2,y+25);
+    if(i<stages.length-1){ctx.fillStyle=isActive&&i<activeStage?'rgba(0,200,255,0.5)':'rgba(100,100,100,0.2)';
+      ctx.beginPath();ctx.moveTo(x+stageW-6,y+20);ctx.lineTo(x+stageW+2,y+20);ctx.lineTo(x+stageW-2,y+17);ctx.moveTo(x+stageW+2,y+20);ctx.lineTo(x+stageW-2,y+23);ctx.stroke();}
+  });
+  // Timeline progress bar
+  const progress=activeStage>=0?(activeStage+1)/stages.length*100:0;
+  ctx.fillStyle='rgba(50,50,50,0.3)';ctx.fillRect(10,75,W-20,8);
+  ctx.fillStyle=progress>80?'rgba(0,200,100,0.6)':progress>40?'rgba(255,200,0,0.5)':'rgba(0,200,255,0.4)';
+  ctx.fillRect(10,75,(W-20)*progress/100,8);
+}
+
+/* ── Detection/Neutralization Stats ── */
+function drawDetNeutStats(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('DETECTION vs NEUTRALIZATION RATE',5,12);
+  const isDet=typeof detecting!=='undefined'&&detecting;
+  const isJam=typeof jamming!=='undefined'&&jamming;
+  const det=isDet?(typeof drones!=='undefined'?drones.filter(d=>!d.neutralized).length:0)*15+Math.random()*10:0;
+  const neut=isJam?(typeof drones!=='undefined'?drones.filter(d=>d.neutralized).length:0)*20+Math.random()*8:0;
+  _detectionHist.push(det);if(_detectionHist.length>200)_detectionHist.shift();
+  _neutralizeHist.push(neut);if(_neutralizeHist.length>200)_neutralizeHist.shift();
+  ctx.beginPath();
+  _detectionHist.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.beginPath();
+  _neutralizeHist.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(255,100,0,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle='rgba(0,200,255,0.5)';ctx.font='8px Orbitron,monospace';ctx.fillText('Detect',W-80,H-15);
+  ctx.fillStyle='rgba(255,100,0,0.5)';ctx.fillText('Neutralize',W-80,H-5);
+}
+
+/* ── RF Signature Classification ── */
+function drawRFClassification(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('RF SIGNATURE CLASSIFICATION',5,12);
+  if(typeof drones==='undefined')return;
+  const isDet=typeof detecting!=='undefined'&&detecting;
+  const classTypes=[{name:'DJI Phantom',band:'2.4 GHz',proto:'Lightbridge',color:'#66ccff'},{name:'FPV Racer',band:'5.8 GHz',proto:'Analog Video',color:'#ff6666'},{name:'DJI Mavic',band:'2.4/5.8 GHz',proto:'OcuSync',color:'#66ff88'},{name:'Parrot',band:'2.4 GHz WiFi',proto:'802.11',color:'#ffcc00'},{name:'Unknown',band:'900 MHz',proto:'Custom',color:'#cc66ff'}];
+  const barH=Math.min(22,(H-25)/classTypes.length);
+  classTypes.forEach((ct,i)=>{
+    const y=25+i*barH;const count=isDet?Math.floor(Math.random()*3):0;
+    const conf=isDet?60+Math.random()*35:0;
+    ctx.fillStyle=count>0?ct.color.replace('#','rgba(').replace(/(..)(..)(..)/,(m,r,g,b)=>parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16))+',0.15)':'rgba(50,50,50,0.1)';
+    ctx.fillRect(5,y,W-10,barH-2);
+    ctx.fillStyle=count>0?ct.color:'rgba(100,100,100,0.4)';ctx.font='8px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText(ct.name+' — '+ct.band,10,y+barH/2+3);
+    if(count>0){ctx.textAlign='right';ctx.fillText(conf.toFixed(0)+'% conf',W-10,y+barH/2+3);}
+  });
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  for(let i=_radarParticles.length-1;i>=0;i--)if(!_radarParticles[i].update())_radarParticles.splice(i,1);
+  const rc=_$('radarCanvas');
+  if(rc){const ctx=rc.getContext('2d');
+    if(typeof detecting!=='undefined'&&detecting&&_t%0.3<0.02){_radarParticles.push(new RadarPulse(rc.width/2,rc.height/2));}
+    _radarParticles.forEach(p=>p.draw(ctx));
+  }
+  const rfc=_$('rfCanvas');
+  if(rfc){const ctx=rfc.getContext('2d');const W=rfc.width,H=rfc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawThreatGauge(ctx,W*0.4,H);
+    ctx.save();ctx.translate(W*0.4,0);drawKillChain(ctx,W*0.6,H);ctx.restore();}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

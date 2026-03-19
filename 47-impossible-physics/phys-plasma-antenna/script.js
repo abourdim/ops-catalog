@@ -389,3 +389,156 @@ function init() {
   log(LANG[currentLang].ready, 'success');
 }
 document.addEventListener('DOMContentLoaded', init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Plasma Antenna
+   Animated ionized gas column with radiation pattern,
+   plasma density visualization, and RF coupling
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simPlasmaAntenna';let cv,cx,W,H,af=null,t=0;
+  const plasmaParticles=[];const rfWaves=[];const MAX_PARTICLES=200;
+  let ionLevel=70,rfFreq=150,antennaGain=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#04060e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function drawAntennaColumn(){
+    const ax=W*0.25,ay=40,aw=30,ah=H-80;
+    // Glass tube
+    cx.strokeStyle='rgba(150,200,255,0.2)';cx.lineWidth=2;
+    cx.beginPath();
+    cx.roundRect(ax-aw/2,ay,aw,ah,8);cx.stroke();
+    // Plasma glow
+    const glowAlpha=ionLevel/100*0.3;
+    const grad=cx.createLinearGradient(ax-aw/2,ay,ax+aw/2,ay);
+    grad.addColorStop(0,'rgba(100,50,255,0)');
+    grad.addColorStop(0.5,'rgba(150,100,255,'+glowAlpha+')');
+    grad.addColorStop(1,'rgba(100,50,255,0)');
+    cx.fillStyle=grad;
+    cx.beginPath();cx.roundRect(ax-aw/2+2,ay+2,aw-4,ah-4,6);cx.fill();
+    // Ionization level bar
+    const barH=ah*(ionLevel/100);
+    cx.fillStyle='rgba(150,100,255,'+(0.1+ionLevel/200)+')';
+    cx.fillRect(ax-aw/2+4,ay+ah-barH-2,aw-8,barH);
+    // Plasma particles inside tube
+    for(let i=0;i<ionLevel/5;i++){
+      const px2=ax+(Math.random()-.5)*(aw-10);
+      const py=ay+5+Math.random()*(ah-10);
+      cx.fillStyle='rgba(200,150,255,'+(0.2+Math.random()*0.3)+')';
+      cx.beginPath();cx.arc(px2,py,1+Math.random(),0,Math.PI*2);cx.fill();
+    }
+    cx.fillStyle='rgba(150,100,255,0.4)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('PLASMA TUBE',ax,ay-8);
+    cx.fillText(ionLevel+'% ionized',ax,ay+ah+12);
+  }
+
+  function drawRadiationPattern(){
+    const pcx=W*0.55,pcy=H/2,pr=110;
+    // Polar grid
+    cx.strokeStyle='rgba(100,200,255,0.06)';cx.lineWidth=0.5;
+    for(let r=pr*0.25;r<=pr;r+=pr*0.25){
+      cx.beginPath();cx.arc(pcx,pcy,r,0,Math.PI*2);cx.stroke();
+    }
+    for(let a=0;a<Math.PI*2;a+=Math.PI/6){
+      cx.beginPath();cx.moveTo(pcx,pcy);
+      cx.lineTo(pcx+Math.cos(a)*pr,pcy+Math.sin(a)*pr);cx.stroke();
+    }
+    // Radiation pattern (dipole-like with gain)
+    cx.fillStyle='rgba(150,100,255,0.15)';cx.beginPath();
+    for(let a=0;a<Math.PI*2;a+=0.02){
+      const gain2=Math.pow(Math.abs(Math.cos(a)),1.5)*(0.5+ionLevel/200);
+      const r2=pr*gain2;
+      const x=pcx+Math.cos(a)*r2;const y=pcy+Math.sin(a)*r2;
+      if(a===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+    }
+    cx.closePath();cx.fill();
+    cx.strokeStyle='rgba(150,100,255,0.5)';cx.lineWidth=1.5;cx.stroke();
+    // Animated RF emission
+    for(let w=0;w<3;w++){
+      const r2=(t*60+w*40)%pr;
+      const alpha=0.1*(1-r2/pr);
+      cx.strokeStyle='rgba(200,150,255,'+alpha+')';cx.lineWidth=1;
+      cx.beginPath();cx.arc(pcx,pcy,r2,0,Math.PI*2);cx.stroke();
+    }
+    cx.fillStyle='rgba(150,100,255,0.3)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('RADIATION PATTERN',pcx,pcy-pr-8);
+  }
+
+  function drawFrequencyResponse(){
+    const fx=W*0.78,fy=20,fw=W*0.2,fh=110;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(fx,fy,fw,fh);
+    const bins=40;const binW=fw/bins;
+    for(let i=0;i<bins;i++){
+      const freq=i/bins;
+      const plasmaFreq=ionLevel/100;
+      const response=freq>plasmaFreq?1/(1+Math.pow((freq-0.6)*5,2)):0.05;
+      const bh=response*fh*0.7+Math.random()*2;
+      const hue=260+freq*40;
+      cx.fillStyle='hsla('+hue+',60%,50%,'+(0.3+response*0.4)+')';
+      cx.fillRect(fx+i*binW,fy+fh-bh,binW-0.5,bh);
+    }
+    // Plasma frequency cutoff line
+    const cutoff=fx+ionLevel/100*fw;
+    cx.strokeStyle='rgba(255,100,100,0.3)';cx.lineWidth=1;cx.setLineDash([3,3]);
+    cx.beginPath();cx.moveTo(cutoff,fy);cx.lineTo(cutoff,fy+fh);cx.stroke();cx.setLineDash([]);
+    cx.fillStyle='rgba(255,100,100,0.3)';cx.font='6px monospace';cx.fillText('f_p',cutoff+3,fy+10);
+    cx.fillStyle='rgba(150,100,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('FREQUENCY RESPONSE',fx+8,fy+10);
+  }
+
+  function drawMetrics(){
+    const mx=W*0.78,my=150,mw=W*0.2,mh=70;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(mx,my,mw,mh);
+    antennaGain=2+ionLevel/20;
+    cx.fillStyle='rgba(150,100,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('ANTENNA METRICS',mx+8,my+14);
+    cx.fillStyle='#aaa';
+    cx.fillText('Gain: '+antennaGain.toFixed(1)+' dBi',mx+8,my+30);
+    cx.fillText('RF: '+rfFreq+' MHz',mx+8,my+44);
+    cx.fillText('Ion: '+ionLevel+'%',mx+8,my+58);
+  }
+
+  function drawPlasmaPhysics(){
+    const px=20,py=H-60,pw=W*0.45,ph=45;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(px,py,pw,ph);
+    cx.fillStyle='rgba(150,100,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('Plasma Freq: f_p = 9*sqrt(n_e) Hz',px+8,py+14);
+    cx.fillText('Above f_p: transparent | Below f_p: reflects',px+8,py+28);
+    cx.fillText('Advantage: Reconfigurable, stealth when OFF',px+8,py+42);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,180,42);
+    cx.strokeStyle='rgba(150,100,255,0.15)';cx.strokeRect(8,8,180,42);
+    cx.font='10px monospace';cx.fillStyle='#8b5cf6';cx.textAlign='left';
+    cx.fillText('PLASMA ANTENNA',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Ionized Gas RF Radiator',16,40);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(4,6,14,0.12)';cx.fillRect(0,0,W,H);
+
+    ionLevel=70+Math.sin(t*0.3)*20;
+    rfFreq=150+Math.sin(t*0.2)*50;
+
+    drawAntennaColumn();drawRadiationPattern();
+    drawFrequencyResponse();drawMetrics();drawPlasmaPhysics();drawHUD();
+
+    cx.fillStyle='rgba(150,100,255,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Plasma Antenna — Ionized Gas Column RF Radiation',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

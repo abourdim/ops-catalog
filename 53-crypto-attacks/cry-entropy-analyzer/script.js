@@ -392,3 +392,178 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildHelp();buildRef();buildMath();
   log(LANG[currentLang].ready,'success');drawCanvas();
 });
+
+/* ═══════ ENHANCED ENTROPY VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+// Live entropy data
+let _liveData=new Uint8Array(256);
+let _source='crypto';
+
+function refreshData(){
+  if(_source==='crypto')crypto.getRandomValues(_liveData);
+  else if(_source==='math')for(let i=0;i<256;i++)_liveData[i]=Math.floor(Math.random()*256);
+  else if(_source==='counter')for(let i=0;i<256;i++)_liveData[i]=(i+_t)&0xFF;
+  else{let s=_t;for(let i=0;i<256;i++){s=(s*1103515245+12345)&0x7FFFFFFF;_liveData[i]=(s>>16)&0xFF}}
+}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  if(_t%10===0)refreshData();
+
+  // === Byte Heatmap (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Live Byte Stream Heatmap',10,16);
+
+  const hmW=w*0.38,hmH=100,hmX=10,hmY=24;
+  const hmCols=16,hmRows=16;
+  const hmCellW=hmW/hmCols,hmCellH=hmH/hmRows;
+  for(let i=0;i<Math.min(256,hmCols*hmRows);i++){
+    const col=i%hmCols,row=Math.floor(i/hmCols);
+    const val=_liveData[i];
+    const hue=(val/256)*360;
+    _x.fillStyle=`hsla(${hue},60%,${30+val/256*40}%,.7)`;
+    _x.fillRect(hmX+col*hmCellW,hmY+row*hmCellH,hmCellW-0.5,hmCellH-0.5);
+  }
+  // Compute live entropy
+  const freq=new Float64Array(256);
+  for(let i=0;i<_liveData.length;i++)freq[_liveData[i]]++;
+  let H=0;for(let i=0;i<256;i++){if(freq[i]>0){const p=freq[i]/_liveData.length;H-=p*Math.log2(p)}}
+  _x.fillStyle=H>7.5?'#4ade80':H>6?'#fbbf24':'#f87171';_x.font='bold 9px SF Mono';
+  _x.fillText(`Shannon Entropy: ${H.toFixed(4)} / 8.0 bits`,hmX,hmY+hmH+12);
+
+  // === Bit Pattern Visualization (top-middle) ===
+  const bpX=w*0.42,bpW=w*0.25,bpY=10;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Bit Patterns',bpX,16);
+
+  const bitRows=16,bitCols=16;
+  const bitCW=bpW/bitCols,bitCH=100/bitRows;
+  for(let byte=0;byte<Math.min(bitRows,_liveData.length);byte++){
+    for(let bit=7;bit>=0;bit--){
+      const val=(_liveData[byte]>>bit)&1;
+      const x=bpX+(7-bit)*bitCW*2;
+      const y=bpY+18+byte*bitCH;
+      _x.fillStyle=val?`${acc}66`:'rgba(255,255,255,.03)';
+      _x.fillRect(x,y,bitCW*2-0.5,bitCH-0.5);
+    }
+  }
+  _x.fillStyle=mut;_x.font='8px Tajawal';_x.fillText('0-bits dark, 1-bits colored',bpX,bpY+126);
+
+  // === Monte Carlo Pi Scatter (top-right) ===
+  const mcX=w*0.70,mcW=w*0.28,mcY=10;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Monte Carlo Pi',mcX,16);
+  const mcSize=Math.min(mcW,100);
+  const mcR=mcSize/2;
+  _x.strokeStyle=mut+'44';_x.strokeRect(mcX,mcY+18,mcSize,mcSize);
+  _x.strokeStyle='#60a5fa44';_x.beginPath();_x.arc(mcX+mcR,mcY+18+mcR,mcR,0,Math.PI*2);_x.stroke();
+
+  let inside=0;const nPairs=Math.floor(_liveData.length/2);
+  for(let i=0;i<nPairs;i++){
+    const x=_liveData[i*2],y=_liveData[i*2+1];
+    const dx=x-127.5,dy=y-127.5;
+    const isIn=dx*dx+dy*dy<=127.5*127.5;
+    if(isIn)inside++;
+    _x.fillStyle=isIn?'#4ade8044':'#f8717133';
+    const px=mcX+(x/255)*mcSize;
+    const py=mcY+18+(y/255)*mcSize;
+    _x.fillRect(px,py,2,2);
+  }
+  const piEst=4*inside/nPairs;
+  _x.fillStyle=mut;_x.font='9px SF Mono';
+  _x.fillText(`Pi ~ ${piEst.toFixed(3)}`,mcX,mcY+mcSize+32);
+
+  // === Entropy Gauge (middle) ===
+  const egY=140,egW=w-20,egH=30;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Entropy Quality Gauge',10,egY);
+  // Background
+  _x.fillStyle='rgba(255,255,255,.04)';_x.fillRect(10,egY+8,egW,egH);
+  // Gradient fill
+  const grad=_x.createLinearGradient(10,0,10+egW,0);
+  grad.addColorStop(0,'#f87171');grad.addColorStop(0.5,'#fbbf24');grad.addColorStop(0.85,'#4ade80');grad.addColorStop(1,'#4ade80');
+  _x.fillStyle=grad;_x.fillRect(10,egY+8,(H/8)*egW,egH);
+  _x.strokeStyle=acc;_x.strokeRect(10,egY+8,egW,egH);
+  // Needle
+  const needleX=10+(H/8)*egW;
+  _x.fillStyle='#fff';_x.beginPath();_x.moveTo(needleX,egY+6);_x.lineTo(needleX-4,egY+2);_x.lineTo(needleX+4,egY+2);_x.fill();
+  // Labels
+  _x.fillStyle=mut;_x.font='8px SF Mono';
+  _x.fillText('0 (constant)',10,egY+egH+20);_x.fillText('8.0 (perfect)',egW-55,egY+egH+20);
+  const grade=H>7.9?'EXCELLENT':H>7.5?'GOOD':H>6?'FAIR':'POOR';
+  _x.fillStyle=H>7.5?'#4ade80':H>6?'#fbbf24':'#f87171';
+  _x.font='bold 10px SF Mono';_x.textAlign='center';
+  _x.fillText(`${H.toFixed(3)} bits/byte (${grade})`,w/2,egY+22);_x.textAlign='left';
+
+  // === Chi-Square Histogram (bottom-left) ===
+  const csY=egY+egH+30,csW=w*0.48,csH=h-csY-25;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Byte Frequency (Chi-Square basis)',10,csY);
+
+  const maxFreq=Math.max(...freq,1);
+  const expected=_liveData.length/256;
+  const barW=csW/256;
+  for(let i=0;i<256;i++){
+    if(freq[i]>0){
+      const barH=(freq[i]/maxFreq)*(csH-15);
+      const deviation=Math.abs(freq[i]-expected)/Math.max(expected,1);
+      const color=deviation<0.5?'#4ade80':deviation<1?'#fbbf24':'#f87171';
+      _x.fillStyle=color+'55';
+      _x.fillRect(10+i*barW,csY+8+csH-15-barH,barW,barH);
+    }
+  }
+  // Expected line
+  const expY=csY+8+csH-15-(expected/maxFreq)*(csH-15);
+  _x.strokeStyle='#f87171';_x.setLineDash([2,2]);
+  _x.beginPath();_x.moveTo(10,expY);_x.lineTo(10+csW,expY);_x.stroke();_x.setLineDash([]);
+  // Chi2 value
+  let chi2=0;for(let i=0;i<256;i++)chi2+=(freq[i]-expected)**2/Math.max(expected,0.01);
+  _x.fillStyle=chi2>200&&chi2<330?'#4ade80':'#f87171';_x.font='9px SF Mono';
+  _x.fillText(`Chi2 = ${chi2.toFixed(1)} ${chi2>200&&chi2<330?'(PASS)':'(FAIL)'}`,10,csY+csH-2);
+
+  // === Serial Correlation Plot (bottom-right) ===
+  const scX=w*0.52,scY=csY,scW=w*0.46,scH=csH;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Serial Correlation (x[i] vs x[i+1])',scX,scY);
+
+  const scPlotSize=Math.min(scW,scH-20);
+  _x.strokeStyle=mut+'33';_x.strokeRect(scX,scY+8,scPlotSize,scPlotSize);
+  // Diagonal (perfect correlation line)
+  _x.strokeStyle='#f87171';_x.setLineDash([3,3]);
+  _x.beginPath();_x.moveTo(scX,scY+8+scPlotSize);_x.lineTo(scX+scPlotSize,scY+8);_x.stroke();_x.setLineDash([]);
+
+  for(let i=0;i<_liveData.length-1;i++){
+    const x=scX+(_liveData[i]/255)*scPlotSize;
+    const y=scY+8+(1-_liveData[i+1]/255)*scPlotSize;
+    _x.fillStyle='rgba(96,165,250,.2)';
+    _x.fillRect(x,y,2,2);
+  }
+
+  // Correlation coefficient
+  let sc=0,sum=0,sumSq=0,sumProd=0;
+  for(let i=0;i<_liveData.length;i++){sum+=_liveData[i];sumSq+=_liveData[i]*_liveData[i]}
+  for(let i=0;i<_liveData.length-1;i++)sumProd+=_liveData[i]*_liveData[i+1];
+  const mean=sum/_liveData.length;
+  const denom=sumSq-mean*mean*_liveData.length;
+  sc=denom===0?1:(sumProd-mean*mean*(_liveData.length-1))/denom;
+  _x.fillStyle=Math.abs(sc)<0.1?'#4ade80':'#f87171';_x.font='bold 9px SF Mono';
+  _x.fillText(`r = ${sc.toFixed(4)} ${Math.abs(sc)<0.1?'(good)':'(correlated!)'}`,scX+scPlotSize+5,scY+scPlotSize/2);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

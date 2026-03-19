@@ -362,3 +362,180 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildHelp();buildRef();buildMath();
   log(LANG[currentLang].ready,'success');drawCanvas();
 });
+
+/* ═══════ ENHANCED BIRTHDAY PARADOX VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0,_people=[],_collisionT=-1;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+// Birthday simulation: 365-day calendar
+function resetSim(){_people=[];_collisionT=-1}
+resetSim();
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Calendar Birthday Grid (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Birthday Calendar (365 days)',10,16);
+
+  const calW=w*0.48,calH=130,calX=10,calY=24;
+  const cols=31,rows=12;
+  const cellW=calW/cols,cellH=calH/rows;
+
+  // Add a new person every few frames
+  if(_t%8===0&&_collisionT<0){
+    const bday=Math.floor(Math.random()*365);
+    const existing=_people.find(p=>p.bday===bday);
+    _people.push({bday,collision:!!existing,id:_people.length});
+    if(existing)_collisionT=_t;
+  }
+
+  // Draw calendar grid
+  const dayCounts=new Array(365).fill(0);
+  _people.forEach(p=>dayCounts[p.bday]++);
+
+  for(let month=0;month<12;month++){
+    for(let day=0;day<31;day++){
+      const dayOfYear=month*30+day;
+      if(dayOfYear>=365)continue;
+      const x=calX+day*cellW,y=calY+month*cellH;
+      const count=dayCounts[dayOfYear];
+      if(count>=2){
+        _x.fillStyle='#f8717166';_x.fillRect(x,y,cellW-0.5,cellH-0.5);
+      }else if(count===1){
+        _x.fillStyle=`${acc}44`;_x.fillRect(x,y,cellW-0.5,cellH-0.5);
+      }else{
+        _x.fillStyle='rgba(255,255,255,.02)';_x.fillRect(x,y,cellW-0.5,cellH-0.5);
+      }
+    }
+  }
+
+  // Stats
+  _x.fillStyle=mut;_x.font='9px SF Mono';
+  _x.fillText(`People: ${_people.length} / 365 days`,calX,calY+calH+12);
+  if(_collisionT>0){
+    _x.fillStyle='#f87171';_x.font='bold 9px SF Mono';
+    _x.fillText(`Collision at person #${_people.findIndex(p=>p.collision)+1}! (Expected ~23)`,calX+130,calY+calH+12);
+  }
+
+  // Reset after finding collision and showing for a bit
+  if(_collisionT>0&&_t-_collisionT>120)resetSim();
+
+  // === Probability Theory (top-right) ===
+  const ptX=w*0.52,ptY=10,ptW=w*0.46,ptH=130;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Collision Probability Theory',ptX,16);
+
+  // Draw P(collision) for different N values
+  const Ns=[{n:365,label:'365 (birthday)',color:'#4ade80'},{n:256,label:'256 (8-bit hash)',color:'#60a5fa'},{n:65536,label:'65536 (16-bit)',color:'#fbbf24'}];
+
+  _x.strokeStyle=mut+'44';_x.beginPath();
+  _x.moveTo(ptX+25,ptY+18);_x.lineTo(ptX+25,ptY+ptH);_x.lineTo(ptX+ptW,ptY+ptH);_x.stroke();
+
+  Ns.forEach(ns=>{
+    _x.strokeStyle=ns.color;_x.lineWidth=1.5;_x.beginPath();
+    const maxK=Math.min(Math.ceil(3*Math.sqrt(ns.n)),300);
+    for(let k=1;k<=maxK;k++){
+      const prob=1-Math.exp(-k*(k-1)/(2*ns.n));
+      const px=ptX+25+(k/maxK)*(ptW-30);
+      const py=ptY+ptH-prob*(ptH-22);
+      if(k===1)_x.moveTo(px,py);else _x.lineTo(px,py);
+    }
+    _x.stroke();_x.lineWidth=1;
+  });
+
+  // 50% line
+  const halfY=ptY+ptH-(ptH-22)*0.5;
+  _x.strokeStyle='#f87171';_x.setLineDash([3,3]);
+  _x.beginPath();_x.moveTo(ptX+25,halfY);_x.lineTo(ptX+ptW,halfY);_x.stroke();_x.setLineDash([]);
+  _x.fillStyle='#f87171';_x.font='7px SF Mono';_x.fillText('50%',ptX+5,halfY+3);
+
+  // Legend
+  Ns.forEach((ns,i)=>{
+    _x.fillStyle=ns.color;_x.font='8px SF Mono';
+    _x.fillText(ns.label,ptX+30,ptY+ptH+12+i*11);
+  });
+
+  // === Birthday Bound Table (middle) ===
+  const bbY=calY+calH+24,bbW=w;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Birthday Bound: 50% collision probability',10,bbY);
+
+  const bounds=[
+    {hash:'MD5',bits:128,bound:'2^64',color:'#f87171',broken:true},
+    {hash:'SHA-1',bits:160,bound:'2^80',color:'#f87171',broken:true},
+    {hash:'SHA-256',bits:256,bound:'2^128',color:'#4ade80',broken:false},
+    {hash:'SHA-384',bits:384,bound:'2^192',color:'#4ade80',broken:false},
+    {hash:'SHA-512',bits:512,bound:'2^256',color:'#4ade80',broken:false},
+    {hash:'SHA-3-256',bits:256,bound:'2^128',color:'#4ade80',broken:false}
+  ];
+
+  const colW=w/6;
+  // Header
+  _x.fillStyle=acc+'44';_x.fillRect(10,bbY+6,w-20,14);
+  ['Hash','Bits','Bound','Status'].forEach((hdr,i)=>{
+    _x.fillStyle=acc;_x.font='bold 8px SF Mono';
+    _x.fillText(hdr,[14,80,145,220][i],bbY+16);
+  });
+
+  bounds.forEach((b,i)=>{
+    const y=bbY+22+i*14;
+    const isActive=Math.floor(_t/40)%bounds.length===i;
+    _x.fillStyle=isActive?b.color+'22':'rgba(255,255,255,.02)';
+    _x.fillRect(10,y,w*0.55,13);
+    _x.fillStyle=b.color;_x.font='8px SF Mono';
+    _x.fillText(b.hash,14,y+10);
+    _x.fillStyle=mut;_x.fillText(`${b.bits}`,80,y+10);
+    _x.fillText(b.bound,145,y+10);
+    _x.fillStyle=b.broken?'#f87171':'#4ade80';_x.font='bold 8px SF Mono';
+    _x.fillText(b.broken?'BROKEN':'SECURE',220,y+10);
+    // Security bar
+    const barW=(b.bits/512)*(w*0.35);
+    _x.fillStyle=b.color+'33';_x.fillRect(280,y+1,barW,11);
+  });
+
+  // === Animated Hash Collision Demo (bottom) ===
+  const acY=bbY+22+bounds.length*14+10;
+  if(acY+40<h){
+    _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+    _x.fillText('Live: Random hash values approaching collision',10,acY);
+
+    const nDots=Math.min(120,_t%150);
+    const hashSpace=256;// 8-bit for visualization
+    const radius=Math.min((w-40)/2,(h-acY-25)/2)*0.8;
+    const cx=w/2,cy=acY+radius+15;
+    _x.strokeStyle=mut+'22';_x.beginPath();_x.arc(cx,cy,radius,0,Math.PI*2);_x.stroke();
+
+    const seen=new Set();let collisionIdx=-1;
+    for(let i=0;i<nDots;i++){
+      const hash=(i*37+_t*3)%hashSpace;
+      if(seen.has(hash)&&collisionIdx<0)collisionIdx=i;
+      seen.add(hash);
+      const angle=(hash/hashSpace)*Math.PI*2;
+      const px=cx+Math.cos(angle)*radius*0.85;
+      const py=cy+Math.sin(angle)*radius*0.85;
+      const isCollision=i===collisionIdx;
+      _x.fillStyle=isCollision?'#f87171':`hsla(${(hash/hashSpace)*360},60%,50%,.5)`;
+      _x.beginPath();_x.arc(px,py,isCollision?5:2.5,0,Math.PI*2);_x.fill();
+    }
+    if(collisionIdx>=0){
+      _x.fillStyle='#f87171';_x.font='bold 10px SF Mono';_x.textAlign='center';
+      _x.fillText(`Collision at attempt #${collisionIdx}!`,cx,cy);_x.textAlign='left';
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

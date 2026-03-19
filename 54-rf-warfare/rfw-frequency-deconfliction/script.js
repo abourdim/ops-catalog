@@ -82,3 +82,148 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();setInterval(updateAllocList,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS — FREQUENCY DECONFLICTION ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _specEfficiency=new Array(200).fill(0);let _guardBands=[];
+let _interferencePower=new Array(60).fill(0);
+
+/* ── Interference Power Map ── */
+function drawInterferenceMap(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('INTERFERENCE POWER MAP (dBm)',5,12);
+  if(typeof allocations==='undefined')return;
+  const bins=60;const binW=W/bins;
+  // Calculate interference per bin
+  for(let b=0;b<bins;b++){
+    const freq=b*100;let power=-100;
+    allocations.forEach(a=>{
+      const diff=Math.abs(freq-a.freq);
+      if(diff<a.bw)power=Math.max(power,-20+a.bw*0.3);
+      else if(diff<a.bw*2)power=Math.max(power,-60+a.bw*0.1);
+    });
+    _interferencePower[b]=_interferencePower[b]*0.9+(power+100)*0.1;
+  }
+  // Heatmap bars
+  for(let b=0;b<bins;b++){
+    const norm=Math.min(1,_interferencePower[b]/80);
+    const r=norm>0.5?255:norm*500;const g=norm<0.5?200:200*(1-norm);
+    ctx.fillStyle='rgba('+Math.floor(r)+','+Math.floor(g)+',50,'+(0.3+norm*0.5)+')';
+    ctx.fillRect(b*binW,25,binW-1,H-35);
+  }
+  // Frequency labels
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+  for(let f=0;f<=6000;f+=1000){ctx.fillText(f+'',f/6000*W,H-2);}
+}
+
+/* ── Spectral Efficiency Tracker ── */
+function drawSpectralEfficiency(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('SPECTRAL EFFICIENCY (%)',5,12);
+  if(typeof allocations==='undefined')return;
+  let totalBW=0;allocations.forEach(a=>totalBW+=a.bw);
+  const eff=Math.min(100,totalBW/6000*100);
+  _specEfficiency.push(eff);if(_specEfficiency.length>200)_specEfficiency.shift();
+  ctx.beginPath();
+  _specEfficiency.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(0,200,255,0.7)';ctx.lineWidth=2;ctx.stroke();
+  ctx.lineTo(W,H-10);ctx.lineTo(0,H-10);ctx.closePath();ctx.fillStyle='rgba(0,200,255,0.05)';ctx.fill();
+  ctx.fillStyle='rgba(0,200,255,0.6)';ctx.font='14px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(eff.toFixed(1)+'%',W-10,30);
+  // Waste indicator
+  const waste=Math.max(0,100-eff);
+  ctx.fillStyle='rgba(255,200,0,0.4)';ctx.font='8px Orbitron,monospace';ctx.fillText('Unused: '+waste.toFixed(1)+'%',W-10,45);
+}
+
+/* ── Guard Band Visualization ── */
+function drawGuardBands(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('GUARD BAND ANALYSIS',5,12);
+  if(typeof allocations==='undefined'||allocations.length<2)return;
+  const sorted=[...allocations].sort((a,b)=>a.freq-b.freq);
+  const barH=Math.min(30,(H-30)/sorted.length);
+  for(let i=0;i<sorted.length-1;i++){
+    const a=sorted[i],b=sorted[i+1];
+    const aEnd=a.freq+a.bw/2;const bStart=b.freq-b.bw/2;
+    const gap=bStart-aEnd;
+    const y=25+i*barH;
+    // Allocation bars
+    const ax1=((a.freq-a.bw/2)/6000)*W;const ax2=(aEnd/6000)*W;
+    const bx1=(bStart/6000)*W;const bx2=((b.freq+b.bw/2)/6000)*W;
+    const ac=unitColors[a.unit]||'#888';const bc=unitColors[b.unit]||'#888';
+    ctx.fillStyle=ac+'33';ctx.fillRect(ax1,y,ax2-ax1,barH-2);
+    ctx.fillStyle=bc+'33';ctx.fillRect(bx1,y,bx2-bx1,barH-2);
+    // Guard band
+    if(gap>0){ctx.fillStyle='rgba(0,200,100,0.15)';ctx.fillRect(ax2,y,bx1-ax2,barH-2);
+      ctx.fillStyle='rgba(0,200,100,0.4)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText(gap.toFixed(0)+'MHz',(ax2+bx1)/2,y+barH/2+2);}
+    else{ctx.fillStyle='rgba(255,50,50,0.2)';ctx.fillRect(Math.min(ax2,bx1),y,Math.abs(bx1-ax2),barH-2);
+      ctx.fillStyle='rgba(255,50,50,0.5)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText('OVERLAP',(ax2+bx1)/2,y+barH/2+2);}
+  }
+}
+
+/* ── Priority Allocation Treemap ── */
+function drawPriorityTreemap(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('PRIORITY ALLOCATION TREEMAP',5,12);
+  if(typeof allocations==='undefined')return;
+  const priorities={critical:[],high:[],medium:[],low:[]};
+  allocations.forEach(a=>{if(priorities[a.priority])priorities[a.priority].push(a);});
+  const priColors={critical:'rgba(255,50,50,0.4)',high:'rgba(255,200,0,0.3)',medium:'rgba(0,200,255,0.25)',low:'rgba(100,100,100,0.2)'};
+  let y=25;
+  Object.entries(priorities).forEach(([pri,allocs])=>{
+    if(allocs.length===0)return;
+    const totalBW=allocs.reduce((s,a)=>s+a.bw,0);
+    const rowH=Math.max(20,Math.min(40,totalBW/20));
+    let x=5;
+    allocs.forEach(a=>{
+      const w=Math.max(30,(a.bw/200)*(W-10));
+      ctx.fillStyle=priColors[pri];ctx.fillRect(x,y,w-2,rowH-2);
+      ctx.strokeStyle=(a.conflict?'rgba(255,50,50,0.7)':'rgba(255,255,255,0.15)');ctx.lineWidth=a.conflict?2:1;ctx.strokeRect(x,y,w-2,rowH-2);
+      ctx.fillStyle=unitColors[a.unit]||'#aaa';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText(a.unit,x+w/2,y+rowH/2-2);ctx.fillText(a.bw+'MHz',x+w/2,y+rowH/2+8);
+      x+=w;
+    });
+    ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';ctx.textAlign='right';
+    ctx.fillText(pri.toUpperCase(),W-5,y+rowH/2+3);
+    y+=rowH+3;
+  });
+}
+
+/* ── EMI Probability Matrix ── */
+function drawEMIMatrix(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('EMI PROBABILITY MATRIX',5,12);
+  if(typeof allocations==='undefined')return;
+  const n=Math.min(allocations.length,8);const cellW=Math.min(50,(W-50)/n);const cellH=Math.min(22,(H-35)/n);
+  for(let i=0;i<n;i++){for(let j=0;j<n;j++){
+    const x=45+j*cellW;const y=28+i*cellH;
+    let prob=0;
+    if(i===j)prob=0;
+    else{const a=allocations[i],b=allocations[j];const sep=Math.abs(a.freq-b.freq)-(a.bw+b.bw)/2;
+      prob=sep<0?0.9:sep<20?0.5:sep<50?0.2:0.05;}
+    ctx.fillStyle=prob>0.5?'rgba(255,50,50,0.4)':prob>0.2?'rgba(255,200,0,0.25)':'rgba(0,200,100,0.1)';
+    ctx.fillRect(x,y,cellW-2,cellH-2);
+    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='6px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillText((prob*100).toFixed(0)+'%',x+cellW/2,y+cellH/2+2);
+  }
+  ctx.fillStyle=unitColors[allocations[i].unit]||'#aaa';ctx.font='6px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(allocations[i].id,43,28+i*cellH+cellH/2+2);
+  ctx.textAlign='center';ctx.fillText(allocations[i].id,45+i*cellW+cellW/2,26);
+  }
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const ac=_$('allocCanvas');
+  if(ac){const ctx=ac.getContext('2d');drawInterferenceMap(ctx,ac.width,ac.height);}
+  const cc=_$('conflictCanvas');
+  if(cc){const ctx=cc.getContext('2d');const W=cc.width,H=cc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawSpectralEfficiency(ctx,W,H);}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

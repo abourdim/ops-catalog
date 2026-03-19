@@ -337,3 +337,142 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildHelp();buildRef();buildMath();
   log(LANG[currentLang].ready,'success');drawCanvas();
 });
+
+/* ═══════ ENHANCED MEET-IN-THE-MIDDLE VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Double Encryption Pipeline (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('2DES Double Encryption Pipeline',10,16);
+
+  const boxes=[
+    {label:'P',desc:'Plaintext',x:w*0.05,color:'#4ade80'},
+    {label:'E_K1',desc:'Encrypt',x:w*0.22,color:'#60a5fa'},
+    {label:'M',desc:'Middle',x:w*0.42,color:'#fbbf24'},
+    {label:'E_K2',desc:'Encrypt',x:w*0.60,color:'#60a5fa'},
+    {label:'C',desc:'Ciphertext',x:w*0.78,color:'#f87171'}
+  ];
+  const bW=60,bH=30,bY=28;
+  boxes.forEach((b,i)=>{
+    _x.fillStyle=b.color+'22';_x.fillRect(b.x,bY,bW,bH);_x.strokeStyle=b.color;_x.strokeRect(b.x,bY,bW,bH);
+    _x.fillStyle=b.color;_x.font='bold 10px SF Mono';_x.textAlign='center';
+    _x.fillText(b.label,b.x+bW/2,bY+14);_x.fillStyle=mut;_x.font='7px Tajawal';_x.fillText(b.desc,b.x+bW/2,bY+26);_x.textAlign='left';
+    if(i<boxes.length-1){
+      _x.strokeStyle=mut+'66';_x.beginPath();_x.moveTo(b.x+bW,bY+bH/2);_x.lineTo(boxes[i+1].x,bY+bH/2);_x.stroke();
+    }
+  });
+  // Animated data flow
+  const flowPhase=(_t%100)/100;
+  const flowX=boxes[0].x+bW+(boxes[4].x-boxes[0].x-bW)*flowPhase;
+  _x.fillStyle='#fff';_x.beginPath();_x.arc(flowX,bY+bH/2,4,0,Math.PI*2);_x.fill();
+
+  // === Forward & Backward Table Concept (middle) ===
+  const tbY=bY+bH+20;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('MITM: Forward & Backward Hash Tables',10,tbY);
+
+  const halfW=w*0.45;
+  // Forward table
+  _x.fillStyle='#60a5fa';_x.font='bold 10px SF Mono';_x.fillText('Forward: E_K1(P)',10,tbY+16);
+  const nEntries=12;
+  const entryH=14;
+  for(let i=0;i<nEntries;i++){
+    const y=tbY+22+i*entryH;
+    const isActive=i<=(_t%nEntries);
+    const k1=i*19+3;const m=miniEncrypt(42,k1,8);
+    _x.fillStyle=isActive?'#60a5fa22':'rgba(255,255,255,.02)';
+    _x.fillRect(10,y,halfW-10,entryH-2);
+    _x.fillStyle=isActive?'#60a5fa':mut;_x.font='7px SF Mono';
+    _x.fillText(`K1=${k1.toString(16).padStart(2,'0')} -> M=${m.toString(16).padStart(2,'0')}  [stored in table]`,14,y+10);
+  }
+
+  // Backward table
+  _x.fillStyle='#f87171';_x.font='bold 10px SF Mono';_x.fillText('Backward: D_K2(C)',w*0.52,tbY+16);
+  for(let i=0;i<nEntries;i++){
+    const y=tbY+22+i*entryH;
+    const isActive=i<=(_t%(nEntries+3));
+    const k2=i*23+7;const m=miniDecrypt(187,k2,8);
+    const isMatch=i===7&&_t%40>20;
+    _x.fillStyle=isMatch?'#4ade8044':isActive?'#f8717122':'rgba(255,255,255,.02)';
+    _x.fillRect(w*0.52,y,halfW-10,entryH-2);
+    _x.fillStyle=isMatch?'#4ade80':isActive?'#f87171':mut;_x.font='7px SF Mono';
+    _x.fillText(`K2=${k2.toString(16).padStart(2,'0')} -> M'=${m.toString(16).padStart(2,'0')}  ${isMatch?'<< MATCH!':'[lookup]'}`,w*0.52+4,y+10);
+  }
+
+  // Match arrow
+  if(_t%40>20){
+    const matchY=tbY+22+7*entryH+entryH/2;
+    _x.strokeStyle='#4ade80';_x.lineWidth=2;_x.setLineDash([3,3]);
+    _x.beginPath();_x.moveTo(halfW,matchY);_x.lineTo(w*0.52,matchY);_x.stroke();
+    _x.setLineDash([]);_x.lineWidth=1;
+    _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';_x.textAlign='center';
+    _x.fillText('M = M\' => Found K1, K2!',w/2,matchY-6);_x.textAlign='left';
+  }
+
+  // === Complexity Comparison Chart (bottom) ===
+  const ccY=tbY+22+nEntries*entryH+15;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Why 2DES Fails: Complexity Analysis',10,ccY);
+
+  const bits=[4,6,8,10,12,14,16];
+  const chartW=w-40,chartH=h-ccY-35;
+  const maxLog=32;
+  _x.strokeStyle=mut+'44';_x.beginPath();
+  _x.moveTo(30,ccY+8);_x.lineTo(30,ccY+8+chartH);_x.lineTo(30+chartW,ccY+8+chartH);_x.stroke();
+
+  // Brute force line (2^2n)
+  _x.strokeStyle='#f87171';_x.lineWidth=2;_x.beginPath();
+  bits.forEach((b,i)=>{
+    const x=30+i/(bits.length-1)*chartW;
+    const y=ccY+8+chartH-(2*b/maxLog)*chartH;
+    if(i===0)_x.moveTo(x,y);else _x.lineTo(x,y);
+  });_x.stroke();
+
+  // MITM line (2^(n+1))
+  _x.strokeStyle='#4ade80';_x.beginPath();
+  bits.forEach((b,i)=>{
+    const x=30+i/(bits.length-1)*chartW;
+    const y=ccY+8+chartH-((b+1)/maxLog)*chartH;
+    if(i===0)_x.moveTo(x,y);else _x.lineTo(x,y);
+  });_x.stroke();_x.lineWidth=1;
+
+  // Single DES line (2^n)
+  _x.strokeStyle='#fbbf24';_x.setLineDash([4,4]);_x.beginPath();
+  bits.forEach((b,i)=>{
+    const x=30+i/(bits.length-1)*chartW;
+    const y=ccY+8+chartH-(b/maxLog)*chartH;
+    if(i===0)_x.moveTo(x,y);else _x.lineTo(x,y);
+  });_x.stroke();_x.setLineDash([]);
+
+  // Legend
+  _x.fillStyle='#f87171';_x.font='8px SF Mono';_x.fillText('Brute 2^(2n)',w-180,ccY+14);
+  _x.fillStyle='#4ade80';_x.fillText('MITM 2^(n+1)',w-180,ccY+26);
+  _x.fillStyle='#fbbf24';_x.fillText('1DES 2^n',w-180,ccY+38);
+
+  // X-axis labels
+  bits.forEach((b,i)=>{
+    const x=30+i/(bits.length-1)*chartW;
+    _x.fillStyle=mut;_x.font='7px SF Mono';_x.textAlign='center';
+    _x.fillText(`${b}`,x,ccY+8+chartH+10);_x.textAlign='left';
+  });
+  _x.fillStyle=mut;_x.font='8px Tajawal';_x.fillText('Key bits (n)',30+chartW/2-20,ccY+8+chartH+20);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();
