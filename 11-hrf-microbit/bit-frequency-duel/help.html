@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Help — Frequency Duel — Workshop DIY</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e0e0e0;line-height:1.8;padding:2rem;max-width:860px;margin:0 auto}
+h1{font-family:'Orbitron',monospace;color:#d4a03c;font-size:1.6rem;margin-bottom:.3rem}
+h2{color:#d4a03c;font-size:1.15rem;margin:2rem 0 .6rem;border-bottom:1px solid #333;padding-bottom:.3rem}
+h3{color:#8ab4f8;font-size:.95rem;margin:1.2rem 0 .3rem}
+a{color:#68f;text-decoration:none}a:hover{text-decoration:underline}
+.back{display:inline-block;margin-bottom:1rem;color:#888;font-size:.85rem}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;margin:2px;border:1px solid #d4a03c;color:#d4a03c}
+.start-box{background:#111;border:1px solid #d4a03c44;border-radius:10px;padding:1.2rem;margin:1rem 0}
+.start-box ol{padding-left:1.5rem}
+.start-box li{margin:.5rem 0;color:#ccc}
+code{background:#1a1a2e;padding:2px 6px;border-radius:4px;font-size:.85rem;color:#4a9}
+.faq{margin:1rem 0}
+.faq details{background:#111;border:1px solid #222;border-radius:8px;margin:.5rem 0;overflow:hidden}
+.faq summary{padding:.7rem 1rem;cursor:pointer;font-weight:600;color:#e0e0e0;font-size:.9rem}
+.faq summary:hover{background:#1a1a2e}
+.faq .answer{padding:.5rem 1rem 1rem;color:#bbb;font-size:.88rem;border-top:1px solid #222}
+.hw-box{background:#0d1a0d;border:1px solid #4a933;border-radius:8px;padding:1rem;margin:.5rem 0}
+.hw-box h4{color:#4a9;margin-bottom:.4rem;font-size:.9rem}
+.hw-box p{color:#aaa;font-size:.85rem}
+.tips{background:#1a1a0d;border:1px solid #d4a03c33;border-radius:8px;padding:1rem;margin:1rem 0}
+.tips li{margin:.3rem 0;color:#ccc;font-size:.88rem}
+.nav-links{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.nav-links a{display:inline-block;padding:6px 16px;background:#1a1a2e;border:1px solid #333;border-radius:6px;font-size:.85rem}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #222;color:#555;font-size:.75rem;text-align:center}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">&larr; Back to App</a>
+<h1>🔲 Frequency Duel — Help</h1>
+<span class="badge">Hrf Microbit</span> <span class="badge">BBC micro:bit</span>
+
+<h2>🚀 Start Here</h2>
+<div class="start-box">
+<p style="color:#d4a03c;font-weight:600;margin-bottom:.5rem">Get up and running in 3 steps:</p>
+<ol>
+<li>Open <code><a href="index.html">index.html</a></code> in any modern browser (Chrome, Firefox, Edge)</li>
+<li>Click <strong>"Enter HQ"</strong> on the splash screen (or <strong>"Skip"</strong> to browse without voting)</li>
+<li>Interact with the simulation — use the controls, click buttons, explore the canvas</li>
+</ol>
+<li>To run on real hardware: open <code>makecode.js</code> in <a href="https://makecode.microbit.org" target="_blank">MakeCode Editor</a>, flash to micro:bit via USB</li>
+</div>
+
+<h2>❓ Frequently Asked Questions</h2>
+<div class="faq">
+<details><summary>What is Frequency Duel?</summary><div class="answer">**2.4GHz Waterfall Spectrum Simulator for micro:bit Education**</div></details>
+<details><summary>Do I need real hardware?</summary><div class="answer">No! The browser simulation works without any hardware. It simulates the real behavior so you can learn the concepts. If you have the hardware (BBC micro:bit), you can use the companion code files to run it for real.</div></details>
+<details><summary>What languages are supported?</summary><div class="answer">The app supports English, French, and Arabic (with RTL). Click the language selector in Settings (gear icon) to switch. All UI, labels, FAQ, and instructions are fully translated.</div></details>
+<details><summary>How do I change the theme?</summary><div class="answer">Open Settings (gear icon in the header). Choose from 8 themes: Midnight Ops, Cyber Neon, Desert Storm, Forest Recon, Riad, Medina, Blood Moon, and Arctic. Your choice is saved automatically.</div></details>
+<details><summary>Can I use this for teaching/classroom?</summary><div class="answer">Absolutely! Each app is self-contained (no internet needed) and includes educational content, challenges, and How-To guides. Perfect for workshops, classrooms, and maker spaces.</div></details>
+<details><summary>How do I flash the code to micro:bit?</summary><div class="answer">Open <a href="https://makecode.microbit.org">makecode.microbit.org</a>, click "Import" → paste the contents of <code>makecode.js</code>. Connect your micro:bit via USB. Click "Download" to flash.</div></details>
+</div>
+
+<h2>🔲 Hardware Setup</h2>
+<div class="hw-box"><h4>BBC micro:bit</h4><p>This app targets <strong>BBC micro:bit</strong> hardware. The browser simulation works without it, but for the full experience:</p>
+<div class="start-box"><ol>
+<li>To run on real hardware: open <code>makecode.js</code> in <a href="https://makecode.microbit.org" target="_blank">MakeCode Editor</a>, flash to micro:bit via USB</li>
+</ol></div></div>
+
+<h2>💡 Tips & Tricks</h2>
+<div class="tips">
+<ul>
+<li>🎵 Enable sound effects in Settings for audio feedback on actions</li>
+<li>📊 Check the Activity Log (sidebar) for a history of all events</li>
+<li>🏆 Try completing the Challenges section to test your knowledge</li>
+<li>🔍 Use the Help panel (? icon) for FAQ, How-To steps, and Wiki entries</li>
+<li>📱 The app is responsive — works on mobile, tablet, and desktop</li>
+<li>🌙 The app auto-detects dark/light preference from your system</li>
+<li>🔲 micro:bit battery pack gives you wireless portability</li><li>📻 Use radio group numbers to avoid interference with other micro:bits</li>
+</ul>
+</div>
+
+<h2>📂 Project Files</h2>
+<ul style="padding-left:1.5rem">
+<li><code><a href="CHANGES.md">CHANGES.md</a></code></li>
+<li><code><a href="README.md">README.md</a></code></li>
+<li><code><a href="index.html">index.html</a></code></li>
+<li><code><a href="makecode.js">makecode.js</a></code></li>
+<li><code><a href="manifest.json">manifest.json</a></code></li>
+<li><code><a href="readme.html">readme.html</a></code></li>
+<li><code><a href="script.js">script.js</a></code></li>
+<li><code><a href="style.css">style.css</a></code></li>
+
+</ul>
+
+<div class="nav-links">
+<a href="index.html">▶ Launch App</a>
+<a href="readme.html">📖 Project Info</a>
+<a href="../../index.html">🏠 Catalog</a>
+</div>
+
+<footer>Workshop-DIY — Ops Catalog · bit-frequency-duel · Help</footer>
+</body>
+</html>
