@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Directed Energy Sim — Workshop DIY</title>
+  <meta name="description" content="Simulate directed energy weapons and RF beam focusing — Workshop-DIY."/>
+  <meta name="author" content="Workshop-DIY — abourdim"/>
+  <meta property="og:title" content="Directed Energy Sim — Workshop DIY"/>
+  <meta property="og:description" content="High-power RF beam simulation, phased array steering and target engagement."/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#08091a"/>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()">
+    <div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Directed Energy Simulator</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div>
+  </div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1649;&#1604;&#1604;&#1617;&#1614;&#1648;&#1607;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1600;&#1648;&#1606;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616; <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Directed Energy Sim</h1><div class="subtitle" data-i18n="subtitle">Directed Energy Simulator</div></div></div>
+        <div class="header-right">
+          <div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button></div>
+          <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Idle</span></div>
+        </div>
+      </div>
+      <div class="card" id="mainCard">
+        <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F4A5;</span> <span data-i18n="mainSection">Directed Energy Simulator</span></div><div class="card-subtitle"><span data-i18n="mainDesc">High-power RF beam simulation and phased array steering</span> <span class="version-tag">v1.2</span></div></div></div>
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="beamCanvas" width="780" height="350" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="powerCanvas" width="780" height="120" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;margin-bottom:8px;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="beamParams">Beam Parameters</div>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="beamAngle">Beam Angle:</label>
+            <input id="angleInput" type="range" min="-90" max="90" value="0" step="1" style="width:100%;"/>
+            <span id="angleLabel" style="font-size:.75rem;color:var(--accent);">0 deg</span>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="beamWidth">Beam Width:</label>
+            <input id="widthInput" type="range" min="1" max="45" value="10" step="1" style="width:100%;"/>
+            <span id="widthLabel" style="font-size:.75rem;color:var(--accent);">10 deg</span>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="powerParams">Power Settings</div>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="outputPower">Output (kW):</label>
+            <input id="powerInput" type="range" min="1" max="500" value="100" step="1" style="width:100%;"/>
+            <span id="powerLabel" style="font-size:.75rem;color:var(--accent);">100 kW</span>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="frequency">Frequency (GHz):</label>
+            <input id="freqInput" type="range" min="1" max="100" value="35" step="1" style="width:100%;"/>
+            <span id="freqLabel" style="font-size:.75rem;color:var(--accent);">35 GHz</span>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="engStatus">Engagement Status</div>
+            <div id="engStats" style="font-size:.78rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="fireBtn" class="primary"><span class="btn-icon">&#x1F4A5;</span> <span data-i18n="fireBeam">Fire Beam</span></button>
+          <button id="trackBtn"><span class="btn-icon">&#x1F3AF;</span> <span data-i18n="autoTrack">Auto-Track</span></button>
+          <button id="resetBtn"><span class="btn-icon">&#x1F504;</span> <span data-i18n="resetSim">Reset</span></button>
+        </div>
+      </div>
+      <details class="collapsible" open><summary><span class="icon">&#x1F3AF;</span> <span data-i18n="sectionA">Target Tracking</span></summary><div class="card"><div id="targetList" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div><div class="hint" data-i18n="targetHint">Tracked targets and engagement data.</div></div></details>
+      <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">DEW Technology</span></summary><div class="card"><div id="techDatabase" style="font-size:.78rem;line-height:1.5;"></div></div></details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="sidebar-body">
+      <div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is this app?</summary><p data-i18n="faq_a1">A directed energy weapon simulator for educational RF studies.</p></details><details class="help-item"><summary data-i18n="faq_q2">What is DEW?</summary><p data-i18n="faq_a2">Directed Energy Weapons focus RF energy on targets at the speed of light.</p></details><details class="help-item"><summary data-i18n="faq_q3">Is this real?</summary><p data-i18n="faq_a3">No. Visual simulation only.</p></details><details class="help-item"><summary data-i18n="faq_q4">Data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details></div>
+      <div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Set beam angle and width.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Configure power and frequency.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Fire Beam to engage.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Auto-Track for moving targets.</p></div></div>
+      <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_themes_title">Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">Languages</h3><p data-i18n="wiki_i18n">EN, FR, AR.</p></div></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
+    <div class="sidebar-body">
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">AR</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">Sound effects</span></label></div>
+    </div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+    <div class="resize-handle" id="logResizeHandle"></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">OK</button><button class="log-filter" data-filter="error">Err</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events</span><span class="badge"><strong>v1.2</strong></span></div>
+  </aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
