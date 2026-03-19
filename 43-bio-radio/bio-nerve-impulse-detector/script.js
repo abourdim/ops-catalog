@@ -114,3 +114,334 @@ function init(){
   log(LANG[currentLang].ready,'success');setTimeout(initNerveApp,50);
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ NERVE IMPULSE DETECTOR CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootNerveViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(50,255,50,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* action potential shape */
+    function ap(phase){
+      if(phase<0||phase>1)return -70;
+      if(phase<0.08)return -70+phase/0.08*110;
+      if(phase<0.18)return 40-(phase-0.08)/0.1*120;
+      if(phase<0.35)return -80+(phase-0.18)/0.17*10;
+      return -70;
+    }
+
+    /* nerve fiber definitions */
+    var nerves=[
+      {name:'Motor Neuron',velocity:80,color:'#33ff33',myelinated:true,diameter:12},
+      {name:'Sensory A-beta',velocity:55,color:'#6699ff',myelinated:true,diameter:8},
+      {name:'Pain C-fiber',velocity:1.5,color:'#ff3366',myelinated:false,diameter:1}
+    ];
+    var activeNerve=0;
+
+    /* data stores */
+    var apBuffer=new Float32Array(W);
+    var spikeCount=0,lastSpikeT=0,spikeRate=0;
+    var rasterData=[];var MAX_RASTER=60;
+    var conductionMap=[];var MAX_COND=120;
+    var noiseFloor=[];
+    var myelinPulses=[];
+
+    /* init noise */
+    for(var i=0;i<W;i++)noiseFloor.push(-70+(Math.random()-0.5)*5);
+
+    /* trigger a spike */
+    function triggerSpike(){
+      var n=nerves[activeNerve];
+      /* inject AP waveform */
+      for(var i=0;i<30;i++){
+        var idx=W-30+i;
+        if(idx>=0&&idx<W)apBuffer[idx]=ap(i/30);
+      }
+      spikeCount++;
+      var now=t;if(lastSpikeT>0)spikeRate=1/(now-lastSpikeT);lastSpikeT=now;
+
+      /* raster entry */
+      rasterData.push({time:t,nerve:activeNerve});
+      if(rasterData.length>MAX_RASTER)rasterData.shift();
+
+      /* conduction pulse */
+      myelinPulses.push({x:0,speed:n.velocity/40,nerve:activeNerve,alpha:1});
+
+      /* conduction map entry */
+      var entry=[];
+      for(var b=0;b<64;b++){
+        var v=0.05;
+        if(b<10)v+=Math.exp(-(b-3)*(b-3)/8)*0.8;
+        entry.push(v+Math.random()*0.03);
+      }
+      conductionMap.push(entry);
+      if(conductionMap.length>MAX_COND)conductionMap.shift();
+    }
+
+    /* auto-spike */
+    var autoSpike=true;
+
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* auto spikes */
+      if(autoSpike&&Math.random()<0.04)triggerSpike();
+
+      /* shift AP buffer */
+      for(var i=0;i<W-1;i++)apBuffer[i]=apBuffer[i+1];
+      apBuffer[W-1]=-70+(Math.random()-0.5)*4;
+
+      var n=nerves[activeNerve];
+
+      /* ---- SECTION 1: Top — Action Potential Trace ---- */
+      var apY=0,apH=H*0.28;
+      ctx.save();ctx.beginPath();ctx.rect(0,apY,W,apH);ctx.clip();
+      ctx.fillStyle='rgba(6,6,16,0.3)';ctx.fillRect(0,apY,W,apH);
+
+      /* reference lines */
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.setLineDash([4,8]);ctx.lineWidth=0.5;
+      [-70,0,40].forEach(function(mv){
+        var y=apY+apH/2-(mv+70)/180*apH*0.8;
+        ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+        ctx.fillStyle='rgba(255,255,255,0.25)';ctx.font='7px Orbitron,monospace';
+        ctx.fillText(mv+'mV',W-40,y-2);
+      });
+      ctx.setLineDash([]);
+
+      /* AP trace */
+      ctx.beginPath();ctx.strokeStyle=n.color;ctx.lineWidth=2;
+      ctx.shadowColor=n.color;ctx.shadowBlur=8;
+      for(var i=0;i<W;i++){
+        var y=apY+apH/2-(apBuffer[i]+70)/180*apH*0.8;
+        if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);
+      }
+      ctx.stroke();ctx.shadowBlur=0;
+      ctx.restore();
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('ACTION POTENTIAL MONITOR',10,apY+14);
+      ctx.fillText(n.name+' | '+n.velocity+' m/s',10,apY+apH-8);
+
+      /* ---- SECTION 2: Middle-left — Neuron Diagram ---- */
+      var ndX=10,ndY=apH+10,ndW=W*0.42,ndH=H*0.32;
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(ndX,ndY,ndW,ndH);
+
+      /* soma (cell body) */
+      var somaX=ndX+50,somaY=ndY+ndH/2;
+      ctx.beginPath();ctx.arc(somaX,somaY,18,0,Math.PI*2);
+      ctx.fillStyle=n.color+'22';ctx.fill();
+      ctx.strokeStyle=n.color;ctx.lineWidth=1.5;ctx.stroke();
+
+      /* dendrites */
+      ctx.strokeStyle=n.color+'66';ctx.lineWidth=1;
+      for(var d=0;d<5;d++){
+        var angle=-Math.PI/2+d*Math.PI/6-Math.PI/6;
+        ctx.beginPath();ctx.moveTo(somaX+18*Math.cos(angle),somaY+18*Math.sin(angle));
+        var dx=somaX+40*Math.cos(angle)+Math.sin(t*2+d)*5;
+        var dy=somaY+40*Math.sin(angle);
+        ctx.lineTo(dx,dy);ctx.stroke();
+        /* branches */
+        ctx.beginPath();ctx.moveTo(dx,dy);ctx.lineTo(dx+12*Math.cos(angle-0.4),dy+12*Math.sin(angle-0.4));ctx.stroke();
+        ctx.beginPath();ctx.moveTo(dx,dy);ctx.lineTo(dx+12*Math.cos(angle+0.4),dy+12*Math.sin(angle+0.4));ctx.stroke();
+      }
+
+      /* axon */
+      var axonStartX=somaX+18,axonEndX=ndX+ndW-25,axonY=somaY;
+      ctx.strokeStyle=n.color+'88';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(axonStartX,axonY);ctx.lineTo(axonEndX,axonY);ctx.stroke();
+
+      /* myelin sheaths */
+      if(n.myelinated){
+        for(var mx=axonStartX+15;mx<axonEndX-15;mx+=22){
+          ctx.beginPath();ctx.ellipse(mx,axonY,9,6,0,0,Math.PI*2);
+          ctx.fillStyle='#ffcc0020';ctx.fill();
+          ctx.strokeStyle='#ffcc0055';ctx.lineWidth=0.5;ctx.stroke();
+        }
+      }
+
+      /* conduction pulses traveling */
+      for(var pi=myelinPulses.length-1;pi>=0;pi--){
+        var mp=myelinPulses[pi];
+        mp.x+=mp.speed*2;mp.alpha-=0.005;
+        if(mp.x>ndW||mp.alpha<=0){myelinPulses.splice(pi,1);continue;}
+        var px=axonStartX+mp.x*(axonEndX-axonStartX)/ndW;
+        ctx.beginPath();ctx.arc(px,axonY,5,0,Math.PI*2);
+        ctx.fillStyle=nerves[mp.nerve].color+Math.round(Math.max(0,mp.alpha)*255).toString(16).padStart(2,'0');
+        ctx.fill();
+        /* trail */
+        ctx.fillStyle=nerves[mp.nerve].color+'11';
+        ctx.fillRect(axonStartX,axonY-3,px-axonStartX,6);
+      }
+
+      /* axon terminal */
+      ctx.strokeStyle=n.color+'66';ctx.lineWidth=1;
+      for(var tb=0;tb<3;tb++){
+        var tx=axonEndX+8,ty=axonY-10+tb*10;
+        ctx.beginPath();ctx.moveTo(axonEndX,axonY);ctx.lineTo(tx,ty);ctx.stroke();
+        ctx.beginPath();ctx.arc(tx+4,ty,3,0,Math.PI*2);ctx.fillStyle=n.color+'44';ctx.fill();
+      }
+
+      /* nucleus */
+      ctx.fillStyle=n.color+'55';ctx.beginPath();ctx.arc(somaX-3,somaY,7,0,Math.PI*2);ctx.fill();
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('NEURON ANATOMY',ndX+5,ndY+12);
+      ctx.fillText('soma',somaX-10,somaY+30);
+      ctx.fillText('axon',ndX+ndW/2-10,axonY-10);
+      if(n.myelinated)ctx.fillText('myelin',ndX+ndW/2-10,axonY+18);
+
+      /* ---- SECTION 3: Middle-right — Raster Plot ---- */
+      var rpX=ndX+ndW+15,rpY=ndY,rpW=W-rpX-10,rpH=ndH*0.5;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(rpX,rpY,rpW,rpH);
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('SPIKE RASTER PLOT',rpX+5,rpY+12);
+
+      /* raster dots */
+      var rasterTimeW=5;// seconds visible
+      rasterData.forEach(function(rd){
+        var age=t-rd.time;
+        if(age>rasterTimeW)return;
+        var x=rpX+rpW-(age/rasterTimeW)*rpW;
+        var y=rpY+20+rd.nerve*(rpH-30)/nerves.length;
+        ctx.fillStyle=nerves[rd.nerve].color;
+        ctx.fillRect(x,y,2,8);
+      });
+
+      /* nerve labels */
+      nerves.forEach(function(nv,ni){
+        var y=rpY+24+ni*(rpH-30)/nerves.length;
+        ctx.fillStyle=ni===activeNerve?nv.color:'rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';
+        ctx.fillText(nv.name.substring(0,8),rpX+rpW-60,y+6);
+      });
+
+      /* ---- SECTION 4: Conduction velocity map ---- */
+      var cmX=rpX,cmY=rpY+rpH+8,cmW=rpW,cmH=ndH-rpH-8;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(cmX,cmY,cmW,cmH);
+
+      var cmCellW=cmW/64,cmCellH=cmH/MAX_COND;
+      for(var row=0;row<conductionMap.length;row++){
+        for(var col=0;col<64;col++){
+          var v=conductionMap[row][col];
+          ctx.fillStyle='rgb('+(Math.min(255,v*400)|0)+','+(Math.min(255,Math.max(0,v*800-100))|0)+','+(Math.max(0,(0.5-v)*200)|0)+')';
+          ctx.fillRect(cmX+col*cmCellW,cmY+row*cmCellH,cmCellW+0.5,cmCellH+0.5);
+        }
+      }
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('CONDUCTION MAP',cmX+5,cmY+12);
+
+      /* ---- SECTION 5: Bottom — Stats & Nerve Selector ---- */
+      var btY=ndY+ndH+12,btH=H-btY-10;
+
+      /* stats panel */
+      var stX=10,stW=W*0.55;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(stX,btY,stW,btH);
+
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('NERVE IMPULSE STATISTICS',stX+10,btY+16);
+
+      var stats=[
+        ['Total Spikes',spikeCount.toString()],
+        ['Velocity',n.velocity+' m/s'],
+        ['Amplitude','110 mV (-70 to +40)'],
+        ['Spike Rate',(spikeRate>0?spikeRate.toFixed(1):'--')+' Hz'],
+        ['Fiber Type',n.myelinated?'Myelinated':'Unmyelinated'],
+        ['Fiber Diameter',n.diameter+' \u00b5m'],
+        ['Active Nerve',n.name]
+      ];
+      stats.forEach(function(s,i){
+        var sx=stX+10+(i%2)*stW*0.48;
+        var sy=btY+32+Math.floor(i/2)*16;
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(s[0]+':',sx,sy);
+        ctx.fillStyle=n.color;ctx.fillText(s[1],sx+100,sy);
+      });
+
+      /* AP phase diagram */
+      var phX=stX+10,phY=btY+btH-55,phW=stW-20,phH=45;
+      ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(phX,phY,phW,phH);
+      ctx.beginPath();ctx.strokeStyle=n.color;ctx.lineWidth=1.5;
+      for(var i=0;i<phW;i++){
+        var phase=i/phW;
+        var mv=ap(phase);
+        var y=phY+phH/2-(mv+70)/180*phH*0.8;
+        if(i===0)ctx.moveTo(phX+i,y);else ctx.lineTo(phX+i,y);
+      }
+      ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.25)';ctx.font='6px Orbitron,monospace';
+      ctx.fillText('AP TEMPLATE',phX+2,phY+8);
+      ctx.fillText('REST',phX+2,phY+phH-3);
+      ctx.fillText('DEPOL',phX+phW*0.08,phY+8);
+      ctx.fillText('REPOL',phX+phW*0.15,phY+phH-3);
+      ctx.fillText('HYPER',phX+phW*0.25,phY+phH-3);
+
+      /* nerve selector */
+      var nsX=stX+stW+15,nsW=W-nsX-10;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(nsX,btY,nsW,btH);
+
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('NERVE FIBER SELECTOR',nsX+10,btY+16);
+
+      nerves.forEach(function(nv,ni){
+        var ny=btY+32+ni*35;
+        var isAct=ni===activeNerve;
+        if(isAct){ctx.fillStyle=nv.color+'15';ctx.fillRect(nsX+5,ny-8,nsW-10,30);}
+        ctx.fillStyle=nv.color;ctx.beginPath();ctx.arc(nsX+18,ny+5,5,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=isAct?'#fff':'rgba(255,255,255,0.4)';ctx.font='9px Orbitron,monospace';
+        ctx.fillText(nv.name,nsX+30,ny+3);
+        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';
+        ctx.fillText(nv.velocity+'m/s  '+nv.diameter+'\u00b5m  '+(nv.myelinated?'myelinated':'unmyel.'),nsX+30,ny+16);
+      });
+
+      /* ---- HUD ---- */
+      ctx.strokeStyle='rgba(50,255,50,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl=18;ctx.strokeStyle='rgba(50,255,50,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl,c[1]);ctx.stroke();
+      });
+      ctx.fillStyle='rgba(50,255,50,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('NERVE',W-65,17);
+
+      /* dividers */
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(0,apH+5);ctx.lineTo(W,apH+5);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,btY-5);ctx.lineTo(W,btY-5);ctx.stroke();
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to switch nerve / trigger spike */
+    cvs.addEventListener('click',function(e){
+      var rect=cvs.getBoundingClientRect();
+      var mx=(e.clientX-rect.left)*(W/rect.width);
+      var my=(e.clientY-rect.top)*(H/rect.height);
+      var btY=H*0.28+10+H*0.32+12;
+      var nsX=W*0.55+25;
+
+      /* nerve selector */
+      nerves.forEach(function(nv,ni){
+        var ny=btY+32+ni*35;
+        if(mx>nsX&&mx<W&&my>ny-8&&my<ny+25){activeNerve=ni;spikeCount=0;spikeRate=0;conductionMap=[];rasterData=[];}
+      });
+
+      /* click on AP trace to trigger spike */
+      if(my<H*0.28){triggerSpike();}
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootNerveViz);
+  else setTimeout(bootNerveViz,200);
+})();

@@ -83,3 +83,265 @@ function initApp(){
   if(moveBtn)moveBtn.onclick=()=>{people.forEach(p=>{p.vx=(Math.random()-.5)*2;p.vy=(Math.random()-.5)*1.5});log('People moving','info')};
   if(wallBtn)wallBtn.onclick=()=>{showWall=!showWall;log(showWall?'Wall ON \u2014 signal attenuated':'Wall removed \u2014 clear view','info')};
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ THERMAL SIGNATURE CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootThermalViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(255,80,0,.15);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- thermal targets --- */
+    var targets=[
+      {x:W*0.65,y:H*0.35,vx:0.4,vy:0.2,temp:37.2,size:22,label:'Person A'},
+      {x:W*0.75,y:H*0.6,vx:-0.3,vy:0.15,temp:36.8,size:18,label:'Person B'}
+    ];
+    var ambientT=22.0,wallX=W*0.42,wallW=W*0.05;
+    var showWallV=true,scanActive=true;
+    var heatMap=[];var hmW=100,hmH=65;
+    var timeHistory=[];var MAX_HISTORY=200;
+    var rfPulses=[];
+
+    /* init heatmap */
+    for(var i=0;i<hmW*hmH;i++)heatMap.push(ambientT);
+
+    /* thermal palette: blue->cyan->green->yellow->red->white */
+    function thermalColor(temp){
+      var n=(temp-15)/30;// 15-45C range
+      n=Math.max(0,Math.min(1,n));
+      var r,g,b;
+      if(n<0.25){r=0;g=Math.round(n*4*200);b=Math.round(150+n*4*105);}
+      else if(n<0.5){var t2=(n-0.25)*4;r=Math.round(t2*200);g=200+Math.round(t2*55);b=Math.round(255-t2*200);}
+      else if(n<0.75){var t2=(n-0.5)*4;r=200+Math.round(t2*55);g=Math.round(255-t2*100);b=Math.round(55-t2*55);}
+      else{var t2=(n-0.75)*4;r=255;g=Math.round(155+t2*100);b=Math.round(t2*200);}
+      return 'rgb('+r+','+g+','+b+')';
+    }
+
+    /* --- RF pulse for through-wall detection --- */
+    function emitPulse(){
+      rfPulses.push({x:30,y:H*0.38,r:0,maxR:W*0.8,speed:4,alpha:0.4});
+    }
+
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.15)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* ---- SECTION 1: Top — Through-wall thermal view ---- */
+      var viewH=H*0.6;
+
+      /* move targets */
+      targets.forEach(function(tgt){
+        tgt.x+=tgt.vx;tgt.y+=tgt.vy;
+        if(tgt.x<W*0.5||tgt.x>W-25){tgt.vx*=-1;}
+        if(tgt.y<30||tgt.y>viewH-25){tgt.vy*=-1;}
+        tgt.temp=36.5+Math.sin(t+tgt.x*0.01)*0.8;
+      });
+
+      /* compute heatmap */
+      var cellW=W/hmW,cellH=viewH/hmH;
+      for(var hy=0;hy<hmH;hy++){
+        for(var hx=0;hx<hmW;hx++){
+          var px=hx*cellW+cellW/2,py=hy*cellH+cellH/2;
+          var heat=ambientT+Math.sin(px*0.005+t)*0.3+Math.sin(py*0.007)*0.2;
+          /* heat from targets */
+          targets.forEach(function(tgt){
+            var dx=px-tgt.x,dy=py-tgt.y;
+            var dist=Math.sqrt(dx*dx+dy*dy);
+            var contribution=(tgt.temp-ambientT)*Math.exp(-dist*dist/(tgt.size*tgt.size*3));
+            /* wall attenuation */
+            if(showWallV&&px<wallX)contribution*=0.12;
+            heat+=contribution;
+          });
+          heatMap[hy*hmW+hx]=heat;
+        }
+      }
+
+      /* draw heatmap */
+      for(var hy=0;hy<hmH;hy++){
+        for(var hx=0;hx<hmW;hx++){
+          ctx.fillStyle=thermalColor(heatMap[hy*hmW+hx]);
+          ctx.fillRect(hx*cellW,hy*cellH,cellW+0.5,cellH+0.5);
+        }
+      }
+
+      /* wall */
+      if(showWallV){
+        ctx.fillStyle='rgba(80,80,100,0.55)';ctx.fillRect(wallX,0,wallW,viewH);
+        ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.strokeRect(wallX,0,wallW,viewH);
+        ctx.save();ctx.translate(wallX+wallW/2,viewH/2);ctx.rotate(-Math.PI/2);
+        ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='bold 10px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText('WALL',0,0);ctx.restore();ctx.textAlign='left';
+      }
+
+      /* target markers */
+      targets.forEach(function(tgt){
+        ctx.strokeStyle='rgba(255,255,0,0.6)';ctx.lineWidth=1.5;
+        /* crosshair */
+        ctx.beginPath();ctx.moveTo(tgt.x-15,tgt.y);ctx.lineTo(tgt.x-8,tgt.y);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(tgt.x+8,tgt.y);ctx.lineTo(tgt.x+15,tgt.y);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(tgt.x,tgt.y-15);ctx.lineTo(tgt.x,tgt.y-8);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(tgt.x,tgt.y+8);ctx.lineTo(tgt.x,tgt.y+15);ctx.stroke();
+        /* ring */
+        ctx.beginPath();ctx.arc(tgt.x,tgt.y,12,0,Math.PI*2);ctx.stroke();
+        /* label */
+        ctx.fillStyle='rgba(255,255,0,0.8)';ctx.font='9px Orbitron,monospace';
+        ctx.fillText(tgt.label+' '+tgt.temp.toFixed(1)+'\u00b0C',tgt.x+18,tgt.y-8);
+      });
+
+      /* RF pulses */
+      if(scanActive&&Math.random()<0.03)emitPulse();
+      for(var pi=rfPulses.length-1;pi>=0;pi--){
+        var p=rfPulses[pi];p.r+=p.speed;p.alpha-=0.004;
+        if(p.alpha<=0||p.r>p.maxR){rfPulses.splice(pi,1);continue;}
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,-.4,.4);
+        ctx.strokeStyle='rgba(0,255,200,'+Math.max(0,p.alpha)+')';ctx.lineWidth=1.5;ctx.stroke();
+      }
+
+      /* sensor icon */
+      ctx.fillStyle='rgba(0,255,200,0.5)';ctx.font='bold 10px Orbitron,monospace';
+      ctx.fillText('RF SENSOR',8,18);
+      ctx.strokeStyle='rgba(0,255,200,0.4)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(25,35,8,0,Math.PI*2);ctx.stroke();
+      for(var a=0;a<3;a++){
+        ctx.beginPath();ctx.arc(25,35,14+a*7,-0.5,0.5);ctx.stroke();
+      }
+
+      /* temperature scale bar */
+      var scaleX=W-30,scaleY=20,scaleH=viewH-40;
+      for(var sy=0;sy<scaleH;sy++){
+        var stmp=45-(sy/scaleH)*30;
+        ctx.fillStyle=thermalColor(stmp);ctx.fillRect(scaleX,scaleY+sy,18,1);
+      }
+      ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.strokeRect(scaleX,scaleY,18,scaleH);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('45\u00b0C',scaleX-25,scaleY+8);ctx.fillText('30\u00b0C',scaleX-25,scaleY+scaleH/2);ctx.fillText('15\u00b0C',scaleX-25,scaleY+scaleH);
+
+      /* zone labels */
+      ctx.fillStyle='rgba(0,255,200,0.3)';ctx.font='9px Orbitron,monospace';
+      ctx.fillText('SENSOR SIDE',10,viewH-10);
+      ctx.fillText('TARGET ZONE',W*0.65,viewH-10);
+
+      /* ---- SECTION 2: Bottom-left — Temperature history ---- */
+      var histX=10,histY=viewH+15,histW=W*0.55,histH=H-viewH-30;
+
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(histX,histY,histW,histH);
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.strokeRect(histX,histY,histW,histH);
+
+      /* push new data */
+      var histEntry={t:t};
+      targets.forEach(function(tgt,i){histEntry['t'+i]=tgt.temp;});
+      histEntry.ambient=ambientT;
+      timeHistory.push(histEntry);
+      if(timeHistory.length>MAX_HISTORY)timeHistory.shift();
+
+      /* draw temp traces */
+      var colors=['#ff6633','#6699ff','#ffcc00'];
+      targets.forEach(function(tgt,ti){
+        ctx.beginPath();ctx.strokeStyle=colors[ti]||'#fff';ctx.lineWidth=1.5;
+        for(var i=0;i<timeHistory.length;i++){
+          var x=histX+5+(i/MAX_HISTORY)*histW*0.95;
+          var v=timeHistory[i]['t'+ti]||ambientT;
+          var y=histY+histH-(v-15)/30*histH;
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      });
+
+      /* ambient line */
+      var ambY=histY+histH-(ambientT-15)/30*histH;
+      ctx.strokeStyle='rgba(100,200,255,0.2)';ctx.setLineDash([3,3]);ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(histX,ambY);ctx.lineTo(histX+histW,ambY);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='rgba(100,200,255,0.3)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('AMBIENT '+ambientT.toFixed(1)+'\u00b0C',histX+histW-100,ambY-3);
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('TEMPERATURE HISTORY',histX+5,histY+12);
+      /* legend */
+      targets.forEach(function(tgt,i){
+        ctx.fillStyle=colors[i];ctx.fillRect(histX+5+i*100,histY+histH-14,10,3);
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='7px Orbitron,monospace';
+        ctx.fillText(tgt.label,histX+18+i*100,histY+histH-10);
+      });
+
+      /* ---- SECTION 3: Bottom-right — Detection stats ---- */
+      var statX=histX+histW+15,statY=histY,statW=W-statX-15,statH=histH;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(statX,statY,statW,statH);
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.strokeRect(statX,statY,statW,statH);
+
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('DETECTION STATUS',statX+10,statY+16);
+
+      /* detection confidence */
+      var conf=showWallV?(62+Math.sin(t*2)*8):(94+Math.sin(t*3)*3);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('Targets: '+targets.length,statX+10,statY+35);
+      ctx.fillText('Wall: '+(showWallV?'ACTIVE':'REMOVED'),statX+10,statY+50);
+      ctx.fillText('Confidence: '+conf.toFixed(0)+'%',statX+10,statY+65);
+      ctx.fillText('Range: '+(showWallV?'5m':'2m'),statX+10,statY+80);
+      ctx.fillText('Ambient: '+ambientT.toFixed(1)+'\u00b0C',statX+10,statY+95);
+
+      /* confidence bar */
+      var barY=statY+110;
+      ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fillRect(statX+10,barY,statW-20,14);
+      var confColor=conf>80?'#33ff33':conf>60?'#ffcc00':'#ff3333';
+      ctx.fillStyle=confColor;ctx.fillRect(statX+10,barY,(statW-20)*conf/100,14);
+      ctx.fillStyle='#fff';ctx.font='bold 8px Orbitron,monospace';
+      ctx.fillText(conf.toFixed(0)+'%',statX+statW/2-10,barY+11);
+
+      /* target temp readouts */
+      targets.forEach(function(tgt,i){
+        var ty=barY+25+i*30;
+        ctx.fillStyle=colors[i];ctx.beginPath();ctx.arc(statX+18,ty+5,4,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='9px Orbitron,monospace';
+        ctx.fillText(tgt.label,statX+28,ty+3);
+        ctx.fillStyle='#fff';ctx.font='bold 11px Orbitron,monospace';
+        ctx.fillText(tgt.temp.toFixed(1)+'\u00b0C',statX+28,ty+18);
+      });
+
+      /* ---- HUD ---- */
+      ctx.strokeStyle='rgba(255,80,0,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl=18;ctx.strokeStyle='rgba(255,80,0,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl,c[1]);ctx.stroke();
+      });
+      /* live dot */
+      ctx.fillStyle='rgba(255,80,0,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('THERMAL',W-70,17);
+
+      /* dividers */
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(0,viewH+8);ctx.lineTo(W,viewH+8);ctx.stroke();
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to add target */
+    cvs.addEventListener('click',function(e){
+      var rect=cvs.getBoundingClientRect();
+      var mx=(e.clientX-rect.left)*(W/rect.width);
+      var my=(e.clientY-rect.top)*(H/rect.height);
+      if(my<H*0.6&&mx>W*0.5){
+        targets.push({x:mx,y:my,vx:(Math.random()-0.5)*0.8,vy:(Math.random()-0.5)*0.5,temp:36.5+Math.random()*1.5,size:18+Math.random()*8,label:'Person '+(targets.length+1)});
+      }
+      /* click wall to toggle */
+      if(mx>wallX-10&&mx<wallX+wallW+10&&my<H*0.6){showWallV=!showWallV;}
+    });
+
+    /* auto-emit RF */
+    setInterval(emitPulse,600);
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootThermalViz);
+  else setTimeout(bootThermalViz,200);
+})();

@@ -112,3 +112,306 @@ function init(){
   log(LANG[currentLang].ready,'success');setTimeout(initVoiceApp,50);
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ VOICE RF FINGERPRINT CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootVoiceViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(100,150,255,.15);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* voice profiles */
+    var voiceDefs=[
+      {name:'Deep Male',f0:95,formants:[700,1200,2500],color:'#ff6633',hash:''},
+      {name:'Mid Female',f0:180,formants:[850,1500,2900],color:'#33ff33',hash:''},
+      {name:'High Child',f0:260,formants:[950,1700,3400],color:'#6699ff',hash:''}
+    ];
+    var activeVoice=0,isVoicing=true;
+    var spectrumBins=new Float32Array(128);
+    var waveformBuf=new Float32Array(360);
+    var spectrogramRows=[];var MAX_SPEC=90;
+    var fingerprints=[];var MAX_FP=5;
+    var matchResult='',matchScore=0;
+    var formantTrack=[];var MAX_FORMANT_TRACK=150;
+
+    function genSpectrum(v){
+      for(var i=0;i<128;i++){
+        var freq=i*40;var amp=0;
+        for(var h=1;h<=10;h++){
+          var hf=v.f0*h;var diff=Math.abs(freq-hf);
+          amp+=Math.exp(-diff*diff/4000)/(h*0.8);
+        }
+        v.formants.forEach(function(f){
+          var diff=Math.abs(freq-f);amp+=Math.exp(-diff*diff/25000)*2.2;
+        });
+        amp+=(Math.random()-0.5)*0.02;
+        spectrumBins[i]=spectrumBins[i]*0.82+amp*0.18;
+      }
+    }
+
+    function genWaveform(v){
+      for(var i=0;i<360;i++){
+        var val=0;
+        for(var h=1;h<=6;h++){
+          val+=Math.sin(i*0.02*v.f0/50*h+t*8*h)*1/h;
+        }
+        val*=0.5+Math.sin(i*0.01)*0.3;
+        waveformBuf[i]=val;
+      }
+    }
+
+    function computeHash(v){
+      var hash='';
+      for(var i=0;i<16;i++){
+        var val=Math.round(spectrumBins[i*4]*200+spectrumBins[i*4+1]*100);
+        hash+=((val&0xFF)^(v.f0&0xFF)).toString(16).padStart(2,'0');
+      }
+      return hash;
+    }
+
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      var v=voiceDefs[activeVoice];
+      if(isVoicing){genSpectrum(v);genWaveform(v);}
+
+      /* ---- SECTION 1: Top-left — Waveform ---- */
+      var wfX=10,wfY=10,wfW=W*0.48,wfH=H*0.22;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(wfX,wfY,wfW,wfH);
+
+      ctx.beginPath();ctx.strokeStyle=v.color;ctx.lineWidth=1.5;
+      for(var i=0;i<wfW;i++){
+        var idx=Math.floor(i/wfW*360);
+        var y=wfY+wfH/2-waveformBuf[idx]*wfH*0.35;
+        if(i===0)ctx.moveTo(wfX+i,y);else ctx.lineTo(wfX+i,y);
+      }
+      ctx.stroke();
+      /* glow */
+      ctx.strokeStyle=v.color+'33';ctx.lineWidth=4;
+      ctx.beginPath();
+      for(var i=0;i<wfW;i++){
+        var idx=Math.floor(i/wfW*360);
+        var y=wfY+wfH/2-waveformBuf[idx]*wfH*0.35;
+        if(i===0)ctx.moveTo(wfX+i,y);else ctx.lineTo(wfX+i,y);
+      }
+      ctx.stroke();
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('VOICE WAVEFORM',wfX+5,wfY+12);
+      ctx.fillText('F0: '+v.f0+'Hz  '+v.name,wfX+5,wfY+wfH-5);
+
+      /* ---- SECTION 2: Top-right — Spectrum Bars ---- */
+      var spX=wfX+wfW+15,spY=10,spW=W-spX-10,spH=wfH;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(spX,spY,spW,spH);
+
+      var barW=spW/128;
+      for(var i=0;i<128;i++){
+        var val=spectrumBins[i];
+        var bh=val*spH*0.8;var hue=i/128*280;
+        ctx.fillStyle='hsla('+hue+',75%,50%,'+(0.3+val*0.5)+')';
+        ctx.fillRect(spX+i*barW,spY+spH-bh,barW-0.3,bh);
+      }
+
+      /* formant markers */
+      if(isVoicing){
+        ctx.setLineDash([2,3]);ctx.lineWidth=0.8;
+        v.formants.forEach(function(f,fi){
+          var x=spX+(f/5120)*spW;
+          ctx.strokeStyle=v.color;ctx.beginPath();ctx.moveTo(x,spY);ctx.lineTo(x,spY+spH);ctx.stroke();
+          ctx.fillStyle=v.color;ctx.font='8px Orbitron,monospace';ctx.fillText('F'+(fi+1),x+2,spY+14+fi*10);
+        });
+        /* harmonic markers */
+        for(var h=1;h<=8;h++){
+          var x=spX+(v.f0*h/5120)*spW;
+          if(x<spX+spW){ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.beginPath();ctx.moveTo(x,spY);ctx.lineTo(x,spY+spH);ctx.stroke();}
+        }
+        ctx.setLineDash([]);
+      }
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('FREQUENCY SPECTRUM',spX+5,spY+12);
+
+      /* ---- SECTION 3: Middle — Spectrogram ---- */
+      var sgY=wfY+wfH+10,sgH=H*0.22;
+      var specRow=[];
+      for(var i=0;i<128;i++)specRow.push(Math.min(1,spectrumBins[i]*0.5));
+      spectrogramRows.push(specRow);
+      if(spectrogramRows.length>MAX_SPEC)spectrogramRows.shift();
+
+      var cellW=W/128,cellH=sgH/MAX_SPEC;
+      for(var row=0;row<spectrogramRows.length;row++){
+        for(var col=0;col<128;col++){
+          var val=spectrogramRows[row][col];
+          var r=Math.min(255,val*600)|0;
+          var g=Math.min(255,Math.max(0,(val-0.15)*500))|0;
+          var b=Math.min(255,Math.max(0,(0.5-val)*300))|0;
+          ctx.fillStyle='rgb('+r+','+g+','+b+')';
+          ctx.fillRect(col*cellW,sgY+row*cellH,cellW+0.5,cellH+0.5);
+        }
+      }
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('VOICE SPECTROGRAM',10,sgY+12);
+      ctx.fillText('TIME \u2193',W-50,sgY+12);
+
+      /* ---- SECTION 4: Bottom-left — Formant Tracker ---- */
+      var ftX=10,ftY=sgY+sgH+10,ftW=W*0.45,ftH=H-ftY-15;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ftX,ftY,ftW,ftH);
+
+      /* track formants over time */
+      if(isVoicing){
+        var entry={f0:v.f0+Math.sin(t*3)*8};
+        v.formants.forEach(function(f,i){entry['f'+(i+1)]=f+Math.sin(t*2+i)*30+Math.random()*15;});
+        formantTrack.push(entry);
+        if(formantTrack.length>MAX_FORMANT_TRACK)formantTrack.shift();
+      }
+
+      var ftColors=['#ffcc00','#ff6633','#33ff33','#6699ff'];
+      ['f0','f1','f2','f3'].forEach(function(key,ki){
+        ctx.beginPath();ctx.strokeStyle=ftColors[ki];ctx.lineWidth=1.2;
+        for(var i=0;i<formantTrack.length;i++){
+          var x=ftX+5+(i/MAX_FORMANT_TRACK)*ftW*0.95;
+          var val=formantTrack[i][key];
+          if(val===undefined)continue;
+          var y=ftY+ftH-(val/4000)*ftH;
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      });
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('FORMANT TRACKER',ftX+5,ftY+12);
+      /* legend */
+      ['F0','F1','F2','F3'].forEach(function(lbl,i){
+        ctx.fillStyle=ftColors[i];ctx.fillRect(ftX+5+i*50,ftY+ftH-12,8,3);
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.fillText(lbl,ftX+16+i*50,ftY+ftH-8);
+      });
+
+      /* ---- SECTION 5: Bottom-right — RF Fingerprint ---- */
+      var fpX=ftX+ftW+15,fpY=ftY,fpW=W-fpX-10,fpH=ftH;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(fpX,fpY,fpW,fpH);
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.strokeRect(fpX,fpY,fpW,fpH);
+
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('RF FINGERPRINT AUTH',fpX+10,fpY+16);
+
+      /* voice selector */
+      voiceDefs.forEach(function(vd,vi){
+        var vy=fpY+30+vi*28;
+        var isAct=vi===activeVoice;
+        if(isAct){ctx.fillStyle=vd.color+'15';ctx.fillRect(fpX+5,vy-8,fpW-10,24);}
+        ctx.fillStyle=vd.color;ctx.beginPath();ctx.arc(fpX+18,vy+4,4,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=isAct?'#fff':'rgba(255,255,255,0.4)';ctx.font='9px Orbitron,monospace';
+        ctx.fillText(vd.name+' ('+vd.f0+'Hz)',fpX+28,vy+7);
+      });
+
+      /* hash display */
+      var hashY=fpY+120;
+      var currentHash=computeHash(v);
+      v.hash=currentHash;
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('CURRENT HASH:',fpX+10,hashY);
+      ctx.fillStyle='#ffcc00';ctx.font='7px monospace';
+      ctx.fillText(currentHash.substring(0,32),fpX+10,hashY+13);
+
+      /* stored fingerprints */
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('STORED PROFILES ('+fingerprints.length+'):',fpX+10,hashY+32);
+      fingerprints.forEach(function(fp,i){
+        ctx.fillStyle=fp.color;ctx.font='7px monospace';
+        ctx.fillText(fp.name+': '+fp.hash.substring(0,20)+'...',fpX+10,hashY+45+i*12);
+      });
+
+      /* match status */
+      if(matchResult){
+        var mrY=fpY+fpH-30;
+        ctx.fillStyle=matchScore>70?'#33ff33':'#ff3333';ctx.font='bold 10px Orbitron,monospace';
+        ctx.fillText(matchResult,fpX+10,mrY);
+        /* score bar */
+        ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fillRect(fpX+10,mrY+5,fpW-25,10);
+        ctx.fillStyle=matchScore>70?'#33ff33':'#ff3333';
+        ctx.fillRect(fpX+10,mrY+5,(fpW-25)*matchScore/100,10);
+      }
+
+      /* ---- HUD ---- */
+      ctx.strokeStyle='rgba(100,150,255,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl=18;ctx.strokeStyle='rgba(100,150,255,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl,c[1]);ctx.stroke();
+      });
+      ctx.fillStyle='rgba(100,150,255,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('VOICE RF',W-75,17);
+
+      /* dividers */
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(0,sgY-3);ctx.lineTo(W,sgY-3);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,ftY-3);ctx.lineTo(W,ftY-3);ctx.stroke();
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to switch voice / register fingerprint */
+    cvs.addEventListener('click',function(e){
+      var rect=cvs.getBoundingClientRect();
+      var mx=(e.clientX-rect.left)*(W/rect.width);
+      var my=(e.clientY-rect.top)*(H/rect.height);
+      var fpX=W*0.45+25;
+      var sgY=(H*0.22+10)+H*0.22+10;
+      var ftY=sgY+10;
+
+      /* voice selector area */
+      voiceDefs.forEach(function(vd,vi){
+        var vy=ftY+30+vi*28;
+        if(mx>fpX&&mx<W&&my>vy-8&&my<vy+20){
+          activeVoice=vi;spectrogramRows=[];formantTrack=[];matchResult='';matchScore=0;
+        }
+      });
+
+      /* click hash area to register */
+      var hashY=ftY+120;
+      if(mx>fpX&&my>hashY-5&&my<hashY+25){
+        var v=voiceDefs[activeVoice];
+        var hash=computeHash(v);
+        if(fingerprints.length<MAX_FP){
+          fingerprints.push({name:v.name,hash:hash,color:v.color});
+        }
+      }
+
+      /* click stored profiles to match */
+      if(mx>fpX&&my>hashY+30&&my<hashY+30+fingerprints.length*12+10){
+        var v=voiceDefs[activeVoice];
+        var currentHash=computeHash(v);
+        var bestMatch=0;
+        fingerprints.forEach(function(fp){
+          var score=0;
+          for(var i=0;i<Math.min(currentHash.length,fp.hash.length);i++){
+            if(currentHash[i]===fp.hash[i])score+=100/currentHash.length;
+          }
+          bestMatch=Math.max(bestMatch,score);
+        });
+        matchScore=bestMatch;
+        matchResult=bestMatch>70?'MATCH ('+bestMatch.toFixed(0)+'%)':'NO MATCH ('+bestMatch.toFixed(0)+'%)';
+      }
+    });
+
+    /* auto switch voice periodically */
+    setInterval(function(){
+      activeVoice=(activeVoice+1)%voiceDefs.length;
+      spectrogramRows=[];formantTrack=[];
+    },12000);
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootVoiceViz);
+  else setTimeout(bootVoiceViz,200);
+})();

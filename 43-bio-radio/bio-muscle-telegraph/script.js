@@ -77,3 +77,326 @@ function initApp(){
 
   function updateMorse(){const md=$('morseDisplay');if(md)md.textContent=morseBuffer||'...';}
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ MUSCLE TELEGRAPH CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootMuscleViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(255,100,50,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- Morse code map --- */
+    var MORSE={'a':'.-','b':'-...','c':'-.-.','d':'-..','e':'.','f':'..-.','g':'--.','h':'....','i':'..','j':'.---','k':'-.-','l':'.-..','m':'--','n':'-.','o':'---','p':'.--.','q':'--.-','r':'.-.','s':'...','t':'-','u':'..-','v':'...-','w':'.--','x':'-..-','y':'-.--','z':'--..'};
+    var MORSE_REV={};Object.keys(MORSE).forEach(function(k){MORSE_REV[MORSE[k]]=k;});
+
+    /* --- state --- */
+    var emgBuffer=new Float32Array(W);
+    var rectifiedBuffer=new Float32Array(W);
+    var morseSymbols=[]; // {type:'dot'|'dash'|'space',time:t}
+    var decodedChars=[];
+    var currentWord='';
+    var isFlexing=false,flexIntensity=0,flexTimer=0;
+    var autoMode=true,autoMsg='SOS HELLO WORLD';
+    var autoIdx=0,autoSymIdx=0,autoDelay=0;
+    var muscleGroups=[
+      {name:'Bicep',x:0.22,y:0.42,active:false,emgScale:1.0},
+      {name:'Forearm',x:0.28,y:0.58,active:true,emgScale:0.8},
+      {name:'Wrist Flex',x:0.32,y:0.68,active:false,emgScale:0.6}
+    ];
+    var activeMuscle=1;
+    var spectrogramData=[];
+    var MAX_SPEC=80;
+
+    /* --- arm outline points --- */
+    var armTop=[[0.08,0.30],[0.14,0.28],[0.22,0.30],[0.28,0.35],[0.35,0.45],[0.40,0.55],[0.42,0.65],[0.40,0.72]];
+    var armBot=[[0.08,0.50],[0.14,0.52],[0.22,0.55],[0.28,0.58],[0.35,0.62],[0.40,0.68],[0.42,0.72]];
+
+    /* scale to arm region */
+    var armW=280,armH=300,armOX=10,armOY=200;
+    function ax(nx){return armOX+nx*armW;}
+    function ay(ny){return armOY+ny*armH;}
+
+    /* --- auto-send morse --- */
+    function autoStep(){
+      if(!autoMode)return;
+      autoDelay-=0.016;
+      if(autoDelay>0)return;
+
+      if(autoIdx>=autoMsg.length){autoIdx=0;autoSymIdx=0;}
+      var ch=autoMsg[autoIdx].toLowerCase();
+      if(ch===' '){
+        morseSymbols.push({type:'space',time:t});
+        decodedChars.push(' ');
+        autoIdx++;autoSymIdx=0;autoDelay=0.6;
+        return;
+      }
+      var code=MORSE[ch];
+      if(!code){autoIdx++;autoSymIdx=0;return;}
+      if(autoSymIdx>=code.length){
+        /* letter done, decode */
+        decodedChars.push(ch.toUpperCase());
+        autoIdx++;autoSymIdx=0;autoDelay=0.4;
+        return;
+      }
+      var sym=code[autoSymIdx];
+      isFlexing=true;
+      flexIntensity=sym==='.'?0.6:1.0;
+      flexTimer=sym==='.'?0.12:0.35;
+      morseSymbols.push({type:sym==='.'?'dot':'dash',time:t});
+      autoSymIdx++;autoDelay=sym==='.'?0.25:0.5;
+    }
+
+    /* --- draw morse tape --- */
+    function drawMorseTape(x,y,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fillRect(x,y,w,h);
+      ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.strokeRect(x,y,w,h);
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('MORSE OUTPUT TAPE',x+5,y+12);
+
+      /* draw recent symbols */
+      var startIdx=Math.max(0,morseSymbols.length-40);
+      var tx=x+10;
+      for(var i=startIdx;i<morseSymbols.length;i++){
+        var sym=morseSymbols[i];
+        if(sym.type==='dot'){
+          ctx.fillStyle='#ff6633';ctx.beginPath();ctx.arc(tx,y+h/2+5,4,0,Math.PI*2);ctx.fill();
+          tx+=12;
+        }else if(sym.type==='dash'){
+          ctx.fillStyle='#ff6633';ctx.fillRect(tx-2,y+h/2+1,18,8);
+          tx+=24;
+        }else{
+          tx+=15;
+        }
+        if(tx>x+w-10)break;
+      }
+
+      /* decoded text */
+      var decoded=decodedChars.slice(-30).join('');
+      ctx.fillStyle='#33ff33';ctx.font='bold 12px Orbitron,monospace';
+      ctx.fillText(decoded,x+10,y+h-10);
+    }
+
+    /* --- main frame --- */
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* auto morse stepping */
+      autoStep();
+
+      /* flex timer */
+      if(flexTimer>0){flexTimer-=0.016;if(flexTimer<=0){isFlexing=false;flexIntensity=0;}}
+
+      /* generate EMG signal */
+      var noise=(Math.random()-0.5)*0.08;
+      var mg=muscleGroups[activeMuscle];
+      var emgVal=isFlexing?(flexIntensity*mg.emgScale*(0.7+Math.random()*0.3)+Math.sin(t*120)*0.15*flexIntensity):noise*0.3;
+      var rectVal=Math.abs(emgVal);
+
+      /* shift buffers */
+      for(var i=0;i<W-1;i++){emgBuffer[i]=emgBuffer[i+1];rectifiedBuffer[i]=rectifiedBuffer[i+1];}
+      emgBuffer[W-1]=emgVal;rectifiedBuffer[W-1]=rectVal;
+
+      /* ---- SECTION 1: Raw EMG (top) ---- */
+      var emgY0=0,emgH=H*0.22;
+      ctx.save();ctx.beginPath();ctx.rect(0,emgY0,W,emgH);ctx.clip();
+      ctx.fillStyle='rgba(6,6,16,0.3)';ctx.fillRect(0,emgY0,W,emgH);
+
+      /* threshold lines */
+      ctx.strokeStyle='rgba(255,204,0,0.15)';ctx.setLineDash([4,4]);ctx.lineWidth=0.5;
+      var threshY=emgH*0.3;
+      ctx.beginPath();ctx.moveTo(0,emgY0+threshY);ctx.lineTo(W,emgY0+threshY);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,emgY0+emgH-threshY);ctx.lineTo(W,emgY0+emgH-threshY);ctx.stroke();
+      ctx.setLineDash([]);
+
+      /* draw raw EMG */
+      ctx.beginPath();ctx.strokeStyle=isFlexing?'#ff6633':'#33ff33';ctx.lineWidth=1.5;
+      for(var i=0;i<W;i++){
+        var y=emgY0+emgH/2-emgBuffer[i]*emgH*0.8;
+        if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('RAW EMG SIGNAL',10,emgY0+12);
+      ctx.fillStyle='rgba(255,204,0,0.3)';ctx.fillText('THRESHOLD',W-70,emgY0+threshY-3);
+
+      /* ---- SECTION 2: Rectified EMG ---- */
+      var rectY0=emgH+5,rectH=H*0.13;
+      ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(0,rectY0,W,rectH);
+
+      ctx.beginPath();ctx.strokeStyle='#ffcc00';ctx.lineWidth=1.2;
+      for(var i=0;i<W;i++){
+        var y=rectY0+rectH-rectifiedBuffer[i]*rectH*1.6;
+        if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);
+      }
+      ctx.stroke();
+      /* filled area */
+      ctx.fillStyle='rgba(255,204,0,0.08)';ctx.beginPath();ctx.moveTo(0,rectY0+rectH);
+      for(var i=0;i<W;i++){
+        var y=rectY0+rectH-rectifiedBuffer[i]*rectH*1.6;ctx.lineTo(i,y);
+      }
+      ctx.lineTo(W,rectY0+rectH);ctx.closePath();ctx.fill();
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('RECTIFIED + ENVELOPE',10,rectY0+12);
+
+      /* ---- SECTION 3: EMG Spectrogram ---- */
+      var specY0=rectY0+rectH+5,specH=H*0.18;
+      /* build spectrum from recent EMG */
+      var specRow=[];
+      for(var b=0;b<64;b++){
+        var freq=b*8;// 0-512Hz
+        var amp=0.02;
+        if(isFlexing){
+          /* EMG spectrum: broad 20-150Hz with peaks at muscle firing freq */
+          amp+=Math.exp(-(freq-80)*(freq-80)/3000)*flexIntensity*0.5;
+          amp+=Math.exp(-(freq-40)*(freq-40)/1000)*flexIntensity*0.3;
+          amp+=Math.random()*0.05*flexIntensity;
+        }
+        amp+=Math.random()*0.02;
+        specRow.push(Math.min(1,amp));
+      }
+      spectrogramData.push(specRow);
+      if(spectrogramData.length>MAX_SPEC)spectrogramData.shift();
+
+      var cellW=W/64,cellH=specH/MAX_SPEC;
+      for(var row=0;row<spectrogramData.length;row++){
+        for(var col=0;col<64;col++){
+          var v=spectrogramData[row][col];
+          var r=Math.min(255,v*600)|0;
+          var g=Math.min(255,Math.max(0,(v-0.15)*500))|0;
+          var bl=Math.max(0,(0.5-v)*200)|0;
+          ctx.fillStyle='rgb('+r+','+g+','+bl+')';
+          ctx.fillRect(col*cellW,specY0+row*cellH,cellW+0.5,cellH+0.5);
+        }
+      }
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('EMG SPECTROGRAM (0-512Hz)',10,specY0+12);
+
+      /* ---- SECTION 4: Bottom — Arm + Morse ---- */
+      var botY=specY0+specH+8;
+
+      /* ---- Arm diagram (left) ---- */
+      var armRegW=W*0.38;
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(0,botY,armRegW,H-botY);
+
+      /* arm outline */
+      ctx.strokeStyle='rgba(0,200,255,0.2)';ctx.lineWidth=1.5;
+      ctx.beginPath();
+      armTop.forEach(function(p,i){var x=p[0]*armRegW*2+10,y=botY+(p[1]-0.25)*300;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+      ctx.stroke();
+      ctx.beginPath();
+      armBot.forEach(function(p,i){var x=p[0]*armRegW*2+10,y=botY+(p[1]-0.25)*300;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+      ctx.stroke();
+
+      /* muscle groups / electrodes */
+      muscleGroups.forEach(function(mg2,idx){
+        var ex=mg2.x*armRegW*2+10,ey=botY+(mg2.y-0.25)*300;
+        var isAct=idx===activeMuscle;
+
+        /* electrode */
+        ctx.beginPath();ctx.arc(ex,ey,isAct?8:5,0,Math.PI*2);
+        ctx.fillStyle=isAct?(isFlexing?'#ff6633':'#33ff33')+'88':'rgba(100,100,200,0.3)';
+        ctx.fill();ctx.strokeStyle=isAct?'#fff':'rgba(255,255,255,0.2)';ctx.lineWidth=1;ctx.stroke();
+
+        /* EMG burst animation */
+        if(isAct&&isFlexing){
+          for(var r=0;r<2;r++){
+            var rad=12+r*10+Math.sin(t*8)*4;
+            ctx.beginPath();ctx.arc(ex,ey,rad,0,Math.PI*2);
+            ctx.strokeStyle='rgba(255,100,50,'+(0.3-r*0.12)+')';ctx.stroke();
+          }
+        }
+
+        ctx.fillStyle=isAct?'#fff':'rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(mg2.name,ex+12,ey+3);
+      });
+
+      /* muscle contraction visualization */
+      if(isFlexing){
+        var mx=muscleGroups[activeMuscle].x*armRegW*2+10;
+        var my=botY+(muscleGroups[activeMuscle].y-0.25)*300;
+        /* fiber lines */
+        ctx.strokeStyle='rgba(255,100,50,0.15)';ctx.lineWidth=0.5;
+        for(var f=0;f<8;f++){
+          var fy=my-20+f*5;
+          var contraction=Math.sin(t*30+f)*3*flexIntensity;
+          ctx.beginPath();ctx.moveTo(mx-25,fy);
+          for(var fx=mx-25;fx<mx+25;fx+=3){
+            ctx.lineTo(fx,fy+Math.sin((fx+t*50)*0.3)*contraction);
+          }
+          ctx.stroke();
+        }
+      }
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('MUSCLE ELECTRODE MAP',10,botY+12);
+
+      /* ---- Morse tape (right) ---- */
+      drawMorseTape(armRegW+10,botY,W-armRegW-20,H-botY-5);
+
+      /* ---- Morse code reference (small) ---- */
+      var refX=armRegW+20,refY=botY+45;
+      ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('A .-  B -...  C -.-.  D -..  E .  F ..-.',refX,refY);
+      ctx.fillText('G --.  H ....  I ..  J .---  K -.-  L .-..',refX,refY+11);
+      ctx.fillText('S ...  O ---  SPACE = /  DOT=short  DASH=long',refX,refY+22);
+
+      /* ---- HUD ---- */
+      ctx.strokeStyle='rgba(255,100,50,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl=18;ctx.strokeStyle='rgba(255,100,50,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl,c[1]);ctx.stroke();
+      });
+
+      /* flex indicator */
+      if(isFlexing){
+        ctx.fillStyle='rgba(255,100,50,'+(0.5+Math.sin(t*10)*0.3)+')';
+        ctx.beginPath();ctx.arc(W-20,14,5,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#ff6633';ctx.font='9px Orbitron,monospace';ctx.fillText('FLEX',W-60,17);
+      }else{
+        ctx.fillStyle='rgba(0,255,100,0.4)';ctx.beginPath();ctx.arc(W-20,14,3,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';ctx.fillText('IDLE',W-55,17);
+      }
+
+      /* divider lines */
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(0,emgH);ctx.lineTo(W,emgH);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,rectY0);ctx.lineTo(W,rectY0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,specY0);ctx.lineTo(W,specY0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,botY-3);ctx.lineTo(W,botY-3);ctx.stroke();
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to switch muscle groups */
+    cvs.addEventListener('click',function(e){
+      var rect=cvs.getBoundingClientRect();
+      var mx=(e.clientX-rect.left)*(W/rect.width);
+      var my=(e.clientY-rect.top)*(H/rect.height);
+      var armRegW=W*0.38;
+      var botY=H*0.22+5+H*0.13+5+H*0.18+8;
+      muscleGroups.forEach(function(mg2,idx){
+        var ex=mg2.x*armRegW*2+10,ey=botY+(mg2.y-0.25)*300;
+        var dist=Math.sqrt((mx-ex)*(mx-ex)+(my-ey)*(my-ey));
+        if(dist<20)activeMuscle=idx;
+      });
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootMuscleViz);
+  else setTimeout(bootMuscleViz,200);
+})();
