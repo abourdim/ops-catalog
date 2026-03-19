@@ -123,3 +123,174 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Zero-Point Energy Meter
+   Animated quantum vacuum fluctuations with virtual particle pairs,
+   Casimir effect plates, and energy density visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simZeroPoint';let cv,cx,W,H,af=null,t=0;
+  const virtualPairs=[];const fluctHistory=[];const MAX_PAIRS=80;
+  let zpeLevel=0,temperature=4;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#04060e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  class VirtualPair{
+    constructor(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      this.life=20+Math.random()*40;this.age=0;
+      this.sep=0;this.maxSep=8+Math.random()*15;
+      this.angle=Math.random()*Math.PI*2;
+      this.energy=0.3+Math.random()*0.7;
+      this.hue=Math.random()>0.5?200:340;
+    }
+    update(){
+      this.age++;
+      const phase=this.age/this.life;
+      this.sep=Math.sin(phase*Math.PI)*this.maxSep;
+      return this.age<this.life;
+    }
+    draw(){
+      const alpha=Math.sin(this.age/this.life*Math.PI)*0.7;
+      const dx=Math.cos(this.angle)*this.sep;
+      const dy=Math.sin(this.angle)*this.sep;
+      const r=2+this.energy*2;
+      // Particle
+      cx.save();cx.globalAlpha=alpha;
+      cx.fillStyle='hsla('+this.hue+',80%,60%,0.8)';
+      cx.beginPath();cx.arc(this.x+dx,this.y+dy,r,0,Math.PI*2);cx.fill();
+      // Anti-particle
+      cx.fillStyle='hsla('+((this.hue+180)%360)+',80%,60%,0.8)';
+      cx.beginPath();cx.arc(this.x-dx,this.y-dy,r,0,Math.PI*2);cx.fill();
+      // Connection line
+      cx.strokeStyle='rgba(255,255,255,'+(alpha*0.2)+')';cx.lineWidth=0.5;
+      cx.beginPath();cx.moveTo(this.x+dx,this.y+dy);cx.lineTo(this.x-dx,this.y-dy);cx.stroke();
+      // Annihilation flash
+      if(this.age>this.life*0.85){
+        const flash=((this.age-this.life*0.85)/(this.life*0.15))*10;
+        cx.fillStyle='rgba(255,255,200,'+(alpha*0.3)+')';
+        cx.beginPath();cx.arc(this.x,this.y,flash,0,Math.PI*2);cx.fill();
+      }
+      cx.restore();
+    }
+  }
+
+  function drawVacuumField(){
+    // Background quantum foam
+    for(let i=0;i<30;i++){
+      const x=Math.random()*W,y=Math.random()*H;
+      const r=Math.random()*1.5;
+      cx.fillStyle='rgba(100,150,255,'+(Math.random()*0.06)+')';
+      cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  function drawEnergyMeter(){
+    const mx=W-200,my=20,mw=180,mh=100;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(mx,my,mw,mh);
+    cx.strokeStyle='rgba(100,200,255,0.15)';cx.strokeRect(mx,my,mw,mh);
+    // Energy level bar
+    const barH=mh-30;const barW=20;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(mx+mw-35,my+10,barW,barH);
+    const level=zpeLevel*barH;
+    const grad=cx.createLinearGradient(0,my+10+barH,0,my+10);
+    grad.addColorStop(0,'#3b82f6');grad.addColorStop(0.5,'#8b5cf6');grad.addColorStop(1,'#ef4444');
+    cx.fillStyle=grad;cx.fillRect(mx+mw-35,my+10+barH-level,barW,level);
+    // Labels
+    cx.fillStyle='rgba(100,200,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('ZPE METER',mx+8,my+14);
+    cx.fillText('E = (1/2)hf',mx+8,my+28);
+    cx.fillText('Fluctuation:',mx+8,my+44);
+    cx.fillText((zpeLevel*100).toFixed(1)+' %',mx+8,my+56);
+    cx.fillText('Virtual Pairs:',mx+8,my+70);
+    cx.fillText(virtualPairs.length.toString(),mx+8,my+82);
+    cx.fillText('Temp: '+temperature+' mK',mx+8,my+94);
+  }
+
+  function drawFluctuationGraph(){
+    const gx=20,gy=H-80,gw=W-250,gh=60;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(gx,gy,gw,gh);
+    cx.strokeStyle='rgba(100,200,255,0.1)';cx.lineWidth=0.5;
+    cx.beginPath();cx.moveTo(gx,gy+gh/2);cx.lineTo(gx+gw,gy+gh/2);cx.stroke();
+    if(fluctHistory.length>1){
+      cx.strokeStyle='rgba(139,92,246,0.6)';cx.lineWidth=1.5;cx.beginPath();
+      const step=gw/Math.max(1,fluctHistory.length-1);
+      fluctHistory.forEach((v,i)=>{
+        const x=gx+i*step;const y=gy+gh/2-v*gh*0.4;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    cx.fillStyle='rgba(139,92,246,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('VACUUM ENERGY FLUCTUATION TRACE',gx+8,gy-4);
+  }
+
+  function drawCasimirPlates(){
+    const px=W/2-60,py=30,pw=120,ph=H-130;
+    // Left plate
+    cx.fillStyle='rgba(100,100,120,0.3)';cx.fillRect(px,py,4,ph);
+    cx.strokeStyle='rgba(200,200,220,0.3)';cx.strokeRect(px,py,4,ph);
+    // Right plate
+    const sep=40+Math.sin(t*0.5)*10;
+    cx.fillStyle='rgba(100,100,120,0.3)';cx.fillRect(px+sep,py,4,ph);
+    cx.strokeStyle='rgba(200,200,220,0.3)';cx.strokeRect(px+sep,py,4,ph);
+    // Arrows showing Casimir force
+    cx.strokeStyle='rgba(255,200,100,0.3)';cx.lineWidth=1;
+    const acy=py+ph/2;
+    cx.beginPath();cx.moveTo(px-15,acy);cx.lineTo(px,acy);cx.stroke();
+    cx.beginPath();cx.moveTo(px+sep+4,acy);cx.lineTo(px+sep+19,acy);cx.stroke();
+    cx.fillStyle='rgba(255,200,100,0.3)';cx.font='7px monospace';cx.textAlign='center';
+    cx.fillText('Casimir Force',px+sep/2+2,py-5);
+    cx.fillText('<-- F -->',px+sep/2+2,acy-8);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,210,54);
+    cx.strokeStyle='rgba(139,92,246,0.2)';cx.strokeRect(8,8,210,54);
+    cx.font='10px monospace';cx.fillStyle='#8b5cf6';cx.textAlign='left';
+    cx.fillText('ZERO-POINT ENERGY METER',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Quantum Vacuum Fluctuation Viz',16,40);
+    cx.fillText('h-bar omega/2 per mode',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(4,6,14,0.1)';cx.fillRect(0,0,W,H);
+
+    drawVacuumField();
+    drawCasimirPlates();
+
+    // Spawn virtual pairs
+    if(Math.random()<0.15&&virtualPairs.length<MAX_PAIRS){
+      virtualPairs.push(new VirtualPair());
+    }
+    for(let i=virtualPairs.length-1;i>=0;i--){
+      if(!virtualPairs[i].update())virtualPairs.splice(i,1);
+      else virtualPairs[i].draw();
+    }
+
+    // Update ZPE level
+    zpeLevel=0.3+0.2*Math.sin(t*1.5)+0.15*Math.sin(t*3.7)+0.1*Math.random();
+    fluctHistory.push(Math.sin(t*2)*0.5+Math.sin(t*5)*0.3+(Math.random()-0.5)*0.4);
+    if(fluctHistory.length>300)fluctHistory.shift();
+
+    drawEnergyMeter();drawFluctuationGraph();drawHUD();
+
+    cx.fillStyle='rgba(139,92,246,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Quantum Vacuum Zero-Point Energy — Virtual Particle Pair Annihilation',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

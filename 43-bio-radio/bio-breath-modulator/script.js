@@ -351,3 +351,289 @@ function initBreathApp(){
     sendMsg('breath-tx',{active:isTx,rate:breathRate});
   };
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ BREATH MODULATOR ADVANCED CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootBreathViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(102,255,204,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- state --- */
+    var breathPhase=0,breathRate2=14,breathDepth2=50;
+    var breathHistory=new Float32Array(W);
+    var carrierHistory=new Float32Array(W);
+    var fmDeviationHistory=[];var MAX_DEV=120;
+    var spectrogramData=[];var MAX_SPEC=80;
+    var breathCycles=0,lastPeak=0;
+    var autoBreath=true;
+    var coherence=0.5;
+
+    /* --- lung model parameters --- */
+    var lungVolume=0.3,tidalVolume=0.5,residualVol=0.25;
+
+    /* --- respiratory waveform generator --- */
+    function breathWave(phase){
+      var p=phase%(Math.PI*2);
+      /* more natural breathing: fast inhale, slow exhale */
+      var inhale=Math.sin(p)*0.5+0.5;
+      return inhale>0.5?Math.pow((inhale-0.5)*2,0.7)*0.5+0.5:Math.pow((0.5-inhale)*2,0.5)*0.5;
+    }
+
+    /* --- draw anatomical lung diagram --- */
+    function drawLungs(ox,oy,w,h,expand){
+      ctx.strokeStyle='rgba(102,255,204,'+(0.2+expand*0.3)+')';ctx.lineWidth=1.5;
+      /* trachea */
+      ctx.beginPath();ctx.moveTo(ox+w/2,oy);ctx.lineTo(ox+w/2,oy+h*0.25);ctx.stroke();
+      /* bronchi */
+      ctx.beginPath();ctx.moveTo(ox+w/2,oy+h*0.25);ctx.quadraticCurveTo(ox+w*0.35,oy+h*0.30,ox+w*0.30,oy+h*0.40);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox+w/2,oy+h*0.25);ctx.quadraticCurveTo(ox+w*0.65,oy+h*0.30,ox+w*0.70,oy+h*0.40);ctx.stroke();
+      /* left lung */
+      var le=8+expand*12;
+      ctx.beginPath();ctx.ellipse(ox+w*0.32,oy+h*0.55,w*0.18+le,h*0.28+le*0.8,0,0,Math.PI*2);
+      ctx.fillStyle='rgba(102,255,204,'+(0.05+expand*0.1)+')';ctx.fill();
+      ctx.strokeStyle='rgba(102,255,204,'+(0.25+expand*0.3)+')';ctx.stroke();
+      /* right lung (slightly bigger) */
+      ctx.beginPath();ctx.ellipse(ox+w*0.68,oy+h*0.53,w*0.20+le,h*0.30+le*0.8,0,0,Math.PI*2);
+      ctx.fill();ctx.stroke();
+      /* diaphragm */
+      ctx.beginPath();ctx.moveTo(ox+w*0.10,oy+h*0.82+expand*5);
+      ctx.quadraticCurveTo(ox+w/2,oy+h*0.75-expand*10,ox+w*0.90,oy+h*0.82+expand*5);
+      ctx.strokeStyle='rgba(255,204,0,'+(0.2+expand*0.2)+')';ctx.lineWidth=2;ctx.stroke();
+      /* alveoli detail */
+      for(var ai=0;ai<6;ai++){
+        var ax=ox+w*0.25+ai%3*w*0.10+Math.sin(ai)*8;
+        var ay=oy+h*0.45+Math.floor(ai/3)*h*0.12;
+        var ar=3+expand*4+Math.sin(t*2+ai)*1;
+        ctx.beginPath();ctx.arc(ax,ay,ar,0,Math.PI*2);
+        ctx.fillStyle='rgba(102,255,204,'+(0.1+expand*0.15)+')';ctx.fill();
+      }
+      for(var ai2=0;ai2<6;ai2++){
+        var ax2=ox+w*0.60+ai2%3*w*0.10+Math.cos(ai2)*8;
+        var ay2=oy+h*0.43+Math.floor(ai2/3)*h*0.12;
+        var ar2=3+expand*4+Math.sin(t*2+ai2+1)*1;
+        ctx.beginPath();ctx.arc(ax2,ay2,ar2,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('RESPIRATORY ANATOMY',ox+5,oy-5);
+      ctx.fillText('Vol: '+(lungVolume*100).toFixed(0)+'%',ox+5,oy+h+12);
+    }
+
+    /* --- draw FM modulation diagram --- */
+    function drawFMDiagram(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('FM MODULATION ANALYSIS',ox+5,oy+12);
+
+      /* carrier signal */
+      var third=h/3;
+      ctx.beginPath();ctx.strokeStyle='#ff6633';ctx.lineWidth=1;
+      for(var i=0;i<w;i++){
+        var env=breathHistory[Math.floor(i/w*W)]/100;
+        var freq2=10+env*30;
+        var y=oy+third*0.5+Math.sin(i*freq2*0.02)*third*0.3;
+        if(i===0)ctx.moveTo(ox+i,y);else ctx.lineTo(ox+i,y);
+      }
+      ctx.stroke();
+      ctx.fillStyle='rgba(255,102,51,0.4)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('FM CARRIER',ox+5,oy+22);
+
+      /* deviation history */
+      if(fmDeviationHistory.length>1){
+        ctx.beginPath();ctx.strokeStyle='#ffcc00';ctx.lineWidth=1.2;
+        fmDeviationHistory.forEach(function(v,i2){
+          var x=ox+(i2/MAX_DEV)*w;
+          var y=oy+third+third*0.5-v/100*third*0.8;
+          if(i2===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        ctx.fillStyle='rgba(255,204,0,0.4)';ctx.fillText('FREQ DEVIATION',ox+5,oy+third+12);
+      }
+
+      /* breathing coherence */
+      var cohY=oy+third*2;
+      ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(ox+5,cohY+5,w-10,14);
+      ctx.fillStyle=coherence>0.7?'#33ff33':coherence>0.4?'#ffcc00':'#ff3366';
+      ctx.fillRect(ox+5,cohY+5,(w-10)*coherence,14);
+      ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('BREATH COHERENCE: '+(coherence*100).toFixed(0)+'%',ox+5,cohY+32);
+    }
+
+    /* --- draw breathing spectrogram --- */
+    function drawBreathSpectrogram(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('RESPIRATORY SPECTROGRAM',ox+5,oy+12);
+
+      var cellW=w/48,cellH=(h-16)/MAX_SPEC;
+      for(var row=0;row<spectrogramData.length;row++){
+        for(var col=0;col<48;col++){
+          var v=spectrogramData[row][col];
+          ctx.fillStyle='rgb('+(Math.min(255,v*400)|0)+','+(Math.min(255,Math.max(0,v*600-80))|0)+','+(Math.max(0,(0.6-v)*300)|0)+')';
+          ctx.fillRect(ox+col*cellW,oy+16+row*cellH,cellW+0.5,cellH+0.5);
+        }
+      }
+    }
+
+    /* --- main frame --- */
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* auto breathing simulation */
+      if(autoBreath){
+        breathPhase+=0.016*breathRate2/60*Math.PI*2;
+        var envelope=breathWave(breathPhase);
+        breathDepth2=Math.round(envelope*100);
+        lungVolume=residualVol+envelope*tidalVolume;
+        breathRate2=12+Math.sin(t*0.08)*3+Math.random()*0.5;
+
+        /* detect breath cycles */
+        if(envelope>0.95&&t-lastPeak>1){breathCycles++;lastPeak=t;}
+
+        /* coherence from rate stability */
+        coherence+=(0.7+Math.sin(t*0.2)*0.2-coherence)*0.02;
+      }
+
+      /* shift buffers */
+      for(var i=0;i<W-1;i++){breathHistory[i]=breathHistory[i+1];carrierHistory[i]=carrierHistory[i+1];}
+      breathHistory[W-1]=breathDepth2;
+      var carrierFreq2=433.92+breathDepth2/100*0.5;
+      carrierHistory[W-1]=Math.sin(t*carrierFreq2*2)*22*(breathDepth2/100);
+
+      /* FM deviation */
+      fmDeviationHistory.push(breathDepth2*0.5);
+      if(fmDeviationHistory.length>MAX_DEV)fmDeviationHistory.shift();
+
+      /* spectrogram row */
+      var specRow=[];
+      for(var sb=0;sb<48;sb++){
+        var freq3=sb*0.5;var amp3=0.02;
+        amp3+=Math.exp(-(freq3-breathRate2/60)*(freq3-breathRate2/60)/0.05)*breathDepth2/100*0.6;
+        amp3+=Math.exp(-(freq3-breathRate2/30)*(freq3-breathRate2/30)/0.1)*breathDepth2/100*0.2;
+        amp3+=Math.random()*0.02;
+        specRow.push(Math.min(1,amp3));
+      }
+      spectrogramData.push(specRow);if(spectrogramData.length>MAX_SPEC)spectrogramData.shift();
+
+      /* ---- LAYOUT ---- */
+
+      /* Top-left: Breath waveform */
+      var waveY=0,waveH2=H*0.25;
+      ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(0,waveY,W*0.58,waveH2);
+      ctx.beginPath();ctx.strokeStyle='#66ffcc';ctx.lineWidth=2.5;ctx.shadowColor='#66ffcc';ctx.shadowBlur=8;
+      for(var i2=0;i2<W*0.58;i2++){
+        var idx2=Math.floor(i2/(W*0.58)*W);
+        var y=waveY+waveH2-breathHistory[idx2]/100*(waveH2-10)-5;
+        if(i2===0)ctx.moveTo(i2,y);else ctx.lineTo(i2,y);
+      }
+      ctx.stroke();ctx.shadowBlur=0;
+      /* breath area fill */
+      ctx.beginPath();ctx.moveTo(0,waveY+waveH2);
+      for(var i3=0;i3<W*0.58;i3++){
+        var idx3=Math.floor(i3/(W*0.58)*W);
+        ctx.lineTo(i3,waveY+waveH2-breathHistory[idx3]/100*(waveH2-10)-5);
+      }
+      ctx.lineTo(W*0.58,waveY+waveH2);ctx.closePath();
+      ctx.fillStyle='rgba(102,255,204,0.06)';ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('BREATHING WAVEFORM',5,waveY+12);
+      ctx.fillText(breathRate2.toFixed(0)+' BrPM  |  Depth: '+breathDepth2+'%  |  Cycles: '+breathCycles,5,waveY+waveH2-5);
+
+      /* Top-right: Lung anatomy */
+      drawLungs(W*0.60,5,W*0.38,waveH2-10,breathDepth2/100);
+
+      /* Middle-left: FM carrier trace */
+      var fmY=waveH2+8,fmH=H*0.18;
+      ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(0,fmY,W*0.58,fmH);
+      ctx.beginPath();ctx.strokeStyle='#ff6633';ctx.lineWidth=1.2;
+      for(var i4=0;i4<W*0.58;i4++){
+        var idx4=Math.floor(i4/(W*0.58)*W);
+        var y2=fmY+fmH/2+carrierHistory[idx4];
+        if(i4===0)ctx.moveTo(i4,y2);else ctx.lineTo(i4,y2);
+      }
+      ctx.stroke();
+      /* envelope ghost */
+      ctx.beginPath();ctx.strokeStyle='rgba(255,102,51,0.2)';ctx.lineWidth=1;
+      for(var i5=0;i5<W*0.58;i5++){
+        var idx5=Math.floor(i5/(W*0.58)*W);
+        ctx.lineTo(i5,fmY+fmH/2-breathHistory[idx5]/100*fmH*0.3);
+      }
+      ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('RF CARRIER (433.92 MHz FM)',5,fmY+12);
+
+      /* Middle-right: FM modulation panel */
+      drawFMDiagram(W*0.60,fmY,W*0.40-5,fmH);
+
+      /* Bottom-left: Spectrogram */
+      var specY2=fmY+fmH+8;
+      drawBreathSpectrogram(0,specY2,W*0.55,H*0.22);
+
+      /* Bottom-right: Stats */
+      var stX=W*0.56,stY2=specY2,stW2=W*0.44-5,stH2=H*0.22;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(stX,stY2,stW2,stH2);
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('RESPIRATORY METRICS',stX+10,stY2+14);
+      var stats2=[
+        ['Breath Rate',breathRate2.toFixed(1)+' BrPM'],
+        ['Depth',breathDepth2+'%'],
+        ['Lung Volume',(lungVolume*100).toFixed(0)+'%'],
+        ['FM Carrier',(433.92+breathDepth2/100*0.5).toFixed(2)+' MHz'],
+        ['Deviation','\u00b1'+(breathDepth2*5).toFixed(0)+' kHz'],
+        ['Coherence',(coherence*100).toFixed(0)+'%'],
+        ['Cycles',breathCycles.toString()],
+        ['Phase',(breathDepth2>50?'INHALE':'EXHALE')]
+      ];
+      stats2.forEach(function(s,si){
+        var sx2=stX+10+(si%2)*stW2*0.48;
+        var sy2=stY2+30+Math.floor(si/2)*16;
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(s[0]+':',sx2,sy2);
+        ctx.fillStyle='#66ffcc';ctx.fillText(s[1],sx2+80,sy2);
+      });
+
+      /* Very bottom: phase indicator */
+      var phY=specY2+stH2+10;
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(0,phY,W,H-phY);
+      /* breathing phase circle */
+      var pcx=W/2,pcy=phY+(H-phY)/2;
+      var pr2=Math.min(30,(H-phY)/2-5);
+      ctx.beginPath();ctx.arc(pcx,pcy,pr2,0,Math.PI*2);
+      ctx.strokeStyle='rgba(102,255,204,0.2)';ctx.lineWidth=2;ctx.stroke();
+      var angle2=breathPhase%(Math.PI*2);
+      ctx.beginPath();ctx.moveTo(pcx,pcy);
+      ctx.lineTo(pcx+Math.cos(angle2-Math.PI/2)*pr2,pcy+Math.sin(angle2-Math.PI/2)*pr2);
+      ctx.strokeStyle='#66ffcc';ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='9px Orbitron,monospace';ctx.textAlign='center';
+      ctx.fillText('BREATH PHASE',pcx,phY+12);ctx.textAlign='left';
+
+      /* HUD */
+      ctx.strokeStyle='rgba(102,255,204,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl2=18;ctx.strokeStyle='rgba(102,255,204,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl2);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl2,c[1]);ctx.stroke();
+      });
+
+      requestAnimationFrame(frame);
+    }
+
+    cvs.addEventListener('click',function(){
+      breathRate2=6+Math.random()*18;
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootBreathViz);
+  else setTimeout(bootBreathViz,200);
+})();

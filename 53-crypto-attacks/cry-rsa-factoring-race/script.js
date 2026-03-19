@@ -410,3 +410,189 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Draw initial canvas
   drawRace();
 });
+
+/* ═══════ ENHANCED CRYPTO VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c2=document.createElement('canvas');
+_c2.id='cryptoVizCanvas';
+_c2.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizSect=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizSect)vizSect.appendChild(_c2);
+const _x2=_c2.getContext('2d');
+let _raf,_tick=0,_primes=[],_sieve=[],_keyBits=[];
+
+function _resize(){const r=_c2.getBoundingClientRect();_c2.width=r.width*devicePixelRatio;_c2.height=r.height*devicePixelRatio;_x2.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_resize);_resize();
+
+// Generate small primes via Sieve of Eratosthenes for visualization
+function genSieve(max){
+  const s=new Uint8Array(max+1);
+  for(let i=2;i*i<=max;i++)if(!s[i])for(let j=i*i;j<=max;j+=i)s[j]=1;
+  _primes=[];_sieve=s;
+  for(let i=2;i<=max;i++)if(!s[i])_primes.push(i);
+}
+genSieve(500);
+
+// Generate RSA key space visualization data
+function genKeySpace(){
+  _keyBits=[];
+  for(let i=0;i<64;i++){
+    const b=[];
+    for(let j=0;j<64;j++)b.push(Math.random());
+    _keyBits.push(b);
+  }
+}
+genKeySpace();
+
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function drawEnhanced(){
+  const w=_c2.getBoundingClientRect().width,h=_c2.getBoundingClientRect().height;
+  const acc=_gc('--accent'),acc2=_gc('--accent2'),txt=_gc('--text'),mut=_gc('--text-muted');
+  _x2.clearRect(0,0,w,h);
+  _tick++;
+
+  // === Section 1: Prime Sieve Visualization (top-left) ===
+  _x2.fillStyle=acc;_x2.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x2.fillText('Prime Number Sieve (Eratosthenes)',10,18);
+  const sieveW=w*0.48,sieveH=90,sieveX=10,sieveY=28;
+  const cols=Math.ceil(Math.sqrt(500)),cellSz=Math.min(sieveW/cols,sieveH/Math.ceil(500/cols));
+  for(let n=2;n<=Math.min(500,cols*Math.ceil(sieveH/cellSz));n++){
+    const col=(n-2)%cols,row=Math.floor((n-2)/cols);
+    const cx=sieveX+col*cellSz,cy=sieveY+row*cellSz;
+    if(cy>sieveY+sieveH)break;
+    const isPrime=!_sieve[n];
+    const isActive=(n<=(_tick%500)+2);
+    if(isPrime){
+      _x2.fillStyle=isActive?`${acc}cc`:`${acc}44`;
+      _x2.beginPath();_x2.arc(cx+cellSz/2,cy+cellSz/2,cellSz*0.35,0,Math.PI*2);_x2.fill();
+    }else{
+      _x2.fillStyle='rgba(255,255,255,.03)';
+      _x2.fillRect(cx+1,cy+1,cellSz-2,cellSz-2);
+    }
+  }
+  _x2.fillStyle=mut;_x2.font='9px Tajawal';
+  _x2.fillText(`Primes found: ${_primes.length} in [2..500]`,sieveX,sieveY+sieveH+12);
+
+  // === Section 2: RSA Key Space Heatmap (top-right) ===
+  const ksX=w*0.52,ksY=10;
+  _x2.fillStyle=acc2||acc;_x2.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x2.fillText('RSA Key Space Exploration',ksX,18);
+  const ksW=w*0.46,ksH=90;
+  const kCellW=ksW/64,kCellH=ksH/64;
+  for(let i=0;i<64;i++){
+    for(let j=0;j<64;j++){
+      const val=_keyBits[i][j];
+      const dist=Math.sqrt((i-32)**2+(j-32)**2)/45;
+      const wave=Math.sin(_tick*0.03+i*0.1+j*0.1)*0.3+0.5;
+      const heat=val*wave*(1-dist*0.5);
+      const r=Math.floor(heat*180+40),g=Math.floor(heat*80+20),b=Math.floor((1-heat)*120+60);
+      _x2.fillStyle=`rgb(${r},${g},${b})`;
+      _x2.fillRect(ksX+j*kCellW,ksY+18+i*kCellH,kCellW,kCellH);
+    }
+  }
+  // Scanning line
+  const scanY=ksY+18+(_tick%64)*kCellH;
+  _x2.fillStyle='rgba(255,255,255,.15)';
+  _x2.fillRect(ksX,scanY,ksW,kCellH*2);
+  _x2.fillStyle=mut;_x2.font='9px Tajawal';
+  _x2.fillText('2048-bit key space (each pixel = 2^20 keys)',ksX,ksY+ksH+30);
+
+  // === Section 3: Factoring Complexity Curves (bottom-left) ===
+  const crvX=10,crvY=sieveY+sieveH+26,crvW=w*0.48,crvH=h-crvY-30;
+  _x2.fillStyle=acc;_x2.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x2.fillText('Factoring Complexity: bits vs operations',crvX,crvY);
+  // Axes
+  _x2.strokeStyle=mut+'44';_x2.lineWidth=1;
+  _x2.beginPath();_x2.moveTo(crvX+30,crvY+10);_x2.lineTo(crvX+30,crvY+crvH);_x2.lineTo(crvX+crvW,crvY+crvH);_x2.stroke();
+  _x2.fillStyle=mut;_x2.font='8px SF Mono,monospace';
+  _x2.fillText('bits',crvX+crvW/2,crvY+crvH+12);
+
+  const algos=[
+    {name:'Trial Div O(2^(n/2))',color:'#f87171',fn:x=>Math.pow(2,x/2)},
+    {name:'Pollard Rho O(2^(n/4))',color:'#4ade80',fn:x=>Math.pow(2,x/4)},
+    {name:'GNFS O(e^(n^(1/3)))',color:'#60a5fa',fn:x=>Math.exp(1.923*Math.pow(x*Math.log(2),1/3)*Math.pow(Math.log(x*Math.log(2)),2/3))},
+    {name:"Shor's O(n^3)",color:'#c084fc',fn:x=>Math.pow(x,3)}
+  ];
+
+  const maxBits=120,maxOps=Math.pow(2,60);
+  algos.forEach((algo,ai)=>{
+    _x2.strokeStyle=algo.color;_x2.lineWidth=1.5;_x2.beginPath();
+    let started=false;
+    for(let b=4;b<=maxBits;b++){
+      const ops=algo.fn(b);
+      const px=crvX+30+(b/maxBits)*(crvW-35);
+      const logOps=Math.log2(Math.max(1,ops));
+      const py=crvY+crvH-(logOps/60)*crvH+10;
+      if(py<crvY+10)break;
+      if(!started){_x2.moveTo(px,py);started=true}else _x2.lineTo(px,py);
+    }
+    _x2.stroke();
+    // Label with animated pulse at current tick position
+    const labelY=crvY+18+ai*11;
+    _x2.fillStyle=algo.color;_x2.font='8px SF Mono';
+    _x2.fillText(algo.name,crvX+35,labelY);
+  });
+
+  // Animated cursor showing "current factoring progress"
+  const curBit=32+Math.sin(_tick*0.02)*28;
+  const curX=crvX+30+(curBit/maxBits)*(crvW-35);
+  _x2.strokeStyle='rgba(255,255,255,.4)';_x2.setLineDash([3,3]);
+  _x2.beginPath();_x2.moveTo(curX,crvY+10);_x2.lineTo(curX,crvY+crvH);_x2.stroke();
+  _x2.setLineDash([]);
+  _x2.fillStyle='#fff';_x2.font='8px SF Mono';
+  _x2.fillText(`${Math.round(curBit)} bits`,curX-12,crvY+crvH+12);
+
+  // === Section 4: Modular Arithmetic Animation (bottom-right) ===
+  const modX=w*0.52,modY=crvY,modW=w*0.46,modH=crvH;
+  _x2.fillStyle=acc2||acc;_x2.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x2.fillText('Modular Exponentiation: a^x mod N',modX,modY);
+
+  const N=97,a=3;
+  const orbLen=Math.min(N,96);
+  const orbCX=modX+modW/2,orbCY=modY+modH/2+5;
+  const orbR=Math.min(modW,modH)*0.35;
+
+  // Draw orbit circle
+  _x2.strokeStyle=mut+'22';_x2.lineWidth=1;
+  _x2.beginPath();_x2.arc(orbCX,orbCY,orbR,0,Math.PI*2);_x2.stroke();
+
+  // Plot a^x mod N values around the circle
+  let val=1;
+  for(let x=0;x<orbLen;x++){
+    const angle=(x/orbLen)*Math.PI*2-Math.PI/2;
+    const px=orbCX+Math.cos(angle)*orbR;
+    const py=orbCY+Math.sin(angle)*orbR;
+    const isActive=x<=(_tick%orbLen);
+    const sz=isActive?3.5:2;
+    _x2.fillStyle=isActive?`hsl(${(val/N)*360},70%,60%)`:`${acc}22`;
+    _x2.beginPath();_x2.arc(px,py,sz,0,Math.PI*2);_x2.fill();
+
+    // Connect sequential values with lines
+    if(x>0&&isActive){
+      const prevAngle=((x-1)/orbLen)*Math.PI*2-Math.PI/2;
+      const ppx=orbCX+Math.cos(prevAngle)*orbR;
+      const ppy=orbCY+Math.sin(prevAngle)*orbR;
+      _x2.strokeStyle=`hsla(${(val/N)*360},70%,60%,.2)`;_x2.lineWidth=0.8;
+      _x2.beginPath();_x2.moveTo(ppx,ppy);_x2.lineTo(px,py);_x2.stroke();
+    }
+    val=(val*a)%N;
+  }
+
+  // Center text
+  _x2.fillStyle=txt;_x2.font='bold 10px SF Mono';_x2.textAlign='center';
+  _x2.fillText(`${a}^x mod ${N}`,orbCX,orbCY-6);
+  _x2.fillStyle=mut;_x2.font='9px Tajawal';
+  _x2.fillText(`x = ${_tick%orbLen}`,orbCX,orbCY+8);
+  _x2.fillText(`val = ${(() => {let v=1;for(let i=0;i<_tick%orbLen;i++)v=(v*a)%N;return v})()}`,orbCX,orbCY+20);
+  _x2.textAlign='left';
+
+  // Phi function visualization (small)
+  const phiY=modY+modH-20;
+  _x2.fillStyle=mut;_x2.font='9px SF Mono';
+  _x2.fillText(`phi(${N})=${(() => {let c=0;for(let i=1;i<N;i++){let g=N,b=i;while(b){[g,b]=[b,g%b]}if(g===1)c++}return c})()}  |  Period detection via GCD`,modX,phiY);
+
+  _raf=requestAnimationFrame(drawEnhanced);
+}
+drawEnhanced();
+})();

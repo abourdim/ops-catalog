@@ -291,3 +291,180 @@ document.addEventListener('DOMContentLoaded', () => {
   $('playBtn').onclick = playAudio;
   drawIdle(); fillStegoInfo(); log(T('ready'), 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Audio Steganography
+   Animated spectral encoding with carrier waveform, hidden data
+   embedding, and real-time frequency analysis display
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simAudioStego';let cv,cx,W,H,af=null,t=0;
+  const spectrumBins=128;const carrierData=new Float32Array(spectrumBins);
+  const stegoData=new Float32Array(spectrumBins);
+  const bitStream=[];let bitIdx=0,msgText='HIDDEN MESSAGE ENCODED IN AUDIO SPECTRUM';
+  const waterfall=[];const WATERFALL_ROWS=80;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=320;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060812;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+    generateBits();
+  }
+
+  function generateBits(){
+    bitStream.length=0;
+    for(let i=0;i<msgText.length;i++){
+      const c=msgText.charCodeAt(i);
+      for(let b=7;b>=0;b--)bitStream.push((c>>b)&1);
+    }
+  }
+
+  function updateSpectrum(){
+    for(let i=0;i<spectrumBins;i++){
+      const freq=i/spectrumBins;
+      // Carrier: musical tones at 440Hz harmonics
+      let val=0;
+      val+=0.6*Math.exp(-Math.pow((freq-0.1)*20,2));
+      val+=0.4*Math.exp(-Math.pow((freq-0.15)*20,2));
+      val+=0.3*Math.exp(-Math.pow((freq-0.2)*20,2));
+      val+=Math.random()*0.05;
+      carrierData[i]=val;
+
+      // Stego: carrier + hidden high-freq tones
+      const bit=bitStream[(bitIdx+i)%bitStream.length];
+      const stegoFreq=bit?0.88:0.85;
+      const stegoPeak=0.15*Math.exp(-Math.pow((freq-stegoFreq)*40,2));
+      stegoData[i]=val+stegoPeak+Math.random()*0.02;
+    }
+    bitIdx=(bitIdx+1)%bitStream.length;
+  }
+
+  function drawWaveform(y,h,label,color){
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(20,y,W-40,h);
+    cx.strokeStyle=color;cx.lineWidth=1.5;cx.beginPath();
+    for(let i=0;i<W-40;i++){
+      const tt=(i/(W-40))*8+t*4;
+      const val=Math.sin(tt*8)*0.3+Math.sin(tt*12)*0.2+Math.sin(tt*2)*0.4;
+      const py=y+h/2+val*h*0.35;
+      if(i===0)cx.moveTo(20+i,py);else cx.lineTo(20+i,py);
+    }
+    cx.stroke();
+    cx.fillStyle=color.replace('0.7','0.4');cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText(label,28,y+12);
+  }
+
+  function drawSpectrumComparison(){
+    const sy=85,sh=65,sw=(W-60)/2;
+    // Carrier spectrum
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(20,sy,sw,sh);
+    for(let i=0;i<spectrumBins;i++){
+      const x=20+i/spectrumBins*sw;
+      const bh=carrierData[i]*sh*0.85;
+      cx.fillStyle='hsla(140,70%,50%,'+(0.3+carrierData[i]*0.5)+')';
+      cx.fillRect(x,sy+sh-bh,sw/spectrumBins-0.5,bh);
+    }
+    cx.fillStyle='rgba(0,255,136,0.4)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('CARRIER SPECTRUM (clean)',28,sy+12);
+
+    // Stego spectrum
+    const sx2=30+sw;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(sx2,sy,sw,sh);
+    for(let i=0;i<spectrumBins;i++){
+      const x=sx2+i/spectrumBins*sw;
+      const bh=stegoData[i]*sh*0.85;
+      const isHidden=i/spectrumBins>0.82&&i/spectrumBins<0.92;
+      cx.fillStyle=isHidden?'hsla(0,70%,50%,'+(0.4+stegoData[i]*0.4)+')':'hsla(200,70%,50%,'+(0.3+stegoData[i]*0.5)+')';
+      cx.fillRect(x,sy+sh-bh,sw/spectrumBins-0.5,bh);
+    }
+    cx.fillStyle='rgba(100,150,255,0.4)';cx.font='8px monospace';
+    cx.fillText('STEGO SPECTRUM (data at 19-20kHz)',sx2+8,sy+12);
+
+    // Arrow between
+    cx.fillStyle='rgba(255,255,255,0.2)';cx.font='14px sans-serif';cx.textAlign='center';
+    cx.fillText('>',20+sw+5,sy+sh/2+4);
+  }
+
+  function drawWaterfall(){
+    const wy=160,wh=80,ww=W-40;
+    // Add new row
+    const row=[];
+    for(let i=0;i<spectrumBins;i++)row.push(stegoData[i]);
+    waterfall.push(row);
+    if(waterfall.length>WATERFALL_ROWS)waterfall.shift();
+
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(20,wy,ww,wh);
+    const rowH=wh/WATERFALL_ROWS;
+    const colW=ww/spectrumBins;
+    for(let r=0;r<waterfall.length;r++){
+      for(let c=0;c<spectrumBins;c++){
+        const val=waterfall[r][c];
+        if(val<0.1)continue;
+        const isHidden=c/spectrumBins>0.82&&c/spectrumBins<0.92;
+        const rr=isHidden?Math.floor(val*255):0;
+        const gg=isHidden?Math.floor(val*100):Math.floor(val*255);
+        const bb=isHidden?0:Math.floor(val*100);
+        cx.fillStyle='rgba('+rr+','+gg+','+bb+','+(val*0.8)+')';
+        cx.fillRect(20+c*colW,wy+r*rowH,colW,rowH);
+      }
+    }
+    cx.fillStyle='rgba(255,255,255,0.3)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('SPECTROGRAM WATERFALL — Hidden data visible at high frequencies (red)',28,wy+wh+12);
+  }
+
+  function drawBitPattern(){
+    const bx=20,by=260,bw=W-40,bh=18;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(bx,by,bw,bh);
+    const visible=Math.min(bitStream.length,120);
+    const cellW=bw/visible;
+    for(let i=0;i<visible;i++){
+      const bit=bitStream[(bitIdx+i)%bitStream.length];
+      cx.fillStyle=bit?'rgba(59,130,246,0.6)':'rgba(239,68,68,0.25)';
+      cx.fillRect(bx+i*cellW+0.5,by+1,cellW-1,bh-2);
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('ENCODED BIT STREAM (blue=1, red=0)',bx+4,by-3);
+  }
+
+  function drawDecodedMsg(){
+    const dx=20,dy=285,dw=W-40;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(dx,dy,dw,20);
+    const charPos=Math.floor(bitIdx/8)%msgText.length;
+    const decoded=msgText.substring(0,charPos+1);
+    cx.fillStyle='#22c55e';cx.font='11px monospace';cx.textAlign='left';
+    cx.fillText('DECODED> '+decoded+(Math.sin(t*5)>0?'\u2588':''),dx+8,dy+14);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,200,54);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.strokeRect(8,8,200,54);
+    cx.font='10px monospace';cx.fillStyle='#00ffaa';cx.textAlign='left';
+    cx.fillText('AUDIO STEGANOGRAPHY',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Spectral Encoding Simulation',16,40);
+    cx.fillText('Bits: '+bitStream.length+'  Method: Tone Insert',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,8,18,0.12)';cx.fillRect(0,0,W,H);
+
+    updateSpectrum();
+    drawWaveform(15,55,'CARRIER + HIDDEN DATA WAVEFORM','rgba(0,255,136,0.7)');
+    drawSpectrumComparison();
+    drawWaterfall();
+    drawBitPattern();
+    drawDecodedMsg();
+    drawHUD();
+
+    cx.fillStyle='rgba(0,255,170,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Audio Steganography — Spectral Tone Insertion Encoding',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

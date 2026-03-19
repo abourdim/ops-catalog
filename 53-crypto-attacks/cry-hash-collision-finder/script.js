@@ -97,3 +97,201 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('searchBtn').onclick=startSearch;$('stopBtn').onclick=stopSearch;
   buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawSim()
 });
+
+/* ═══════ ENHANCED HASH COLLISION VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0,_hashGrid=[],_avalanche=[];
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+
+// Build hash distribution grid
+function buildGrid(){
+  _hashGrid=[];
+  for(let i=0;i<32;i++){
+    const row=[];
+    for(let j=0;j<32;j++){
+      const v=simpleHash(`cell_${i}_${j}_${Math.random()}`,16);
+      row.push({val:v,occ:0,age:0});
+    }
+    _hashGrid.push(row);
+  }
+}
+buildGrid();
+
+// Avalanche effect data: flip 1 bit, see how many output bits change
+function genAvalanche(){
+  _avalanche=[];
+  for(let bit=0;bit<8;bit++){
+    const original=`test_message_${_t}`;
+    const h1=simpleHash(original,16);
+    const modified=String.fromCharCode(original.charCodeAt(0)^(1<<bit))+original.slice(1);
+    const h2=simpleHash(modified,16);
+    const diff=h1^h2;
+    let flipped=0;for(let b=0;b<16;b++)if(diff&(1<<b))flipped++;
+    _avalanche.push({inputBit:bit,h1,h2,diff,flipped,ratio:flipped/16});
+  }
+}
+
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Hash Distribution Grid (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Hash Output Distribution (16-bit)',10,16);
+  const gW=w*0.45,gH=130,gX=10,gY=24;
+  const cellW=gW/32,cellH=gH/32;
+
+  // Simulate hashing: drop a new value each frame
+  const newHash=simpleHash(`msg_${_t}_${Math.random().toString(36)}`,16);
+  const gi=newHash%32,gj=Math.floor(newHash/32)%32;
+  if(_hashGrid[gi]&&_hashGrid[gi][gj]){_hashGrid[gi][gj].occ++;_hashGrid[gi][gj].age=_t}
+
+  for(let i=0;i<32;i++){
+    for(let j=0;j<32;j++){
+      const cell=_hashGrid[i][j];
+      const intensity=Math.min(1,cell.occ/10);
+      const fresh=(_t-cell.age)<30?0.5:0;
+      _x.fillStyle=`rgba(74,222,128,${intensity*0.6+fresh})`;
+      _x.fillRect(gX+j*cellW,gY+i*cellH,cellW-0.5,cellH-0.5);
+    }
+  }
+  // Highlight newest
+  _x.strokeStyle='#f87171';_x.lineWidth=2;
+  _x.strokeRect(gX+gj*cellW-1,gY+gi*cellH-1,cellW+2,cellH+2);
+  _x.fillStyle=mut;_x.font='9px SF Mono';
+  _x.fillText(`Hash: 0x${newHash.toString(16).padStart(4,'0')}  Bucket [${gi},${gj}]`,gX,gY+gH+12);
+
+  // === Avalanche Effect (top-right) ===
+  const avX=w*0.52,avY=6;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Avalanche Effect (1-bit input change)',avX,16);
+
+  if(_t%30===0)genAvalanche();
+  const avW=w*0.46,avH=130;
+  if(_avalanche.length>0){
+    const barW=avW/8;
+    _avalanche.forEach((a,i)=>{
+      const x=avX+i*barW;
+      const barH=a.ratio*avH*0.8;
+      const color=a.ratio>0.4?'#4ade80':a.ratio>0.2?'#fbbf24':'#f87171';
+      _x.fillStyle=color+'44';_x.fillRect(x+2,avY+18+avH-barH,barW-4,barH);
+      _x.fillStyle=color;_x.font='bold 9px SF Mono';
+      _x.textAlign='center';
+      _x.fillText(`${a.flipped}/16`,x+barW/2,avY+18+avH-barH-4);
+      _x.fillStyle=mut;_x.font='8px SF Mono';
+      _x.fillText(`bit ${a.inputBit}`,x+barW/2,avY+avH+22);
+      _x.textAlign='left';
+    });
+    // Ideal line (50%)
+    const idealY=avY+18+avH-0.5*avH*0.8;
+    _x.strokeStyle='#f87171';_x.setLineDash([3,3]);
+    _x.beginPath();_x.moveTo(avX,idealY);_x.lineTo(avX+avW,idealY);_x.stroke();
+    _x.setLineDash([]);
+    _x.fillStyle='#f87171';_x.font='8px SF Mono';_x.fillText('ideal 50%',avX+avW-45,idealY-3);
+  }
+
+  // === Birthday Probability Curve (bottom-left) ===
+  const bpX=10,bpY=gY+gH+26,bpW=w*0.45,bpH=h-bpY-25;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('P(collision) vs attempts (birthday bound)',bpX,bpY);
+  _x.strokeStyle=mut+'44';_x.beginPath();
+  _x.moveTo(bpX+25,bpY+8);_x.lineTo(bpX+25,bpY+bpH);_x.lineTo(bpX+bpW,bpY+bpH);_x.stroke();
+
+  const bits=parseInt(document.getElementById('bitsSelect').value)||16;
+  const N=1<<bits;
+  const maxK=Math.min(N,Math.ceil(3*Math.sqrt(N)));
+  _x.strokeStyle='#60a5fa';_x.lineWidth=2;_x.beginPath();
+  for(let k=1;k<=Math.min(maxK,400);k++){
+    const prob=1-Math.exp(-k*(k-1)/(2*N));
+    const px=bpX+25+(k/maxK)*(bpW-30);
+    const py=bpY+bpH-prob*(bpH-12);
+    if(k===1)_x.moveTo(px,py);else _x.lineTo(px,py);
+  }
+  _x.stroke();_x.lineWidth=1;
+
+  // 50% line
+  const halfY=bpY+bpH-0.5*(bpH-12);
+  _x.strokeStyle='#fbbf24';_x.setLineDash([4,4]);
+  _x.beginPath();_x.moveTo(bpX+25,halfY);_x.lineTo(bpX+bpW,halfY);_x.stroke();_x.setLineDash([]);
+  _x.fillStyle='#fbbf24';_x.font='8px SF Mono';_x.fillText('50%',bpX+2,halfY+3);
+
+  // Birthday bound marker
+  const bbK=Math.round(1.177*Math.sqrt(N));
+  const bbX=bpX+25+(bbK/maxK)*(bpW-30);
+  _x.strokeStyle='#f87171';_x.setLineDash([2,2]);
+  _x.beginPath();_x.moveTo(bbX,bpY+8);_x.lineTo(bbX,bpY+bpH);_x.stroke();_x.setLineDash([]);
+  _x.fillStyle='#f87171';_x.font='8px SF Mono';_x.fillText(`~${bbK}`,bbX-10,bpY+bpH+10);
+
+  // === Hash Internals Animation (bottom-right) ===
+  const hiX=w*0.52,hiY=bpY,hiW=w*0.46,hiH=bpH;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Hash Compression (Merkle-Damgard steps)',hiX,hiY);
+
+  const nBlocks=6;
+  const bkW=hiW/(nBlocks+1);
+  const bkH=30;
+  const bkY=hiY+15;
+  let state=0x5381;
+  for(let i=0;i<nBlocks;i++){
+    const x=hiX+i*bkW;
+    // Block
+    _x.fillStyle=`${acc}22`;_x.fillRect(x+2,bkY,bkW-8,bkH);
+    _x.strokeStyle=`${acc}66`;_x.strokeRect(x+2,bkY,bkW-8,bkH);
+    // Arrow
+    if(i<nBlocks-1){
+      _x.strokeStyle=acc;_x.beginPath();_x.moveTo(x+bkW-6,bkY+bkH/2);_x.lineTo(x+bkW+2,bkY+bkH/2);_x.stroke();
+      _x.fillStyle=acc;_x.beginPath();_x.moveTo(x+bkW+2,bkY+bkH/2);_x.lineTo(x+bkW-4,bkY+bkH/2-4);_x.lineTo(x+bkW-4,bkY+bkH/2+4);_x.fill();
+    }
+    // State value (animated)
+    const animState=((state<<5)+state+(_t+i*37))>>>0;
+    state=animState;
+    const displayH=(animState&0xFFFF).toString(16).padStart(4,'0');
+    _x.fillStyle=acc;_x.font='bold 8px SF Mono';_x.textAlign='center';
+    _x.fillText(`0x${displayH}`,x+bkW/2-2,bkY+bkH/2+3);
+    _x.textAlign='left';
+
+    // Block label
+    _x.fillStyle=mut;_x.font='7px Tajawal';_x.textAlign='center';
+    _x.fillText(i===0?'IV':`B${i}`,x+bkW/2-2,bkY-3);
+    _x.textAlign='left';
+  }
+
+  // XOR / compression visual
+  const compY=bkY+bkH+15;
+  for(let i=0;i<16;i++){
+    const bx=hiX+i*(hiW/16);
+    const bit=(state>>(15-i))&1;
+    const flip=Math.sin(_t*0.05+i*0.5)>0?1:0;
+    _x.fillStyle=bit?`${acc}88`:'rgba(255,255,255,.05)';
+    _x.fillRect(bx,compY,hiW/16-1,12);
+    if(flip!==bit){
+      _x.fillStyle='#f87171';_x.font='bold 8px SF Mono';_x.textAlign='center';
+      _x.fillText(bit.toString(),bx+hiW/32,compY+10);_x.textAlign='left';
+    }
+  }
+  _x.fillStyle=mut;_x.font='9px Tajawal';
+  _x.fillText('Internal state bits (XOR cascade)',hiX,compY+25);
+
+  // Collision counter animation
+  const ccY=compY+35;
+  const progress=(_t%200)/200;
+  _x.fillStyle='rgba(255,255,255,.04)';_x.fillRect(hiX,ccY,hiW,16);
+  _x.fillStyle=progress>0.8?'#f87171':'#4ade80';
+  _x.fillRect(hiX,ccY,progress*hiW,16);
+  _x.fillStyle=txt;_x.font='9px SF Mono';
+  _x.fillText(`Search progress: ${Math.floor(progress*100)}%  (${Math.floor(progress*Math.sqrt(N))} / ~${Math.ceil(Math.sqrt(N))} birthday bound)`,hiX+4,ccY+12);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

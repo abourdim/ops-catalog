@@ -409,3 +409,317 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ HEARTBEAT MESH ADVANCED CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootMeshViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(255,51,102,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- mesh node definitions --- */
+    var COLORS=['#ff3366','#ff6633','#33ff33','#6699ff','#ffcc00','#ff33cc','#33ffcc','#9966ff','#ff9933','#66ff33'];
+    var vizNodes=[],vizLinks=[];
+
+    function addVizNode(){
+      var n={
+        x:80+Math.random()*(W*0.55-160),
+        y:80+Math.random()*(H*0.55-100),
+        bpm:55+Math.random()*40,
+        phase:Math.random()*Math.PI*2,
+        color:COLORS[vizNodes.length%COLORS.length],
+        name:'N'+(vizNodes.length+1),
+        history:[],
+        pulseAlpha:0
+      };
+      vizNodes.push(n);
+      /* auto-link */
+      vizNodes.forEach(function(o,i){
+        if(o===n)return;
+        var d=Math.hypot(o.x-n.x,o.y-n.y);
+        if(d<200)vizLinks.push({a:vizNodes.length-1,b:i,strength:1-d/200});
+      });
+    }
+    /* initialize with 5 nodes */
+    for(var ni=0;ni<5;ni++)addVizNode();
+
+    /* ECG-like waveform */
+    function ecg(phase){
+      var p=((phase%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
+      var n2=p/(Math.PI*2);
+      if(n2<0.05)return Math.sin(n2/0.05*Math.PI)*0.3;
+      if(n2<0.1)return 0;
+      if(n2<0.15)return -Math.sin((n2-0.1)/0.05*Math.PI)*0.15;
+      if(n2<0.2)return Math.sin((n2-0.15)/0.05*Math.PI)*1.0;
+      if(n2<0.25)return -Math.sin((n2-0.2)/0.05*Math.PI)*0.25;
+      if(n2<0.4)return Math.sin((n2-0.25)/0.15*Math.PI)*0.15;
+      return 0;
+    }
+
+    /* --- sync metrics --- */
+    var syncHistory=[];var MAX_SYNC=200;
+    var hrHistory=[];var MAX_HR=200;
+    var networkEntropy=0;
+
+    /* --- draw ECG strip for a node --- */
+    function drawECGStrip(ox,oy,w,h,node,idx){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.strokeStyle=node.color+'44';ctx.strokeRect(ox,oy,w,h);
+
+      if(node.history.length>1){
+        ctx.beginPath();ctx.strokeStyle=node.color;ctx.lineWidth=1.5;
+        node.history.forEach(function(v,i){
+          var x=ox+(i/60)*w;
+          var y=oy+h/2-v*h*0.35;
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+      }
+      ctx.fillStyle=node.color;ctx.font='7px Orbitron,monospace';
+      ctx.fillText(node.name+' '+Math.round(node.bpm)+'BPM',ox+3,oy+10);
+    }
+
+    /* --- draw network topology graph --- */
+    function drawTopology(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(ox,oy,w,h);
+
+      /* links */
+      vizLinks.forEach(function(l){
+        var a=vizNodes[l.a],b2=vizNodes[l.b];
+        if(!a||!b2)return;
+        var beatA=ecg(a.phase);
+        var pulse=Math.max(0,beatA);
+        /* scale positions to viewport */
+        var ax=ox+a.x/(W*0.55)*w,ay=oy+a.y/(H*0.55)*h;
+        var bx=ox+b2.x/(W*0.55)*w,by=oy+b2.y/(H*0.55)*h;
+
+        ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);
+        ctx.strokeStyle='rgba(255,51,102,'+(0.08+pulse*0.3)+')';
+        ctx.lineWidth=1+pulse*2;ctx.stroke();
+
+        /* traveling packet */
+        if(beatA>0.8){
+          var prog=(t*2)%1;
+          var mx=ax+(bx-ax)*prog,my=ay+(by-ay)*prog;
+          ctx.beginPath();ctx.arc(mx,my,2+pulse*2,0,Math.PI*2);
+          ctx.fillStyle='#ff3366';ctx.fill();
+        }
+      });
+
+      /* nodes */
+      vizNodes.forEach(function(n2){
+        var beat=ecg(n2.phase);
+        var glow=Math.max(0,beat);
+        var nx=ox+n2.x/(W*0.55)*w,ny=oy+n2.y/(H*0.55)*h;
+
+        /* glow */
+        ctx.beginPath();ctx.arc(nx,ny,8+glow*8,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,51,102,'+(0.03+glow*0.15)+')';ctx.fill();
+
+        /* body */
+        var g=ctx.createRadialGradient(nx,ny,0,nx,ny,8);
+        g.addColorStop(0,n2.color+'cc');g.addColorStop(1,n2.color+'44');
+        ctx.beginPath();ctx.arc(nx,ny,8,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+        ctx.fillStyle='#fff';ctx.font='6px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText(n2.name,nx,ny-12);
+        ctx.fillStyle=n2.color;ctx.fillText(Math.round(n2.bpm),nx,ny+18);
+        ctx.textAlign='left';
+      });
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('MESH TOPOLOGY',ox+5,oy+12);
+    }
+
+    /* --- draw sync timeline --- */
+    function drawSyncTimeline(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('SYNCHRONIZATION TIMELINE',ox+5,oy+12);
+
+      if(syncHistory.length>1){
+        ctx.beginPath();ctx.strokeStyle='#33ff33';ctx.lineWidth=1.5;
+        syncHistory.forEach(function(v,i){
+          var x=ox+(i/MAX_SYNC)*w;
+          var y=oy+h-v/100*(h-20)-5;
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        /* fill */
+        ctx.beginPath();ctx.moveTo(ox,oy+h);
+        syncHistory.forEach(function(v,i){ctx.lineTo(ox+(i/MAX_SYNC)*w,oy+h-v/100*(h-20)-5);});
+        ctx.lineTo(ox+(syncHistory.length/MAX_SYNC)*w,oy+h);ctx.closePath();
+        ctx.fillStyle='rgba(51,255,51,0.06)';ctx.fill();
+      }
+
+      /* threshold line */
+      var thY=oy+h-95/100*(h-20)-5;
+      ctx.strokeStyle='rgba(255,204,0,0.3)';ctx.setLineDash([4,4]);
+      ctx.beginPath();ctx.moveTo(ox,thY);ctx.lineTo(ox+w,thY);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='rgba(255,204,0,0.4)';ctx.fillText('95%',ox+w-25,thY-3);
+    }
+
+    /* --- draw heart rate distribution --- */
+    function drawHRDistribution(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('BPM DISTRIBUTION',ox+5,oy+12);
+
+      /* histogram bins 40-120 BPM */
+      var bins=new Array(20).fill(0);
+      vizNodes.forEach(function(n2){
+        var bin=Math.floor((n2.bpm-40)/4);
+        if(bin>=0&&bin<20)bins[bin]++;
+      });
+      var maxBin=Math.max.apply(null,bins)||1;
+      var binW=(w-20)/20;
+      bins.forEach(function(v,i){
+        var bh2=(v/maxBin)*(h-30);
+        var hue=i/20*120;
+        ctx.fillStyle='hsla('+hue+',70%,50%,0.6)';
+        ctx.fillRect(ox+10+i*binW,oy+h-5-bh2,binW-1,bh2);
+      });
+      ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='6px Orbitron,monospace';
+      ctx.fillText('40',ox+10,oy+h+6);ctx.fillText('120',ox+w-20,oy+h+6);
+    }
+
+    /* --- main frame --- */
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      /* update all nodes */
+      vizNodes.forEach(function(n2,ni2){
+        n2.phase+=0.016*n2.bpm/60*Math.PI*2;
+        var beat=ecg(n2.phase);
+        n2.history.push(beat);if(n2.history.length>60)n2.history.shift();
+
+        /* sync toward neighbors */
+        vizLinks.forEach(function(l){
+          var other=null;
+          if(vizNodes[l.a]===n2)other=vizNodes[l.b];
+          if(vizNodes[l.b]===n2)other=vizNodes[l.a];
+          if(other)n2.bpm+=(other.bpm-n2.bpm)*0.0012*l.strength;
+        });
+      });
+
+      /* compute sync */
+      var sync2=0;
+      if(vizNodes.length>1){
+        var bpms2=vizNodes.map(function(n2){return n2.bpm;});
+        var avg2=bpms2.reduce(function(a,b2){return a+b2;})/bpms2.length;
+        sync2=Math.max(0,100-bpms2.reduce(function(a,b2){return a+Math.abs(b2-avg2);},0)/vizNodes.length*2);
+      }
+      syncHistory.push(sync2);if(syncHistory.length>MAX_SYNC)syncHistory.shift();
+
+      /* ---- LAYOUT ---- */
+
+      /* Top-left: Mesh topology */
+      drawTopology(0,0,W*0.55,H*0.55);
+
+      /* Top-right: ECG strips for each node */
+      var ecgX=W*0.56,ecgW=W*0.44-5;
+      var stripH=Math.min(50,(H*0.55)/Math.max(vizNodes.length,1)-2);
+      vizNodes.forEach(function(n2,ni2){
+        if(ni2*stripH>H*0.55-10)return;
+        drawECGStrip(ecgX,ni2*(stripH+2),ecgW,stripH,n2,ni2);
+      });
+
+      /* Bottom-left: Sync timeline */
+      drawSyncTimeline(0,H*0.56+5,W*0.55,H*0.20);
+
+      /* Bottom-right: HR distribution */
+      drawHRDistribution(W*0.56,H*0.56+5,W*0.44-5,H*0.20);
+
+      /* Very bottom: Stats bar */
+      var stY=H*0.78;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(0,stY,W,H-stY);
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('MESH NETWORK STATISTICS',10,stY+14);
+
+      var avg3=0;
+      if(vizNodes.length>0){
+        avg3=vizNodes.reduce(function(a,n2){return a+n2.bpm;},0)/vizNodes.length;
+      }
+      var stats3=[
+        ['Nodes',vizNodes.length.toString()],
+        ['Links',vizLinks.length.toString()],
+        ['Sync',sync2.toFixed(0)+'%'],
+        ['Avg BPM',avg3.toFixed(0)],
+        ['Min BPM',vizNodes.length>0?Math.min.apply(null,vizNodes.map(function(n2){return n2.bpm;})).toFixed(0):'--'],
+        ['Max BPM',vizNodes.length>0?Math.max.apply(null,vizNodes.map(function(n2){return n2.bpm;})).toFixed(0):'--'],
+        ['Density',vizNodes.length>1?(2*vizLinks.length/(vizNodes.length*(vizNodes.length-1))*100).toFixed(0)+'%':'--'],
+        ['Network',sync2>90?'HARMONY':sync2>60?'SYNCING':'DIVERGENT']
+      ];
+      stats3.forEach(function(s,si){
+        var sx=10+(si%4)*W*0.24;
+        var sy=stY+30+Math.floor(si/4)*16;
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(s[0]+':',sx,sy);
+        ctx.fillStyle=sync2>80?'#33ff33':sync2>50?'#ffcc00':'#ff3366';
+        ctx.fillText(s[1],sx+70,sy);
+      });
+
+      /* pulse indicator at each node on beat */
+      vizNodes.forEach(function(n2){
+        var beat=ecg(n2.phase);
+        if(beat>0.9){
+          n2.pulseAlpha=1;
+        }
+        if(n2.pulseAlpha>0){
+          n2.pulseAlpha-=0.02;
+          var nx=n2.x/(W*0.55)*(W*0.55),ny=n2.y/(H*0.55)*(H*0.55);
+          ctx.beginPath();ctx.arc(nx,ny,20+((1-n2.pulseAlpha)*25),0,Math.PI*2);
+          ctx.strokeStyle='rgba(255,51,102,'+Math.max(0,n2.pulseAlpha*0.4).toFixed(2)+')';
+          ctx.lineWidth=2;ctx.stroke();
+        }
+      });
+
+      /* HUD corners */
+      ctx.strokeStyle='rgba(255,51,102,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl3=18;ctx.strokeStyle='rgba(255,51,102,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl3);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl3,c[1]);ctx.stroke();
+      });
+      ctx.fillStyle='rgba(255,51,102,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('MESH',W-60,17);
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to add node */
+    cvs.addEventListener('click',function(e){
+      var rect=cvs.getBoundingClientRect();
+      var mx=(e.clientX-rect.left)*(W/rect.width);
+      var my=(e.clientY-rect.top)*(H/rect.height);
+      if(mx<W*0.55&&my<H*0.55&&vizNodes.length<12){
+        var n3={
+          x:mx/(W*0.55)*(W*0.55),y:my/(H*0.55)*(H*0.55),
+          bpm:55+Math.random()*40,phase:Math.random()*Math.PI*2,
+          color:COLORS[vizNodes.length%COLORS.length],name:'N'+(vizNodes.length+1),
+          history:[],pulseAlpha:0
+        };
+        vizNodes.push(n3);
+        vizNodes.forEach(function(o,i){
+          if(o===n3)return;
+          var d=Math.hypot(o.x-n3.x,o.y-n3.y);
+          if(d<200)vizLinks.push({a:vizNodes.length-1,b:i,strength:1-d/200});
+        });
+      }
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootMeshViz);
+  else setTimeout(bootMeshViz,200);
+})();

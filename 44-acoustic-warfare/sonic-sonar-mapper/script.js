@@ -247,3 +247,178 @@ document.addEventListener('DOMContentLoaded', () => {
   if (ctx) { ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, canvas.width, canvas.height); drawSonar(); }
   fillSonarInfo(); log(T('ready'), 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Sonar Mapper
+   Animated PPI radar display with echo points, room geometry
+   reconstruction, and acoustic pulse propagation
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simSonarMapper';let cv,cx,W,H,af=null,t=0;
+  const echoPoints=[];const pulses=[];let sweep=0;
+  const roomWalls=[];let simPings=0;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=320;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060a14;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+    generateRoom();
+  }
+
+  function generateRoom(){
+    roomWalls.length=0;
+    const cx2=W*0.3,cy2=H/2,r=120;
+    // Irregular room polygon
+    for(let a=0;a<Math.PI*2;a+=0.15){
+      const dist=r*(0.6+0.4*Math.sin(a*3)*Math.cos(a*2)+0.2*Math.sin(a*5));
+      roomWalls.push({x:cx2+Math.cos(a)*dist,y:cy2+Math.sin(a)*dist,angle:a,dist:dist});
+    }
+  }
+
+  class SonarPulse{
+    constructor(x,y){this.x=x;this.y=y;this.r=0;this.maxR=150;this.alpha=0.4;}
+    update(){this.r+=2;this.alpha=0.4*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){
+      cx.beginPath();cx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      cx.strokeStyle='rgba(0,255,100,'+this.alpha+')';cx.lineWidth=2;cx.stroke();
+    }
+  }
+
+  function drawPPIDisplay(){
+    const pcx=W*0.3,pcy=H/2,pr=130;
+    // Range circles
+    cx.strokeStyle='rgba(0,255,170,0.1)';cx.lineWidth=0.5;
+    for(let r=1;r<=4;r++){cx.beginPath();cx.arc(pcx,pcy,pr*r/4,0,Math.PI*2);cx.stroke();}
+    // Cross hairs
+    cx.beginPath();cx.moveTo(pcx-pr,pcy);cx.lineTo(pcx+pr,pcy);
+    cx.moveTo(pcx,pcy-pr);cx.lineTo(pcx,pcy+pr);cx.stroke();
+    // Sweep line
+    const grad=cx.createRadialGradient(pcx,pcy,0,pcx,pcy,pr);
+    grad.addColorStop(0,'rgba(0,255,100,0.25)');grad.addColorStop(1,'rgba(0,255,100,0)');
+    cx.save();cx.translate(pcx,pcy);cx.rotate(sweep);
+    cx.fillStyle=grad;cx.beginPath();cx.moveTo(0,0);cx.arc(0,0,pr,-0.12,0.12);cx.fill();
+    cx.restore();
+    // Sweep line
+    cx.strokeStyle='rgba(0,255,100,0.7)';cx.lineWidth=1.5;
+    cx.beginPath();cx.moveTo(pcx,pcy);
+    cx.lineTo(pcx+Math.cos(sweep)*pr,pcy+Math.sin(sweep)*pr);cx.stroke();
+    // Echo points
+    const now=Date.now();
+    for(let i=echoPoints.length-1;i>=0;i--){
+      const p=echoPoints[i];
+      const age=(now-p.time)/6000;
+      if(age>1){echoPoints.splice(i,1);continue;}
+      const alpha=1-age;
+      cx.fillStyle='rgba(0,255,100,'+alpha+')';cx.beginPath();
+      cx.arc(pcx+p.dx,pcy+p.dy,2+alpha*3,0,Math.PI*2);cx.fill();
+    }
+    // Cardinal labels
+    cx.fillStyle='rgba(255,255,255,0.3)';cx.font='9px monospace';cx.textAlign='center';
+    cx.fillText('N',pcx,pcy-pr-6);cx.fillText('S',pcx,pcy+pr+12);
+    cx.fillText('E',pcx+pr+10,pcy+4);cx.fillText('W',pcx-pr-10,pcy+4);
+    // Range labels
+    for(let r=1;r<=4;r++)cx.fillText((r*2.5).toFixed(1)+'m',pcx+pr*r/4-10,pcy-4);
+    // Center emitter
+    cx.save();cx.shadowColor='#00ff88';cx.shadowBlur=6;
+    cx.fillStyle='#00ff88';cx.beginPath();cx.arc(pcx,pcy,4,0,Math.PI*2);cx.fill();
+    cx.restore();
+  }
+
+  function drawRoomReconstruction(){
+    const rx=W*0.6+10,ry=20,rw=W*0.4-30,rh=H/2-30;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(rx,ry,rw,rh);
+    cx.fillStyle='rgba(0,255,170,0.3)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('ROOM RECONSTRUCTION',rx+8,ry+12);
+    // Draw reconstructed walls from echo points
+    if(echoPoints.length>2){
+      const scaleX=rw/(300),scaleY=rh/(300);
+      cx.strokeStyle='rgba(0,200,255,0.4)';cx.lineWidth=1.5;cx.beginPath();
+      echoPoints.forEach((p,i)=>{
+        const x=rx+rw/2+p.dx*scaleX;
+        const y=ry+rh/2+p.dy*scaleY;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.closePath();cx.stroke();
+      // Fill translucent
+      cx.fillStyle='rgba(0,200,255,0.05)';cx.fill();
+    }
+  }
+
+  function drawEchoTimeline(){
+    const ex=W*0.6+10,ey=H/2,ew=W*0.4-30,eh=60;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(ex,ey,ew,eh);
+    cx.fillStyle='rgba(0,255,170,0.3)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('ECHO DELAY TIMELINE',ex+8,ey+10);
+    // Show recent echo delays as bars
+    const recent=echoPoints.slice(-20);
+    const barW=ew/20;
+    recent.forEach((p,i)=>{
+      const delay=Math.sqrt(p.dx*p.dx+p.dy*p.dy)/2;
+      const bh=delay/150*eh*0.7;
+      cx.fillStyle='rgba(0,255,100,'+(0.3+bh/eh*0.5)+')';
+      cx.fillRect(ex+i*barW+1,ey+eh-bh-5,barW-2,bh);
+    });
+  }
+
+  function drawFreqResponse(){
+    const fx=W*0.6+10,fy=H/2+70,fw=W*0.4-30,fh=50;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(fx,fy,fw,fh);
+    cx.strokeStyle='rgba(0,200,255,0.5)';cx.lineWidth=1.5;cx.beginPath();
+    for(let i=0;i<fw;i++){
+      const freq=i/fw*8;
+      const resp=Math.exp(-freq*0.3)*(0.8+0.2*Math.sin(freq*4+t*2));
+      const y=fy+fh-resp*fh*0.8;
+      if(i===0)cx.moveTo(fx+i,y);else cx.lineTo(fx+i,y);
+    }
+    cx.stroke();
+    cx.fillStyle='rgba(100,200,255,0.3)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('ECHO FREQUENCY RESPONSE — 0 Hz         8 kHz',fx+8,fy+fh+10);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,200,54);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.strokeRect(8,8,200,54);
+    cx.font='10px monospace';cx.fillStyle='#00ffaa';cx.textAlign='left';
+    cx.fillText('SONAR PPI MAPPER',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Pings: '+simPings+'  Points: '+echoPoints.length,16,40);
+    cx.fillText('Chirp: 4 kHz  Speed: 343 m/s',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    sweep+=0.02;if(sweep>Math.PI*2)sweep-=Math.PI*2;
+    cx.fillStyle='rgba(6,10,20,0.08)';cx.fillRect(0,0,W,H);
+
+    // Auto-ping and generate echoes
+    if(Math.floor(t*60)%40===0){
+      simPings++;
+      pulses.push(new SonarPulse(W*0.3,H/2));
+      // Generate echo from "room"
+      const wall=roomWalls[Math.floor(Math.random()*roomWalls.length)];
+      const angle=sweep+Math.random()*0.5-0.25;
+      const dist=40+Math.random()*90;
+      echoPoints.push({dx:Math.cos(angle)*dist,dy:Math.sin(angle)*dist,time:Date.now()});
+    }
+
+    drawPPIDisplay();
+
+    for(let i=pulses.length-1;i>=0;i--){
+      if(!pulses[i].update())pulses.splice(i,1);
+      else pulses[i].draw();
+    }
+
+    drawRoomReconstruction();drawEchoTimeline();drawFreqResponse();drawHUD();
+
+    cx.fillStyle='rgba(0,255,170,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Acoustic Echolocation — PPI Sonar Room Mapping',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

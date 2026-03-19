@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Deepfake Voice Cloner — Workshop DIY</title>
-  <meta name="description" content="Deepfake Voice Cloner — Simulate AI voice cloning to understand deepfake audio threats." />
+  <meta name="description" content="Deepfake Voice Cloner — Simulate AI voice cloning to understand deepfake audio threats and learn detection techniques." />
   <meta name="author" content="Workshop-DIY — abourdim" />
   <meta property="og:title" content="Deepfake Voice Cloner — Workshop DIY" />
   <meta property="og:description" content="Simulate AI voice cloning to understand deepfake audio threats." />
@@ -15,14 +15,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
-    .sim-panel{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:10px;padding:12px}
-    .sim-panel h4{font-size:.85rem;color:var(--accent);margin:0 0 8px;font-family:var(--font-h)}
-    .sim-val{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--text)}
-    .sim-label{font-size:.7rem;color:var(--text-muted)}
-    .ctrl-row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
-    .ctrl-row select,.ctrl-row input{flex:1;min-width:100px;padding:6px 10px;border-radius:6px;border:1px solid var(--border,rgba(255,255,255,.2));background:var(--panel);color:var(--text);font-size:.85rem}
-    .mono-log{font-family:monospace;font-size:.72rem;background:#000;color:#0f0;padding:8px;border-radius:8px;max-height:120px;overflow-y:auto;margin-top:6px;line-height:1.4}
+    .sim-controls{display:flex;flex-direction:column;gap:.5rem;padding:1rem}
+    .sim-btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 1rem 1rem}
+    .sim-panel{background:var(--card-bg,#111);border:1px solid var(--border,#222);border-radius:10px;padding:12px}
+    .sim-panel h4{font-size:.85rem;color:var(--accent);margin:0 0 8px;font-family:'Orbitron',monospace}
+    .sim-val{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--text,#eee)}
+    .sim-label{font-size:.7rem;color:var(--muted,#888)}
+    .ctrl-row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap;padding:0 1rem}
+    .ctrl-row select,.ctrl-row input{flex:1;min-width:100px;padding:6px 10px;border-radius:6px;border:1px solid var(--border,rgba(255,255,255,.2));background:var(--card-bg,#111);color:var(--text,#eee);font-size:.85rem}
+    .lab-area{padding:1rem}
+    .lab-area canvas{width:100%;border-radius:8px;background:#0a0a1a;border:1px solid var(--border,#222)}
+    .mono-log{font-family:'Orbitron',monospace;font-size:.7rem;background:#000;color:#0f0;padding:10px;border-radius:8px;max-height:140px;overflow-y:auto;margin:0 1rem 1rem;line-height:1.5;border:1px solid var(--border,#222)}
+    .voice-meter{height:6px;background:var(--border,#222);border-radius:3px;margin:4px 0;overflow:hidden}
+    .voice-meter-fill{height:100%;background:var(--accent,#d4a03c);border-radius:3px;transition:width .3s;width:0}
+    .how-steps{padding:1rem}
+    .how-step-item{display:flex;gap:.8rem;margin-bottom:.8rem;align-items:flex-start}
+    .how-step-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--accent,#d4a03c);color:var(--bg,#000);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem}
+    .how-step-text{font-size:.85rem;line-height:1.5}
+    .challenge-card{padding:.8rem;margin-bottom:.5rem;border-radius:8px;background:var(--card-bg,#111);border:1px solid var(--border,#222)}
+    .challenge-card p{margin:0 0 .5rem;font-size:.85rem}
+    .challenge-answer{display:none;padding:.5rem;margin-top:.5rem;border-radius:6px;background:var(--bg,#000);font-size:.8rem;color:var(--accent,#33ff33);border-left:3px solid var(--accent,#d4a03c)}
+    .challenge-answer.visible{display:block}
     @media(max-width:600px){.sim-grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -31,18 +45,28 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">Deepfake Voice Cloner</div>
+      <div class="splash-sub" data-i18n="subtitle">Simulate AI voice cloning threats</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
+
   <div class="app">
     <div class="deco-band top-band" aria-hidden="true"></div>
     <div class="rows-container">
+
+      <!-- HEADER -->
       <div class="header">
-        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1649;&#1604;&#1604;&#1617;&#1614;&#1648;&#1607;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1600;&#1648;&#1606;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616; <span class="bism-ornament">&#x2726;</span></div>
+        <div class="bismillah" aria-hidden="true">
+          <span class="bism-ornament">&#x2726;</span>
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+          <span class="bism-ornament">&#x2726;</span>
+        </div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Deepfake Voice Cloner</h1><div class="subtitle" data-i18n="subtitle">Simulate AI voice cloning threats</div></div>
+          <div>
+            <h1 data-i18n="title">Deepfake Voice Cloner</h1>
+            <div class="subtitle" data-i18n="subtitle">Simulate AI voice cloning threats</div>
+          </div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -50,95 +74,187 @@
             <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button>
             <button id="logBtn" class="btn-icon-only" aria-label="Log">&#128220;</button>
           </div>
-          <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
+          <div class="status-pill" id="statusPill">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText" data-i18n="disconnected">Disconnected</span>
+          </div>
         </div>
       </div>
+
+      <!-- MAIN CARD -->
       <div class="card" id="mainCard">
-        <div class="card-header"><div><div class="card-title"><span class="icon">&#127908;</span> <span data-i18n="mainSection">Deepfake Voice Cloner</span></div><div class="card-subtitle"><span data-i18n="mainDesc">AI voice cloning simulation for security awareness</span> <span class="version-tag">v1.0</span></div></div></div>
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">&#127908;</span> <span data-i18n="mainSection">Deepfake Voice Cloner</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">AI voice cloning simulation for security awareness</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+        <div class="lab-area">
+          <canvas id="waveCanvas" height="220"></canvas>
+        </div>
+        <div class="ctrl-row">
+          <select id="voiceSelect">
+            <option value="male" data-i18n-opt="voiceMale">Male Voice</option>
+            <option value="female" data-i18n-opt="voiceFemale">Female Voice</option>
+            <option value="child" data-i18n-opt="voiceChild">Child Voice</option>
+          </select>
+          <button id="recordBtn" class="button primary" data-i18n="recordBtn">Record</button>
+          <button id="cloneBtn" class="button" data-i18n="cloneBtn">Clone Voice</button>
+        </div>
+        <div class="sim-grid">
+          <div class="sim-panel">
+            <h4 data-i18n="similarityLabel">Clone Similarity</h4>
+            <div class="sim-val" id="similarityVal">0 %</div>
+            <div class="voice-meter"><div class="voice-meter-fill" id="simMeter"></div></div>
+            <div class="sim-label" data-i18n="similarityDesc">AI model confidence</div>
+          </div>
+          <div class="sim-panel">
+            <h4 data-i18n="spectrumLabel">Frequency Spectrum</h4>
+            <div class="sim-val" id="freqVal">-- Hz</div>
+            <div class="sim-label" id="pitchLabel">Pitch: --</div>
+          </div>
+        </div>
       </div>
 
-      <details class="collapsible" open>
-        <summary><span class="icon">&#127911;</span> <span data-i18n="sectionA">Voice Waveform</span></summary>
+      <!-- SECTION A — Spectrogram Lab -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128202;</span> <span data-i18n="sectionA">Clone Analysis Lab</span></summary>
         <div class="card">
-          <canvas id="waveCanvas" width="800" height="200" style="width:100%;height:auto;border-radius:8px;background:#000;display:block"></canvas>
-          <div class="ctrl-row">
-            <select id="voiceSelect"><option value="male" data-i18n-opt="voiceMale">Male Voice</option><option value="female" data-i18n-opt="voiceFemale">Female Voice</option><option value="child" data-i18n-opt="voiceChild">Child Voice</option></select>
-            <button id="recordBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">&#9679;</span> <span data-i18n="recordBtn">Record</span></button>
-            <button id="cloneBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#129302;</span> <span data-i18n="cloneBtn">Clone Voice</span></button>
+          <div class="lab-area">
+            <canvas id="specCanvas" height="200"></canvas>
           </div>
-          <div class="sim-grid">
-            <div class="sim-panel"><h4 data-i18n="similarityLabel">Clone Similarity</h4><div class="sim-val" id="similarityVal">0%</div><div class="sim-label" data-i18n="similarityDesc">AI model confidence</div></div>
-            <div class="sim-panel"><h4 data-i18n="spectrumLabel">Frequency Spectrum</h4><div class="sim-val" id="freqVal">-- Hz</div><div class="sim-label" id="pitchLabel">Pitch: --</div></div>
+          <div class="ctrl-row">
+            <button id="playOrigBtn" class="button" data-i18n="playOrig">Play Original</button>
+            <button id="playCloneBtn" class="button primary" data-i18n="playClone">Play Cloned</button>
+            <button id="detectBtn" class="button" data-i18n="detectBtn">Detect Fake</button>
+          </div>
+          <div class="mono-log" id="detectionLog">Deepfake Voice Cloner ready. Neural model loaded (3.2M params)...</div>
+        </div>
+      </details>
+
+      <!-- SECTION B — How It Works -->
+      <details class="collapsible">
+        <summary><span class="icon">&#128272;</span> <span data-i18n="sectionB">How It Works</span></summary>
+        <div class="card">
+          <div class="how-steps">
+            <div class="how-step-item"><span class="how-step-num">1</span><span class="how-step-text" data-i18n="howStep1">A voice sample is recorded and converted to a spectrogram representation.</span></div>
+            <div class="how-step-item"><span class="how-step-num">2</span><span class="how-step-text" data-i18n="howStep2">An AI model analyzes the voice's unique characteristics (timbre, pitch, cadence).</span></div>
+            <div class="how-step-item"><span class="how-step-num">3</span><span class="how-step-text" data-i18n="howStep3">The model generates a synthetic clone that mimics the original voice patterns.</span></div>
+            <div class="how-step-item"><span class="how-step-num">4</span><span class="how-step-text" data-i18n="howStep4">Detection algorithms analyze spectral anomalies to identify deepfake artifacts.</span></div>
           </div>
         </div>
       </details>
 
+      <!-- SECTION C — Challenge -->
       <details class="collapsible">
-        <summary><span class="icon">&#128202;</span> <span data-i18n="sectionB">Clone Analysis</span></summary>
+        <summary><span class="icon">&#127942;</span> <span data-i18n="sectionC">Challenge</span></summary>
         <div class="card">
-          <canvas id="specCanvas" width="800" height="200" style="width:100%;height:auto;border-radius:8px;background:#000;display:block"></canvas>
-          <div class="ctrl-row">
-            <button id="playOrigBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#9654;</span> <span data-i18n="playOrig">Original</span></button>
-            <button id="playCloneBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">&#9654;</span> <span data-i18n="playClone">Cloned</span></button>
-            <button id="detectBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#128269;</span> <span data-i18n="detectBtn">Detect Fake</span></button>
+          <div style="padding:1rem">
+            <div class="challenge-card">
+              <p data-i18n="challenge1">How can you tell a cloned voice from a real one?</p>
+              <button class="button" onclick="revealChallenge(0)" data-i18n="revealBtn">Reveal Answer</button>
+              <div class="challenge-answer" id="answer0" data-i18n="challengeReveal1">Look for metallic resonance at high frequencies, unnatural micro-pauses, and consistent pitch that lacks natural human variation.</div>
+            </div>
+            <div class="challenge-card">
+              <p data-i18n="challenge2">Why is deepfake voice cloning dangerous for social engineering?</p>
+              <button class="button" onclick="revealChallenge(1)" data-i18n="revealBtn">Reveal Answer</button>
+              <div class="challenge-answer" id="answer1" data-i18n="challengeReveal2">Attackers can impersonate executives in phone calls (vishing), authorize fraudulent wire transfers, or manipulate employees into revealing sensitive information.</div>
+            </div>
+            <div class="challenge-card">
+              <p data-i18n="challenge3">Design a defense protocol against voice deepfakes.</p>
+              <button class="button" onclick="revealChallenge(2)" data-i18n="revealBtn">Reveal Answer</button>
+              <div class="challenge-answer" id="answer2" data-i18n="challengeReveal3">Use code words for sensitive requests, implement callback verification on separate channels, deploy real-time deepfake detection AI, and never authorize financial transactions based solely on voice.</div>
+            </div>
           </div>
         </div>
       </details>
 
-      <details class="collapsible">
-        <summary><span class="icon">&#128203;</span> <span data-i18n="sectionC">Detection Log</span></summary>
-        <div class="card"><div class="mono-log" id="detectionLog">Deepfake Voice Cloner ready. AI model loaded (3.2M params)...</div></div>
-      </details>
     </div>
-    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+
+    <footer class="app-footer">
+      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+      <span class="hijri-date" id="hijriDate"></span>
+    </footer>
     <div class="deco-band bottom-band" aria-hidden="true"></div>
   </div>
 
   <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
   <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
 
+  <!-- Help Panel -->
   <div class="sidebar-overlay" id="helpOverlay"></div>
   <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
     <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#10067; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
-    <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
+    <div class="help-tabs">
+      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
+    </div>
     <div class="sidebar-body">
       <div class="help-content active" id="helpFaq">
-        <details class="help-item"><summary data-i18n="faq_q1">What is deepfake voice cloning?</summary><p data-i18n="faq_a1">AI technology that replicates a person's voice from audio samples. This simulator teaches recognition of such threats.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">Is this real cloning?</summary><p data-i18n="faq_a2">No. This is an educational simulation that visualizes how the process works without actually cloning voices.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">How to detect deepfakes?</summary><p data-i18n="faq_a3">Look for unnatural pauses, metallic artifacts, inconsistent pitch, and spectral anomalies.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q1">What is deepfake voice cloning?</summary><p data-i18n="faq_a1">AI technology that replicates a person's voice from short audio samples using neural network models.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">Is this real cloning?</summary><p data-i18n="faq_a2">No. This is a purely educational simulation that visualizes how the process works without actually cloning voices.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">How to detect deepfakes?</summary><p data-i18n="faq_a3">Look for unnatural pauses, metallic artifacts, inconsistent pitch, spectral anomalies, and phase discontinuities.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data leaves your device.</p></details>
       </div>
       <div class="help-content" id="helpHowto">
-        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select a voice type and click Record.</p></div>
-        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Clone Voice to simulate AI synthesis.</p></div>
-        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Compare original vs cloned in Clone Analysis.</p></div>
-        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Detect Fake to identify artifacts.</p></div>
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select a voice type (male, female, child) from the dropdown.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Record to capture a simulated voice sample and observe the waveform.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Click Clone Voice to simulate AI synthesis and watch the similarity meter rise.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Open Clone Analysis Lab, play original vs cloned, and use Detect Fake to find artifacts.</p></div>
       </div>
       <div class="help-content" id="helpWiki">
-        <div class="wiki-entry"><h3 data-i18n="wiki_t1">&#127908; Deepfake Audio</h3><p data-i18n="wiki_d1">AI models learn voice characteristics from short samples to generate convincing speech.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_t2">&#128269; Detection</h3><p data-i18n="wiki_d2">Spectral analysis and AI classifiers help identify synthetic audio.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_t1">&#127908; Voice Synthesis</h3><p data-i18n="wiki_d1">Neural TTS models like WaveNet learn voice characteristics from short samples to generate convincing synthetic speech.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_t2">&#128269; Spectral Detection</h3><p data-i18n="wiki_d2">Spectral analysis reveals anomalies in frequency distribution that betray synthetic audio generation.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_t3">&#128737; Social Engineering Risk</h3><p data-i18n="wiki_d3">Voice cloning enables vishing attacks where attackers impersonate trusted individuals over phone calls.</p></div>
       </div>
     </div>
     <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
 
+  <!-- Settings Panel -->
   <div class="sidebar-overlay" id="settingsOverlay"></div>
   <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
     <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#9881;&#65039; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
     <div class="sidebar-body">
-      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">&#1593;&#1585;&#1576;&#1610;</option></select></div>
-      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
-      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">Sound effects</span></label></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label>
+        <select id="langSelect" class="sidebar-select" aria-label="Language">
+          <option value="en" selected>&#127468;&#127463; EN</option><option value="fr">&#127467;&#127479; FR</option><option value="ar">&#127465;&#127487; عربي</option>
+        </select>
+      </div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label>
+        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option>
+          <option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option>
+          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option>
+        </select>
+      </div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">&#128266; Sound effects</span></label></div>
     </div>
     <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
 
+  <!-- Log Panel -->
   <aside class="sidebar" id="logPanel" aria-label="Activity Log">
     <div class="resize-handle" id="logResizeHandle"></div>
-    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div></div>
-    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#10003;</button><button class="log-filter" data-filter="error">&#10007;</button></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title" data-i18n="activityLog">&#128220; Activity Log</span>
+      <div class="log-controls">
+        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#128465;</span><span data-i18n="clear">Clear</span></button>
+        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#128203;</span><span data-i18n="copy">Copy</span></button>
+        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#128190;</span><span data-i18n="export">Export</span></button>
+        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button>
+      </div>
+    </div>
+    <div class="log-filters" id="logFilters">
+      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="log-filter" data-filter="info">Info</button>
+      <button class="log-filter" data-filter="success">&#10003;</button>
+      <button class="log-filter" data-filter="error">&#10007;</button>
+    </div>
     <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
-    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events & messages</span><span class="badge"><strong>v1.0</strong></span></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
 
   <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>

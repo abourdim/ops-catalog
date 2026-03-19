@@ -229,3 +229,199 @@ document.addEventListener('DOMContentLoaded', () => {
   $('startBtn').onclick = startMonitor; $('stopBtn').onclick = stopMonitor;
   drawIdle(); fillScience(); log(T('ready'), 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Infrasound Detector
+   Animated seismograph trace, frequency spectrum, CTBTO station
+   network map, and event classification display
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simInfrasound';let cv,cx,W,H,af=null,t=0;
+  const traceHistory=[];const freqBins=128;const spectrum=new Float32Array(freqBins);
+  const events=[];let eventCount=0;
+  const stations=[{x:0.2,y:0.3,name:'IMS-01'},{x:0.5,y:0.2,name:'IMS-02'},{x:0.8,y:0.4,name:'IMS-03'},
+    {x:0.3,y:0.7,name:'IMS-04'},{x:0.6,y:0.6,name:'IMS-05'},{x:0.85,y:0.75,name:'IMS-06'}];
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=320;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060a14;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  function generateSignal(){
+    const base=Math.sin(t*0.3)*15+Math.sin(t*0.7)*8+Math.sin(t*1.2)*5;
+    // Occasional seismic events
+    let event=0;
+    if(Math.sin(t*0.05)>0.95)event=60*Math.exp(-Math.pow(t%20-10,2)/8);
+    if(Math.sin(t*0.02+1)>0.97)event+=40*Math.exp(-Math.pow(t%30-15,2)/5);
+    const noise=(Math.random()-.5)*8;
+    return base+event+noise;
+  }
+
+  function classifyAmplitude(amp){
+    const a=Math.abs(amp);
+    if(a>80)return{type:'NUCLEAR',color:'#ef4444',level:3};
+    if(a>50)return{type:'VOLCANIC',color:'#f59e0b',level:2};
+    if(a>30)return{type:'SEISMIC',color:'#3b82f6',level:1};
+    return{type:'QUIET',color:'#22c55e',level:0};
+  }
+
+  function drawSeismograph(){
+    const sy=10,sh=110,sw=W-220;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(10,sy,sw,sh);
+    // Grid
+    cx.strokeStyle='rgba(0,255,170,0.06)';cx.lineWidth=0.5;
+    for(let i=0;i<=10;i++){const x=10+i/10*sw;cx.beginPath();cx.moveTo(x,sy);cx.lineTo(x,sy+sh);cx.stroke();}
+    for(let i=0;i<=4;i++){const y=sy+i/4*sh;cx.beginPath();cx.moveTo(10,y);cx.lineTo(10+sw,y);cx.stroke();}
+    // Center line
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.setLineDash([4,4]);
+    cx.beginPath();cx.moveTo(10,sy+sh/2);cx.lineTo(10+sw,sy+sh/2);cx.stroke();
+    cx.setLineDash([]);
+
+    if(traceHistory.length>1){
+      const cls=classifyAmplitude(traceHistory[traceHistory.length-1]);
+      cx.strokeStyle=cls.color;cx.lineWidth=1.5;cx.beginPath();
+      const step=sw/Math.max(1,traceHistory.length-1);
+      traceHistory.forEach((v,i)=>{
+        const x=10+i*step;
+        const y=sy+sh/2-v/120*sh*0.4;
+        if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+      });
+      cx.stroke();
+    }
+    cx.fillStyle='rgba(0,255,170,0.4)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('INFRASOUND SEISMOGRAPH — 0-20 Hz',18,sy+12);
+  }
+
+  function drawSpectrum(){
+    const sx=W-200,sy=10,sw=190,sh=110;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(sx,sy,sw,sh);
+    for(let i=0;i<freqBins;i++){
+      const freq=i/freqBins*20;
+      let val=0;
+      val+=0.5*Math.exp(-Math.pow((freq-2)*2,2))*Math.abs(Math.sin(t*0.5));
+      val+=0.3*Math.exp(-Math.pow((freq-5)*1.5,2))*Math.abs(Math.sin(t*0.3));
+      val+=0.2*Math.exp(-Math.pow((freq-12)*1,2))*Math.abs(Math.sin(t*0.7));
+      val+=Math.random()*0.05;
+      spectrum[i]=val;
+      const bh=val*sh*0.8;
+      const hue=120-val*120;
+      cx.fillStyle='hsla('+hue+',70%,50%,'+(0.3+val*0.5)+')';
+      cx.fillRect(sx+i/freqBins*sw,sy+sh-bh,sw/freqBins-0.5,bh);
+    }
+    cx.fillStyle='rgba(0,255,170,0.4)';cx.font='7px monospace';
+    cx.fillText('FREQUENCY — 0 Hz         20 Hz',sx+4,sy+sh+10);
+    cx.fillText('LOW-FREQ SPECTRUM',sx+4,sy+10);
+  }
+
+  function drawStationMap(){
+    const mx=10,my=130,mw=W/2-20,mh=130;
+    cx.fillStyle='rgba(0,0,20,0.4)';cx.fillRect(mx,my,mw,mh);
+    cx.strokeStyle='rgba(0,100,200,0.15)';cx.lineWidth=0.5;
+    // Simple world outline (abstracted)
+    cx.beginPath();
+    cx.moveTo(mx+mw*0.1,my+mh*0.3);cx.quadraticCurveTo(mx+mw*0.3,my+mh*0.15,mx+mw*0.5,my+mh*0.25);
+    cx.quadraticCurveTo(mx+mw*0.7,my+mh*0.2,mx+mw*0.9,my+mh*0.35);
+    cx.strokeStyle='rgba(0,100,200,0.2)';cx.stroke();
+    cx.beginPath();
+    cx.moveTo(mx+mw*0.1,my+mh*0.5);cx.quadraticCurveTo(mx+mw*0.25,my+mh*0.8,mx+mw*0.4,my+mh*0.7);
+    cx.stroke();
+
+    // Stations
+    stations.forEach((s,i)=>{
+      const sx2=mx+s.x*mw,sy2=my+s.y*mh;
+      const pulse=3+Math.sin(t*2+i)*2;
+      cx.save();cx.shadowColor='#00ff88';cx.shadowBlur=pulse;
+      cx.fillStyle='rgba(0,255,136,0.7)';cx.beginPath();cx.arc(sx2,sy2,3,0,Math.PI*2);cx.fill();
+      cx.shadowBlur=0;
+      cx.font='6px monospace';cx.fillStyle='rgba(0,255,170,0.5)';cx.textAlign='center';
+      cx.fillText(s.name,sx2,sy2-7);
+      cx.restore();
+      // Detection rings on events
+      const cls=classifyAmplitude(traceHistory.length?traceHistory[traceHistory.length-1]:0);
+      if(cls.level>0){
+        const r=(t*20+i*15)%40;
+        cx.strokeStyle='rgba(239,68,68,'+(0.15*(1-r/40))+')';cx.lineWidth=1;
+        cx.beginPath();cx.arc(sx2,sy2,r,0,Math.PI*2);cx.stroke();
+      }
+    });
+    cx.fillStyle='rgba(0,255,170,0.3)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('CTBTO IMS NETWORK',mx+8,my+12);
+  }
+
+  function drawEventLog(){
+    const ex=W/2,ey=130,ew=W/2-10,eh=130;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(ex,ey,ew,eh);
+    cx.fillStyle='rgba(0,255,170,0.3)';cx.font='8px monospace';cx.textAlign='left';
+    cx.fillText('DETECTION LOG',ex+8,ey+12);
+
+    const recentEvents=events.slice(-6);
+    recentEvents.forEach((e,i)=>{
+      cx.fillStyle=e.color;cx.font='7px monospace';
+      cx.fillText('['+e.time+'] '+e.type+' — '+e.amp.toFixed(1)+' dB',ex+8,ey+26+i*14);
+    });
+
+    // Alert level bar
+    const cls=classifyAmplitude(traceHistory.length?traceHistory[traceHistory.length-1]:0);
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(ex+8,ey+eh-20,ew-16,12);
+    const alertW=(ew-16)*Math.min(1,Math.abs(traceHistory.length?traceHistory[traceHistory.length-1]:0)/100);
+    cx.fillStyle=cls.color;cx.fillRect(ex+8,ey+eh-20,alertW,12);
+    cx.fillStyle='rgba(255,255,255,0.5)';cx.font='7px monospace';
+    cx.fillText('ALERT: '+cls.type,ex+12,ey+eh-11);
+  }
+
+  function drawPressureGraph(){
+    const px=10,py=270,pw=W-20,ph=35;
+    cx.fillStyle='rgba(0,0,0,0.25)';cx.fillRect(px,py,pw,ph);
+    // Pressure bars (microbarom simulation)
+    const bins=96;const binW=pw/bins;
+    for(let i=0;i<bins;i++){
+      const val=Math.abs(Math.sin(t*0.5+i*0.3)*0.5+Math.sin(t*0.8+i*0.1)*0.3)+Math.random()*0.1;
+      const bh=val*ph*0.7;
+      cx.fillStyle='hsla('+(180+val*60)+',60%,50%,'+(0.3+val*0.4)+')';
+      cx.fillRect(px+i*binW,py+ph-bh,binW-0.5,bh);
+    }
+    cx.fillStyle='rgba(100,200,255,0.3)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('MICROBAROM PRESSURE — Atmospheric Waveguide Detection',px+8,py-3);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(W-200,270,190,35);
+    cx.strokeStyle='rgba(0,255,170,0.12)';cx.strokeRect(W-200,270,190,35);
+    cx.font='8px monospace';cx.fillStyle='#aaa';cx.textAlign='left';
+    cx.fillText('Events: '+eventCount+'  Stations: '+stations.length,W-192,284);
+    cx.fillText('Sensitivity: HIGH  Filter: 0-20Hz',W-192,296);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,10,20,0.12)';cx.fillRect(0,0,W,H);
+
+    const signal=generateSignal();
+    traceHistory.push(signal);
+    if(traceHistory.length>400)traceHistory.shift();
+
+    // Log events
+    const cls=classifyAmplitude(signal);
+    if(cls.level>=2&&(events.length===0||t-events[events.length-1].t>2)){
+      events.push({type:cls.type,color:cls.color,amp:Math.abs(signal),
+        time:new Date().toLocaleTimeString(),t:t});
+      eventCount++;
+      if(events.length>20)events.shift();
+    }
+
+    drawSeismograph();drawSpectrum();drawStationMap();
+    drawEventLog();drawPressureGraph();drawHUD();
+
+    cx.fillStyle='rgba(0,255,170,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Infrasound Detection Network — Sub-20Hz Monitoring',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

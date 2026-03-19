@@ -163,3 +163,197 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('runBtn').onclick=runShor;$('stopBtn').onclick=()=>{running=false;hideToast();if(animFrame)clearTimeout(animFrame)};
   buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawCanvas()
 });
+
+/* ═══════ ENHANCED QUANTUM VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+// Qubit state simulation
+const nQubits=8;
+let qubits=[];
+function initQubits(){
+  qubits=[];
+  for(let i=0;i<nQubits;i++)qubits.push({alpha:Math.cos(i*0.3),beta:Math.sin(i*0.3),phase:i*0.5,measured:false});
+}
+initQubits();
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Bloch Sphere Representations (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Qubit States (Bloch Sphere projections)',10,16);
+
+  const sphereR=Math.min(35,(w-40)/(nQubits*2.5));
+  for(let i=0;i<nQubits;i++){
+    const q=qubits[i];
+    q.phase+=0.02+i*0.005;
+    const cx=30+i*(sphereR*2.5),cy=55;
+
+    // Draw circle (sphere projection)
+    _x.strokeStyle=`${acc}44`;_x.lineWidth=1;
+    _x.beginPath();_x.arc(cx,cy,sphereR,0,Math.PI*2);_x.stroke();
+    // Cross hairs
+    _x.strokeStyle=`${acc}22`;
+    _x.beginPath();_x.moveTo(cx-sphereR,cy);_x.lineTo(cx+sphereR,cy);_x.stroke();
+    _x.beginPath();_x.moveTo(cx,cy-sphereR);_x.lineTo(cx,cy+sphereR);_x.stroke();
+
+    // State vector
+    const theta=Math.acos(q.alpha)*2;
+    const phi=q.phase;
+    const sx=Math.sin(theta)*Math.cos(phi)*sphereR;
+    const sy=-Math.cos(theta)*sphereR;
+    _x.strokeStyle='#f87171';_x.lineWidth=2;
+    _x.beginPath();_x.moveTo(cx,cy);_x.lineTo(cx+sx,cy+sy);_x.stroke();
+    _x.fillStyle='#f87171';_x.beginPath();_x.arc(cx+sx,cy+sy,3,0,Math.PI*2);_x.fill();
+
+    // Probability bars (|0> and |1>)
+    const p0=q.alpha*q.alpha,p1=q.beta*q.beta;
+    const bW=sphereR*0.6,bH=15;
+    const bY=cy+sphereR+4;
+    _x.fillStyle='#4ade8044';_x.fillRect(cx-bW,bY,bW*2*p0,bH/2);
+    _x.fillStyle='#60a5fa44';_x.fillRect(cx-bW,bY+bH/2,bW*2*p1,bH/2);
+    _x.fillStyle=mut;_x.font='7px SF Mono';_x.textAlign='center';
+    _x.fillText(`q${i}`,cx,cy-sphereR-3);
+    _x.textAlign='left';
+    _x.lineWidth=1;
+  }
+
+  // === QFT Circuit Diagram (middle) ===
+  const qftY=110,qftH=80;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Quantum Fourier Transform Circuit',10,qftY);
+
+  const wireSpacing=qftH/nQubits,gateSize=14;
+  for(let i=0;i<nQubits;i++){
+    const y=qftY+12+i*wireSpacing;
+    // Wire
+    _x.strokeStyle=`${acc}33`;_x.beginPath();_x.moveTo(40,y);_x.lineTo(w-20,y);_x.stroke();
+    // Label
+    _x.fillStyle=mut;_x.font='8px SF Mono';_x.fillText(`|q${i}>`,10,y+3);
+
+    // Hadamard gates
+    const hX=60+i*25;
+    _x.fillStyle='#c084fc33';_x.fillRect(hX-gateSize/2,y-gateSize/2,gateSize,gateSize);
+    _x.strokeStyle='#c084fc';_x.strokeRect(hX-gateSize/2,y-gateSize/2,gateSize,gateSize);
+    _x.fillStyle='#c084fc';_x.font='bold 8px SF Mono';_x.textAlign='center';
+    _x.fillText('H',hX,y+3);_x.textAlign='left';
+
+    // Controlled rotation gates
+    for(let j=i+1;j<Math.min(i+4,nQubits);j++){
+      const crX=hX+30+(j-i)*20;
+      const ty=qftY+12+j*wireSpacing;
+      // Control line
+      _x.strokeStyle='#60a5fa44';_x.beginPath();_x.moveTo(crX,y);_x.lineTo(crX,ty);_x.stroke();
+      // Control dot
+      _x.fillStyle='#60a5fa';_x.beginPath();_x.arc(crX,y,3,0,Math.PI*2);_x.fill();
+      // Target
+      _x.strokeStyle='#60a5fa';_x.beginPath();_x.arc(crX,ty,5,0,Math.PI*2);_x.stroke();
+      _x.beginPath();_x.moveTo(crX,ty-5);_x.lineTo(crX,ty+5);_x.stroke();
+      _x.beginPath();_x.moveTo(crX-5,ty);_x.lineTo(crX+5,ty);_x.stroke();
+    }
+
+    // Measurement wave
+    const phase=_t*0.05+i*0.3;
+    const measX=w-50;
+    _x.strokeStyle=`hsl(${i*45+120},70%,60%)`;_x.lineWidth=1.5;_x.beginPath();
+    for(let p=0;p<20;p++){
+      const px=measX+p;
+      const py=y+Math.sin(phase+p*0.5)*4*qubits[i].alpha;
+      if(p===0)_x.moveTo(px,py);else _x.lineTo(px,py);
+    }
+    _x.stroke();_x.lineWidth=1;
+  }
+
+  // === Period Finding Visualization (bottom-left) ===
+  const pfY=qftY+qftH+20,pfW=w*0.48,pfH=h-pfY-25;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Period Finding: a^x mod N',10,pfY);
+
+  const N=parseInt(document.getElementById('modulusInput').value)||15;
+  const a=2+(_t%5);
+  const nPts=Math.min(N,100);
+  const barW=pfW/nPts;
+  let period=-1;
+
+  // Compute and display a^x mod N
+  let v=1;const vals=[];
+  for(let x=0;x<nPts;x++){
+    vals.push(v);
+    if(x>0&&v===1&&period<0)period=x;
+    v=(v*a)%N;
+  }
+
+  const maxV=Math.max(...vals,1);
+  vals.forEach((v,x)=>{
+    const barH=(v/maxV)*(pfH-20);
+    const hue=(v/N)*360;
+    _x.fillStyle=`hsla(${hue},60%,50%,.5)`;
+    _x.fillRect(10+x*barW,pfY+10+pfH-20-barH,barW-1,barH);
+  });
+
+  if(period>0){
+    _x.strokeStyle='#f87171';_x.setLineDash([3,3]);_x.lineWidth=1.5;
+    for(let x=period;x<nPts;x+=period){
+      const px=10+x*barW;
+      _x.beginPath();_x.moveTo(px,pfY+10);_x.lineTo(px,pfY+pfH-10);_x.stroke();
+    }
+    _x.setLineDash([]);_x.lineWidth=1;
+    _x.fillStyle='#f87171';_x.font='9px SF Mono';
+    _x.fillText(`Period r=${period}`,10,pfY+pfH-5);
+  }
+
+  // === Quantum vs Classical Complexity (bottom-right) ===
+  const qcX=w*0.52,qcY=pfY,qcW=w*0.46,qcH=pfH;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Quantum vs Classical Factoring',qcX,qcY);
+
+  const complexities=[
+    {name:'GNFS (classical)',color:'#f87171',fn:n=>Math.exp(1.9*Math.pow(n,1/3)*Math.pow(Math.log(n),2/3))},
+    {name:"Shor's (quantum)",color:'#4ade80',fn:n=>Math.pow(n,3)},
+    {name:'Trial Division',color:'#fbbf24',fn:n=>Math.pow(2,n/2)}
+  ];
+
+  const maxN=80,chartH=qcH-30;
+  _x.strokeStyle=mut+'44';_x.beginPath();
+  _x.moveTo(qcX+20,qcY+8);_x.lineTo(qcX+20,qcY+8+chartH);_x.lineTo(qcX+qcW,qcY+8+chartH);_x.stroke();
+
+  complexities.forEach((c,ci)=>{
+    _x.strokeStyle=c.color;_x.lineWidth=2;_x.beginPath();
+    let started=false;
+    for(let n=4;n<=maxN;n++){
+      const ops=c.fn(n);
+      const logOps=Math.log10(Math.max(1,ops));
+      const px=qcX+20+(n/maxN)*(qcW-25);
+      const py=qcY+8+chartH-Math.min(1,logOps/30)*chartH;
+      if(py<qcY+8)break;
+      if(!started){_x.moveTo(px,py);started=true}else _x.lineTo(px,py);
+    }
+    _x.stroke();_x.lineWidth=1;
+    _x.fillStyle=c.color;_x.font='8px SF Mono';
+    _x.fillText(c.name,qcX+25,qcY+18+ci*11);
+  });
+
+  // Post-quantum threat line
+  const threatN=30+Math.sin(_t*0.02)*20;
+  const threatX=qcX+20+(threatN/maxN)*(qcW-25);
+  _x.strokeStyle='rgba(255,255,255,.2)';_x.setLineDash([4,4]);
+  _x.beginPath();_x.moveTo(threatX,qcY+8);_x.lineTo(threatX,qcY+8+chartH);_x.stroke();
+  _x.setLineDash([]);
+  _x.fillStyle=mut;_x.font='8px SF Mono';_x.fillText(`${Math.round(threatN)} bits`,threatX-12,qcY+8+chartH+10);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

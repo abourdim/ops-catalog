@@ -91,3 +91,144 @@ function initControls(){
 function initRefDB(){const db=$('refDatabase');if(!db)return;db.innerHTML=['<b>Spectral Features:</b> Unique frequency-domain characteristics of each transmitter.','<b>Transient Analysis:</b> Turn-on/off transient fingerprinting.','<b>I/Q Imbalance:</b> Hardware imperfections as identity markers.','<b>Phase Noise Profile:</b> Oscillator-specific phase noise signatures.','<b>Clock Drift:</b> Crystal oscillator frequency offset patterns.','<b>GAN Spoofing:</b> Using generative networks to clone RF fingerprints.'].join('<br><br>');}
 
 document.addEventListener('DOMContentLoaded',()=>{initSplash();initPanels();initLogFilters();initRefDB();initControls();try{const l=localStorage.getItem('wdiy-lang');if(l)setLanguage(l);}catch{}try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}log(LANG[currentLang].ready,'success');animate();});
+
+/* ═══════ ENHANCED RF CANVAS — RF FINGERPRINT SPOOFER ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _iqData=[];for(let i=0;i<128;i++)_iqData.push({i:Math.cos(i*0.15)*0.5+Math.random()*0.3,q:Math.sin(i*0.15)*0.5+Math.random()*0.3});
+let _phaseNoise=new Array(256).fill(-100);
+let _clockDrift=new Array(200).fill(0);
+let _matchScore=new Array(200).fill(0);
+
+/* ── IQ Constellation with Fingerprint Overlay ── */
+function drawIQConstellation(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('I/Q CONSTELLATION — RF FINGERPRINT',5,12);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-20;
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R*0.5,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-R,cy);ctx.lineTo(cx+R,cy);ctx.moveTo(cx,cy-R);ctx.lineTo(cx,cy+R);
+  ctx.strokeStyle='rgba(0,255,136,0.08)';ctx.stroke();
+  const isActive=typeof active!=='undefined'&&active;
+  const acc=parseInt(_$('accuracy')?.value||85)/100;
+  // Original signal points
+  _iqData.forEach(pt=>{
+    const px=cx+pt.i*R*0.9+Math.random()*2;const py=cy+pt.q*R*0.9+Math.random()*2;
+    ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.5)';ctx.fill();
+  });
+  // Spoofed overlay
+  if(isActive){
+    _iqData.forEach(pt=>{
+      const err=(1-acc)*0.5;
+      const px=cx+(pt.i+Math.random()*err-err/2)*R*0.9;
+      const py=cy+(pt.q+Math.random()*err-err/2)*R*0.9;
+      ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);ctx.fillStyle='rgba(255,80,80,0.5)';ctx.fill();
+    });
+  }
+}
+
+/* ── Phase Noise Profile ── */
+function drawPhaseNoise(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('PHASE NOISE PROFILE (dBc/Hz)',5,12);
+  const isActive=typeof active!=='undefined'&&active;
+  for(let i=0;i<256;i++){
+    const offset=Math.pow(10,i/256*6+1);
+    let pn=-30-20*Math.log10(offset/10)+Math.random()*3;
+    if(isActive)pn+=Math.random()*5-2;
+    _phaseNoise[i]=_phaseNoise[i]*0.9+pn*0.1;
+  }
+  // Original
+  ctx.beginPath();
+  for(let i=0;i<256;i++){const x=(i/256)*W;const y=20+((_phaseNoise[i]+130)/80)*(H-30);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  ctx.strokeStyle='rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  // Spoofed
+  if(isActive){ctx.beginPath();
+    for(let i=0;i<256;i++){const x=(i/256)*W;const y=20+((_phaseNoise[i]+Math.random()*8-4+130)/80)*(H-30);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+    ctx.strokeStyle='rgba(255,80,80,0.5)';ctx.lineWidth=1;ctx.stroke();}
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';
+  ['10Hz','1kHz','100kHz','10MHz'].forEach((l,i)=>{ctx.fillText(l,i*(W/4)+5,H-2);});
+}
+
+/* ── Clock Drift Analysis ── */
+function drawClockDrift(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('CLOCK DRIFT PATTERN (ppm)',5,12);
+  const isActive=typeof active!=='undefined'&&active;
+  const drift=isActive?Math.sin(_t*0.5)*2+Math.random()*0.5:Math.sin(_t*0.3)*0.3+Math.random()*0.1;
+  _clockDrift.push(drift);if(_clockDrift.length>200)_clockDrift.shift();
+  ctx.beginPath();
+  _clockDrift.forEach((v,i)=>{const x=(i/200)*W;const y=H/2-(v/4)*(H/2-15);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=isActive?'rgba(255,100,0,0.7)':'rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.stroke();
+}
+
+/* ── Feature Match Scoring ── */
+function drawMatchScore(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('FINGERPRINT MATCH SCORE',5,12);
+  const isActive=typeof active!=='undefined'&&active;
+  const acc=parseInt(_$('accuracy')?.value||85);
+  const score=isActive?acc+Math.random()*10-5:Math.random()*15;
+  _matchScore.push(Math.max(0,Math.min(100,score)));if(_matchScore.length>200)_matchScore.shift();
+  ctx.beginPath();
+  _matchScore.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/100)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=isActive?'rgba(255,200,0,0.7)':'rgba(0,200,255,0.5)';ctx.lineWidth=2;ctx.stroke();
+  // Fill
+  ctx.lineTo(W,H-10);ctx.lineTo(0,H-10);ctx.closePath();
+  ctx.fillStyle=isActive?'rgba(255,200,0,0.08)':'rgba(0,200,255,0.05)';ctx.fill();
+  // Threshold
+  const thY=H-10-(70/100)*(H-25);
+  ctx.beginPath();ctx.moveTo(0,thY);ctx.lineTo(W,thY);
+  ctx.strokeStyle='rgba(0,255,136,0.4)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='7px Orbitron,monospace';ctx.fillText('MATCH THRESHOLD (70%)',5,thY-3);
+  // Current value
+  const last=_matchScore[_matchScore.length-1];
+  ctx.fillStyle=last>70?'rgba(0,200,100,0.7)':'rgba(255,50,50,0.7)';ctx.font='12px Orbitron,monospace';ctx.textAlign='right';
+  ctx.fillText(last.toFixed(0)+'%',W-10,30);
+}
+
+/* ── Transient Waveform Detail ── */
+function drawTransientDetail(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('TURN-ON TRANSIENT WAVEFORM',5,12);
+  const isActive=typeof active!=='undefined'&&active;
+  ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const t=x/W*10;
+    let y=H/2;
+    if(t<2)y=H/2-Math.exp(-t*2)*Math.sin(t*15)*30;
+    else y=H/2+Math.sin(t*5)*5+Math.random()*2;
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  if(isActive){
+    ctx.beginPath();
+    for(let x=0;x<W;x++){
+      const t=x/W*10;const acc=parseInt(_$('accuracy')?.value||85)/100;
+      let y=H/2;
+      if(t<2)y=H/2-Math.exp(-t*2)*Math.sin(t*15)*(30*acc+Math.random()*(1-acc)*15);
+      else y=H/2+Math.sin(t*5)*(5*acc)+Math.random()*(1-acc)*8;
+      if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle='rgba(255,80,80,0.5)';ctx.lineWidth=1;ctx.stroke();
+  }
+  // Time markers
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+  for(let us=0;us<=10;us+=2){ctx.fillText(us+'us',(us/10)*W,H-2);}
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const fpC=_$('fpCanvas');
+  if(fpC){const ctx=fpC.getContext('2d');
+    drawIQConstellation(ctx,fpC.width,fpC.height);}
+  const sigC=_$('sigCanvas');
+  if(sigC){const ctx=sigC.getContext('2d');const W=sigC.width,H=sigC.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawPhaseNoise(ctx,W,H*0.5);
+    ctx.save();ctx.translate(0,H*0.5);drawMatchScore(ctx,W,H*0.5);ctx.restore();}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

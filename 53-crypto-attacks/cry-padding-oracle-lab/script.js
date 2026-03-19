@@ -139,3 +139,166 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('encryptBtn').onclick=doEncrypt;$('attackBtn').onclick=startAttack;$('stopBtn').onclick=()=>{running=false;hideToast();log('Attack stopped','info')};
   buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawCanvas()
 });
+
+/* ═══════ ENHANCED PADDING ORACLE VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+// Simulate oracle queries distribution
+let _oracleHist=new Array(256).fill(0);
+let _xorMatrix=[];
+function buildXorMatrix(){
+  _xorMatrix=[];
+  for(let i=0;i<16;i++){
+    const row=[];
+    for(let j=0;j<16;j++)row.push((i*16+j)^((i+j+_t)&0xFF));
+    _xorMatrix.push(row);
+  }
+}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === CBC Mode Block Diagram (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('CBC Decryption Pipeline (vulnerable to padding oracle)',10,16);
+
+  const nBlocks=4,bW=Math.min(120,(w-80)/nBlocks),bH=35,bY=30;
+  for(let i=0;i<nBlocks;i++){
+    const x=20+i*(bW+15);
+    // Ciphertext block
+    _x.fillStyle='#f8717122';_x.fillRect(x,bY,bW,bH);
+    _x.strokeStyle='#f8717166';_x.strokeRect(x,bY,bW,bH);
+    _x.fillStyle='#f87171';_x.font='bold 9px SF Mono';_x.textAlign='center';
+    _x.fillText(i===0?'IV':`C${i}`,x+bW/2,bY+14);
+    // Animated bytes
+    const animByte=((0xAB+_t*3+i*47)&0xFF).toString(16).padStart(2,'0');
+    _x.fillStyle=mut;_x.font='8px SF Mono';
+    _x.fillText(`0x${animByte}...`,x+bW/2,bY+28);
+    _x.textAlign='left';
+
+    // Decrypt box
+    const dY=bY+bH+12;
+    _x.fillStyle='#60a5fa22';_x.fillRect(x+bW*0.15,dY,bW*0.7,22);
+    _x.strokeStyle='#60a5fa66';_x.strokeRect(x+bW*0.15,dY,bW*0.7,22);
+    _x.fillStyle='#60a5fa';_x.font='bold 8px SF Mono';_x.textAlign='center';
+    _x.fillText('D_K',x+bW/2,dY+14);_x.textAlign='left';
+
+    // XOR symbol
+    const xorY=dY+28;
+    _x.fillStyle='#fbbf24';_x.font='bold 12px SF Mono';_x.textAlign='center';
+    _x.fillText('\u2295',x+bW/2,xorY+10);_x.textAlign='left';
+
+    // Arrow from prev ciphertext
+    if(i>0){
+      _x.strokeStyle='#f87171';_x.setLineDash([2,2]);
+      const prevX=20+(i-1)*(bW+15)+bW/2;
+      _x.beginPath();_x.moveTo(prevX,bY+bH);_x.lineTo(prevX,xorY+2);_x.lineTo(x+bW/2-8,xorY+2);_x.stroke();
+      _x.setLineDash([]);
+    }
+
+    // Plaintext output
+    const pY=xorY+18;
+    const isRecovering=(_t%nBlocks)===i;
+    _x.fillStyle=isRecovering?'#4ade8044':'rgba(255,255,255,.04)';
+    _x.fillRect(x,pY,bW,bH);
+    _x.strokeStyle=isRecovering?'#4ade80':mut+'33';_x.strokeRect(x,pY,bW,bH);
+    _x.fillStyle=isRecovering?'#4ade80':mut;_x.font='bold 9px SF Mono';_x.textAlign='center';
+    _x.fillText(`P${i+1}`,x+bW/2,pY+14);_x.textAlign='left';
+
+    // Down arrows
+    _x.strokeStyle=mut+'44';
+    _x.beginPath();_x.moveTo(x+bW/2,bY+bH);_x.lineTo(x+bW/2,dY);_x.stroke();
+    _x.beginPath();_x.moveTo(x+bW/2,dY+22);_x.lineTo(x+bW/2,xorY);_x.stroke();
+    _x.beginPath();_x.moveTo(x+bW/2,xorY+16);_x.lineTo(x+bW/2,pY);_x.stroke();
+  }
+
+  // === PKCS#7 Padding Visualization (middle-left) ===
+  const padY=bY+bH+100,padX=10,padW=w*0.45;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('PKCS#7 Padding Values',padX,padY);
+  for(let padVal=1;padVal<=8;padVal++){
+    const y=padY+8+(padVal-1)*18;
+    const totalBytes=8;
+    const cW=padW/totalBytes;
+    for(let b=0;b<totalBytes;b++){
+      const isPad=b>=totalBytes-padVal;
+      _x.fillStyle=isPad?'#fbbf2433':'#60a5fa11';
+      _x.fillRect(padX+b*cW,y,cW-2,14);
+      _x.strokeStyle=isPad?'#fbbf2466':mut+'22';_x.strokeRect(padX+b*cW,y,cW-2,14);
+      if(isPad){
+        _x.fillStyle='#fbbf24';_x.font='bold 8px SF Mono';_x.textAlign='center';
+        _x.fillText(`0${padVal}`,padX+b*cW+cW/2,y+11);_x.textAlign='left';
+      }
+    }
+    _x.fillStyle=mut;_x.font='8px Tajawal';
+    _x.fillText(`pad=${padVal}`,padX+padW+4,y+11);
+  }
+
+  // === Oracle Query Heatmap (middle-right) ===
+  const oqX=w*0.52,oqY=padY;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Oracle Query Byte Guesses (0x00-0xFF)',oqX,oqY);
+  buildXorMatrix();
+  const mCW=(w*0.46)/16,mCH=9;
+  for(let i=0;i<16;i++){
+    for(let j=0;j<16;j++){
+      const val=_xorMatrix[i][j];
+      const isValid=val===1||val===(_t%256);
+      _x.fillStyle=isValid?'#4ade8088':`rgba(${val},${60},${255-val},.15)`;
+      _x.fillRect(oqX+j*mCW,oqY+8+i*mCH,mCW-1,mCH-1);
+    }
+  }
+  // Current guess highlight
+  const guessVal=_t%256;
+  const gi=Math.floor(guessVal/16),gj=guessVal%16;
+  _x.strokeStyle='#f87171';_x.lineWidth=2;
+  _x.strokeRect(oqX+gj*mCW-1,oqY+8+gi*mCH-1,mCW+1,mCH+1);_x.lineWidth=1;
+  _x.fillStyle=mut;_x.font='9px SF Mono';
+  _x.fillText(`Testing: 0x${guessVal.toString(16).padStart(2,'0')}  (${guessVal}/255)`,oqX,oqY+8+16*mCH+12);
+
+  // === XOR Intermediate Value Recovery (bottom) ===
+  const ixY=Math.max(padY+155,oqY+8+16*mCH+25);
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Intermediate Value Recovery: I[k] = guess XOR pad_value',10,ixY);
+
+  const nBytes=8;
+  const ixCW=Math.min(60,(w-20)/nBytes);
+  for(let i=0;i<nBytes;i++){
+    const x=10+i*ixCW;
+    const recovered=i<Math.floor((_t%80)/10);
+    const current=i===Math.floor((_t%80)/10);
+    // Guess value
+    _x.fillStyle='#f8717122';_x.fillRect(x,ixY+10,ixCW-4,22);
+    _x.fillStyle='#f87171';_x.font='bold 8px SF Mono';_x.textAlign='center';
+    _x.fillText(`g=${((_t+i*19)&0xFF).toString(16)}`,x+ixCW/2-2,ixY+24);
+    // XOR arrow
+    _x.fillStyle='#fbbf24';_x.font='bold 10px SF Mono';
+    _x.fillText('\u2295',x+ixCW/2-2,ixY+40);
+    // Intermediate value
+    _x.fillStyle=recovered?'#4ade8044':current?'#fbbf2444':'rgba(255,255,255,.04)';
+    _x.fillRect(x,ixY+46,ixCW-4,22);
+    if(recovered){
+      _x.fillStyle='#4ade80';_x.font='bold 9px SF Mono';
+      _x.fillText(`0x${((0xDE+i*0x11)&0xFF).toString(16)}`,x+ixCW/2-2,ixY+60);
+    }else if(current){
+      _x.fillStyle='#fbbf24';_x.fillText('?',x+ixCW/2-2,ixY+60);
+    }
+    _x.textAlign='left';
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

@@ -114,3 +114,166 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Radio Black Hole
+   Animated gravitational lensing of EM waves, Hawking radiation,
+   accretion disk, and photon sphere visualization
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simRadioBlackHole';let cv,cx,W,H,af=null,t=0;
+  const photons=[];const hawkingParticles=[];const accretionRings=[];
+  const MAX_PHOTONS=120;let bhMass=10;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#020206;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+  }
+
+  class Photon{
+    constructor(){
+      this.x=Math.random()*W*0.3;this.y=Math.random()*H;
+      this.vx=1.5+Math.random();this.vy=(Math.random()-.5)*0.5;
+      this.trail=[];this.absorbed=false;this.age=0;
+      this.freq=Math.random();this.hue=30+this.freq*30;
+    }
+    update(){
+      this.age++;
+      const bhx=W*0.5,bhy=H/2;
+      const dx=bhx-this.x,dy=bhy-this.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const rs=20*bhMass/10;
+      if(dist<rs){this.absorbed=true;return false;}
+      const force=500/(dist*dist+100);
+      this.vx+=dx/dist*force;this.vy+=dy/dist*force;
+      const speed=Math.sqrt(this.vx*this.vx+this.vy*this.vy);
+      if(speed>4){this.vx*=4/speed;this.vy*=4/speed;}
+      this.x+=this.vx;this.y+=this.vy;
+      this.trail.push({x:this.x,y:this.y});
+      if(this.trail.length>30)this.trail.shift();
+      return this.x>0&&this.x<W&&this.y>0&&this.y<H&&this.age<400;
+    }
+    draw(){
+      if(this.trail.length>1){
+        cx.strokeStyle='hsla('+this.hue+',80%,60%,0.3)';cx.lineWidth=1;cx.beginPath();
+        this.trail.forEach((p,i)=>{if(i===0)cx.moveTo(p.x,p.y);else cx.lineTo(p.x,p.y);});
+        cx.stroke();
+      }
+      cx.fillStyle='hsla('+this.hue+',80%,70%,0.8)';
+      cx.beginPath();cx.arc(this.x,this.y,1.5,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  class HawkingParticle{
+    constructor(){
+      const bhx=W*0.5,bhy=H/2,rs=20*bhMass/10;
+      const angle=Math.random()*Math.PI*2;
+      this.x=bhx+Math.cos(angle)*(rs+2);
+      this.y=bhy+Math.sin(angle)*(rs+2);
+      this.vx=Math.cos(angle)*(0.5+Math.random()*1);
+      this.vy=Math.sin(angle)*(0.5+Math.random()*1);
+      this.life=60+Math.random()*80;this.age=0;
+    }
+    update(){this.age++;this.x+=this.vx;this.y+=this.vy;return this.age<this.life;}
+    draw(){
+      const alpha=1-this.age/this.life;
+      cx.fillStyle='rgba(255,200,100,'+alpha*0.6+')';
+      cx.beginPath();cx.arc(this.x,this.y,1,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  function drawBlackHole(){
+    const bhx=W*0.5,bhy=H/2,rs=20*bhMass/10;
+    // Event horizon
+    cx.save();
+    const grad=cx.createRadialGradient(bhx,bhy,rs*0.5,bhx,bhy,rs*3);
+    grad.addColorStop(0,'rgba(0,0,0,1)');grad.addColorStop(0.3,'rgba(0,0,0,0.8)');
+    grad.addColorStop(0.6,'rgba(20,0,40,0.3)');grad.addColorStop(1,'rgba(0,0,0,0)');
+    cx.fillStyle=grad;cx.beginPath();cx.arc(bhx,bhy,rs*3,0,Math.PI*2);cx.fill();
+    // Hard event horizon
+    cx.fillStyle='#000';cx.beginPath();cx.arc(bhx,bhy,rs,0,Math.PI*2);cx.fill();
+    // Photon sphere
+    cx.strokeStyle='rgba(255,200,100,0.15)';cx.lineWidth=1;cx.setLineDash([3,5]);
+    cx.beginPath();cx.arc(bhx,bhy,rs*1.5,0,Math.PI*2);cx.stroke();cx.setLineDash([]);
+    cx.restore();
+    // Accretion disk
+    cx.save();cx.translate(bhx,bhy);cx.scale(1,0.3);
+    for(let r=rs*1.8;r<rs*4;r+=3){
+      const bright=0.15*(1-r/(rs*4));
+      const hue=30+r;
+      cx.strokeStyle='hsla('+hue+',80%,50%,'+bright+')';cx.lineWidth=2;
+      cx.beginPath();cx.arc(0,0,r,0,Math.PI*2);cx.stroke();
+    }
+    cx.restore();
+  }
+
+  function drawGravitationalLensing(){
+    const bhx=W*0.5,bhy=H/2;
+    // Background stars being lensed
+    for(let i=0;i<20;i++){
+      const sx=W*0.7+Math.sin(i*1.7)*W*0.25;
+      const sy=H*0.1+Math.sin(i*2.3)*H*0.8;
+      const dx=bhx-sx,dy=bhy-sy;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const deflection=200/(dist+50);
+      const lx=sx+dx/dist*deflection*5;
+      const ly=sy+dy/dist*deflection*5;
+      cx.fillStyle='rgba(255,255,200,'+(0.1+0.1*Math.sin(t+i))+')';
+      cx.beginPath();cx.arc(lx,ly,1+deflection*0.5,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  function drawInfoPanel(){
+    const px=20,py=H-80,pw=200,ph=65;
+    cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(px,py,pw,ph);
+    cx.fillStyle='rgba(255,200,100,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    const rs=(20*bhMass/10).toFixed(0);
+    cx.fillText('Mass: '+bhMass+' M_sun',px+8,py+14);
+    cx.fillText('Schwarzschild R: '+rs+' px',px+8,py+28);
+    cx.fillText('Hawking Temp: '+(0.1/bhMass).toFixed(3)+' K',px+8,py+42);
+    cx.fillText('Absorbed: '+(photons.filter(p=>p.absorbed).length||0),px+8,py+56);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,210,54);
+    cx.strokeStyle='rgba(255,200,100,0.15)';cx.strokeRect(8,8,210,54);
+    cx.font='10px monospace';cx.fillStyle='#f59e0b';cx.textAlign='left';
+    cx.fillText('RADIO BLACK HOLE',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('EM Wave Absorption & Lensing',16,40);
+    cx.fillText('Photons: '+photons.length+'  Hawking: '+hawkingParticles.length,16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(2,2,6,0.12)';cx.fillRect(0,0,W,H);
+
+    if(Math.random()<0.1&&photons.length<MAX_PHOTONS)photons.push(new Photon());
+    if(Math.random()<0.03)hawkingParticles.push(new HawkingParticle());
+
+    drawGravitationalLensing();drawBlackHole();
+
+    for(let i=photons.length-1;i>=0;i--){
+      if(!photons[i].update())photons.splice(i,1);
+      else photons[i].draw();
+    }
+    for(let i=hawkingParticles.length-1;i>=0;i--){
+      if(!hawkingParticles[i].update())hawkingParticles.splice(i,1);
+      else hawkingParticles[i].draw();
+    }
+
+    drawInfoPanel();drawHUD();
+
+    cx.fillStyle='rgba(255,200,100,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Radio Black Hole — Gravitational Lensing & Hawking Radiation',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

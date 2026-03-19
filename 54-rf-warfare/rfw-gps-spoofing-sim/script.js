@@ -305,3 +305,349 @@ document.addEventListener('DOMContentLoaded',()=>{
   animate();
   setInterval(updateSatLibrary,1000);
 });
+
+/* ═══════ ENHANCED RF CANVAS VISUALIZATION ═══════ */
+(function(){
+  const _$ = id => document.getElementById(id);
+  let _t = 0, _frame = null;
+  const _particles = [];
+  const _spoofTrails = [];
+  let _constellationPhase = 0;
+  let _spectrumData = new Float32Array(512).fill(-90);
+  let _waterfallBuf = [];
+  const MAX_WF_ROWS = 120;
+
+  /* ── Particle System for Signal Propagation ── */
+  class SignalParticle {
+    constructor(x, y, tx, ty, color, speed) {
+      this.x = x; this.y = y; this.tx = tx; this.ty = ty;
+      this.color = color; this.speed = speed || 2;
+      this.life = 1; this.decay = 0.015 + Math.random() * 0.01;
+      this.size = 1.5 + Math.random() * 2;
+      const dx = tx - x, dy = ty - y, d = Math.sqrt(dx*dx + dy*dy);
+      this.vx = (dx / d) * this.speed; this.vy = (dy / d) * this.speed;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      this.life -= this.decay;
+      return this.life > 0;
+    }
+    draw(ctx) {
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size * this.life, 0, Math.PI * 2);
+      ctx.fillStyle = this.color.replace('1)', this.life * 0.8 + ')');
+      ctx.fill();
+    }
+  }
+
+  function spawnSatelliteParticles(cx, cy, sats, isSpoofing) {
+    sats.forEach((sat, i) => {
+      if (Math.random() > 0.06) return;
+      const az = sat.azimuth * Math.PI / 180;
+      const elR = (90 - sat.elevation) / 90;
+      const sx = cx + Math.sin(az) * elR * 120;
+      const sy = cy - Math.cos(az) * elR * 120;
+      const col = sat.spoofed ? 'rgba(255,60,60,' : 'rgba(0,200,255,';
+      _particles.push(new SignalParticle(sx, sy, cx, cy, col + '1)', 1.5 + Math.random()));
+    });
+  }
+
+  /* ── Constellation Geometry Overlay ── */
+  function drawConstellationGeometry(ctx, W, H, sats) {
+    _constellationPhase += 0.005;
+    const cx = W / 2, cy = H / 2;
+    ctx.save(); ctx.globalAlpha = 0.12;
+    sats.forEach((s1, i) => {
+      sats.forEach((s2, j) => {
+        if (j <= i) return;
+        const az1 = s1.azimuth * Math.PI / 180, az2 = s2.azimuth * Math.PI / 180;
+        const r1 = (90 - s1.elevation) / 90, r2 = (90 - s2.elevation) / 90;
+        const x1 = cx + Math.sin(az1) * r1 * 100, y1 = cy - Math.cos(az1) * r1 * 100;
+        const x2 = cx + Math.sin(az2) * r2 * 100, y2 = cy - Math.cos(az2) * r2 * 100;
+        const dist = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        if (dist < 120) {
+          ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+          ctx.strokeStyle = (s1.spoofed || s2.spoofed) ? '#ff4444' : '#00ccff';
+          ctx.lineWidth = 0.8; ctx.stroke();
+        }
+      });
+    });
+    ctx.restore();
+  }
+
+  /* ── GDOP (Geometric Dilution of Precision) Heatmap ── */
+  function drawGDOPHeatmap(ctx, W, H, sats) {
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 30;
+    const step = 16;
+    ctx.save(); ctx.globalAlpha = 0.08;
+    for (let gx = 0; gx < W; gx += step) {
+      for (let gy = 0; gy < H; gy += step) {
+        const dx = gx - cx, dy = gy - cy;
+        if (Math.sqrt(dx * dx + dy * dy) > R) continue;
+        let minDist = Infinity;
+        sats.forEach(s => {
+          const az = s.azimuth * Math.PI / 180;
+          const elR = (90 - s.elevation) / 90;
+          const sx = cx + Math.sin(az) * elR * R;
+          const sy = cy - Math.cos(az) * elR * R;
+          const d = Math.sqrt((gx - sx) ** 2 + (gy - sy) ** 2);
+          if (d < minDist) minDist = d;
+        });
+        const gdop = Math.min(1, minDist / 150);
+        const r = Math.floor(gdop * 255), g = Math.floor((1 - gdop) * 200);
+        ctx.fillStyle = 'rgb(' + r + ',' + g + ',50)';
+        ctx.fillRect(gx, gy, step - 1, step - 1);
+      }
+    }
+    ctx.restore();
+  }
+
+  /* ── Enhanced Spectrum Analyzer ── */
+  function drawAdvancedSpectrum(ctx, W, H, isSpoofing, power) {
+    // Generate realistic GPS L-band spectrum
+    for (let i = 0; i < 512; i++) {
+      const f = 1150 + (i / 512) * 700; // 1150-1850 MHz range
+      let level = -90 + Math.random() * 3;
+      // L1 signal at 1575.42 MHz
+      const l1Diff = Math.abs(f - 1575.42);
+      if (l1Diff < 12) level += 25 * Math.exp(-l1Diff * l1Diff / 50);
+      // L2 at 1227.60 MHz
+      const l2Diff = Math.abs(f - 1227.60);
+      if (l2Diff < 10) level += 20 * Math.exp(-l2Diff * l2Diff / 40);
+      // L5 at 1176.45 MHz
+      const l5Diff = Math.abs(f - 1176.45);
+      if (l5Diff < 10) level += 18 * Math.exp(-l5Diff * l5Diff / 35);
+      if (isSpoofing) {
+        if (l1Diff < 15) level += power + 20 + Math.random() * 8;
+        if (l2Diff < 12) level += (power + 15) * 0.6 + Math.random() * 5;
+      }
+      _spectrumData[i] = _spectrumData[i] * 0.7 + level * 0.3;
+    }
+    // Draw spectrum
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, 'rgba(255,50,50,0.8)'); grad.addColorStop(0.5, 'rgba(255,200,0,0.6)');
+    grad.addColorStop(1, 'rgba(0,200,100,0.4)');
+    ctx.beginPath();
+    for (let i = 0; i < 512; i++) {
+      const x = (i / 512) * W;
+      const y = H - 15 - ((_spectrumData[i] + 95) / 70) * (H - 30);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, H - 15); ctx.lineTo(0, H - 15); ctx.closePath();
+    ctx.fillStyle = isSpoofing ? 'rgba(255,50,50,0.1)' : 'rgba(0,200,255,0.08)';
+    ctx.fill();
+    ctx.beginPath();
+    for (let i = 0; i < 512; i++) {
+      const x = (i / 512) * W;
+      const y = H - 15 - ((_spectrumData[i] + 95) / 70) * (H - 30);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = isSpoofing ? 'rgba(255,80,80,0.9)' : 'rgba(0,200,255,0.7)';
+    ctx.lineWidth = 1.5; ctx.stroke();
+    // Frequency labels
+    ctx.fillStyle = 'rgba(0,255,136,0.35)'; ctx.font = '8px Orbitron,monospace'; ctx.textAlign = 'center';
+    [1176, 1228, 1381, 1575, 1602, 1800].forEach(f => {
+      const x = ((f - 1150) / 700) * W;
+      ctx.fillText(f + '', x, H - 2);
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H - 15);
+      ctx.strokeStyle = 'rgba(0,255,136,0.06)'; ctx.lineWidth = 1; ctx.stroke();
+    });
+    // Band labels
+    ctx.fillStyle = 'rgba(0,200,255,0.5)'; ctx.font = '9px Orbitron,monospace';
+    const l5x = ((1176.45 - 1150) / 700) * W;
+    const l2x = ((1227.60 - 1150) / 700) * W;
+    const l1x = ((1575.42 - 1150) / 700) * W;
+    ctx.fillText('L5', l5x, 12); ctx.fillText('L2', l2x, 12); ctx.fillText('L1', l1x, 12);
+  }
+
+  /* ── Waterfall Display ── */
+  function drawWaterfall(ctx, W, H, isSpoofing) {
+    const row = new Uint8Array(W);
+    for (let x = 0; x < W; x++) {
+      const idx = Math.floor((x / W) * 512);
+      const val = Math.max(0, Math.min(255, (_spectrumData[idx] + 95) * 3.5));
+      row[x] = val;
+    }
+    _waterfallBuf.unshift(row);
+    if (_waterfallBuf.length > MAX_WF_ROWS) _waterfallBuf.pop();
+    const rowH = H / MAX_WF_ROWS;
+    _waterfallBuf.forEach((r, ri) => {
+      for (let x = 0; x < W; x += 2) {
+        const v = r[x];
+        const red = v > 180 ? 255 : v > 100 ? v * 2 : v;
+        const grn = v > 180 ? (255 - v) : v > 80 ? v : v * 0.5;
+        const blu = v < 80 ? v * 2 : 0;
+        ctx.fillStyle = 'rgb(' + (red | 0) + ',' + (grn | 0) + ',' + (blu | 0) + ')';
+        ctx.fillRect(x, ri * rowH, 2, rowH + 1);
+      }
+    });
+  }
+
+  /* ── Doppler Shift Visualization ── */
+  function drawDopplerShift(ctx, W, H, sats) {
+    ctx.save(); ctx.globalAlpha = 0.6;
+    ctx.fillStyle = 'rgba(0,255,136,0.4)'; ctx.font = '9px Orbitron,monospace';
+    ctx.textAlign = 'left'; ctx.fillText('DOPPLER SHIFT (Hz)', 5, 12);
+    const barH = (H - 25) / Math.max(sats.length, 1);
+    sats.forEach((sat, i) => {
+      const doppler = Math.sin(_t * sat.orbitSpeed + sat.phase) * 4500;
+      const y = 20 + i * barH;
+      const bw = (doppler / 5000) * (W / 2 - 20);
+      ctx.fillStyle = sat.spoofed ? 'rgba(255,60,60,0.4)' : 'rgba(0,200,255,0.3)';
+      ctx.fillRect(W / 2, y, bw, barH - 2);
+      ctx.fillStyle = sat.spoofed ? '#ff6666' : '#66ccff';
+      ctx.font = '7px Orbitron,monospace'; ctx.textAlign = 'right';
+      ctx.fillText(sat.id, W / 2 - 4, y + barH / 2 + 3);
+      ctx.textAlign = 'left';
+      ctx.fillText((doppler > 0 ? '+' : '') + doppler.toFixed(0), W / 2 + bw + 4, y + barH / 2 + 3);
+    });
+    // Zero line
+    ctx.beginPath(); ctx.moveTo(W / 2, 18); ctx.lineTo(W / 2, H);
+    ctx.strokeStyle = 'rgba(255,200,0,0.3)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  /* ── C/N0 (Carrier-to-Noise) Bar Chart ── */
+  function drawCN0Bars(ctx, W, H, sats) {
+    ctx.fillStyle = 'rgba(0,255,136,0.4)'; ctx.font = '9px Orbitron,monospace';
+    ctx.textAlign = 'left'; ctx.fillText('C/N0 (dB-Hz)', 5, 12);
+    const barW = Math.max(8, (W - 20) / sats.length - 4);
+    sats.forEach((sat, i) => {
+      const x = 10 + i * (barW + 4);
+      let cn0 = 30 + sat.snr * 0.8 + Math.sin(_t + sat.phase) * 2;
+      if (sat.spoofed) cn0 += 8 + Math.random() * 5;
+      const barH = (cn0 / 55) * (H - 35);
+      const col = sat.spoofed ? (cn0 > 45 ? 'rgba(255,50,50,0.7)' : 'rgba(255,100,60,0.5)')
+                               : (cn0 > 40 ? 'rgba(0,200,100,0.6)' : 'rgba(0,150,255,0.5)');
+      ctx.fillStyle = col;
+      ctx.fillRect(x, H - 18 - barH, barW, barH);
+      ctx.strokeStyle = sat.spoofed ? 'rgba(255,80,80,0.5)' : 'rgba(0,200,255,0.3)';
+      ctx.lineWidth = 1; ctx.strokeRect(x, H - 18 - barH, barW, barH);
+      ctx.fillStyle = sat.spoofed ? '#ff6666' : '#aaa';
+      ctx.font = '7px Orbitron,monospace'; ctx.textAlign = 'center';
+      ctx.fillText(sat.id.split('-')[1], x + barW / 2, H - 5);
+      ctx.fillText(cn0.toFixed(0), x + barW / 2, H - 22 - barH);
+    });
+    // Threshold line
+    const threshY = H - 18 - (35 / 55) * (H - 35);
+    ctx.beginPath(); ctx.moveTo(5, threshY); ctx.lineTo(W - 5, threshY);
+    ctx.strokeStyle = 'rgba(255,200,0,0.4)'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,200,0,0.4)'; ctx.font = '7px Orbitron,monospace';
+    ctx.textAlign = 'right'; ctx.fillText('MIN LOCK', W - 5, threshY - 3);
+  }
+
+  /* ── Position Error Scatter Plot ── */
+  let _posErrors = [];
+  function drawPositionError(ctx, W, H, isSpoofing, power) {
+    ctx.fillStyle = 'rgba(0,255,136,0.4)'; ctx.font = '9px Orbitron,monospace';
+    ctx.textAlign = 'left'; ctx.fillText('POSITION ERROR SCATTER (m)', 5, 12);
+    const cx = W / 2, cy = H / 2 + 5;
+    // Grid circles (meters)
+    [20, 50, 100, 200].forEach(r => {
+      const pr = r / 250 * Math.min(W, H) / 2;
+      ctx.beginPath(); ctx.arc(cx, cy, pr, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(0,255,136,0.1)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = 'rgba(0,255,136,0.2)'; ctx.font = '7px Orbitron,monospace';
+      ctx.textAlign = 'left'; ctx.fillText(r + 'm', cx + pr + 2, cy);
+    });
+    // Generate new error point
+    if (_t % 0.1 < 0.02) {
+      let ex, ey;
+      if (isSpoofing) {
+        const drift = (power + 10) * 3;
+        ex = drift + (Math.random() - 0.3) * 40;
+        ey = drift * 0.7 + (Math.random() - 0.5) * 30;
+      } else {
+        ex = (Math.random() - 0.5) * 15;
+        ey = (Math.random() - 0.5) * 15;
+      }
+      _posErrors.push({ x: ex, y: ey, age: 0 });
+      if (_posErrors.length > 80) _posErrors.shift();
+    }
+    _posErrors.forEach(p => {
+      p.age += 0.01;
+      const px = cx + (p.x / 250) * Math.min(W, H) / 2;
+      const py = cy + (p.y / 250) * Math.min(W, H) / 2;
+      const alpha = Math.max(0.1, 1 - p.age);
+      ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+      const dist = Math.sqrt(p.x * p.x + p.y * p.y);
+      ctx.fillStyle = dist > 100 ? 'rgba(255,50,50,' + alpha + ')' :
+                      dist > 30 ? 'rgba(255,200,0,' + alpha + ')' :
+                      'rgba(0,200,100,' + alpha + ')';
+      ctx.fill();
+    });
+    // Crosshair
+    ctx.beginPath(); ctx.moveTo(cx - 8, cy); ctx.lineTo(cx + 8, cy);
+    ctx.moveTo(cx, cy - 8); ctx.lineTo(cx, cy + 8);
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 1; ctx.stroke();
+  }
+
+  /* ── Time Series: Pseudorange Residuals ── */
+  let _pseudorangeResiduals = new Array(200).fill(0);
+  function drawPseudorangeResiduals(ctx, W, H, isSpoofing, power) {
+    const newVal = isSpoofing ? (power + 10) * 2 + Math.sin(_t * 2) * 15 + Math.random() * 10
+                              : Math.random() * 4 - 2;
+    _pseudorangeResiduals.push(newVal);
+    if (_pseudorangeResiduals.length > 200) _pseudorangeResiduals.shift();
+    ctx.fillStyle = 'rgba(0,255,136,0.4)'; ctx.font = '9px Orbitron,monospace';
+    ctx.textAlign = 'left'; ctx.fillText('PSEUDORANGE RESIDUALS (m)', 5, 12);
+    // Draw
+    ctx.beginPath();
+    _pseudorangeResiduals.forEach((v, i) => {
+      const x = (i / 200) * W;
+      const y = H / 2 - (v / 80) * (H / 2 - 15);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = isSpoofing ? 'rgba(255,80,80,0.8)' : 'rgba(0,200,255,0.7)';
+    ctx.lineWidth = 1.5; ctx.stroke();
+    // Zero line
+    ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 1; ctx.stroke();
+    // Alarm threshold
+    [20, -20].forEach(th => {
+      const y = H / 2 - (th / 80) * (H / 2 - 15);
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y);
+      ctx.strokeStyle = 'rgba(255,200,0,0.3)'; ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
+    });
+  }
+
+  /* ── Master Enhanced Render ── */
+  function enhancedRender() {
+    _t += 0.016;
+    // Update particles
+    for (let i = _particles.length - 1; i >= 0; i--) {
+      if (!_particles[i].update()) _particles.splice(i, 1);
+    }
+    // Draw on sky canvas overlay
+    const skyC = _$('skyCanvas');
+    if (skyC) {
+      const ctx = skyC.getContext('2d');
+      const W = skyC.width, H = skyC.height;
+      if (typeof satellites !== 'undefined' && satellites.length > 0) {
+        drawConstellationGeometry(ctx, W, H, satellites);
+        drawGDOPHeatmap(ctx, W, H, satellites);
+        spawnSatelliteParticles(W / 2, H / 2, satellites, typeof spoofing !== 'undefined' && spoofing);
+        _particles.forEach(p => p.draw(ctx));
+      }
+    }
+    // Draw enhanced spectrum on signal canvas
+    const sigC = _$('signalCanvas');
+    if (sigC) {
+      const ctx = sigC.getContext('2d');
+      const W = sigC.width, H = sigC.height;
+      const isSpoofing = typeof spoofing !== 'undefined' && spoofing;
+      const pwr = parseFloat(_$('powerInput')?.value || -10);
+      ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, W, H);
+      drawAdvancedSpectrum(ctx, W, H * 0.55, isSpoofing, pwr);
+      ctx.save(); ctx.translate(0, H * 0.55);
+      drawWaterfall(ctx, W, H * 0.45, isSpoofing);
+      ctx.restore();
+    }
+    _frame = requestAnimationFrame(enhancedRender);
+  }
+
+  // Start after a short delay to not interfere with main init
+  setTimeout(() => { enhancedRender(); }, 500);
+})();

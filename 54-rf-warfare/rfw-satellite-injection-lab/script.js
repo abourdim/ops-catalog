@@ -98,3 +98,164 @@ function initControls(){
 function initRefDB(){const db=$('refDatabase');if(!db)return;db.innerHTML=['<b>Uplink Injection:</b> Overpower legitimate uplink with stronger signal.','<b>Transponder Hijacking:</b> Capture satellite transponder for unauthorized broadcast.','<b>Cross-pol Isolation:</b> Exploit polarization leakage for covert injection.','<b>Carrier-in-Carrier:</b> Hide injected signal within legitimate carrier.','<b>Orbital Slot Spoofing:</b> Mimic satellite from adjacent orbital position.','<b>TT&C Exploitation:</b> Target telemetry and command channels.'].join('<br><br>');}
 
 document.addEventListener('DOMContentLoaded',()=>{initSplash();initPanels();initLogFilters();initTransponders();initRefDB();initControls();try{const l=localStorage.getItem('wdiy-lang');if(l)setLanguage(l);}catch{}try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}log(LANG[currentLang].ready,'success');animate();setInterval(updateLibrary,1000);});
+
+/* ═══════ ENHANCED RF CANVAS — SATELLITE INJECTION ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _linkBudget=[];let _beamPattern=[];let _orbitalPath=[];
+let _snrHistory=new Array(200).fill(10);
+
+/* ── Link Budget Waterfall Chart ── */
+function drawLinkBudget(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('SATELLITE LINK BUDGET (dB)',5,12);
+  const eirp=parseInt(_$('eirp')?.value||50);
+  const freq=parseFloat(_$('uplinkFreq')?.value||14);
+  const fsl=20*Math.log10(35786)+20*Math.log10(freq*1e9)+20*Math.log10(4*Math.PI/3e8);
+  const items=[{name:'EIRP',val:eirp,color:'#66ff88'},{name:'Free Space Loss',val:-fsl/5,color:'#ff6666'},{name:'Atmospheric',val:-2.5,color:'#ff9966'},{name:'Rain Fade',val:-1.5,color:'#ffcc00'},{name:'Antenna Gain',val:35,color:'#66ccff'},{name:'Pointing Loss',val:-0.8,color:'#ff8888'},{name:'Margin',val:3,color:'#00cc88'}];
+  let cumulative=0;const barW=Math.max(30,(W-40)/items.length-6);
+  items.forEach((item,i)=>{
+    const x=20+i*(barW+6);const prev=cumulative;cumulative+=item.val;
+    const startY=H-20-(prev+100)/200*(H-35);
+    const endY=H-20-(cumulative+100)/200*(H-35);
+    ctx.fillStyle=item.color.replace(')',',0.4)').replace('#','rgba(');
+    const topY=Math.min(startY,endY);const bh=Math.abs(endY-startY);
+    ctx.fillStyle=item.val>0?'rgba(0,200,100,0.4)':'rgba(255,80,80,0.4)';
+    ctx.fillRect(x,topY,barW,bh||2);
+    ctx.strokeStyle=item.val>0?'rgba(0,200,100,0.7)':'rgba(255,80,80,0.7)';
+    ctx.lineWidth=1;ctx.strokeRect(x,topY,barW,bh||2);
+    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+    ctx.save();ctx.translate(x+barW/2,H-5);ctx.rotate(-0.3);ctx.fillText(item.name,0,0);ctx.restore();
+    ctx.fillText((item.val>0?'+':'')+item.val.toFixed(1),x+barW/2,topY-3);
+  });
+}
+
+/* ── Orbital Track View ── */
+function drawOrbitalTrack(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('ORBITAL POSITION — GEO BELT',5,12);
+  const cx=W/2,cy=H*0.65;const rx=W*0.4,ry=H*0.25;
+  // Orbit ellipse
+  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,200,255,0.2)';ctx.lineWidth=1;ctx.stroke();
+  // Earth
+  ctx.beginPath();ctx.arc(cx,cy,15,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,100,200,0.4)';ctx.fill();
+  ctx.strokeStyle='rgba(0,150,255,0.3)';ctx.stroke();
+  // Target satellite
+  const satAngle=_t*0.02;
+  const sx=cx+Math.cos(satAngle)*rx,sy=cy+Math.sin(satAngle)*ry;
+  ctx.beginPath();ctx.arc(sx,sy,5,0,Math.PI*2);
+  const isInj=typeof injecting!=='undefined'&&injecting;
+  ctx.fillStyle=isInj?'rgba(255,50,50,0.9)':'rgba(0,255,136,0.8)';ctx.fill();
+  ctx.fillStyle=isInj?'#ff6666':'#66ffaa';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText(_$('satTarget')?.value||'GEO-SAT',sx,sy-10);
+  // Adjacent satellites
+  for(let i=1;i<=3;i++){
+    const a=satAngle+i*0.4;const ax=cx+Math.cos(a)*rx,ay=cy+Math.sin(a)*ry;
+    ctx.beginPath();ctx.arc(ax,ay,3,0,Math.PI*2);ctx.fillStyle='rgba(100,100,100,0.5)';ctx.fill();
+    const a2=satAngle-i*0.4;const bx=cx+Math.cos(a2)*rx,by=cy+Math.sin(a2)*ry;
+    ctx.beginPath();ctx.arc(bx,by,3,0,Math.PI*2);ctx.fillStyle='rgba(100,100,100,0.5)';ctx.fill();
+  }
+  // Injection beam
+  if(isInj){
+    const gx=cx+100,gy=H-15;
+    ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(sx,sy);
+    ctx.strokeStyle='rgba(255,50,50,0.5)';ctx.lineWidth=2;ctx.setLineDash([6,3]);ctx.stroke();ctx.setLineDash([]);
+    const pulse=8+Math.sin(_t*5)*4;
+    ctx.beginPath();ctx.arc(sx,sy,pulse,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,50,50,0.4)';ctx.lineWidth=1;ctx.stroke();
+  }
+  // Ground station
+  ctx.beginPath();ctx.arc(cx-100,H-15,4,0,Math.PI*2);ctx.fillStyle='rgba(0,200,255,0.7)';ctx.fill();
+  ctx.fillStyle='rgba(0,200,255,0.5)';ctx.font='7px Orbitron,monospace';ctx.fillText('LEGIT GS',cx-100,H-3);
+  if(isInj){ctx.beginPath();ctx.arc(cx+100,H-15,4,0,Math.PI*2);ctx.fillStyle='rgba(255,50,50,0.7)';ctx.fill();
+    ctx.fillStyle='rgba(255,50,50,0.5)';ctx.fillText('ATTACKER',cx+100,H-3);}
+}
+
+/* ── SNR Monitor ── */
+function drawSNRMonitor(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('TRANSPONDER SNR (dB)',5,12);
+  const isInj=typeof injecting!=='undefined'&&injecting;
+  const eirp=parseInt(_$('eirp')?.value||50);
+  const newVal=isInj?5+eirp*0.3+Math.random()*8:12+Math.random()*3;
+  _snrHistory.push(newVal);if(_snrHistory.length>200)_snrHistory.shift();
+  ctx.beginPath();
+  _snrHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-(v/50)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=isInj?'rgba(255,100,0,0.7)':'rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  // Threshold
+  const thY=H-10-(8/50)*(H-25);
+  ctx.beginPath();ctx.moveTo(0,thY);ctx.lineTo(W,thY);ctx.strokeStyle='rgba(255,200,0,0.4)';
+  ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,200,0,0.4)';ctx.font='7px Orbitron,monospace';ctx.fillText('MIN LOCK',W-55,thY-3);
+}
+
+/* ── Beam Pattern Visualization ── */
+function drawBeamPattern(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('ANTENNA BEAM PATTERN',5,12);
+  const cx=W/2,cy=H-10;const R=H-25;
+  // Main lobe
+  ctx.beginPath();
+  for(let a=-Math.PI/2-0.8;a<=-Math.PI/2+0.8;a+=0.02){
+    const diff=a+Math.PI/2;const gain=Math.exp(-diff*diff*8)*R;
+    const x=cx+Math.cos(a)*gain;const y=cy+Math.sin(a)*gain;
+    if(a===-Math.PI/2-0.8)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='rgba(0,200,255,0.6)';ctx.lineWidth=2;ctx.stroke();
+  // Side lobes
+  for(let sl=-3;sl<=3;sl++){
+    if(sl===0)continue;
+    ctx.beginPath();
+    const slCenter=-Math.PI/2+sl*0.5;
+    for(let a=slCenter-0.15;a<=slCenter+0.15;a+=0.01){
+      const diff=a-slCenter;const gain=Math.exp(-diff*diff*80)*R*0.15;
+      const x=cx+Math.cos(a)*gain;const y=cy+Math.sin(a)*gain;
+      if(a===slCenter-0.15)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle='rgba(0,200,255,0.3)';ctx.lineWidth=1;ctx.stroke();
+  }
+  // Injector beam overlay
+  if(typeof injecting!=='undefined'&&injecting){
+    ctx.beginPath();
+    for(let a=-Math.PI/2-0.6;a<=-Math.PI/2+0.6;a+=0.02){
+      const diff=a+Math.PI/2-0.2;const gain=Math.exp(-diff*diff*10)*R*0.8;
+      const x=cx+Math.cos(a)*gain;const y=cy+Math.sin(a)*gain;
+      if(a===-Math.PI/2-0.6)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle='rgba(255,50,50,0.6)';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='rgba(255,50,50,0.5)';ctx.font='8px Orbitron,monospace';ctx.fillText('INJECTED BEAM',W-110,25);
+  }
+}
+
+/* ── Transponder Loading Bar Chart ── */
+function drawTPLoading(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('TRANSPONDER LOADING (%)',5,12);
+  const isInj=typeof injecting!=='undefined'&&injecting;
+  const tpIdx=parseInt(_$('transponder')?.value||8)-1;
+  const barW=Math.max(6,(W-20)/24-2);
+  for(let i=0;i<24;i++){
+    const x=10+i*(barW+2);
+    let load=(typeof transponders!=='undefined'&&transponders[i])?transponders[i].usage:50;
+    if(isInj&&i===tpIdx)load=90+Math.random()*10;
+    const bh=load/100*(H-30);
+    const col=i===tpIdx&&isInj?'rgba(255,50,50,0.6)':load>80?'rgba(255,200,0,0.5)':'rgba(0,200,255,0.4)';
+    ctx.fillStyle=col;ctx.fillRect(x,H-10-bh,barW,bh);
+    if(i%4===0){ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='6px Orbitron,monospace';ctx.textAlign='center';ctx.fillText('TP'+(i+1),x+barW/2,H-1);}
+  }
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const satC=_$('satCanvas');
+  if(satC){const ctx=satC.getContext('2d');drawOrbitalTrack(ctx,satC.width,satC.height);}
+  const specC=_$('specCanvas');
+  if(specC){const ctx=specC.getContext('2d');const W=specC.width,H=specC.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawSNRMonitor(ctx,W,H*0.5);ctx.save();ctx.translate(0,H*0.5);drawTPLoading(ctx,W,H*0.5);ctx.restore();}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

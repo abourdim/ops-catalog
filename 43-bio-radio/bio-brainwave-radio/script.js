@@ -465,3 +465,360 @@ function initBrainwaveApp() {
     sendAppMessage('brain-state', { state, focus: focusLevel, alpha: alpha.toFixed(1), beta: beta.toFixed(1) });
   };
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══════ BRAINWAVE RADIO ADVANCED CANVAS VIZ (IIFE) ═══════ */
+/* ═══════════════════════════════════════════════════════════ */
+;(function(){
+  'use strict';
+
+  function bootBrainViz(){
+    var host=document.querySelector('.main-panel')||document.querySelector('.card-body')||document.querySelector('main')||document.body;
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;width:100%;max-width:800px;margin:18px auto;border-radius:14px;overflow:hidden;box-shadow:0 0 24px rgba(150,100,255,.12);background:#0a0a14;';
+    var cvs=document.createElement('canvas');cvs.width=800;cvs.height=520;cvs.style.cssText='width:100%;display:block;border-radius:14px;';
+    wrap.appendChild(cvs);host.appendChild(wrap);
+
+    var ctx=cvs.getContext('2d'),W=cvs.width,H=cvs.height,t=0;
+
+    /* --- EEG band definitions --- */
+    var bands=[
+      {name:'Delta',freq:2,min:0.5,max:4,color:'#ffcc00',amp:35},
+      {name:'Theta',freq:6,min:4,max:8,color:'#6699ff',amp:25},
+      {name:'Alpha',freq:10,min:8,max:13,color:'#33ff33',amp:30},
+      {name:'Beta',freq:22,min:13,max:30,color:'#ff3366',amp:22},
+      {name:'Gamma',freq:45,min:30,max:100,color:'#cc66ff',amp:12}
+    ];
+    var bandBuffers={};
+    bands.forEach(function(b){bandBuffers[b.name]=new Float32Array(W);});
+
+    /* --- brain topographic map electrodes (10-20 system) --- */
+    var electrodes=[
+      {name:'Fp1',x:0.38,y:0.18},{name:'Fp2',x:0.62,y:0.18},
+      {name:'F3',x:0.30,y:0.32},{name:'F4',x:0.70,y:0.32},{name:'Fz',x:0.50,y:0.28},
+      {name:'C3',x:0.25,y:0.48},{name:'C4',x:0.75,y:0.48},{name:'Cz',x:0.50,y:0.45},
+      {name:'P3',x:0.30,y:0.62},{name:'P4',x:0.70,y:0.62},{name:'Pz',x:0.50,y:0.60},
+      {name:'O1',x:0.38,y:0.76},{name:'O2',x:0.62,y:0.76},
+      {name:'T3',x:0.15,y:0.48},{name:'T4',x:0.85,y:0.48}
+    ];
+
+    /* --- state --- */
+    var brainState='normal';var stateTimer=0;
+    var coherenceVal=0.45;
+    var topoData=[];
+    for(var ei=0;ei<electrodes.length;ei++)topoData.push(0);
+    var spectrogramData=[];var MAX_SPEC=80;
+    var focusHistory=[];var MAX_FOCUS=200;
+    var asymmetry=0;
+
+    /* auto-cycle brain states */
+    function autoState(){
+      stateTimer+=0.016;
+      if(stateTimer>6){
+        stateTimer=0;
+        var states=['normal','relax','focus','meditate'];
+        brainState=states[Math.floor(Math.random()*states.length)];
+      }
+    }
+
+    /* generate EEG signal for a band */
+    function genEEG(freq,amp,noise){
+      return Math.sin(t*freq*0.1)*amp
+        +Math.sin(t*freq*0.23)*(amp*0.3)
+        +Math.sin(t*freq*0.07)*(amp*0.15)
+        +(Math.random()-0.5)*noise;
+    }
+
+    /* --- draw brain topographic map --- */
+    function drawTopoMap(ox,oy,size){
+      /* head outline */
+      ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(ox+size/2,oy+size/2,size/2-5,0,Math.PI*2);ctx.stroke();
+      /* nose */
+      ctx.beginPath();ctx.moveTo(ox+size/2-8,oy+4);ctx.lineTo(ox+size/2,oy-4);ctx.lineTo(ox+size/2+8,oy+4);ctx.stroke();
+      /* ears */
+      ctx.beginPath();ctx.ellipse(ox-2,oy+size/2,5,12,0,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.ellipse(ox+size+2,oy+size/2,5,12,0,0,Math.PI*2);ctx.stroke();
+
+      /* heatmap interpolation */
+      var imgW=80,imgH=80;
+      for(var py=0;py<imgH;py++){
+        for(var px=0;px<imgW;px++){
+          var nx=px/imgW,ny=py/imgH;
+          var dx=nx-0.5,dy=ny-0.5;
+          if(dx*dx+dy*dy>0.23)continue;
+          var val=0,wt=0;
+          for(var ei2=0;ei2<electrodes.length;ei2++){
+            var ex=electrodes[ei2].x,ey=electrodes[ei2].y;
+            var d=Math.sqrt((nx-ex)*(nx-ex)+(ny-ey)*(ny-ey));
+            var w=1/(d*d+0.01);
+            val+=topoData[ei2]*w;wt+=w;
+          }
+          val=val/wt;
+          var norm=Math.max(0,Math.min(1,(val+1)/2));
+          var r=Math.min(255,norm*510)|0;
+          var g=Math.min(255,Math.max(0,(norm-0.3)*400))|0;
+          var b2=Math.max(0,(1-norm*2)*200)|0;
+          ctx.fillStyle='rgba('+r+','+g+','+b2+',0.7)';
+          ctx.fillRect(ox+px*(size/imgW),oy+py*(size/imgH),size/imgW+0.5,size/imgH+0.5);
+        }
+      }
+
+      /* electrode dots */
+      electrodes.forEach(function(e,i){
+        var ex2=ox+e.x*size,ey2=oy+e.y*size;
+        ctx.beginPath();ctx.arc(ex2,ey2,3,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,255,255,0.7)';ctx.fill();
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='6px Orbitron,monospace';
+        ctx.fillText(e.name,ex2+5,ey2-2);
+      });
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='9px Orbitron,monospace';
+      ctx.fillText('EEG TOPOGRAPHIC MAP',ox+5,oy-8);
+    }
+
+    /* --- draw power spectrum bars --- */
+    function drawPowerSpectrum(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.strokeRect(ox,oy,w,h);
+
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('BAND POWER SPECTRUM',ox+5,oy+12);
+
+      var barW=(w-20)/bands.length-4;
+      bands.forEach(function(b,i){
+        var bx=ox+12+i*(barW+4);
+        var last=bandBuffers[b.name][W-1];
+        var norm=Math.abs(last)/b.amp;
+        var barH=Math.min(h-30,norm*(h-30));
+
+        var grad=ctx.createLinearGradient(bx,oy+h-5,bx,oy+h-5-barH);
+        grad.addColorStop(0,b.color);grad.addColorStop(1,b.color+'33');
+        ctx.fillStyle=grad;ctx.fillRect(bx,oy+h-5-barH,barW,barH);
+
+        ctx.fillStyle=b.color;ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText(b.name[0]+b.name[1],bx+barW/2,oy+h-8-barH);
+        ctx.fillStyle='rgba(255,255,255,0.3)';
+        ctx.fillText(b.min+'-'+b.max,bx+barW/2,oy+h+8);
+        ctx.textAlign='left';
+      });
+    }
+
+    /* --- draw coherence & asymmetry panel --- */
+    function drawCoherencePanel(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('HEMISPHERIC ANALYSIS',ox+5,oy+14);
+
+      /* coherence bar */
+      ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(ox+10,oy+24,w-20,14);
+      ctx.fillStyle=coherenceVal>0.7?'#33ff33':coherenceVal>0.4?'#ffcc00':'#ff3366';
+      ctx.fillRect(ox+10,oy+24,(w-20)*coherenceVal,14);
+      ctx.fillStyle='#fff';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('Coherence: '+(coherenceVal*100).toFixed(0)+'%',ox+10,oy+52);
+
+      /* asymmetry indicator */
+      var acx=ox+w/2,acy=oy+72;
+      ctx.beginPath();ctx.moveTo(ox+10,acy);ctx.lineTo(ox+w-10,acy);ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(acx+asymmetry*((w-20)/2),acy,5,0,Math.PI*2);
+      ctx.fillStyle=asymmetry>0?'#ff3366':'#6699ff';ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';
+      ctx.fillText('L',ox+12,acy+4);ctx.fillText('R',ox+w-18,acy+4);
+      ctx.textAlign='center';ctx.fillText('ASYMMETRY',acx,acy+16);ctx.textAlign='left';
+
+      /* brain state */
+      var stateColors={normal:'#ffcc00',relax:'#33ff33',focus:'#ff3366',meditate:'#cc66ff'};
+      ctx.fillStyle=stateColors[brainState]||'#fff';ctx.font='bold 10px Orbitron,monospace';
+      ctx.fillText('STATE: '+brainState.toUpperCase(),ox+10,oy+h-10);
+    }
+
+    /* --- draw focus/attention timeline --- */
+    function drawFocusTimeline(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('FOCUS / ATTENTION TIMELINE',ox+5,oy+12);
+
+      if(focusHistory.length>1){
+        ctx.beginPath();ctx.strokeStyle='#ff3366';ctx.lineWidth=1.5;
+        focusHistory.forEach(function(v,i){
+          var fx=ox+(i/MAX_FOCUS)*w;
+          var fy=oy+h-v/100*(h-20)-5;
+          if(i===0)ctx.moveTo(fx,fy);else ctx.lineTo(fx,fy);
+        });
+        ctx.stroke();
+
+        /* fill */
+        ctx.beginPath();ctx.moveTo(ox,oy+h);
+        focusHistory.forEach(function(v,i){
+          ctx.lineTo(ox+(i/MAX_FOCUS)*w,oy+h-v/100*(h-20)-5);
+        });
+        ctx.lineTo(ox+(focusHistory.length/MAX_FOCUS)*w,oy+h);ctx.closePath();
+        ctx.fillStyle='rgba(255,51,102,0.08)';ctx.fill();
+      }
+    }
+
+    /* --- draw EEG spectrogram --- */
+    function drawSpectrogram(ox,oy,w,h){
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(ox,oy,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='8px Orbitron,monospace';
+      ctx.fillText('EEG SPECTROGRAM (0-50Hz)',ox+5,oy+12);
+
+      var cellW=w/64,cellH=h/MAX_SPEC;
+      for(var row=0;row<spectrogramData.length;row++){
+        for(var col=0;col<64;col++){
+          var v=spectrogramData[row][col];
+          var r2=Math.min(255,v*600)|0;
+          var g2=Math.min(255,Math.max(0,(v-0.15)*500))|0;
+          var b3=Math.max(0,(0.5-v)*200)|0;
+          ctx.fillStyle='rgb('+r2+','+g2+','+b3+')';
+          ctx.fillRect(ox+col*cellW,oy+16+row*cellH,cellW+0.5,cellH+0.5);
+        }
+      }
+    }
+
+    /* --- main render loop --- */
+    function frame(){
+      ctx.fillStyle='rgba(6,6,16,0.12)';ctx.fillRect(0,0,W,H);
+      t+=0.016;
+
+      autoState();
+
+      /* generate EEG data per band */
+      var targetAlpha=brainState==='relax'?1.3:brainState==='meditate'?1.5:brainState==='focus'?0.5:1.0;
+      var targetBeta=brainState==='focus'?1.5:brainState==='relax'?0.6:1.0;
+      var targetTheta=brainState==='meditate'?1.4:brainState==='relax'?1.2:0.8;
+
+      bands.forEach(function(b){
+        var buf=bandBuffers[b.name];
+        var scale=b.name==='Alpha'?targetAlpha:b.name==='Beta'?targetBeta:b.name==='Theta'?targetTheta:1.0;
+        for(var i=0;i<W-1;i++)buf[i]=buf[i+1];
+        buf[W-1]=genEEG(b.freq,b.amp*scale,b.amp*0.15);
+      });
+
+      /* update topographic data */
+      electrodes.forEach(function(e,i){
+        var alphaVal=bandBuffers['Alpha'][W-1]/bands[2].amp;
+        var betaVal=bandBuffers['Beta'][W-1]/bands[3].amp;
+        var zone=e.y<0.35?'frontal':e.y<0.55?'central':'posterior';
+        var val=0;
+        if(zone==='frontal')val=betaVal*0.6+alphaVal*0.3;
+        else if(zone==='central')val=alphaVal*0.5+betaVal*0.3;
+        else val=alphaVal*0.7+betaVal*0.2;
+        val+=(Math.random()-0.5)*0.2;
+        topoData[i]+=(val-topoData[i])*0.1;
+      });
+
+      /* coherence and asymmetry */
+      var leftPow=0,rightPow=0,lc2=0,rc2=0;
+      electrodes.forEach(function(e,i){
+        if(e.x<0.5){leftPow+=Math.abs(topoData[i]);lc2++;}
+        else{rightPow+=Math.abs(topoData[i]);rc2++;}
+      });
+      leftPow/=lc2;rightPow/=rc2;
+      coherenceVal+=(1-Math.abs(leftPow-rightPow)*2-coherenceVal)*0.05;
+      coherenceVal=Math.max(0,Math.min(1,coherenceVal));
+      asymmetry+=(((rightPow-leftPow)/(rightPow+leftPow+0.01))-asymmetry)*0.05;
+
+      /* focus level */
+      var betaNow=Math.abs(bandBuffers['Beta'][W-1]);
+      var alphaNow=Math.abs(bandBuffers['Alpha'][W-1]);
+      var focus2=Math.min(100,Math.max(0,betaNow/(alphaNow+0.1)*28));
+      focusHistory.push(focus2);if(focusHistory.length>MAX_FOCUS)focusHistory.shift();
+
+      /* build spectrogram row */
+      var specRow=[];
+      for(var sb=0;sb<64;sb++){
+        var freq2=sb*50/64;var amp2=0.02;
+        bands.forEach(function(b){
+          amp2+=Math.exp(-(freq2-b.freq)*(freq2-b.freq)/(b.freq*2))*Math.abs(bandBuffers[b.name][W-1])/b.amp*0.4;
+        });
+        amp2+=Math.random()*0.02;
+        specRow.push(Math.min(1,amp2));
+      }
+      spectrogramData.push(specRow);if(spectrogramData.length>MAX_SPEC)spectrogramData.shift();
+
+      /* ---- LAYOUT ---- */
+
+      /* Section 1: Top — 5 EEG waveforms stacked */
+      var waveH=H*0.30;var bandH2=waveH/bands.length;
+      bands.forEach(function(b,bi){
+        var y0=bi*bandH2;
+        ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(0,y0,W*0.55,bandH2-1);
+        /* waveform */
+        var buf2=bandBuffers[b.name];
+        ctx.beginPath();ctx.strokeStyle=b.color;ctx.lineWidth=1.2;
+        ctx.shadowColor=b.color;ctx.shadowBlur=3;
+        for(var i2=0;i2<W*0.55;i2++){
+          var idx=Math.floor(i2/(W*0.55)*W);
+          var y=y0+bandH2/2-buf2[idx]/b.amp*(bandH2*0.4);
+          if(i2===0)ctx.moveTo(i2,y);else ctx.lineTo(i2,y);
+        }
+        ctx.stroke();ctx.shadowBlur=0;
+        ctx.fillStyle=b.color;ctx.font='7px Orbitron,monospace';
+        ctx.fillText(b.name+' ('+b.min+'-'+b.max+'Hz)',3,y0+10);
+      });
+
+      /* Section 2: Top-right — Topographic map */
+      drawTopoMap(W*0.56,0,W*0.22);
+
+      /* Section 3: Power spectrum */
+      drawPowerSpectrum(W*0.56,W*0.22+10,W*0.44-10,(H*0.30)-W*0.22-10);
+
+      /* Section 4: Middle — Spectrogram */
+      drawSpectrogram(0,waveH+5,W*0.55,H*0.22);
+
+      /* Section 5: Middle-right — Coherence panel */
+      drawCoherencePanel(W*0.56,waveH+5,W*0.44-10,H*0.22);
+
+      /* Section 6: Bottom — Focus timeline */
+      drawFocusTimeline(0,waveH+H*0.22+15,W-10,H*0.18);
+
+      /* Section 7: Bottom stats */
+      var stY=waveH+H*0.22+H*0.18+25;
+      ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(0,stY,W,H-stY);
+      ctx.fillStyle='#fff';ctx.font='bold 9px Orbitron,monospace';
+      ctx.fillText('NEURAL METRICS',10,stY+14);
+      var metrics=[
+        ['Alpha Power',(Math.abs(bandBuffers['Alpha'][W-1])).toFixed(1)+' \u00b5V'],
+        ['Beta Power',(Math.abs(bandBuffers['Beta'][W-1])).toFixed(1)+' \u00b5V'],
+        ['Focus',focus2.toFixed(0)+'%'],
+        ['Coherence',(coherenceVal*100).toFixed(0)+'%'],
+        ['Asymmetry',(asymmetry>0?'R':'L')+' '+(Math.abs(asymmetry)*100).toFixed(0)+'%'],
+        ['State',brainState.toUpperCase()],
+        ['Theta/Beta',((Math.abs(bandBuffers['Theta'][W-1]))/(Math.abs(bandBuffers['Beta'][W-1])+0.1)).toFixed(2)]
+      ];
+      metrics.forEach(function(m,mi){
+        var mx2=10+(mi%4)*W*0.24;
+        var my2=stY+28+Math.floor(mi/4)*16;
+        ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px Orbitron,monospace';
+        ctx.fillText(m[0]+':',mx2,my2);
+        ctx.fillStyle='#cc66ff';ctx.fillText(m[1],mx2+90,my2);
+      });
+
+      /* HUD corners */
+      ctx.strokeStyle='rgba(150,100,255,0.08)';ctx.lineWidth=1;ctx.strokeRect(1,1,W-2,H-2);
+      var cl=18;ctx.strokeStyle='rgba(150,100,255,0.2)';ctx.lineWidth=1.5;
+      [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(function(c){
+        ctx.beginPath();ctx.moveTo(c[0],c[1]+c[3]*cl);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0]+c[2]*cl,c[1]);ctx.stroke();
+      });
+      ctx.fillStyle='rgba(150,100,255,'+(0.4+Math.sin(t*4)*0.3)+')';
+      ctx.beginPath();ctx.arc(W-20,14,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='8px Orbitron,monospace';ctx.fillText('EEG',W-55,17);
+
+      requestAnimationFrame(frame);
+    }
+
+    /* click to cycle brain state */
+    cvs.addEventListener('click',function(){
+      var states=['normal','relax','focus','meditate'];
+      var idx=states.indexOf(brainState);
+      brainState=states[(idx+1)%states.length];
+      stateTimer=0;
+    });
+
+    frame();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootBrainViz);
+  else setTimeout(bootBrainViz,200);
+})();

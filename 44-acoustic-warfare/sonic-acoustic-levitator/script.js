@@ -345,3 +345,219 @@ document.addEventListener('DOMContentLoaded', () => {
   drawLevitator();
   log(T('ready'), 'success');
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Acoustic Levitator
+   Animated standing wave field with particle trapping,
+   pressure node visualization, and transducer array display
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simAcousticLevitator';let cv,cx,W,H,af=null,t=0;
+  const particles=[];const pressureNodes=[];const waveRings=[];
+  let simFreq=40000,simPhase=180,simPower=80,levActive=true;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=340;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#060a14;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+    initParticles();calcNodes();
+  }
+
+  function initParticles(){
+    particles.length=0;
+    for(let i=0;i<5;i++){
+      particles.push({x:W/2+(Math.random()-.5)*40,y:H/2+(Math.random()-.5)*60,
+        vx:0,vy:0,targetY:0,radius:3+Math.random()*3,wobble:Math.random()*Math.PI*2,
+        hue:120+Math.random()*60,trapped:false});
+    }
+  }
+
+  function calcNodes(){
+    pressureNodes.length=0;
+    const wavelength=343000/simFreq;
+    const topY=50,botY=H-50,gap=botY-topY;
+    const nodeCount=Math.floor(gap/(wavelength*50));
+    for(let n=0;n<nodeCount;n++){
+      const ny=topY+gap*(n+0.5)/nodeCount;
+      pressureNodes.push({y:ny,strength:0.5+Math.random()*0.5});
+    }
+  }
+
+  class WaveRing{
+    constructor(x,y,dir){this.x=x;this.y=y;this.r=0;this.maxR=120;this.dir=dir;this.alpha=0.3;}
+    update(){this.r+=1.5;this.alpha=0.3*(1-this.r/this.maxR);return this.r<this.maxR;}
+    draw(){
+      cx.beginPath();
+      if(this.dir>0)cx.arc(this.x,this.y,this.r,0,Math.PI);
+      else cx.arc(this.x,this.y,this.r,Math.PI,Math.PI*2);
+      cx.strokeStyle='rgba(0,200,255,'+this.alpha+')';cx.lineWidth=1.5;cx.stroke();
+    }
+  }
+
+  function drawTransducerArray(y,isTop){
+    const cx2=W/2;
+    cx.fillStyle='#2a2a3a';
+    cx.fillRect(cx2-180,isTop?y-12:y-3,360,15);
+    cx.strokeStyle='rgba(0,255,170,0.3)';cx.lineWidth=1;
+    cx.strokeRect(cx2-180,isTop?y-12:y-3,360,15);
+    for(let i=0;i<12;i++){
+      const x=cx2-165+i*30;
+      const pulse=levActive?3+Math.sin(t*6+i*0.5)*2:0;
+      cx.save();cx.shadowColor=levActive?'hsl('+(100+i*15)+',80%,50%)':'#333';
+      cx.shadowBlur=pulse;
+      cx.fillStyle=levActive?'hsl('+(100+i*15)+',80%,50%)':'#555';
+      cx.beginPath();cx.arc(x,y,5,0,Math.PI*2);cx.fill();
+      cx.restore();
+    }
+  }
+
+  function drawStandingWaveField(){
+    if(!levActive)return;
+    const cx2=W/2,topY=50,botY=H-50,gap=botY-topY;
+    const wavelength=343000/simFreq;
+    const nodeCount=Math.floor(gap/(wavelength*50));
+    const phaseRad=simPhase*Math.PI/180;
+
+    for(let y=topY;y<botY;y+=2){
+      const normY=(y-topY)/gap;
+      const pressure=Math.abs(Math.sin(normY*Math.PI*nodeCount+phaseRad));
+      const osc=Math.cos(t*4)*0.3+0.7;
+      const w=pressure*osc*130*(simPower/100);
+      const r=Math.floor(pressure*200);
+      const g=Math.floor((1-pressure)*200);
+      cx.fillStyle='rgba('+r+','+g+',100,'+(pressure*0.25)+')';
+      cx.fillRect(cx2-w,y,w*2,2);
+    }
+  }
+
+  function drawPressureNodes(){
+    pressureNodes.forEach((n,i)=>{
+      cx.setLineDash([4,4]);
+      cx.strokeStyle='rgba(0,255,100,0.25)';cx.lineWidth=1;
+      cx.beginPath();cx.moveTo(W/2-140,n.y);cx.lineTo(W/2+140,n.y);cx.stroke();
+      cx.setLineDash([]);
+      cx.fillStyle='rgba(0,255,100,0.4)';cx.font='8px monospace';
+      cx.textAlign='left';
+      cx.fillText('NODE '+(i+1)+' ['+n.strength.toFixed(2)+']',W/2+145,n.y+3);
+    });
+  }
+
+  function updateParticles(){
+    particles.forEach(p=>{
+      if(levActive&&pressureNodes.length>0){
+        let closest=pressureNodes[0],minD=Math.abs(p.y-pressureNodes[0].y);
+        pressureNodes.forEach(n=>{const d=Math.abs(p.y-n.y);if(d<minD){minD=d;closest=n;}});
+        p.targetY=closest.y;
+        p.vy+=(p.targetY-p.y)*0.008;
+        p.vy*=0.95;
+        p.vx=(Math.sin(t*3+p.wobble)*0.3);
+        p.trapped=minD<15;
+      }else{
+        p.vy+=0.15;p.vy*=0.98;p.vx*=0.98;
+        p.trapped=false;
+      }
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<W/2-130)p.x=W/2-130;if(p.x>W/2+130)p.x=W/2+130;
+      if(p.y>H-55){p.y=H-55;p.vy*=-0.3;}
+      if(p.y<55){p.y=55;p.vy*=-0.3;}
+    });
+  }
+
+  function drawParticles(){
+    particles.forEach(p=>{
+      cx.save();
+      if(p.trapped){cx.shadowColor='#00ff88';cx.shadowBlur=12;}
+      cx.fillStyle=p.trapped?'#ffffff':'rgba(200,200,200,0.6)';
+      cx.beginPath();cx.arc(p.x,p.y,p.radius,0,Math.PI*2);cx.fill();
+      if(p.trapped){
+        cx.strokeStyle='rgba(0,255,136,0.3)';cx.lineWidth=1;
+        cx.beginPath();cx.arc(p.x,p.y,p.radius+6+Math.sin(t*5)*3,0,Math.PI*2);cx.stroke();
+      }
+      cx.restore();
+    });
+  }
+
+  function drawSpectrumBar(){
+    const bx=20,by=H-45,bw=200,bh=30;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(bx,by,bw,bh);
+    const bins=64;const binW=bw/bins;
+    for(let i=0;i<bins;i++){
+      const freq=i/bins;
+      const peak=Math.exp(-Math.pow((freq-0.5)*10,2));
+      const h2=peak*bh*0.8+Math.random()*2;
+      const hue=120+freq*120;
+      cx.fillStyle='hsla('+hue+',70%,50%,0.6)';
+      cx.fillRect(bx+i*binW,by+bh-h2,binW-0.5,h2);
+    }
+    cx.fillStyle='rgba(0,255,170,0.4)';cx.font='7px monospace';cx.textAlign='left';
+    cx.fillText('ULTRASONIC SPECTRUM — 38-42 kHz',bx+4,by-4);
+  }
+
+  function drawPhysicsInfo(){
+    const px=W-220,py=H-80,pw=200,ph=65;
+    cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(px,py,pw,ph);
+    cx.strokeStyle='rgba(0,255,170,0.12)';cx.strokeRect(px,py,pw,ph);
+    cx.fillStyle='rgba(0,255,170,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    const wl=(343000/simFreq).toFixed(2);
+    cx.fillText('Frequency: '+(simFreq/1000)+' kHz',px+8,py+14);
+    cx.fillText('Wavelength: '+wl+' mm',px+8,py+28);
+    cx.fillText('Phase: '+simPhase+'deg  Power: '+simPower+'%',px+8,py+42);
+    cx.fillText('Nodes: '+pressureNodes.length+'  Particles: '+particles.length,px+8,py+56);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,220,54);
+    cx.strokeStyle='rgba(0,255,170,0.15)';cx.strokeRect(8,8,220,54);
+    cx.font='10px monospace';cx.fillStyle='#00ffaa';cx.textAlign='left';
+    cx.fillText('ACOUSTIC LEVITATION ARRAY',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Standing Wave Trapping Simulation',16,40);
+    cx.fillText('Trapped: '+particles.filter(p=>p.trapped).length+'/'+particles.length,16,54);
+    cx.restore();
+  }
+
+  function drawGrid(){
+    cx.strokeStyle='rgba(0,255,170,0.04)';cx.lineWidth=0.5;
+    for(let x=0;x<W;x+=40){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
+    for(let y=0;y<H;y+=40){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();}
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(6,10,20,0.15)';cx.fillRect(0,0,W,H);
+
+    // Slowly cycle parameters
+    simPhase=180+Math.sin(t*0.3)*20;
+    simPower=70+Math.sin(t*0.2)*15;
+
+    if(Math.floor(t*60)%30===0)waveRings.push(new WaveRing(W/2,50,1));
+    if(Math.floor(t*60)%30===15)waveRings.push(new WaveRing(W/2,H-50,-1));
+
+    drawGrid();
+    drawStandingWaveField();
+    drawPressureNodes();
+    drawTransducerArray(50,true);
+    drawTransducerArray(H-50,false);
+
+    for(let i=waveRings.length-1;i>=0;i--){
+      if(!waveRings[i].update())waveRings.splice(i,1);
+      else waveRings[i].draw();
+    }
+
+    updateParticles();
+    drawParticles();
+    drawSpectrumBar();
+    drawPhysicsInfo();
+    drawHUD();
+
+    cx.fillStyle='rgba(0,255,170,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Standing Wave Acoustic Levitation — Pressure Node Trapping',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

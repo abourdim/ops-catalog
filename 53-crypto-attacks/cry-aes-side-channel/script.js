@@ -142,3 +142,118 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('captureBtn').onclick=captureTraces;$('analyzeBtn').onclick=analyzeCPA;$('stopBtn').onclick=()=>{running=false;hideToast()};
   buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawCanvas()
 });
+
+/* ═══════ ENHANCED AES SIDE-CHANNEL VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0;
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === S-Box Visualization (top-left) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('AES S-Box (16x16)',10,16);
+  const sW=w*0.38,sH=130,sX=10,sY=24;
+  const cellW=sW/16,cellH=sH/16;
+  for(let i=0;i<16;i++){
+    for(let j=0;j<16;j++){
+      const idx=i*16+j;
+      const val=SBOX[idx];
+      const hw=hammingWeight(val);
+      const intensity=hw/8;
+      const isActive=idx===(_t%256);
+      _x.fillStyle=isActive?'#f87171':`rgba(${Math.floor(intensity*200)+30},${Math.floor((1-intensity)*150)+40},${100},${intensity*0.6+0.1})`;
+      _x.fillRect(sX+j*cellW,sY+i*cellH,cellW-0.5,cellH-0.5);
+    }
+  }
+  // Active cell label
+  const activeIdx=_t%256;
+  _x.fillStyle=mut;_x.font='9px SF Mono';
+  _x.fillText(`S[0x${activeIdx.toString(16).padStart(2,'0')}] = 0x${SBOX[activeIdx].toString(16).padStart(2,'0')}  HW=${hammingWeight(SBOX[activeIdx])}`,sX,sY+sH+12);
+
+  // === Hamming Weight Distribution (top-right) ===
+  const hwX=w*0.42,hwY=6;
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('S-Box Hamming Weight Distribution',hwX,16);
+  const hwW=w*0.56,hwH=130;
+  const hwDist=new Array(9).fill(0);
+  for(let i=0;i<256;i++)hwDist[hammingWeight(SBOX[i])]++;
+  const maxHW=Math.max(...hwDist);
+  const barW=hwW/9;
+  for(let hw=0;hw<=8;hw++){
+    const barH=(hwDist[hw]/maxHW)*hwH*0.8;
+    const color=`hsl(${hw*30+120},60%,50%)`;
+    _x.fillStyle=color+'44';_x.fillRect(hwX+hw*barW+5,hwY+18+hwH-barH,barW-10,barH);
+    _x.fillStyle=color;_x.font='bold 9px SF Mono';_x.textAlign='center';
+    _x.fillText(`HW=${hw}`,hwX+hw*barW+barW/2,hwY+hwH+22);
+    _x.fillText(`${hwDist[hw]}`,hwX+hw*barW+barW/2,hwY+18+hwH-barH-4);
+    _x.textAlign='left';
+  }
+
+  // === Simulated Power Trace (middle) ===
+  const ptY=sY+sH+28,ptH=60,ptW=w-20;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Simulated Power Trace (single encryption)',10,ptY);
+
+  // Generate a fake power trace with S-box lookups visible
+  _x.strokeStyle='#4ade80';_x.lineWidth=1.5;_x.beginPath();
+  const traceLen=200;
+  for(let i=0;i<traceLen;i++){
+    const x=10+i*(ptW/traceLen);
+    const sboxPoint=(i%25)===12;
+    const baseNoise=(Math.sin(i*0.3+_t*0.05)*2+Math.random()*1.5);
+    const sboxSpike=sboxPoint?hammingWeight(SBOX[(_t+i)&0xFF])*2:0;
+    const y=ptY+12+ptH/2-(baseNoise+sboxSpike)*3;
+    if(i===0)_x.moveTo(x,y);else _x.lineTo(x,y);
+  }
+  _x.stroke();_x.lineWidth=1;
+
+  // Mark S-box lookup points
+  for(let i=0;i<traceLen;i++){
+    if((i%25)===12){
+      const x=10+i*(ptW/traceLen);
+      _x.strokeStyle='#f8717144';_x.beginPath();_x.moveTo(x,ptY+10);_x.lineTo(x,ptY+10+ptH);_x.stroke();
+    }
+  }
+  _x.fillStyle=mut;_x.font='8px SF Mono';_x.fillText('S-box lookup spikes marked in red',10,ptY+ptH+20);
+
+  // === CPA Correlation Matrix (bottom) ===
+  const cpY=ptY+ptH+30,cpW=w-20,cpH=h-cpY-25;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('CPA Correlation: 256 key guesses x 16 byte positions',10,cpY);
+
+  const corrCols=Math.min(128,Math.floor(cpW/3)),corrRows=16;
+  const corrCW=cpW/corrCols,corrCH=Math.min(cpH/corrRows-0.5,(cpH-15)/corrRows);
+  for(let i=0;i<corrRows;i++){
+    for(let j=0;j<corrCols;j++){
+      // Simulated correlation: correct key byte should have highest correlation
+      const correctKey=(0xA5+i*0x11)&0xFF;
+      const guess=Math.floor(j*256/corrCols);
+      const dist=Math.abs(guess-correctKey);
+      const corr=Math.exp(-dist*dist/800)+Math.sin(_t*0.02+i+j*0.1)*0.05;
+      const isCorrect=dist<2;
+      _x.fillStyle=isCorrect?`rgba(248,113,113,${corr})`:`rgba(96,165,250,${corr*0.5})`;
+      _x.fillRect(10+j*corrCW,cpY+8+i*corrCH,corrCW-0.5,corrCH-0.5);
+    }
+    // Byte label
+    _x.fillStyle=mut;_x.font='7px SF Mono';
+    _x.fillText(`B${i}`,cpW+14,cpY+8+i*corrCH+corrCH/2+2);
+  }
+  _x.fillStyle='#f87171';_x.font='8px SF Mono';
+  _x.fillText('Correct key bytes show peak correlation (red columns)',10,cpY+8+corrRows*corrCH+12);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

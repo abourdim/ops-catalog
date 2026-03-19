@@ -114,3 +114,189 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('authBtn').onclick=authenticate;$('captureBtn').onclick=captureToken;$('replayBtn').onclick=replayAttack;
   buildHelp();buildRef();buildMath();log(LANG[currentLang].ready,'success');drawCanvas()
 });
+
+/* ═══════ ENHANCED REPLAY ATTACK VISUALIZATION (IIFE) ═══════ */
+(function(){
+const _c=document.createElement('canvas');
+_c.style.cssText='width:100%;height:340px;border-radius:12px;margin-top:12px;display:block;background:rgba(0,0,0,.12)';
+const vizS=document.querySelector('.visualization-section')||document.querySelector('.card');
+if(vizS)vizS.appendChild(_c);
+const _x=_c.getContext('2d');
+let _t=0,_particles=[];
+
+function _rs(){const r=_c.getBoundingClientRect();_c.width=r.width*devicePixelRatio;_c.height=r.height*devicePixelRatio;_x.scale(devicePixelRatio,devicePixelRatio)}
+window.addEventListener('resize',_rs);_rs();
+function _gc(p){return getComputedStyle(document.documentElement).getPropertyValue(p).trim()}
+
+function draw(){
+  const w=_c.getBoundingClientRect().width,h=_c.getBoundingClientRect().height;
+  const acc=_gc('--accent'),mut=_gc('--text-muted'),txt=_gc('--text');
+  _x.clearRect(0,0,w,h);_t++;
+
+  // === Network Topology (top) ===
+  _x.fillStyle=acc;_x.font='bold 12px Righteous,Tajawal,sans-serif';
+  _x.fillText('Network Authentication Flow',10,16);
+
+  const nodes=[
+    {name:'Client',x:w*0.12,y:65,icon:'C',color:'#4ade80'},
+    {name:'Router',x:w*0.35,y:45,icon:'R',color:'#60a5fa'},
+    {name:'Attacker',x:w*0.35,y:90,icon:'A',color:'#f87171'},
+    {name:'Server',x:w*0.58,y:65,icon:'S',color:'#c084fc'},
+    {name:'Auth DB',x:w*0.78,y:65,icon:'DB',color:'#fbbf24'}
+  ];
+
+  // Draw connections
+  const conns=[[0,1],[1,3],[3,4],[1,2]];
+  conns.forEach(([a,b])=>{
+    _x.strokeStyle=mut+'44';_x.lineWidth=1;
+    _x.beginPath();_x.moveTo(nodes[a].x,nodes[a].y);_x.lineTo(nodes[b].x,nodes[b].y);_x.stroke();
+  });
+
+  // Animated packet along connections
+  const packetConn=_t%120<30?0:_t%120<60?1:_t%120<90?2:3;
+  const progress=(_t%30)/30;
+  if(packetConn<conns.length){
+    const[a,b]=conns[packetConn];
+    const px=nodes[a].x+(nodes[b].x-nodes[a].x)*progress;
+    const py=nodes[a].y+(nodes[b].y-nodes[a].y)*progress;
+    _x.fillStyle=packetConn===3?'#f87171':'#4ade80';
+    _x.beginPath();_x.arc(px,py,5,0,Math.PI*2);_x.fill();
+    _x.fillStyle='#fff';_x.font='bold 6px SF Mono';_x.textAlign='center';
+    _x.fillText('PKT',px,py+2);_x.textAlign='left';
+  }
+
+  // Draw nodes
+  nodes.forEach(n=>{
+    _x.fillStyle=n.color+'33';_x.beginPath();_x.arc(n.x,n.y,20,0,Math.PI*2);_x.fill();
+    _x.strokeStyle=n.color;_x.lineWidth=2;_x.beginPath();_x.arc(n.x,n.y,20,0,Math.PI*2);_x.stroke();
+    _x.fillStyle=n.color;_x.font='bold 10px SF Mono';_x.textAlign='center';
+    _x.fillText(n.icon,n.x,n.y+4);
+    _x.fillStyle=mut;_x.font='8px Tajawal';_x.fillText(n.name,n.x,n.y+30);
+    _x.textAlign='left';_x.lineWidth=1;
+  });
+
+  // === Token Structure (middle-left) ===
+  const tkY=120,tkW=w*0.48;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Authentication Token Structure',10,tkY);
+
+  const fields=[
+    {name:'user',val:'alice',color:'#4ade80',w:0.2},
+    {name:'nonce',val:randHex(8),color:'#60a5fa',w:0.25},
+    {name:'timestamp',val:Date.now().toString(36).slice(-6),color:'#fbbf24',w:0.25},
+    {name:'HMAC-sig',val:randHex(8),color:'#c084fc',w:0.3}
+  ];
+  let fx=10;
+  fields.forEach(f=>{
+    const fw=f.w*tkW;
+    _x.fillStyle=f.color+'22';_x.fillRect(fx,tkY+8,fw-3,35);
+    _x.strokeStyle=f.color+'66';_x.strokeRect(fx,tkY+8,fw-3,35);
+    _x.fillStyle=f.color;_x.font='bold 8px SF Mono';_x.fillText(f.name,fx+3,tkY+20);
+    _x.fillStyle=mut;_x.font='7px SF Mono';_x.fillText(f.val,fx+3,tkY+35);
+    fx+=fw;
+  });
+
+  // === Nonce Defense Timeline (middle-right) ===
+  const ndX=w*0.52,ndY=tkY;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Nonce Lifecycle & Expiration',ndX,ndY);
+
+  const nNonces=8;
+  const nW=(w*0.46)/nNonces;
+  for(let i=0;i<nNonces;i++){
+    const x=ndX+i*nW;
+    const age=(_t+i*20)%100;
+    const isExpired=age>70;
+    const isActive=age<30;
+    _x.fillStyle=isExpired?'#f8717133':isActive?'#4ade8044':'#fbbf2433';
+    _x.fillRect(x,ndY+8,nW-3,35);
+    _x.fillStyle=isExpired?'#f87171':isActive?'#4ade80':'#fbbf24';
+    _x.font='7px SF Mono';_x.textAlign='center';
+    _x.fillText(`N${i}`,x+nW/2,ndY+20);
+    _x.fillText(isExpired?'EXPIRED':isActive?'ACTIVE':'AGING',x+nW/2,ndY+36);
+    // TTL bar
+    const ttl=Math.max(0,1-age/100);
+    _x.fillStyle=`rgba(${isExpired?248:74},${isExpired?113:222},${isExpired?113:128},.3)`;
+    _x.fillRect(x+2,ndY+38,ttl*(nW-7),4);
+    _x.textAlign='left';
+  }
+
+  // === Replay Detection Matrix (bottom-left) ===
+  const rdY=tkY+55,rdW=w*0.48,rdH=h-rdY-65;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Challenge-Response Protocol',10,rdY);
+
+  const steps=[
+    {label:'1. Client -> Server: Hello',color:'#4ade80'},
+    {label:'2. Server -> Client: Challenge (random)',color:'#c084fc'},
+    {label:'3. Client -> Server: HMAC(key, challenge)',color:'#4ade80'},
+    {label:'4. Server verifies HMAC',color:'#c084fc'},
+    {label:'5. Attacker replays step 3...',color:'#f87171'},
+    {label:'6. Server rejects: stale challenge!',color:'#f87171'}
+  ];
+  steps.forEach((s,i)=>{
+    const y=rdY+12+i*18;
+    const active=Math.floor(_t/40)%steps.length===i;
+    _x.fillStyle=active?s.color+'44':'rgba(255,255,255,.02)';
+    _x.fillRect(10,y,rdW-5,16);
+    _x.fillStyle=active?s.color:mut;
+    _x.font='9px SF Mono';_x.fillText(s.label,14,y+12);
+    if(active){
+      _x.fillStyle=s.color;_x.beginPath();_x.arc(rdW+2,y+8,3,0,Math.PI*2);_x.fill();
+    }
+  });
+
+  // === Timestamp Window (bottom-right) ===
+  const twX=w*0.52,twY=rdY,twW=w*0.46,twH=h-rdY-65;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Timestamp Acceptance Window',twX,twY);
+
+  const windowSize=60;
+  const timeline=twW-10;
+  const now=_t%200;
+  // Timeline
+  _x.fillStyle='rgba(255,255,255,.03)';_x.fillRect(twX,twY+15,timeline,25);
+  // Acceptance window
+  const winStart=Math.max(0,(now-windowSize/2)/200)*timeline;
+  const winEnd=Math.min(200,(now+windowSize/2))/200*timeline;
+  _x.fillStyle='#4ade8022';_x.fillRect(twX+winStart,twY+15,winEnd-winStart,25);
+  _x.strokeStyle='#4ade80';_x.strokeRect(twX+winStart,twY+15,winEnd-winStart,25);
+  // Now marker
+  const nowX=twX+(now/200)*timeline;
+  _x.fillStyle='#fbbf24';_x.beginPath();_x.moveTo(nowX,twY+12);_x.lineTo(nowX-4,twY+8);_x.lineTo(nowX+4,twY+8);_x.fill();
+  _x.fillStyle='#fbbf24';_x.font='7px SF Mono';_x.fillText('NOW',nowX-8,twY+7);
+
+  // Incoming requests (some in window, some out)
+  for(let i=0;i<12;i++){
+    const reqTime=(i*17+_t*0.5)%200;
+    const rx=twX+(reqTime/200)*timeline;
+    const inWindow=Math.abs(reqTime-now)<windowSize/2;
+    _x.fillStyle=inWindow?'#4ade80':'#f87171';
+    _x.beginPath();_x.arc(rx,twY+28,3,0,Math.PI*2);_x.fill();
+  }
+
+  _x.fillStyle=mut;_x.font='8px Tajawal';
+  _x.fillText('Green = accepted, Red = rejected (outside window)',twX,twY+50);
+
+  // === Sequence Number Counter (bottom) ===
+  const seqY=h-55;
+  _x.fillStyle=acc;_x.font='bold 11px Righteous,Tajawal,sans-serif';
+  _x.fillText('Sequence Number Defense',10,seqY);
+  const seqCount=16;
+  const seqW=(w-20)/seqCount;
+  for(let i=0;i<seqCount;i++){
+    const val=(_t+i*7)%256;
+    const isMonotonic=i===0||val>((_t+(i-1)*7)%256);
+    _x.fillStyle=isMonotonic?'#4ade8022':'#f8717122';
+    _x.fillRect(10+i*seqW,seqY+8,seqW-2,22);
+    _x.fillStyle=isMonotonic?'#4ade80':'#f87171';_x.font='bold 8px SF Mono';_x.textAlign='center';
+    _x.fillText(`${val}`,10+i*seqW+seqW/2,seqY+22);
+    _x.textAlign='left';
+  }
+  _x.fillStyle=mut;_x.font='8px Tajawal';
+  _x.fillText('Monotonically increasing sequence prevents replay',10,seqY+38);
+
+  requestAnimationFrame(draw);
+}
+draw();
+})();

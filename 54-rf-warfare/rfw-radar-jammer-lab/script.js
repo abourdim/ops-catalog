@@ -158,3 +158,170 @@ document.addEventListener('DOMContentLoaded',()=>{
   try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
   log(LANG[currentLang].ready,'success');animate();
 });
+
+/* ═══════ ENHANCED RF CANVAS — RADAR JAMMER ═══════ */
+(function(){
+  const _$=id=>document.getElementById(id);
+  let _t=0;
+  const _particles=[];
+  let _rcsHistory=new Array(200).fill(0);
+  let _doppler=new Float32Array(256).fill(-80);
+  let _wfBuf=[];
+  const MAX_WF=100;
+  let _falseTargets=[];
+  for(let i=0;i<15;i++)_falseTargets.push({r:0.1+Math.random()*0.8,a:Math.random()*Math.PI*2,speed:0.01+Math.random()*0.02,size:2+Math.random()*4,blink:Math.random()*Math.PI*2});
+
+  class JamParticle{constructor(x,y,a){this.x=x;this.y=y;this.vx=Math.cos(a)*3;this.vy=Math.sin(a)*3;this.life=1;this.decay=0.02+Math.random()*0.02;this.size=1+Math.random()*2;}
+  update(){this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;return this.life>0;}
+  draw(ctx){ctx.beginPath();ctx.arc(this.x,this.y,this.size*this.life,0,Math.PI*2);ctx.fillStyle='rgba(255,100,0,'+this.life*0.6+')';ctx.fill();}}
+
+  /* ── A-Scope Display ── */
+  function drawAScope(ctx,W,H){
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText('A-SCOPE — RANGE vs AMPLITUDE',5,12);
+    const isJam=typeof jamming!=='undefined'&&jamming;
+    const pwr=parseInt(_$('jamPower')?.value||50)/100;
+    ctx.beginPath();
+    for(let x=0;x<W;x++){
+      const range=x/W;let amp=H*0.85+Math.random()*4;
+      if(typeof targets!=='undefined')targets.forEach(t=>{const d=Math.abs(range-t.r);if(d<0.03){amp=H*0.2+d/0.03*H*0.5;if(isJam&&Math.random()<pwr*0.6)amp=H*0.3+Math.random()*H*0.4;}});
+      if(isJam){amp-=Math.random()*H*0.15*pwr;}
+      if(x===0)ctx.moveTo(x,amp);else ctx.lineTo(x,amp);
+    }
+    ctx.strokeStyle=isJam?'rgba(255,100,0,0.7)':'rgba(0,255,70,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,H*0.85);ctx.lineTo(W,H*0.85);ctx.strokeStyle='rgba(0,255,70,0.15)';ctx.lineWidth=1;ctx.stroke();
+    for(let i=0;i<=5;i++){const x=i*W/5;ctx.fillStyle='rgba(0,255,136,0.25)';ctx.fillText((i*20)+'km',x+2,H-3);}
+  }
+
+  /* ── Doppler Processing Display ── */
+  function drawDoppler(ctx,W,H){
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText('DOPPLER VELOCITY PROFILE',5,12);
+    const isJam=typeof jamming!=='undefined'&&jamming;
+    const pwr=parseInt(_$('jamPower')?.value||50)/100;
+    for(let i=0;i<256;i++){
+      const v=(i-128)/128*500;
+      let level=-80+Math.random()*3;
+      if(typeof targets!=='undefined')targets.forEach(t=>{const tV=t.speed*10000;if(Math.abs(v-tV)<30)level+=20;});
+      if(isJam)level+=Math.random()*25*pwr;
+      _doppler[i]=_doppler[i]*0.8+level*0.2;
+    }
+    ctx.beginPath();
+    for(let i=0;i<256;i++){const x=(i/256)*W;const y=H-10-((_doppler[i]+85)/60)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+    ctx.strokeStyle=isJam?'rgba(255,100,0,0.6)':'rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(W/2,15);ctx.lineTo(W/2,H-10);ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillText('0 m/s',W/2,H-1);ctx.fillText('-500',5,H-1);ctx.fillText('+500',W-20,H-1);
+  }
+
+  /* ── False Target Generator (DRFM) ── */
+  function drawDRFM(ctx,W,H,cx,cy,R){
+    const isJam=typeof jamming!=='undefined'&&jamming;
+    if(!isJam)return;
+    const jType=_$('jamType')?.value||'noise';
+    if(jType!=='noise'){
+      _falseTargets.forEach((ft,i)=>{
+        ft.a+=ft.speed;
+        const fx=cx+Math.cos(ft.a)*ft.r*R;
+        const fy=cy+Math.sin(ft.a)*ft.r*R;
+        const fade=0.3+Math.sin(_t*3+ft.blink)*0.3;
+        ctx.beginPath();ctx.arc(fx,fy,ft.size*(0.5+Math.sin(_t*5+i)*0.3),0,Math.PI*2);
+        ctx.fillStyle='rgba(0,255,70,'+fade+')';ctx.fill();
+      });
+      ctx.fillStyle='rgba(255,200,0,0.5)';ctx.font='9px Orbitron,monospace';ctx.textAlign='right';
+      ctx.fillText('DRFM FALSE TARGETS: '+_falseTargets.length,W-8,H-8);
+    }
+  }
+
+  /* ── RCS Fluctuation Chart ── */
+  function drawRCSChart(ctx,W,H){
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText('TARGET RCS FLUCTUATION (dBsm)',5,12);
+    const isJam=typeof jamming!=='undefined'&&jamming;
+    let rcs=5+Math.sin(_t*2)*3+Math.random()*2;
+    if(isJam){rcs+=Math.random()*15-5;rcs*=(0.3+Math.random()*0.7);}
+    _rcsHistory.push(rcs);if(_rcsHistory.length>200)_rcsHistory.shift();
+    ctx.beginPath();
+    _rcsHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-((v+5)/25)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+    ctx.strokeStyle='rgba(0,200,255,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+    if(isJam){ctx.fillStyle='rgba(255,100,0,0.3)';ctx.font='8px Orbitron,monospace';ctx.fillText('ECM DEGRADED',W-100,25);}
+  }
+
+  /* ── Radar Waterfall ── */
+  function drawRadarWaterfall(ctx,W,H){
+    const isJam=typeof jamming!=='undefined'&&jamming;
+    const pwr=parseInt(_$('jamPower')?.value||50)/100;
+    const row=new Uint8Array(W);
+    for(let x=0;x<W;x++){
+      let v=Math.random()*20;
+      if(typeof targets!=='undefined')targets.forEach(t=>{const d=Math.abs(x/W-t.r);if(d<0.02)v+=60;});
+      if(isJam)v+=Math.random()*80*pwr;
+      row[x]=Math.min(255,v);
+    }
+    _wfBuf.unshift(row);if(_wfBuf.length>MAX_WF)_wfBuf.pop();
+    const rh=H/MAX_WF;
+    _wfBuf.forEach((r,ri)=>{for(let x=0;x<W;x+=2){const v=r[x];
+      ctx.fillStyle='rgb('+(v>150?255:v*1.7)+','+(v>100?v:v*0.5)+','+(v<60?v*3:0)+')';
+      ctx.fillRect(x,ri*rh,2,rh+1);}});
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText('RANGE-TIME WATERFALL',5,H-5);
+  }
+
+  /* ── Burn-Through Range Calculator ── */
+  function drawBurnThrough(ctx,W,H){
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText('BURN-THROUGH ANALYSIS',5,12);
+    const pwr=parseInt(_$('jamPower')?.value||50);
+    const freq=parseFloat(_$('radarFreq')?.value||10);
+    const radarPwr=80;
+    const burnRange=Math.sqrt(radarPwr/(pwr*0.1+0.01))*20;
+    const maxRange=parseInt(_$('radarRange')?.value||100);
+    // Range bar
+    ctx.fillStyle='rgba(0,200,255,0.15)';ctx.fillRect(10,30,W-20,20);
+    const burnX=Math.min(1,burnRange/maxRange)*(W-20);
+    ctx.fillStyle='rgba(255,50,50,0.3)';ctx.fillRect(10,30,burnX,20);
+    ctx.fillStyle='rgba(0,255,70,0.3)';ctx.fillRect(10+burnX,30,W-20-burnX,20);
+    ctx.strokeStyle='rgba(255,200,0,0.8)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(10+burnX,25);ctx.lineTo(10+burnX,55);ctx.stroke();
+    ctx.fillStyle='rgba(255,200,0,0.7)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillText('BURN-THROUGH: '+burnRange.toFixed(1)+' km',10+burnX,22);
+    ctx.fillStyle='rgba(255,80,80,0.6)';ctx.textAlign='left';ctx.fillText('JAMMED ZONE',15,44);
+    ctx.fillStyle='rgba(0,200,100,0.6)';ctx.textAlign='right';ctx.fillText('DETECTION ZONE',W-15,44);
+    // J/S ratio indicator
+    const jsRatio=pwr-radarPwr+20*Math.log10(50/(burnRange||1));
+    ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText('J/S Ratio: '+(jsRatio>0?'+':'')+jsRatio.toFixed(1)+' dB',10,70);
+    ctx.fillText('Radar Power: '+radarPwr+' dBm | Jammer: '+pwr+' dBm',10,82);
+    ctx.fillText('Frequency: '+freq+' GHz',10,94);
+    // Effectiveness gauge
+    const eff=Math.min(100,Math.max(0,pwr*1.2-20));
+    const gaugeW=W-20;
+    ctx.fillStyle='rgba(50,50,50,0.5)';ctx.fillRect(10,105,gaugeW,12);
+    const gColor=eff>70?'rgba(0,200,100,0.7)':eff>40?'rgba(255,200,0,0.7)':'rgba(255,50,50,0.7)';
+    ctx.fillStyle=gColor;ctx.fillRect(10,105,gaugeW*eff/100,12);
+    ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillText('ECM EFFECTIVENESS: '+eff.toFixed(0)+'%',W/2,115);
+  }
+
+  function enhancedRender(){
+    _t+=0.016;
+    for(let i=_particles.length-1;i>=0;i--)if(!_particles[i].update())_particles.splice(i,1);
+    const rc=_$('radarCanvas');
+    if(rc){const ctx=rc.getContext('2d');const W=rc.width,H=rc.height;
+      const cx=W/2,cy=H/2,R=Math.min(W,H)/2-20;
+      drawDRFM(ctx,W,H,cx,cy,R);
+      if(typeof jamming!=='undefined'&&jamming){
+        for(let i=0;i<3;i++){const a=Math.random()*Math.PI*2;_particles.push(new JamParticle(cx,cy,a));}
+        _particles.forEach(p=>p.draw(ctx));
+      }
+    }
+    const sc=_$('spectrumCanvas');
+    if(sc){const ctx=sc.getContext('2d');const W=sc.width,H=sc.height;
+      ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+      drawAScope(ctx,W,H*0.5);
+      ctx.save();ctx.translate(0,H*0.5);drawDoppler(ctx,W,H*0.5);ctx.restore();
+    }
+    requestAnimationFrame(enhancedRender);
+  }
+  setTimeout(()=>{enhancedRender();},500);
+})();

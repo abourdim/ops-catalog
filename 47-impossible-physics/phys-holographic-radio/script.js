@@ -125,3 +125,153 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════════════════════════════════════════
+   RICH CANVAS SIMULATION — Holographic Radio
+   Animated holographic boundary encoding with bulk-boundary
+   correspondence, information projection, and RF field mapping
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const CVS_ID='simHolographicRadio';let cv,cx,W,H,af=null,t=0;
+  const boundaryBits=[];const bulkParticles=[];const projectionRays=[];
+  const MAX_PARTICLES=60;const BOUNDARY_SIZE=100;
+
+  function boot(){
+    let el=document.getElementById(CVS_ID);
+    if(!el){el=document.createElement('canvas');el.id=CVS_ID;el.width=780;el.height=300;
+    el.style.cssText='width:100%;border-radius:12px;margin-top:12px;background:#04060e;display:block;';
+    const h=document.querySelector('.section-card')||document.querySelector('.main-content')||document.body;h.appendChild(el);}
+    cv=el;cx=el.getContext('2d');W=el.width;H=el.height;
+    for(let i=0;i<BOUNDARY_SIZE;i++)boundaryBits.push(Math.random()>0.5?1:0);
+  }
+
+  function drawBoundarySphere(){
+    const scx=W*0.3,scy=H/2,sr=110;
+    // Outer boundary (2D surface encoding)
+    cx.strokeStyle='rgba(100,200,255,0.15)';cx.lineWidth=1;
+    cx.beginPath();cx.arc(scx,scy,sr,0,Math.PI*2);cx.stroke();
+    // Rotating boundary data
+    const bits=BOUNDARY_SIZE;
+    for(let i=0;i<bits;i++){
+      const angle=i/bits*Math.PI*2+t*0.3;
+      const x=scx+Math.cos(angle)*sr;
+      const y=scy+Math.sin(angle)*sr;
+      const bit=boundaryBits[i];
+      cx.fillStyle=bit?'rgba(59,130,246,0.6)':'rgba(239,68,68,0.3)';
+      cx.beginPath();cx.arc(x,y,2,0,Math.PI*2);cx.fill();
+    }
+    // Inner bulk (3D encoded info)
+    cx.fillStyle='rgba(100,200,255,0.03)';
+    cx.beginPath();cx.arc(scx,scy,sr,0,Math.PI*2);cx.fill();
+    // Grid inside sphere
+    cx.strokeStyle='rgba(100,200,255,0.04)';cx.lineWidth=0.5;
+    for(let r=sr*0.25;r<sr;r+=sr*0.25){
+      cx.beginPath();cx.arc(scx,scy,r,0,Math.PI*2);cx.stroke();
+    }
+    for(let a=0;a<Math.PI*2;a+=Math.PI/6){
+      cx.beginPath();cx.moveTo(scx,scy);
+      cx.lineTo(scx+Math.cos(a)*sr,scy+Math.sin(a)*sr);cx.stroke();
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('HOLOGRAPHIC BOUNDARY',scx,scy-sr-8);
+    cx.fillText('Bulk Information',scx,scy+4);
+  }
+
+  function drawBulkParticles(){
+    const scx=W*0.3,scy=H/2,sr=110;
+    if(Math.random()<0.08&&bulkParticles.length<MAX_PARTICLES){
+      const angle=Math.random()*Math.PI*2;
+      const dist=Math.random()*sr*0.8;
+      bulkParticles.push({x:scx+Math.cos(angle)*dist,y:scy+Math.sin(angle)*dist,
+        vx:(Math.random()-.5)*0.5,vy:(Math.random()-.5)*0.5,
+        life:80+Math.random()*120,age:0,hue:180+Math.random()*60});
+    }
+    for(let i=bulkParticles.length-1;i>=0;i--){
+      const p=bulkParticles[i];
+      p.age++;p.x+=p.vx;p.y+=p.vy;
+      const dx=p.x-scx,dy=p.y-scy;
+      if(Math.sqrt(dx*dx+dy*dy)>sr||p.age>p.life){bulkParticles.splice(i,1);continue;}
+      const alpha=Math.sin(p.age/p.life*Math.PI)*0.6;
+      cx.fillStyle='hsla('+p.hue+',60%,60%,'+alpha+')';
+      cx.beginPath();cx.arc(p.x,p.y,1.5,0,Math.PI*2);cx.fill();
+    }
+  }
+
+  function drawProjection(){
+    const scx=W*0.3,scy=H/2,sr=110;
+    const px=W*0.65,py=20,pw=W*0.32,ph=H-40;
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fillRect(px,py,pw,ph);
+    cx.strokeStyle='rgba(100,200,255,0.1)';cx.strokeRect(px,py,pw,ph);
+    // Projection rays from boundary to screen
+    for(let i=0;i<12;i++){
+      const angle=i/12*Math.PI*2+t*0.2;
+      const bx=scx+Math.cos(angle)*sr;
+      const by=scy+Math.sin(angle)*sr;
+      const tx=px+Math.random()*pw;
+      const ty=py+Math.random()*ph;
+      cx.strokeStyle='rgba(100,200,255,'+(0.03+Math.sin(t+i)*0.02)+')';
+      cx.lineWidth=0.5;cx.beginPath();cx.moveTo(bx,by);cx.lineTo(tx,ty);cx.stroke();
+    }
+    // Projected RF pattern
+    const cols=40,rows=30;
+    const cellW=pw/cols,cellH=ph/rows;
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const bitIdx=(r*cols+c+Math.floor(t*10))%BOUNDARY_SIZE;
+        const val=boundaryBits[bitIdx];
+        const interference=Math.sin(c*0.3+t*2)*Math.sin(r*0.3+t*1.5);
+        const bright=val*0.4+interference*0.2+0.1;
+        if(bright<0.1)continue;
+        cx.fillStyle='hsla(200,70%,50%,'+(bright*0.5)+')';
+        cx.fillRect(px+c*cellW,py+r*cellH,cellW-0.5,cellH-0.5);
+      }
+    }
+    cx.fillStyle='rgba(100,200,255,0.4)';cx.font='8px monospace';cx.textAlign='center';
+    cx.fillText('RF FIELD PROJECTION',px+pw/2,py-5);
+  }
+
+  function drawInfoMetrics(){
+    const mx=20,my=H-70,mw=W*0.35,mh=55;
+    cx.fillStyle='rgba(0,0,0,0.4)';cx.fillRect(mx,my,mw,mh);
+    cx.fillStyle='rgba(100,200,255,0.5)';cx.font='8px monospace';cx.textAlign='left';
+    const entropy=(3.2+Math.sin(t)*0.5).toFixed(2);
+    const bits2=BOUNDARY_SIZE;
+    const area=(4*Math.PI*110*110/4).toFixed(0);
+    cx.fillText('Boundary Entropy: '+entropy+' bits/Planck area',mx+8,my+14);
+    cx.fillText('Boundary Bits: '+bits2+'  Area: '+area+' px^2',mx+8,my+28);
+    cx.fillText('Bulk Degrees of Freedom: '+bulkParticles.length,mx+8,my+42);
+  }
+
+  function drawHUD(){
+    cx.save();
+    cx.fillStyle='rgba(0,0,0,0.6)';cx.fillRect(8,8,220,54);
+    cx.strokeStyle='rgba(100,200,255,0.15)';cx.strokeRect(8,8,220,54);
+    cx.font='10px monospace';cx.fillStyle='#3b82f6';cx.textAlign='left';
+    cx.fillText('HOLOGRAPHIC RADIO',16,24);
+    cx.fillStyle='#aaa';
+    cx.fillText('Bulk-Boundary Correspondence',16,40);
+    cx.fillText('AdS/CFT RF Encoding Simulation',16,54);
+    cx.restore();
+  }
+
+  function tick(){
+    t+=0.016;
+    cx.fillStyle='rgba(4,6,14,0.1)';cx.fillRect(0,0,W,H);
+
+    // Slowly mutate boundary
+    if(Math.floor(t*60)%15===0){
+      const idx=Math.floor(Math.random()*BOUNDARY_SIZE);
+      boundaryBits[idx]=boundaryBits[idx]?0:1;
+    }
+
+    drawBoundarySphere();drawBulkParticles();drawProjection();
+    drawInfoMetrics();drawHUD();
+
+    cx.fillStyle='rgba(100,200,255,0.25)';cx.font='9px Orbitron,monospace';cx.textAlign='left';
+    cx.fillText('Holographic Principle — Boundary Surface RF Encoding',8,H-8);
+
+    af=requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=>{boot();tick();},600);
+})();

@@ -99,3 +99,147 @@ function initControls(){
 function initRefDB(){const db=$('refDatabase');if(!db)return;db.innerHTML=['<b>Stingray/IMSI Catcher:</b> Fake base station forcing phones to connect.','<b>Downgrade Attack:</b> Force 4G/5G devices to fall back to 2G (no encryption).','<b>Identity Capture:</b> Collect IMSI, IMEI, and TMSI identifiers.','<b>Man-in-the-Middle:</b> Intercept calls and SMS in real-time.','<b>Location Tracking:</b> Triangulate device positions via signal strength.','<b>Silent SMS:</b> Send invisible pings to confirm device presence.'].join('<br><br>');}
 
 document.addEventListener('DOMContentLoaded',()=>{initSplash();initPanels();initLogFilters();initDevices();initRefDB();initControls();try{const l=localStorage.getItem('wdiy-lang');if(l)setLanguage(l);}catch{}try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}log(LANG[currentLang].ready,'success');animate();setInterval(updateDevList,1000);});
+
+/* ═══════ ENHANCED RF CANVAS — IMSI CATCHER ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);let _t=0;
+let _rssiHistory=new Array(200).fill(-90);
+let _connTimeline=[];let _authFlows=[];
+let _cellBarData=new Array(30).fill(0);
+
+/* ── RSSI Heatmap Overlay ── */
+function drawRSSIHeatmap(ctx,W,H){
+  const isDep=typeof deployed!=='undefined'&&deployed;
+  if(!isDep)return;
+  const cx=W/2,cy=H/2;const pwr=parseInt(_$('txPower')?.value||20);
+  const step=14;
+  ctx.save();ctx.globalAlpha=0.12;
+  for(let gx=0;gx<W;gx+=step){for(let gy=0;gy<H;gy+=step){
+    const dist=Math.sqrt((gx-cx)**2+(gy-cy)**2);
+    const rssi=pwr*6-dist*0.8+Math.random()*5;
+    const norm=Math.max(0,Math.min(1,rssi/(pwr*6)));
+    const r=norm>0.5?255:norm*500;const g=norm<0.5?200:200*(1-norm);
+    ctx.fillStyle='rgb('+Math.floor(r)+','+Math.floor(g)+',50)';
+    ctx.fillRect(gx,gy,step-1,step-1);
+  }}
+  ctx.restore();
+}
+
+/* ── Authentication Protocol Flow ── */
+function drawAuthFlow(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('AUTHENTICATION PROTOCOL FLOW',5,12);
+  const isDep=typeof deployed!=='undefined'&&deployed;
+  const steps=['IMSI Request','Auth Challenge','Auth Response','Cipher Mode','Connection','Data Intercept'];
+  const activeStep=isDep?Math.floor((_t*2)%steps.length):0;
+  steps.forEach((s,i)=>{
+    const y=25+i*22;const isActive=isDep&&i<=activeStep;
+    ctx.fillStyle=isActive?'rgba(255,50,50,0.15)':'rgba(50,50,50,0.2)';
+    ctx.fillRect(10,y,W-20,18);
+    ctx.fillStyle=isActive?(i===activeStep?'rgba(255,200,0,0.8)':'rgba(255,80,80,0.7)'):'rgba(100,100,100,0.4)';
+    ctx.font='8px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText((i+1)+'. '+s,15,y+13);
+    if(isActive&&i===activeStep){
+      ctx.fillStyle='rgba(255,200,0,0.5)';ctx.fillRect(W-60,y+3,40,12);
+      ctx.fillStyle='#000';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';ctx.fillText('ACTIVE',W-40,y+12);
+    }
+    if(isActive&&i<activeStep){ctx.fillStyle='rgba(0,200,100,0.6)';ctx.font='7px Orbitron,monospace';ctx.textAlign='right';ctx.fillText('DONE',W-15,y+13);}
+  });
+}
+
+/* ── RSSI Time Series ── */
+function drawRSSITimeSeries(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('RSSI TIMELINE (dBm)',5,12);
+  const isDep=typeof deployed!=='undefined'&&deployed;
+  const newVal=isDep?-40+Math.random()*15-parseInt(_$('txPower')?.value||20)*0.3:-90+Math.random()*5;
+  _rssiHistory.push(newVal);if(_rssiHistory.length>200)_rssiHistory.shift();
+  ctx.beginPath();
+  _rssiHistory.forEach((v,i)=>{const x=(i/200)*W;const y=H-10-((v+100)/70)*(H-25);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle=isDep?'rgba(255,80,80,0.7)':'rgba(0,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+  const threshY=H-10-((-50+100)/70)*(H-25);
+  ctx.beginPath();ctx.moveTo(0,threshY);ctx.lineTo(W,threshY);
+  ctx.strokeStyle='rgba(255,200,0,0.4)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,200,0,0.4)';ctx.font='7px Orbitron,monospace';ctx.fillText('CONNECT THRESHOLD',5,threshY-3);
+}
+
+/* ── Cell ID Timing Advance Plot ── */
+function drawTimingAdvance(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('TIMING ADVANCE — DISTANCE ESTIMATION',5,12);
+  if(typeof devices==='undefined')return;
+  const cx=W/2,cy=H/2+10;
+  devices.forEach((d,i)=>{
+    if(!d.connected)return;
+    const angle=(i/devices.length)*Math.PI*2;
+    const dist=d.dist/600;
+    const px=cx+Math.cos(angle)*dist*(W/2-30);
+    const py=cy+Math.sin(angle)*dist*(H/2-25);
+    ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,100,100,0.7)';ctx.fill();
+    ctx.fillStyle='#ff8888';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+    ctx.fillText(d.dist.toFixed(0)+'m',px,py-8);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,py);
+    ctx.strokeStyle='rgba(255,80,80,0.2)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+  });
+  [100,300,500].forEach(r=>{const pr=r/600*(Math.min(W,H)/2-25);
+    ctx.beginPath();ctx.arc(cx,cy,pr,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle='rgba(0,255,136,0.2)';ctx.font='7px Orbitron,monospace';ctx.fillText(r+'m',cx+pr+3,cy);});
+  ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,80,80,0.9)';ctx.fill();
+}
+
+/* ── Channel Utilization Bars ── */
+function drawChannelUtil(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('CHANNEL UTILIZATION',5,12);
+  const isDep=typeof deployed!=='undefined'&&deployed;
+  for(let i=0;i<30;i++){
+    _cellBarData[i]=isDep?Math.min(100,_cellBarData[i]+Math.random()*8-2):Math.max(0,_cellBarData[i]-1);
+    _cellBarData[i]=Math.max(0,_cellBarData[i]);
+    const x=10+i*(W-20)/30;const bh=_cellBarData[i]/100*(H-30);
+    const col=_cellBarData[i]>70?'rgba(255,50,50,0.6)':_cellBarData[i]>40?'rgba(255,200,0,0.5)':'rgba(0,200,255,0.4)';
+    ctx.fillStyle=col;ctx.fillRect(x,H-10-bh,(W-20)/30-2,bh);
+  }
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='center';
+  ctx.fillText('ARFCN',W/2,H-1);
+}
+
+/* ── Downgrade Attack Visualization ── */
+function drawDowngradeAttack(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('PROTOCOL DOWNGRADE ATTACK',5,12);
+  const isDep=typeof deployed!=='undefined'&&deployed;
+  const protocols=[{name:'5G NR',enc:'256-bit',safe:true},{name:'4G LTE',enc:'128-bit',safe:true},{name:'3G UMTS',enc:'128-bit',safe:true},{name:'2G GSM',enc:'A5/1 (weak)',safe:false},{name:'2G GSM',enc:'A5/0 (none)',safe:false}];
+  const activeLevel=isDep?Math.min(4,Math.floor(_t*0.5)%5):0;
+  protocols.forEach((p,i)=>{
+    const y=28+i*28;const w=W-20;
+    const isActive=isDep&&i===activeLevel;
+    const isForced=isDep&&i>=activeLevel;
+    ctx.fillStyle=isActive?'rgba(255,50,50,0.25)':isForced?'rgba(255,100,50,0.1)':'rgba(0,200,255,0.05)';
+    ctx.fillRect(10,y,w,24);
+    if(isActive){ctx.strokeStyle='rgba(255,50,50,0.6)';ctx.lineWidth=2;ctx.strokeRect(10,y,w,24);}
+    ctx.fillStyle=isActive?'#ff6666':isForced?'#ff9966':p.safe?'#66ccff':'#ffcc00';
+    ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText(p.name+' — '+p.enc,15,y+16);
+    if(isActive){ctx.fillStyle='rgba(255,50,50,0.8)';ctx.textAlign='right';ctx.fillText('FORCED',W-15,y+16);}
+  });
+  if(isDep){
+    ctx.fillStyle='rgba(255,200,0,0.5)';ctx.font='8px Orbitron,monospace';ctx.textAlign='center';
+    const arrow='▼';for(let i=0;i<activeLevel;i++){ctx.fillText(arrow,W/2,30+i*28+24);}
+  }
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const cc=_$('cellCanvas');
+  if(cc){const ctx=cc.getContext('2d');drawRSSIHeatmap(ctx,cc.width,cc.height);}
+  const sc=_$('specCanvas');
+  if(sc){const ctx=sc.getContext('2d');const W=sc.width,H=sc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawRSSITimeSeries(ctx,W,H*0.5);
+    ctx.save();ctx.translate(0,H*0.5);drawChannelUtil(ctx,W,H*0.5);ctx.restore();}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();

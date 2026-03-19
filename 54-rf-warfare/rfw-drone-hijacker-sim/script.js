@@ -94,3 +94,164 @@ function initControls(){
 function initRefDB(){const db=$('refDatabase');if(!db)return;db.innerHTML=['<b>Command Injection:</b> Override MAVLink/DSMX commands with stronger signal.','<b>GPS Spoofing:</b> Feed false GPS to redirect drone flight path.','<b>De-auth Attack:</b> Disconnect WiFi FPV drones from controller.','<b>Replay Attack:</b> Record and replay control packets.','<b>Protocol Exploit:</b> Leverage unencrypted telemetry channels.','<b>Signal Jamming:</b> Deny command link forcing fail-safe behavior.'].join('<br><br>');}
 
 document.addEventListener('DOMContentLoaded',()=>{initSplash();initPanels();initLogFilters();initDrones();initRefDB();initControls();try{const l=localStorage.getItem('wdiy-lang');if(l)setLanguage(l);}catch{}try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}log(LANG[currentLang].ready,'success');animate();setInterval(updateDroneList,1000);});
+
+/* ═══════ ENHANCED RF CANVAS — DRONE HIJACKER ═══════ */
+(function(){
+const _$=id=>document.getElementById(id);
+let _t=0;
+let _linkQuality=new Array(250).fill(100);
+let _packetLoss=new Array(250).fill(0);
+let _telemetryBuf=[];
+const MAX_TEL=80;
+let _signalConst=[];
+for(let i=0;i<64;i++)_signalConst.push({i:Math.random()*2-1,q:Math.random()*2-1});
+let _hopHistory=[];
+let _droneTrails={};
+
+/* ── Signal Constellation Diagram (IQ Plot) ── */
+function drawConstellation(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('IQ CONSTELLATION — COMMAND LINK',5,12);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-20;
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R*0.6,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-R,cy);ctx.lineTo(cx+R,cy);ctx.moveTo(cx,cy-R);ctx.lineTo(cx,cy+R);ctx.strokeStyle='rgba(0,255,136,0.08)';ctx.stroke();
+  const isHijack=typeof hijacking!=='undefined'&&hijacking;
+  _signalConst.forEach((pt,i)=>{
+    let ni=pt.i+Math.random()*0.1-0.05;
+    let nq=pt.q+Math.random()*0.1-0.05;
+    if(isHijack){ni+=Math.random()*0.6-0.3;nq+=Math.random()*0.6-0.3;}
+    const px=cx+ni*R*0.8,py=cy+nq*R*0.8;
+    ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);
+    ctx.fillStyle=isHijack?'rgba(255,80,80,'+(0.4+Math.random()*0.4)+')':'rgba(0,200,255,'+(0.5+Math.random()*0.3)+')';
+    ctx.fill();
+  });
+  if(isHijack){ctx.fillStyle='rgba(255,50,50,0.6)';ctx.font='8px Orbitron,monospace';ctx.fillText('SIGNAL DEGRADED',W-110,H-5);}
+}
+
+/* ── Link Quality & Packet Loss Chart ── */
+function drawLinkQuality(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('LINK QUALITY / PACKET LOSS',5,12);
+  const isHijack=typeof hijacking!=='undefined'&&hijacking;
+  const pwr=parseInt(_$('injectPower')?.value||20);
+  let q=isHijack?Math.max(5,100-pwr*2+Math.random()*20):95+Math.random()*5;
+  let pl=isHijack?Math.min(80,pwr*1.5+Math.random()*15):Math.random()*2;
+  _linkQuality.push(q);if(_linkQuality.length>250)_linkQuality.shift();
+  _packetLoss.push(pl);if(_packetLoss.length>250)_packetLoss.shift();
+  // Quality
+  ctx.beginPath();
+  _linkQuality.forEach((v,i)=>{const x=(i/250)*W;const y=20+(100-v)/100*(H-30);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(0,200,255,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+  // Packet loss
+  ctx.beginPath();
+  _packetLoss.forEach((v,i)=>{const x=(i/250)*W;const y=20+(100-v)/100*(H-30);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+  ctx.strokeStyle='rgba(255,80,80,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+  // Labels
+  ctx.fillStyle='rgba(0,200,255,0.5)';ctx.font='7px Orbitron,monospace';ctx.fillText('Quality: '+q.toFixed(0)+'%',W-120,H-15);
+  ctx.fillStyle='rgba(255,80,80,0.5)';ctx.fillText('Loss: '+pl.toFixed(0)+'%',W-120,H-5);
+}
+
+/* ── Frequency Hopping Tracker ── */
+function drawFreqHopping(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('FREQUENCY HOPPING PATTERN',5,12);
+  if(_t%0.15<0.02){
+    const freq=2400+Math.floor(Math.random()*80)*5;
+    _hopHistory.push({t:_t,f:freq});
+    if(_hopHistory.length>150)_hopHistory.shift();
+  }
+  _hopHistory.forEach((h,i)=>{
+    const x=(i/150)*W;
+    const y=25+((h.f-2400)/400)*(H-35);
+    ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);
+    const age=1-i/150;
+    ctx.fillStyle='rgba(0,200,255,'+age*0.7+')';ctx.fill();
+    if(i>0){ctx.beginPath();const prev=_hopHistory[i-1];
+      ctx.moveTo(((i-1)/150)*W,25+((prev.f-2400)/400)*(H-35));ctx.lineTo(x,y);
+      ctx.strokeStyle='rgba(0,200,255,'+age*0.2+')';ctx.lineWidth=0.5;ctx.stroke();}
+  });
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';ctx.textAlign='right';
+  for(let f=2400;f<=2480;f+=20){const y=25+((f-2400)/400)*(H-35);ctx.fillText(f+'',W-3,y+3);}
+}
+
+/* ── Drone Altitude Profile ── */
+function drawAltProfile(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('ALTITUDE PROFILE — TRACKED DRONES',5,12);
+  if(typeof drones==='undefined')return;
+  drones.forEach((d,i)=>{
+    if(!_droneTrails[d.name])_droneTrails[d.name]=[];
+    _droneTrails[d.name].push(d.alt+Math.sin(_t*2+i)*10);
+    if(_droneTrails[d.name].length>200)_droneTrails[d.name].shift();
+    const trail=_droneTrails[d.name];
+    const colors=['rgba(0,200,255,','rgba(0,255,136,','rgba(255,200,0,','rgba(200,100,255,','rgba(255,100,100,','rgba(100,255,200,'];
+    ctx.beginPath();
+    trail.forEach((alt,j)=>{const x=(j/200)*W;const y=H-10-(alt/400)*(H-30);if(j===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+    ctx.strokeStyle=colors[i%colors.length]+'0.6)';ctx.lineWidth=1;ctx.stroke();
+  });
+  ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='7px Orbitron,monospace';
+  for(let a=0;a<=400;a+=100){const y=H-10-(a/400)*(H-30);ctx.fillText(a+'m',3,y+3);}
+}
+
+/* ── MAVLink Protocol Packet View ── */
+function drawProtocolView(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('PROTOCOL PACKET ANALYSIS',5,12);
+  const isHijack=typeof hijacking!=='undefined'&&hijacking;
+  const proto=_$('protocol')?.value||'mavlink';
+  const packetTypes=['HEARTBEAT','GPS_RAW','ATTITUDE','RC_CHANNELS','SYS_STATUS','COMMAND_LONG','MISSION_ITEM','PARAM_VALUE'];
+  const rows=Math.min(packetTypes.length,Math.floor((H-25)/18));
+  for(let i=0;i<rows;i++){
+    const y=25+i*18;
+    const rate=10+Math.random()*40;
+    const barW=(rate/50)*(W-180);
+    const injected=isHijack&&i<3;
+    ctx.fillStyle=injected?'rgba(255,50,50,0.2)':'rgba(0,200,255,0.08)';ctx.fillRect(5,y-1,W-10,16);
+    ctx.fillStyle=injected?'rgba(255,50,50,0.3)':'rgba(0,200,255,0.2)';ctx.fillRect(140,y+2,barW,10);
+    ctx.fillStyle=injected?'#ff6666':'#66ccff';ctx.font='8px Orbitron,monospace';ctx.textAlign='left';
+    ctx.fillText(packetTypes[i],10,y+11);
+    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.textAlign='right';
+    ctx.fillText(rate.toFixed(0)+' pkt/s',W-10,y+11);
+    if(injected){ctx.fillStyle='rgba(255,50,50,0.7)';ctx.font='7px Orbitron,monospace';ctx.textAlign='right';ctx.fillText('INJECTED',135,y+11);}
+  }
+}
+
+/* ── RF Power Density Map ── */
+function drawPowerDensity(ctx,W,H){
+  ctx.fillStyle='rgba(0,255,136,0.4)';ctx.font='9px Orbitron,monospace';ctx.textAlign='left';
+  ctx.fillText('RF POWER DENSITY MAP',5,12);
+  const isHijack=typeof hijacking!=='undefined'&&hijacking;
+  const step=12;
+  for(let gx=0;gx<W;gx+=step){for(let gy=20;gy<H;gy+=step){
+    let power=-70+Math.random()*5;
+    const cx=W/2,cy=H-30;
+    const dist=Math.sqrt((gx-cx)**2+(gy-cy)**2);
+    power+=Math.max(0,30-dist*0.1);
+    if(isHijack){const ax=W/2-150,ay=H-30;
+      const aDist=Math.sqrt((gx-ax)**2+(gy-ay)**2);
+      power+=Math.max(0,40-aDist*0.12);}
+    const norm=Math.max(0,Math.min(1,(power+70)/50));
+    const r=norm>0.6?255:norm*400;
+    const g=norm>0.3&&norm<0.7?200:norm<0.3?norm*600:0;
+    const b=norm<0.3?200-norm*600:0;
+    ctx.fillStyle='rgba('+Math.floor(r)+','+Math.floor(g)+','+Math.floor(b)+',0.35)';
+    ctx.fillRect(gx,gy,step-1,step-1);
+  }}
+}
+
+function enhancedRender(){
+  _t+=0.016;
+  const dc=_$('droneCanvas');
+  if(dc){const ctx=dc.getContext('2d');const W=dc.width,H=dc.height;
+    drawPowerDensity(ctx,W,H);}
+  const lc=_$('linkCanvas');
+  if(lc){const ctx=lc.getContext('2d');const W=lc.width,H=lc.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+    drawConstellation(ctx,W*0.4,H);
+    ctx.save();ctx.translate(W*0.4,0);drawLinkQuality(ctx,W*0.6,H*0.5);
+    ctx.restore();ctx.save();ctx.translate(W*0.4,H*0.5);drawFreqHopping(ctx,W*0.6,H*0.5);ctx.restore();}
+  requestAnimationFrame(enhancedRender);
+}
+setTimeout(()=>{enhancedRender();},500);
+})();
