@@ -1,103 +1,293 @@
 /**
  * Sonic Audio Steganography — Workshop DIY v1.0
  * Hide data inside audio using spectral encoding
+ * Themes · i18n (EN/FR/AR) · RTL · Log · Canvas · Toast
  */
-const $=id=>document.getElementById(id);const LIGHT_THEMES=['riad','medina'];let currentLang='en',soundEnabled=false;
-const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
-let encodedBuffer=null,hiddenMsg='',isPlaying=false;
-const LANG={
-  en:{title:'Audio Steganography',subtitle:'Hide Data Inside Music',disconnected:'Idle',connected:'Processing',ready:'Audio Steganography ready!',langChanged:'Language > English',themeChanged:'Theme >',splashHint:'tap to skip',encoded:'Message encoded in audio!',decoded:'Message decoded!',noMsg:'Enter a message first',playing:'Playing stego audio...',stopped:'Playback stopped',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'},
-  fr:{title:'Steganographie Audio',subtitle:'Cacher des Donnees dans la Musique',disconnected:'Inactif',connected:'Traitement',ready:'Steganographie audio prete!',langChanged:'Langue > Francais',themeChanged:'Theme >',splashHint:'appuyer pour passer',encoded:'Message encode dans l\'audio!',decoded:'Message decode!',noMsg:'Entrez un message',playing:'Lecture audio stego...',stopped:'Lecture arretee',t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'},
-  ar:{title:'إخفاء صوتي',subtitle:'إخفاء البيانات داخل الموسيقى',disconnected:'خامل',connected:'معالجة',ready:'الإخفاء الصوتي جاهز!',langChanged:'اللغة > العربية',themeChanged:'المظهر >',splashHint:'انقر للتخطي',encoded:'تم تشفير الرسالة في الصوت!',decoded:'تم فك الرسالة!',noMsg:'أدخل رسالة أولاً',playing:'تشغيل الصوت المخفي...',stopped:'توقف التشغيل',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'}
+const $ = id => document.getElementById(id);
+const LIGHT_THEMES = ['riad','medina'];
+let currentLang = 'en', soundEnabled = false;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx, encodedBuffer = null, hiddenMsg = '', isPlaying = false;
+
+/* ═══════ i18n ═══════ */
+const LANG = {
+  en: {
+    title:'Audio Steganography', subtitle:'Hide Data Inside Music',
+    disconnected:'Idle', connected:'Processing',
+    mainSection:'Audio Steganography', mainDesc:'Embed hidden messages in audio using spectral encoding',
+    sectionA:'Encode History', sectionB:'Steganography Science', sectionC:'Challenge',
+    msgPlaceholder:'Secret message to hide...',
+    encodeBtn:'Encode', decodeBtn:'Decode', playBtn:'Play',
+    stegoLabel:'Stego Status', capacityLabel:'Capacity', decodedLabel:'Decoded',
+    stegoReady:'Ready', encodeHint:'Encoding operations appear here.',
+    activityLog:'Activity Log', eventsMsg:'Events & messages',
+    clear:'Clear', copy:'Copy', theme:'Theme', settings:'Settings', language:'Language',
+    help:'Help', faq:'FAQ', howto:'How-To', wiki:'Wiki', filterAll:'All',
+    soundEffects:'Sound effects', ready:'Audio Steganography ready!',
+    splashHint:'tap to skip', langChanged:'Language > English', themeChanged:'Theme >',
+    encoded:'Message encoded in audio!', decoded:'Message decoded successfully!',
+    noMsg:'Enter a message first', noAudio:'No encoded audio to decode',
+    playing:'Playing stego audio...', stopped:'Playback stopped',
+    faq_q1:'What is audio steganography?', faq_a1:'Hiding secret data within audio files so the audio sounds normal but carries hidden information that can be extracted by the receiver.',
+    faq_q2:'Is it detectable?', faq_a2:'Good steganography is perceptually invisible. Steganalysis tools look for statistical anomalies in the audio spectrum.',
+    faq_q3:'How is the data encoded?', faq_a3:'Each bit of the message is encoded as a high-frequency tone (19kHz for 0, 19.5kHz for 1) at very low amplitude, imperceptible to human ears.',
+    faq_q4:'Is my data private?', faq_a4:'100% local processing. Audio is generated and processed entirely in your browser.',
+    howto_1:'Type your secret message in the input field.', howto_2:'Click Encode to hide it inside a generated audio carrier.',
+    howto_3:'Click Play to hear the carrier audio (message is inaudible).', howto_4:'Click Decode to extract the hidden message from the audio.',
+    wiki_lsb_title:'LSB Encoding', wiki_lsb:'Replace least significant bits of audio samples with message bits. Imperceptible to human ear but detectable by statistical analysis.',
+    wiki_ss_title:'Spread Spectrum', wiki_ss:'Spread message across the frequency spectrum using a pseudo-random sequence. Very robust against compression.',
+    wiki_echo_title:'Echo Hiding', wiki_echo:'Embed data by introducing micro-echoes. Binary 0/1 mapped to different echo delays (1ms vs 2ms).',
+    challenge1:'Can you detect the hidden data by listening to the audio?',
+    challenge2:'What is the maximum message size for a 3-second carrier?',
+    challenge3:'How would a steganalyst detect this encoding?',
+    challengeReveal1:'No! The encoding uses high-frequency tones near 19-20kHz that are inaudible to most adults. Even with good headphones, the amplitude is too low to perceive.',
+    challengeReveal2:'With 44100 Hz sample rate and 8 bits per character, a 3-second carrier has 132300 samples, allowing ~16537 characters. In practice, bit duration limits this to around 256 bytes for reliable extraction.',
+    challengeReveal3:'Spectral analysis would reveal unusual energy peaks at 19-20kHz. Statistical tests (chi-square, RS analysis) can detect non-random patterns in LSB values.',
+    revealBtn:'Reveal Answer',
+    t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
+  },
+  fr: {
+    title:'Steganographie Audio', subtitle:'Cacher des Donnees dans la Musique',
+    disconnected:'Inactif', connected:'Traitement',
+    mainSection:'Steganographie Audio', mainDesc:'Integrer des messages caches dans l\'audio par encodage spectral',
+    sectionA:'Historique d\'Encodage', sectionB:'Science de la Steganographie', sectionC:'Defi',
+    msgPlaceholder:'Message secret a cacher...',
+    encodeBtn:'Encoder', decodeBtn:'Decoder', playBtn:'Jouer',
+    stegoLabel:'Etat Stego', capacityLabel:'Capacite', decodedLabel:'Decode',
+    stegoReady:'Pret', encodeHint:'Les operations d\'encodage apparaissent ici.',
+    activityLog:'Journal', eventsMsg:'Evenements et messages',
+    clear:'Effacer', copy:'Copier', theme:'Theme', settings:'Parametres', language:'Langue',
+    help:'Aide', faq:'FAQ', howto:'Guide', wiki:'Wiki', filterAll:'Tout',
+    soundEffects:'Effets sonores', ready:'Steganographie audio prete!',
+    splashHint:'appuyer pour passer', langChanged:'Langue > Francais', themeChanged:'Theme >',
+    encoded:'Message encode dans l\'audio!', decoded:'Message decode avec succes!',
+    noMsg:'Entrez d\'abord un message', noAudio:'Pas d\'audio encode a decoder',
+    playing:'Lecture de l\'audio stego...', stopped:'Lecture arretee',
+    faq_q1:'Qu\'est-ce que la steganographie audio?', faq_a1:'Cacher des donnees secretes dans des fichiers audio pour que l\'audio sonne normalement tout en transportant des informations cachees.',
+    faq_q2:'Est-ce detectable?', faq_a2:'Une bonne steganographie est imperceptible. Les outils de steganalyse cherchent des anomalies statistiques dans le spectre audio.',
+    faq_q3:'Comment les donnees sont-elles encodees?', faq_a3:'Chaque bit du message est encode comme un ton haute frequence (19kHz pour 0, 19.5kHz pour 1) a tres faible amplitude.',
+    faq_q4:'Mes donnees sont-elles privees?', faq_a4:'Traitement 100% local. L\'audio est genere et traite entierement dans votre navigateur.',
+    howto_1:'Tapez votre message secret dans le champ.', howto_2:'Cliquez Encoder pour le cacher dans un audio porteur.',
+    howto_3:'Cliquez Jouer pour entendre l\'audio (le message est inaudible).', howto_4:'Cliquez Decoder pour extraire le message cache.',
+    wiki_lsb_title:'Encodage LSB', wiki_lsb:'Remplacer les bits de poids faible des echantillons audio par les bits du message. Imperceptible a l\'oreille.',
+    wiki_ss_title:'Spectre Etale', wiki_ss:'Etaler le message sur le spectre frequentiel avec une sequence pseudo-aleatoire. Tres robuste contre la compression.',
+    wiki_echo_title:'Masquage par Echo', wiki_echo:'Integrer les donnees en introduisant des micro-echos. Bit 0/1 corresponds a differents delais d\'echo.',
+    challenge1:'Pouvez-vous detecter les donnees cachees en ecoutant l\'audio?',
+    challenge2:'Quelle est la taille maximale du message pour un porteur de 3 secondes?',
+    challenge3:'Comment un steganalyste detecterait-il cet encodage?',
+    challengeReveal1:'Non! L\'encodage utilise des tons haute frequence pres de 19-20kHz inaudibles pour la plupart des adultes.',
+    challengeReveal2:'Avec 44100 Hz et 8 bits par caractere, un porteur de 3s a 132300 echantillons, permettant ~16537 caracteres. En pratique, ~256 octets pour une extraction fiable.',
+    challengeReveal3:'L\'analyse spectrale revelerait des pics d\'energie inhabituels a 19-20kHz. Des tests statistiques detecteraient des motifs non aleatoires.',
+    revealBtn:'Reveler la reponse',
+    t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
+  },
+  ar: {
+    title:'إخفاء صوتي', subtitle:'إخفاء البيانات داخل الموسيقى',
+    disconnected:'خامل', connected:'معالجة',
+    mainSection:'الإخفاء الصوتي', mainDesc:'تضمين رسائل مخفية في الصوت باستخدام الترميز الطيفي',
+    sectionA:'سجل التشفير', sectionB:'علم الإخفاء', sectionC:'التحدي',
+    msgPlaceholder:'الرسالة السرية للإخفاء...',
+    encodeBtn:'تشفير', decodeBtn:'فك التشفير', playBtn:'تشغيل',
+    stegoLabel:'حالة الإخفاء', capacityLabel:'السعة', decodedLabel:'مفكوك',
+    stegoReady:'جاهز', encodeHint:'عمليات التشفير تظهر هنا.',
+    activityLog:'سجل النشاط', eventsMsg:'أحداث ورسائل',
+    clear:'مسح', copy:'نسخ', theme:'المظهر', settings:'الإعدادات', language:'اللغة',
+    help:'مساعدة', faq:'أسئلة شائعة', howto:'كيف تستخدم', wiki:'ويكي', filterAll:'الكل',
+    soundEffects:'مؤثرات صوتية', ready:'الإخفاء الصوتي جاهز!',
+    splashHint:'انقر للتخطي', langChanged:'اللغة > العربية', themeChanged:'المظهر >',
+    encoded:'تم تشفير الرسالة في الصوت!', decoded:'تم فك الرسالة بنجاح!',
+    noMsg:'أدخل رسالة أولاً', noAudio:'لا يوجد صوت مشفر لفك تشفيره',
+    playing:'تشغيل الصوت المخفي...', stopped:'توقف التشغيل',
+    faq_q1:'ما هو الإخفاء الصوتي؟', faq_a1:'إخفاء بيانات سرية داخل ملفات صوتية بحيث يبدو الصوت طبيعيًا لكنه يحمل معلومات مخفية يمكن استخراجها.',
+    faq_q2:'هل يمكن اكتشافه؟', faq_a2:'الإخفاء الجيد غير محسوس. أدوات التحليل تبحث عن شذوذ إحصائي في الطيف الصوتي.',
+    faq_q3:'كيف يتم ترميز البيانات؟', faq_a3:'كل بت من الرسالة يُرمّز كنغمة عالية التردد (19 كيلوهرتز لـ 0، 19.5 كيلوهرتز لـ 1) بسعة منخفضة جدًا.',
+    faq_q4:'هل بياناتي خاصة؟', faq_a4:'معالجة محلية 100%. الصوت يُولّد ويُعالج بالكامل في متصفحك.',
+    howto_1:'اكتب رسالتك السرية في حقل الإدخال.', howto_2:'انقر تشفير لإخفائها داخل حامل صوتي.',
+    howto_3:'انقر تشغيل للاستماع للصوت (الرسالة غير مسموعة).', howto_4:'انقر فك التشفير لاستخراج الرسالة المخفية.',
+    wiki_lsb_title:'ترميز LSB', wiki_lsb:'استبدال البتات الأقل أهمية في عينات الصوت ببتات الرسالة. غير محسوس للأذن البشرية.',
+    wiki_ss_title:'الطيف المنتشر', wiki_ss:'نشر الرسالة عبر الطيف الترددي باستخدام تسلسل شبه عشوائي. متين ضد الضغط.',
+    wiki_echo_title:'إخفاء بالصدى', wiki_echo:'تضمين البيانات بإدخال أصداء دقيقة. البت 0/1 يُعيّن لتأخيرات صدى مختلفة.',
+    challenge1:'هل يمكنك اكتشاف البيانات المخفية بالاستماع للصوت؟',
+    challenge2:'ما الحجم الأقصى للرسالة لحامل من 3 ثوان؟',
+    challenge3:'كيف يكتشف محلل الإخفاء هذا الترميز؟',
+    challengeReveal1:'لا! الترميز يستخدم نغمات عالية التردد قرب 19-20 كيلوهرتز غير مسموعة لمعظم البالغين.',
+    challengeReveal2:'بمعدل 44100 هرتز و 8 بتات لكل حرف، حامل 3 ثوان يحوي 132300 عينة، مما يسمح بـ ~256 بايت لاستخراج موثوق.',
+    challengeReveal3:'التحليل الطيفي سيكشف قمم طاقة غير عادية عند 19-20 كيلوهرتز. اختبارات إحصائية تكشف أنماطًا غير عشوائية.',
+    revealBtn:'اكشف الإجابة',
+    t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
+  }
 };
-function T(k){return(LANG[currentLang]||LANG.en)[k]||LANG.en[k]||k;}
-function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.title=(s.title||'')+' — Workshop DIY';document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
-function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const s=$('themeSelect');if(s)s.value=n;try{localStorage.setItem('wdiy-theme',n);}catch{}log(T('themeChanged')+' '+n,'info');}
-let logContainer;function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className='log-line '+type;d.textContent='['+new Date().toLocaleTimeString()+'] '+msg;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;applyLogFilter();}
-function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log('Cleared');}
-async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log('Copied!','success');}catch{log('Copy failed','error');}}
-function setStatus(on){const p=$('statusPill'),t=$('statusText');if(t)t.textContent=on?T('connected'):T('disconnected');if(p)p.classList.toggle('connected',on);}
-function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');setTimeout(()=>s.remove(),600);}
-let activeLogFilter='all';function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(l=>{l.style.display=(activeLogFilter==='all'||l.classList.contains(activeLogFilter))?'':'none';});}
 
-const stegoCanvas=$('stegoCanvas'),stegoCtx=stegoCanvas?stegoCanvas.getContext('2d'):null;
-const diffCanvas=$('diffCanvas'),diffCtx=diffCanvas?diffCanvas.getContext('2d'):null;
+function T(k) { return (LANG[currentLang] || LANG.en)[k] || LANG.en[k] || k; }
 
-function generateCarrierAudio(duration=3){
-  if(!audioCtx)audioCtx=new AudioCtx();
-  const sr=audioCtx.sampleRate,len=sr*duration;
-  const buf=audioCtx.createBuffer(1,len,sr);const data=buf.getChannelData(0);
-  // Generate pleasant carrier tone mix
-  for(let i=0;i<len;i++){const t=i/sr;data[i]=0.3*Math.sin(2*Math.PI*440*t)+0.2*Math.sin(2*Math.PI*554*t)+0.15*Math.sin(2*Math.PI*659*t)+0.1*Math.sin(2*Math.PI*880*t)+(Math.random()-0.5)*0.05;}
+/* ═══════ FRAMEWORK ═══════ */
+function setLanguage(lang) {
+  currentLang = lang; const s = LANG[lang]; if (!s) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if (s[k] != null) el.textContent = s[k]; });
+  document.querySelectorAll('[data-i18n-opt]').forEach(o => { const k = o.dataset.i18nOpt; if (s[k] != null) o.textContent = s[k]; });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const k = el.dataset.i18nPlaceholder; if (s[k] != null) el.placeholder = s[k]; });
+  document.title = (s.title || '') + ' — Workshop DIY';
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+  const sel = $('langSelect'); if (sel) sel.value = lang;
+  try { localStorage.setItem('wdiy-lang', lang); } catch {}
+  log(s.langChanged, 'info');
+}
+function setTheme(n) {
+  document.documentElement.dataset.theme = n;
+  document.documentElement.classList.toggle('light-theme', LIGHT_THEMES.includes(n));
+  const s = $('themeSelect'); if (s) s.value = n;
+  try { localStorage.setItem('wdiy-theme', n); } catch {}
+  log(T('themeChanged') + ' ' + n, 'info');
+}
+let logContainer;
+function log(msg, type = 'info') {
+  if (!logContainer) logContainer = $('logContainer'); if (!logContainer) return;
+  const d = document.createElement('div'); d.className = 'log-line ' + type;
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  logContainer.appendChild(d); logContainer.scrollTop = logContainer.scrollHeight; applyLogFilter();
+}
+function clearLog() { if (!logContainer) logContainer = $('logContainer'); if (logContainer) logContainer.innerHTML = ''; log('Cleared'); }
+async function copyLog() { if (!logContainer) logContainer = $('logContainer'); if (!logContainer) return; try { await navigator.clipboard.writeText(Array.from(logContainer.children).map(d => d.textContent).join('\n')); log('Copied!', 'success'); } catch { log('Copy failed', 'error'); } }
+function showToast(m, ms = 0) { const e = $('toastIndicator'), t = $('toastMessage'); if (e && t) { t.textContent = m; e.style.display = 'block'; } if (ms > 0) setTimeout(hideToast, ms); }
+function hideToast() { const e = $('toastIndicator'); if (e) e.style.display = 'none'; }
+function setStatus(on) { const p = $('statusPill'), t = $('statusText'); if (t) t.textContent = on ? T('connected') : T('disconnected'); if (p) p.classList.toggle('connected', on); }
+function dismissSplash() { const s = $('splash'); if (!s) return; s.classList.add('hidden'); setTimeout(() => s.remove(), 600); }
+let activeLogFilter = 'all';
+function applyLogFilter() { if (!logContainer) logContainer = $('logContainer'); if (!logContainer) return; Array.from(logContainer.children).forEach(l => { l.style.display = (activeLogFilter === 'all' || l.classList.contains(activeLogFilter)) ? '' : 'none'; }); }
+function revealChallenge(i) { const a = $('answer' + i); if (a) a.classList.toggle('visible'); }
+
+/* ═══════ CANVAS ═══════ */
+const stegoCanvas = $('stegoCanvas'), stegoCtx = stegoCanvas ? stegoCanvas.getContext('2d') : null;
+const diffCanvas = $('diffCanvas'), diffCtx = diffCanvas ? diffCanvas.getContext('2d') : null;
+
+function generateCarrierAudio(duration = 3) {
+  if (!audioCtx) audioCtx = new AudioCtx();
+  const sr = audioCtx.sampleRate, len = sr * duration;
+  const buf = audioCtx.createBuffer(1, len, sr); const data = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) {
+    const t = i / sr;
+    data[i] = 0.3 * Math.sin(2 * Math.PI * 440 * t) + 0.2 * Math.sin(2 * Math.PI * 554 * t) +
+              0.15 * Math.sin(2 * Math.PI * 659 * t) + 0.1 * Math.sin(2 * Math.PI * 880 * t) +
+              (Math.random() - 0.5) * 0.05;
+  }
   return buf;
 }
-function encodeMessage(msg){
-  if(!msg){log(T('noMsg'),'error');return;}
-  if(!audioCtx)audioCtx=new AudioCtx();
-  hiddenMsg=msg;const carrier=generateCarrierAudio(3);
-  const data=carrier.getChannelData(0);const sr=audioCtx.sampleRate;
-  // LSB encoding: embed each bit of message in low-amplitude high-frequency tones
-  const bits=[];for(let i=0;i<msg.length;i++){const c=msg.charCodeAt(i);for(let b=7;b>=0;b--)bits.push((c>>b)&1);}
-  const samplesPerBit=Math.floor(data.length/bits.length);
-  for(let i=0;i<bits.length;i++){
-    const start=i*samplesPerBit;const freq=bits[i]?19500:19000;
-    for(let j=0;j<samplesPerBit;j++){data[start+j]+=0.008*Math.sin(2*Math.PI*freq*(j/sr));}
-  }
-  encodedBuffer=carrier;setStatus(true);
-  $('stegoStatus').textContent='ENCODED';$('stegoStatus').style.color='#22c55e';
-  $('capacityValue').textContent=msg.length+' / 256 bytes';
-  drawSpectrogram(data,stegoCtx,stegoCanvas);drawDiff(bits);
-  addEncodeLog('ENCODE',msg);log(T('encoded'),'success');
-}
-function decodeMessage(){
-  if(!encodedBuffer){log('No encoded audio to decode','error');return;}
-  $('decodedMsg').textContent=hiddenMsg;$('decodedMsg').style.color='#3b82f6';
-  addEncodeLog('DECODE',hiddenMsg);log(T('decoded'),'success');
-}
-function playAudio(){
-  if(!encodedBuffer||!audioCtx){log('Encode a message first','error');return;}
-  const src=audioCtx.createBufferSource();src.buffer=encodedBuffer;src.connect(audioCtx.destination);src.start();
-  isPlaying=true;log(T('playing'),'tx');src.onended=()=>{isPlaying=false;log(T('stopped'),'info');};
-}
-function drawSpectrogram(data,ctx,canvas){
-  if(!ctx)return;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,canvas.width,canvas.height);
-  // Draw waveform
-  ctx.strokeStyle='#00ff88';ctx.lineWidth=1;ctx.beginPath();
-  const step=Math.floor(data.length/canvas.width);
-  for(let x=0;x<canvas.width;x++){const y=canvas.height/2+data[x*step]*canvas.height/2;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
-  ctx.stroke();
-  // Overlay spectral indicators
-  ctx.fillStyle='rgba(0,255,136,0.3)';ctx.font='10px Orbitron';ctx.fillText('CARRIER AUDIO + HIDDEN DATA',10,15);
-  ctx.fillText('Waveform',10,canvas.height-5);
-}
-function drawDiff(bits){
-  if(!diffCtx)return;diffCtx.fillStyle='#0a0a1a';diffCtx.fillRect(0,0,diffCanvas.width,diffCanvas.height);
-  const bw=diffCanvas.width/bits.length;
-  for(let i=0;i<bits.length;i++){diffCtx.fillStyle=bits[i]?'rgba(59,130,246,0.7)':'rgba(239,68,68,0.3)';diffCtx.fillRect(i*bw,bits[i]?10:diffCanvas.height/2,bw-1,bits[i]?diffCanvas.height/2-10:diffCanvas.height/2-10);}
-  diffCtx.fillStyle='rgba(255,255,255,0.4)';diffCtx.font='10px Orbitron';diffCtx.fillText('BIT PATTERN (blue=1, red=0)',10,diffCanvas.height-3);
-}
-function drawIdle(){
-  if(stegoCtx){stegoCtx.fillStyle='#0a0a1a';stegoCtx.fillRect(0,0,stegoCanvas.width,stegoCanvas.height);stegoCtx.fillStyle='rgba(0,255,170,0.15)';stegoCtx.font='13px Orbitron';stegoCtx.textAlign='center';stegoCtx.fillText('AUDIO STEGANOGRAPHY — Encode a Message',stegoCanvas.width/2,stegoCanvas.height/2);stegoCtx.textAlign='left';}
-  if(diffCtx){diffCtx.fillStyle='#0a0a1a';diffCtx.fillRect(0,0,diffCanvas.width,diffCanvas.height);diffCtx.fillStyle='rgba(0,255,170,0.1)';diffCtx.font='10px Orbitron';diffCtx.fillText('BIT PATTERN — encode to visualize',10,diffCanvas.height/2);}
-}
-function addEncodeLog(op,msg){const el=$('encodeLog');if(!el)return;const d=document.createElement('div');d.style.cssText='padding:4px 8px;border-radius:6px;font-size:.8rem;font-family:Orbitron,monospace;'+(op==='ENCODE'?'background:rgba(34,197,94,.1);color:#22c55e;border-left:3px solid #22c55e;':'background:rgba(59,130,246,.1);color:#3b82f6;border-left:3px solid #3b82f6;');d.textContent='['+new Date().toLocaleTimeString()+'] '+op+': "'+msg+'" ('+msg.length+' bytes)';el.appendChild(d);el.scrollTop=el.scrollHeight;}
-function fillStegoInfo(){const el=$('stegoInfo');if(!el)return;el.innerHTML='<b>Audio Steganography Methods</b><br><br><b>1. LSB Encoding:</b> Replace least significant bits of audio samples with message bits. Imperceptible to human ear.<br><br><b>2. Spread Spectrum:</b> Spread message across frequency spectrum using pseudo-random sequence.<br><br><b>3. Echo Hiding:</b> Embed data by introducing micro-echoes. Binary 0/1 mapped to different echo delays.<br><br><b>4. Phase Coding:</b> Replace phase of initial segment with encoded data. Very robust.<br><br><b>Detection:</b> Steganalysis uses statistical tests (chi-square, RS analysis) to detect anomalies in audio samples.';}
 
-document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(dismissSplash,2500);
-  try{const l=localStorage.getItem('wdiy-lang');if(l)setLanguage(l);else setLanguage('en');}catch{setLanguage('en');}
-  try{const t=localStorage.getItem('wdiy-theme');if(t)setTheme(t);}catch{}
-  $('helpBtn').onclick=()=>{$('helpPanel').classList.toggle('open');$('helpOverlay').classList.toggle('active');};
-  $('helpCloseBtn').onclick=$('helpOverlay').onclick=()=>{$('helpPanel').classList.remove('open');$('helpOverlay').classList.remove('active');};
-  $('settingsBtn').onclick=()=>{$('settingsPanel').classList.toggle('open');$('settingsOverlay').classList.toggle('active');};
-  $('settingsCloseBtn').onclick=$('settingsOverlay').onclick=()=>{$('settingsPanel').classList.remove('open');$('settingsOverlay').classList.remove('active');};
-  $('logBtn').onclick=()=>$('logPanel').classList.toggle('open');$('logCloseBtn').onclick=()=>$('logPanel').classList.remove('open');
-  $('clearLogBtn').onclick=clearLog;$('copyLogBtn').onclick=copyLog;
-  $('langSelect').onchange=e=>setLanguage(e.target.value);$('themeSelect').onchange=e=>setTheme(e.target.value);
-  $('soundToggle').onchange=e=>{soundEnabled=e.target.checked;};
-  document.querySelectorAll('.help-tab').forEach(tab=>{tab.onclick=()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const tgt=$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1));if(tgt)tgt.classList.add('active');};});
-  document.querySelectorAll('.log-filter').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter();};});
-  $('encodeBtn').onclick=()=>encodeMessage($('hideInput').value);
-  $('decodeBtn').onclick=decodeMessage;$('playBtn').onclick=playAudio;
-  drawIdle();fillStegoInfo();log(T('ready'),'success');
+function encodeMessage(msg) {
+  if (!msg) { log(T('noMsg'), 'error'); return; }
+  if (!audioCtx) audioCtx = new AudioCtx();
+  hiddenMsg = msg; const carrier = generateCarrierAudio(3);
+  const data = carrier.getChannelData(0); const sr = audioCtx.sampleRate;
+  // Convert message to bits
+  const bits = [];
+  for (let i = 0; i < msg.length; i++) { const c = msg.charCodeAt(i); for (let b = 7; b >= 0; b--) bits.push((c >> b) & 1); }
+  const samplesPerBit = Math.floor(data.length / bits.length);
+  // Encode bits as high-frequency tones
+  for (let i = 0; i < bits.length; i++) {
+    const start = i * samplesPerBit; const freq = bits[i] ? 19500 : 19000;
+    for (let j = 0; j < samplesPerBit; j++) data[start + j] += 0.008 * Math.sin(2 * Math.PI * freq * (j / sr));
+  }
+  encodedBuffer = carrier; setStatus(true);
+  $('stegoStatus').textContent = 'ENCODED'; $('stegoStatus').style.color = '#22c55e';
+  $('capacityValue').textContent = msg.length + ' / 256 bytes';
+  drawSpectrogram(data, stegoCtx, stegoCanvas); drawDiff(bits);
+  addEncodeLog('ENCODE', msg);
+  log(T('encoded'), 'success');
+  showToast(T('encoded'), 2000);
+}
+
+function decodeMessage() {
+  if (!encodedBuffer) { log(T('noAudio'), 'error'); return; }
+  $('decodedMsg').textContent = hiddenMsg; $('decodedMsg').style.color = '#3b82f6';
+  addEncodeLog('DECODE', hiddenMsg);
+  log(T('decoded'), 'success');
+}
+
+function playAudio() {
+  if (!encodedBuffer || !audioCtx) { log(T('noAudio'), 'error'); return; }
+  const src = audioCtx.createBufferSource(); src.buffer = encodedBuffer; src.connect(audioCtx.destination); src.start();
+  isPlaying = true; log(T('playing'), 'tx');
+  src.onended = () => { isPlaying = false; log(T('stopped'), 'info'); };
+}
+
+function drawSpectrogram(data, ctx, canvas) {
+  if (!ctx) return;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1; ctx.beginPath();
+  const step = Math.floor(data.length / canvas.width);
+  for (let x = 0; x < canvas.width; x++) {
+    const y = canvas.height / 2 + data[x * step] * canvas.height / 2;
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  // Spectral heat overlay
+  ctx.fillStyle = 'rgba(0,255,136,0.05)';
+  for (let x = 0; x < canvas.width; x += 4) {
+    const val = Math.abs(data[x * step]) * canvas.height;
+    ctx.fillRect(x, canvas.height - val, 3, val);
+  }
+  ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.font = '10px Orbitron';
+  ctx.fillText('CARRIER AUDIO + HIDDEN DATA', 10, 15);
+  ctx.fillText('Waveform', 10, canvas.height - 5);
+}
+
+function drawDiff(bits) {
+  if (!diffCtx) return;
+  diffCtx.fillStyle = '#0a0a1a'; diffCtx.fillRect(0, 0, diffCanvas.width, diffCanvas.height);
+  const bw = diffCanvas.width / bits.length;
+  for (let i = 0; i < bits.length; i++) {
+    diffCtx.fillStyle = bits[i] ? 'rgba(59,130,246,0.7)' : 'rgba(239,68,68,0.3)';
+    diffCtx.fillRect(i * bw, bits[i] ? 10 : diffCanvas.height / 2, bw - 1, bits[i] ? diffCanvas.height / 2 - 10 : diffCanvas.height / 2 - 10);
+  }
+  diffCtx.fillStyle = 'rgba(255,255,255,0.4)'; diffCtx.font = '10px Orbitron';
+  diffCtx.fillText('BIT PATTERN (blue=1, red=0)', 10, diffCanvas.height - 3);
+}
+
+function drawIdle() {
+  if (stegoCtx) { stegoCtx.fillStyle = '#0a0a1a'; stegoCtx.fillRect(0, 0, stegoCanvas.width, stegoCanvas.height); stegoCtx.fillStyle = 'rgba(0,255,170,0.15)'; stegoCtx.font = '13px Orbitron'; stegoCtx.textAlign = 'center'; stegoCtx.fillText('AUDIO STEGANOGRAPHY — Encode a Message', stegoCanvas.width / 2, stegoCanvas.height / 2); stegoCtx.textAlign = 'left'; }
+  if (diffCtx) { diffCtx.fillStyle = '#0a0a1a'; diffCtx.fillRect(0, 0, diffCanvas.width, diffCanvas.height); diffCtx.fillStyle = 'rgba(0,255,170,0.1)'; diffCtx.font = '10px Orbitron'; diffCtx.fillText('BIT PATTERN — encode to visualize', 10, diffCanvas.height / 2); }
+}
+
+function addEncodeLog(op, msg) {
+  const el = $('encodeLog'); if (!el) return;
+  const d = document.createElement('div');
+  d.style.cssText = 'padding:4px 8px;border-radius:6px;font-size:.8rem;font-family:Orbitron,monospace;' +
+    (op === 'ENCODE' ? 'background:rgba(34,197,94,.1);color:#22c55e;border-left:3px solid #22c55e;' : 'background:rgba(59,130,246,.1);color:#3b82f6;border-left:3px solid #3b82f6;');
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + op + ': "' + msg + '" (' + msg.length + ' bytes)';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+
+function fillStegoInfo() {
+  const el = $('stegoInfo'); if (!el) return;
+  el.innerHTML = '<b>Audio Steganography Methods</b><br><br>' +
+    '<b>1. LSB Encoding:</b> Replace least significant bits of audio samples with message bits. Imperceptible to human ear.<br><br>' +
+    '<b>2. Spread Spectrum:</b> Spread message across frequency spectrum using pseudo-random sequence. Robust against compression.<br><br>' +
+    '<b>3. Echo Hiding:</b> Embed data by introducing micro-echoes. Binary 0/1 mapped to different echo delays.<br><br>' +
+    '<b>4. Phase Coding:</b> Replace phase of initial audio segment with encoded data. Very robust method.<br><br>' +
+    '<b>5. Tone Insertion:</b> Add inaudible high-frequency tones representing data bits (used in this app).<br><br>' +
+    '<b>Detection (Steganalysis):</b> Chi-square test, RS analysis, spectral anomaly detection, comparison with original carrier.';
+}
+
+/* ═══════ INIT ═══════ */
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(dismissSplash, 2500);
+  try { const l = localStorage.getItem('wdiy-lang'); if (l) setLanguage(l); else setLanguage('en'); } catch { setLanguage('en'); }
+  try { const t = localStorage.getItem('wdiy-theme'); if (t) setTheme(t); } catch {}
+  $('helpBtn').onclick = () => { $('helpPanel').classList.toggle('open'); $('helpOverlay').classList.toggle('active'); };
+  $('helpCloseBtn').onclick = $('helpOverlay').onclick = () => { $('helpPanel').classList.remove('open'); $('helpOverlay').classList.remove('active'); };
+  $('settingsBtn').onclick = () => { $('settingsPanel').classList.toggle('open'); $('settingsOverlay').classList.toggle('active'); };
+  $('settingsCloseBtn').onclick = $('settingsOverlay').onclick = () => { $('settingsPanel').classList.remove('open'); $('settingsOverlay').classList.remove('active'); };
+  $('logBtn').onclick = () => $('logPanel').classList.toggle('open');
+  $('logCloseBtn').onclick = () => $('logPanel').classList.remove('open');
+  $('clearLogBtn').onclick = clearLog; $('copyLogBtn').onclick = copyLog;
+  $('langSelect').onchange = e => setLanguage(e.target.value);
+  $('themeSelect').onchange = e => setTheme(e.target.value);
+  $('soundToggle').onchange = e => { soundEnabled = e.target.checked; };
+  document.querySelectorAll('.help-tab').forEach(tab => { tab.onclick = () => { document.querySelectorAll('.help-tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.help-content').forEach(c => c.classList.remove('active')); tab.classList.add('active'); const tgt = $('help' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1)); if (tgt) tgt.classList.add('active'); }; });
+  document.querySelectorAll('.log-filter').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.log-filter').forEach(b => b.classList.remove('active')); btn.classList.add('active'); activeLogFilter = btn.dataset.filter; applyLogFilter(); }; });
+  $('encodeBtn').onclick = () => encodeMessage($('hideInput').value);
+  $('decodeBtn').onclick = decodeMessage;
+  $('playBtn').onclick = playAudio;
+  drawIdle(); fillStegoInfo(); log(T('ready'), 'success');
 });
