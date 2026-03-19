@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Full Spectrum', subtitle: 'Full WiFi spectrum dashboard. Monitor 2.4GHz and 5GHz',
+    disconnected: 'Idle', connected: 'Monitoring',
+    mainSection: 'Spectrum Dashboard', mainDesc: 'Real-time 2.4GHz and 5GHz band monitoring',
+    sectionA: 'Band Activity', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,10 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Full Spectrum ready!',
+    start: 'Monitor', stop: 'Stop', band24: '2.4GHz', band5: '5GHz', utilization: 'Usage', networks: 'Networks',
+    simStarted: 'Monitoring started', simStopped: 'Stopped', bandUpdate: 'Band update',
+    howItWorksText: 'WiFi spectrum monitoring observes all activity in 2.4GHz and 5GHz bands. The waterfall display shows signal activity over time.',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +103,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Spectre Complet WiFi', subtitle: 'Tableau de bord du spectre WiFi complet',
+    disconnected: 'Inactif', connected: 'Surveillance',
+    mainSection: 'Tableau de Bord', mainDesc: 'Surveillance des bandes 2.4GHz et 5GHz',
+    sectionA: 'Activite des Bandes', sectionB: 'Comment ca marche',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +128,10 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Spectre pret!',
+    start: 'Surveiller', stop: 'Arreter', band24: '2.4GHz', band5: '5GHz', utilization: 'Usage', networks: 'Reseaux',
+    simStarted: 'Surveillance demarree', simStopped: 'Arretee', bandUpdate: 'Mise a jour',
+    howItWorksText: 'Surveillance du spectre WiFi en temps reel.',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +143,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'الطيف الكامل WiFi', subtitle: 'لوحة طيف WiFi الكاملة',
+    disconnected: 'خامل', connected: 'مراقبة',
+    mainSection: 'لوحة الطيف', mainDesc: 'مراقبة 2.4GHz و 5GHz',
+    sectionA: 'نشاط النطاقات', sectionB: 'كيف يعمل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +168,10 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 الطيف الكامل جاهز!',
+    start: 'مراقبة', stop: 'إيقاف', band24: '2.4GHz', band5: '5GHz', utilization: 'استخدام', networks: 'شبكات',
+    simStarted: 'بدأت المراقبة', simStopped: 'توقفت', bandUpdate: 'تحديث',
+    howItWorksText: 'مراقبة طيف WiFi في الوقت الفعلي.',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1458,12 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Full Spectrum ═══════ */
+let simRunning=false,simInterval=null;let sCanvas,sCtx,scanCount=0;
+function initSCanvas(){sCanvas=$('specCanvas');if(!sCanvas)return;sCtx=sCanvas.getContext('2d');sCanvas.width=sCanvas.offsetWidth*2;sCanvas.height=sCanvas.offsetHeight*2;sCtx.scale(2,2);}
+function drawWaterfall(){if(!sCtx)return;const w=sCanvas.offsetWidth,h=sCanvas.offsetHeight;const imgData=sCtx.getImageData(0,0,sCanvas.width,sCanvas.height);sCtx.putImageData(imgData,0,2);const cols=Math.floor(w/2);for(let i=0;i<cols;i++){const freq=i<cols/2?2400+i*2:5100+(i-cols/2)*4;const inBand=(freq>=2400&&freq<=2484)||(freq>=5150&&freq<=5850);if(!inBand){sCtx.fillStyle='rgba(10,10,26,0.8)';sCtx.fillRect(i*2,0,2,2);continue;}const signal=-90+Math.random()*(Math.random()<0.3?80:40);const norm=Math.max(0,Math.min(1,(signal+90)/60));sCtx.fillStyle=`rgb(${Math.floor(norm*255)},${Math.floor((1-norm)*200)},${Math.floor(norm*100+50)})`;sCtx.fillRect(i*2,0,2,2);}sCtx.fillStyle='rgba(255,255,255,0.5)';sCtx.font='10px monospace';sCtx.fillText('2.4GHz',10,h-5);sCtx.fillText('5GHz',w*0.55,h-5);}
+function simTick(){scanCount++;const u24=20+Math.random()*60,u5=10+Math.random()*40,nets=5+Math.floor(Math.random()*20);$('b24Val').textContent=u24.toFixed(0)+'%';$('b5Val').textContent=u5.toFixed(0)+'%';$('utilVal').textContent=((u24+u5)/2).toFixed(0)+'%';$('netVal').textContent=nets;const list=$('bandList');if(list){const d=document.createElement('div');d.className='packet-item';d.innerHTML='<span class="pkt-type">Scan #'+scanCount+'</span><span class="pkt-data">2.4G:'+u24.toFixed(0)+'% | 5G:'+u5.toFixed(0)+'% | '+nets+' nets</span><span class="pkt-size">'+((u24+u5)/2).toFixed(0)+'%</span>';list.insertBefore(d,list.firstChild);if(list.children.length>80)list.removeChild(list.lastChild);}log(LANG[currentLang].bandUpdate+': 2.4='+u24.toFixed(0)+'% 5='+u5.toFixed(0)+'%','tx');}
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);$('startBtn').disabled=true;$('stopBtn').disabled=false;scanCount=0;initSCanvas();log(LANG[currentLang].simStarted,'success');simInterval=setInterval(simTick,700);(function loop(){if(!simRunning)return;drawWaterfall();requestAnimationFrame(loop)})();}
+function stopSim(){simRunning=false;if(simInterval)clearInterval(simInterval);setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;log(LANG[currentLang].simStopped,'info');}
+document.addEventListener('DOMContentLoaded',()=>{const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;});

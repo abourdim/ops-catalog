@@ -1449,3 +1449,114 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"ISS Contact",subtitle:"🛸 Track the ISS and tune 145.800 MHz!",mainSection:"ISS Contact — Live Tracker",mainDesc:"Real-time ISS position with pass predictions and Doppler tuning",sectionA:"How It Works",sectionB:"Lab",sectionC:"Challenge",latLabel:"Latitude",lonLabel:"Longitude",elevLabel:"Elevation",dopplerLabel:"Doppler",pktLabel:"Packets",aprsLabel:"APRS Packets Received",decodeBtnLabel:"Decode Packet",resetBtnLabel:"Reset Sim",stepA1:"The ISS orbits Earth every ~92 min at 408 km altitude, traveling at 7.66 km/s.",stepA2:"Amateur radio on ISS uses 145.800 MHz FM downlink for voice and packet.",stepA3:"Doppler shift changes the frequency by up to +/-3.5 kHz during a pass.",stepA4:"A pass lasts 5-10 minutes. Higher max elevation = longer and stronger pass.",labStep1:"Track the ISS position on the world map and predict the next visible pass.",labStep2:"Adjust the Doppler-corrected frequency as the ISS approaches and recedes.",labStep3:"Decode simulated APRS packets from ISS using the built-in packet decoder.",challenge1:"Predict the next ISS pass over your location within 2 min accuracy.",challenge2:"Manually correct Doppler shift to stay within 500 Hz of the true signal.",challenge3:"Decode 3 consecutive APRS packets during a simulated ISS pass.",passActive:"PASS ACTIVE",noPass:"No Pass",issTracking:"ISS tracking active",pktDecoded:"APRS packet decoded",simReset:"Simulation reset"});
+Object.assign(LANG.fr, {title:"Contact ISS",subtitle:"🛸 Suivez l'ISS et ecoutez 145.800 MHz!",mainSection:"Contact ISS — Suivi en Direct",mainDesc:"Position ISS en temps reel avec predictions de passage et correction Doppler",sectionA:"Fonctionnement",sectionB:"Labo",sectionC:"Defi",latLabel:"Latitude",lonLabel:"Longitude",elevLabel:"Elevation",dopplerLabel:"Doppler",pktLabel:"Paquets",aprsLabel:"Paquets APRS Recus",decodeBtnLabel:"Decoder Paquet",resetBtnLabel:"Reinitialiser",stepA1:"L'ISS orbite la Terre toutes les ~92 min a 408 km d'altitude a 7.66 km/s.",stepA2:"La radio amateur sur l'ISS utilise 145.800 MHz FM pour la voix et les paquets.",stepA3:"Le decalage Doppler modifie la frequence jusqu'a +/-3.5 kHz pendant un passage.",stepA4:"Un passage dure 5-10 minutes. Plus l'elevation max est haute, plus le passage est long.",labStep1:"Suivez la position ISS sur la carte mondiale.",labStep2:"Ajustez la frequence corrigee Doppler.",labStep3:"Decodez les paquets APRS simules depuis l'ISS.",challenge1:"Predire le prochain passage ISS avec 2 min de precision.",challenge2:"Corriger manuellement le Doppler a moins de 500 Hz.",challenge3:"Decoder 3 paquets APRS consecutifs pendant un passage.",passActive:"PASSAGE ACTIF",noPass:"Pas de Passage",issTracking:"Suivi ISS actif",pktDecoded:"Paquet APRS decode",simReset:"Simulation reinitialisee"});
+Object.assign(LANG.ar, {title:"اتصال محطة الفضاء",subtitle:"🛸 تتبع محطة الفضاء الدولية واستمع على 145.800 MHz!",mainSection:"اتصال ISS — تتبع مباشر",mainDesc:"موقع ISS مباشر مع تنبؤات المرور وتصحيح دوبلر",sectionA:"كيف يعمل",sectionB:"المختبر",sectionC:"التحدي",latLabel:"خط العرض",lonLabel:"خط الطول",elevLabel:"الارتفاع",dopplerLabel:"دوبلر",pktLabel:"الحزم",aprsLabel:"حزم APRS المستقبلة",decodeBtnLabel:"فك حزمة",resetBtnLabel:"اعادة",stepA1:"تدور ISS حول الارض كل 92 دقيقة على ارتفاع 408 كم بسرعة 7.66 كم/ث.",stepA2:"الراديو الهاوي على ISS يستخدم 145.800 MHz FM.",stepA3:"انزياح دوبلر يغير التردد حتى +/-3.5 كيلوهرتز.",stepA4:"يستمر المرور 5-10 دقائق.",labStep1:"تتبع موقع ISS على خريطة العالم.",labStep2:"اضبط تردد دوبلر المصحح.",labStep3:"فك حزم APRS المحاكاة من ISS.",challenge1:"توقع المرور التالي بدقة دقيقتين.",challenge2:"صحح دوبلر يدويا للبقاء ضمن 500 هرتز.",challenge3:"فك 3 حزم APRS متتالية اثناء المرور.",passActive:"مرور نشط",noPass:"لا يوجد مرور",issTracking:"تتبع ISS نشط",pktDecoded:"تم فك حزمة APRS",simReset:"تم اعادة المحاكاة"});
+setLanguage(currentLang);
+
+
+/* ═══════ ISS CONTACT SIM ═══════ */
+let issLat=0,issLon=0,issAngle=0,issAnim=null,issRunning=false,issPktCount=0;
+const CALLSIGNS=['RS0ISS','NA1SS','DP0ISS','OR4ISS','IR0ISS'];
+const APRS_MSGS=['>ARISS - International Space Station','>School contact in progress','T#001,120,045,038,025,000,00000000','>APRS via ISS digipeater active','>73 de ISS crew - QRV on 145.800'];
+
+function drawISSMap(){
+  const c=$('issMap');if(!c)return;
+  const W=c.parentElement.clientWidth||600;c.width=W;c.height=W*0.5;
+  const ctx=c.getContext('2d');const H=c.height;
+  ctx.fillStyle='#0a1628';ctx.fillRect(0,0,W,H);
+  // Grid
+  ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=0.5;
+  for(let i=0;i<12;i++){const x=i*W/12;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let i=0;i<6;i++){const y=i*H/6;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  // Continents (simplified outlines)
+  ctx.fillStyle='rgba(100,200,100,.15)';ctx.strokeStyle='rgba(100,200,100,.3)';ctx.lineWidth=1;
+  // North America
+  ctx.beginPath();ctx.ellipse(W*0.2,H*0.3,W*0.1,H*0.12,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  // South America
+  ctx.beginPath();ctx.ellipse(W*0.28,H*0.6,W*0.04,H*0.15,0.2,0,Math.PI*2);ctx.fill();ctx.stroke();
+  // Europe/Africa
+  ctx.beginPath();ctx.ellipse(W*0.52,H*0.35,W*0.04,H*0.1,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.ellipse(W*0.53,H*0.58,W*0.05,H*0.12,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  // Asia
+  ctx.beginPath();ctx.ellipse(W*0.7,H*0.3,W*0.12,H*0.12,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  // Australia
+  ctx.beginPath();ctx.ellipse(W*0.82,H*0.65,W*0.04,H*0.06,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  // Orbit trail
+  ctx.strokeStyle='rgba(212,160,60,.3)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();
+  for(let a=0;a<360;a+=2){
+    const la=51.6*Math.sin((a+issAngle)*Math.PI/180);
+    const lo=(a+issAngle)%360-180;
+    const px=((lo+180)/360)*W;const py=((90-la)/180)*H;
+    a===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.stroke();ctx.setLineDash([]);
+  // ISS position dot
+  const px=((issLon+180)/360)*W;const py=((90-issLat)/180)*H;
+  ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fillStyle='#ff4444';ctx.fill();
+  ctx.beginPath();ctx.arc(px,py,10,0,Math.PI*2);ctx.strokeStyle='rgba(255,68,68,.5)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#fff';ctx.font='bold 10px Orbitron,monospace';ctx.fillText('ISS',px+14,py+4);
+}
+
+function updateISS(){
+  if(!issRunning)return;
+  issAngle=(issAngle+0.5)%360;
+  issLat=51.6*Math.sin(issAngle*Math.PI/180);
+  issLon=(issAngle*4)%360-180;
+  const elev=Math.max(0,45-Math.abs(issLat-36)*2+Math.random()*5);
+  const doppler=((issAngle%180)-90)*38;
+  const freq=145800000+doppler;
+
+  const latD=$('issLatDisplay');if(latD)latD.textContent=issLat.toFixed(2)+(issLat>=0?' N':' S');
+  const lonD=$('issLonDisplay');if(lonD)lonD.textContent=Math.abs(issLon).toFixed(2)+(issLon>=0?' E':' W');
+  const elD=$('elevDisplay');if(elD)elD.textContent=elev.toFixed(1)+' deg';
+  const dpD=$('dopplerDisplay');if(dpD)dpD.textContent=(doppler>0?'+':'')+doppler.toFixed(0)+' Hz';
+  const frD=$('freqDisplay');if(frD)frD.textContent=(freq/1e6).toFixed(6)+' MHz';
+
+  const ps=$('passStatus');
+  if(ps){
+    if(elev>2){ps.textContent='🟢 '+(LANG[currentLang].passActive||'PASS ACTIVE');ps.style.color='#51cf66';}
+    else{ps.textContent='🔴 '+(LANG[currentLang].noPass||'No Pass');ps.style.color='#ff6b6b';}
+  }
+
+  drawISSMap();
+  // Random APRS packet during pass
+  if(elev>5&&Math.random()<0.03){
+    issPktCount++;
+    const pc=$('pktCount');if(pc)pc.textContent=issPktCount;
+    const call=CALLSIGNS[Math.random()*CALLSIGNS.length|0];
+    const msg=APRS_MSGS[Math.random()*APRS_MSGS.length|0];
+    const ao=$('aprsOutput');
+    if(ao){const line=call+msg;ao.innerHTML='<div>'+line+'</div>'+ao.innerHTML;if(ao.children.length>20)ao.lastChild.remove();}
+    log(LANG[currentLang].pktDecoded+' #'+issPktCount,'rx');
+  }
+  issAnim=requestAnimationFrame(updateISS);
+}
+
+(function initISS(){
+  const db=$('decodeBtn');
+  if(db)db.onclick=function(){
+    issPktCount++;
+    const pc=$('pktCount');if(pc)pc.textContent=issPktCount;
+    const call=CALLSIGNS[Math.random()*CALLSIGNS.length|0];
+    const msg=APRS_MSGS[Math.random()*APRS_MSGS.length|0];
+    const ao=$('aprsOutput');
+    if(ao){ao.innerHTML='<div>'+call+msg+'</div>'+ao.innerHTML;}
+    log(LANG[currentLang].pktDecoded+' #'+issPktCount,'rx');
+  };
+  const rb=$('resetSimBtn');
+  if(rb)rb.onclick=function(){
+    issAngle=0;issPktCount=0;issLat=0;issLon=0;
+    const pc=$('pktCount');if(pc)pc.textContent='0';
+    const ao=$('aprsOutput');if(ao)ao.innerHTML='';
+    log(LANG[currentLang].simReset||'Simulation reset','info');
+  };
+  issRunning=true;
+  setStatus(true);
+  log(LANG[currentLang].issTracking||'ISS tracking active','success');
+  drawISSMap();
+  updateISS();
+})();

@@ -28,8 +28,8 @@
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-title">Hackathon Arena</div>
+      <div class="splash-sub" data-i18n="subtitle">⚔️ Compete · ⏱️ Race · 🏆 Conquer challenges</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">Hackathon Arena</h1>
+            <div class="subtitle" data-i18n="subtitle">⚔️ Compete · ⏱️ Race · 🏆 Conquer challenges</div>
           </div>
         </div>
 
@@ -68,26 +68,105 @@
         </div>
       </div>
 
-      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <!-- ═══════════════════ MAIN CARD — Challenge Arena ═══════════════════ -->
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">⚔️</span> <span data-i18n="mainSection">Challenge Arena</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Solve hacking challenges against the clock</span> <span class="version-tag">v1.2</span></div>
           </div>
+        </div>
+
+        <!-- Timer & Score -->
+        <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+          <div style="flex:1;min-width:120px;padding:12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="timerLabel">Time Remaining</div>
+            <div id="timerDisplay" style="font-size:2rem;font-weight:bold;font-family:'Orbitron',monospace;color:var(--accent)">05:00</div>
+          </div>
+          <div style="flex:1;min-width:120px;padding:12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="scoreLabel">Score</div>
+            <div id="scoreDisplay" style="font-size:2rem;font-weight:bold;font-family:'Orbitron',monospace;color:#4CAF50">0</div>
+          </div>
+          <div style="flex:1;min-width:120px;padding:12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="levelLabel">Difficulty</div>
+            <div id="diffDisplay" style="font-size:1.2rem;font-weight:bold;color:#FF9800">Level 1</div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <button id="startGameBtn" class="primary" style="flex:1;min-width:100px"><span class="btn-icon">▶️</span> <span data-i18n="startGame">Start Game</span></button>
+          <button id="resetGameBtn" style="flex:1;min-width:80px"><span class="btn-icon">🔄</span> <span data-i18n="resetGame">Reset</span></button>
+          <select id="diffSelect" class="select-ctrl" style="min-width:100px">
+            <option value="1">Level 1 - Easy</option>
+            <option value="2">Level 2 - Medium</option>
+            <option value="3">Level 3 - Hard</option>
+            <option value="4">Level 4 - Expert</option>
+            <option value="5">Level 5 - Legendary</option>
+          </select>
+        </div>
+
+        <!-- Challenge Display -->
+        <div class="control-section" style="margin-bottom:10px">
+          <div class="section-header">
+            <div class="section-title"><span class="icon">🧩</span> <span id="challengeCategory" data-i18n="challengeLabel">Challenge</span></div>
+            <div class="section-subtitle hint" id="challengeHint">Start the game to receive challenges</div>
+          </div>
+          <div id="challengeBox" style="padding:12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);min-height:80px">
+            <div id="challengeText" style="font-family:'SF Mono',monospace;font-size:.85rem;color:var(--accent);margin-bottom:10px;white-space:pre-wrap"></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <input type="text" id="flagInput" placeholder="Enter flag or answer..." style="flex:1;border-radius:10px;min-width:180px" />
+              <button id="submitFlagBtn" class="btn-sm primary"><span class="btn-icon">🚩</span> <span data-i18n="submit">Submit</span></button>
+              <button id="hintBtn" class="btn-sm"><span class="btn-icon">💡</span> <span data-i18n="hint">Hint</span></button>
+            </div>
+            <div id="flagResult" style="margin-top:8px;font-size:.82rem"></div>
+          </div>
+        </div>
+
+        <!-- Progress Canvas -->
+        <div class="control-section">
+          <canvas id="progressCanvas" width="700" height="100" style="width:100%;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2)"></canvas>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Leaderboard ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🏆</span> <span data-i18n="sectionA">Leaderboard</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <div class="section-header">
+              <div class="section-title"><span class="icon">📊</span> <span data-i18n="rankings">Rankings</span></div>
+            </div>
+            <table id="leaderTable" style="width:100%;border-collapse:collapse;font-size:.78rem;color:var(--text)">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border)">
+                  <th style="padding:6px;text-align:center">#</th>
+                  <th style="padding:6px;text-align:left" data-i18n="col_team">Team</th>
+                  <th style="padding:6px;text-align:center" data-i18n="col_score">Score</th>
+                  <th style="padding:6px;text-align:center" data-i18n="col_solved">Solved</th>
+                  <th style="padding:6px;text-align:center" data-i18n="col_time">Time</th>
+                </tr>
+              </thead>
+              <tbody id="leaderBody"></tbody>
+            </table>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Challenge Stats ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📈</span> <span data-i18n="sectionB">Challenge Statistics</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <div class="section-header">
+              <div class="section-title"><span class="icon">📊</span> <span data-i18n="statsTitle">Performance Overview</span></div>
+            </div>
+            <canvas id="statsCanvas" width="700" height="250" style="width:100%;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2)"></canvas>
+          </div>
+          <div class="control-section" style="margin-top:10px">
+            <div id="solvedList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+          </div>
+        </div>
       </details>
 
     </div>

@@ -1449,3 +1449,80 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"GRAVES Radar",subtitle:"☄️ Monitor meteor scatter using GRAVES radar",mainSection:"GRAVES Radar",mainDesc:"Monitor meteor scatter using GRAVES radar",sectionA:"Theory",sectionB:"Controls",sectionC:"Waterfall Display",theoryTitle:"GRAVES Radar & Meteor Scatter",theoryDesc:"GRAVES is a French space surveillance radar at 143.050 MHz. Meteor trails reflect its signal producing Doppler-shifted pings.",sensitivity:"Sensitivity",noiseFloor:"Noise Floor",start:"Start",stop:"Stop",paramCol:"Parameter",valueCol:"Value",gravesFreq:"143.050 MHz GRAVES",meteorsDetected:"Meteors",peakHz:"Peak Hz",avgDur:"Avg (s)",simStarted:"Monitoring started",simStopped:"Monitoring stopped",meteorPing:"Meteor ping detected"});
+Object.assign(LANG.fr, {title:"Radar GRAVES",subtitle:"☄️ Surveiller la diffusion meteorique avec GRAVES",mainSection:"Radar GRAVES",mainDesc:"Surveiller la diffusion meteorique via GRAVES",sectionA:"Theorie",sectionB:"Controles",sectionC:"Affichage Cascade",theoryTitle:"Radar GRAVES et Diffusion Meteorique",theoryDesc:"GRAVES est un radar de surveillance spatiale francais a 143.050 MHz. Les trainées meteoriques reflechissent le signal.",sensitivity:"Sensibilite",noiseFloor:"Plancher de bruit",start:"Demarrer",stop:"Arreter",paramCol:"Parametre",valueCol:"Valeur",gravesFreq:"143.050 MHz GRAVES",meteorsDetected:"Meteores",peakHz:"Pic Hz",avgDur:"Moy (s)",simStarted:"Surveillance demarree",simStopped:"Surveillance arretee",meteorPing:"Ping meteorique detecte"});
+Object.assign(LANG.ar, {title:"رادار GRAVES",subtitle:"☄️ رصد انتشار الشهب عبر رادار GRAVES",mainSection:"رادار GRAVES",mainDesc:"رصد انتشار الشهب عبر رادار GRAVES",sectionA:"النظرية",sectionB:"التحكم",sectionC:"عرض الشلال",theoryTitle:"رادار GRAVES وانتشار الشهب",theoryDesc:"GRAVES هو رادار فرنسي لمراقبة الفضاء على تردد 143.050 ميغاهرتز.",sensitivity:"الحساسية",noiseFloor:"مستوى الضوضاء",start:"بدء",stop:"ايقاف",paramCol:"المعامل",valueCol:"القيمة",gravesFreq:"143.050 MHz GRAVES",meteorsDetected:"الشهب",peakHz:"الذروة Hz",avgDur:"متوسط (ث)",simStarted:"بدأ الرصد",simStopped:"توقف الرصد",meteorPing:"تم رصد نبضة شهاب"});
+setLanguage(currentLang);
+
+
+/* ═══════ GRAVES RADAR SIM ═══════ */
+let grvRunning=false,grvAnim=null,meteorTotal=0,peakD=0,durSum=0;
+const wfC=$('waterfallCanvas'),wfX=wfC?wfC.getContext('2d'):null;
+const spC=$('spectrumCanvas'),spX=spC?spC.getContext('2d'):null;
+let activePings=[];
+
+function simGraves(){
+  if(!wfX||!spX)return;
+  const W=wfC.width,H=wfC.height;
+  const sens=$('sensitivityRange')?parseInt($('sensitivityRange').value):5;
+  const nf=$('noiseRange')?parseInt($('noiseRange').value):3;
+  // Scroll waterfall
+  const img=wfX.getImageData(0,0,W,H-1);wfX.putImageData(img,0,1);
+  // New line with noise
+  for(let x=0;x<W;x++){
+    let v=Math.random()*nf*3;
+    // Check active pings
+    activePings.forEach(p=>{
+      const cx=((p.doppler+2000)/4000)*W;
+      const dist=Math.abs(x-cx);
+      if(dist<p.width)v+=p.intensity*(1-dist/p.width);
+    });
+    v=Math.min(255,v);
+    let r,g,b;
+    if(v<80){r=0;g=0;b=v*2;}
+    else if(v<160){r=(v-80)*2;g=v;b=255-(v-80)*2;}
+    else{r=255;g=255-(v-160)*2;b=0;}
+    wfX.fillStyle=`rgb(${r|0},${g|0},${b|0})`;wfX.fillRect(x,0,1,1);
+  }
+  // Decay pings
+  activePings=activePings.filter(p=>{p.intensity*=0.92;p.width*=0.98;return p.intensity>2;});
+  // Random new meteor
+  if(Math.random()<0.02*sens){
+    const doppler=-2000+Math.random()*4000;
+    const dur=0.1+Math.random()*2.9;
+    const intensity=60+Math.random()*180;
+    activePings.push({doppler,intensity,width:10+Math.random()*30});
+    meteorTotal++;durSum+=dur;
+    if(Math.abs(doppler)>Math.abs(peakD))peakD=doppler;
+    const mc=$('meteorCount');if(mc)mc.textContent=meteorTotal;
+    const pd=$('peakDoppler');if(pd)pd.textContent=(peakD>0?'+':'')+peakD.toFixed(0);
+    const ad=$('avgDuration');if(ad)ad.textContent=(durSum/meteorTotal).toFixed(1);
+    const dd=$('dopplerDisplay');if(dd)dd.textContent=(doppler>0?'+':'')+doppler.toFixed(0)+' Hz';
+    const pl=$('pingLog');
+    if(pl){const line='['+new Date().toISOString().substr(11,8)+'] PING Doppler:'+(doppler>0?'+':'')+doppler.toFixed(0)+'Hz Dur:'+dur.toFixed(1)+'s Int:'+intensity.toFixed(0);pl.textContent=line+'\n'+pl.textContent.split('\n').slice(0,15).join('\n');}
+    log(LANG[currentLang].meteorPing+' '+doppler.toFixed(0)+'Hz','rx');
+  }
+  // Spectrum
+  spX.fillStyle='rgba(0,0,0,0.3)';spX.fillRect(0,0,spC.width,spC.height);
+  spX.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  spX.lineWidth=1.5;spX.beginPath();
+  for(let x=0;x<spC.width;x++){
+    let v=5+Math.random()*nf*2;
+    activePings.forEach(p=>{const cx=((p.doppler+2000)/4000)*spC.width;const d=Math.abs(x-cx);if(d<p.width)v+=p.intensity*(1-d/p.width)*0.5;});
+    const y=spC.height-(v/180)*spC.height;
+    x===0?spX.moveTo(x,y):spX.lineTo(x,y);
+  }
+  spX.stroke();
+  if(grvRunning)grvAnim=requestAnimationFrame(simGraves);
+}
+
+function startGrv(){if(grvRunning)return;grvRunning=true;log(LANG[currentLang].simStarted,'success');setStatus(true);simGraves();}
+function stopGrv(){grvRunning=false;if(grvAnim)cancelAnimationFrame(grvAnim);log(LANG[currentLang].simStopped,'info');setStatus(false);}
+
+(function initGraves(){
+  const sb=$('startBtn'),eb=$('stopBtn');
+  if(sb)sb.onclick=startGrv;if(eb)eb.onclick=stopGrv;
+})();

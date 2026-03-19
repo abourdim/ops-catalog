@@ -63,10 +63,26 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Escape Room', subtitle: 'Solve network puzzles to escape',
+    disconnected: 'Locked', connected: 'Escaping...',
+    mainSection: 'Escape Room', mainDesc: 'WiFi-themed puzzle challenge',
+    sectionA: 'Puzzle Console', sectionB: 'Network Clues', sectionC: 'How It Works',
+    start: 'Start Escape', stop: 'Give Up',
+    timeLeft: 'Time Left', puzzlesSolved: 'Puzzles Solved', currentPuzzle: 'Current Puzzle',
+    hint: 'Hint', submit: 'Submit', correct: 'Correct!', wrong: 'Wrong! Try again',
+    escaped: 'You escaped!', failed: 'Time is up! You are trapped!',
+    puzzle1: 'What channel number has no overlap in 2.4GHz? (lowest)',
+    puzzle2: 'What protocol replaced WPA2? (three letters + digit)',
+    puzzle3: 'Convert this hex MAC to find the vendor: AA:BB:CC',
+    puzzle4: 'What frequency (MHz) is WiFi channel 6 at?',
+    puzzle5: 'What does SSID stand for? (first letters)',
+    hint1: 'Non-overlapping channels are 1, 6, and 11',
+    hint2: 'It uses SAE instead of PSK',
+    hint3: 'The first 3 octets identify the vendor (OUI)',
+    hint4: 'Channel 1 = 2412, each channel adds 5 MHz',
+    hint5: 'Service Set ___________',
+    escapeReady: 'Escape Room ready! Solve WiFi puzzles to escape!',
+    howItWorksText: 'You are locked in a virtual room. Solve WiFi-themed puzzles before time runs out. Each puzzle tests your knowledge of channels, protocols, MAC addresses, frequencies, and network terminology. Get hints if stuck, but hurry — the clock is ticking!',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +116,26 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Salle d\'Evasion WiFi', subtitle: 'Resolvez les enigmes reseau pour vous echapper',
+    disconnected: 'Verrouille', connected: 'Evasion...',
+    mainSection: 'Salle d\'Evasion', mainDesc: 'Defi de puzzles WiFi',
+    sectionA: 'Console de Puzzles', sectionB: 'Indices Reseau', sectionC: 'Comment ca marche',
+    start: 'Commencer', stop: 'Abandonner',
+    timeLeft: 'Temps restant', puzzlesSolved: 'Puzzles resolus', currentPuzzle: 'Puzzle actuel',
+    hint: 'Indice', submit: 'Valider', correct: 'Correct!', wrong: 'Faux! Reessayez',
+    escaped: 'Vous vous etes echappe!', failed: 'Temps ecoule! Vous etes piege!',
+    puzzle1: 'Quel canal n\'a pas de chevauchement en 2,4GHz? (le plus bas)',
+    puzzle2: 'Quel protocole a remplace WPA2? (3 lettres + chiffre)',
+    puzzle3: 'Convertissez ce MAC hex pour trouver le vendeur: AA:BB:CC',
+    puzzle4: 'Quelle frequence (MHz) correspond au canal WiFi 6?',
+    puzzle5: 'Que signifie SSID? (premieres lettres)',
+    hint1: 'Les canaux non superposes sont 1, 6 et 11',
+    hint2: 'Il utilise SAE au lieu de PSK',
+    hint3: 'Les 3 premiers octets identifient le vendeur (OUI)',
+    hint4: 'Canal 1 = 2412, chaque canal ajoute 5 MHz',
+    hint5: 'Service Set ___________',
+    escapeReady: 'Salle prete! Resolvez les puzzles WiFi!',
+    howItWorksText: 'Vous etes enferme dans une salle virtuelle. Resolvez des puzzles WiFi avant la fin du temps. Chaque puzzle teste vos connaissances sur les canaux, protocoles, adresses MAC et terminologie reseau.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +169,26 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'غرفة الهروب WiFi', subtitle: 'حل ألغاز الشبكة للهروب',
+    disconnected: 'مغلق', connected: 'جارٍ الهروب...',
+    mainSection: 'غرفة الهروب', mainDesc: 'تحدي ألغاز WiFi',
+    sectionA: 'وحدة الألغاز', sectionB: 'أدلة الشبكة', sectionC: 'كيف يعمل',
+    start: 'ابدأ الهروب', stop: 'استسلم',
+    timeLeft: 'الوقت المتبقي', puzzlesSolved: 'ألغاز محلولة', currentPuzzle: 'اللغز الحالي',
+    hint: 'تلميح', submit: 'إرسال', correct: 'صحيح!', wrong: 'خطأ! حاول مرة أخرى',
+    escaped: 'لقد هربت!', failed: 'انتهى الوقت! أنت محاصر!',
+    puzzle1: 'ما رقم القناة بدون تداخل في 2.4GHz؟ (الأدنى)',
+    puzzle2: 'ما البروتوكول الذي حل محل WPA2؟ (3 أحرف + رقم)',
+    puzzle3: 'حوّل عنوان MAC هذا للعثور على المصنّع: AA:BB:CC',
+    puzzle4: 'ما تردد (MHz) القناة 6 في WiFi؟',
+    puzzle5: 'ما معنى SSID؟ (الأحرف الأولى)',
+    hint1: 'القنوات غير المتداخلة هي 1 و6 و11',
+    hint2: 'يستخدم SAE بدلاً من PSK',
+    hint3: 'أول 3 بايتات تحدد المصنّع (OUI)',
+    hint4: 'القناة 1 = 2412، كل قناة تضيف 5 MHz',
+    hint5: 'Service Set ___________',
+    escapeReady: 'غرفة الهروب جاهزة! حل ألغاز WiFi للهروب!',
+    howItWorksText: 'أنت محبوس في غرفة افتراضية. حل ألغاز WiFi قبل نفاد الوقت. كل لغز يختبر معرفتك بالقنوات والبروتوكولات وعناوين MAC والترددات ومصطلحات الشبكة.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1444,8 +1492,175 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initEscapeRoom();
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Escape Room ═══════ */
+const PUZZLES = [
+  { key: 'puzzle1', answer: '1', hintKey: 'hint1' },
+  { key: 'puzzle2', answer: 'wpa3', hintKey: 'hint2' },
+  { key: 'puzzle3', answer: 'aabbcc', hintKey: 'hint3' },
+  { key: 'puzzle4', answer: '2437', hintKey: 'hint4' },
+  { key: 'puzzle5', answer: 'ssid', hintKey: 'hint5' }
+];
+
+let escapeRunning = false, escapeTimer = null, escapeCanvas, escapeCtx;
+let timeRemaining = 300, currentPuzzleIdx = 0, solvedCount = 0;
+
+function initEscapeRoom() {
+  escapeCanvas = $('escapeCanvas');
+  if (escapeCanvas) escapeCtx = escapeCanvas.getContext('2d');
+
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  if (startBtn) startBtn.onclick = startEscape;
+  if (stopBtn) stopBtn.onclick = stopEscape;
+
+  const submitBtn = $('submitAnswer');
+  if (submitBtn) submitBtn.onclick = checkAnswer;
+
+  const hintBtn = $('hintBtn');
+  if (hintBtn) hintBtn.onclick = showHint;
+
+  const answerInput = $('answerInput');
+  if (answerInput) answerInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
+
+  drawEscapeViz();
+}
+
+function startEscape() {
+  if (escapeRunning) return;
+  escapeRunning = true;
+  timeRemaining = 300;
+  currentPuzzleIdx = 0;
+  solvedCount = 0;
+  setStatus(true);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = true;
+  if (p) p.disabled = false;
+  log(LANG[currentLang].escapeReady, 'success');
+  showPuzzle();
+  escapeTimer = setInterval(tick, 1000);
+  animateEscape();
+}
+
+function stopEscape() {
+  escapeRunning = false;
+  if (escapeTimer) clearInterval(escapeTimer);
+  setStatus(false);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = false;
+  if (p) p.disabled = true;
+}
+
+function tick() {
+  timeRemaining--;
+  updateTimerDisplay();
+  if (timeRemaining <= 0) {
+    stopEscape();
+    log(LANG[currentLang].failed, 'error');
+    const puzzleText = $('puzzleText');
+    if (puzzleText) puzzleText.textContent = LANG[currentLang].failed;
+  }
+}
+
+function updateTimerDisplay() {
+  const el = $('timerDisplay');
+  if (!el) return;
+  const m = Math.floor(timeRemaining / 60);
+  const s = timeRemaining % 60;
+  el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+  el.style.color = timeRemaining < 60 ? '#ef4444' : timeRemaining < 120 ? '#fbbf24' : 'var(--accent)';
+}
+
+function showPuzzle() {
+  const puzzleText = $('puzzleText');
+  const solvedEl = $('solvedCount');
+  const answerInput = $('answerInput');
+  if (currentPuzzleIdx >= PUZZLES.length) {
+    stopEscape();
+    if (puzzleText) puzzleText.textContent = LANG[currentLang].escaped;
+    log(LANG[currentLang].escaped, 'success');
+    return;
+  }
+  const p = PUZZLES[currentPuzzleIdx];
+  if (puzzleText) puzzleText.textContent = `#${currentPuzzleIdx + 1}: ${LANG[currentLang][p.key]}`;
+  if (solvedEl) solvedEl.textContent = `${solvedCount}/${PUZZLES.length}`;
+  if (answerInput) { answerInput.value = ''; answerInput.focus(); }
+}
+
+function checkAnswer() {
+  const input = $('answerInput');
+  if (!input || !escapeRunning) return;
+  const answer = input.value.trim().toLowerCase();
+  const puzzle = PUZZLES[currentPuzzleIdx];
+  if (answer === puzzle.answer) {
+    solvedCount++;
+    currentPuzzleIdx++;
+    log(`${LANG[currentLang].correct} (#${currentPuzzleIdx})`, 'success');
+    showPuzzle();
+  } else {
+    log(LANG[currentLang].wrong, 'error');
+    input.style.borderColor = '#ef4444';
+    setTimeout(() => { if (input) input.style.borderColor = ''; }, 1000);
+  }
+}
+
+function showHint() {
+  if (currentPuzzleIdx >= PUZZLES.length) return;
+  const p = PUZZLES[currentPuzzleIdx];
+  const hint = LANG[currentLang][p.hintKey];
+  log(`${LANG[currentLang].hint}: ${hint}`, 'info');
+  timeRemaining = Math.max(0, timeRemaining - 15); // penalty
+}
+
+function drawEscapeViz() {
+  if (!escapeCtx || !escapeCanvas) return;
+  const c = escapeCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  escapeCtx.scale(dpr, dpr);
+  const w = c.clientWidth, h = c.clientHeight;
+  escapeCtx.clearRect(0, 0, w, h);
+
+  // Draw lock visualization
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  const progress = solvedCount / PUZZLES.length;
+
+  // Lock body
+  escapeCtx.fillStyle = 'rgba(255,255,255,0.1)';
+  escapeCtx.fillRect(w / 2 - 40, h / 2 - 10, 80, 50);
+  escapeCtx.strokeStyle = accent;
+  escapeCtx.lineWidth = 2;
+  escapeCtx.strokeRect(w / 2 - 40, h / 2 - 10, 80, 50);
+
+  // Lock shackle
+  escapeCtx.beginPath();
+  escapeCtx.arc(w / 2, h / 2 - 10, 25, Math.PI, 2 * Math.PI);
+  escapeCtx.stroke();
+
+  // Progress bars (lock pins)
+  for (let i = 0; i < PUZZLES.length; i++) {
+    const px = w / 2 - 30 + i * 15;
+    const solved = i < solvedCount;
+    escapeCtx.fillStyle = solved ? '#22c55e' : 'rgba(255,255,255,0.2)';
+    escapeCtx.fillRect(px, h / 2, 10, 30);
+  }
+
+  // Label
+  escapeCtx.fillStyle = accent;
+  escapeCtx.font = '11px Orbitron, monospace';
+  escapeCtx.textAlign = 'center';
+  escapeCtx.fillText(`${Math.round(progress * 100)}% Unlocked`, w / 2, h - 10);
+}
+
+function animateEscape() {
+  if (!escapeRunning) return;
+  drawEscapeViz();
+  requestAnimationFrame(animateEscape);
+}

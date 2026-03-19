@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Antenna Farm Manager', subtitle: '🏗️ Manage an antenna farm. Track antennas, rotators, feedlines',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Farm Overview', mainDesc: 'Add, track and manage your antenna farm installations',
+    sectionA: 'Antenna Inventory', sectionB: 'Rotator Status', sectionC: 'Feedline Map',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Antenna Farm Manager?', faq_a1: 'Manage your entire antenna farm — track antennas, rotators, feedlines, towers, and maintenance schedules.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Add antennas to your farm using the Add Antenna button.',
+    howto_2: 'Click on an antenna to see its details and feedline routing.',
+    howto_3: 'Monitor rotator positions and SWR readings in real-time.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🏗️ Farm manager ready — manage your installations!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +100,32 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Gestionnaire de Ferme', subtitle: '🏗️ Gérez une ferme d\'antennes. Suivez antennes, rotateurs, lignes',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Vue d\'Ensemble', mainDesc: 'Ajoutez, suivez et gérez vos installations d\'antennes',
+    sectionA: 'Inventaire des Antennes', sectionB: 'État des Rotateurs', sectionC: 'Carte des Feedlines',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Gestionnaire de Ferme ?', faq_a1: 'Gérez votre ferme d\'antennes — suivez antennes, rotateurs, feedlines, tours et maintenance.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Ajoute des antennes à ta ferme avec le bouton Ajouter.',
+    howto_2: 'Clique sur une antenne pour voir ses détails.',
+    howto_3: 'Surveille les positions des rotateurs et le SWR en temps réel.',
+    howto_4: 'Utilise Paramètres (⚙️) pour le thème et la langue.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Données locales.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🏗️ Gestionnaire prêt — gérez vos installations !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +137,32 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مدير مزرعة الهوائيات', subtitle: '🏗️ أدِر مزرعة هوائيات. تتبع الهوائيات والدوّارات والخطوط',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'نظرة عامة', mainDesc: 'أضف وتتبع وأدِر منشآت الهوائيات الخاصة بك',
+    sectionA: 'جرد الهوائيات', sectionB: 'حالة الدوّارات', sectionC: 'خريطة خطوط التغذية',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو مدير مزرعة الهوائيات؟', faq_a1: 'أدِر مزرعة الهوائيات بالكامل — تتبع الهوائيات والدوّارات والخطوط والأبراج وجداول الصيانة.',
+    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا.',
+    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات واختر لغتك.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'أضف هوائيات إلى المزرعة باستخدام زر إضافة.',
+    howto_2: 'انقر على هوائي لرؤية تفاصيله ومسار التغذية.',
+    howto_3: 'راقب مواضع الدوّارات وقراءات SWR.',
+    howto_4: 'استخدم الإعدادات للمظهر واللغة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'بيانات محلية فقط.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🏗️ المدير جاهز — أدِر منشآتك!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,193 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ ANTENNA FARM MANAGER — SIMULATION ═══════ */
+
+const FARM_ANTENNAS = [
+  { id: 1, name: 'HF Yagi 20m', type: 'Yagi', band: '20m', freq: 14.2, height: 18, azimuth: 45, rotator: 'Yaesu G-800', feedline: 'LMR-400 30m', swr: 1.4, status: 'active' },
+  { id: 2, name: 'Wire Dipole 40m', type: 'Dipole', band: '40m', freq: 7.1, height: 12, azimuth: 0, rotator: 'None', feedline: 'RG-213 25m', swr: 1.6, status: 'active' },
+  { id: 3, name: 'VHF Collinear', type: 'Collinear', band: '2m', freq: 145, height: 15, azimuth: 0, rotator: 'None', feedline: 'LMR-400 15m', swr: 1.3, status: 'active' },
+  { id: 4, name: 'UHF Yagi 70cm', type: 'Yagi', band: '70cm', freq: 432, height: 16, azimuth: 180, rotator: 'Yaesu G-450', feedline: 'Ecoflex-10 20m', swr: 1.2, status: 'maintenance' },
+  { id: 5, name: '80m Inverted-V', type: 'Inv-V', band: '80m', freq: 3.6, height: 14, azimuth: 90, rotator: 'None', feedline: 'RG-8X 35m', swr: 1.8, status: 'active' },
+  { id: 6, name: '6m Halo', type: 'Halo', band: '6m', freq: 50.1, height: 10, azimuth: 0, rotator: 'None', feedline: 'RG-58 12m', swr: 2.1, status: 'needs-repair' }
+];
+
+let selectedAntenna = 0;
+
+function initFarmApp() {
+  const mc = $('mainControls');
+  mc.innerHTML = `
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Select Antenna</label>
+        <select id="farmSelect">${FARM_ANTENNAS.map((a,i) => `<option value="${i}">${a.name} (${a.band})</option>`).join('')}</select>
+      </div>
+      <div><label>View Mode</label>
+        <select id="viewMode"><option value="map">Farm Map</option><option value="status">Status Dashboard</option></select>
+      </div>
+    </div>
+    <button class="primary" id="farmBtn" style="width:100%">\u{1F3D7}\uFE0F Refresh Farm View</button>`;
+  $('farmBtn').addEventListener('click', refreshFarm);
+  $('farmSelect').addEventListener('change', e => { selectedAntenna = +e.target.value; });
+  drawFarmMap();
+}
+
+function refreshFarm() {
+  playSound('click');
+  const mode = $('viewMode').value;
+  if (mode === 'map') drawFarmMap(); else drawStatusDashboard();
+  drawInventoryList();
+  drawRotatorPanel();
+  showFeedlineMap();
+  const ant = FARM_ANTENNAS[selectedAntenna];
+  log(`Viewing: ${ant.name} | SWR: ${ant.swr}:1 | Status: ${ant.status}`, ant.status === 'active' ? 'success' : 'error');
+  const rb = $('resultBox');
+  rb.style.display = 'block';
+  rb.innerHTML = `
+    <div class="result-row"><span class="result-label">Antenna</span><span class="result-value">${ant.name}</span></div>
+    <div class="result-row"><span class="result-label">Type</span><span class="result-value">${ant.type}</span></div>
+    <div class="result-row"><span class="result-label">Band</span><span class="result-value">${ant.band} (${ant.freq} MHz)</span></div>
+    <div class="result-row"><span class="result-label">Height</span><span class="result-value">${ant.height} m</span></div>
+    <div class="result-row"><span class="result-label">Azimuth</span><span class="result-value">${ant.azimuth}\u00B0</span></div>
+    <div class="result-row"><span class="result-label">Rotator</span><span class="result-value">${ant.rotator}</span></div>
+    <div class="result-row"><span class="result-label">Feedline</span><span class="result-value">${ant.feedline}</span></div>
+    <div class="result-row"><span class="result-label">SWR</span><span class="result-value">${ant.swr}:1</span></div>
+    <div class="result-row"><span class="result-label">Status</span><span class="result-value" style="color:${ant.status === 'active' ? 'var(--success)' : 'var(--error)'}">${ant.status.toUpperCase()}</span></div>`;
+  playSound('success');
+}
+
+function drawFarmMap() {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0f0a'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#1a2a1a'; ctx.lineWidth = 0.5;
+  for (let i = 0; i < W; i += 25) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke(); }
+  for (let i = 0; i < H; i += 25) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke(); }
+  ctx.font = '12px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('ANTENNA FARM — SITE MAP', W / 2, 18);
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 2;
+  ctx.strokeRect(30, 30, W - 60, H - 50);
+  ctx.fillStyle = '#1a1a0a'; ctx.fillRect(W / 2 - 20, H - 40, 40, 20);
+  ctx.fillStyle = '#888'; ctx.font = '7px Tajawal'; ctx.fillText('SHACK', W / 2, H - 27);
+  FARM_ANTENNAS.forEach((ant, i) => {
+    const angle = (i / FARM_ANTENNAS.length) * Math.PI * 2;
+    const radius = 80 + (i % 2) * 40;
+    const x = W / 2 + radius * Math.cos(angle);
+    const y = H / 2 + radius * Math.sin(angle) - 10;
+    ctx.strokeStyle = '#555'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(W / 2, H - 30); ctx.lineTo(x, y); ctx.stroke();
+    ctx.setLineDash([]);
+    const colors = { active: '#33ff33', maintenance: '#ffaa00', 'needs-repair': '#ff4444' };
+    ctx.fillStyle = colors[ant.status] || '#888';
+    ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
+    if (i === selectedAntenna) {
+      ctx.strokeStyle = '#d4a03c'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(x, y, 12, 0, Math.PI * 2); ctx.stroke();
+    }
+    if (ant.rotator !== 'None') {
+      const azRad = ant.azimuth * Math.PI / 180 - Math.PI / 2;
+      ctx.strokeStyle = colors[ant.status]; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(x, y);
+      ctx.lineTo(x + 18 * Math.cos(azRad), y + 18 * Math.sin(azRad)); ctx.stroke();
+    }
+    ctx.fillStyle = '#ddd'; ctx.font = '7px Orbitron'; ctx.textAlign = 'center';
+    ctx.fillText(ant.name.substring(0, 12), x, y - 14);
+    ctx.fillStyle = '#888'; ctx.font = '6px Tajawal';
+    ctx.fillText(`${ant.height}m | ${ant.swr}:1`, x, y + 20);
+  });
+  ctx.fillStyle = '#33ff33'; ctx.font = '7px Tajawal'; ctx.textAlign = 'left';
+  ctx.fillText('\u25CF Active', 10, H - 8);
+  ctx.fillStyle = '#ffaa00'; ctx.fillText('\u25CF Maintenance', 70, H - 8);
+  ctx.fillStyle = '#ff4444'; ctx.fillText('\u25CF Needs Repair', 160, H - 8);
+}
+
+function drawStatusDashboard() {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '12px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('STATUS DASHBOARD', W / 2, 18);
+  FARM_ANTENNAS.forEach((ant, i) => {
+    const row = Math.floor(i / 2), col = i % 2;
+    const x = 15 + col * (W / 2), y = 35 + row * 80;
+    const colors = { active: '#33ff33', maintenance: '#ffaa00', 'needs-repair': '#ff4444' };
+    ctx.strokeStyle = colors[ant.status]; ctx.lineWidth = 1;
+    ctx.strokeRect(x, y, W / 2 - 25, 70);
+    ctx.fillStyle = '#fff'; ctx.font = '9px Orbitron'; ctx.textAlign = 'left';
+    ctx.fillText(ant.name, x + 8, y + 15);
+    ctx.fillStyle = '#888'; ctx.font = '8px Tajawal';
+    ctx.fillText(`${ant.band} | ${ant.freq} MHz | H:${ant.height}m`, x + 8, y + 30);
+    ctx.fillText(`Feedline: ${ant.feedline}`, x + 8, y + 42);
+    ctx.fillText(`Rotator: ${ant.rotator}`, x + 8, y + 54);
+    const swrW = Math.min(ant.swr / 3, 1) * 80;
+    ctx.fillStyle = ant.swr < 2 ? '#33ff33' : '#ff4444';
+    ctx.fillRect(x + W / 2 - 120, y + 58, swrW, 6);
+    ctx.fillStyle = '#aaa'; ctx.font = '7px Orbitron';
+    ctx.fillText(`SWR ${ant.swr}:1`, x + W / 2 - 120, y + 54);
+  });
+}
+
+function drawInventoryList() {
+  const sc = $('sectionAContent');
+  sc.innerHTML = FARM_ANTENNAS.map(a => `
+    <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:.78rem">
+      <span>${a.name}</span>
+      <span style="color:${a.status === 'active' ? 'var(--success)' : 'var(--error)'}">${a.status} | SWR ${a.swr}:1</span>
+    </div>`).join('');
+}
+
+function drawRotatorPanel() {
+  const cv = $('canvasA'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('ROTATOR STATUS', W / 2, 15);
+  const rotators = FARM_ANTENNAS.filter(a => a.rotator !== 'None');
+  rotators.forEach((ant, i) => {
+    const cx = 60 + i * 120, cy = H / 2 + 10, r = 35;
+    ctx.strokeStyle = '#444'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    for (let a = 0; a < 360; a += 45) {
+      const rad = a * Math.PI / 180 - Math.PI / 2;
+      ctx.fillStyle = '#555'; ctx.font = '6px Orbitron';
+      ctx.fillText(`${a}`, cx + (r + 8) * Math.cos(rad), cy + (r + 8) * Math.sin(rad) + 2);
+    }
+    const azRad = ant.azimuth * Math.PI / 180 - Math.PI / 2;
+    ctx.strokeStyle = '#33ff33'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r * 0.8 * Math.cos(azRad), cy + r * 0.8 * Math.sin(azRad)); ctx.stroke();
+    ctx.fillStyle = '#d4a03c'; ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '7px Orbitron'; ctx.textAlign = 'center';
+    ctx.fillText(ant.name.substring(0, 10), cx, cy + r + 18);
+    ctx.fillText(`${ant.azimuth}\u00B0`, cx, cy + r + 28);
+  });
+}
+
+function showFeedlineMap() {
+  const cv = $('canvasB'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('FEEDLINE LOSS ANALYSIS', W / 2, 15);
+  const pad = 40, gW = W - pad * 2, gH = H - pad * 2;
+  FARM_ANTENNAS.forEach((ant, i) => {
+    const bw = gW / FARM_ANTENNAS.length;
+    const x = pad + i * bw;
+    const lenMatch = ant.feedline.match(/(\d+)m/);
+    const len = lenMatch ? +lenMatch[1] : 20;
+    const lossPerM = ant.feedline.includes('LMR-400') ? 0.02 : ant.feedline.includes('RG-213') ? 0.05 : ant.feedline.includes('Ecoflex') ? 0.015 : 0.08;
+    const totalLoss = len * lossPerM * (ant.freq / 100);
+    const h = Math.min(totalLoss / 5, 1) * gH * 0.8;
+    ctx.fillStyle = totalLoss < 1 ? '#33ff33' : totalLoss < 2.5 ? '#ffaa00' : '#ff4444';
+    ctx.fillRect(x + 4, pad + gH - h, bw - 8, h);
+    ctx.fillStyle = '#fff'; ctx.font = '7px Orbitron'; ctx.textAlign = 'center';
+    ctx.fillText(totalLoss.toFixed(1) + 'dB', x + bw / 2, pad + gH - h - 5);
+    ctx.save(); ctx.translate(x + bw / 2, H - 5); ctx.rotate(-0.4);
+    ctx.fillStyle = '#aaa'; ctx.font = '6px Tajawal';
+    ctx.fillText(ant.name.substring(0, 10), 0, 0); ctx.restore();
+  });
+  $('sectionCContent').innerHTML = `<p><strong>Feedline Map</strong></p>` +
+    FARM_ANTENNAS.map(a => `<p style="font-size:.75rem">${a.name}: ${a.feedline} \u2014 ${a.rotator !== 'None' ? 'Rotatable' : 'Fixed'}</p>`).join('');
+}
+
+initFarmApp();

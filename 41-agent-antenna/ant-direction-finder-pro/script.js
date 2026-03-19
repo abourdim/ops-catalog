@@ -63,115 +63,106 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Direction Finder Pro', subtitle: '🧭 Multi-bearing triangulation with accuracy',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Direction Finder Pro', mainDesc: 'Professional RF direction finding with multi-bearing triangulation',
+    sectionA: 'Bearing Plot', sectionB: 'Antenna Array', sectionC: 'Target Map',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is Direction Finder Pro?', faq_a1: 'A professional RF direction finding simulator that uses multi-bearing triangulation to locate signal sources.',
+    faq_q2: 'How does triangulation work?', faq_a2: 'Take bearings from multiple positions. Where the bearing lines cross is the estimated target location.',
+    faq_q3: 'What is bearing accuracy?', faq_a3: 'Accuracy depends on antenna array quality, number of bearings taken, and environmental conditions.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    howto_1: 'Activate the direction finder system.', howto_2: 'Take bearings from the Bearing Plot section.',
+    howto_3: 'Configure antenna array parameters.', howto_4: 'View triangulated target on the map.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'EN/FR/AR with RTL.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data local.',
+    working: 'Working…', t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🧭 Direction finder ready!', logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    dfStat1: 'Status', dfStat2: 'Bearing', dfStat3: 'Bearings', dfStat4: 'Uptime',
+    dfActivate: 'Activate', dfAct1: 'Take Bearing', dfEmerg: 'Emergency',
+    dfSecA: 'Bearing Plot', dfSecABtn: 'Add Bearing', dfSecARst: 'Clear All',
+    dfSecB: 'Antenna Array Config', dfSecBBtn: 'Calibrate', dfSecBRst: 'Reset',
+    dfSecC: 'Target Map', dfSecCBtn: 'Triangulate', dfSecCRst: 'Clear Map',
+    activated: '🧭 Direction finder activated!', deactivated: '🧭 System deactivated',
+    scanning: '🔍 Taking bearing...', bearingTaken: '📐 Bearing recorded!',
+    emergency: '🚨 Emergency shutdown!', triangulated: '🎯 Target triangulated!',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Radiogoniomètre Pro', subtitle: '🧭 Triangulation multi-relèvements',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Radiogoniomètre Pro', mainDesc: 'Goniométrie RF professionnelle avec triangulation',
+    sectionA: 'Relèvements', sectionB: 'Réseau d\'Antennes', sectionC: 'Carte Cible',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    faq_q1: 'Qu\'est-ce que le Radiogoniomètre ?', faq_a1: 'Un simulateur professionnel de goniométrie RF par triangulation.',
+    faq_q2: 'Comment fonctionne la triangulation ?', faq_a2: 'Prenez des relèvements depuis plusieurs positions pour localiser la source.',
+    faq_q3: 'Quelle est la précision ?', faq_a3: 'Elle dépend du réseau d\'antennes et des conditions environnementales.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Activez le système.', howto_2: 'Prenez des relèvements.',
+    howto_3: 'Configurez le réseau d\'antennes.', howto_4: 'Visualisez la cible sur la carte.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'EN/FR/AR avec RTL.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout est local.',
+    working: 'En cours…', t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🧭 Radiogoniomètre prêt !', logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    dfStat1: 'Statut', dfStat2: 'Relèvement', dfStat3: 'Relèvements', dfStat4: 'Temps',
+    dfActivate: 'Activer', dfAct1: 'Relèvement', dfEmerg: 'Urgence',
+    activated: '🧭 Radiogoniomètre activé !', deactivated: '🧭 Système désactivé',
+    scanning: '🔍 Prise de relèvement...', bearingTaken: '📐 Relèvement enregistré !',
+    emergency: '🚨 Arrêt d\'urgence !', triangulated: '🎯 Cible triangulée !',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محدد الاتجاه المحترف', subtitle: '🧭 تثليث متعدد الاتجاهات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محدد الاتجاه المحترف', mainDesc: 'تحديد اتجاه RF احترافي بالتثليث',
+    sectionA: 'مخطط الاتجاهات', sectionB: 'مصفوفة الهوائيات', sectionC: 'خريطة الهدف',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    faq_q1: 'ما هو محدد الاتجاه؟', faq_a1: 'محاكي احترافي لتحديد اتجاه إشارات RF بالتثليث.',
+    faq_q2: 'كيف يعمل التثليث؟', faq_a2: 'خذ اتجاهات من مواقع متعددة لتحديد مصدر الإشارة.',
+    faq_q3: 'ما مدى الدقة؟', faq_a3: 'تعتمد على مصفوفة الهوائيات والظروف البيئية.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
+    howto_1: 'فعّل نظام تحديد الاتجاه.', howto_2: 'خذ اتجاهات من قسم المخطط.',
+    howto_3: 'اضبط معلمات مصفوفة الهوائيات.', howto_4: 'اعرض الهدف على الخريطة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'EN/FR/AR مع RTL.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات محلية.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🧭 محدد الاتجاه جاهز!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    dfStat1: 'الحالة', dfStat2: 'الاتجاه', dfStat3: 'الاتجاهات', dfStat4: 'وقت التشغيل',
+    dfActivate: 'تفعيل', dfAct1: 'أخذ اتجاه', dfEmerg: 'طوارئ',
+    activated: '🧭 تم تفعيل محدد الاتجاه!', deactivated: '🧭 تم إيقاف النظام',
+    scanning: '🔍 جارٍ أخذ الاتجاه...', bearingTaken: '📐 تم تسجيل الاتجاه!',
+    emergency: '🚨 إيقاف طارئ!', triangulated: '🎯 تم تثليث الهدف!',
   }
 };
 
@@ -1443,9 +1434,253 @@ function init() {
   initAR();
   initAIChat();
 
+  // Direction Finder simulation
+  initDirectionFinder();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ DIRECTION FINDER PRO SIMULATION ═══════ */
+
+let dfState = { active: false, bearings: [], signal: 0, uptime: 0, uptimeTimer: null, animFrame: null, targetX: 0.6, targetY: 0.4 };
+
+function initDirectionFinder() {
+  setStatus(false);
+  dfState.targetX = 0.3 + Math.random() * 0.4;
+  dfState.targetY = 0.2 + Math.random() * 0.4;
+  const secA = $('dfSecAContent');
+  if (secA) secA.innerHTML = '<canvas id="dfBearingCanvas" width="300" height="300" style="width:100%;max-width:300px;display:block;margin:0 auto;border-radius:50%;background:#0a0a1a"></canvas><div id="dfBearingList" style="margin-top:8px;font-size:11px"></div>';
+  const secB = $('dfSecBContent');
+  if (secB) secB.innerHTML = '<div>Array Elements: <input type="range" id="dfElements" min="2" max="8" value="4" style="width:100%;accent-color:var(--accent)"><span id="dfElVal">4</span></div><div style="margin-top:6px">Frequency (MHz): <input type="range" id="dfFreq" min="100" max="1000" value="450" style="width:100%;accent-color:var(--accent)"><span id="dfFreqVal">450</span></div><div id="dfArrayInfo" style="margin-top:8px;font-size:11px;opacity:.7"></div>';
+  const secC = $('dfSecCContent');
+  if (secC) secC.innerHTML = '<canvas id="dfMapCanvas" width="400" height="300" style="width:100%;border-radius:8px;background:#0a0a1a"></canvas><div id="dfTargetInfo" style="margin-top:8px;font-size:11px"></div>';
+  setupDfSliders();
+  drawDfCompass();
+  drawDfMap();
+  drawDfMainCanvas();
+}
+
+function setupDfSliders() {
+  const el = $('dfElements'), freq = $('dfFreq');
+  if (el) el.oninput = () => { $('dfElVal').textContent = el.value; updateArrayInfo(); };
+  if (freq) freq.oninput = () => { $('dfFreqVal').textContent = freq.value; updateArrayInfo(); };
+  updateArrayInfo();
+}
+
+function updateArrayInfo() {
+  const el = $('dfElements'), freq = $('dfFreq'), info = $('dfArrayInfo');
+  if (!el || !freq || !info) return;
+  const n = parseInt(el.value);
+  const f = parseInt(freq.value);
+  const beamwidth = Math.round(120 / n);
+  info.innerHTML = `Beamwidth: ~${beamwidth} deg | Wavelength: ${(300/f).toFixed(2)} m | Aperture: ${(n * 300/f/2).toFixed(2)} m`;
+}
+
+function dfActivate() {
+  if (dfState.active) {
+    dfState.active = false;
+    setStatus(false);
+    clearInterval(dfState.uptimeTimer);
+    if (dfState.animFrame) cancelAnimationFrame(dfState.animFrame);
+    $('dfS1').textContent = 'STANDBY';
+    $('dfS2').textContent = '--';
+    log(LANG[currentLang].deactivated, 'info');
+    return;
+  }
+  dfState.active = true;
+  dfState.uptime = 0;
+  setStatus(true);
+  $('dfS1').textContent = 'ACTIVE';
+  log(LANG[currentLang].activated, 'success');
+  dfState.uptimeTimer = setInterval(() => {
+    dfState.uptime++;
+    const m = String(Math.floor(dfState.uptime / 60)).padStart(2, '0');
+    const s = String(dfState.uptime % 60).padStart(2, '0');
+    $('dfS4').textContent = `${m}:${s}`;
+  }, 1000);
+  animateDf();
+}
+
+function animateDf() {
+  if (!dfState.active) return;
+  dfState.signal = 30 + Math.random() * 60;
+  const bar = $('dfBar');
+  if (bar) bar.style.width = dfState.signal + '%';
+  drawDfMainCanvas();
+  dfState.animFrame = requestAnimationFrame(animateDf);
+}
+
+function dfAction1() {
+  if (!dfState.active) { log('Activate system first!', 'error'); return; }
+  log(LANG[currentLang].scanning, 'info');
+  const bearing = Math.round(Math.atan2(dfState.targetY - 0.5, dfState.targetX - 0.5) * 180 / Math.PI + 90 + (Math.random() - 0.5) * 20);
+  const normBearing = ((bearing % 360) + 360) % 360;
+  setTimeout(() => {
+    dfState.bearings.push({ angle: normBearing, strength: 40 + Math.random() * 50, x: 0.5 + (Math.random() - 0.5) * 0.3, y: 0.8 + (Math.random() - 0.5) * 0.1 });
+    $('dfS2').textContent = normBearing + '\u00B0';
+    $('dfS3').textContent = dfState.bearings.length;
+    log(LANG[currentLang].bearingTaken + ` ${normBearing}\u00B0`, 'success');
+    playSound('success');
+    drawDfCompass();
+    drawDfMap();
+    updateBearingList();
+  }, 1500);
+}
+
+function updateBearingList() {
+  const el = $('dfBearingList');
+  if (!el) return;
+  el.innerHTML = dfState.bearings.map((b, i) => `#${i+1}: ${b.angle}\u00B0 (${Math.round(b.strength)}% signal)`).join('<br>');
+}
+
+function dfEmergency() {
+  dfState.active = false;
+  setStatus(false);
+  clearInterval(dfState.uptimeTimer);
+  if (dfState.animFrame) cancelAnimationFrame(dfState.animFrame);
+  $('dfS1').textContent = 'EMERGENCY';
+  log(LANG[currentLang].emergency, 'error');
+  playSound('error');
+}
+
+function dfSecAAction() {
+  dfAction1();
+}
+
+function dfSecAReset() {
+  dfState.bearings = [];
+  $('dfS3').textContent = '0';
+  drawDfCompass();
+  drawDfMap();
+  const el = $('dfBearingList');
+  if (el) el.innerHTML = '';
+  log('🧹 Bearings cleared', 'info');
+}
+
+function dfSecBAction() {
+  if (!dfState.active) { log('Activate system first!', 'error'); return; }
+  log('📡 Calibrating antenna array...', 'info');
+  showToast('Calibrating...', 2000);
+  setTimeout(() => {
+    log('✅ Array calibrated!', 'success');
+    playSound('success');
+  }, 2000);
+}
+
+function dfSecBReset() { updateArrayInfo(); log('🔄 Array reset to defaults', 'info'); }
+
+function dfSecCAction() {
+  if (dfState.bearings.length < 2) { log('Need at least 2 bearings to triangulate!', 'error'); return; }
+  const info = $('dfTargetInfo');
+  const errKm = (5 / dfState.bearings.length).toFixed(1);
+  if (info) info.innerHTML = `Target located! Estimated position: ${(dfState.targetX * 100).toFixed(0)}E, ${(dfState.targetY * 100).toFixed(0)}N<br>Accuracy: ~${errKm} km (${dfState.bearings.length} bearings)`;
+  log(LANG[currentLang].triangulated + ` Accuracy: ~${errKm} km`, 'success');
+  playSound('success');
+  drawDfMap(true);
+}
+
+function dfSecCReset() {
+  const info = $('dfTargetInfo');
+  if (info) info.innerHTML = '';
+  drawDfMap();
+}
+
+function drawDfCompass() {
+  const canvas = $('dfBearingCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height, cx = w/2, cy = h/2, r = Math.min(cx, cy) - 10;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(cx, cy, r * 0.6, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, r * 0.3, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = accent;
+  ctx.font = '12px Orbitron, monospace';
+  ctx.textAlign = 'center';
+  ['N','E','S','W'].forEach((d, i) => {
+    const a = i * Math.PI / 2 - Math.PI / 2;
+    ctx.fillText(d, cx + Math.cos(a) * (r + 8), cy + Math.sin(a) * (r + 8) + 4);
+  });
+  for (let i = 0; i < 360; i += 30) {
+    const a = i * Math.PI / 180 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * (r - 5), cy + Math.sin(a) * (r - 5));
+    ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+    ctx.strokeStyle = accent; ctx.stroke();
+  }
+  dfState.bearings.forEach((b, i) => {
+    const a = b.angle * Math.PI / 180 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+    ctx.strokeStyle = `hsl(${(i * 60) % 360}, 80%, 60%)`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+}
+
+function drawDfMap(showTarget) {
+  const canvas = $('dfMapCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+  for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+  dfState.bearings.forEach((b, i) => {
+    const ox = b.x * w, oy = b.y * h;
+    const a = b.angle * Math.PI / 180 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox + Math.cos(a) * w, oy + Math.sin(a) * h);
+    ctx.strokeStyle = `hsl(${(i * 60) % 360}, 80%, 60%)`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(ox, oy, 4, 0, Math.PI * 2); ctx.fill();
+  });
+  if (showTarget) {
+    const tx = dfState.targetX * w, ty = dfState.targetY * h;
+    ctx.fillStyle = '#f44336';
+    ctx.beginPath(); ctx.arc(tx, ty, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#f44336'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(tx, ty, 15, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(tx, ty, 22, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.font = '10px Orbitron'; ctx.fillText('TARGET', tx + 15, ty - 5);
+  }
+}
+
+function drawDfMainCanvas() {
+  const canvas = $('dfCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, w, h);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  const t = Date.now() / 1000;
+  for (let x = 0; x < w; x++) {
+    const sig = dfState.active ? dfState.signal / 100 : 0.05;
+    const y = h/2 + Math.sin(x * 0.08 + t * 4) * h * 0.35 * sig + Math.cos(x * 0.03 + t * 2) * h * 0.1 * sig;
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron, monospace';
+  ctx.fillText(`BEARINGS: ${dfState.bearings.length}`, 5, 15);
+  if (dfState.bearings.length > 0) ctx.fillText(`LAST: ${dfState.bearings[dfState.bearings.length-1].angle}\u00B0`, 5, 30);
+}

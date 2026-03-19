@@ -63,32 +63,35 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Dark Net Radio', subtitle: '📡 Build an offline encrypted WiFi mesh network',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Dark Net Radio — Private Mesh', mainDesc: 'ESP32 mesh topology: encrypted offline communication',
+    sectionA: 'A — How It Works', sectionB: 'B — Mesh Lab', sectionC: 'C — Challenges',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Dark Net Radio?', faq_a1: 'A simulator for ESP32-based private mesh networks. Build offline encrypted communication systems with no internet.',
+    faq_q2: 'How do I add mesh nodes?', faq_a2: 'Click "Add Node" or click on the canvas. Nodes auto-connect to nearby peers forming a mesh topology.',
+    faq_q3: 'How does encryption work?', faq_a3: 'Messages are encrypted using simulated AES-256. Type a message and click Send to see the encrypted output.',
+    faq_q4: 'What happens when a link breaks?', faq_a4: 'The mesh automatically discovers alternative routes. Messages find a new path if one exists.',
+    faq_q5: 'Is any real data transmitted?', faq_a5: 'No. Everything is simulated in your browser. No data leaves your device. Fully offline and private.',
+    howto_1: 'Add ESP32 nodes by clicking "Add Node" or clicking on the canvas.',
+    howto_2: 'Watch nodes auto-discover each other and form mesh links (animated).',
+    howto_3: 'Type a message and click Send to see AES-256 encryption in action.',
+    howto_4: 'Break links with "Break Link" and watch the mesh re-route around failures.',
+    howto_5: 'Use "Voice Sim" to simulate encrypted voice packets traversing the mesh.',
+    wiki_mesh_title: '🌐 Mesh Networking', wiki_mesh: 'A mesh network is a decentralized topology where each node relays data. If one path fails, data routes around it. ESP32 nodes create WiFi APs to form these meshes.',
+    wiki_ap_title: '📶 WiFi AP Mode', wiki_ap: 'In AP (Access Point) mode, the ESP32 creates its own WiFi network. Other devices connect directly — no router or internet needed. Range: ~50-100m outdoors.',
+    wiki_encrypt_title: '🔐 AES-256 Encryption', wiki_encrypt: 'AES-256 is a symmetric encryption standard used by governments. Each message is encrypted with a shared key, making interception useless without the key.',
+    wiki_offline_title: '📡 Offline Communication', wiki_offline: 'The entire mesh operates without internet. Messages hop node-to-node using WiFi direct connections. Untraceable, uncensorable, and fully autonomous.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'This simulator runs 100% in your browser. No data is sent anywhere. No tracking, no analytics. Local-first, privacy-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Dark Net Radio ready — build your mesh!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,34 +101,54 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    addNode: 'Add Node', removeNode: 'Remove Node', breakLink: 'Break Link',
+    voiceSim: 'Voice Sim', discover: 'Discover', sendMsg: 'Send',
+    msgPlaceholder: 'Type encrypted message...',
+    encryptHint: 'Encrypted output appears here...',
+    statNodes: 'nodes', statLinks: 'links', statMsgs: 'messages', statPackets: 'voice pkts',
+    step1Title: 'ESP32 Creates AP', step1Desc: 'Each ESP32 boots as a WiFi Access Point, broadcasting its own SSID. No internet needed.',
+    step2Title: 'Node Discovery', step2Desc: 'Nodes scan for nearby APs and auto-connect, building a mesh topology dynamically.',
+    step3Title: 'E2E Encryption', step3Desc: 'Messages are encrypted end-to-end using AES-256. Only sender and receiver can read them.',
+    step4Title: 'Mesh Routing', step4Desc: 'If a node fails, the mesh re-routes around it. Messages always find a path if one exists.',
+    labTitle: 'Interactive Mesh Lab', labDesc: 'Add/remove nodes, send encrypted messages, simulate voice, and break links to test resilience.',
+    labAdd: 'Add Mesh Node', labRemove: 'Remove Last Node', labBreak: 'Break Random Link', labHeal: 'Heal Network',
+    labMsgPlaceholder: 'Encrypted message...', labSend: 'Broadcast',
+    labVoice: 'Simulate Voice Packets', labFlood: 'Flood Test', labHint: 'Tip: Break links to test mesh resilience. The network auto-discovers new routes!',
+    ch1Title: 'Build a 5-Node Mesh', ch1Desc: 'Create a mesh network with at least 5 nodes. All must be connected. Watch the topology form!',
+    ch2Title: 'Survive a Link Failure', ch2Desc: 'Break a link and send a message that still arrives. Prove the mesh can route around failures!',
+    ch3Title: 'Encrypted Voice Call', ch3Desc: 'Send 10 voice packets across at least 3 hops. All packets must arrive encrypted and intact.',
+    chPending: 'Pending', chComplete: 'Complete ✓',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Dark Net Radio', subtitle: '📡 Réseau mesh WiFi chiffré hors ligne',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Dark Net Radio — Mesh Privé', mainDesc: 'Topologie mesh ESP32 : communication chiffrée hors ligne',
+    sectionA: 'A — Comment ça marche', sectionB: 'B — Labo Mesh', sectionC: 'C — Défis',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que Dark Net Radio ?', faq_a1: 'Un simulateur de réseaux mesh privés basés sur ESP32. Construisez des systèmes de communication chiffrés hors ligne.',
+    faq_q2: 'Comment ajouter des nœuds ?', faq_a2: 'Cliquez sur "Ajouter Nœud" ou sur le canvas. Les nœuds se connectent automatiquement.',
+    faq_q3: 'Comment fonctionne le chiffrement ?', faq_a3: 'Les messages sont chiffrés en AES-256 simulé. Tapez un message et envoyez pour voir le résultat.',
+    faq_q4: 'Que se passe-t-il si un lien casse ?', faq_a4: 'Le mesh découvre automatiquement des routes alternatives.',
+    faq_q5: 'Des données réelles sont transmises ?', faq_a5: 'Non. Tout est simulé dans votre navigateur. Aucune donnée ne quitte votre appareil.',
+    howto_1: 'Ajoutez des nœuds ESP32 en cliquant sur "Ajouter Nœud" ou sur le canvas.',
+    howto_2: 'Regardez les nœuds se découvrir et former des liens mesh (animé).',
+    howto_3: 'Tapez un message et cliquez Envoyer pour voir le chiffrement AES-256.',
+    howto_4: 'Cassez des liens avec "Casser Lien" et regardez le mesh re-router.',
+    howto_5: 'Utilisez "Sim Voix" pour simuler des paquets vocaux chiffrés.',
+    wiki_mesh_title: '🌐 Réseau Mesh', wiki_mesh: 'Un réseau mesh est une topologie décentralisée où chaque nœud relaie les données.',
+    wiki_ap_title: '📶 Mode AP WiFi', wiki_ap: 'En mode AP, l\'ESP32 crée son propre réseau WiFi. Portée : ~50-100m en extérieur.',
+    wiki_encrypt_title: '🔐 Chiffrement AES-256', wiki_encrypt: 'AES-256 est un standard de chiffrement symétrique utilisé par les gouvernements.',
+    wiki_offline_title: '📡 Communication Hors Ligne', wiki_offline: 'Le mesh fonctionne sans internet. Les messages sautent de nœud en nœud.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Ce simulateur fonctionne 100% dans votre navigateur. Aucune donnée envoyée.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Dark Net Radio prêt — construisez votre mesh !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -135,34 +158,54 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
+    addNode: 'Ajouter Nœud', removeNode: 'Supprimer Nœud', breakLink: 'Casser Lien',
+    voiceSim: 'Sim Voix', discover: 'Découvrir', sendMsg: 'Envoyer',
+    msgPlaceholder: 'Message chiffré...',
+    encryptHint: 'Le résultat chiffré apparaît ici...',
+    statNodes: 'nœuds', statLinks: 'liens', statMsgs: 'messages', statPackets: 'paquets voix',
+    step1Title: 'L\'ESP32 crée un AP', step1Desc: 'Chaque ESP32 démarre comme Point d\'Accès WiFi, diffusant son propre SSID.',
+    step2Title: 'Découverte des nœuds', step2Desc: 'Les nœuds scannent les AP proches et se connectent automatiquement.',
+    step3Title: 'Chiffrement E2E', step3Desc: 'Les messages sont chiffrés de bout en bout avec AES-256.',
+    step4Title: 'Routage Mesh', step4Desc: 'Si un nœud tombe, le mesh re-route autour. Les messages trouvent toujours un chemin.',
+    labTitle: 'Labo Mesh Interactif', labDesc: 'Ajoutez/supprimez des nœuds, envoyez des messages chiffrés, simulez la voix et cassez des liens.',
+    labAdd: 'Ajouter Nœud', labRemove: 'Supprimer Dernier', labBreak: 'Casser Lien Aléatoire', labHeal: 'Réparer Réseau',
+    labMsgPlaceholder: 'Message chiffré...', labSend: 'Diffuser',
+    labVoice: 'Simuler Paquets Voix', labFlood: 'Test d\'Inondation', labHint: 'Astuce : Cassez des liens pour tester la résilience du mesh !',
+    ch1Title: 'Construire un Mesh à 5 Nœuds', ch1Desc: 'Créez un réseau mesh avec au moins 5 nœuds. Tous doivent être connectés.',
+    ch2Title: 'Survivre à une Panne', ch2Desc: 'Cassez un lien et envoyez un message qui arrive quand même.',
+    ch3Title: 'Appel Voix Chiffré', ch3Desc: 'Envoyez 10 paquets voix à travers au moins 3 sauts.',
+    chPending: 'En attente', chComplete: 'Terminé ✓',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'راديو الشبكة المظلمة', subtitle: '📡 بناء شبكة mesh WiFi مشفرة بدون إنترنت',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'راديو الشبكة المظلمة — Mesh خاص', mainDesc: 'طوبولوجيا mesh ESP32: اتصال مشفر بدون إنترنت',
+    sectionA: 'أ — كيف يعمل', sectionB: 'ب — مختبر Mesh', sectionC: 'ج — التحديات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو راديو الشبكة المظلمة؟', faq_a1: 'محاكي لشبكات mesh خاصة قائمة على ESP32. بناء أنظمة اتصال مشفرة بدون إنترنت.',
+    faq_q2: 'كيف أضيف عقد mesh؟', faq_a2: 'انقر على "إضافة عقدة" أو على اللوحة. العقد تتصل تلقائيًا.',
+    faq_q3: 'كيف يعمل التشفير؟', faq_a3: 'الرسائل مشفرة بمحاكاة AES-256. اكتب رسالة وأرسلها لترى النتيجة.',
+    faq_q4: 'ماذا يحدث عند كسر رابط؟', faq_a4: 'الشبكة تكتشف تلقائيًا مسارات بديلة.',
+    faq_q5: 'هل يتم إرسال بيانات حقيقية؟', faq_a5: 'لا. كل شيء محاكاة في متصفحك. لا تغادر أي بيانات جهازك.',
+    howto_1: 'أضف عقد ESP32 بالنقر على "إضافة عقدة" أو على اللوحة.',
+    howto_2: 'شاهد العقد تكتشف بعضها وتشكل روابط mesh.',
+    howto_3: 'اكتب رسالة وانقر إرسال لترى تشفير AES-256.',
+    howto_4: 'اكسر الروابط بـ"كسر رابط" وشاهد إعادة التوجيه.',
+    howto_5: 'استخدم "محاكاة صوت" لمحاكاة حزم صوتية مشفرة.',
+    wiki_mesh_title: '🌐 شبكة Mesh', wiki_mesh: 'شبكة mesh هي طوبولوجيا لامركزية حيث كل عقدة تنقل البيانات.',
+    wiki_ap_title: '📶 وضع AP WiFi', wiki_ap: 'في وضع AP، ينشئ ESP32 شبكة WiFi خاصة به. المدى: ~50-100م في الخارج.',
+    wiki_encrypt_title: '🔐 تشفير AES-256', wiki_encrypt: 'AES-256 هو معيار تشفير متماثل تستخدمه الحكومات.',
+    wiki_offline_title: '📡 اتصال بدون إنترنت', wiki_offline: 'الشبكة تعمل بالكامل بدون إنترنت. الرسائل تقفز من عقدة لعقدة.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'هذا المحاكي يعمل 100% في متصفحك. لا بيانات مرسلة.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 راديو الشبكة المظلمة جاهز — ابنِ شبكتك!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +215,23 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    addNode: 'إضافة عقدة', removeNode: 'حذف عقدة', breakLink: 'كسر رابط',
+    voiceSim: 'محاكاة صوت', discover: 'اكتشاف', sendMsg: 'إرسال',
+    msgPlaceholder: 'رسالة مشفرة...',
+    encryptHint: 'النتيجة المشفرة تظهر هنا...',
+    statNodes: 'عقد', statLinks: 'روابط', statMsgs: 'رسائل', statPackets: 'حزم صوت',
+    step1Title: 'ESP32 ينشئ AP', step1Desc: 'كل ESP32 يبدأ كنقطة وصول WiFi، يبث SSID الخاص به.',
+    step2Title: 'اكتشاف العقد', step2Desc: 'العقد تفحص APs القريبة وتتصل تلقائيًا.',
+    step3Title: 'تشفير E2E', step3Desc: 'الرسائل مشفرة من طرف لطرف بـ AES-256.',
+    step4Title: 'توجيه Mesh', step4Desc: 'إذا سقطت عقدة، الشبكة تعيد التوجيه حولها.',
+    labTitle: 'مختبر Mesh تفاعلي', labDesc: 'أضف/احذف عقد، أرسل رسائل مشفرة، حاكِ الصوت واكسر الروابط.',
+    labAdd: 'إضافة عقدة', labRemove: 'حذف الأخيرة', labBreak: 'كسر رابط عشوائي', labHeal: 'إصلاح الشبكة',
+    labMsgPlaceholder: 'رسالة مشفرة...', labSend: 'بث',
+    labVoice: 'محاكاة حزم صوتية', labFlood: 'اختبار إغراق', labHint: 'نصيحة: اكسر الروابط لاختبار مرونة الشبكة!',
+    ch1Title: 'بناء Mesh من 5 عقد', ch1Desc: 'أنشئ شبكة mesh بـ5 عقد على الأقل. يجب أن تكون كلها متصلة.',
+    ch2Title: 'النجاة من عطل', ch2Desc: 'اكسر رابطًا وأرسل رسالة تصل رغم ذلك.',
+    ch3Title: 'مكالمة صوتية مشفرة', ch3Desc: 'أرسل 10 حزم صوتية عبر 3 قفزات على الأقل.',
+    chPending: 'قيد الانتظار', chComplete: 'مكتمل ✓',
   }
 };
 
@@ -1449,3 +1509,375 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════════════════════════════════════════════════════════
+   DARK NET RADIO — Mesh Network Simulation
+   ═══════════════════════════════════════════════════════════ */
+
+(function DarkNetRadioSim() {
+  const canvas = $('meshCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const voiceCanvas = $('voiceCanvas');
+  const voiceCtx = voiceCanvas ? voiceCanvas.getContext('2d') : null;
+
+  // Mesh state
+  let nodes = [];
+  let links = [];
+  let packets = [];
+  let msgCount = 0;
+  let voicePacketCount = 0;
+  let animId = null;
+  let dragNode = null;
+
+  // Challenge state
+  let ch1Done = false, ch2Done = false, ch3Done = false;
+  let ch2BrokenAndSent = false;
+  let ch3VoiceHops = 0;
+
+  const COLORS = ['#ef4444','#f59e0b','#22c55e','#3b82f6','#8b5cf6','#ec4899','#06b6d4','#10b981'];
+
+  function randName() {
+    const prefixes = ['ESP','NODE','RELAY','MESH','HUB'];
+    return prefixes[Math.floor(Math.random()*prefixes.length)] + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
+  }
+
+  function addNode(x, y) {
+    if (!x) x = 60 + Math.random() * (canvas.width - 120);
+    if (!y) y = 60 + Math.random() * (canvas.height - 120);
+    const node = { id: nodes.length, x, y, name: randName(), color: COLORS[nodes.length % COLORS.length], vx: 0, vy: 0 };
+    nodes.push(node);
+    autoLink(node);
+    updateStats();
+    log(`📡 Node ${node.name} joined the mesh`, 'success');
+    playSound('click');
+    checkChallenges();
+  }
+
+  function autoLink(node) {
+    const RANGE = 200;
+    nodes.forEach(n => {
+      if (n.id === node.id) return;
+      const d = Math.hypot(n.x - node.x, n.y - node.y);
+      if (d < RANGE && !links.find(l => (l.a === node.id && l.b === n.id) || (l.a === n.id && l.b === node.id))) {
+        links.push({ a: node.id, b: n.id, strength: 1 - d / RANGE, active: true });
+      }
+    });
+  }
+
+  function removeLastNode() {
+    if (nodes.length === 0) return;
+    const removed = nodes.pop();
+    links = links.filter(l => l.a !== removed.id && l.b !== removed.id);
+    updateStats();
+    log(`🗑️ Node ${removed.name} removed`, 'info');
+    playSound('click');
+  }
+
+  function breakRandomLink() {
+    const active = links.filter(l => l.active);
+    if (active.length === 0) return;
+    const link = active[Math.floor(Math.random() * active.length)];
+    link.active = false;
+    updateStats();
+    const nA = nodes[link.a], nB = nodes[link.b];
+    log(`⚡ Link broken: ${nA?.name} ↔ ${nB?.name}`, 'error');
+    playSound('error');
+    ch2BrokenAndSent = false;
+  }
+
+  function healNetwork() {
+    links.forEach(l => l.active = true);
+    // Re-link orphans
+    nodes.forEach(n => autoLink(n));
+    updateStats();
+    log('🩹 Network healed — all links restored', 'success');
+    playSound('success');
+  }
+
+  function fakeEncrypt(text) {
+    let out = '';
+    for (let i = 0; i < text.length; i++) {
+      out += ('0' + (text.charCodeAt(i) ^ 0x5A).toString(16)).slice(-2);
+    }
+    return out.toUpperCase();
+  }
+
+  function sendMessage(text) {
+    if (!text || nodes.length < 2) { log('Need at least 2 nodes and a message', 'error'); return; }
+    const from = nodes[0];
+    const to = nodes[nodes.length - 1];
+    const enc = fakeEncrypt(text);
+    const out = $('encryptOutput');
+    if (out) out.textContent = `🔐 ${enc}`;
+    // Find path using BFS
+    const path = bfs(from.id, to.id);
+    if (path) {
+      animatePacket(path, '#22c55e');
+      msgCount++;
+      log(`🔒 Encrypted: "${text}" → ${enc.substring(0,16)}...`, 'tx');
+      log(`📨 Route: ${path.map(i => nodes[i].name).join(' → ')}`, 'info');
+      if (!links.every(l => l.active)) ch2BrokenAndSent = true;
+    } else {
+      log('❌ No route found — mesh is partitioned', 'error');
+    }
+    updateStats();
+    checkChallenges();
+  }
+
+  function bfs(startId, endId) {
+    const visited = new Set();
+    const queue = [[startId]];
+    visited.add(startId);
+    while (queue.length) {
+      const path = queue.shift();
+      const current = path[path.length - 1];
+      if (current === endId) return path;
+      const neighbors = links.filter(l => l.active && (l.a === current || l.b === current))
+        .map(l => l.a === current ? l.b : l.a)
+        .filter(n => !visited.has(n));
+      for (const n of neighbors) {
+        visited.add(n);
+        queue.push([...path, n]);
+      }
+    }
+    return null;
+  }
+
+  function animatePacket(path, color) {
+    if (path.length < 2) return;
+    packets.push({ path, step: 0, progress: 0, color });
+  }
+
+  function simulateVoice() {
+    if (nodes.length < 2) { log('Need at least 2 nodes for voice', 'error'); return; }
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        const from = nodes[Math.floor(Math.random() * nodes.length)];
+        let to;
+        do { to = nodes[Math.floor(Math.random() * nodes.length)]; } while (to.id === from.id);
+        const path = bfs(from.id, to.id);
+        if (path) {
+          animatePacket(path, '#8b5cf6');
+          voicePacketCount++;
+          if (path.length >= 4) ch3VoiceHops++;
+          updateStats();
+        }
+      }, i * 300);
+    }
+    log('🎤 Voice packets transmitted', 'tx');
+    checkChallenges();
+  }
+
+  function floodTest() {
+    if (nodes.length < 2) return;
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const from = nodes[Math.floor(Math.random() * nodes.length)];
+        const to = nodes[Math.floor(Math.random() * nodes.length)];
+        if (from.id !== to.id) {
+          const path = bfs(from.id, to.id);
+          if (path) animatePacket(path, '#f59e0b');
+        }
+      }, i * 100);
+    }
+    log('🌊 Flood test — 20 packets released', 'info');
+  }
+
+  function discover() {
+    nodes.forEach(n => {
+      n.vx = (Math.random() - 0.5) * 2;
+      n.vy = (Math.random() - 0.5) * 2;
+    });
+    setTimeout(() => {
+      nodes.forEach(n => { n.vx = 0; n.vy = 0; });
+      links = [];
+      nodes.forEach(n => autoLink(n));
+      updateStats();
+      log('🔍 Discovery complete — topology updated', 'success');
+    }, 1000);
+  }
+
+  function updateStats() {
+    const sn = $('statNodes'), sl = $('statLinks'), sm = $('statMsgs'), sp = $('statPackets');
+    if (sn) sn.textContent = nodes.length;
+    if (sl) sl.textContent = links.filter(l => l.active).length;
+    if (sm) sm.textContent = msgCount;
+    if (sp) sp.textContent = voicePacketCount;
+  }
+
+  function checkChallenges() {
+    // Ch1: 5 connected nodes
+    if (!ch1Done && nodes.length >= 5) {
+      const allConnected = nodes.every(n => links.some(l => l.active && (l.a === n.id || l.b === n.id)));
+      if (allConnected) {
+        ch1Done = true;
+        const s = $('ch1Status');
+        if (s) { s.textContent = LANG[currentLang].chComplete || 'Complete ✓'; s.classList.add('done'); }
+        log('🏆 Challenge 1 complete: 5-node mesh built!', 'success');
+      }
+    }
+    // Ch2: broken link + successful send
+    if (!ch2Done && ch2BrokenAndSent) {
+      ch2Done = true;
+      const s = $('ch2Status');
+      if (s) { s.textContent = LANG[currentLang].chComplete || 'Complete ✓'; s.classList.add('done'); }
+      log('🏆 Challenge 2 complete: survived link failure!', 'success');
+    }
+    // Ch3: 10 voice packets with 3+ hops
+    if (!ch3Done && voicePacketCount >= 10 && ch3VoiceHops >= 5) {
+      ch3Done = true;
+      const s = $('ch3Status');
+      if (s) { s.textContent = LANG[currentLang].chComplete || 'Complete ✓'; s.classList.add('done'); }
+      log('🏆 Challenge 3 complete: encrypted voice call!', 'success');
+    }
+  }
+
+  // Drawing
+  function draw() {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    // Draw links
+    links.forEach(l => {
+      const a = nodes[l.a], b = nodes[l.b];
+      if (!a || !b) return;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = l.active ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.2)';
+      ctx.lineWidth = l.active ? 2 : 1;
+      if (!l.active) ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Draw packets
+    packets = packets.filter(p => {
+      if (p.step >= p.path.length - 1) return false;
+      p.progress += 0.03;
+      if (p.progress >= 1) { p.progress = 0; p.step++; }
+      if (p.step >= p.path.length - 1) return false;
+      const a = nodes[p.path[p.step]], b = nodes[p.path[p.step + 1]];
+      if (!a || !b) return false;
+      const px = a.x + (b.x - a.x) * p.progress;
+      const py = a.y + (b.y - a.y) * p.progress;
+      ctx.beginPath();
+      ctx.arc(px, py, 5, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      return true;
+    });
+
+    // Draw nodes
+    nodes.forEach(n => {
+      // Move if velocity
+      n.x += n.vx || 0;
+      n.y += n.vy || 0;
+      n.x = Math.max(20, Math.min(W - 20, n.x));
+      n.y = Math.max(20, Math.min(H - 20, n.y));
+
+      // Glow
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 18, 0, Math.PI * 2);
+      ctx.fillStyle = n.color + '33';
+      ctx.fill();
+
+      // Node circle
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 12, 0, Math.PI * 2);
+      ctx.fillStyle = n.color;
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = '#fff';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(n.name, n.x, n.y + 24);
+    });
+
+    // Voice waveform
+    if (voiceCtx && voicePacketCount > 0) {
+      const vW = voiceCanvas.width, vH = voiceCanvas.height;
+      voiceCtx.clearRect(0, 0, vW, vH);
+      voiceCtx.beginPath();
+      voiceCtx.strokeStyle = 'rgba(139,92,246,0.6)';
+      voiceCtx.lineWidth = 2;
+      const t = Date.now() / 200;
+      for (let x = 0; x < vW; x++) {
+        const y = vH / 2 + Math.sin(x * 0.05 + t) * 15 + Math.sin(x * 0.02 + t * 0.7) * 10;
+        x === 0 ? voiceCtx.moveTo(x, y) : voiceCtx.lineTo(x, y);
+      }
+      voiceCtx.stroke();
+    }
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  // Canvas click to add node
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const sx = canvas.width / rect.width;
+    const sy = canvas.height / rect.height;
+    addNode((e.clientX - rect.left) * sx, (e.clientY - rect.top) * sy);
+  });
+
+  // Canvas drag
+  canvas.addEventListener('mousedown', e => {
+    const rect = canvas.getBoundingClientRect();
+    const sx = canvas.width / rect.width;
+    const sy = canvas.height / rect.height;
+    const mx = (e.clientX - rect.left) * sx;
+    const my = (e.clientY - rect.top) * sy;
+    dragNode = nodes.find(n => Math.hypot(n.x - mx, n.y - my) < 16);
+    if (dragNode) e.stopPropagation();
+  });
+  canvas.addEventListener('mousemove', e => {
+    if (!dragNode) return;
+    const rect = canvas.getBoundingClientRect();
+    dragNode.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    dragNode.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+  });
+  canvas.addEventListener('mouseup', () => {
+    if (dragNode) { links = []; nodes.forEach(n => autoLink(n)); updateStats(); }
+    dragNode = null;
+  });
+
+  // Button bindings
+  const addBtn = $('addNodeBtn'); if (addBtn) addBtn.onclick = () => addNode();
+  const removeBtn = $('removeNodeBtn'); if (removeBtn) removeBtn.onclick = removeLastNode;
+  const breakBtn = $('breakLinkBtn'); if (breakBtn) breakBtn.onclick = breakRandomLink;
+  const voiceBtn = $('voiceBtn'); if (voiceBtn) voiceBtn.onclick = simulateVoice;
+  const discoverBtn = $('discoverBtn'); if (discoverBtn) discoverBtn.onclick = discover;
+  const sendBtn = $('sendMsgBtn'); if (sendBtn) sendBtn.onclick = () => sendMessage($('msgInput')?.value);
+  const msgInput = $('msgInput'); if (msgInput) msgInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(msgInput.value); });
+
+  // Lab buttons
+  const labAddBtn = $('labAddBtn'); if (labAddBtn) labAddBtn.onclick = () => addNode();
+  const labRemoveBtn = $('labRemoveBtn'); if (labRemoveBtn) labRemoveBtn.onclick = removeLastNode;
+  const labBreakBtn = $('labBreakBtn'); if (labBreakBtn) labBreakBtn.onclick = breakRandomLink;
+  const labHealBtn = $('labHealBtn'); if (labHealBtn) labHealBtn.onclick = healNetwork;
+  const labSendBtn = $('labSendBtn'); if (labSendBtn) labSendBtn.onclick = () => sendMessage($('labMsgInput')?.value);
+  const labVoiceBtn = $('labVoiceBtn'); if (labVoiceBtn) labVoiceBtn.onclick = simulateVoice;
+  const labFloodBtn = $('labFloodBtn'); if (labFloodBtn) labFloodBtn.onclick = floodTest;
+
+  // Start with 3 nodes
+  addNode(canvas.width * 0.25, canvas.height * 0.5);
+  addNode(canvas.width * 0.5, canvas.height * 0.3);
+  addNode(canvas.width * 0.75, canvas.height * 0.6);
+
+  setStatus(true);
+  draw();
+})();

@@ -63,27 +63,41 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Mesh vs Traditional', subtitle: '🔀 mesh · 📶 traditional · ⚡ compare',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Mesh vs Traditional WiFi', mainDesc: 'Compare mesh and traditional WiFi topologies side by side',
+    sectionA: 'Topology Canvas', sectionB: 'Performance Comparison', sectionC: 'Challenge',
+    meshMode: 'Mesh Network', tradMode: 'Traditional', splitMode: 'Split View',
+    coverage: 'Coverage', latency: 'Latency', throughput: 'Mbps',
+    startSim: 'Start Simulation', stopSim: 'Stop', resetSim: 'Reset',
+    canvasHint: 'Live network topology — nodes route packets in real-time',
+    perfHint: 'Throughput and latency comparison over time',
+    challenge1: 'What happens in a traditional WiFi network when the router fails?',
+    challenge2: 'Why does mesh WiFi have higher latency than traditional?',
+    challenge3: 'When is mesh WiFi better than traditional?',
+    revealBtn: 'Reveal',
+    challengeReveal1: 'All devices lose connectivity. In mesh, traffic reroutes through other nodes automatically.',
+    challengeReveal2: 'Each hop between mesh nodes adds processing delay. Packets may traverse multiple nodes.',
+    challengeReveal3: 'Large areas, thick walls, many rooms. Mesh self-heals and extends coverage.',
+    simStarted: 'Simulation running — comparing mesh vs traditional',
+    simStopped: 'Simulation stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is mesh WiFi?', faq_a1: 'Interconnected nodes relaying data to each other for seamless coverage without a single point of failure.',
+    faq_q2: 'What is traditional WiFi?', faq_a2: 'A star topology where all devices connect to a single router. Simple but limited range.',
+    faq_q3: 'Can ESP32 do mesh?', faq_a3: 'Yes! ESP-MDF enables ESP32 devices to form self-healing mesh networks.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select a view mode: Mesh, Traditional, or Split View.',
+    howto_2: 'Click Start Simulation to begin the comparison.',
+    howto_3: 'Watch the topology canvas for real-time packet routing.',
+    howto_4: 'Compare performance metrics: coverage, latency, throughput.',
+    wiki_mesh_title: '🔀 Mesh Networking', wiki_mesh: 'Nodes relay data cooperatively. Self-healing if one node fails.',
+    wiki_star_title: '📶 Star Topology', wiki_star: 'All devices connect to a central point. Simple but single point of failure.',
+    wiki_hop_title: '🔗 Hops', wiki_hop: 'Each relay between mesh nodes. More hops = more latency but better coverage.',
+    wiki_heal_title: '🩹 Self-Healing', wiki_heal: 'Mesh detects failed nodes and reroutes traffic automatically.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
@@ -94,84 +108,96 @@ const LANG = {
     soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Mesh vs Traditionnel', subtitle: '🔀 mesh · 📶 traditionnel · ⚡ comparer',
+    disconnected: 'Deconnecte', connected: 'Connecte',
+    mainSection: 'WiFi Mesh vs Traditionnel', mainDesc: 'Comparer les topologies mesh et traditionnelle cote a cote',
+    sectionA: 'Canvas Topologie', sectionB: 'Comparaison Performance', sectionC: 'Defi',
+    meshMode: 'Reseau Mesh', tradMode: 'Traditionnel', splitMode: 'Vue Double',
+    coverage: 'Couverture', latency: 'Latence', throughput: 'Mbps',
+    startSim: 'Lancer la Simulation', stopSim: 'Arreter', resetSim: 'Reinitialiser',
+    canvasHint: 'Topologie reseau en direct — les noeuds routent les paquets en temps reel',
+    perfHint: 'Comparaison debit et latence dans le temps',
+    challenge1: 'Que se passe-t-il dans un reseau WiFi traditionnel quand le routeur tombe en panne ?',
+    challenge2: 'Pourquoi le WiFi mesh a-t-il une latence plus elevee ?',
+    challenge3: 'Quand le WiFi mesh est-il meilleur que le traditionnel ?',
+    revealBtn: 'Reveler',
+    challengeReveal1: 'Tous les appareils perdent la connexion. En mesh, le trafic est rereroute automatiquement.',
+    challengeReveal2: 'Chaque saut entre noeuds mesh ajoute un delai. Les paquets peuvent traverser plusieurs noeuds.',
+    challengeReveal3: 'Grandes surfaces, murs epais. Le mesh s\'auto-repare et etend la couverture.',
+    simStarted: 'Simulation en cours — comparaison mesh vs traditionnel',
+    simStopped: 'Simulation arretee',
+    activityLog: 'Journal', eventsMsg: 'Evenements et messages',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme', settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    faq_q1: 'Qu\'est-ce que le WiFi mesh ?', faq_a1: 'Des noeuds interconnectes qui relaient les donnees pour une couverture sans point de defaillance unique.',
+    faq_q2: 'Qu\'est-ce que le WiFi traditionnel ?', faq_a2: 'Topologie en etoile ou tous les appareils se connectent a un routeur unique.',
+    faq_q3: 'L\'ESP32 peut-il faire du mesh ?', faq_a3: 'Oui ! ESP-MDF permet aux ESP32 de former des reseaux mesh auto-reparants.',
+    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Selectionne un mode de vue : Mesh, Traditionnel ou Vue Double.',
+    howto_2: 'Clique sur Lancer la Simulation pour commencer la comparaison.',
+    howto_3: 'Observe le canvas topologie pour le routage en temps reel.',
+    howto_4: 'Compare les metriques : couverture, latence, debit.',
+    wiki_mesh_title: '🔀 Reseau Mesh', wiki_mesh: 'Les noeuds relaient les donnees cooperativement. Auto-reparation si un noeud tombe.',
+    wiki_star_title: '📶 Topologie en Etoile', wiki_star: 'Tous connectes a un point central. Simple mais point de defaillance unique.',
+    wiki_hop_title: '🔗 Sauts', wiki_hop: 'Chaque relais entre noeuds mesh. Plus de sauts = plus de latence mais meilleure couverture.',
+    wiki_heal_title: '🩹 Auto-Reparation', wiki_heal: 'Le mesh detecte les noeuds en panne et reroute le trafic automatiquement.',
+    working: 'En cours…', t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Application prete !', logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'Mesh مقابل تقليدي', subtitle: '🔀 شبكي · 📶 تقليدي · ⚡ قارن',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'WiFi شبكي مقابل تقليدي', mainDesc: 'مقارنة طوبولوجيا الشبكة الشبكية والتقليدية جنباً إلى جنب',
+    sectionA: 'لوحة الطوبولوجيا', sectionB: 'مقارنة الأداء', sectionC: 'تحدي',
+    meshMode: 'شبكة Mesh', tradMode: 'تقليدي', splitMode: 'عرض مزدوج',
+    coverage: 'تغطية', latency: 'زمن وصول', throughput: 'ميغابت/ث',
+    startSim: 'بدء المحاكاة', stopSim: 'إيقاف', resetSim: 'إعادة ضبط',
+    canvasHint: 'طوبولوجيا حية — العقد توجه الحزم في الوقت الحقيقي',
+    perfHint: 'مقارنة الإنتاجية وزمن الوصول عبر الزمن',
+    challenge1: 'ماذا يحدث في شبكة WiFi تقليدية عندما يتعطل الراوتر؟',
+    challenge2: 'لماذا يكون زمن الوصول في WiFi الشبكي أعلى من التقليدي؟',
+    challenge3: 'متى يكون WiFi الشبكي أفضل من التقليدي؟',
+    revealBtn: 'كشف',
+    challengeReveal1: 'تفقد جميع الأجهزة الاتصال. في الشبكي، يُعاد توجيه الحركة تلقائياً.',
+    challengeReveal2: 'كل قفزة بين عقد Mesh تضيف تأخيراً. قد تعبر الحزم عدة عقد.',
+    challengeReveal3: 'المساحات الكبيرة والجدران السميكة. Mesh يعالج نفسه ويوسع التغطية.',
+    simStarted: 'المحاكاة تعمل — مقارنة شبكي مقابل تقليدي',
+    simStopped: 'المحاكاة متوقفة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    faq_q1: 'ما هو WiFi الشبكي؟', faq_a1: 'عقد مترابطة تنقل البيانات لبعضها لتغطية سلسة بدون نقطة فشل واحدة.',
+    faq_q2: 'ما هو WiFi التقليدي؟', faq_a2: 'طوبولوجيا نجمية حيث تتصل جميع الأجهزة براوتر واحد.',
+    faq_q3: 'هل يمكن لـ ESP32 عمل شبكة mesh؟', faq_a3: 'نعم! ESP-MDF يمكّن أجهزة ESP32 من تشكيل شبكات mesh ذاتية الإصلاح.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
+    howto_1: 'اختر وضع العرض: شبكي، تقليدي أو عرض مزدوج.',
+    howto_2: 'اضغط بدء المحاكاة لبدء المقارنة.',
+    howto_3: 'شاهد لوحة الطوبولوجيا لتوجيه الحزم الحي.',
+    howto_4: 'قارن مقاييس الأداء: التغطية وزمن الوصول والإنتاجية.',
+    wiki_mesh_title: '🔀 شبكة Mesh', wiki_mesh: 'العقد تنقل البيانات تعاونياً. إصلاح ذاتي إذا فشلت عقدة.',
+    wiki_star_title: '📶 طوبولوجيا نجمية', wiki_star: 'جميع الأجهزة متصلة بنقطة مركزية. بسيطة لكن نقطة فشل واحدة.',
+    wiki_hop_title: '🔗 القفزات', wiki_hop: 'كل نقل بين عقد mesh. قفزات أكثر = تأخير أكثر لكن تغطية أفضل.',
+    wiki_heal_title: '🩹 الإصلاح الذاتي', wiki_heal: 'Mesh يكتشف العقد المعطلة ويعيد توجيه الحركة تلقائياً.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 التطبيق جاهز!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
   }
 };
 
@@ -1443,9 +1469,301 @@ function init() {
   initAR();
   initAIChat();
 
+  // App-specific init
+  initApp();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ MESH VS TRADITIONAL SIMULATION ═══════ */
+
+let simMode = 'mesh'; // mesh, traditional, split
+let simRunning = false;
+let simTimer = null;
+let simCanvas, simCtx, perfCanvas, perfCtx;
+let meshNodes = [];
+let tradNodes = [];
+let packets = [];
+let perfData = { mesh: [], trad: [] };
+
+const MESH_POSITIONS = [
+  {x:0.5,y:0.15},{x:0.2,y:0.35},{x:0.8,y:0.35},{x:0.35,y:0.6},{x:0.65,y:0.6},{x:0.5,y:0.85}
+];
+const TRAD_POSITIONS = [
+  {x:0.5,y:0.2},{x:0.2,y:0.5},{x:0.4,y:0.5},{x:0.6,y:0.5},{x:0.8,y:0.5},{x:0.5,y:0.8}
+];
+
+function revealChallenge(idx) {
+  const el = $('answer' + idx);
+  if (!el) return;
+  el.classList.toggle('visible');
+  playSound('click');
+}
+
+function setSimMode(mode) {
+  simMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  if (mode === 'mesh') $('tabMesh').classList.add('active');
+  else if (mode === 'traditional') $('tabTraditional').classList.add('active');
+  else $('tabSplit').classList.add('active');
+  log(`🔀 Mode: ${mode}`, 'info');
+  playSound('click');
+}
+
+function initSimCanvas() {
+  simCanvas = $('simCanvas');
+  if (!simCanvas) return;
+  simCtx = simCanvas.getContext('2d');
+  simCanvas.width = simCanvas.offsetWidth || 400;
+  simCanvas.height = 280;
+
+  function drawSim() {
+    const W = simCanvas.width, H = simCanvas.height;
+    simCtx.fillStyle = '#0a0a1a';
+    simCtx.fillRect(0, 0, W, H);
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+    if (simMode === 'split') {
+      simCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+      simCtx.beginPath();
+      simCtx.moveTo(W/2, 0);
+      simCtx.lineTo(W/2, H);
+      simCtx.stroke();
+      simCtx.fillStyle = '#666';
+      simCtx.font = '10px Orbitron, monospace';
+      simCtx.textAlign = 'center';
+      simCtx.fillText('MESH', W*0.25, 16);
+      simCtx.fillText('TRADITIONAL', W*0.75, 16);
+      drawMeshNetwork(simCtx, 0, 0, W/2, H, accent);
+      drawTradNetwork(simCtx, W/2, 0, W/2, H, accent);
+    } else if (simMode === 'mesh') {
+      drawMeshNetwork(simCtx, 0, 0, W, H, accent);
+    } else {
+      drawTradNetwork(simCtx, 0, 0, W, H, accent);
+    }
+
+    // Draw packets
+    for (let i = packets.length - 1; i >= 0; i--) {
+      const p = packets[i];
+      p.progress += 0.02;
+      if (p.progress >= 1) { packets.splice(i, 1); continue; }
+      const x = p.sx + (p.ex - p.sx) * p.progress;
+      const y = p.sy + (p.ey - p.sy) * p.progress;
+      simCtx.globalAlpha = 1 - p.progress;
+      simCtx.beginPath();
+      simCtx.arc(x, y, 3, 0, Math.PI * 2);
+      simCtx.fillStyle = p.color;
+      simCtx.fill();
+    }
+    simCtx.globalAlpha = 1;
+    requestAnimationFrame(drawSim);
+  }
+  requestAnimationFrame(drawSim);
+}
+
+function drawMeshNetwork(ctx, ox, oy, w, h, accent) {
+  const nodes = MESH_POSITIONS.map(p => ({x: ox + p.x * w, y: oy + p.y * h}));
+  // Draw mesh links (all-to-adjacent)
+  ctx.strokeStyle = 'rgba(52,199,89,0.3)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+      if (d < w * 0.5) {
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  // Draw nodes
+  nodes.forEach((n, i) => {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, i === 0 ? 12 : 8, 0, Math.PI * 2);
+    ctx.fillStyle = i === 0 ? '#34c759' : accent;
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.font = '7px Orbitron, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(i === 0 ? 'ROOT' : 'N' + i, n.x, n.y + 20);
+  });
+}
+
+function drawTradNetwork(ctx, ox, oy, w, h, accent) {
+  const router = {x: ox + w * 0.5, y: oy + h * 0.2};
+  const clients = TRAD_POSITIONS.slice(1).map(p => ({x: ox + p.x * w, y: oy + p.y * h}));
+  // Draw star links
+  ctx.strokeStyle = 'rgba(74,144,217,0.3)';
+  ctx.lineWidth = 1;
+  clients.forEach(c => {
+    ctx.beginPath();
+    ctx.moveTo(router.x, router.y);
+    ctx.lineTo(c.x, c.y);
+    ctx.stroke();
+  });
+  // Router
+  ctx.beginPath();
+  ctx.arc(router.x, router.y, 14, 0, Math.PI * 2);
+  ctx.fillStyle = '#4a90d9';
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.fillStyle = '#fff';
+  ctx.font = '7px Orbitron, monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('ROUTER', router.x, router.y + 24);
+  // Clients
+  clients.forEach((c, i) => {
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 7, 0, Math.PI * 2);
+    ctx.fillStyle = accent;
+    ctx.fill();
+    ctx.fillStyle = '#ccc';
+    ctx.fillText('D' + (i+1), c.x, c.y + 18);
+  });
+}
+
+function initPerfCanvas() {
+  perfCanvas = $('perfCanvas');
+  if (!perfCanvas) return;
+  perfCtx = perfCanvas.getContext('2d');
+  perfCanvas.width = perfCanvas.offsetWidth || 400;
+  perfCanvas.height = 200;
+
+  function drawPerf() {
+    const W = perfCanvas.width, H = perfCanvas.height;
+    perfCtx.fillStyle = '#0a0a1a';
+    perfCtx.fillRect(0, 0, W, H);
+    // Mesh line (green)
+    drawPerfLine(perfCtx, perfData.mesh, W, H, '#34c759');
+    // Trad line (blue)
+    drawPerfLine(perfCtx, perfData.trad, W, H, '#4a90d9');
+    // Legend
+    perfCtx.fillStyle = '#34c759';
+    perfCtx.fillRect(10, 8, 12, 8);
+    perfCtx.fillStyle = '#4a90d9';
+    perfCtx.fillRect(10, 20, 12, 8);
+    perfCtx.fillStyle = '#ccc';
+    perfCtx.font = '8px Orbitron, monospace';
+    perfCtx.textAlign = 'left';
+    perfCtx.fillText('Mesh', 26, 16);
+    perfCtx.fillText('Traditional', 26, 28);
+    requestAnimationFrame(drawPerf);
+  }
+  requestAnimationFrame(drawPerf);
+}
+
+function drawPerfLine(ctx, data, W, H, color) {
+  if (data.length < 2) return;
+  const max = Math.max(...data, 1);
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  data.forEach((v, i) => {
+    const x = (i / Math.max(data.length - 1, 1)) * W;
+    const y = H - 20 - (v / max) * (H - 40);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+}
+
+function updateMetrics() {
+  const meshCov = 85 + Math.random() * 10;
+  const tradCov = 55 + Math.random() * 15;
+  const meshLat = 15 + Math.random() * 20;
+  const tradLat = 5 + Math.random() * 8;
+  const meshTput = 80 + Math.random() * 40;
+  const tradTput = 150 + Math.random() * 50;
+
+  const cov = simMode === 'mesh' ? meshCov : simMode === 'traditional' ? tradCov : meshCov;
+  const lat = simMode === 'mesh' ? meshLat : simMode === 'traditional' ? tradLat : meshLat;
+  const tput = simMode === 'mesh' ? meshTput : simMode === 'traditional' ? tradTput : meshTput;
+
+  const covEl = $('coveragePct'), latEl = $('latencyMs'), tputEl = $('throughputVal');
+  if (covEl) covEl.textContent = Math.round(cov) + '%';
+  if (latEl) latEl.textContent = Math.round(lat) + 'ms';
+  if (tputEl) tputEl.textContent = Math.round(tput);
+
+  const bc = $('barCoverage'), bl = $('barLatency'), bt = $('barThroughput');
+  if (bc) bc.style.width = cov + '%';
+  if (bl) bl.style.width = (lat / 40 * 100) + '%';
+  if (bt) bt.style.width = (tput / 200 * 100) + '%';
+
+  perfData.mesh.push(meshTput);
+  perfData.trad.push(tradTput);
+  if (perfData.mesh.length > 60) perfData.mesh.shift();
+  if (perfData.trad.length > 60) perfData.trad.shift();
+
+  // Spawn packet animation
+  if (simCanvas) {
+    const W = simCanvas.width, H = simCanvas.height;
+    const src = Math.floor(Math.random() * 5) + 1;
+    const positions = simMode === 'traditional' ? TRAD_POSITIONS : MESH_POSITIONS;
+    const s = positions[src] || positions[1];
+    const e = positions[0];
+    const offX = simMode === 'split' ? (Math.random() > 0.5 ? W/2 : 0) : 0;
+    const scaleW = simMode === 'split' ? W/2 : W;
+    packets.push({
+      sx: offX + s.x * scaleW, sy: s.y * H,
+      ex: offX + e.x * scaleW, ey: e.y * H,
+      progress: 0, color: simMode === 'traditional' ? '#4a90d9' : '#34c759'
+    });
+  }
+}
+
+function doSimTick() {
+  if (!simRunning) return;
+  updateMetrics();
+  const delay = 500 + Math.random() * 1000;
+  simTimer = setTimeout(doSimTick, delay);
+}
+
+function startSim() {
+  simRunning = true;
+  setStatus(true);
+  log(LANG[currentLang].simStarted, 'success');
+  showToast(LANG[currentLang].simStarted, 2000);
+  doSimTick();
+}
+
+function stopSim() {
+  simRunning = false;
+  if (simTimer) { clearTimeout(simTimer); simTimer = null; }
+  setStatus(false);
+  log(LANG[currentLang].simStopped, 'info');
+}
+
+function resetSim() {
+  stopSim();
+  perfData = { mesh: [], trad: [] };
+  packets = [];
+  const covEl = $('coveragePct'), latEl = $('latencyMs'), tputEl = $('throughputVal');
+  if (covEl) covEl.textContent = '0%';
+  if (latEl) latEl.textContent = '0ms';
+  if (tputEl) tputEl.textContent = '0';
+  ['barCoverage','barLatency','barThroughput'].forEach(id => {
+    const el = $(id); if (el) el.style.width = '0%';
+  });
+}
+
+function initApp() {
+  initSimCanvas();
+  initPerfCanvas();
+  const startBtn = $('startBtn'), stopBtn = $('stopBtn'), resetBtn = $('resetBtn');
+  if (startBtn) startBtn.onclick = startSim;
+  if (stopBtn) stopBtn.onclick = stopSim;
+  if (resetBtn) resetBtn.onclick = resetSim;
+  const tabM = $('tabMesh'), tabT = $('tabTraditional'), tabS = $('tabSplit');
+  if (tabM) tabM.onclick = () => setSimMode('mesh');
+  if (tabT) tabT.onclick = () => setSimMode('traditional');
+  if (tabS) tabS.onclick = () => setSimMode('split');
+}

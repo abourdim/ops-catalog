@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Satellite Antenna Tracker', subtitle: '🛰️ Point antennas at satellites in real-time',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Satellite Tracker', mainDesc: 'Enter coordinates and satellite to calculate azimuth and elevation',
+    sectionA: 'Sky Map', sectionB: 'Signal Strength', sectionC: 'Satellite Info',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Satellite Antenna Tracker?', faq_a1: 'Calculate azimuth and elevation to point dish or Yagi antennas at geostationary and orbiting satellites.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -100,16 +100,16 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Traqueur Satellite', subtitle: '🛰️ Pointer les antennes vers les satellites',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Traqueur Satellite', mainDesc: 'Entrez les coordonnées et le satellite pour calculer azimut et élévation',
+    sectionA: 'Carte du Ciel', sectionB: 'Force du Signal', sectionC: 'Info Satellite',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Traqueur Satellite ?', faq_a1: 'Calculez l\'azimut et l\'élévation pour pointer les paraboles ou Yagi vers les satellites géostationnaires.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -137,16 +137,16 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'متتبع الأقمار الصناعية', subtitle: '🛰️ توجيه الهوائيات نحو الأقمار الصناعية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'متتبع الأقمار', mainDesc: 'أدخل الإحداثيات والقمر لحساب السمت والارتفاع',
+    sectionA: 'خريطة السماء', sectionB: 'قوة الإشارة', sectionC: 'معلومات القمر',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو متتبع الأقمار الصناعية؟', faq_a1: 'احسب السمت والارتفاع لتوجيه أطباق الهوائي أو ياغي نحو الأقمار الصناعية.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -1449,3 +1449,221 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SATELLITE ANTENNA TRACKER SIMULATION ═══════ */
+
+(function() {
+  const DEG = Math.PI / 180;
+  const RAD = 180 / Math.PI;
+  const RE = 6371; // Earth radius km
+  const GEO_ALT = 35786; // Geostationary altitude km
+
+  const SATELLITES = [
+    { name: 'Astra 19.2E', lon: 19.2 },
+    { name: 'Hotbird 13E', lon: 13.0 },
+    { name: 'Nilesat 7W', lon: -7.0 },
+    { name: 'Arabsat 26E', lon: 26.0 },
+    { name: 'Turksat 42E', lon: 42.0 },
+    { name: 'Eutelsat 5W', lon: -5.0 },
+    { name: 'Galaxy 19 (97W)', lon: -97.0 },
+    { name: 'Intelsat 17 (66E)', lon: 66.0 },
+  ];
+
+  function waitForDOM(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  waitForDOM(function() {
+    const mc = document.getElementById('mainControls');
+    if (!mc) return;
+    const satOpts = SATELLITES.map((s, i) => `<option value="${i}">${s.name}</option>`).join('');
+    mc.innerHTML = `
+      <div class="control-section">
+        <div class="grid-2">
+          <div><label>Your Latitude</label><input type="number" id="satLat" value="33.97" min="-90" max="90" step="0.01"></div>
+          <div><label>Your Longitude</label><input type="number" id="satLon" value="-6.85" min="-180" max="180" step="0.01"></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Satellite</label><select id="satSelect">${satOpts}</select></div>
+          <div><label>Dish Size (m)</label><input type="number" id="satDish" value="0.9" min="0.3" max="5" step="0.1"></div>
+        </div>
+        <div style="margin-top:10px;"><button class="primary" id="satCalcBtn" style="width:100%">🛰️ Track Satellite</button></div>
+      </div>`;
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const canvasA = document.getElementById('canvasA');
+    const ctxA = canvasA ? canvasA.getContext('2d') : null;
+    const canvasB = document.getElementById('canvasB');
+    const ctxB = canvasB ? canvasB.getContext('2d') : null;
+    const resultBox = document.getElementById('resultBox');
+    const secC = document.getElementById('sectionCContent');
+
+    function calcSat() {
+      const lat = parseFloat(document.getElementById('satLat').value) || 33.97;
+      const lon = parseFloat(document.getElementById('satLon').value) || -6.85;
+      const idx = parseInt(document.getElementById('satSelect').value) || 0;
+      const dish = parseFloat(document.getElementById('satDish').value) || 0.9;
+      const sat = SATELLITES[idx];
+      const dLon = (sat.lon - lon) * DEG;
+      const latR = lat * DEG;
+      const cosC = Math.cos(latR) * Math.cos(dLon);
+      const el = Math.atan((cosC - RE / (RE + GEO_ALT)) / Math.sqrt(1 - cosC * cosC)) * RAD;
+      const az = 180 + Math.atan2(Math.tan(dLon), Math.sin(latR)) * RAD;
+      const azNorm = ((az % 360) + 360) % 360;
+      const d = (RE + GEO_ALT) * Math.sqrt(1 + Math.pow(RE / (RE + GEO_ALT), 2) - 2 * (RE / (RE + GEO_ALT)) * cosC);
+      const fspl = 20 * Math.log10(d * 1000) + 20 * Math.log10(11.7e9) + 20 * Math.log10(4 * Math.PI / 299792458);
+      const gainDish = 10 * Math.log10(Math.pow(Math.PI * dish / (299792458 / 11.7e9), 2) * 0.55);
+      const cnr = 52 - fspl + gainDish + 30;
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div class="result-row"><span class="result-label">Satellite</span><span class="result-value">${sat.name}</span></div>
+          <div class="result-row"><span class="result-label">Azimuth</span><span class="result-value">${azNorm.toFixed(1)}deg</span></div>
+          <div class="result-row"><span class="result-label">Elevation</span><span class="result-value">${el.toFixed(1)}deg</span></div>
+          <div class="result-row"><span class="result-label">Distance</span><span class="result-value">${d.toFixed(0)} km</span></div>
+          <div class="result-row"><span class="result-label">Free Space Loss</span><span class="result-value">${fspl.toFixed(1)} dB</span></div>
+          <div class="result-row"><span class="result-label">Dish Gain (Ku)</span><span class="result-value">${gainDish.toFixed(1)} dBi</span></div>
+          <div class="result-row"><span class="result-label">Est. C/N</span><span class="result-value">${cnr.toFixed(1)} dB</span></div>`;
+      }
+
+      drawCompass(ctx, canvas, azNorm, el, sat.name);
+      drawSkyMap(ctxA, canvasA, lat, lon);
+      drawSignal(ctxB, canvasB, el, gainDish, cnr);
+      fillNotes(secC, sat, lat, lon, el, azNorm, dish);
+      if (typeof log === 'function') log(`${sat.name}: Az=${azNorm.toFixed(1)} El=${el.toFixed(1)}`, 'success');
+    }
+
+    function drawCompass(ctx, cvs, az, el, name) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2 + 10, r = Math.min(W, H) * 0.35;
+      ctx.strokeStyle = '#2a2d45';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.66, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.33, 0, 2 * Math.PI);
+      ctx.stroke();
+      const dirs = ['N', 'E', 'S', 'W'];
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '11px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i < 4; i++) {
+        const a = (i * 90 - 90) * DEG;
+        ctx.fillText(dirs[i], cx + (r + 14) * Math.cos(a), cy + (r + 14) * Math.sin(a));
+      }
+      const aRad = (az - 90) * DEG;
+      const elR = Math.max(0, 90 - el) / 90;
+      const sx = cx + r * elR * Math.cos(aRad);
+      const sy = cy + r * elR * Math.sin(aRad);
+      ctx.fillStyle = '#d4a03c';
+      ctx.beginPath();
+      ctx.arc(sx, sy, 8, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = '#000';
+      ctx.font = '7px Orbitron, monospace';
+      ctx.fillText('SAT', sx, sy + 1);
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(sx, sy); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textBaseline = 'top';
+      ctx.fillText(`${name}`, cx, 6);
+      ctx.fillText(`Az: ${az.toFixed(1)}  El: ${el.toFixed(1)}`, cx, H - 14);
+    }
+
+    function drawSkyMap(ctx, cvs, lat, lon) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#050520';
+      ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2, r = Math.min(W, H) * 0.42;
+      ctx.strokeStyle = '#1a1a4a';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 3; i++) {
+        ctx.beginPath(); ctx.arc(cx, cy, r * i / 3, 0, 2 * Math.PI); ctx.stroke();
+      }
+      ctx.strokeStyle = '#1a1a4a';
+      ctx.beginPath(); ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r); ctx.stroke();
+      SATELLITES.forEach((sat, i) => {
+        const dLon = (sat.lon - lon) * DEG;
+        const latR = lat * DEG;
+        const cosC = Math.cos(latR) * Math.cos(dLon);
+        const el = Math.atan((cosC - RE / (RE + GEO_ALT)) / Math.sqrt(1 - cosC * cosC)) * RAD;
+        if (el < 0) return;
+        const az = 180 + Math.atan2(Math.tan(dLon), Math.sin(latR)) * RAD;
+        const azN = ((az % 360) + 360) % 360;
+        const aRad = (azN - 90) * DEG;
+        const elR = (90 - el) / 90;
+        const sx = cx + r * elR * Math.cos(aRad);
+        const sy = cy + r * elR * Math.sin(aRad);
+        ctx.fillStyle = `hsl(${i * 45}, 70%, 60%)`;
+        ctx.beginPath(); ctx.arc(sx, sy, 4, 0, 2 * Math.PI); ctx.fill();
+        ctx.fillStyle = '#e8e6e3';
+        ctx.font = '7px Orbitron, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(sat.name.split(' ')[0], sx, sy - 8);
+      });
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Sky Map (visible satellites)', cx, 12);
+    }
+
+    function drawSignal(ctx, cvs, el, gain, cnr) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const bars = 5;
+      const bw = (W - 80) / bars;
+      const levels = [el / 90, gain / 40, cnr / 20, Math.min(1, el / 30), Math.min(1, cnr / 15)];
+      const labels = ['Elev', 'Gain', 'C/N', 'LOS', 'Lock'];
+      const colors = ['#4caf50', '#2196f3', '#ff9800', '#9c27b0', '#f44336'];
+      levels.forEach((lv, i) => {
+        const bh = Math.max(0, Math.min(1, lv)) * (H - 50);
+        ctx.fillStyle = colors[i];
+        ctx.fillRect(40 + i * bw + 5, H - 30 - bh, bw - 10, bh);
+        ctx.fillStyle = '#e8e6e3';
+        ctx.font = '8px Orbitron, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(labels[i], 40 + i * bw + bw / 2, H - 10);
+      });
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Signal Quality Indicators', W / 2, 14);
+    }
+
+    function fillNotes(el, sat, lat, lon, elev, az, dish) {
+      if (!el) return;
+      el.innerHTML = `
+        <p><strong>Satellite Tracking Notes:</strong></p>
+        <p>Station: ${lat.toFixed(2)}N, ${lon.toFixed(2)}E. Target: ${sat.name} (${sat.lon}E).</p>
+        <p>Point your dish to Azimuth ${az.toFixed(1)} degrees, Elevation ${elev.toFixed(1)} degrees.</p>
+        <p>${elev < 5 ? 'WARNING: Very low elevation angle. Signal will be weak and obstructed.' : elev < 20 ? 'Low elevation: expect some atmospheric attenuation.' : 'Good elevation angle for reliable reception.'}</p>
+        <p>A ${dish}m dish provides approximately ${(10*Math.log10(Math.pow(Math.PI*dish/(299792458/11.7e9),2)*0.55)).toFixed(1)} dBi gain at Ku-band (11.7 GHz).</p>
+        <p>Use a satellite finder meter or spectrum analyzer for fine-tuning peak signal.</p>`;
+    }
+
+    document.getElementById('satCalcBtn').addEventListener('click', calcSat);
+    calcSat();
+  });
+})();

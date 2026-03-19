@@ -63,32 +63,49 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'kit-field-comms', subtitle: 'Field Communications Kit — Portable Secure Comms',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Field Comms — Secure Channel', mainDesc: 'Portable encrypted comms with mesh relay and HF backup',
+    sectionA: 'Mesh Network Relay', sectionB: 'HF Backup Radio', sectionC: 'Emergency Protocol',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is the Field Comms Kit?', faq_a1: 'A portable secure communications backpack with mesh networking, HF radio backup, and encrypted burst messaging for field operations.',
+    faq_q2: 'How does the mesh network work?', faq_a2: 'Nodes automatically discover peers and relay encrypted packets. Each node extends range by hopping messages through the mesh.',
+    faq_q3: 'What is burst transmission?', faq_a3: 'Data is compressed and sent in a rapid burst to minimize interception time. The shorter the transmission, the harder it is to detect.',
+    faq_q4: 'What does the panic button do?', faq_a4: 'Broadcasts an emergency SOS on all frequencies with GPS coordinates. Auto-wipes sensitive data from the kit after transmission.',
+    howto_1: 'Click Open Channel to establish a secure communications link.',
+    howto_2: 'Use Freq Scan to find clear frequencies with low interference.',
+    howto_3: 'Send Burst to transmit encrypted data packets to field agents.',
+    howto_4: 'Use the Panic Signal only in emergencies — it broadcasts on all bands.',
+    wiki_mesh_title: '📡 Mesh Networking', wiki_mesh: 'Decentralized peer-to-peer communication where each node relays data. No single point of failure. Range extends with each added node.',
+    wiki_hf_title: '📻 HF Radio', wiki_hf: 'High-Frequency radio (3-30 MHz) can bounce signals off the ionosphere for long-range comms without satellites or infrastructure.',
+    wiki_burst_title: '⚡ Burst Transmission', wiki_burst: 'Compress data into ultra-short transmissions (milliseconds) to evade signal interception and direction-finding equipment.',
+    wiki_crypto_title: '🔐 Field Encryption', wiki_crypto: 'End-to-end AES-256 encryption with rotating keys. Messages are indistinguishable from noise without the correct key material.',
+    statLink: 'Link Status', statSNR: 'Signal / Noise', statPackets: 'Packets TX', statUptime: 'Uptime',
+    btnActivate: 'Open Channel', btnScan: 'Freq Scan', btnSend: 'Send Burst', btnPanic: 'Panic Signal',
+    btnMeshPing: 'Ping Nodes', btnMeshReset: 'Reset Mesh',
+    btnHfTune: 'Auto-Tune', btnHfReset: 'Reset HF',
+    btnEmergExec: 'Execute Protocol', btnEmergReset: 'Stand Down',
+    channelOpen: '📡 Secure channel OPEN — encrypted link established',
+    channelClosed: '🔴 Channel closed',
+    scanning: '🔍 Scanning frequencies...',
+    scanDone: '✅ Scan complete — clear frequency found',
+    burstSent: '⚡ Burst transmitted — 256-bit encrypted packet sent',
+    panicSent: '🆘 PANIC — SOS broadcast on all frequencies!',
+    meshPing: '📡 Pinging mesh nodes...',
+    meshFound: '✅ Mesh nodes discovered',
+    hfTuning: '📻 Auto-tuning HF radio...',
+    hfLocked: '✅ HF frequency locked',
+    emergExec: '🆘 Emergency protocol executing — data wipe initiated',
+    emergStandDown: '✅ Emergency stood down — normal operations resumed',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Field Comms Kit ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +117,49 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'kit-field-comms', subtitle: 'Kit Communications Terrain — Comms Portables Sécurisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Comms Terrain — Canal Sécurisé', mainDesc: 'Communications chiffrées portables avec relais maillé et HF de secours',
+    sectionA: 'Relais Réseau Maillé', sectionB: 'Radio HF de Secours', sectionC: 'Protocole d\'Urgence',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le kit comms terrain ?', faq_a1: 'Un sac à dos de communications sécurisées avec réseau maillé, radio HF de secours et messagerie chiffrée par rafale.',
+    faq_q2: 'Comment fonctionne le réseau maillé ?', faq_a2: 'Les noeuds découvrent automatiquement les pairs et relaient les paquets chiffrés. Chaque noeud étend la portée.',
+    faq_q3: 'Qu\'est-ce que la transmission par rafale ?', faq_a3: 'Les données sont compressées et envoyées en rafale rapide pour minimiser le temps d\'interception.',
+    faq_q4: 'Que fait le bouton panique ?', faq_a4: 'Diffuse un SOS d\'urgence sur toutes les fréquences avec coordonnées GPS. Efface automatiquement les données sensibles.',
+    howto_1: 'Cliquez sur Ouvrir Canal pour établir un lien de communication sécurisé.',
+    howto_2: 'Utilisez Scan Fréq pour trouver des fréquences claires.',
+    howto_3: 'Envoi Rafale pour transmettre des paquets chiffrés aux agents terrain.',
+    howto_4: 'Utilisez le Signal Panique uniquement en urgence — diffuse sur toutes les bandes.',
+    wiki_mesh_title: '📡 Réseau Maillé', wiki_mesh: 'Communication pair-à-pair décentralisée où chaque noeud relaie les données. Pas de point unique de défaillance.',
+    wiki_hf_title: '📻 Radio HF', wiki_hf: 'La radio haute fréquence (3-30 MHz) peut faire rebondir les signaux sur l\'ionosphère pour des comms longue portée.',
+    wiki_burst_title: '⚡ Transmission Rafale', wiki_burst: 'Compresse les données en transmissions ultra-courtes (millisecondes) pour échapper à l\'interception.',
+    wiki_crypto_title: '🔐 Chiffrement Terrain', wiki_crypto: 'Chiffrement AES-256 de bout en bout avec clés rotatives. Messages indiscernables du bruit sans la clé.',
+    statLink: 'État Liaison', statSNR: 'Signal / Bruit', statPackets: 'Paquets TX', statUptime: 'Temps actif',
+    btnActivate: 'Ouvrir Canal', btnScan: 'Scan Fréq', btnSend: 'Envoi Rafale', btnPanic: 'Signal Panique',
+    btnMeshPing: 'Ping Noeuds', btnMeshReset: 'Réinit. Maillage',
+    btnHfTune: 'Auto-Syntonisation', btnHfReset: 'Réinit. HF',
+    btnEmergExec: 'Exécuter Protocole', btnEmergReset: 'Fin d\'Alerte',
+    channelOpen: '📡 Canal sécurisé OUVERT — liaison chiffrée établie',
+    channelClosed: '🔴 Canal fermé',
+    scanning: '🔍 Balayage des fréquences...',
+    scanDone: '✅ Scan terminé — fréquence claire trouvée',
+    burstSent: '⚡ Rafale transmise — paquet chiffré 256 bits envoyé',
+    panicSent: '🆘 PANIQUE — SOS diffusé sur toutes les fréquences !',
+    meshPing: '📡 Ping des noeuds maillés...',
+    meshFound: '✅ Noeuds maillés découverts',
+    hfTuning: '📻 Auto-syntonisation radio HF...',
+    hfLocked: '✅ Fréquence HF verrouillée',
+    emergExec: '🆘 Protocole d\'urgence en cours — effacement des données',
+    emergStandDown: '✅ Alerte levée — opérations normales reprises',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Kit Comms Terrain prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +171,49 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'طقم اتصالات ميداني', subtitle: 'طقم اتصالات ميداني — اتصالات آمنة محمولة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'اتصالات ميدانية — قناة آمنة', mainDesc: 'اتصالات مشفرة محمولة مع ترحيل شبكي ونسخ HF احتياطي',
+    sectionA: 'ترحيل الشبكة المعشقة', sectionB: 'راديو HF احتياطي', sectionC: 'بروتوكول الطوارئ',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو طقم الاتصالات الميداني؟', faq_a1: 'حقيبة اتصالات آمنة محمولة مع شبكة معشقة وراديو HF احتياطي ورسائل مشفرة بالرشقات.',
+    faq_q2: 'كيف تعمل الشبكة المعشقة؟', faq_a2: 'تكتشف العقد تلقائياً الأقران وتنقل الحزم المشفرة. كل عقدة تمدد النطاق.',
+    faq_q3: 'ما هو الإرسال بالرشقات؟', faq_a3: 'يتم ضغط البيانات وإرسالها في رشقة سريعة لتقليل وقت الاعتراض.',
+    faq_q4: 'ماذا يفعل زر الذعر؟', faq_a4: 'يبث إشارة استغاثة طارئة على جميع الترددات مع إحداثيات GPS ويمسح البيانات الحساسة تلقائياً.',
+    howto_1: 'انقر فتح القناة لإنشاء رابط اتصال آمن.',
+    howto_2: 'استخدم مسح التردد للعثور على ترددات واضحة.',
+    howto_3: 'إرسال رشقة لنقل حزم مشفرة للعملاء الميدانيين.',
+    howto_4: 'استخدم إشارة الذعر فقط في حالات الطوارئ.',
+    wiki_mesh_title: '📡 الشبكة المعشقة', wiki_mesh: 'اتصال نظير لنظير لا مركزي حيث تنقل كل عقدة البيانات. لا نقطة فشل واحدة.',
+    wiki_hf_title: '📻 راديو HF', wiki_hf: 'الراديو عالي التردد (3-30 ميجاهرتز) يمكنه ارتداد الإشارات عن الأيونوسفير للاتصال بعيد المدى.',
+    wiki_burst_title: '⚡ إرسال بالرشقات', wiki_burst: 'ضغط البيانات في إرسالات فائقة القصر (ملي ثانية) للتهرب من الاعتراض.',
+    wiki_crypto_title: '🔐 تشفير ميداني', wiki_crypto: 'تشفير AES-256 من طرف لطرف مع مفاتيح دوارة. الرسائل لا يمكن تمييزها عن الضوضاء.',
+    statLink: 'حالة الرابط', statSNR: 'إشارة / ضوضاء', statPackets: 'حزم مرسلة', statUptime: 'وقت التشغيل',
+    btnActivate: 'فتح القناة', btnScan: 'مسح التردد', btnSend: 'إرسال رشقة', btnPanic: 'إشارة ذعر',
+    btnMeshPing: 'اختبار العقد', btnMeshReset: 'إعادة تعيين الشبكة',
+    btnHfTune: 'ضبط تلقائي', btnHfReset: 'إعادة تعيين HF',
+    btnEmergExec: 'تنفيذ البروتوكول', btnEmergReset: 'إنهاء الحالة',
+    channelOpen: '📡 القناة الآمنة مفتوحة — رابط مشفر',
+    channelClosed: '🔴 القناة مغلقة',
+    scanning: '🔍 مسح الترددات...',
+    scanDone: '✅ المسح اكتمل — تردد واضح',
+    burstSent: '⚡ رشقة مرسلة — حزمة مشفرة 256 بت',
+    panicSent: '🆘 ذعر — بث استغاثة على كل الترددات!',
+    meshPing: '📡 اختبار عقد الشبكة...',
+    meshFound: '✅ تم اكتشاف عقد الشبكة',
+    hfTuning: '📻 ضبط تلقائي لراديو HF...',
+    hfLocked: '✅ تردد HF مقفل',
+    emergExec: '🆘 تنفيذ بروتوكول الطوارئ — بدء مسح البيانات',
+    emergStandDown: '✅ انتهاء الحالة — استئناف العمليات العادية',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 طقم الاتصالات الميداني جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1494,293 @@ function init() {
   initAR();
   initAIChat();
 
+  // Field Comms simulation
+  initFieldComms();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ FIELD COMMS SIMULATION ═══════ */
+
+(function(){
+  let fcActive = false, fcInterval = null, fcUptime = 0, fcPackets = 0;
+  let fcFreq = 145.800, fcSNR = 0, fcSignal = 0;
+  const fcWaveData = [];
+  let meshNodes = [], hfFreq = 7.050;
+
+  window.initFieldComms = function() {
+    const canvas = $('simCanvas');
+    if (canvas) {
+      canvas.width = canvas.offsetWidth || 480;
+      canvas.height = 160;
+      for (let i = 0; i < canvas.width; i++) fcWaveData.push(0);
+      requestAnimationFrame(fcAnimLoop);
+      window.addEventListener('resize', () => { if (canvas) canvas.width = canvas.offsetWidth || 480; });
+    }
+    const btnAct = $('btnActivate');
+    const btnScan = $('btnScan');
+    const btnSend = $('btnSendMsg');
+    const btnPanic = $('btnPanic');
+    if (btnAct) btnAct.onclick = () => { fcToggleChannel(); playSound('click'); };
+    if (btnScan) btnScan.onclick = () => { fcScanFreq(); playSound('click'); };
+    if (btnSend) btnSend.onclick = () => { fcSendBurst(); playSound('click'); };
+    if (btnPanic) btnPanic.onclick = () => { fcPanic(); playSound('error'); };
+    const btnMP = $('btnMeshPing');
+    const btnMR = $('btnMeshReset');
+    if (btnMP) btnMP.onclick = () => { fcMeshPing(); playSound('click'); };
+    if (btnMR) btnMR.onclick = () => { fcMeshReset(); playSound('click'); };
+    const btnHT = $('btnHfTune');
+    const btnHR = $('btnHfReset');
+    if (btnHT) btnHT.onclick = () => { fcHfTune(); playSound('click'); };
+    if (btnHR) btnHR.onclick = () => { fcHfReset(); playSound('click'); };
+    const btnEE = $('btnEmergExec');
+    const btnER = $('btnEmergReset');
+    if (btnEE) btnEE.onclick = () => { fcEmergExec(); playSound('error'); };
+    if (btnER) btnER.onclick = () => { fcEmergReset(); playSound('click'); };
+  };
+
+  function fcToggleChannel() {
+    const s = LANG[currentLang];
+    if (fcActive) {
+      fcActive = false;
+      if (fcInterval) { clearInterval(fcInterval); fcInterval = null; }
+      fcUptime = 0; fcPackets = 0; fcSNR = 0; fcSignal = 0;
+      updateFcStats();
+      setStatus(false);
+      log(s.channelClosed, 'error');
+      return;
+    }
+    fcActive = true;
+    setStatus(true);
+    log(s.channelOpen, 'success');
+    fcInterval = setInterval(() => {
+      fcUptime++;
+      fcSNR = 12 + Math.random() * 18 | 0;
+      fcSignal = 40 + Math.random() * 55 | 0;
+      fcFreq = 145.800 + (Math.random() * 0.4 - 0.2);
+      updateFcStats();
+    }, 1000);
+  }
+
+  function fcScanFreq() {
+    const s = LANG[currentLang];
+    log(s.scanning, 'tx');
+    showToast(s.scanning, 2000);
+    let step = 0;
+    const si = setInterval(() => {
+      step++;
+      fcFreq = 144 + Math.random() * 4;
+      const fd = $('freqDisplay');
+      if (fd) fd.textContent = fcFreq.toFixed(3) + ' MHz';
+      if (step >= 8) {
+        clearInterval(si);
+        fcFreq = 145.800 + Math.random() * 0.2;
+        if (fd) fd.textContent = fcFreq.toFixed(3) + ' MHz';
+        log(s.scanDone, 'success');
+      }
+    }, 250);
+  }
+
+  function fcSendBurst() {
+    if (!fcActive) return;
+    const s = LANG[currentLang];
+    fcPackets++;
+    fcSignal = Math.min(100, fcSignal + 20);
+    updateFcStats();
+    log(s.burstSent, 'tx');
+    playSound('success');
+  }
+
+  function fcPanic() {
+    const s = LANG[currentLang];
+    log(s.panicSent, 'error');
+    fcSignal = 100;
+    updateFcStats();
+    const ei = $('emergInfo');
+    if (ei) ei.textContent = '🆘 SOS BROADCAST ACTIVE — ALL FREQUENCIES — GPS: 36.7538°N, 3.0588°E';
+  }
+
+  function updateFcStats() {
+    const link = $('statLink');
+    const snr = $('statSNR');
+    const pkt = $('statPackets');
+    const upt = $('statUptime');
+    const bar = $('sigBar');
+    const fd = $('freqDisplay');
+    if (link) link.textContent = fcActive ? 'ACTIVE' : 'STANDBY';
+    if (snr) snr.textContent = fcActive ? fcSNR + ' dB' : '-- dB';
+    if (pkt) pkt.textContent = fcPackets;
+    if (upt) upt.textContent = formatTime(fcUptime);
+    if (bar) bar.style.width = fcSignal + '%';
+    if (fd) fd.textContent = fcFreq.toFixed(3) + ' MHz';
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60), sec = s % 60;
+    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+
+  function fcAnimLoop() {
+    const canvas = $('simCanvas');
+    if (!canvas) { requestAnimationFrame(fcAnimLoop); return; }
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const val = fcActive ? 0.3 + Math.random() * 0.5 : Math.random() * 0.05;
+    fcWaveData.push(val);
+    if (fcWaveData.length > w) fcWaveData.splice(0, fcWaveData.length - w);
+    ctx.fillStyle = '#0a0a1a';
+    ctx.fillRect(0, 0, w, h);
+    // Grid
+    ctx.strokeStyle = 'rgba(0,255,65,0.06)';
+    ctx.lineWidth = 1;
+    for (let y = 0; y < h; y += 20) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+    for (let x = 0; x < w; x += 30) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+    // Waveform
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00ff41';
+    ctx.strokeStyle = fcActive ? accent : 'rgba(100,100,100,0.4)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    const start = Math.max(0, fcWaveData.length - w);
+    for (let i = start; i < fcWaveData.length; i++) {
+      const x = i - start;
+      const y = h / 2 - fcWaveData[i] * h * 0.4 * Math.sin((i + Date.now() * 0.01) * 0.1);
+      i === start ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    // Scanline
+    const sl = (Date.now() * 0.05) % w;
+    ctx.strokeStyle = 'rgba(0,255,65,0.15)';
+    ctx.beginPath(); ctx.moveTo(sl, 0); ctx.lineTo(sl, h); ctx.stroke();
+    requestAnimationFrame(fcAnimLoop);
+  }
+
+  // Mesh network visualization
+  function fcMeshPing() {
+    const s = LANG[currentLang];
+    log(s.meshPing, 'tx');
+    meshNodes = [];
+    for (let i = 0; i < 5 + (Math.random() * 4 | 0); i++) {
+      meshNodes.push({ x: Math.random(), y: Math.random(), id: 'NODE-' + (i + 1).toString(16).toUpperCase(), rssi: -30 - (Math.random() * 50 | 0) });
+    }
+    drawMesh();
+    const info = $('meshInfo');
+    if (info) info.textContent = meshNodes.map(n => n.id + ' [RSSI: ' + n.rssi + ' dBm]').join('\n');
+    setTimeout(() => log(s.meshFound + ' (' + meshNodes.length + ')', 'success'), 800);
+  }
+
+  function fcMeshReset() {
+    meshNodes = [];
+    drawMesh();
+    const info = $('meshInfo');
+    if (info) info.textContent = '';
+  }
+
+  function drawMesh() {
+    const c = $('meshCanvas');
+    if (!c) return;
+    const ctx = c.getContext('2d');
+    c.width = c.offsetWidth || 480;
+    const w = c.width, h = c.height;
+    ctx.fillStyle = '#0a0a1a';
+    ctx.fillRect(0, 0, w, h);
+    if (!meshNodes.length) return;
+    // Lines between nodes
+    ctx.strokeStyle = 'rgba(0,255,65,0.2)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < meshNodes.length; i++) {
+      for (let j = i + 1; j < meshNodes.length; j++) {
+        const dx = meshNodes[i].x - meshNodes[j].x, dy = meshNodes[i].y - meshNodes[j].y;
+        if (Math.sqrt(dx * dx + dy * dy) < 0.5) {
+          ctx.beginPath();
+          ctx.moveTo(meshNodes[i].x * w * 0.8 + w * 0.1, meshNodes[i].y * h * 0.8 + h * 0.1);
+          ctx.lineTo(meshNodes[j].x * w * 0.8 + w * 0.1, meshNodes[j].y * h * 0.8 + h * 0.1);
+          ctx.stroke();
+        }
+      }
+    }
+    // Nodes
+    meshNodes.forEach(n => {
+      const x = n.x * w * 0.8 + w * 0.1, y = n.y * h * 0.8 + h * 0.1;
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = n.rssi > -50 ? '#00ff41' : n.rssi > -70 ? '#ffaa00' : '#ff4444';
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.fillText(n.id, x + 10, y + 3);
+    });
+  }
+
+  // HF Radio
+  function fcHfTune() {
+    const s = LANG[currentLang];
+    log(s.hfTuning, 'tx');
+    let step = 0;
+    const c = $('hfCanvas');
+    const si = setInterval(() => {
+      step++;
+      hfFreq = 3 + Math.random() * 27;
+      drawHf(c);
+      if (step >= 12) {
+        clearInterval(si);
+        hfFreq = 7.050 + Math.random() * 0.2;
+        drawHf(c);
+        const info = $('hfInfo');
+        if (info) info.textContent = 'Locked: ' + hfFreq.toFixed(3) + ' MHz | Mode: USB | Power: 5W';
+        log(s.hfLocked + ' (' + hfFreq.toFixed(3) + ' MHz)', 'success');
+      }
+    }, 200);
+  }
+
+  function fcHfReset() {
+    hfFreq = 7.050;
+    const c = $('hfCanvas');
+    drawHf(c);
+    const info = $('hfInfo');
+    if (info) info.textContent = '';
+  }
+
+  function drawHf(c) {
+    if (!c) return;
+    const ctx = c.getContext('2d');
+    c.width = c.offsetWidth || 480;
+    const w = c.width, h = c.height;
+    ctx.fillStyle = '#0a0a1a';
+    ctx.fillRect(0, 0, w, h);
+    // Spectrum bars
+    for (let x = 0; x < w; x += 3) {
+      const v = Math.random() * 0.3 + (Math.abs(x / w - 0.5) < 0.05 ? 0.6 : 0);
+      ctx.fillStyle = v > 0.5 ? '#ff4444' : 'rgba(0,255,65,0.4)';
+      ctx.fillRect(x, h - v * h, 2, v * h);
+    }
+    ctx.fillStyle = '#fff';
+    ctx.font = '11px Orbitron, monospace';
+    ctx.fillText(hfFreq.toFixed(3) + ' MHz', 10, 18);
+  }
+
+  // Emergency
+  function fcEmergExec() {
+    const s = LANG[currentLang];
+    log(s.emergExec, 'error');
+    const info = $('emergInfo');
+    if (info) {
+      let step = 0;
+      const lines = ['[!] EMERGENCY PROTOCOL ACTIVE', '[>] Broadcasting SOS on all bands...', '[>] Encrypting local storage...', '[>] Wiping temp data...', '[>] GPS beacon: 36.7538N, 3.0588E', '[OK] Data sanitized. SOS sent.'];
+      const si = setInterval(() => {
+        if (step < lines.length) { info.textContent += (step > 0 ? '\n' : '') + lines[step]; step++; }
+        else { clearInterval(si); }
+      }, 500);
+    }
+  }
+
+  function fcEmergReset() {
+    const s = LANG[currentLang];
+    log(s.emergStandDown, 'success');
+    const info = $('emergInfo');
+    if (info) info.textContent = '';
+  }
+})();

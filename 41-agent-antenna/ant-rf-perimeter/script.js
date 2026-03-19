@@ -63,115 +63,103 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'RF Perimeter Security', subtitle: '📡 Monitor zones for unauthorized transmissions',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'RF Perimeter Security', mainDesc: 'Monitor a zone for unauthorized RF transmissions',
+    sectionA: 'Zone Map', sectionB: 'Threat Log', sectionC: 'Alert Config',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    faq_q1: 'What is RF Perimeter Security?', faq_a1: 'A simulator that monitors a defined zone for unauthorized RF transmissions and alerts on intrusions.',
+    faq_q2: 'How does detection work?', faq_a2: 'Sensors placed around the perimeter detect any RF signals. Unknown signals trigger threat alerts.',
+    faq_q3: 'What frequencies are monitored?', faq_a3: 'The system scans across HF, VHF, UHF and microwave bands for comprehensive coverage.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Activate the perimeter monitoring system.', howto_2: 'View the zone map with sensor positions.',
+    howto_3: 'Check the threat log for detected intrusions.', howto_4: 'Configure alert thresholds and responses.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'EN/FR/AR with RTL.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data local.',
+    working: 'Working…', t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📡 RF perimeter security ready!', logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    rpStat1: 'Status', rpStat2: 'Threats', rpStat3: 'Sensors', rpStat4: 'Uptime',
+    rpActivate: 'Arm Perimeter', rpAct1: 'Sweep Now', rpEmerg: 'Lockdown',
+    activated: '📡 Perimeter armed!', deactivated: '📡 Perimeter disarmed',
+    threatDetected: '🚨 Unauthorized transmission detected!', sweepClean: '✅ Sweep clean!',
+    lockdown: '🔒 LOCKDOWN initiated!',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Sécurité Périmètre RF', subtitle: '📡 Surveillance de zone contre transmissions non autorisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Sécurité Périmètre RF', mainDesc: 'Surveillez une zone contre les transmissions RF non autorisées',
+    sectionA: 'Carte Zone', sectionB: 'Journal Menaces', sectionC: 'Config Alertes',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    faq_q1: 'Qu\'est-ce que la Sécurité Périmètre RF ?', faq_a1: 'Un simulateur de surveillance de zone contre les transmissions RF non autorisées.',
+    faq_q2: 'Comment fonctionne la détection ?', faq_a2: 'Des capteurs détectent tout signal RF. Les signaux inconnus déclenchent des alertes.',
+    faq_q3: 'Quelles fréquences sont surveillées ?', faq_a3: 'Le système balaye HF, VHF, UHF et micro-ondes.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Activez le système de surveillance.', howto_2: 'Consultez la carte de zone.',
+    howto_3: 'Vérifiez le journal des menaces.', howto_4: 'Configurez les seuils d\'alerte.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'EN/FR/AR avec RTL.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout est local.',
+    working: 'En cours…', t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📡 Sécurité périmètre RF prête !', logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    rpStat1: 'Statut', rpStat2: 'Menaces', rpStat3: 'Capteurs', rpStat4: 'Temps',
+    rpActivate: 'Armer', rpAct1: 'Balayage', rpEmerg: 'Confinement',
+    activated: '📡 Périmètre armé !', deactivated: '📡 Périmètre désarmé',
+    threatDetected: '🚨 Transmission non autorisée détectée !', sweepClean: '✅ Balayage propre !',
+    lockdown: '🔒 Confinement initié !',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'أمن المحيط RF', subtitle: '📡 مراقبة المنطقة ضد الإرسال غير المصرح به',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'أمن المحيط RF', mainDesc: 'راقب منطقة للكشف عن إرسال RF غير مصرح به',
+    sectionA: 'خريطة المنطقة', sectionB: 'سجل التهديدات', sectionC: 'إعدادات التنبيه',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    faq_q1: 'ما هو أمن المحيط RF؟', faq_a1: 'محاكي لمراقبة منطقة محددة ضد الإرسال RF غير المصرح به.',
+    faq_q2: 'كيف يعمل الكشف؟', faq_a2: 'أجهزة استشعار حول المحيط تكشف إشارات RF غير معروفة.',
+    faq_q3: 'ما الترددات المراقبة؟', faq_a3: 'النظام يمسح HF و VHF و UHF والموجات الدقيقة.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
+    howto_1: 'فعّل نظام مراقبة المحيط.', howto_2: 'اعرض خريطة المنطقة.',
+    howto_3: 'تحقق من سجل التهديدات.', howto_4: 'اضبط حدود التنبيه.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'EN/FR/AR مع RTL.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات محلية.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '📡 أمن المحيط RF جاهز!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    rpStat1: 'الحالة', rpStat2: 'التهديدات', rpStat3: 'المستشعرات', rpStat4: 'وقت التشغيل',
+    rpActivate: 'تسليح', rpAct1: 'مسح', rpEmerg: 'إغلاق',
+    activated: '📡 تم تسليح المحيط!', deactivated: '📡 تم نزع تسليح المحيط',
+    threatDetected: '🚨 تم كشف إرسال غير مصرح به!', sweepClean: '✅ المسح نظيف!',
+    lockdown: '🔒 تم بدء الإغلاق!',
   }
 };
 
@@ -1442,10 +1430,128 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initRfPerimeter();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ RF PERIMETER SECURITY SIMULATION ═══════ */
+let rpState = { active: false, threats: 0, sensors: 6, uptime: 0, uptimeTimer: null, animFrame: null, threatList: [], sweepAngle: 0 };
+
+function initRfPerimeter() {
+  setStatus(false);
+  const secA = $('rpSecAContent') || document.querySelector('#mainCard .control-section');
+  drawRpCanvas();
+}
+
+function rpActivate() {
+  if (rpState.active) {
+    rpState.active = false; setStatus(false); clearInterval(rpState.uptimeTimer);
+    if (rpState.animFrame) cancelAnimationFrame(rpState.animFrame);
+    const s1 = $('rpS1'); if (s1) s1.textContent = 'DISARMED';
+    log(LANG[currentLang].deactivated, 'info'); return;
+  }
+  rpState.active = true; rpState.uptime = 0; setStatus(true);
+  const s1 = $('rpS1'); if (s1) s1.textContent = 'ARMED';
+  log(LANG[currentLang].activated, 'success');
+  rpState.uptimeTimer = setInterval(() => {
+    rpState.uptime++;
+    const s4 = $('rpS4');
+    if (s4) s4.textContent = String(Math.floor(rpState.uptime/60)).padStart(2,'0') + ':' + String(rpState.uptime%60).padStart(2,'0');
+    if (Math.random() < 0.05) rpDetectThreat();
+  }, 1000);
+  animateRp();
+}
+
+function animateRp() {
+  if (!rpState.active) return;
+  rpState.sweepAngle = (rpState.sweepAngle + 2) % 360;
+  drawRpCanvas();
+  rpState.animFrame = requestAnimationFrame(animateRp);
+}
+
+function rpDetectThreat() {
+  rpState.threats++;
+  const s2 = $('rpS2'); if (s2) s2.textContent = rpState.threats;
+  const freq = (100 + Math.random() * 900).toFixed(1);
+  const bearing = Math.round(Math.random() * 360);
+  const pwr = (-30 - Math.random() * 60).toFixed(1);
+  rpState.threatList.push({ freq, bearing, pwr, time: new Date().toLocaleTimeString() });
+  log(LANG[currentLang].threatDetected + ` ${freq} MHz @ ${bearing}\u00B0 (${pwr} dBm)`, 'error');
+  playSound('error');
+  const bar = $('rpBar'); if (bar) { bar.style.width = '100%'; setTimeout(() => bar.style.width = '0%', 500); }
+}
+
+function rpAction1() {
+  if (!rpState.active) { log('Arm perimeter first!', 'error'); return; }
+  log('🔍 Running full sweep...', 'info');
+  showToast('Sweeping...', 3000);
+  setTimeout(() => {
+    const found = Math.floor(Math.random() * 3);
+    for (let i = 0; i < found; i++) rpDetectThreat();
+    if (found === 0) { log(LANG[currentLang].sweepClean, 'success'); playSound('success'); }
+  }, 3000);
+}
+
+function rpEmergency() {
+  rpState.active = false; setStatus(false); clearInterval(rpState.uptimeTimer);
+  if (rpState.animFrame) cancelAnimationFrame(rpState.animFrame);
+  const s1 = $('rpS1'); if (s1) s1.textContent = 'LOCKDOWN';
+  log(LANG[currentLang].lockdown, 'error'); playSound('error');
+}
+
+function rpSecAAction() { rpAction1(); }
+function rpSecAReset() { rpState.threatList = []; rpState.threats = 0; const s2 = $('rpS2'); if (s2) s2.textContent = '0'; log('🧹 Threats cleared', 'info'); }
+function rpSecBAction() {
+  const el = $('rpSecBContent');
+  if (el) el.innerHTML = rpState.threatList.slice(-10).map(t => `[${t.time}] ${t.freq} MHz @ ${t.bearing}\u00B0 (${t.pwr} dBm)`).join('<br>') || 'No threats recorded.';
+}
+function rpSecBReset() { const el = $('rpSecBContent'); if (el) el.innerHTML = ''; }
+function rpSecCAction() { log('🔔 Alert thresholds updated: -60 dBm trigger', 'success'); playSound('success'); }
+function rpSecCReset() { log('🔄 Alert config reset', 'info'); }
+
+function drawRpCanvas() {
+  const canvas = $('rpCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height, cx = w/2, cy = h/2;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  // Radar sweep
+  const r = Math.min(cx, cy) - 5;
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1;
+  [0.3, 0.6, 1].forEach(s => { ctx.beginPath(); ctx.arc(cx, cy, r * s, 0, Math.PI * 2); ctx.stroke(); });
+  // Cross lines
+  ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke();
+  if (rpState.active) {
+    // Sweep cone
+    const a = rpState.sweepAngle * Math.PI / 180;
+    const grad = ctx.createConicalGradient ? null : null;
+    ctx.fillStyle = accent; ctx.globalAlpha = 0.15;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, a - 0.3, a, false); ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = 1;
+    // Sweep line
+    ctx.strokeStyle = accent; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); ctx.stroke();
+    // Sensor dots
+    for (let i = 0; i < rpState.sensors; i++) {
+      const sa = (i / rpState.sensors) * Math.PI * 2;
+      ctx.fillStyle = '#4caf50'; ctx.beginPath();
+      ctx.arc(cx + Math.cos(sa) * r * 0.85, cy + Math.sin(sa) * r * 0.85, 3, 0, Math.PI * 2); ctx.fill();
+    }
+    // Threat blips
+    rpState.threatList.slice(-5).forEach(t => {
+      const ta = t.bearing * Math.PI / 180;
+      const tr = r * (0.3 + Math.random() * 0.5);
+      ctx.fillStyle = '#f44336'; ctx.beginPath();
+      ctx.arc(cx + Math.cos(ta) * tr, cy + Math.sin(ta) * tr, 4, 0, Math.PI * 2); ctx.fill();
+    });
+  }
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron, monospace';
+  ctx.fillText(`THREATS: ${rpState.threats}`, 5, 15);
+}

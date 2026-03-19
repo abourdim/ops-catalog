@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP32 Solar Monitor', subtitle: '☀️ Solar & propagation band conditions',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Solar Monitor', mainDesc: 'ESP32 solar/propagation monitor with band conditions',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Moniteur Solaire ESP32', subtitle: '☀️ Conditions solaires et propagation',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Moniteur Solaire', mainDesc: 'Moniteur solaire/propagation avec conditions de bande sur ESP32',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مراقب شمسي ESP32', subtitle: '☀️ ظروف الطاقة الشمسية والانتشار',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'المراقب الشمسي', mainDesc: 'مراقب شمسي وانتشار مع ظروف النطاقات على ESP32',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,84 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Start Monitor',stop:'Stop',simStarted:'Monitor started',simStopped:'Monitor stopped',theoryTitle:'Solar Monitor Theory',theoryDesc:'Solar activity directly affects HF propagation. Key indices include SFI (Solar Flux Index), SSN (Sunspot Number), Kp/Ap (geomagnetic activity), and X-ray flux. The ESP32 fetches real-time data from NOAA/WWV and displays band condition predictions for each amateur band.',sfi:'SFI',ssn:'SSN',kp:'Kp Index',xray:'X-Ray'});
+Object.assign(LANG.fr, {start:'Démarrer Moniteur',stop:'Arrêter',simStarted:'Moniteur démarré',simStopped:'Moniteur arrêté',theoryTitle:'Théorie Moniteur Solaire',theoryDesc:'L\'activité solaire affecte directement la propagation HF. Les indices clés incluent SFI (indice de flux solaire), SSN (nombre de taches solaires), Kp/Ap (activité géomagnétique) et le flux de rayons X. L\'ESP32 récupère les données en temps réel de NOAA/WWV et affiche les prévisions de conditions pour chaque bande amateur.',sfi:'SFI',ssn:'SSN',kp:'Indice Kp',xray:'Rayons X'});
+Object.assign(LANG.ar, {start:'بدء المراقبة',stop:'إيقاف',simStarted:'بدأت المراقبة',simStopped:'توقفت المراقبة',theoryTitle:'نظرية المراقب الشمسي',theoryDesc:'يؤثر النشاط الشمسي مباشرة على انتشار HF. تشمل المؤشرات الرئيسية SFI (مؤشر التدفق الشمسي) وSSN (عدد البقع الشمسية) وKp/Ap (النشاط الجيومغناطيسي) وتدفق الأشعة السينية. يجلب ESP32 البيانات في الوقت الحقيقي من NOAA/WWV ويعرض توقعات ظروف النطاقات.',sfi:'SFI',ssn:'SSN',kp:'مؤشر Kp',xray:'أشعة سينية'});
+setLanguage(currentLang);
+
+
+/* ═══════ SOLAR MONITOR SIM ═══════ */
+let simRunning=false,simTimer=null;
+const solC=$('solarCanvas'),solCtx=solC?solC.getContext('2d'):null;
+const HF_BANDS=['160m','80m','40m','30m','20m','17m','15m','12m','10m','6m'];
+let sfi=120,ssn=80,kp=2,xray='B5.3';
+let bandConditions={},sfiHistory=[];
+
+function updateSolarData(){
+  sfi=Math.max(60,Math.min(250,sfi+(-5+Math.random()*10)));
+  ssn=Math.max(0,Math.min(200,ssn+(-8+Math.random()*16)));
+  kp=Math.max(0,Math.min(9,kp+(-1+Math.random()*2)));
+  const xLevels=['A','B','C','M','X'];const xl=xLevels[Math.min(4,Math.floor(kp/2))];
+  xray=xl+(1+Math.random()*8).toFixed(1);
+  sfiHistory.push(sfi);if(sfiHistory.length>60)sfiHistory.shift();
+  HF_BANDS.forEach(b=>{
+    const base=sfi>150?0.8:sfi>100?0.5:0.2;
+    const kpPen=kp*0.08;
+    const r=Math.max(0,Math.min(1,base-kpPen+Math.random()*0.3));
+    bandConditions[b]=r>0.6?'Good':r>0.35?'Fair':'Poor';
+  });
+}
+
+function drawSolar(){
+  if(!solCtx)return;const W=solC.width,H=solC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  solCtx.fillStyle='#0a1628';solCtx.fillRect(0,0,W,H);
+  // SFI history chart (left half)
+  const chartW=W*0.55,chartH=H-40;
+  solCtx.strokeStyle='rgba(255,255,255,0.1)';solCtx.lineWidth=0.5;
+  for(let i=0;i<=4;i++){const y=20+i*chartH/4;solCtx.beginPath();solCtx.moveTo(30,y);solCtx.lineTo(chartW,y);solCtx.stroke();
+    solCtx.fillStyle='rgba(255,255,255,0.3)';solCtx.font='9px monospace';solCtx.fillText((250-i*50)+'',2,y+3);}
+  if(sfiHistory.length>1){solCtx.strokeStyle=acc;solCtx.lineWidth=2;solCtx.beginPath();
+    sfiHistory.forEach((v,i)=>{const x=30+i*(chartW-30)/60;const y=20+(250-v)/250*chartH;i===0?solCtx.moveTo(x,y):solCtx.lineTo(x,y);});solCtx.stroke();}
+  solCtx.fillStyle='rgba(255,255,255,0.5)';solCtx.font='10px monospace';solCtx.fillText('SFI History',chartW/2-30,H-5);
+  // Band conditions (right side)
+  const bx=chartW+20,bw=W-bx-10;
+  solCtx.fillStyle='rgba(255,255,255,0.6)';solCtx.font='bold 10px monospace';solCtx.fillText('Band Conditions',bx,16);
+  HF_BANDS.forEach((b,i)=>{
+    const y=30+i*(chartH/HF_BANDS.length);const cond=bandConditions[b]||'--';
+    solCtx.fillStyle='rgba(255,255,255,0.5)';solCtx.font='9px monospace';solCtx.fillText(b,bx,y+10);
+    const color=cond==='Good'?'#22c55e':cond==='Fair'?acc:'#ef4444';
+    solCtx.fillStyle=color;solCtx.fillRect(bx+35,y+2,bw-45,12);
+    solCtx.fillStyle='#000';solCtx.font='bold 9px monospace';solCtx.fillText(cond,bx+38,y+12);
+  });
+  // Solar indices
+  solCtx.fillStyle=acc;solCtx.font='bold 11px monospace';
+  solCtx.fillText('SFI:'+Math.round(sfi)+' SSN:'+Math.round(ssn)+' Kp:'+kp.toFixed(1)+' X:'+xray,10,H-5);
+}
+
+function solarStep(){
+  updateSolarData();
+  const sf=$('sfiDisp');if(sf)sf.textContent=Math.round(sfi);
+  const sn=$('ssnDisp');if(sn)sn.textContent=Math.round(ssn);
+  const kd=$('kpDisp');if(kd)kd.textContent=kp.toFixed(1);
+  const xd=$('xrayDisp');if(xd)xd.textContent=xray;
+  log('Solar: SFI='+Math.round(sfi)+' SSN='+Math.round(ssn)+' Kp='+kp.toFixed(1)+' X-Ray='+xray,'rx');
+  drawSolar();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);sfiHistory=[];
+  log(LANG[currentLang].simStarted||'Started','success');
+  solarStep();simTimer=setInterval(solarStep,3000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_solar(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  updateSolarData();drawSolar();
+}
+init_solar();

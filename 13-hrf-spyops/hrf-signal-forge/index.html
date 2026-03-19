@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Signal Forge — Workshop DIY</title>
+  <meta name="description" content="Craft custom RF signals — build waveforms and modulate data — Workshop-DIY." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Signal Forge — Workshop DIY" />
+  <meta property="og:description" content="Craft custom RF signals. Build waveforms, modulate data, analyze characteristics." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -72,22 +72,76 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">&#x2692;</span> <span data-i18n="mainSection">Signal Forge</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Craft custom RF signals and analyze waveforms</span> <span class="version-tag">v1.2</span></div>
           </div>
+        </div>
+
+        <!-- Waveform Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="forgeCanvas" width="780" height="250" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+
+        <!-- Spectrum Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="specCanvas" width="780" height="120" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;margin-bottom:8px;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="waveform">Waveform</div>
+            <select id="waveType" style="width:100%;padding:4px;border-radius:6px;background:var(--card-bg);color:var(--text);border:1px solid var(--border);font-size:.8rem;margin-bottom:4px;">
+              <option value="sine">Sine</option>
+              <option value="square">Square</option>
+              <option value="triangle">Triangle</option>
+              <option value="sawtooth">Sawtooth</option>
+              <option value="noise">Noise</option>
+            </select>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="frequency">Frequency (Hz):</label>
+            <input id="sigFreq" type="range" min="1" max="100" value="5" style="width:100%;" />
+            <span id="freqLabel" style="font-size:.75rem;color:var(--accent);">5 Hz</span>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="modulation">Modulation</div>
+            <select id="modType" style="width:100%;padding:4px;border-radius:6px;background:var(--card-bg);color:var(--text);border:1px solid var(--border);font-size:.8rem;margin-bottom:4px;">
+              <option value="none">None</option>
+              <option value="am">AM</option>
+              <option value="fm">FM</option>
+              <option value="psk">PSK</option>
+            </select>
+            <label style="font-size:.75rem;color:var(--text-muted);" data-i18n="amplitude">Amplitude:</label>
+            <input id="sigAmp" type="range" min="1" max="100" value="80" style="width:100%;" />
+            <span id="ampLabel" style="font-size:.75rem;color:var(--accent);">80%</span>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title" data-i18n="sigInfo">Signal Info</div>
+            <div id="sigStats" style="font-size:.78rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="transmitBtn" class="primary"><span class="btn-icon">&#x1F4E1;</span> <span data-i18n="transmit">Transmit</span></button>
+          <button id="addHarmonicBtn"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="addHarmonic">Add Harmonic</span></button>
+          <button id="resetForgeBtn"><span class="btn-icon">&#x1F504;</span> <span data-i18n="resetForge">Reset</span></button>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- SECTION A — Signal Library -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F4E1;</span> <span data-i18n="sectionA">Signal Library</span></summary>
+        <div class="card">
+          <div id="sigLibrary" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="forgeHint">Craft signals and transmit them to the library.</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- SECTION B — Modulation Guide -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">Modulation Guide</span></summary>
+        <div class="card">
+          <div id="modDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
       </details>
 
     </div>

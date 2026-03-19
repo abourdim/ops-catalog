@@ -1449,3 +1449,84 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"QSL Card Maker","subtitle":"🎨 Design and create QSL cards with templates","sectionA":"Theory","sectionB":"Controls","sectionC":"Card Designer","mainSection":"QSL Card Maker","mainDesc":"Design and create custom QSL cards","start":"New Card","stop":"Clear","simStarted":"New QSL card created","simStopped":"Card cleared","theoryTitle":"QSL Card Theory","theoryDesc":"QSL cards confirm radio contacts. Include callsign, date, time, frequency, mode, RST report, and your station details.","callsign":"Callsign","toCall":"To Callsign","freq":"Frequency","mode":"Mode","rst":"RST","date":"Date","template":"Template","classic":"Classic","modern":"Modern","minimal":"Minimal","ornate":"Ornate","generate":"Generate","download":"Download","preview":"Preview"});
+Object.assign(LANG.fr, {"title":"Createur de Cartes QSL","subtitle":"🎨 Concevez et creez des cartes QSL avec des modeles","sectionA":"Theorie","sectionB":"Controles","sectionC":"Designer de Carte","mainSection":"Createur de Cartes QSL","mainDesc":"Concevez et creez des cartes QSL personnalisees","start":"Nouvelle Carte","stop":"Effacer","simStarted":"Nouvelle carte QSL creee","simStopped":"Carte effacee","theoryTitle":"Theorie des Cartes QSL","theoryDesc":"Les cartes QSL confirment les contacts radio. Incluez indicatif, date, heure, frequence, mode, rapport RST et details de station.","callsign":"Indicatif","toCall":"Indicatif Dest.","freq":"Frequence","mode":"Mode","rst":"RST","date":"Date","template":"Modele","classic":"Classique","modern":"Moderne","minimal":"Minimal","ornate":"Orne","generate":"Generer","download":"Telecharger","preview":"Apercu"});
+Object.assign(LANG.ar, {"title":"صانع بطاقات QSL","subtitle":"🎨 صمم وأنشئ بطاقات QSL مع قوالب","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"مصمم البطاقة","mainSection":"صانع بطاقات QSL","mainDesc":"صمم وأنشئ بطاقات QSL مخصصة","start":"بطاقة جديدة","stop":"مسح","simStarted":"تم إنشاء بطاقة QSL جديدة","simStopped":"تم مسح البطاقة","theoryTitle":"نظرية بطاقات QSL","theoryDesc":"بطاقات QSL تؤكد الاتصالات اللاسلكية. تتضمن إشارة النداء والتاريخ والوقت والتردد والوضع وتقرير RST وتفاصيل المحطة.","callsign":"إشارة النداء","toCall":"إشارة نداء المستقبل","freq":"التردد","mode":"الوضع","rst":"RST","date":"التاريخ","template":"القالب","classic":"كلاسيكي","modern":"حديث","minimal":"بسيط","ornate":"مزخرف","generate":"إنشاء","download":"تحميل","preview":"معاينة"});
+setLanguage(currentLang);
+
+
+/* ═══════ QSL CARD MAKER SIM ═══════ */
+let simRunning=false;
+const qslCanvas=$('qslCanvas'),qslCtx=qslCanvas?qslCanvas.getContext('2d'):null;
+const templates={
+  classic:{bg:'#1a1a3e',border:'#d4a03c',font:'serif',accent:'#ffd700'},
+  modern:{bg:'#0a192f',border:'#64ffda',font:'sans-serif',accent:'#64ffda'},
+  minimal:{bg:'#ffffff',border:'#333333',font:'monospace',accent:'#000000',textColor:'#000'},
+  ornate:{bg:'#2d1b4e',border:'#e040fb',font:'serif',accent:'#e040fb'}
+};
+
+function drawQSL(){
+  if(!qslCtx)return;
+  const W=qslCanvas.width,H=qslCanvas.height;
+  const tpl=$('templateSelect')?$('templateSelect').value:'classic';
+  const t=templates[tpl];
+  const myCall=$('myCallInput')?$('myCallInput').value||'N0CALL':'N0CALL';
+  const toCall=$('toCallInput')?$('toCallInput').value||'DX1STA':'DX1STA';
+  const freq=$('freqInput')?$('freqInput').value||'14.200':'14.200';
+  const mode=$('modeSelect')?$('modeSelect').value||'SSB':'SSB';
+  const rst=$('rstInput')?$('rstInput').value||'599':'599';
+  const dt=$('dateInput')?$('dateInput').value||new Date().toISOString().slice(0,10):new Date().toISOString().slice(0,10);
+  // Background
+  qslCtx.fillStyle=t.bg;qslCtx.fillRect(0,0,W,H);
+  // Border
+  qslCtx.strokeStyle=t.border;qslCtx.lineWidth=4;qslCtx.strokeRect(8,8,W-16,H-16);
+  if(tpl==='ornate'){qslCtx.strokeStyle=t.accent;qslCtx.lineWidth=1;qslCtx.strokeRect(16,16,W-32,H-32);}
+  // Title
+  const tc=t.textColor||'#ffffff';
+  qslCtx.fillStyle=t.accent;qslCtx.font='bold 36px '+t.font;qslCtx.textAlign='center';
+  qslCtx.fillText(myCall,W/2,60);
+  // Confirming QSO with
+  qslCtx.fillStyle=tc;qslCtx.font='16px '+t.font;
+  qslCtx.fillText('Confirming QSO with',W/2,90);
+  qslCtx.fillStyle=t.accent;qslCtx.font='bold 28px '+t.font;
+  qslCtx.fillText(toCall,W/2,125);
+  // Details
+  qslCtx.fillStyle=tc;qslCtx.font='14px '+t.font;qslCtx.textAlign='left';
+  const detY=165;
+  qslCtx.fillText('Date: '+dt,40,detY);
+  qslCtx.fillText('Freq: '+freq+' MHz',40,detY+24);
+  qslCtx.fillText('Mode: '+mode,40,detY+48);
+  qslCtx.fillText('RST: '+rst,40,detY+72);
+  // Decorative wave
+  qslCtx.strokeStyle=t.accent;qslCtx.lineWidth=1;qslCtx.globalAlpha=0.3;
+  qslCtx.beginPath();
+  for(let x=0;x<W;x++){qslCtx.lineTo(x,H-30+Math.sin(x/30)*10);}
+  qslCtx.stroke();qslCtx.globalAlpha=1;
+  // 73
+  qslCtx.fillStyle=t.accent;qslCtx.font='bold 20px '+t.font;qslCtx.textAlign='right';
+  qslCtx.fillText('73!',W-30,H-20);
+  log('QSL card rendered: '+myCall+' to '+toCall,'success');
+}
+
+function downloadQSL(){
+  if(!qslCanvas)return;
+  const link=document.createElement('a');link.download='qsl-card.png';link.href=qslCanvas.toDataURL();link.click();
+  log('QSL card downloaded','success');
+}
+
+function startSim(){simRunning=true;setStatus(true);drawQSL();log(LANG[currentLang].simStarted||'Created','success');}
+function stopSim(){simRunning=false;setStatus(false);if(qslCtx)qslCtx.clearRect(0,0,qslCanvas.width,qslCanvas.height);log(LANG[currentLang].simStopped||'Cleared','info');}
+function init_qsl_maker(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('generateBtn'))$('generateBtn').onclick=drawQSL;
+  if($('downloadBtn'))$('downloadBtn').onclick=downloadQSL;
+  ['myCallInput','toCallInput','freqInput','modeSelect','rstInput','dateInput','templateSelect'].forEach(id=>{
+    const el=$(id);if(el)el.addEventListener('input',()=>{if(simRunning)drawQSL();});
+    if(el)el.addEventListener('change',()=>{if(simRunning)drawQSL();});
+  });
+}
+init_qsl_maker();

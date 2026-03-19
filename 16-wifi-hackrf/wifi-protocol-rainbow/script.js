@@ -63,32 +63,30 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Protocol Rainbow', subtitle: 'Visualize WiFi protocol layers with colors. See how 802.11 frames work',
+    disconnected: 'Idle', connected: 'Visualizing',
+    mainSection: 'Protocol Visualizer', mainDesc: 'See how 802.11 frames work',
+    sectionA: 'Frame Inspector', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is 802.11?', faq_a1: 'The IEEE standard for WiFi wireless networking.',
+    faq_q2: 'Is this real?', faq_a2: 'No, simulation for educational purposes.',
+    faq_q3: 'What are the layers?', faq_a3: 'PHY preamble, MAC header, LLC, Data payload, and FCS checksum.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Click Visualize to start.', howto_2: 'Watch colored protocol layers animate.',
+    howto_3: 'Inspect individual frames below.', howto_4: 'Learn each layer\'s function.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🌈 Protocol Rainbow ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,80 +96,66 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    start: 'Visualize', stop: 'Stop', frames: 'Frames', frameType: 'Type', frameSize: 'Size', dataRate: 'Rate',
+    layerPHY: 'PHY', layerMAC: 'MAC Header', layerLLC: 'LLC', layerData: 'Data', layerFCS: 'FCS',
+    simStarted: 'Visualization started', simStopped: 'Visualization stopped',
+    frameCapture: 'Frame captured', beaconFrame: 'Beacon', dataFrame: 'Data', ackFrame: 'ACK', rtsFrame: 'RTS', ctsFrame: 'CTS', probeFrame: 'Probe',
+    howItWorksText: '802.11 frames have multiple layers: PHY preamble (red) for synchronization, MAC header (orange) with addresses and control fields, LLC (green) for protocol identification, Data payload (blue), and FCS checksum (purple) for error detection.',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Arc-en-ciel Protocole WiFi', subtitle: 'Visualiser les couches du protocole WiFi en couleurs',
+    disconnected: 'Inactif', connected: 'Visualisation',
+    mainSection: 'Visualiseur de Protocole', mainDesc: 'Voir comment fonctionnent les trames 802.11',
+    sectionA: 'Inspecteur de Trames', sectionB: 'Comment ca marche',
+    activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    faq_q1: '802.11?', faq_a1: 'Norme IEEE pour le WiFi.',
+    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation educative.',
+    faq_q3: 'Les couches?', faq_a3: 'PHY, en-tete MAC, LLC, Donnees, FCS.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui, tout local.',
+    howto_1: 'Cliquez Visualiser.', howto_2: 'Observez les couches colorees.', howto_3: 'Inspectez les trames.', howto_4: 'Apprenez chaque couche.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.', wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local.',
+    working: 'En cours…', t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🌈 Visualiseur pret!', logCleared: 'Efface', copied: 'Copie!', copyFail: 'Echec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
+    whisperMode: 'Murmure', breathingGuide: 'Respiration', dhikrTap: 'Tap', musicMode: 'Musique',
+    chatPlaceholder: 'Parle...', splashHint: 'appuyer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    start: 'Visualiser', stop: 'Arreter', frames: 'Trames', frameType: 'Type', frameSize: 'Taille', dataRate: 'Debit',
+    layerPHY: 'PHY', layerMAC: 'En-tete MAC', layerLLC: 'LLC', layerData: 'Donnees', layerFCS: 'FCS',
+    simStarted: 'Visualisation demarree', simStopped: 'Visualisation arretee',
+    frameCapture: 'Trame capturee', beaconFrame: 'Balise', dataFrame: 'Donnees', ackFrame: 'ACK', rtsFrame: 'RTS', ctsFrame: 'CTS', probeFrame: 'Sonde',
+    howItWorksText: 'Les trames 802.11 ont plusieurs couches: preambule PHY (rouge), en-tete MAC (orange), LLC (vert), charge utile (bleu), et FCS (violet).',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'قوس قزح بروتوكول WiFi', subtitle: 'تصور طبقات بروتوكول WiFi بالألوان. شاهد كيف تعمل إطارات 802.11',
+    disconnected: 'خامل', connected: 'تصور',
+    mainSection: 'مُصوِّر البروتوكول', mainDesc: 'شاهد كيف تعمل إطارات 802.11',
+    sectionA: 'فاحص الإطارات', sectionB: 'كيف يعمل',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
+    settings: '⚙️ الإعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    faq_q1: 'ما هو 802.11؟', faq_a1: 'معيار IEEE للشبكات اللاسلكية WiFi.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة تعليمية فقط.',
+    faq_q3: 'ما هي الطبقات؟', faq_a3: 'PHY، رأس MAC، LLC، البيانات، وFCS.',
+    faq_q4: 'خصوصية؟', faq_a4: 'نعم، كل شيء محلي.',
+    howto_1: 'انقر تصور للبدء.', howto_2: 'شاهد الطبقات الملونة.', howto_3: 'افحص الإطارات.', howto_4: 'تعلم وظيفة كل طبقة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي.',
+    wiki_log_title: '📜 سجل', wiki_log: 'مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🌈 مُصوِّر البروتوكول جاهز!', logCleared: 'تم المسح', copied: 'تم النسخ!', copyFail: 'فشل',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات', whisperMode: 'همس', breathingGuide: 'تنفس',
+    dhikrTap: 'اضغط', musicMode: 'موسيقى', chatPlaceholder: 'تحدث...', splashHint: 'انقر للتخطي',
+    newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    start: 'تصور', stop: 'إيقاف', frames: 'إطارات', frameType: 'نوع', frameSize: 'حجم', dataRate: 'معدل',
+    layerPHY: 'PHY', layerMAC: 'رأس MAC', layerLLC: 'LLC', layerData: 'بيانات', layerFCS: 'FCS',
+    simStarted: 'بدأ التصور', simStopped: 'توقف التصور',
+    frameCapture: 'تم التقاط إطار', beaconFrame: 'إشارة', dataFrame: 'بيانات', ackFrame: 'ACK', rtsFrame: 'RTS', ctsFrame: 'CTS', probeFrame: 'فحص',
+    howItWorksText: 'إطارات 802.11 لها طبقات متعددة: تمهيد PHY (أحمر)، رأس MAC (برتقالي)، LLC (أخضر)، حمولة البيانات (أزرق)، وفحص FCS (بنفسجي).',
   }
 };
 
@@ -1449,3 +1433,101 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Protocol Rainbow ═══════ */
+let simRunning=false,simInterval=null,simAnim=null;
+let pCanvas,pCtx,frameCount=0,activeFrames=[];
+
+const FRAME_TYPES=[
+  {type:'beacon',label:'beaconFrame',size:128,rate:'6 Mbps',layers:[16,24,8,72,4],color:'#f59e0b'},
+  {type:'data',label:'dataFrame',size:1500,rate:'54 Mbps',layers:[16,30,8,1438,4],color:'#3b82f6'},
+  {type:'ack',label:'ackFrame',size:14,rate:'6 Mbps',layers:[16,10,0,0,4],color:'#22c55e'},
+  {type:'rts',label:'rtsFrame',size:20,rate:'6 Mbps',layers:[16,16,0,0,4],color:'#a855f7'},
+  {type:'cts',label:'ctsFrame',size:14,rate:'6 Mbps',layers:[16,10,0,0,4],color:'#ec4899'},
+  {type:'probe',label:'probeFrame',size:64,rate:'6 Mbps',layers:[16,24,8,12,4],color:'#ef4444'}
+];
+const LAYER_COLORS=['#ef4444','#f59e0b','#22c55e','#3b82f6','#a855f7'];
+const LAYER_NAMES=['PHY','MAC','LLC','DATA','FCS'];
+
+function initPCanvas(){pCanvas=$('protoCanvas');if(!pCanvas)return;pCtx=pCanvas.getContext('2d');pCanvas.width=pCanvas.offsetWidth*2;pCanvas.height=pCanvas.offsetHeight*2;pCtx.scale(2,2);}
+
+function drawProtocol(){
+  if(!pCtx)return;const w=pCanvas.offsetWidth,h=pCanvas.offsetHeight;
+  pCtx.fillStyle='rgba(10,10,26,0.08)';pCtx.fillRect(0,0,w,h);
+  // draw timeline grid
+  pCtx.strokeStyle='rgba(255,255,255,0.05)';pCtx.lineWidth=0.5;
+  for(let y=0;y<h;y+=40){pCtx.beginPath();pCtx.moveTo(0,y);pCtx.lineTo(w,y);pCtx.stroke();}
+  // animate active frames flowing left to right
+  const now=Date.now();
+  activeFrames=activeFrames.filter(f=>{
+    const age=(now-f.ts)/4000;if(age>1.2)return false;
+    const x=age*w*1.1-w*0.05;
+    const y=f.row*42+20;
+    const totalSize=f.layers.reduce((a,b)=>a+b,0);
+    const frameW=Math.min(w*0.85,totalSize/2);
+    let lx=x;
+    // draw each layer as colored segment
+    f.layers.forEach((size,i)=>{
+      if(size===0)return;
+      const layerW=frameW*(size/totalSize);
+      const alpha=Math.max(0,1-Math.abs(age-0.5)*1.5);
+      pCtx.fillStyle=LAYER_COLORS[i];pCtx.globalAlpha=alpha*0.8;
+      const ry=y;const rh=30;
+      pCtx.fillRect(lx,ry,layerW-1,rh);
+      // layer label
+      if(layerW>18){
+        pCtx.fillStyle='rgba(255,255,255,'+(alpha*0.9)+')';
+        pCtx.font='bold 8px monospace';pCtx.globalAlpha=alpha;
+        pCtx.fillText(LAYER_NAMES[i],lx+3,ry+12);
+        pCtx.font='7px monospace';
+        pCtx.fillText(size+'B',lx+3,ry+23);
+      }
+      pCtx.globalAlpha=1;
+      lx+=layerW;
+    });
+    // glow effect on leading edge
+    const glowX=x+frameW;
+    const grd=pCtx.createRadialGradient(glowX,y+15,0,glowX,y+15,20);
+    grd.addColorStop(0,'rgba(255,255,255,0.15)');grd.addColorStop(1,'rgba(255,255,255,0)');
+    pCtx.fillStyle=grd;pCtx.fillRect(glowX-20,y-5,40,40);
+    // frame type label
+    pCtx.fillStyle='rgba(255,255,255,0.5)';pCtx.font='7px monospace';
+    pCtx.fillText(f.type.toUpperCase()+' #'+f.id,x,y-3);
+    return true;
+  });
+  // legend at bottom
+  pCtx.globalAlpha=0.6;pCtx.font='8px monospace';
+  LAYER_NAMES.forEach((name,i)=>{
+    const lx=10+i*70;
+    pCtx.fillStyle=LAYER_COLORS[i];pCtx.fillRect(lx,h-15,8,8);
+    pCtx.fillStyle='rgba(255,255,255,0.5)';pCtx.fillText(name,lx+11,h-8);
+  });
+  pCtx.globalAlpha=1;
+  pCtx.fillStyle='rgba(255,255,255,0.3)';pCtx.fillText('Frames: '+frameCount,w-80,h-8);
+}
+
+function simTick(){
+  frameCount++;const s=LANG[currentLang];
+  const ft=FRAME_TYPES[Math.floor(Math.random()*FRAME_TYPES.length)];
+  const sizeVar=Math.floor(ft.size*(0.7+Math.random()*0.6));
+  const layers=ft.layers.map((l,i)=>i===3?Math.max(0,sizeVar-ft.layers.reduce((a,b,j)=>j===3?a:a+b,0)):l);
+  const totalSize=layers.reduce((a,b)=>a+b,0);
+  const row=frameCount%6;
+  activeFrames.push({type:ft.type,layers,ts:Date.now(),row,id:frameCount,size:totalSize,rate:ft.rate});
+  if(activeFrames.length>30)activeFrames.shift();
+  const typeLabel=s[ft.label]||ft.type;
+  $('frmVal').textContent=frameCount;
+  $('typeVal').textContent=typeLabel;
+  $('sizeVal').textContent=totalSize+' B';
+  $('rateVal').textContent=ft.rate;
+  log(s.frameCapture+': '+typeLabel+' ('+totalSize+'B @ '+ft.rate+')','rx');
+  // update frame list
+  const list=$('frameList');if(list){const d=document.createElement('div');d.className='frame-item';
+    const layerStr=LAYER_NAMES.map((n,i)=>layers[i]>0?n+':'+layers[i]+'B':'').filter(Boolean).join(' | ');
+    d.innerHTML='<span class="fr-type" style="color:'+ft.color+'">'+typeLabel+'</span><span class="fr-data">#'+frameCount+' | '+layerStr+'</span><span class="fr-size">'+totalSize+' B</span>';
+    list.insertBefore(d,list.firstChild);if(list.children.length>60)list.removeChild(list.lastChild);}
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);$('startBtn').disabled=true;$('stopBtn').disabled=false;frameCount=0;activeFrames=[];initPCanvas();log(LANG[currentLang].simStarted,'success');simInterval=setInterval(simTick,1000);(function loop(){if(!simRunning)return;drawProtocol();simAnim=requestAnimationFrame(loop)})();}
+function stopSim(){simRunning=false;if(simInterval)clearInterval(simInterval);if(simAnim)cancelAnimationFrame(simAnim);setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;log(LANG[currentLang].simStopped,'info');}
+document.addEventListener('DOMContentLoaded',()=>{const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;});

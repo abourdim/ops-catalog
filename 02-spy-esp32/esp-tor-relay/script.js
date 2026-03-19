@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Tor Relay — Onion Routing', subtitle: '🧅 Visualize multi-layer encrypted routing through relay nodes',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Onion Relay Network', mainDesc: 'Build circuits & send encrypted messages through relay nodes',
+    sectionA: 'Encryption Inspector', sectionB: 'Network Statistics', sectionC: 'Learn: Tor & Onion Routing',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is this app?', faq_a1: 'An educational simulator of Tor/onion routing. Build relay circuits, send encrypted messages, and watch encryption layers peel off at each node.',
+    faq_q2: 'How does onion routing work?', faq_a2: 'Your message is encrypted in 3 layers. Each relay node decrypts one layer and forwards the result. No single node sees both the sender and the message.',
+    faq_q3: 'What is XOR encryption?', faq_a3: 'XOR is a simple bitwise operation used here for learning. Each byte is combined with a key byte. Applying XOR twice recovers the original.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Click "New Circuit" to build a random path through 3 relay nodes.',
+    howto_2: 'Type a secret message and click "Send via Circuit" to encrypt and route it.',
+    howto_3: 'Watch the onion layers panel to see encryption being applied and peeled.',
+    howto_4: 'Open "Encryption Inspector" to see step-by-step decryption at each node.',
+    wiki_onion_title: '🧅 Onion Routing', wiki_onion: 'Onion routing encrypts your message in multiple layers. Each relay only knows the previous and next hop, never the full path.',
+    wiki_guard_title: '🛡️ Guard Node', wiki_guard: 'The first hop in a circuit. It knows who you are but not what you send or where it goes.',
+    wiki_exit_title: '🚪 Exit Node', wiki_exit: 'The last hop. It sees the plaintext message but does not know who sent it.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'This simulator runs 100% in your browser. No real Tor connections are made.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🧅 Tor Relay ready — build your circuit!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Relais Tor — Routage Oignon', subtitle: '🧅 Visualisez le routage chiffré multi-couches à travers les relais',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Réseau de Relais Oignon', mainDesc: 'Construisez des circuits et envoyez des messages chiffrés via les relais',
+    sectionA: 'Inspecteur de Chiffrement', sectionB: 'Statistiques Réseau', sectionC: 'Apprendre : Tor et Routage Oignon',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🧅 Relais Tor prêt — construisez votre circuit !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مرحل Tor — توجيه البصل', subtitle: '🧅 تصور التوجيه المشفر متعدد الطبقات عبر عقد الترحيل',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'شبكة مرحلات البصل', mainDesc: 'ابنِ دوائر وأرسل رسائل مشفرة عبر عقد الترحيل',
+    sectionA: 'مفتش التشفير', sectionB: 'إحصائيات الشبكة', sectionC: 'تعلم: Tor وتوجيه البصل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🧅 مرحل Tor جاهز — ابنِ دائرتك!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,281 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════════════════════════════════════════════════════════
+   TOR RELAY — Onion Routing Simulation
+   ═══════════════════════════════════════════════════════════ */
+
+(function TorRelaySim() {
+  const netCanvas = $('networkCanvas');
+  if (!netCanvas) return;
+  const ctx = netCanvas.getContext('2d');
+
+  const NODE_ROLES = ['Guard','Middle','Exit','Relay'];
+  const COUNTRIES = ['🇩🇪 Germany','🇳🇱 Netherlands','🇨🇭 Switzerland','🇮🇸 Iceland','🇷🇴 Romania','🇸🇪 Sweden','🇫🇮 Finland','🇳🇴 Norway'];
+
+  let nodes = [];
+  let circuit = [];
+  let msgCount = 0;
+  let circuitCount = 0;
+  let totalLatency = 0;
+  let animPackets = [];
+  let animId = null;
+
+  function randKey() { let s=''; for(let i=0;i<8;i++) s+=String.fromCharCode(65+Math.floor(Math.random()*26)); return s; }
+
+  function addNode() {
+    const W = netCanvas.width || 800, H = netCanvas.height || 320;
+    const n = {
+      id: nodes.length,
+      x: 80 + Math.random() * (W - 160),
+      y: 50 + Math.random() * (H - 100),
+      name: 'Node-' + Math.random().toString(36).substr(2,4).toUpperCase(),
+      role: NODE_ROLES[Math.floor(Math.random()*NODE_ROLES.length)],
+      country: COUNTRIES[Math.floor(Math.random()*COUNTRIES.length)],
+      key: randKey(),
+      bandwidth: (10 + Math.floor(Math.random()*90)) + ' Mbps',
+      uptime: Math.floor(Math.random()*365) + 'd',
+    };
+    nodes.push(n);
+    updateNodeDir();
+    updateStatNodeCount();
+    log(`➕ ${n.name} joined (${n.role}, ${n.country})`, 'info');
+    return n;
+  }
+
+  function removeNode() {
+    if (nodes.length <= 3) { log('Need at least 3 nodes', 'error'); return; }
+    const removed = nodes.pop();
+    circuit = circuit.filter(id => id < nodes.length);
+    updateNodeDir();
+    updateStatNodeCount();
+    log(`➖ ${removed.name} removed`, 'info');
+  }
+
+  function buildCircuit() {
+    if (nodes.length < 3) { log('Need at least 3 nodes for a circuit', 'error'); return; }
+    const indices = [];
+    const available = [...Array(nodes.length).keys()];
+    for (let i = 0; i < 3; i++) {
+      const idx = Math.floor(Math.random() * available.length);
+      indices.push(available.splice(idx, 1)[0]);
+    }
+    circuit = indices;
+    circuitCount++;
+    const latency = 50 + Math.floor(Math.random() * 200);
+    const path = $('circuitPath');
+    if (path) path.textContent = circuit.map((id,i) => {
+      const roles = ['Guard','Middle','Exit'];
+      return `${nodes[id].name} (${roles[i]})`;
+    }).join(' → ');
+    const lat = $('latencyDisplay'); if (lat) lat.textContent = latency + ' ms';
+    const hops = $('hopsDisplay'); if (hops) hops.textContent = '3';
+    updateStats();
+    log(`🔄 New circuit: ${circuit.map(i=>nodes[i].name).join(' → ')}`, 'success');
+    playSound('success');
+  }
+
+  function xorEncrypt(text, key) {
+    let out = '';
+    for (let i = 0; i < text.length; i++) {
+      out += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return out;
+  }
+
+  function toHex(str) {
+    let h = '';
+    for (let i = 0; i < str.length; i++) h += ('0' + str.charCodeAt(i).toString(16)).slice(-2);
+    return h.toUpperCase();
+  }
+
+  function sendMessage() {
+    const input = $('messageInput');
+    const msg = input ? input.value.trim() : '';
+    if (!msg) { log('Type a message first', 'error'); return; }
+    if (circuit.length < 3) { log('Build a circuit first', 'error'); return; }
+
+    msgCount++;
+    const keys = circuit.map(id => nodes[id].key);
+    // Encrypt layers (reverse order)
+    let encrypted = msg;
+    const layers = [msg];
+    for (let i = keys.length - 1; i >= 0; i--) {
+      encrypted = xorEncrypt(encrypted, keys[i]);
+      layers.push(toHex(encrypted));
+    }
+    layers.reverse();
+
+    // Display onion layers
+    const ol = $('onionLayers');
+    if (ol) {
+      ol.innerHTML = '';
+      layers.forEach((l, i) => {
+        const d = document.createElement('div');
+        const colors = ['#ef4444','#f59e0b','#22c55e','#3b82f6'];
+        d.style.cssText = `padding:8px;border-radius:6px;border-left:3px solid ${colors[i%4]};background:rgba(0,0,0,0.2);word-break:break-all;`;
+        if (i === 0) d.innerHTML = `<strong>Layer ${i} (Full Onion):</strong> ${l.substring(0,40)}...`;
+        else if (i < layers.length - 1) d.innerHTML = `<strong>Layer ${i} (after ${nodes[circuit[i-1]]?.name} decrypts):</strong> ${l.substring(0,40)}...`;
+        else d.innerHTML = `<strong>Plaintext (Exit reveals):</strong> ${l}`;
+        ol.appendChild(d);
+      });
+    }
+
+    // Decryption steps
+    const ds = $('decryptionSteps');
+    if (ds) {
+      ds.innerHTML = '';
+      circuit.forEach((id, i) => {
+        const d = document.createElement('div');
+        const roles = ['Guard','Middle','Exit'];
+        d.style.cssText = 'padding:8px;border-radius:6px;background:rgba(0,0,0,0.15);';
+        d.innerHTML = `<strong>${roles[i]} (${nodes[id].name}):</strong> Decrypts layer ${i+1} with key "${nodes[id].key}" → forwards to ${i<2 ? roles[i+1] : 'destination'}`;
+        ds.appendChild(d);
+      });
+    }
+
+    // Animate
+    animPackets.push({path: circuit, step: 0, progress: 0});
+    const latency = 50 + Math.floor(Math.random() * 200);
+    totalLatency += latency;
+    updateStats();
+    log(`🧅 Message sent via circuit: "${msg}" → ${layers[0].substring(0,20)}...`, 'tx');
+    playSound('click');
+  }
+
+  function resetNetwork() {
+    nodes = []; circuit = []; msgCount = 0; circuitCount = 0; totalLatency = 0; animPackets = [];
+    for (let i = 0; i < 6; i++) addNode();
+    buildCircuit();
+    log('🗑️ Network reset', 'info');
+  }
+
+  function updateStats() {
+    const sm = $('statMsgCount'); if (sm) sm.textContent = msgCount;
+    const sc = $('statCircuits'); if (sc) sc.textContent = circuitCount;
+    const sa = $('statAvgLatency'); if (sa) sa.textContent = msgCount > 0 ? Math.round(totalLatency / msgCount) : 0;
+    updateStatNodeCount();
+  }
+
+  function updateStatNodeCount() {
+    const sn = $('statNodeCount'); if (sn) sn.textContent = nodes.length;
+  }
+
+  function updateNodeDir() {
+    const nd = $('nodeDirectory');
+    if (!nd) return;
+    nd.innerHTML = '';
+    nodes.forEach(n => {
+      const d = document.createElement('div');
+      d.style.cssText = 'display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.05);';
+      d.innerHTML = `<span>${n.name}</span><span style="opacity:0.6">${n.role}</span><span style="opacity:0.5">${n.country}</span>`;
+      nd.appendChild(d);
+    });
+  }
+
+  // XOR demo
+  const xorBtn = $('xorEncBtn');
+  if (xorBtn) xorBtn.onclick = () => {
+    const plain = $('xorPlain')?.value || '';
+    const key = $('xorKey')?.value || 'KEY';
+    const enc = xorEncrypt(plain, key);
+    const result = $('xorResult');
+    if (result) result.textContent = `Encrypted (hex): ${toHex(enc)} | Decrypted: ${xorEncrypt(enc, key)}`;
+  };
+
+  // Drawing
+  function draw() {
+    const rect = netCanvas.getBoundingClientRect();
+    netCanvas.width = rect.width;
+    netCanvas.height = rect.height || 320;
+    const W = netCanvas.width, H = netCanvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // Scale node positions
+    nodes.forEach((n, i) => {
+      if (n.x > W - 20) n.x = 80 + (i * 100) % (W - 160);
+      if (n.y > H - 20) n.y = 50 + Math.random() * (H - 100);
+    });
+
+    // Draw circuit links
+    if (circuit.length >= 3) {
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(139,92,246,0.5)';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([6, 4]);
+      const first = nodes[circuit[0]];
+      if (first) ctx.moveTo(first.x, first.y);
+      circuit.forEach(id => { const n = nodes[id]; if (n) ctx.lineTo(n.x, n.y); });
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Animate packets
+    animPackets = animPackets.filter(p => {
+      if (p.step >= p.path.length - 1) return false;
+      p.progress += 0.02;
+      if (p.progress >= 1) { p.progress = 0; p.step++; }
+      if (p.step >= p.path.length - 1) return false;
+      const a = nodes[p.path[p.step]], b = nodes[p.path[p.step + 1]];
+      if (!a || !b) return false;
+      const px = a.x + (b.x - a.x) * p.progress;
+      const py = a.y + (b.y - a.y) * p.progress;
+      // Draw layers (concentric circles)
+      const layers = 3 - p.step;
+      for (let i = layers; i >= 0; i--) {
+        ctx.beginPath();
+        ctx.arc(px, py, 6 + i * 4, 0, Math.PI * 2);
+        ctx.fillStyle = ['rgba(239,68,68,0.6)','rgba(245,158,11,0.5)','rgba(34,197,94,0.4)','rgba(59,130,246,0.3)'][i];
+        ctx.fill();
+      }
+      return true;
+    });
+
+    // Draw nodes
+    nodes.forEach((n, i) => {
+      const inCircuit = circuit.includes(n.id);
+      // Glow
+      if (inCircuit) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 22, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(139,92,246,0.15)';
+        ctx.fill();
+      }
+      // Node
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = inCircuit ? '#8b5cf6' : 'rgba(255,255,255,0.15)';
+      ctx.fill();
+      ctx.strokeStyle = inCircuit ? '#c4b5fd' : 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // Icon
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(inCircuit ? '🧅' : '⬡', n.x, n.y);
+      // Label
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.fillText(n.name, n.x, n.y + 24);
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  // Button bindings
+  const buildBtn = $('buildCircuitBtn'); if (buildBtn) buildBtn.onclick = buildCircuit;
+  const sendBtn = $('sendBtn'); if (sendBtn) sendBtn.onclick = sendMessage;
+  const addBtn = $('addNodeBtn'); if (addBtn) addBtn.onclick = () => addNode();
+  const rmBtn = $('removeNodeBtn'); if (rmBtn) rmBtn.onclick = removeNode;
+  const resetBtn = $('resetNetBtn'); if (resetBtn) resetBtn.onclick = resetNetwork;
+  const msgInput = $('messageInput'); if (msgInput) msgInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+
+  // Init with 6 nodes
+  for (let i = 0; i < 6; i++) addNode();
+  buildCircuit();
+  setStatus(true);
+  draw();
+})();

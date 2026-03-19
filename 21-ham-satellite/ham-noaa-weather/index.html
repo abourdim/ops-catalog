@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>NOAA Weather — Workshop DIY</title>
+  <meta name="description" content="NOAA Weather — Decode NOAA weather satellite APT signals into maps." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="NOAA Weather — Workshop DIY" />
+  <meta property="og:description" content="Decode NOAA weather satellite APT signals into maps." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -21,6 +21,14 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .apt-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+    .apt-stat{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:8px;padding:8px;text-align:center}
+    .apt-stat .av{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--accent)}
+    .apt-stat .al{font-size:.7rem;color:var(--text-muted);margin-top:2px}
+    .apt-waveform{width:100%;height:60px;border-radius:8px;background:#000;display:block;margin-top:6px}
+    @media(max-width:600px){.apt-stats{grid-template-columns:1fr 1fr}}
+  </style>
 </head>
 
 <body>
@@ -72,22 +80,71 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🌦️</span> <span data-i18n="mainSection">NOAA Weather</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Decode NOAA weather satellite APT signals into maps</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Theory ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card">
+          <h3 data-i18n="theoryTitle">NOAA APT Signals</h3>
+          <p data-i18n="theoryDesc">NOAA polar-orbiting satellites (NOAA-15, 18, 19) transmit Automatic Picture Transmission (APT) on 137 MHz. APT uses 2400 Hz AM subcarrier with two image channels (visible + infrared) at 4 km/pixel resolution. A V-dipole antenna and RTL-SDR can receive these signals.</p>
+          <div class="control-section">
+            <table style="width:100%;font-size:.85rem;border-collapse:collapse">
+              <tr style="border-bottom:1px solid var(--border,rgba(255,255,255,.1))"><th style="text-align:left;padding:4px">Satellite</th><th style="text-align:left;padding:4px">Frequency</th></tr>
+              <tr><td style="padding:4px">NOAA-15</td><td>137.620 MHz</td></tr>
+              <tr><td style="padding:4px">NOAA-18</td><td>137.912 MHz</td></tr>
+              <tr><td style="padding:4px">NOAA-19</td><td>137.100 MHz</td></tr>
+            </table>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Controls ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <label class="sidebar-label" data-i18n="selectSat">Select Satellite</label>
+            <select id="satSelect" class="sidebar-select">
+              <option value="noaa15">NOAA-15 (137.620 MHz)</option>
+              <option value="noaa18" selected>NOAA-18 (137.912 MHz)</option>
+              <option value="noaa19">NOAA-19 (137.100 MHz)</option>
+            </select>
+            <label class="sidebar-label" style="margin-top:8px" data-i18n="enhance">Enhancement</label>
+            <select id="enhanceSelect" class="sidebar-select">
+              <option value="none">None</option>
+              <option value="contrast">High Contrast</option>
+              <option value="thermal" selected>Thermal Color</option>
+              <option value="precip">Precipitation</option>
+            </select>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button id="startBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">&#9654;</span> <span data-i18n="start">Start</span></button>
+              <button id="stopBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#9724;</span> <span data-i18n="stop">Stop</span></button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — APT Image ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🌦️</span> <span data-i18n="sectionC">APT Image</span></summary>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span id="satLabel" style="font-family:var(--font-h);font-size:1rem;color:var(--accent)">NOAA-18 — 137.912 MHz</span>
+            <span id="lineCount" style="font-family:'Orbitron',monospace;color:var(--accent2)">Line: 0</span>
+          </div>
+          <canvas id="aptCanvas" width="800" height="400" style="width:100%;height:auto;border-radius:8px;background:#000;display:block"></canvas>
+          <canvas id="waveCanvas" width="800" height="60" class="apt-waveform"></canvas>
+          <div class="apt-stats">
+            <div class="apt-stat"><div class="av" id="signalStr">0</div><div class="al" data-i18n="signalLabel">Signal (dB)</div></div>
+            <div class="apt-stat"><div class="av" id="aptLines">0</div><div class="al" data-i18n="linesLabel">Lines</div></div>
+            <div class="apt-stat"><div class="av" id="syncRate">0%</div><div class="al" data-i18n="syncLabel">Sync Rate</div></div>
+          </div>
+        </div>
       </details>
 
     </div>

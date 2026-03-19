@@ -1449,3 +1449,81 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"NOAA Weather",subtitle:"🌦️ Decode NOAA weather satellite APT signals into maps",mainSection:"NOAA Weather",mainDesc:"Decode NOAA weather satellite APT signals into maps",sectionA:"Theory",sectionB:"Controls",sectionC:"APT Image",theoryTitle:"NOAA APT Signals",theoryDesc:"NOAA satellites transmit APT on 137 MHz with 2400 Hz AM subcarrier. Two image channels at 4 km/pixel resolution.",selectSat:"Select Satellite",enhance:"Enhancement",start:"Start",stop:"Stop",signalLabel:"Signal (dB)",linesLabel:"Lines",syncLabel:"Sync Rate",simStarted:"APT decoding started",simStopped:"APT decoding stopped",lineDecoded:"APT line decoded",satChanged:"Satellite changed to"});
+Object.assign(LANG.fr, {title:"Meteo NOAA",subtitle:"🌦️ Decoder les signaux APT des satellites meteo NOAA",mainSection:"Meteo NOAA",mainDesc:"Decoder les signaux APT des satellites meteo NOAA",sectionA:"Theorie",sectionB:"Controles",sectionC:"Image APT",theoryTitle:"Signaux APT NOAA",theoryDesc:"Les satellites NOAA transmettent l'APT sur 137 MHz avec une sous-porteuse AM de 2400 Hz.",selectSat:"Choisir le Satellite",enhance:"Amelioration",start:"Demarrer",stop:"Arreter",signalLabel:"Signal (dB)",linesLabel:"Lignes",syncLabel:"Taux Sync",simStarted:"Decodage APT demarre",simStopped:"Decodage APT arrete",lineDecoded:"Ligne APT decodee",satChanged:"Satellite change a"});
+Object.assign(LANG.ar, {title:"طقس NOAA",subtitle:"🌦️ فك ترميز اشارات APT من اقمار NOAA الى خرائط",mainSection:"طقس NOAA",mainDesc:"فك ترميز اشارات APT الى خرائط الطقس",sectionA:"النظرية",sectionB:"التحكم",sectionC:"صورة APT",theoryTitle:"اشارات APT من NOAA",theoryDesc:"تبث اقمار NOAA اشارات APT على 137 ميغاهرتز بدقة 4 كم لكل بكسل.",selectSat:"اختيار القمر",enhance:"التحسين",start:"بدء",stop:"ايقاف",signalLabel:"الاشارة (dB)",linesLabel:"الخطوط",syncLabel:"معدل المزامنة",simStarted:"بدا فك APT",simStopped:"توقف فك APT",lineDecoded:"تم فك خط APT",satChanged:"تغير القمر الى"});
+setLanguage(currentLang);
+
+
+/* ═══════ NOAA APT SIM ═══════ */
+const NOAA_SATS={noaa15:{label:'NOAA-15',freq:'137.620 MHz'},noaa18:{label:'NOAA-18',freq:'137.912 MHz'},noaa19:{label:'NOAA-19',freq:'137.100 MHz'}};
+let aptRunning=false,aptTimer=null,aptLine=0,aptSat='noaa18',aptEnhance='thermal';
+const aptC=$('aptCanvas'),aptX=aptC?aptC.getContext('2d'):null;
+const wavC=$('waveCanvas'),wavX=wavC?wavC.getContext('2d'):null;
+
+function aptPixel(x,y){
+  const nx=x/800,ny=y/400;
+  const ocean=0.2;
+  const land=(Math.sin(nx*14+0.5)*Math.cos(ny*10)*0.4+0.5);
+  const cloud=(Math.sin(nx*25+ny*18+aptLine*0.03)*0.5+0.5);
+  const noise=Math.random()*10;
+  const base=ocean*30+land*60+cloud*140+noise;
+  if(aptEnhance==='none'){const v=Math.min(255,base|0);return [v,v,v];}
+  if(aptEnhance==='contrast'){const v=Math.min(255,(base*1.5)|0);return [v,v,v];}
+  if(aptEnhance==='thermal'){
+    const t=Math.min(1,base/255);
+    if(t<0.3)return [0,0,(t/0.3*255)|0];
+    if(t<0.6)return [0,((t-0.3)/0.3*255)|0,255-((t-0.3)/0.3*128)|0];
+    return [((t-0.6)/0.4*255)|0,255-((t-0.6)/0.4*128)|0,0];
+  }
+  // Precipitation
+  const p=cloud>0.6?cloud*200:0;
+  return [(base*0.5)|0,(base*0.5+p*0.3)|0,(p)|0];
+}
+
+function decodeAPTLine(){
+  if(!aptX||!aptRunning)return;
+  const W=aptC.width,y=aptLine%aptC.height;
+  if(y===0&&aptLine>0)aptX.clearRect(0,0,W,aptC.height);
+  // Left channel (VIS) + sync + right channel (IR)
+  const id=aptX.createImageData(W,1);
+  // Sync markers at edges
+  for(let x=0;x<W;x++){
+    let r,g,b;
+    if(x<10||x>W-10||(x>W/2-5&&x<W/2+5)){r=g=b=x%4<2?255:0;} // sync bars
+    else{[r,g,b]=aptPixel(x,y);}
+    id.data[x*4]=r;id.data[x*4+1]=g;id.data[x*4+2]=b;id.data[x*4+3]=255;
+  }
+  aptX.putImageData(id,0,y);
+  aptLine++;
+  // Waveform
+  if(wavX){
+    wavX.fillStyle='rgba(0,0,0,0.4)';wavX.fillRect(0,0,wavC.width,wavC.height);
+    wavX.strokeStyle='#51cf66';wavX.lineWidth=1;wavX.beginPath();
+    for(let x=0;x<wavC.width;x++){
+      const v=wavC.height/2+Math.sin(x*0.15+aptLine*0.5)*15*(0.5+Math.random()*0.5);
+      x===0?wavX.moveTo(x,v):wavX.lineTo(x,v);
+    }
+    wavX.stroke();
+  }
+  const lc=$('lineCount');if(lc)lc.textContent='Line: '+aptLine;
+  const al=$('aptLines');if(al)al.textContent=aptLine;
+  const ss=$('signalStr');if(ss)ss.textContent=(5+Math.random()*15).toFixed(1);
+  const sr=$('syncRate');if(sr)sr.textContent=(90+Math.random()*9).toFixed(0)+'%';
+  if(aptLine%40===0)log((LANG[currentLang].lineDecoded||'APT line decoded')+' '+aptLine,'rx');
+}
+
+function startAPT(){if(aptRunning)return;aptRunning=true;aptTimer=setInterval(decodeAPTLine,100);log(LANG[currentLang].simStarted,'success');setStatus(true);}
+function stopAPT(){aptRunning=false;if(aptTimer)clearInterval(aptTimer);log(LANG[currentLang].simStopped,'info');setStatus(false);}
+
+(function initNOAA(){
+  const sb=$('startBtn'),eb=$('stopBtn');
+  if(sb)sb.onclick=startAPT;if(eb)eb.onclick=stopAPT;
+  const ss=$('satSelect');
+  if(ss)ss.addEventListener('change',()=>{aptSat=ss.value;const s=NOAA_SATS[aptSat];const sl=$('satLabel');if(sl)sl.textContent=s.label+' — '+s.freq;log((LANG[currentLang].satChanged||'Satellite changed to')+' '+s.label,'info');});
+  const eh=$('enhanceSelect');
+  if(eh)eh.addEventListener('change',()=>{aptEnhance=eh.value;});
+})();

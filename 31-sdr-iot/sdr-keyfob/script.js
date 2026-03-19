@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Keyfob Analyzer', subtitle: '🔑 Keyfob Analyzer — Car Remote Decoder',
+    disconnected: 'Disconnected', connected: 'Capturing',
+    mainSection: 'Keyfob Analyzer', mainDesc: 'Decode car remote key fob signals',
+    sectionA: 'Signal Analysis', sectionB: 'Keyfob RF Theory',
+    started: '▶ Capturing signals', stopped: '⏹ Capture stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔑 Keyfob Analyzer ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +101,8 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Analyseur Télécommande SDR', started: '▶ Capture en cours', stopped: '⏹ Capture arrêtée',
+    _old_title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -1332,6 +1334,16 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ KEYFOB SIMULATION ═══════ */
+let _kf_run=false,_kf_fr=null,_kf_cnt=0,_kf_hist=[];
+function _kf_gen(){const s=new Float32Array(256);for(let i=0;i<256;i++)s[i]=-105+(Math.random()-.5)*6;if(Math.random()<0.15){_kf_cnt++;const pk=100+Math.floor(Math.random()*56);for(let i=-3;i<4;i++)if(pk+i>=0&&pk+i<256)s[pk+i]+=35*(1-Math.abs(i)/4);}return s;}
+function _kf_draw1(spec){const c=$('keyfobCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+110)/50*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('Keyfob Signal',4,12);}
+function _kf_draw2(spec){const c=$('codeCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#0f0';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<w;i++){const bit=Math.random()>0.5?1:0;ctx.lineTo(i,bit?h*0.2:h*0.8);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px monospace';ctx.fillText('Decoded Bits: '+Array.from({length:16},()=>Math.round(Math.random())).join(''),4,h-4);}
+function _kf_stats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('sigCountVal',_kf_cnt);el('modTypeVal',$('modSelect')?$('modSelect').value:'ASK');el('bitRateVal',(1000+Math.floor(Math.random()*3000))+' bps');el('codeLenVal',(24+Math.floor(Math.random()*40))+' bits');}
+function _kf_loop(){if(!_kf_run)return;const spec=_kf_gen();_kf_draw1(spec);_kf_draw2(spec);_kf_stats();_kf_fr=requestAnimationFrame(_kf_loop);}
+function startKf(){if(_kf_run)return;_kf_run=true;_kf_cnt=0;setStatus(true);log(LANG[currentLang].started,'success');_kf_loop();}
+function stopKf(){_kf_run=false;if(_kf_fr)cancelAnimationFrame(_kf_fr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1454,9 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startKf;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopKf;
 
   log(LANG[currentLang].ready, 'success');
 }

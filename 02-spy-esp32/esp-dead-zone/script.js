@@ -63,32 +63,36 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Dead Zone — Device Detector', subtitle: '📵 Find every WiFi device around you',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Device Radar', mainDesc: 'Scan for WiFi devices in range',
+    sectionA: 'Probe Request Analysis', sectionB: 'Device Fingerprinting', sectionC: 'Surveillance Detection',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
+    faq_q1: 'What is Dead Zone?', faq_a1: 'Dead Zone is an educational WiFi device detector simulator. It teaches you how ESP32-based scanners discover nearby wireless devices by capturing probe requests and beacon frames.',
+    faq_q2: 'What are probe requests?', faq_a2: 'Probe requests are WiFi frames that devices send to discover known networks. They reveal previously connected SSIDs, exposing your travel and location history.',
+    faq_q3: 'Can this detect hidden cameras?', faq_a3: 'Yes! Hidden WiFi cameras emit detectable wireless signals. This tool identifies suspicious devices by analyzing MAC vendor prefixes, signal patterns, and probe behavior.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation for learning purposes.',
+    faq_q5: 'What is MAC address randomization?', faq_a5: 'Modern devices use random MAC addresses when scanning for WiFi to prevent tracking. The local bit (second hex character is 2,6,A,E) indicates a randomized address.',
+    howto_1: 'Click "Start Scan" to begin detecting nearby WiFi devices (simulated).',
+    howto_2: 'Watch the radar map as devices appear at varying distances based on signal strength.',
+    howto_3: 'Open "Probe Request Analysis" to see which networks devices are searching for.',
+    howto_4: 'Check "Device Fingerprinting" to analyze vendor patterns and device types.',
+    howto_5: 'Review "Surveillance Detection" to identify hidden cameras and tracking devices.',
+    howto_6: 'Use the MAC Lookup field to identify any device manufacturer by its MAC address.',
+    wiki_probe_title: '📡 Probe Requests', wiki_probe: 'WiFi devices constantly send probe requests to find known networks. Each probe contains the device MAC and often the SSID it is looking for.',
+    wiki_mac_title: '🏷️ MAC Addresses', wiki_mac: 'The first 3 bytes (OUI) of a MAC address identify the manufacturer. This allows vendor identification even without connecting to the device.',
+    wiki_fingerprint_title: '🔬 Device Fingerprinting', wiki_fingerprint: 'Beyond MAC addresses, devices can be identified by probe timing patterns, supported rates, HT capabilities, and other 802.11 frame fields.',
+    wiki_surveillance_title: '🕵️ Surveillance Detection', wiki_surveillance: 'Hidden cameras and tracking devices emit WiFi signals that can be detected. Look for always-on devices with strong signals from surveillance equipment manufacturers.',
     wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📵 Dead Zone ready — start scanning!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,34 +102,55 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    startScan: 'Start Scan', clearDevices: 'Clear', exportDevices: 'Export',
+    devicesFound: 'Devices Found', probeRequests: 'Probe Requests', uniqueVendors: 'Unique Vendors',
+    idle: 'IDLE', scanning: 'SCANNING', scanState: 'Scan State',
+    lookupVendor: 'Lookup', thMAC: 'MAC', thVendor: 'Vendor', thRSSI: 'RSSI', thType: 'Type', thProbes: 'Probes', thSeen: 'Last Seen',
+    probeDesc: 'Probe requests reveal which networks a device has previously connected to.',
+    probeFeed: 'Live Probe Feed', ssidCloud: 'Discovered SSIDs', privacyRisk: 'Privacy Risk Assessment',
+    fingerprintDesc: 'Each device has unique characteristics beyond its MAC address.',
+    deviceBreakdown: 'Device Type Breakdown', vendorDist: 'Vendor Distribution', signalHist: 'Signal Strength Map',
+    survDesc: 'Identify hidden cameras, tracking devices, and suspicious always-on devices.',
+    threatLevel: 'Threat Level', safe: 'SAFE', suspDevices: 'Suspicious Devices',
+    noSuspicious: 'No suspicious devices detected yet. Start a scan.',
+    detectionTips: 'Detection Tips',
+    tip1: '🔴 Hidden cameras often use MAC prefixes from Shenzhen manufacturers',
+    tip2: '🔴 Tracking devices probe very few SSIDs but have strong, constant signals',
+    tip3: '🔴 Suspicious devices often have randomized MACs (local bit set)',
+    tip4: '🔴 Look for devices that appear only when you move to a new location',
+    tip5: '🔴 WiFi cameras typically maintain a persistent connection to one SSID',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Dead Zone — Détecteur', subtitle: '📵 Trouvez chaque appareil WiFi autour de vous',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Radar d\'Appareils', mainDesc: 'Scanner les appareils WiFi à portée',
+    sectionA: 'Analyse des Requêtes Probe', sectionB: 'Empreinte Numérique', sectionC: 'Détection de Surveillance',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que Dead Zone ?', faq_a1: 'Un simulateur éducatif de détection d\'appareils WiFi basé sur ESP32.',
+    faq_q2: 'Que sont les requêtes probe ?', faq_a2: 'Ce sont des trames WiFi que les appareils envoient pour trouver des réseaux connus.',
+    faq_q3: 'Peut-il détecter les caméras cachées ?', faq_a3: 'Oui ! Les caméras WiFi cachées émettent des signaux sans fil détectables.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement. C\'est une simulation éducative.',
+    faq_q5: 'Qu\'est-ce que la randomisation MAC ?', faq_a5: 'Les appareils modernes utilisent des adresses MAC aléatoires pour empêcher le pistage.',
+    howto_1: 'Cliquez sur "Démarrer Scan" pour commencer la détection (simulée).',
+    howto_2: 'Regardez la carte radar quand les appareils apparaissent.',
+    howto_3: 'Ouvrez "Analyse Probe" pour voir les réseaux recherchés.',
+    howto_4: 'Vérifiez "Empreinte Numérique" pour analyser les fabricants.',
+    howto_5: 'Consultez "Détection de Surveillance" pour identifier les caméras cachées.',
+    howto_6: 'Utilisez la recherche MAC pour identifier les fabricants.',
+    wiki_probe_title: '📡 Requêtes Probe', wiki_probe: 'Les appareils WiFi envoient constamment des requêtes probe pour trouver des réseaux connus.',
+    wiki_mac_title: '🏷️ Adresses MAC', wiki_mac: 'Les 3 premiers octets (OUI) d\'une adresse MAC identifient le fabricant.',
+    wiki_fingerprint_title: '🔬 Empreinte', wiki_fingerprint: 'Les appareils peuvent être identifiés par leurs patterns de timing.',
+    wiki_surveillance_title: '🕵️ Détection de Surveillance', wiki_surveillance: 'Les caméras cachées émettent des signaux WiFi détectables.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout reste dans votre navigateur. Pas de tracking.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📵 Dead Zone prêt — lancez le scan !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -135,34 +160,43 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
+    startScan: 'Démarrer Scan', clearDevices: 'Effacer', exportDevices: 'Exporter',
+    devicesFound: 'Appareils Trouvés', probeRequests: 'Requêtes Probe', uniqueVendors: 'Fabricants Uniques',
+    idle: 'INACTIF', scanning: 'EN COURS', scanState: 'État du Scan',
+    lookupVendor: 'Rechercher',
+    safe: 'SÛR', noSuspicious: 'Aucun appareil suspect détecté. Lancez un scan.',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'المنطقة الميتة — كاشف الأجهزة', subtitle: '📵 اعثر على كل جهاز WiFi حولك',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'رادار الأجهزة', mainDesc: 'فحص أجهزة WiFi في النطاق',
+    sectionA: 'تحليل طلبات الفحص', sectionB: 'بصمة الأجهزة', sectionC: 'كشف المراقبة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي المنطقة الميتة؟', faq_a1: 'محاكي تعليمي لكشف أجهزة WiFi باستخدام ESP32.',
+    faq_q2: 'ما هي طلبات الفحص؟', faq_a2: 'إطارات WiFi ترسلها الأجهزة لاكتشاف الشبكات المعروفة.',
+    faq_q3: 'هل يمكنه كشف الكاميرات المخفية؟', faq_a3: 'نعم! الكاميرات المخفية تصدر إشارات لاسلكية قابلة للكشف.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا. هذه محاكاة تعليمية.',
+    faq_q5: 'ما هو عشوائية عنوان MAC؟', faq_a5: 'الأجهزة الحديثة تستخدم عناوين MAC عشوائية لمنع التتبع.',
+    howto_1: 'انقر على "بدء الفحص" لبدء الكشف (محاكاة).',
+    howto_2: 'شاهد خريطة الرادار عند ظهور الأجهزة.',
+    howto_3: 'افتح "تحليل الفحص" لرؤية الشبكات المطلوبة.',
+    howto_4: 'تحقق من "بصمة الأجهزة" لتحليل الشركات المصنعة.',
+    howto_5: 'راجع "كشف المراقبة" لتحديد الكاميرات المخفية.',
+    howto_6: 'استخدم البحث عن MAC لتحديد الشركات المصنعة.',
+    wiki_probe_title: '📡 طلبات الفحص', wiki_probe: 'أجهزة WiFi ترسل باستمرار طلبات فحص للعثور على شبكات معروفة.',
+    wiki_mac_title: '🏷️ عناوين MAC', wiki_mac: 'أول 3 بايتات من عنوان MAC تحدد الشركة المصنعة.',
+    wiki_fingerprint_title: '🔬 البصمة الرقمية', wiki_fingerprint: 'يمكن تحديد الأجهزة من أنماط التوقيت الخاصة بها.',
+    wiki_surveillance_title: '🕵️ كشف المراقبة', wiki_surveillance: 'الكاميرات المخفية تصدر إشارات WiFi قابلة للكشف.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل شيء يبقى في متصفحك. بدون تتبع.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📵 المنطقة الميتة جاهزة — ابدأ الفحص!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +206,11 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    startScan: 'بدء الفحص', clearDevices: 'مسح', exportDevices: 'تصدير',
+    devicesFound: 'أجهزة مكتشفة', probeRequests: 'طلبات فحص', uniqueVendors: 'شركات مصنعة',
+    idle: 'خامل', scanning: 'يفحص', scanState: 'حالة الفحص',
+    lookupVendor: 'بحث',
+    safe: 'آمن', noSuspicious: 'لم يتم الكشف عن أجهزة مشبوهة. ابدأ الفحص.',
   }
 };
 
@@ -1449,3 +1488,304 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════════════════════════════════════════════════════════
+   DEAD ZONE — WiFi Device Detector Simulation
+   ═══════════════════════════════════════════════════════════ */
+
+(function DeadZoneSim() {
+  const radarCanvas = $('radarCanvas');
+  if (!radarCanvas) return;
+  const rctx = radarCanvas.getContext('2d');
+  const sigCanvas = $('signalCanvas');
+  const sctx = sigCanvas ? sigCanvas.getContext('2d') : null;
+
+  const VENDORS = [
+    {oui:'AA:BB:CC',name:'Apple Inc.',type:'phone'},
+    {oui:'11:22:33',name:'Samsung Electronics',type:'phone'},
+    {oui:'44:55:66',name:'Google LLC',type:'phone'},
+    {oui:'77:88:99',name:'Huawei Technologies',type:'phone'},
+    {oui:'DE:AD:BE',name:'Raspberry Pi Foundation',type:'iot'},
+    {oui:'CA:FE:BA',name:'Amazon Technologies',type:'iot'},
+    {oui:'F0:0D:CA',name:'TP-Link Technologies',type:'router'},
+    {oui:'BE:EF:00',name:'Netgear Inc.',type:'router'},
+    {oui:'D0:0R:BE',name:'Hikvision',type:'camera'},
+    {oui:'C0:FF:EE',name:'Shenzhen Reecam',type:'camera'},
+    {oui:'BA:DC:0D',name:'Unknown Shenzhen',type:'tracker'},
+    {oui:'A1:B2:C3',name:'Intel Corporation',type:'laptop'},
+    {oui:'D4:E5:F6',name:'Dell Inc.',type:'laptop'},
+    {oui:'12:34:56',name:'Xiaomi Communications',type:'phone'},
+    {oui:'78:9A:BC',name:'OnePlus Technology',type:'phone'},
+  ];
+
+  const SSIDS = ['HomeWiFi','Starbucks','Airport_Free','Hotel_Guest','Office_5G','McDonald\'s','eduroam','Xfinity','ATT-WIFI','DIRECT-TV','iPhone_Hotspot','AndroidAP','NETGEAR','linksys','FBI_Van'];
+
+  let devices = [];
+  let probes = [];
+  let scanning = false;
+  let scanTimer = null;
+  let sweepAngle = 0;
+
+  function randMAC(oui) {
+    const hex = () => ('0' + Math.floor(Math.random()*256).toString(16)).slice(-2).toUpperCase();
+    return `${oui}:${hex()}:${hex()}:${hex()}`;
+  }
+
+  function genDevice() {
+    const v = VENDORS[Math.floor(Math.random()*VENDORS.length)];
+    const mac = randMAC(v.oui);
+    const rssi = -30 - Math.floor(Math.random()*60);
+    const isRandom = Math.random() < 0.3;
+    const ssidCount = Math.floor(Math.random()*4);
+    const deviceSSIDs = [];
+    for (let i = 0; i < ssidCount; i++) deviceSSIDs.push(SSIDS[Math.floor(Math.random()*SSIDS.length)]);
+    return {
+      mac: isRandom ? randMAC(('0123456789ABCDEF'[Math.floor(Math.random()*16)])+'2') : mac,
+      vendor: isRandom ? 'Randomized MAC' : v.name,
+      type: v.type,
+      rssi,
+      probeSSIDs: deviceSSIDs,
+      angle: Math.random() * Math.PI * 2,
+      dist: (Math.abs(rssi) - 30) / 60,
+      lastSeen: new Date(),
+      suspicious: v.type === 'camera' || v.type === 'tracker',
+      probeCount: 0,
+    };
+  }
+
+  function startScan() {
+    if (scanning) return;
+    scanning = true;
+    const ss = $('scanStatus');
+    if (ss) ss.textContent = 'SCANNING';
+    if (ss) ss.style.color = '#22c55e';
+    log('📡 Scan started — detecting WiFi devices...', 'info');
+    setStatus(true);
+    scanTimer = setInterval(() => {
+      if (devices.length < 20 && Math.random() < 0.6) {
+        const dev = genDevice();
+        devices.push(dev);
+        addToTable(dev);
+        updateStats();
+        // Probe simulation
+        if (dev.probeSSIDs.length > 0) {
+          dev.probeSSIDs.forEach(ssid => {
+            dev.probeCount++;
+            probes.push({mac: dev.mac, ssid, time: new Date()});
+            addProbeFeed(dev.mac, ssid);
+            addSSIDCloud(ssid);
+          });
+        }
+        updateSections(dev);
+        log(`📱 Device detected: ${dev.vendor} (${dev.mac.substring(0,8)}...) RSSI: ${dev.rssi} dBm`, 'rx');
+        playSound('click');
+      }
+    }, 800);
+    drawRadar();
+  }
+
+  function addToTable(dev) {
+    const tbody = $('deviceTableBody');
+    if (!tbody) return;
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+    const timeStr = dev.lastSeen.toLocaleTimeString();
+    tr.innerHTML = `<td style="padding:0.3rem;font-size:0.7rem;opacity:0.9">${dev.mac}</td>
+      <td style="padding:0.3rem;font-size:0.7rem">${dev.vendor}</td>
+      <td style="padding:0.3rem;font-size:0.7rem;color:${dev.rssi > -50 ? '#22c55e' : dev.rssi > -70 ? '#eab308' : '#ef4444'}">${dev.rssi} dBm</td>
+      <td style="padding:0.3rem;font-size:0.7rem">${dev.type}</td>
+      <td style="padding:0.3rem;font-size:0.7rem">${dev.probeSSIDs.join(', ') || '-'}</td>
+      <td style="padding:0.3rem;font-size:0.7rem;opacity:0.6">${timeStr}</td>`;
+    tbody.prepend(tr);
+  }
+
+  function addProbeFeed(mac, ssid) {
+    const feed = $('probeFeed');
+    if (!feed) return;
+    const d = document.createElement('div');
+    d.style.cssText = 'padding:2px 0;opacity:0.9;';
+    d.textContent = `[${new Date().toLocaleTimeString()}] ${mac.substring(0,8)}... → "${ssid}"`;
+    feed.prepend(d);
+    if (feed.children.length > 50) feed.lastChild.remove();
+  }
+
+  function addSSIDCloud(ssid) {
+    const cloud = $('ssidCloud');
+    if (!cloud) return;
+    if (cloud.querySelector(`[data-ssid="${ssid}"]`)) return;
+    const tag = document.createElement('span');
+    tag.dataset.ssid = ssid;
+    tag.style.cssText = 'padding:3px 8px;border-radius:12px;font-size:0.72rem;background:rgba(var(--accent-rgb,212,160,60),0.15);border:1px solid rgba(var(--accent-rgb,212,160,60),0.3);';
+    tag.textContent = ssid;
+    cloud.appendChild(tag);
+  }
+
+  function updateSections(dev) {
+    // Type breakdown
+    const tb = $('typeBreakdown');
+    if (tb) {
+      const types = {};
+      devices.forEach(d => { types[d.type] = (types[d.type]||0) + 1; });
+      tb.innerHTML = '';
+      const icons = {phone:'📱',laptop:'💻',router:'📶',iot:'🔌',camera:'📷',tracker:'📍'};
+      Object.entries(types).forEach(([t,c]) => {
+        const d = document.createElement('div');
+        d.style.cssText = 'padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.05);text-align:center;min-width:70px;';
+        d.innerHTML = `<div style="font-size:1.5rem">${icons[t]||'❓'}</div><div style="font-size:0.8rem;font-weight:bold">${c}</div><div style="font-size:0.7rem;opacity:0.6">${t}</div>`;
+        tb.appendChild(d);
+      });
+    }
+    // Vendor bars
+    const vb = $('vendorBars');
+    if (vb) {
+      const vendors = {};
+      devices.forEach(d => { vendors[d.vendor] = (vendors[d.vendor]||0) + 1; });
+      vb.innerHTML = '';
+      const max = Math.max(...Object.values(vendors));
+      Object.entries(vendors).sort((a,b) => b[1]-a[1]).slice(0,6).forEach(([v,c]) => {
+        const d = document.createElement('div');
+        d.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:0.75rem;';
+        d.innerHTML = `<span style="min-width:120px;opacity:0.8">${v}</span><div style="flex:1;height:16px;border-radius:8px;background:rgba(255,255,255,0.05);overflow:hidden"><div style="width:${(c/max*100)}%;height:100%;background:var(--accent,#d4a03c);border-radius:8px;"></div></div><span style="opacity:0.6">${c}</span>`;
+        vb.appendChild(d);
+      });
+    }
+    // Suspicious devices
+    const susp = devices.filter(d => d.suspicious);
+    const sl = $('suspiciousList');
+    const ns = $('noSuspicious');
+    if (sl && susp.length > 0) {
+      if (ns) ns.style.display = 'none';
+      sl.innerHTML = '';
+      susp.forEach(d => {
+        const el = document.createElement('div');
+        el.style.cssText = 'padding:8px;border-radius:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);font-size:0.8rem;';
+        el.innerHTML = `<strong style="color:#ef4444">⚠️ ${d.vendor}</strong><br><span style="opacity:0.7">${d.mac} | ${d.rssi} dBm | ${d.type}</span>`;
+        sl.appendChild(el);
+      });
+    }
+    // Threat meter
+    const tb2 = $('threatBar');
+    const tl = $('threatLabel');
+    if (tb2) {
+      const threat = Math.min(100, susp.length * 25);
+      tb2.style.width = threat + '%';
+      if (tl) tl.textContent = threat > 60 ? 'HIGH RISK' : threat > 30 ? 'MODERATE' : 'SAFE';
+    }
+    // Signal canvas
+    if (sctx && sigCanvas) {
+      const W = sigCanvas.width, H = sigCanvas.height;
+      sctx.clearRect(0, 0, W, H);
+      devices.forEach((d, i) => {
+        const x = (i / Math.max(devices.length-1,1)) * (W-20) + 10;
+        const h = Math.abs(d.rssi + 30) / 60 * H * 0.8;
+        const color = d.rssi > -50 ? '#22c55e' : d.rssi > -70 ? '#eab308' : '#ef4444';
+        sctx.fillStyle = color + '88';
+        sctx.fillRect(x - 6, H - h, 12, h);
+      });
+    }
+  }
+
+  function updateStats() {
+    const dc = $('deviceCount'), pc = $('probeCount'), vc = $('vendorCount');
+    if (dc) dc.textContent = devices.length;
+    if (pc) pc.textContent = probes.length;
+    const uniqueVendors = new Set(devices.map(d => d.vendor));
+    if (vc) vc.textContent = uniqueVendors.size;
+  }
+
+  function clearAll() {
+    devices = []; probes = [];
+    const tbody = $('deviceTableBody'); if (tbody) tbody.innerHTML = '';
+    const feed = $('probeFeed'); if (feed) feed.innerHTML = '';
+    const cloud = $('ssidCloud'); if (cloud) cloud.innerHTML = '';
+    updateStats();
+    log('🗑️ All devices cleared', 'info');
+  }
+
+  // Radar drawing
+  function drawRadar() {
+    if (!scanning && devices.length === 0) return;
+    const W = radarCanvas.width, H = radarCanvas.height;
+    const cx = W/2, cy = H/2, R = Math.min(W,H)/2 - 10;
+    rctx.clearRect(0, 0, W, H);
+
+    // Rings
+    for (let i = 1; i <= 3; i++) {
+      rctx.beginPath();
+      rctx.arc(cx, cy, R * i/3, 0, Math.PI*2);
+      rctx.strokeStyle = 'rgba(212,160,60,0.15)';
+      rctx.lineWidth = 1;
+      rctx.stroke();
+    }
+    // Cross
+    rctx.strokeStyle = 'rgba(212,160,60,0.1)';
+    rctx.beginPath(); rctx.moveTo(cx, cy-R); rctx.lineTo(cx, cy+R); rctx.stroke();
+    rctx.beginPath(); rctx.moveTo(cx-R, cy); rctx.lineTo(cx+R, cy); rctx.stroke();
+
+    // Sweep
+    if (scanning) {
+      sweepAngle += 0.03;
+      rctx.beginPath();
+      rctx.moveTo(cx, cy);
+      rctx.arc(cx, cy, R, sweepAngle - 0.5, sweepAngle);
+      rctx.closePath();
+      const grad = rctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+      grad.addColorStop(0, 'rgba(34,197,94,0.3)');
+      grad.addColorStop(1, 'rgba(34,197,94,0)');
+      rctx.fillStyle = grad;
+      rctx.fill();
+    }
+
+    // Devices
+    devices.forEach(d => {
+      const r = d.dist * R;
+      const x = cx + Math.cos(d.angle) * r;
+      const y = cy + Math.sin(d.angle) * r;
+      const color = d.suspicious ? '#ef4444' : d.type === 'phone' ? '#3b82f6' : d.type === 'router' ? '#22c55e' : '#eab308';
+      rctx.beginPath();
+      rctx.arc(x, y, 5, 0, Math.PI*2);
+      rctx.fillStyle = color;
+      rctx.shadowColor = color;
+      rctx.shadowBlur = 8;
+      rctx.fill();
+      rctx.shadowBlur = 0;
+      // Pulse
+      const pulse = (Date.now() % 2000) / 2000;
+      rctx.beginPath();
+      rctx.arc(x, y, 5 + pulse * 10, 0, Math.PI*2);
+      rctx.strokeStyle = color + '44';
+      rctx.lineWidth = 1;
+      rctx.stroke();
+    });
+
+    // Center
+    rctx.beginPath();
+    rctx.arc(cx, cy, 6, 0, Math.PI*2);
+    rctx.fillStyle = '#d4a03c';
+    rctx.fill();
+
+    requestAnimationFrame(drawRadar);
+  }
+
+  // MAC lookup
+  function lookupMAC(mac) {
+    const prefix = mac.toUpperCase().substring(0,8);
+    const v = VENDORS.find(v => v.oui === prefix.replace(/:/g,':').substring(0,8));
+    const result = $('lookupResult');
+    if (result) result.textContent = v ? `${v.name} (${v.type})` : 'Unknown vendor';
+    log(`🔍 MAC Lookup: ${mac} → ${v ? v.name : 'Unknown'}`, 'info');
+  }
+
+  // Bindings
+  const scanBtn = $('scanBtn'); if (scanBtn) scanBtn.onclick = startScan;
+  const clearBtn = $('clearDevicesBtn'); if (clearBtn) clearBtn.onclick = clearAll;
+  const lookupBtn = $('macLookupBtn'); if (lookupBtn) lookupBtn.onclick = () => lookupMAC($('macLookupInput')?.value || '');
+  const exportBtn = $('exportDevicesBtn'); if (exportBtn) exportBtn.onclick = () => {
+    const data = devices.map(d => `${d.mac},${d.vendor},${d.rssi},${d.type}`).join('\n');
+    log('💾 Device list exported', 'success');
+    playSound('success');
+  };
+
+  setStatus(true);
+  drawRadar();
+})();

@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP32 Antenna Analyzer', subtitle: '📡 SWR · impedance · resonance',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Antenna Analyzer', mainDesc: 'ESP32-based SWR, impedance & resonance analyzer',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Analyseur Antenne ESP32', subtitle: '📡 ROS · impédance · résonance',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Analyseur Antenne', mainDesc: 'Analyseur ROS, impédance et résonance sur ESP32',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محلل هوائي ESP32', subtitle: '📡 SWR · المعاوقة · الرنين',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محلل الهوائي', mainDesc: 'محلل SWR والمعاوقة والرنين على ESP32',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,106 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Start Sweep',stop:'Stop',simStarted:'Sweep started',simStopped:'Sweep stopped',freq:'Frequency (MHz)',swr:'SWR',impedance:'Impedance',resonance:'Resonance',theoryTitle:'Antenna Analyzer Theory',theoryDesc:'An antenna analyzer measures SWR (Standing Wave Ratio), impedance (R+jX), and resonant frequency. The ESP32 generates RF signals across a frequency range, measures forward/reflected power via a directional coupler, and computes SWR and complex impedance in real-time.'});
+Object.assign(LANG.fr, {start:'Lancer balayage',stop:'Arrêter',simStarted:'Balayage lancé',simStopped:'Balayage arrêté',freq:'Fréquence (MHz)',swr:'ROS',impedance:'Impédance',resonance:'Résonance',theoryTitle:'Théorie Analyseur Antenne',theoryDesc:'Un analyseur d\'antenne mesure le ROS (Rapport d\'Ondes Stationnaires), l\'impédance (R+jX) et la fréquence de résonance. L\'ESP32 génère des signaux RF, mesure la puissance directe/réfléchie via un coupleur directionnel et calcule le ROS et l\'impédance complexe en temps réel.'});
+Object.assign(LANG.ar, {start:'بدء المسح',stop:'إيقاف',simStarted:'بدأ المسح',simStopped:'توقف المسح',freq:'التردد (MHz)',swr:'SWR',impedance:'المعاوقة',resonance:'الرنين',theoryTitle:'نظرية محلل الهوائي',theoryDesc:'يقيس محلل الهوائي نسبة الموجات الثابتة SWR والمعاوقة (R+jX) وتردد الرنين. يولد ESP32 إشارات RF عبر نطاق ترددي ويحسب SWR والمعاوقة المعقدة في الوقت الحقيقي.'});
+setLanguage(currentLang);
+
+
+/* ═══════ ANTENNA ANALYZER SIM ═══════ */
+let simRunning=false,simTimer=null,sweepData=[];
+const swrC=$('swrCanvas'),swrCtx=swrC?swrC.getContext('2d'):null;
+const freqMin=1,freqMax=30;
+let resonantFreq=14.1,antennaQ=25;
+
+function calcSWR(f){
+  const delta=f-resonantFreq;
+  const bw=resonantFreq/antennaQ;
+  const swr=1+4*Math.pow(delta/bw,2)+0.1*Math.random();
+  return Math.max(1,Math.min(swr,15));
+}
+function calcZ(f){
+  const delta=f-resonantFreq;
+  const bw=resonantFreq/antennaQ;
+  const r=50/(1+2*Math.pow(delta/bw,2))+5*Math.random();
+  const x=80*Math.tanh(2*delta/bw)+3*(Math.random()-0.5);
+  return {r:r.toFixed(1),x:x.toFixed(1)};
+}
+
+function drawSWR(){
+  if(!swrCtx)return;
+  const W=swrC.width,H=swrC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  swrCtx.fillStyle='#0a1628';swrCtx.fillRect(0,0,W,H);
+  // Grid
+  swrCtx.strokeStyle='rgba(255,255,255,0.07)';swrCtx.lineWidth=0.5;
+  for(let i=0;i<=10;i++){const x=i*W/10;swrCtx.beginPath();swrCtx.moveTo(x,0);swrCtx.lineTo(x,H);swrCtx.stroke();}
+  for(let i=0;i<=5;i++){const y=i*H/5;swrCtx.beginPath();swrCtx.moveTo(0,y);swrCtx.lineTo(W,y);swrCtx.stroke();}
+  // Axis labels
+  swrCtx.fillStyle='rgba(255,255,255,0.4)';swrCtx.font='10px monospace';
+  for(let f=freqMin;f<=freqMax;f+=3){const x=(f-freqMin)/(freqMax-freqMin)*W;swrCtx.fillText(f+'M',x+2,H-4);}
+  for(let s=1;s<=10;s+=2){const y=H-(s-1)/9*H;swrCtx.fillText('SWR '+s,4,y-2);}
+  // SWR curve
+  if(sweepData.length>1){
+    swrCtx.strokeStyle=acc;swrCtx.lineWidth=2;swrCtx.beginPath();
+    sweepData.forEach((d,i)=>{const x=(d.f-freqMin)/(freqMax-freqMin)*W;const y=H-((d.swr-1)/9)*H;i===0?swrCtx.moveTo(x,y):swrCtx.lineTo(x,y);});
+    swrCtx.stroke();
+    // Impedance (R) overlay
+    swrCtx.strokeStyle=acc2;swrCtx.lineWidth=1.5;swrCtx.setLineDash([4,4]);swrCtx.beginPath();
+    sweepData.forEach((d,i)=>{const x=(d.f-freqMin)/(freqMax-freqMin)*W;const y=H-(d.r/100)*H;i===0?swrCtx.moveTo(x,y):swrCtx.lineTo(x,y);});
+    swrCtx.stroke();swrCtx.setLineDash([]);
+  }
+  // Resonance marker
+  if(sweepData.length>5){
+    let minSWR=999,minIdx=0;
+    sweepData.forEach((d,i)=>{if(d.swr<minSWR){minSWR=d.swr;minIdx=i;}});
+    const d=sweepData[minIdx];
+    const x=(d.f-freqMin)/(freqMax-freqMin)*W;const y=H-((d.swr-1)/9)*H;
+    swrCtx.beginPath();swrCtx.arc(x,y,6,0,Math.PI*2);swrCtx.strokeStyle='#22c55e';swrCtx.lineWidth=2;swrCtx.stroke();
+    swrCtx.fillStyle='#22c55e';swrCtx.font='bold 11px monospace';
+    swrCtx.fillText(d.f.toFixed(1)+'MHz SWR:'+d.swr.toFixed(2),x+10,y-5);
+  }
+}
+
+let sweepIdx=0;
+function sweepStep(){
+  const steps=200;
+  const f=freqMin+(freqMax-freqMin)*(sweepIdx/steps);
+  const swr=calcSWR(f);
+  const z=calcZ(f);
+  sweepData.push({f,swr,r:parseFloat(z.r),x:parseFloat(z.x)});
+  const fd=$('freqDisp');if(fd)fd.textContent=f.toFixed(2)+' MHz';
+  const sd=$('swrDisp');if(sd)sd.textContent=swr.toFixed(2);
+  const zd=$('zDisp');if(zd)zd.textContent=z.r+' + j'+z.x+' \u03A9';
+  log('Sweep '+f.toFixed(1)+' MHz \u2192 SWR:'+swr.toFixed(2)+' Z:'+z.r+'+j'+z.x+'\u03A9','rx');
+  drawSWR();
+  sweepIdx++;
+  if(sweepIdx>steps){stopSim();
+    let minSWR=999,bestF=0;sweepData.forEach(d=>{if(d.swr<minSWR){minSWR=d.swr;bestF=d.f;}});
+    log('Resonance at '+bestF.toFixed(2)+' MHz, min SWR: '+minSWR.toFixed(2),'success');
+  }
+}
+
+function startSim(){
+  if(simRunning)return;simRunning=true;setStatus(true);
+  sweepData=[];sweepIdx=0;
+  resonantFreq=parseFloat(($('resFreqRange')||{value:14.1}).value);
+  antennaQ=parseFloat(($('qRange')||{value:25}).value);
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(sweepStep,50);
+}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_antenna_analyzer(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('resFreqRange'))$('resFreqRange').oninput=function(){const d=$('resFreqDisp');if(d)d.textContent=this.value+' MHz';};
+  if($('qRange'))$('qRange').oninput=function(){const d=$('qDisp');if(d)d.textContent='Q='+this.value;};
+  drawSWR();
+}
+init_antenna_analyzer();

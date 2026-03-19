@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Meteor-M2 Decoder — Workshop DIY</title>
+  <meta name="description" content="Meteor-M2 HD — Decode Meteor-M2 weather satellite images in real time." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Meteor-M2 Decoder — Workshop DIY" />
+  <meta property="og:description" content="Decode Meteor-M2 weather satellite images in real time." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -21,6 +21,15 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .decode-progress{width:100%;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin:8px 0}
+    .decode-progress .prog-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .3s}
+    .img-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+    .img-stat{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:8px;padding:8px;text-align:center}
+    .img-stat .sv{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--accent)}
+    .img-stat .sl{font-size:.7rem;color:var(--text-muted);margin-top:2px}
+    @media(max-width:600px){.img-stats{grid-template-columns:1fr 1fr}}
+  </style>
 </head>
 
 <body>
@@ -72,22 +81,69 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🌍</span> <span data-i18n="mainSection">Meteor-M2 Decoder</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Decode Meteor-M2 weather satellite images</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Theory ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card">
+          <h3 data-i18n="theoryTitle">Meteor-M2 Satellite</h3>
+          <p data-i18n="theoryDesc">Meteor-M2 is a Russian polar-orbiting weather satellite transmitting LRPT images at 137.100 MHz. It sends 3-channel color imagery (visible + infrared) using QPSK modulation. Images are decoded line-by-line as the satellite passes overhead.</p>
+          <div class="control-section">
+            <table style="width:100%;font-size:.85rem;border-collapse:collapse">
+              <tr style="border-bottom:1px solid var(--border,rgba(255,255,255,.1))"><th style="text-align:left;padding:4px">Parameter</th><th style="text-align:left;padding:4px">Value</th></tr>
+              <tr><td style="padding:4px">Frequency</td><td>137.100 MHz</td></tr>
+              <tr><td style="padding:4px">Modulation</td><td>OQPSK / LRPT</td></tr>
+              <tr><td style="padding:4px">Altitude</td><td>832 km</td></tr>
+              <tr><td style="padding:4px">Channels</td><td>3 (VIS + 2x IR)</td></tr>
+              <tr><td style="padding:4px">Resolution</td><td>1 km/pixel</td></tr>
+            </table>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Controls ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <label class="sidebar-label" data-i18n="channelLabel">Channel</label>
+            <select id="channelSelect" class="sidebar-select">
+              <option value="vis" selected>Channel 1 — Visible</option>
+              <option value="ir1">Channel 2 — Near IR</option>
+              <option value="ir2">Channel 3 — Thermal IR</option>
+              <option value="rgb">RGB Composite</option>
+            </select>
+            <label class="sidebar-label" style="margin-top:8px" data-i18n="decodeSpeed">Decode Speed</label>
+            <input type="range" id="speedRange" min="1" max="10" value="5" style="width:100%">
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button id="startBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">&#9654;</span> <span data-i18n="start">Start</span></button>
+              <button id="stopBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#9724;</span> <span data-i18n="stop">Stop</span></button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Image ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🌍</span> <span data-i18n="sectionC">Satellite Image</span></summary>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span id="satLabel" style="font-family:var(--font-h);font-size:1rem;color:var(--accent)">Meteor-M2 — 137.100 MHz</span>
+            <span id="lineCount" style="font-family:'Orbitron',monospace;color:var(--accent2)">Line: 0</span>
+          </div>
+          <div class="decode-progress"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+          <canvas id="imageCanvas" width="800" height="400" style="width:100%;height:auto;border-radius:8px;background:#000;display:block"></canvas>
+          <div class="img-stats">
+            <div class="img-stat"><div class="sv" id="snrVal">0</div><div class="sl" data-i18n="snrLabel">SNR (dB)</div></div>
+            <div class="img-stat"><div class="sv" id="linesVal">0</div><div class="sl" data-i18n="linesLabel">Lines</div></div>
+            <div class="img-stat"><div class="sv" id="qualVal">0%</div><div class="sl" data-i18n="qualLabel">Quality</div></div>
+          </div>
+        </div>
       </details>
 
     </div>

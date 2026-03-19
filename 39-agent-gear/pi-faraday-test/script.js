@@ -63,32 +63,31 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-faraday-test', subtitle: '🛡️ faraday cage tester — RF shielding',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Faraday Cage Tester', mainDesc: 'Verify RF shielding effectiveness across frequencies',
+    sectionA: 'Spectrum Analyzer', sectionB: 'Attenuation Map', sectionC: 'Test Report',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is a Faraday cage?', faq_a1: 'A Faraday cage is a mesh of conductive material that blocks electromagnetic fields, providing RF shielding.',
+    faq_q2: 'How is shielding effectiveness measured?', faq_a2: 'SE is measured in decibels (dB) comparing signal strength outside vs inside the cage across frequencies.',
+    faq_q3: 'What frequencies can I test?', faq_a3: 'This simulator tests common RF bands: 433 MHz, 868 MHz, 915 MHz, 2.4 GHz and 5.8 GHz.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.',
+    howto_1: 'Select a test frequency and mode.',
+    howto_2: 'Click Start Test to begin measuring shielding effectiveness.',
+    howto_3: 'Watch the real-time spectrum and attenuation readings on canvas.',
+    howto_4: 'Generate a test report with pass/fail verdict.',
+    wiki_faraday_title: '🛡️ Faraday Cages', wiki_faraday: 'Named after Michael Faraday, these enclosures block EM fields using conductive mesh or solid metal shells.',
+    wiki_se_title: '📊 Shielding Effectiveness', wiki_se: 'SE = 20 log10(Ei/Et) in dB. Higher values mean better shielding. 30 dB is good, 60+ dB is excellent.',
+    wiki_rf_title: '📡 RF Frequencies', wiki_rf: 'Radio frequencies range from 3 kHz to 300 GHz. WiFi uses 2.4/5 GHz, Bluetooth 2.4 GHz, LoRa 433/868/915 MHz.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🛡️ Faraday cage tester ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,34 +97,43 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    shieldLabel: 'SHIELDING STATUS', standby: 'STANDBY', testing: 'TESTING', pass: 'PASS', fail: 'FAIL',
+    freqLabel: 'Test Frequency (MHz)', modeLabel: 'Test Mode',
+    modeQuick: 'Quick Scan', modeFull: 'Full Sweep', modeCont: 'Continuous',
+    startBtn: 'Start Test', stopBtn: 'Stop',
+    dataLabel: 'RF MEASUREMENT DATA',
+    testStarted: '🛡️ Shielding test started', testStopped: '🔴 Test stopped',
+    testPass: '✅ PASS — Shielding effective', testFail: '❌ FAIL — Shielding insufficient',
+    sweepDone: '📊 Frequency sweep complete', mapDone: '📡 Attenuation map generated',
+    ftSecABtn: 'Sweep', ftSecARst: 'Reset', ftSecBBtn: 'Map', ftSecBRst: 'Reset',
+    ftSecCBtn: 'Generate', ftSecCRst: 'Reset',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-faraday-test', subtitle: '🛡️ testeur de cage de Faraday — blindage RF',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Testeur Cage de Faraday', mainDesc: 'Vérifier l\'efficacité du blindage RF sur les fréquences',
+    sectionA: 'Analyseur de Spectre', sectionB: 'Carte d\'Atténuation', sectionC: 'Rapport de Test',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce qu\'une cage de Faraday ?', faq_a1: 'Une cage de Faraday est un maillage conducteur qui bloque les champs électromagnétiques, assurant un blindage RF.',
+    faq_q2: 'Comment mesure-t-on l\'efficacité du blindage ?', faq_a2: 'L\'efficacité se mesure en décibels (dB) en comparant la puissance du signal à l\'extérieur vs l\'intérieur.',
+    faq_q3: 'Quelles fréquences puis-je tester ?', faq_a3: 'Ce simulateur teste les bandes RF courantes : 433 MHz, 868 MHz, 915 MHz, 2.4 GHz et 5.8 GHz.',
+    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé. C\'est une simulation.',
+    howto_1: 'Sélectionne une fréquence et un mode de test.',
+    howto_2: 'Clique sur Démarrer le test pour mesurer l\'efficacité du blindage.',
+    howto_3: 'Observe le spectre en temps réel et les lectures d\'atténuation.',
+    howto_4: 'Génère un rapport de test avec un verdict pass/fail.',
+    wiki_faraday_title: '🛡️ Cages de Faraday', wiki_faraday: 'Nommées d\'après Michael Faraday, ces enceintes bloquent les champs EM avec un maillage conducteur ou une coque métallique.',
+    wiki_se_title: '📊 Efficacité de Blindage', wiki_se: 'SE = 20 log10(Ei/Et) en dB. Plus la valeur est haute, meilleur est le blindage. 30 dB = bon, 60+ dB = excellent.',
+    wiki_rf_title: '📡 Fréquences RF', wiki_rf: 'Les radiofréquences vont de 3 kHz à 300 GHz. WiFi : 2.4/5 GHz, Bluetooth : 2.4 GHz, LoRa : 433/868/915 MHz.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🛡️ Testeur de cage de Faraday prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -135,34 +143,43 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
+    shieldLabel: 'ÉTAT DU BLINDAGE', standby: 'EN ATTENTE', testing: 'TEST EN COURS', pass: 'RÉUSSI', fail: 'ÉCHEC',
+    freqLabel: 'Fréquence de test (MHz)', modeLabel: 'Mode de test',
+    modeQuick: 'Scan rapide', modeFull: 'Balayage complet', modeCont: 'Continu',
+    startBtn: 'Démarrer le test', stopBtn: 'Arrêter',
+    dataLabel: 'DONNÉES DE MESURE RF',
+    testStarted: '🛡️ Test de blindage démarré', testStopped: '🔴 Test arrêté',
+    testPass: '✅ RÉUSSI — Blindage efficace', testFail: '❌ ÉCHEC — Blindage insuffisant',
+    sweepDone: '📊 Balayage fréquentiel terminé', mapDone: '📡 Carte d\'atténuation générée',
+    ftSecABtn: 'Balayer', ftSecARst: 'Réinitialiser', ftSecBBtn: 'Cartographier', ftSecBRst: 'Réinitialiser',
+    ftSecCBtn: 'Générer', ftSecCRst: 'Réinitialiser',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'pi-faraday-test', subtitle: '🛡️ اختبار قفص فاراداي — حجب الترددات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'اختبار قفص فاراداي', mainDesc: 'التحقق من فعالية حجب الترددات الراديوية',
+    sectionA: 'محلل الطيف', sectionB: 'خريطة التوهين', sectionC: 'تقرير الاختبار',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو قفص فاراداي؟', faq_a1: 'قفص فاراداي هو شبكة من المواد الموصلة تحجب المجالات الكهرومغناطيسية وتوفر حماية من الترددات.',
+    faq_q2: 'كيف تُقاس فعالية الحجب؟', faq_a2: 'تُقاس بالديسيبل (dB) بمقارنة قوة الإشارة خارج القفص مقابل داخله عبر الترددات.',
+    faq_q3: 'ما الترددات التي يمكنني اختبارها؟', faq_a3: 'يختبر هذا المحاكي نطاقات RF الشائعة: 433، 868، 915 ميغاهرتز و2.4 و5.8 غيغاهرتز.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات. هذه محاكاة فقط.',
+    howto_1: 'اختر تردد الاختبار والوضع.',
+    howto_2: 'انقر بدء الاختبار لقياس فعالية الحجب.',
+    howto_3: 'راقب الطيف والقراءات في الوقت الحقيقي على اللوحة.',
+    howto_4: 'أنشئ تقرير اختبار مع حكم نجاح/فشل.',
+    wiki_faraday_title: '🛡️ أقفاص فاراداي', wiki_faraday: 'سُميت على اسم مايكل فاراداي، هذه الحاويات تحجب المجالات الكهرومغناطيسية باستخدام شبكة موصلة أو أغلفة معدنية.',
+    wiki_se_title: '📊 فعالية الحجب', wiki_se: 'SE = 20 log10(Ei/Et) بالديسيبل. قيم أعلى تعني حجبًا أفضل. 30 dB جيد، 60+ dB ممتاز.',
+    wiki_rf_title: '📡 الترددات الراديوية', wiki_rf: 'تتراوح الترددات من 3 كيلوهرتز إلى 300 غيغاهرتز. واي فاي: 2.4/5 غيغاهرتز، بلوتوث: 2.4 غيغاهرتز.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🛡️ اختبار قفص فاراداي جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +189,16 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    shieldLabel: 'حالة الحجب', standby: 'استعداد', testing: 'جارٍ الاختبار', pass: 'ناجح', fail: 'فاشل',
+    freqLabel: 'تردد الاختبار (ميغاهرتز)', modeLabel: 'وضع الاختبار',
+    modeQuick: 'مسح سريع', modeFull: 'مسح كامل', modeCont: 'مستمر',
+    startBtn: 'بدء الاختبار', stopBtn: 'إيقاف',
+    dataLabel: 'بيانات قياس RF',
+    testStarted: '🛡️ بدأ اختبار الحجب', testStopped: '🔴 توقف الاختبار',
+    testPass: '✅ ناجح — الحجب فعال', testFail: '❌ فاشل — الحجب غير كافٍ',
+    sweepDone: '📊 اكتمل مسح الترددات', mapDone: '📡 تم إنشاء خريطة التوهين',
+    ftSecABtn: 'مسح', ftSecARst: 'إعادة', ftSecBBtn: 'خريطة', ftSecBRst: 'إعادة',
+    ftSecCBtn: 'إنشاء', ftSecCRst: 'إعادة',
   }
 };
 
@@ -1443,9 +1470,231 @@ function init() {
   initAR();
   initAIChat();
 
+  // Faraday cage simulation
+  initFaraday();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ FARADAY CAGE SIMULATION ═══════ */
+
+let ftTesting = false, ftInterval = null, ftAnimId = null;
+let ftSpectrumData = new Float32Array(64).fill(-90);
+let ftAttenData = [];
+const FT_BANDS = { 433: 'LoRa 433', 868: 'LoRa 868', 915: 'LoRa 915', 2400: 'WiFi 2.4G', 5800: 'WiFi 5.8G' };
+
+function ftDrawCanvas() {
+  const c = $('ftCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, W, H);
+  // Grid
+  ctx.strokeStyle = 'rgba(0,255,100,0.08)';
+  ctx.lineWidth = 0.5;
+  for (let y = 0; y < H; y += 20) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  for (let x = 0; x < W; x += 20) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  // Spectrum bars
+  const barW = (W - 20) / ftSpectrumData.length;
+  for (let i = 0; i < ftSpectrumData.length; i++) {
+    const val = ftSpectrumData[i];
+    const h = Math.max(2, ((val + 100) / 100) * (H - 20));
+    const hue = val > -40 ? 0 : val > -60 ? 60 : 120;
+    ctx.fillStyle = `hsla(${hue}, 100%, 50%, 0.8)`;
+    ctx.fillRect(10 + i * barW, H - h - 10, barW - 1, h);
+  }
+  // Labels
+  ctx.fillStyle = '#0f8';
+  ctx.font = '10px Orbitron, monospace';
+  ctx.fillText('RF SPECTRUM (dBm)', 10, 14);
+  const freq = ($('freqSelect') || {}).value || '2400';
+  ctx.fillText(FT_BANDS[freq] || freq + ' MHz', W - 100, 14);
+  if (ftTesting) {
+    ctx.fillStyle = '#ff4';
+    ctx.fillText('● SCANNING', W / 2 - 30, 14);
+  }
+}
+
+function ftDrawSpectrum() {
+  const c = $('spectrumCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#0f8';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < ftSpectrumData.length; i++) {
+    const x = (i / ftSpectrumData.length) * W;
+    const y = H - ((ftSpectrumData[i] + 100) / 100) * (H - 20) - 10;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(0,255,136,0.1)';
+  ctx.lineTo(W, H);
+  ctx.lineTo(0, H);
+  ctx.fill();
+  ctx.fillStyle = '#0f8';
+  ctx.font = '10px Orbitron, monospace';
+  ctx.fillText('FREQUENCY SWEEP', 10, 14);
+}
+
+function ftDrawAttenuation() {
+  const c = $('attenuationCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, W, H);
+  if (ftAttenData.length === 0) return;
+  const barW = Math.max(4, (W - 20) / ftAttenData.length);
+  for (let i = 0; i < ftAttenData.length; i++) {
+    const val = ftAttenData[i];
+    const h = (val / 80) * (H - 30);
+    const hue = val > 50 ? 120 : val > 30 ? 60 : 0;
+    ctx.fillStyle = `hsla(${hue}, 80%, 50%, 0.85)`;
+    ctx.fillRect(10 + i * barW, H - h - 10, barW - 1, h);
+    if (barW > 20) {
+      ctx.fillStyle = '#fff';
+      ctx.font = '8px monospace';
+      ctx.fillText(val.toFixed(0), 10 + i * barW, H - h - 14);
+    }
+  }
+  ctx.fillStyle = '#0f8';
+  ctx.font = '10px Orbitron, monospace';
+  ctx.fillText('ATTENUATION (dB)', 10, 14);
+}
+
+function ftUpdateShield(state, db) {
+  const s = LANG[currentLang];
+  const valEl = $('shieldValue');
+  const ring = $('shieldRing');
+  const dbEl = $('shieldDb');
+  if (valEl) { valEl.textContent = s[state] || state.toUpperCase(); valEl.style.color = state === 'pass' ? '#44ff44' : state === 'fail' ? '#ff4444' : state === 'testing' ? '#ffaa00' : '#888'; }
+  if (ring) { ring.className = 'shield-ring ' + state; }
+  if (dbEl) { dbEl.textContent = db != null ? db.toFixed(1) + ' dB' : '-- dB'; }
+}
+
+function ftStartTest() {
+  if (ftTesting) return;
+  ftTesting = true;
+  const s = LANG[currentLang];
+  const freq = parseInt(($('freqSelect') || {}).value || '2400');
+  const mode = ($('modeSelect') || {}).value || 'quick';
+  ftUpdateShield('testing', null);
+  setStatus(true);
+  log(s.testStarted, 'success');
+  playSound('success');
+
+  let tick = 0;
+  const maxTicks = mode === 'quick' ? 30 : mode === 'full' ? 80 : 9999;
+  ftInterval = setInterval(() => {
+    tick++;
+    for (let i = 0; i < ftSpectrumData.length; i++) {
+      const center = (freq / 6000) * ftSpectrumData.length;
+      const dist = Math.abs(i - center);
+      const base = -90 + 50 * Math.exp(-dist * dist / 50);
+      ftSpectrumData[i] = base + (Math.random() - 0.5) * 8;
+    }
+    const se = 20 + Math.random() * 55 + (freq > 2000 ? -10 : 5);
+    ftUpdateShield('testing', se);
+    const dataEl = $('dataDisplay');
+    if (dataEl) {
+      const hex = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256).toString(16).toUpperCase().padStart(2, '0')).join(' ');
+      dataEl.textContent = `[${new Date().toLocaleTimeString()}] ${freq}MHz SE=${se.toFixed(1)}dB | ${hex}`;
+    }
+    ftDrawCanvas();
+    if (tick >= maxTicks && mode !== 'continuous') {
+      ftStopTest(false);
+      const passed = se > 30;
+      ftUpdateShield(passed ? 'pass' : 'fail', se);
+      log(passed ? s.testPass : s.testFail, passed ? 'success' : 'error');
+      playSound(passed ? 'success' : 'error');
+    }
+  }, 200);
+}
+
+function ftStopTest(manual) {
+  if (ftInterval) { clearInterval(ftInterval); ftInterval = null; }
+  ftTesting = false;
+  setStatus(false);
+  if (manual) {
+    ftUpdateShield('standby', null);
+    log(LANG[currentLang].testStopped, 'error');
+    playSound('error');
+  }
+}
+
+function ftSecAAction() {
+  const s = LANG[currentLang];
+  ftAttenData = [];
+  for (let i = 0; i < ftSpectrumData.length; i++) {
+    ftSpectrumData[i] = -90 + Math.random() * 60;
+  }
+  ftDrawSpectrum();
+  log(s.sweepDone, 'success');
+  playSound('success');
+  const el = $('ftSecAContent');
+  if (el) el.textContent = 'Sweep: ' + ftSpectrumData.length + ' bins analyzed. Peak: ' + Math.max(...ftSpectrumData).toFixed(1) + ' dBm';
+}
+
+function ftSecAReset() {
+  ftSpectrumData.fill(-90);
+  ftDrawSpectrum();
+  const el = $('ftSecAContent');
+  if (el) el.textContent = '';
+}
+
+function ftSecBAction() {
+  const s = LANG[currentLang];
+  ftAttenData = Array.from({ length: 20 }, () => 15 + Math.random() * 55);
+  ftDrawAttenuation();
+  log(s.mapDone, 'success');
+  playSound('success');
+  const avg = ftAttenData.reduce((a, b) => a + b, 0) / ftAttenData.length;
+  const el = $('ftSecBContent');
+  if (el) el.textContent = 'Avg attenuation: ' + avg.toFixed(1) + ' dB | Points: ' + ftAttenData.length;
+}
+
+function ftSecBReset() {
+  ftAttenData = [];
+  ftDrawAttenuation();
+  const el = $('ftSecBContent');
+  if (el) el.textContent = '';
+}
+
+function ftSecCAction() {
+  const freq = ($('freqSelect') || {}).value || '2400';
+  const avg = ftAttenData.length > 0 ? (ftAttenData.reduce((a, b) => a + b, 0) / ftAttenData.length) : (20 + Math.random() * 40);
+  const passed = avg > 30;
+  const el = $('ftSecCContent');
+  if (el) {
+    el.innerHTML = `FARADAY CAGE TEST REPORT\n========================\nDate: ${new Date().toLocaleString()}\nFrequency: ${FT_BANDS[freq] || freq + ' MHz'}\nAvg SE: ${avg.toFixed(1)} dB\nVerdict: ${passed ? 'PASS' : 'FAIL'}\n========================\n${passed ? 'Cage meets minimum shielding requirements.' : 'WARNING: Cage does NOT meet shielding requirements.'}`.replace(/\n/g, '<br>');
+  }
+  log(LANG[currentLang][passed ? 'testPass' : 'testFail'], passed ? 'success' : 'error');
+}
+
+function ftSecCReset() {
+  const el = $('ftSecCContent');
+  if (el) el.textContent = '';
+}
+
+function ftActivate() { ftStartTest(); }
+function ftAction1() { ftSecAAction(); }
+function ftEmergency() { ftStopTest(true); }
+
+function initFaraday() {
+  const startBtn = $('startTestBtn');
+  const stopBtn = $('stopTestBtn');
+  if (startBtn) startBtn.onclick = ftStartTest;
+  if (stopBtn) stopBtn.onclick = () => ftStopTest(true);
+  ftDrawCanvas();
+  ftDrawSpectrum();
+  ftDrawAttenuation();
+}

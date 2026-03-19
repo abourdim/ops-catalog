@@ -63,23 +63,30 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Wideband Recorder', subtitle: '🔴 Record wide spectrum chunks — playback and analyze later',
+    disconnected: 'Idle', connected: 'Recording',
+    mainSection: 'Wideband Recorder', mainDesc: 'Record wide spectrum chunks for later playback and analysis',
+    sectionA: 'Recording Analysis', sectionB: 'Theory & Notes',
+    centerFreqLabel: 'Center Freq (MHz)', bwLabel: 'Bandwidth (MHz)', gainLabel: 'Gain (dB)',
+    recBtn: '🔴 Record', stopBtn: '⏹ Stop', playBtn: '▶ Playback', resetBtn: '↺ Reset',
+    recTheory: 'Wideband recording captures a large frequency range simultaneously. Recordings can be played back to search for signals that were present at a given time.',
+    theory1: 'IQ recording captures both amplitude and phase information',
+    theory2: 'Sample rate determines maximum bandwidth (Nyquist theorem)',
+    theory3: 'Waterfall displays show signal activity over time',
+    theory4: 'Post-processing can decode signals found in recordings',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is wideband recording?', faq_a1: 'Capturing a wide frequency range simultaneously for later analysis and playback.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    howto_1: 'Set center frequency and bandwidth.',
+    howto_2: 'Press Record to capture spectrum data.',
+    howto_3: 'Use Playback to review recorded data.',
+    howto_4: 'Click on the timeline to jump to a specific time.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -88,7 +95,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔴 Wideband Recorder ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,23 +107,30 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Enregistreur Large Bande SDR', subtitle: '🔴 Enregistrer de larges portions du spectre — relecture et analyse',
+    disconnected: 'Inactif', connected: 'Enregistrement',
+    mainSection: 'Enregistreur Large Bande', mainDesc: 'Enregistrer de larges portions du spectre pour relecture et analyse',
+    sectionA: 'Analyse d\'Enregistrement', sectionB: 'Théorie & Notes',
+    centerFreqLabel: 'Fréquence centrale (MHz)', bwLabel: 'Bande passante (MHz)', gainLabel: 'Gain (dB)',
+    recBtn: '🔴 Enregistrer', stopBtn: '⏹ Stop', playBtn: '▶ Relecture', resetBtn: '↺ Réinitialiser',
+    recTheory: 'L\'enregistrement large bande capture une grande plage de fréquences simultanément.',
+    theory1: 'L\'enregistrement IQ capture l\'amplitude et la phase',
+    theory2: 'Le taux d\'échantillonnage détermine la bande passante maximale (Nyquist)',
+    theory3: 'L\'affichage cascade montre l\'activité des signaux dans le temps',
+    theory4: 'Le post-traitement peut décoder les signaux trouvés dans les enregistrements',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que l\'enregistrement large bande ?', faq_a1: 'Capturer une large gamme de fréquences simultanément pour analyse et relecture ultérieure.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Règle la fréquence centrale et la bande passante.',
+    howto_2: 'Appuie sur Enregistrer pour capturer les données spectrales.',
+    howto_3: 'Utilise Relecture pour revoir les données enregistrées.',
+    howto_4: 'Clique sur la timeline pour aller à un moment précis.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
     wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
     wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
@@ -125,7 +139,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔴 Enregistreur Large Bande prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,23 +151,30 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'مسجل النطاق العريض SDR', subtitle: '🔴 تسجيل أجزاء واسعة من الطيف — إعادة تشغيل وتحليل',
+    disconnected: 'خامل', connected: 'تسجيل',
+    mainSection: 'مسجل النطاق العريض', mainDesc: 'تسجيل أجزاء واسعة من الطيف لإعادة التشغيل والتحليل لاحقًا',
+    sectionA: 'تحليل التسجيل', sectionB: 'النظرية والملاحظات',
+    centerFreqLabel: 'التردد المركزي (ميغاهرتز)', bwLabel: 'عرض النطاق (ميغاهرتز)', gainLabel: 'الكسب (ديسيبل)',
+    recBtn: '🔴 تسجيل', stopBtn: '⏹ إيقاف', playBtn: '▶ إعادة تشغيل', resetBtn: '↺ إعادة',
+    recTheory: 'تسجيل النطاق العريض يلتقط نطاقًا ترددًا واسعًا في وقت واحد. يمكن إعادة تشغيل التسجيلات للبحث عن إشارات كانت موجودة في وقت معين.',
+    theory1: 'تسجيل IQ يلتقط معلومات السعة والطور',
+    theory2: 'معدل العينات يحدد أقصى عرض نطاق (نظرية نيكويست)',
+    theory3: 'عرض الشلال يظهر نشاط الإشارات عبر الزمن',
+    theory4: 'المعالجة اللاحقة يمكنها فك تشفير الإشارات في التسجيلات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو تسجيل النطاق العريض؟', faq_a1: 'التقاط نطاق تردد واسع في وقت واحد للتحليل والتشغيل لاحقًا.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'اضبط التردد المركزي وعرض النطاق.',
+    howto_2: 'اضغط تسجيل لالتقاط بيانات الطيف.',
+    howto_3: 'استخدم إعادة التشغيل لمراجعة البيانات المسجلة.',
+    howto_4: 'انقر على الخط الزمني للانتقال إلى وقت محدد.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
     wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
     wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
@@ -162,7 +183,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔴 مسجل النطاق العريض جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1470,253 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ WIDEBAND RECORDER SIMULATION ═══════ */
+let wbRecording = false;
+let wbPlaying = false;
+let wbAnim = null;
+let wbData = []; // recorded waterfall rows
+let wbPlayIdx = 0;
+let wbStartTime = 0;
+const WB_BINS = 200;
+const WB_MAX_ROWS = 300;
+
+// Simulated signals: freq bin, bandwidth bins, strength
+let simSignals = [];
+
+function genSimSignals() {
+  simSignals = [];
+  const n = 3 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < n; i++) {
+    simSignals.push({
+      bin: Math.floor(Math.random() * WB_BINS),
+      width: 2 + Math.floor(Math.random() * 8),
+      strength: 0.3 + Math.random() * 0.7,
+      drift: (Math.random() - 0.5) * 0.3,
+      intermittent: Math.random() < 0.3
+    });
+  }
+}
+
+function genSpectrumRow() {
+  const gain = +($('gainSlider')?.value || 30) / 50;
+  const row = new Float32Array(WB_BINS);
+  // Noise floor
+  for (let i = 0; i < WB_BINS; i++) row[i] = Math.random() * 0.15 * gain;
+  // Signals
+  const t = Date.now() * 0.001;
+  simSignals.forEach(sig => {
+    if (sig.intermittent && Math.sin(t * 0.5 + sig.bin) < 0) return;
+    const center = sig.bin + Math.sin(t * sig.drift) * 3;
+    for (let i = -sig.width; i <= sig.width; i++) {
+      const bi = Math.round(center + i);
+      if (bi >= 0 && bi < WB_BINS) {
+        const env = Math.exp(-(i * i) / (sig.width * sig.width * 0.5));
+        row[bi] += sig.strength * env * gain * (0.8 + Math.random() * 0.4);
+      }
+    }
+  });
+  return row;
+}
+
+function heatColor(v) {
+  v = Math.max(0, Math.min(1, v));
+  if (v < 0.25) return `rgb(0,0,${Math.floor(v * 4 * 200)})`;
+  if (v < 0.5) return `rgb(0,${Math.floor((v - 0.25) * 4 * 255)},200)`;
+  if (v < 0.75) return `rgb(${Math.floor((v - 0.5) * 4 * 255)},255,${Math.floor(200 - (v - 0.5) * 4 * 200)})`;
+  return `rgb(255,${Math.floor(255 - (v - 0.75) * 4 * 200)},0)`;
+}
+
+function drawWaterfall(data, highlight) {
+  const c = $('waterfallCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const binW = w / WB_BINS;
+  const rowH = Math.max(1, h / Math.min(data.length, h));
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const start = Math.max(0, data.length - Math.floor(h / rowH));
+  for (let r = start; r < data.length; r++) {
+    const y = (r - start) * rowH;
+    const row = data[r];
+    for (let b = 0; b < WB_BINS; b++) {
+      ctx.fillStyle = heatColor(row[b]);
+      ctx.fillRect(b * binW, y, binW + 0.5, rowH + 0.5);
+    }
+  }
+  // Freq labels
+  const cf = +($('centerFreqSlider')?.value || 100);
+  const bw = +($('bwSlider')?.value || 2);
+  ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.font = '9px Orbitron,monospace';
+  for (let i = 0; i <= 4; i++) {
+    const f = (cf - bw / 2 + bw * i / 4).toFixed(1);
+    ctx.fillText(f + 'M', (i / 4) * w, h - 3);
+  }
+  if (highlight !== undefined) {
+    const hy = (highlight - start) * rowH;
+    ctx.strokeStyle = '#ff0'; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(0, hy); ctx.lineTo(w, hy); ctx.stroke();
+  }
+}
+
+function drawSpectrum(row) {
+  const c = $('spectrumCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (!row) return;
+  // Fill under curve
+  ctx.fillStyle = 'rgba(70,170,255,.15)';
+  ctx.beginPath(); ctx.moveTo(0, h);
+  for (let i = 0; i < row.length; i++) {
+    const x = i / row.length * w;
+    const y = h - row[i] * h * 0.9;
+    ctx.lineTo(x, y);
+  }
+  ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
+  // Line
+  ctx.strokeStyle = '#4af'; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let i = 0; i < row.length; i++) {
+    const x = i / row.length * w;
+    const y = h - row[i] * h * 0.9;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.fillStyle = '#4af'; ctx.font = '10px Orbitron,monospace';
+  ctx.fillText('Live Spectrum', 4, 14);
+}
+
+function drawTimeline() {
+  const c = $('timelineCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (wbData.length === 0) return;
+  // Power over time
+  ctx.strokeStyle = '#4f4'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i < wbData.length; i++) {
+    const x = i / WB_MAX_ROWS * w;
+    const avg = wbData[i].reduce((s, v) => s + v, 0) / WB_BINS;
+    const y = h - avg * h * 3;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  // Playback cursor
+  if (wbPlaying) {
+    const cx = wbPlayIdx / WB_MAX_ROWS * w;
+    ctx.strokeStyle = '#ff0'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
+  }
+  // Recording indicator
+  if (wbRecording) {
+    const cx = wbData.length / WB_MAX_ROWS * w;
+    ctx.fillStyle = '#f44'; ctx.beginPath(); ctx.arc(cx, h / 2, 4, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.fillStyle = '#fff'; ctx.font = '9px Orbitron,monospace';
+  ctx.fillText('Timeline (' + wbData.length + ' frames)', 4, 10);
+}
+
+function updateRecInfo() {
+  const el = $('recInfo'); if (!el) return;
+  const cf = +($('centerFreqSlider')?.value || 100);
+  const bw = +($('bwSlider')?.value || 2);
+  const elapsed = wbRecording ? ((Date.now() - wbStartTime) / 1000).toFixed(1) : '0.0';
+  const sizeMB = (wbData.length * WB_BINS * 4 / 1048576).toFixed(2);
+  el.innerHTML = `
+    <div class="rec-stat ${wbRecording ? 'recording' : ''}"><div class="val">${wbRecording ? '🔴 REC' : wbPlaying ? '▶ PLAY' : 'IDLE'}</div><div class="lbl">Status</div></div>
+    <div class="rec-stat"><div class="val">${cf}</div><div class="lbl">MHz Center</div></div>
+    <div class="rec-stat"><div class="val">${bw}</div><div class="lbl">MHz BW</div></div>
+    <div class="rec-stat"><div class="val">${elapsed}s</div><div class="lbl">Duration</div></div>
+    <div class="rec-stat"><div class="val">${wbData.length}</div><div class="lbl">Frames</div></div>
+    <div class="rec-stat"><div class="val">${sizeMB}</div><div class="lbl">MB</div></div>
+  `;
+}
+
+function stepRecord() {
+  if (!wbRecording) return;
+  const row = genSpectrumRow();
+  wbData.push(row);
+  if (wbData.length > WB_MAX_ROWS) wbData.shift();
+  drawWaterfall(wbData);
+  drawSpectrum(row);
+  drawTimeline();
+  updateRecInfo();
+  wbAnim = requestAnimationFrame(stepRecord);
+}
+
+function stepPlayback() {
+  if (!wbPlaying || wbPlayIdx >= wbData.length) {
+    wbPlaying = false;
+    setStatus(false);
+    log('▶ Playback complete', 'info');
+    return;
+  }
+  drawWaterfall(wbData, wbPlayIdx);
+  drawSpectrum(wbData[wbPlayIdx]);
+  drawTimeline();
+  updateRecInfo();
+  wbPlayIdx++;
+  wbAnim = setTimeout(stepPlayback, 50);
+}
+
+function startRecording() {
+  if (wbRecording) return;
+  wbPlaying = false;
+  wbRecording = true;
+  wbStartTime = Date.now();
+  genSimSignals();
+  setStatus(true);
+  log('🔴 Recording started at ' + $('centerFreqVal')?.textContent, 'success');
+  stepRecord();
+}
+
+function stopRecording() {
+  wbRecording = false;
+  wbPlaying = false;
+  if (wbAnim) { cancelAnimationFrame(wbAnim); clearTimeout(wbAnim); }
+  setStatus(false);
+  updateRecInfo();
+  log('⏹ Recording stopped — ' + wbData.length + ' frames captured', 'info');
+}
+
+function startPlayback() {
+  if (wbData.length === 0) { log('⚠️ No recording to playback', 'error'); return; }
+  stopRecording();
+  wbPlaying = true;
+  wbPlayIdx = 0;
+  setStatus(true);
+  log('▶ Playing back ' + wbData.length + ' frames', 'success');
+  stepPlayback();
+}
+
+function resetRecorder() {
+  stopRecording();
+  wbData = [];
+  wbPlayIdx = 0;
+  ['waterfallCanvas', 'spectrumCanvas', 'timelineCanvas'].forEach(id => {
+    const c = $(id); if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, c.width, c.height); }
+  });
+  updateRecInfo();
+  log('↺ Recorder reset', 'info');
+}
+
+(function initWbRecorder() {
+  const rb = $('recBtn'); if (rb) rb.onclick = startRecording;
+  const sb = $('stopBtn'); if (sb) sb.onclick = stopRecording;
+  const pb = $('playBtn'); if (pb) pb.onclick = startPlayback;
+  const rsb = $('resetBtn'); if (rsb) rsb.onclick = resetRecorder;
+  const cfs = $('centerFreqSlider'); if (cfs) cfs.oninput = function() { $('centerFreqVal').textContent = this.value + ' MHz'; };
+  const bws = $('bwSlider'); if (bws) bws.oninput = function() { $('bwVal').textContent = (+this.value).toFixed(1) + ' MHz'; };
+  const gs = $('gainSlider'); if (gs) gs.oninput = function() { $('gainVal').textContent = this.value + ' dB'; };
+  // Timeline click to seek
+  const tc = $('timelineCanvas');
+  if (tc) tc.onclick = function(e) {
+    if (wbData.length === 0) return;
+    const rect = tc.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const idx = Math.floor(x * wbData.length);
+    if (idx >= 0 && idx < wbData.length) {
+      drawWaterfall(wbData, idx);
+      drawSpectrum(wbData[idx]);
+      log('🔍 Seeking to frame ' + idx, 'info');
+    }
+  };
+  updateRecInfo();
+  setTimeout(startRecording, 800);
+})();

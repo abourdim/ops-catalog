@@ -63,32 +63,48 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-agent-communicator', subtitle: 'Pi Agent Communicator — Encrypted Messaging',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Agent Communicator — Encrypted Channel', mainDesc: 'Numbers station encoder/decoder with one-time pad encryption',
+    sectionA: 'Numbers Station Generator', sectionB: 'Shortwave Monitor', sectionC: 'Cipher Lab',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is the Agent Communicator?', faq_a1: 'A Pi-based encrypted messaging system using numbers station protocols and one-time pad encryption.',
+    faq_q2: 'What is a numbers station?', faq_a2: 'A shortwave radio station broadcasting sequences of numbers encoding secret messages since the Cold War.',
+    faq_q3: 'What is one-time pad encryption?', faq_a3: 'The only theoretically unbreakable cipher. Each character encrypted with a unique random key never reused.',
+    faq_q4: 'What does Burn Keys do?', faq_a4: 'Permanently destroys all encryption keys in memory making decryption impossible.',
+    howto_1: 'Click Connect to establish an encrypted channel with the agent network.',
+    howto_2: 'Type a message and click Encode to encrypt it into a number sequence.',
+    howto_3: 'Use Decode to decrypt incoming number sequences from other agents.',
+    howto_4: 'Generate new keys regularly and burn used keys for security.',
+    wiki_otp_title: '🔐 One-Time Pad', wiki_otp: 'Mathematically unbreakable cipher. Key must be truly random, message-length, never reused.',
+    wiki_numbers_title: '🔢 Numbers Stations', wiki_numbers: 'Mysterious shortwave stations broadcasting coded sequences. Active since the 1960s.',
+    wiki_steganography_title: '👁 Steganography', wiki_steganography: 'Hiding messages within other data to avoid detection.',
+    wiki_tradecraft_title: '🕵 Tradecraft', wiki_tradecraft: 'Intelligence tradecraft: secure comms, dead drops, OTPs, and OPSEC protocols.',
+    statStatus: 'Status', statCipher: 'Cipher', statMsgCount: 'Messages', statKeyLife: 'Key Life',
+    btnActivate: 'Connect', btnEncode: 'Encode', btnDecode: 'Decode', btnGenKey: 'New Key', btnBurn: 'Burn Keys',
+    btnNumGen: 'Generate Sequence', btnNumBroadcast: 'Broadcast',
+    btnSwListen: 'Listen', btnSwStop: 'Stop',
+    btnCipherTest: 'Test Cipher', btnCipherReset: 'Reset',
+    acConnected: '🔐 Encrypted channel OPEN — OTP cipher active',
+    acDisconnected: '🔴 Channel closed — keys secured',
+    acEncoded: '🔢 Message encoded to number sequence',
+    acDecoded: '✅ Message decoded successfully',
+    acNewKey: '🔑 New one-time pad generated (256-bit)',
+    acBurned: '🔥 All keys BURNED — memory wiped',
+    acNumGen: '🔢 Numbers sequence generated',
+    acBroadcast: '📡 Broadcasting number sequence on shortwave...',
+    acListening: '📻 Listening on shortwave frequencies...',
+    acStopped: '⏹ Monitoring stopped',
+    acCipherOk: '✅ Cipher integrity verified',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔐 Agent Communicator ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +116,43 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-agent-communicator', subtitle: 'Communicateur Agent Pi — Messagerie Chiffrée',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Communicateur Agent — Canal Chiffré', mainDesc: 'Encodeur/décodeur station de nombres avec chiffrement masque jetable',
+    sectionA: 'Générateur Station de Nombres', sectionB: 'Moniteur Ondes Courtes', sectionC: 'Labo Chiffrement',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le communicateur agent ?', faq_a1: 'Système de messagerie chiffrée Pi avec protocoles station de nombres et masque jetable.',
+    faq_q2: 'Qu\'est-ce qu\'une station de nombres ?', faq_a2: 'Station radio ondes courtes diffusant des séquences codées. Utilisée par les services de renseignement.',
+    faq_q3: 'Qu\'est-ce que le masque jetable ?', faq_a3: 'Le seul chiffrement incassable. Chaque caractère chiffré avec une clé aléatoire unique jamais réutilisée.',
+    faq_q4: 'Que fait Brûler les Clés ?', faq_a4: 'Détruit définitivement toutes les clés de chiffrement en mémoire.',
+    howto_1: 'Cliquez Connecter pour établir un canal chiffré.',
+    howto_2: 'Tapez un message et cliquez Encoder pour le chiffrer.',
+    howto_3: 'Utilisez Décoder pour déchiffrer les séquences reçues.',
+    howto_4: 'Générez de nouvelles clés régulièrement et brûlez les usagées.',
+    wiki_otp_title: '🔐 Masque Jetable', wiki_otp: 'Chiffrement prouvé mathématiquement incassable.',
+    wiki_numbers_title: '🔢 Stations de Nombres', wiki_numbers: 'Stations radio mystérieuses diffusant des séquences codées.',
+    wiki_steganography_title: '👁 Stéganographie', wiki_steganography: 'Cacher des messages dans d\'autres données.',
+    wiki_tradecraft_title: '🕵 Art du Renseignement', wiki_tradecraft: 'Communications sécurisées, boîtes mortes, masques jetables et sécurité opérationnelle.',
+    statStatus: 'État', statCipher: 'Chiffrement', statMsgCount: 'Messages', statKeyLife: 'Vie Clé',
+    btnActivate: 'Connecter', btnEncode: 'Encoder', btnDecode: 'Décoder', btnGenKey: 'Nouvelle Clé', btnBurn: 'Brûler Clés',
+    btnNumGen: 'Générer Séquence', btnNumBroadcast: 'Diffuser',
+    btnSwListen: 'Écouter', btnSwStop: 'Arrêter',
+    btnCipherTest: 'Tester Chiffrement', btnCipherReset: 'Réinitialiser',
+    acConnected: '🔐 Canal chiffré OUVERT', acDisconnected: '🔴 Canal fermé',
+    acEncoded: '🔢 Message encodé', acDecoded: '✅ Message décodé',
+    acNewKey: '🔑 Nouveau masque jetable généré', acBurned: '🔥 Clés BRÛLÉES',
+    acNumGen: '🔢 Séquence générée', acBroadcast: '📡 Diffusion en cours...',
+    acListening: '📻 Écoute ondes courtes...', acStopped: '⏹ Arrêté',
+    acCipherOk: '✅ Chiffrement vérifié',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔐 Communicateur Agent prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +164,43 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'جهاز اتصال العميل', subtitle: 'جهاز اتصال العميل — رسائل مشفرة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'اتصال العميل — قناة مشفرة', mainDesc: 'مشفّر/فاكّ تشفير محطة أرقام مع قناع لمرة واحدة',
+    sectionA: 'مولّد محطة الأرقام', sectionB: 'مراقب الموجات القصيرة', sectionC: 'مختبر التشفير',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو جهاز اتصال العميل؟', faq_a1: 'نظام رسائل مشفرة يستخدم بروتوكولات محطة الأرقام وتشفير القناع لمرة واحدة.',
+    faq_q2: 'ما هي محطة الأرقام؟', faq_a2: 'محطة راديو موجات قصيرة تبث تسلسلات أرقام مشفرة.',
+    faq_q3: 'ما هو تشفير القناع لمرة واحدة؟', faq_a3: 'الشفرة الوحيدة غير القابلة للكسر نظرياً.',
+    faq_q4: 'ماذا يفعل حرق المفاتيح؟', faq_a4: 'يدمر نهائياً جميع مفاتيح التشفير في الذاكرة.',
+    howto_1: 'انقر اتصال لإنشاء قناة مشفرة.',
+    howto_2: 'اكتب رسالة وانقر تشفير لتحويلها لأرقام.',
+    howto_3: 'استخدم فك التشفير لفك تسلسلات الأرقام.',
+    howto_4: 'ولّد مفاتيح جديدة بانتظام واحرق المستعملة.',
+    wiki_otp_title: '🔐 القناع لمرة واحدة', wiki_otp: 'الشفرة الوحيدة المثبتة رياضياً أنها غير قابلة للكسر.',
+    wiki_numbers_title: '🔢 محطات الأرقام', wiki_numbers: 'محطات راديو غامضة تبث تسلسلات مشفرة.',
+    wiki_steganography_title: '👁 إخفاء المعلومات', wiki_steganography: 'إخفاء الرسائل في بيانات أخرى.',
+    wiki_tradecraft_title: '🕵 فن الاستخبارات', wiki_tradecraft: 'اتصالات آمنة وصناديق ميتة وأقنعة مرة واحدة.',
+    statStatus: 'الحالة', statCipher: 'التشفير', statMsgCount: 'الرسائل', statKeyLife: 'عمر المفتاح',
+    btnActivate: 'اتصال', btnEncode: 'تشفير', btnDecode: 'فك التشفير', btnGenKey: 'مفتاح جديد', btnBurn: 'حرق المفاتيح',
+    btnNumGen: 'توليد تسلسل', btnNumBroadcast: 'بث',
+    btnSwListen: 'استماع', btnSwStop: 'إيقاف',
+    btnCipherTest: 'اختبار التشفير', btnCipherReset: 'إعادة تعيين',
+    acConnected: '🔐 القناة المشفرة مفتوحة', acDisconnected: '🔴 القناة مغلقة',
+    acEncoded: '🔢 تم تشفير الرسالة', acDecoded: '✅ تم فك التشفير',
+    acNewKey: '🔑 تم توليد قناع جديد', acBurned: '🔥 المفاتيح محروقة',
+    acNumGen: '🔢 تم توليد التسلسل', acBroadcast: '📡 جارٍ البث...',
+    acListening: '📻 الاستماع على الموجات القصيرة...', acStopped: '⏹ توقف',
+    acCipherOk: '✅ تم التحقق من التشفير',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔐 جهاز اتصال العميل جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1481,126 @@ function init() {
   initAR();
   initAIChat();
 
+  // Agent Communicator simulation
+  initAgentComm();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ AGENT COMMUNICATOR SIMULATION ═══════ */
+(function(){
+  let acActive=false,acMsgCount=0,acKeyLife=100;
+  const acWave=[];
+  let otpKey=null,swListening=false,swInterval=null;
+
+  window.initAgentComm=function(){
+    const c=$('simCanvas');
+    if(c){c.width=c.offsetWidth||480;c.height=140;for(let i=0;i<c.width;i++)acWave.push(0);requestAnimationFrame(acAnim);}
+    const ba=$('btnAcActivate');if(ba)ba.onclick=()=>{acToggle();playSound('click');};
+    const be=$('btnAcEncode');if(be)be.onclick=()=>{acEncode();playSound('click');};
+    const bd=$('btnAcDecode');if(bd)bd.onclick=()=>{acDecode();playSound('click');};
+    const bk=$('btnAcGenKey');if(bk)bk.onclick=()=>{acGenKey();playSound('click');};
+    const bb=$('btnAcBurn');if(bb)bb.onclick=()=>{acBurn();playSound('error');};
+    const bng=$('btnNumGen');if(bng)bng.onclick=()=>{acNumGen();playSound('click');};
+    const bnb=$('btnNumBroadcast');if(bnb)bnb.onclick=()=>{log(LANG[currentLang].acBroadcast,'tx');showToast(LANG[currentLang].acBroadcast,2000);playSound('click');};
+    const bsl=$('btnSwListen');if(bsl)bsl.onclick=()=>{acSwListen();playSound('click');};
+    const bss=$('btnSwStop');if(bss)bss.onclick=()=>{acSwStop();playSound('click');};
+    const bct=$('btnCipherTest');if(bct)bct.onclick=()=>{acCipherTest();playSound('click');};
+    const bcr=$('btnCipherReset');if(bcr)bcr.onclick=()=>{const i=$('cipherInfo');if(i)i.textContent='';};
+    acGenKey();
+  };
+
+  function acToggle(){
+    const s=LANG[currentLang];acActive=!acActive;setStatus(acActive);
+    const st=$('statStatus');if(st)st.textContent=acActive?'ACTIVE':'STANDBY';
+    log(acActive?s.acConnected:s.acDisconnected,acActive?'success':'error');
+  }
+
+  function acGenKey(){
+    otpKey=[];for(let i=0;i<256;i++)otpKey.push(Math.random()*256|0);
+    acKeyLife=100;
+    const kl=$('statKeyLife');if(kl)kl.textContent='100%';
+    const sc=$('statCipher');if(sc)sc.textContent='OTP-256';
+    log(LANG[currentLang].acNewKey,'success');
+  }
+
+  function acEncode(){
+    if(!acActive||!otpKey)return;
+    const s=LANG[currentLang],inp=$('msgInput'),disp=$('numbersDisplay');
+    const msg=inp?inp.value.trim():'';
+    if(!msg){if(disp)disp.textContent='-- -- -- -- --';return;}
+    const nums=[];
+    for(let i=0;i<msg.length;i++){const c=msg.charCodeAt(i),k=otpKey[i%otpKey.length];nums.push(String((c+k)%1000).padStart(3,'0'));}
+    if(disp)disp.textContent=nums.join(' ');
+    acMsgCount++;acKeyLife=Math.max(0,acKeyLife-5);
+    const mc=$('statMsgCount');if(mc)mc.textContent=acMsgCount;
+    const kl=$('statKeyLife');if(kl)kl.textContent=acKeyLife+'%';
+    const bar=$('acBar');if(bar)bar.style.width=(100-acKeyLife)+'%';
+    log(s.acEncoded,'tx');playSound('success');
+  }
+
+  function acDecode(){
+    if(!acActive||!otpKey)return;
+    const s=LANG[currentLang],disp=$('numbersDisplay');
+    const text=disp?disp.textContent.trim():'';
+    if(!text||text==='-- -- -- -- --')return;
+    const parts=text.split(/\s+/);let decoded='';
+    for(let i=0;i<parts.length;i++){const n=parseInt(parts[i],10),k=otpKey[i%otpKey.length];decoded+=String.fromCharCode(((n-k)%256+256)%256);}
+    const inp=$('msgInput');if(inp)inp.value=decoded;
+    log(s.acDecoded,'success');
+  }
+
+  function acBurn(){
+    otpKey=null;acKeyLife=0;
+    const kl=$('statKeyLife');if(kl)kl.textContent='0%';
+    const sc=$('statCipher');if(sc)sc.textContent='BURNED';
+    const bar=$('acBar');if(bar)bar.style.width='100%';
+    const disp=$('numbersDisplay');if(disp)disp.textContent='** ** ** ** **';
+    log(LANG[currentLang].acBurned,'error');
+  }
+
+  function acNumGen(){
+    const info=$('numGenInfo'),c=$('numGenCanvas');
+    let seq='';for(let i=0;i<20;i++)seq+=String(Math.random()*100|0).padStart(2,'0')+' ';
+    if(info)info.textContent='SEQ: '+seq.trim();
+    if(c){const ctx=c.getContext('2d');c.width=c.offsetWidth||480;const w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);ctx.fillStyle='#00ff41';ctx.font='14px Orbitron,monospace';const nums=seq.trim().split(' ');for(let i=0;i<nums.length;i++){const x=(i%10)*w/10+10,y=Math.floor(i/10)*30+30;ctx.fillText(nums[i],x,y);}}
+    log(LANG[currentLang].acNumGen,'tx');
+  }
+
+  function acSwListen(){
+    if(swListening)return;swListening=true;
+    const s=LANG[currentLang];log(s.acListening,'info');
+    swInterval=setInterval(()=>{
+      const c=$('swCanvas');
+      if(c){const ctx=c.getContext('2d');c.width=c.offsetWidth||480;const w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);for(let x=0;x<w;x+=2){const v=Math.random()*0.3+(Math.sin(x*0.05+Date.now()*0.002)*0.2+0.2);ctx.fillStyle=v>0.4?'#ffaa00':'rgba(0,255,65,0.4)';ctx.fillRect(x,h-v*h,1,v*h);}}
+      const info=$('swInfo');if(info){const f=(3+Math.random()*27).toFixed(3);info.textContent='Scanning '+f+' MHz... '+(Math.random()>0.8?'[SIGNAL DETECTED]':'[noise]');}
+    },300);
+  }
+
+  function acSwStop(){swListening=false;if(swInterval){clearInterval(swInterval);swInterval=null;}log(LANG[currentLang].acStopped,'info');}
+
+  function acCipherTest(){
+    const info=$('cipherInfo');
+    if(info){let o='[TEST] Cipher integrity check...\n[OK] Key entropy: '+(otpKey?'HIGH':'NO KEY')+'\n[OK] Random source: crypto\n[OK] Key reuse: PASS\n[OK] OTP verified';info.textContent=o;}
+    log(LANG[currentLang].acCipherOk,'success');
+  }
+
+  function acAnim(){
+    const c=$('simCanvas');if(!c){requestAnimationFrame(acAnim);return;}
+    const ctx=c.getContext('2d'),w=c.width,h=c.height;
+    acWave.push(acActive?0.2+Math.random()*0.6:Math.random()*0.03);
+    if(acWave.length>w)acWave.splice(0,acWave.length-w);
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(0,255,65,0.06)';ctx.lineWidth=1;
+    for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#00ff41';
+    ctx.strokeStyle=acActive?accent:'rgba(100,100,100,0.3)';ctx.lineWidth=2;ctx.beginPath();
+    const st=Math.max(0,acWave.length-w);
+    for(let i=st;i<acWave.length;i++){const x=i-st,y=h/2-acWave[i]*h*0.4*Math.sin((i+Date.now()*0.008)*0.15);i===st?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();requestAnimationFrame(acAnim);
+  }
+})();

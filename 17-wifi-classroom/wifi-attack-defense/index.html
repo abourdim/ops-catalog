@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>WiFi Attack vs Defense — Workshop DIY</title>
+  <meta name="description" content="Attack vs defense arena. Red team attacks, blue team defends" />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="WiFi Attack vs Defense — Workshop DIY" />
+  <meta property="og:description" content="Attack vs defense arena. Red team attacks, blue team defends" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -28,8 +28,8 @@
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-title">WiFi Attack vs Defense</div>
+      <div class="splash-sub" data-i18n="subtitle">Red team attacks, blue team defends</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">WiFi Attack vs Defense</h1>
+            <div class="subtitle" data-i18n="subtitle">Red team attacks, blue team defends</div>
           </div>
         </div>
 
@@ -72,22 +72,60 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">⚔️</span> <span data-i18n="mainSection">Attack / Defense Arena</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Real-time WiFi attack & defense simulation</span> <span class="version-tag">v1.0</span></div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button id="startBtn" class="primary"><span class="btn-icon">▶</span> <span data-i18n="start">Start Battle</span></button>
+            <button id="stopBtn" disabled><span class="btn-icon">⏹</span> <span data-i18n="stop">Ceasefire</span></button>
           </div>
         </div>
+        <div style="display:flex;gap:20px;justify-content:center;margin:12px 0;flex-wrap:wrap">
+          <div style="text-align:center;padding:10px 20px;border-radius:10px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3)">
+            <div style="font-size:.7rem;color:#ef4444;text-transform:uppercase" data-i18n="redTeam">Red Team</div>
+            <div style="font-family:var(--font-h);font-size:2rem;color:#ef4444" id="redScore">0</div>
+          </div>
+          <div style="text-align:center;padding:10px 20px;border-radius:10px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3)">
+            <div style="font-size:.7rem;color:#3b82f6;text-transform:uppercase" data-i18n="blueTeam">Blue Team</div>
+            <div style="font-family:var(--font-h);font-size:2rem;color:#3b82f6" id="blueScore">0</div>
+          </div>
+        </div>
+        <canvas id="arenaCanvas" style="width:100%;height:180px;border-radius:10px;background:rgba(0,0,0,.2)"></canvas>
+        <div id="attackLog" style="text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:6px">Waiting for battle...</div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- ═══════════════════ SECTION A — Attack Log ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🔴</span> <span data-i18n="sectionA">Attack Vector Log</span></summary>
+        <div class="card">
+          <div style="font-size:.78rem;line-height:1.8;color:var(--text-muted)">
+            <div><strong>Deauth Flood:</strong> Sends forged deauthentication frames to disconnect clients</div>
+            <div><strong>Evil Twin:</strong> Creates a rogue AP that mimics a legitimate network</div>
+            <div><strong>KRACK:</strong> Key Reinstallation Attack exploiting WPA2 4-way handshake</div>
+            <div><strong>ARP Spoof:</strong> Poisons ARP cache for man-in-the-middle attacks</div>
+            <div><strong>Brute Force:</strong> Dictionary attack against WPA/WPA2 passphrase</div>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Defenses ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🛡️</span> <span data-i18n="sectionB">Defense Status</span></summary>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:8px;padding:4px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:.8rem"><input type="checkbox" id="def_wids" checked /> <span data-i18n="wids">WIDS Alert</span> <span style="font-size:.65rem;color:var(--text-muted)">(blocks Deauth, Evil Twin)</span></label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.8rem"><input type="checkbox" id="def_mfp" checked /> <span data-i18n="mfp">MFP Enabled</span> <span style="font-size:.65rem;color:var(--text-muted)">(blocks Deauth)</span></label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.8rem"><input type="checkbox" id="def_rateLimit" /> <span data-i18n="rateLimit">Rate Limiting</span> <span style="font-size:.65rem;color:var(--text-muted)">(blocks Deauth, Brute Force)</span></label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.8rem"><input type="checkbox" id="def_macFilter" /> <span data-i18n="macFilter">MAC Filter</span> <span style="font-size:.65rem;color:var(--text-muted)">(blocks Evil Twin, ARP Spoof)</span></label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.8rem"><input type="checkbox" id="def_wpa3" checked /> <span data-i18n="wpa3">WPA3 SAE</span> <span style="font-size:.65rem;color:var(--text-muted)">(blocks KRACK, Brute Force)</span></label>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — How It Works ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎓</span> <span data-i18n="sectionC">How It Works</span></summary>
+        <div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">WiFi networks face many attacks: deauthentication floods, evil twin APs, KRACK exploits, and ARP spoofing. Defenses include WPA3, MFP, WIDS, rate limiting, and MAC filtering. This simulation pits red team attacks against blue team defenses in real-time.</p></div></div>
       </details>
 
     </div>

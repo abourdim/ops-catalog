@@ -170,6 +170,11 @@
     .meter { height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:4px 0; }
     .meter-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .3s; }
     .compass { position:relative; width:200px; height:200px; margin:0 auto; }
+    .fox-badge { display:inline-block; background:#ff8800; color:#000; padding:2px 8px; border-radius:10px; font-size:.7rem; font-weight:700; }
+    .hide-stars { color:#ff8800; font-size:.9rem; letter-spacing:2px; }
+    .coverage-ring { border:1px dashed #ff880044; border-radius:50%; position:absolute; }
+    .signal-bar { height:6px; background:linear-gradient(90deg, #ff8800, #33ff33); border-radius:3px; }
+    .fox-terrain { display:inline-block; padding:2px 8px; border-radius:8px; font-size:.65rem; border:1px solid var(--border); }
   </style>
 </head>
 <body>
@@ -188,7 +193,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Fox Antenna Builder</h1><div class="subtitle" data-i18n="subtitle">🦊 Directional antenna for fox hunting / ARDF</div></div>
+          <div><h1 data-i18n="title">Fox Hunt Builder</h1><div class="subtitle" data-i18n="subtitle">\u{1F98A} Build fox hunt transmitters. Hidden transmitter antennas</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -204,8 +209,8 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🦊</span> <span data-i18n="mainSection">Fox Antenna Designer</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Build tape-measure Yagi and loop for ARDF</span> <span class="version-tag">v1.0</span></div>
+            <div class="card-title"><span class="icon">\u{1F98A}</span> <span data-i18n="mainSection">Fox Transmitter Designer</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Design compact hidden transmitter antennas for fox hunting</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
         <div id="mainControls"></div>
@@ -215,19 +220,19 @@
 
       <!-- SECTION A -->
       <details class="collapsible">
-        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Bearing Display</span></summary>
+        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Antenna Layout</span></summary>
         <div class="card"><div id="sectionAContent"></div><canvas id="canvasA" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION B -->
       <details class="collapsible">
-        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Signal Strength</span></summary>
+        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Signal Coverage</span></summary>
         <div class="card"><div id="sectionBContent"></div><canvas id="canvasB" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION C -->
       <details class="collapsible">
-        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Hunt Tips</span></summary>
+        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Build Instructions</span></summary>
         <div class="card"><div id="sectionCContent" style="font-size:.78rem; line-height:1.6;"></div></div>
       </details>
     </div>

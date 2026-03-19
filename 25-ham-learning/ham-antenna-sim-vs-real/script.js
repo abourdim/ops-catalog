@@ -1449,3 +1449,91 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"Antenna Sim vs Real","subtitle":"📡 Compare antenna simulations vs real measurements","sectionA":"Theory","sectionB":"Controls","sectionC":"Simulation","mainSection":"Antenna Sim vs Real","mainDesc":"Compare simulated antenna patterns with real-world measurements","start":"Start","stop":"Stop","simStarted":"Simulation started","simStopped":"Simulation stopped","theoryTitle":"Antenna Simulation Theory","theoryDesc":"Compare theoretical radiation patterns with real antenna measurements to understand gain, SWR, and directivity differences.","freqLabel":"Frequency (MHz)","antennaType":"Antenna Type","dipole":"Dipole","yagi":"Yagi 3-el","vertical":"Vertical","loop":"Quad Loop","simGain":"Sim Gain","realGain":"Real Gain","simSWR":"Sim SWR","realSWR":"Real SWR","addNoise":"Add Noise","measure":"Measure"});
+Object.assign(LANG.fr, {"title":"Antenne Sim vs Reel","subtitle":"📡 Comparer simulations et mesures reelles","sectionA":"Theorie","sectionB":"Controles","sectionC":"Simulation","mainSection":"Antenne Sim vs Reel","mainDesc":"Comparer les diagrammes simules avec les mesures reelles","start":"Demarrer","stop":"Arreter","simStarted":"Simulation demarree","simStopped":"Simulation arretee","theoryTitle":"Theorie Simulation Antenne","theoryDesc":"Comparez les diagrammes de rayonnement theoriques avec les mesures reelles pour comprendre le gain, le ROS et la directivite.","freqLabel":"Frequence (MHz)","antennaType":"Type d'antenne","dipole":"Dipole","yagi":"Yagi 3-el","vertical":"Verticale","loop":"Boucle Quad","simGain":"Gain Sim","realGain":"Gain Reel","simSWR":"ROS Sim","realSWR":"ROS Reel","addNoise":"Ajouter Bruit","measure":"Mesurer"});
+Object.assign(LANG.ar, {"title":"محاكاة الهوائي مقابل الواقع","subtitle":"📡 مقارنة محاكاة الهوائي والقياسات الحقيقية","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"المحاكاة","mainSection":"محاكاة الهوائي مقابل الواقع","mainDesc":"مقارنة أنماط الإشعاع المحاكاة مع القياسات الحقيقية","start":"بدء","stop":"إيقاف","simStarted":"بدأت المحاكاة","simStopped":"توقفت المحاكاة","theoryTitle":"نظرية محاكاة الهوائي","theoryDesc":"قارن أنماط الإشعاع النظرية مع قياسات الهوائي الحقيقية لفهم الكسب ونسبة الموجة الثابتة والاتجاهية.","freqLabel":"التردد (ميغاهرتز)","antennaType":"نوع الهوائي","dipole":"ثنائي القطب","yagi":"ياغي 3 عناصر","vertical":"عمودي","loop":"حلقة رباعية","simGain":"كسب المحاكاة","realGain":"كسب حقيقي","simSWR":"ROS محاكاة","realSWR":"ROS حقيقي","addNoise":"إضافة ضوضاء","measure":"قياس"});
+setLanguage(currentLang);
+
+
+/* ═══════ ANTENNA SIM VS REAL ═══════ */
+let simRunning=false,simTimer=null;
+const antCanvas=$('antCanvas'),antCtx=antCanvas?antCanvas.getContext('2d'):null;
+const antennaModels={
+  dipole:{name:'Dipole',simGain:2.15,simSWR:1.5,beamwidth:78,lobes:2},
+  yagi:{name:'Yagi 3-el',simGain:8.5,simSWR:1.3,beamwidth:48,lobes:3},
+  vertical:{name:'Vertical',simGain:0,simSWR:2.0,beamwidth:360,lobes:1},
+  loop:{name:'Quad Loop',simGain:3.3,simSWR:1.8,beamwidth:65,lobes:2}
+};
+
+function drawPattern(){
+  if(!antCtx)return;
+  const W=antCanvas.width,H=antCanvas.height,cx=W/2,cy=H/2;
+  const r=Math.min(cx,cy)-30;
+  antCtx.clearRect(0,0,W,H);
+  // Grid
+  antCtx.strokeStyle='rgba(255,255,255,0.1)';antCtx.lineWidth=0.5;
+  for(let i=1;i<=4;i++){antCtx.beginPath();antCtx.arc(cx,cy,r*i/4,0,Math.PI*2);antCtx.stroke();}
+  for(let a=0;a<360;a+=30){antCtx.beginPath();antCtx.moveTo(cx,cy);antCtx.lineTo(cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180));antCtx.stroke();}
+  const sel=$('antennaSelect');
+  const type=sel?sel.value:'dipole';
+  const model=antennaModels[type];
+  const noiseOn=$('noiseToggle')&&$('noiseToggle').checked;
+  // Simulated pattern (accent color)
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const accent2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  antCtx.strokeStyle=accent;antCtx.lineWidth=2;antCtx.beginPath();
+  for(let a=0;a<360;a++){
+    let g=0;
+    if(model.lobes===1)g=0.7+0.3*Math.abs(Math.sin(a*Math.PI/180));
+    else if(model.lobes===2)g=Math.abs(Math.cos(a*Math.PI/180));
+    else g=Math.pow(Math.abs(Math.cos(a*Math.PI/180)),1.5)*0.8+Math.pow(Math.abs(Math.cos((a*3)*Math.PI/180)),2)*0.2;
+    const px=cx+r*g*Math.cos(a*Math.PI/180);
+    const py=cy+r*g*Math.sin(a*Math.PI/180);
+    a===0?antCtx.moveTo(px,py):antCtx.lineTo(px,py);
+  }
+  antCtx.closePath();antCtx.stroke();
+  // Real pattern with noise (accent2 color)
+  antCtx.strokeStyle=accent2;antCtx.lineWidth=1.5;antCtx.setLineDash([4,3]);antCtx.beginPath();
+  for(let a=0;a<360;a++){
+    let g=0;
+    if(model.lobes===1)g=0.7+0.3*Math.abs(Math.sin(a*Math.PI/180));
+    else if(model.lobes===2)g=Math.abs(Math.cos(a*Math.PI/180));
+    else g=Math.pow(Math.abs(Math.cos(a*Math.PI/180)),1.5)*0.8+Math.pow(Math.abs(Math.cos((a*3)*Math.PI/180)),2)*0.2;
+    const noise=noiseOn?(Math.random()-0.5)*0.15:((Math.random()-0.5)*0.05);
+    g=Math.max(0.05,g+noise)*0.95;
+    const px=cx+r*g*Math.cos(a*Math.PI/180);
+    const py=cy+r*g*Math.sin(a*Math.PI/180);
+    a===0?antCtx.moveTo(px,py):antCtx.lineTo(px,py);
+  }
+  antCtx.closePath();antCtx.stroke();antCtx.setLineDash([]);
+  // Labels
+  antCtx.fillStyle=accent;antCtx.font='12px sans-serif';antCtx.fillText('Simulated',10,20);
+  antCtx.fillStyle=accent2;antCtx.fillText('Real (measured)',10,36);
+  // Stats
+  const realGain=model.simGain+(Math.random()-0.5)*2;
+  const realSWR=model.simSWR+(Math.random()*0.5);
+  const sge=$('simGainVal'),rge=$('realGainVal'),sse=$('simSWRVal'),rse=$('realSWRVal');
+  if(sge)sge.textContent=model.simGain.toFixed(1)+' dBi';
+  if(rge)rge.textContent=realGain.toFixed(1)+' dBi';
+  if(sse)sse.textContent=model.simSWR.toFixed(2);
+  if(rse)rse.textContent=realSWR.toFixed(2);
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);
+  log(LANG[currentLang].simStarted||'Started','success');
+  drawPattern();simTimer=setInterval(drawPattern,3000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+function doMeasure(){drawPattern();log('Measurement taken: '+($('antennaSelect')?$('antennaSelect').value:'dipole'),'success');}
+function init_antenna_sim(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('measureBtn'))$('measureBtn').onclick=doMeasure;
+  if($('antennaSelect'))$('antennaSelect').onchange=drawPattern;
+  if($('noiseToggle'))$('noiseToggle').onchange=drawPattern;
+  drawPattern();
+}
+init_antenna_sim();

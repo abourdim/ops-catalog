@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Persona Builder', subtitle: 'Build fake WiFi device personas with probe patterns',
+    disconnected: 'Idle', connected: 'Generating',
+    mainSection: 'Persona Generator', mainDesc: 'Generate probe patterns and MAC addresses',
+    sectionA: 'Generated Personas', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is a WiFi persona?', faq_a1: 'A simulated device identity with a unique MAC address and probe request patterns.',
+    faq_q2: 'Is this real?', faq_a2: 'No, this is an educational simulation. No real WiFi packets are sent.',
+    faq_q3: 'What are probe requests?', faq_a3: 'Frames sent by WiFi devices to discover nearby networks.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Click Generate to create a new device persona.',
+    howto_2: 'View the generated MAC address and probe pattern.',
+    howto_3: 'Watch the probe visualization on the canvas.',
+    howto_4: 'Check generated personas in the list below.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes with dark and light options.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual: English, Francais, Arabic with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log with filtering.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays in your browser.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🎭 Persona Builder ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,34 +98,39 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    start: 'Generate', stop: 'Stop',
+    mac: 'MAC', vendor: 'Vendor', probes: 'Probes', persona: 'Persona',
+    simStarted: 'Persona generation started', simStopped: 'Generation stopped',
+    personaCreated: 'New persona created',
+    howItWorksText: 'WiFi devices send probe requests to discover networks. Each device has a unique MAC address and probing pattern. This tool simulates creating fake device personas with realistic probe behaviors, useful for understanding WiFi fingerprinting and privacy implications.',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Constructeur de Persona WiFi', subtitle: 'Creer des personas WiFi avec des motifs de sonde',
+    disconnected: 'Inactif', connected: 'Generation',
+    mainSection: 'Generateur de Persona', mainDesc: 'Generer des motifs de sonde et adresses MAC',
+    sectionA: 'Personas Generes', sectionB: 'Comment ca marche',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce qu\'une persona WiFi?', faq_a1: 'Une identite simulee avec adresse MAC et motifs de sonde uniques.',
+    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation educative uniquement.',
+    faq_q3: 'Qu\'est-ce qu\'une requete de sonde?', faq_a3: 'Des trames envoyees par les appareils WiFi pour decouvrir les reseaux.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui. Tout reste dans votre navigateur.',
+    howto_1: 'Cliquez Generer pour creer une persona.',
+    howto_2: 'Voyez l\'adresse MAC et le motif de sonde.',
+    howto_3: 'Observez la visualisation sur le canvas.',
+    howto_4: 'Consultez les personas generees.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes integres.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL automatique.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate et colore.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Tout reste dans votre navigateur.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🎭 Constructeur pret!',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -133,36 +138,41 @@ const LANG = {
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    langChanged: '🌐 Langue → Francais',
+    themeChanged: '🎨 Theme →',
+    start: 'Generer', stop: 'Arreter',
+    mac: 'MAC', vendor: 'Fabricant', probes: 'Sondes', persona: 'Persona',
+    simStarted: 'Generation demarree', simStopped: 'Generation arretee',
+    personaCreated: 'Nouvelle persona creee',
+    howItWorksText: 'Les appareils WiFi envoient des requetes de sonde pour decouvrir les reseaux. Chaque appareil a une adresse MAC unique et un motif de sonde. Cet outil simule la creation de fausses personas.',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'بناء شخصيات WiFi', subtitle: 'إنشاء شخصيات WiFi وهمية مع أنماط المسح',
+    disconnected: 'خامل', connected: 'توليد',
+    mainSection: 'مولد الشخصيات', mainDesc: 'توليد أنماط مسح وعناوين MAC',
+    sectionA: 'الشخصيات المولدة', sectionB: 'كيف يعمل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي شخصية WiFi؟', faq_a1: 'هوية جهاز محاكاة بعنوان MAC فريد وأنماط مسح.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة تعليمية فقط.',
+    faq_q3: 'ما هي طلبات المسح؟', faq_a3: 'إطارات ترسلها أجهزة WiFi لاكتشاف الشبكات القريبة.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'انقر توليد لإنشاء شخصية جديدة.',
+    howto_2: 'شاهد عنوان MAC ونمط المسح المولد.',
+    howto_3: 'راقب التصور على اللوحة.',
+    howto_4: 'تحقق من الشخصيات المولدة في القائمة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL تلقائي.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ مع تصفية.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات تبقى في متصفحك.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🎭 بناء الشخصيات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +182,11 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    start: 'توليد', stop: 'إيقاف',
+    mac: 'MAC', vendor: 'شركة', probes: 'مسح', persona: 'شخصية',
+    simStarted: 'بدأ التوليد', simStopped: 'توقف التوليد',
+    personaCreated: 'تم إنشاء شخصية جديدة',
+    howItWorksText: 'أجهزة WiFi ترسل طلبات مسح لاكتشاف الشبكات. كل جهاز له عنوان MAC فريد ونمط مسح. هذه الأداة تحاكي إنشاء شخصيات وهمية لفهم بصمات WiFi.',
   }
 };
 
@@ -1449,3 +1464,101 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Persona Builder ═══════ */
+let simRunning=false,simInterval=null;
+let pCanvas,pCtx,personas=[],probeParticles=[];
+const VENDORS=['Apple','Samsung','Google','Huawei','Xiaomi','OnePlus','Intel','Broadcom','Qualcomm','MediaTek'];
+const SSIDS=['HomeNetwork','CoffeeShop_5G','Airport_Free','Hotel_Guest','Office_Secure','EDU_Campus','Library_WiFi','Mall_Public'];
+
+function randMAC(){return'XX:XX:XX:XX:XX:XX'.replace(/X/g,()=>'0123456789ABCDEF'[Math.floor(Math.random()*16)]);}
+function randOUI(vendor){const ouis={Apple:'AC:DE:48',Samsung:'8C:F5:A3',Google:'F4:F5:D8',Huawei:'88:66:A5',Xiaomi:'28:6C:07',OnePlus:'94:65:2D',Intel:'00:1B:21',Broadcom:'00:10:18',Qualcomm:'00:A0:C6',MediaTek:'00:0C:E7'};return ouis[vendor]||'00:11:22';}
+
+function genPersona(){
+  const vendor=VENDORS[Math.floor(Math.random()*VENDORS.length)];
+  const oui=randOUI(vendor);
+  const mac=oui+':'+randMAC().slice(9);
+  const numProbes=2+Math.floor(Math.random()*5);
+  const probes=[];
+  for(let i=0;i<numProbes;i++) probes.push(SSIDS[Math.floor(Math.random()*SSIDS.length)]);
+  const interval=20+Math.floor(Math.random()*100);
+  return {mac,vendor,probes:[...new Set(probes)],interval,created:Date.now(),signal:-30-Math.floor(Math.random()*50)};
+}
+
+function initPCanvas(){
+  pCanvas=$('personaCanvas');if(!pCanvas)return;
+  pCtx=pCanvas.getContext('2d');
+  pCanvas.width=pCanvas.offsetWidth*2;pCanvas.height=pCanvas.offsetHeight*2;
+  pCtx.scale(2,2);
+}
+
+function drawPersonaViz(){
+  if(!pCtx)return;
+  const w=pCanvas.offsetWidth,h=pCanvas.offsetHeight;
+  pCtx.fillStyle='rgba(10,10,26,0.1)';pCtx.fillRect(0,0,w,h);
+  // Draw probe particles
+  probeParticles.forEach((p,i)=>{
+    p.x+=p.vx;p.y+=p.vy;p.life-=0.015;
+    if(p.life<=0){probeParticles.splice(i,1);return;}
+    pCtx.beginPath();pCtx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
+    pCtx.fillStyle=p.color;pCtx.globalAlpha=p.life*0.7;pCtx.fill();pCtx.globalAlpha=1;
+    pCtx.font='8px monospace';pCtx.fillStyle='#fff';pCtx.globalAlpha=p.life*0.5;
+    pCtx.fillText(p.ssid,p.x+5,p.y);pCtx.globalAlpha=1;
+  });
+  // Draw device icons for recent personas
+  personas.slice(-5).forEach((p,i)=>{
+    const x=50+i*55,y=h/2;
+    pCtx.beginPath();pCtx.arc(x,y,12,0,Math.PI*2);
+    pCtx.fillStyle=`hsl(${i*72},70%,50%)`;pCtx.globalAlpha=0.8;pCtx.fill();pCtx.globalAlpha=1;
+    pCtx.fillStyle='#fff';pCtx.font='bold 8px monospace';pCtx.textAlign='center';
+    pCtx.fillText(p.vendor.slice(0,3),x,y+3);pCtx.textAlign='start';
+  });
+}
+
+function addProbeParticles(persona){
+  const w=pCanvas?pCanvas.offsetWidth:300,h=pCanvas?pCanvas.offsetHeight:200;
+  const idx=Math.min(personas.length-1,4);
+  const sx=50+idx*55,sy=h/2;
+  persona.probes.forEach(ssid=>{
+    probeParticles.push({x:sx,y:sy,vx:1.5+Math.random()*2,vy:(Math.random()-0.5)*1.5,r:3+Math.random()*3,life:1,color:`hsl(${Math.random()*360},70%,60%)`,ssid});
+  });
+  if(probeParticles.length>150)probeParticles.splice(0,50);
+}
+
+function addPersonaToList(p){
+  const list=$('personaList');if(!list)return;
+  const d=document.createElement('div');d.className='packet-item';
+  d.innerHTML=`<span class="pkt-type">${p.vendor}</span><span class="pkt-data">${p.mac} | ${p.probes.join(', ')}</span><span class="pkt-size">${p.signal}dBm</span>`;
+  list.insertBefore(d,list.firstChild);
+  if(list.children.length>60)list.removeChild(list.lastChild);
+}
+
+function simTick(){
+  const p=genPersona();personas.push(p);
+  addPersonaToList(p);addProbeParticles(p);
+  $('macVal').textContent=p.mac;
+  $('vendorVal').textContent=p.vendor;
+  $('probeVal').textContent=p.probes.length;
+  $('personaVal').textContent=personas.length;
+  log(`${LANG[currentLang].personaCreated}: ${p.vendor} ${p.mac}`,'tx');
+}
+
+function startSim(){
+  if(simRunning)return;simRunning=true;setStatus(true);
+  $('startBtn').disabled=true;$('stopBtn').disabled=false;
+  personas=[];probeParticles=[];initPCanvas();
+  log(LANG[currentLang].simStarted,'success');
+  simInterval=setInterval(simTick,1200);
+  (function loop(){if(!simRunning)return;drawPersonaViz();requestAnimationFrame(loop)})();
+}
+
+function stopSim(){
+  simRunning=false;if(simInterval)clearInterval(simInterval);
+  setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;
+  log(LANG[currentLang].simStopped,'info');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const s=$('startBtn'),t=$('stopBtn');
+  if(s)s.onclick=startSim;if(t)t.onclick=stopSim;
+});

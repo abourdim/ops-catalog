@@ -63,27 +63,39 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP Captive Portal', subtitle: '🎣 lure · 🔓 capture · 🛡️ defend',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Rogue Captive Portal — Social Engineering', mainDesc: 'Simulate fake login portals to study credential phishing',
+    sectionA: 'Portal Visualization', sectionB: 'Harvested Credentials', sectionC: 'Challenge',
+    victims: 'Victims', creds: 'Credentials', views: 'Page Views',
+    startPortal: 'Launch Portal', stopPortal: 'Stop', clearLog: 'Clear Log',
+    canvasHint: 'Visual simulation of rogue AP and victim devices',
+    challenge1: 'How does a rogue captive portal trick users into entering credentials?',
+    challenge2: 'What visual clues can help you spot a fake captive portal?',
+    challenge3: 'How can organizations defend against rogue access points?',
+    revealBtn: 'Reveal',
+    challengeReveal1: 'It creates a fake WiFi with a familiar name. Users see a login page mimicking a trusted service.',
+    challengeReveal2: 'Check for HTTPS, verify the domain, look for typos, never enter credentials on public WiFi portals.',
+    challengeReveal3: 'Use 802.1X auth, deploy WIDS/WIPS, enforce VPN, and educate users about social engineering.',
+    portalStarted: 'Rogue portal active — broadcasting fake SSID',
+    portalStopped: 'Portal deactivated',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is a captive portal attack?', faq_a1: 'An attacker creates a rogue WiFi AP with a fake login page to harvest credentials from unsuspecting users.',
+    faq_q2: 'Is this a real attack?', faq_a2: 'No, this is an educational simulation. Everything runs locally in your browser.',
+    faq_q3: 'What is social engineering?', faq_a3: 'Manipulating people into revealing confidential information by exploiting trust and human psychology.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No real network connections are made.',
+    howto_1: 'Select a portal type from the dropdown (Hotel, Airport, etc.).',
+    howto_2: 'Click Launch Portal to start the rogue AP simulation.',
+    howto_3: 'Watch simulated victims connect and submit credentials.',
+    howto_4: 'Open Portal Visualization to see the attack diagram on canvas.',
+    wiki_cp_title: '🎣 Captive Portals', wiki_cp: 'Web pages shown to new users. Legitimate ones show ToS; rogue ones steal credentials.',
+    wiki_se_title: '🧠 Social Engineering', wiki_se: 'Psychological manipulation to trick people into security mistakes.',
+    wiki_et_title: '👿 Evil Twin', wiki_et: 'A rogue WiFi AP that mimics a legitimate one, exposing user traffic.',
+    wiki_def_title: '🛡️ Defenses', wiki_def: 'VPN, HTTPS verification, 802.1X, and user awareness training.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
@@ -100,64 +112,88 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Portail Captif ESP', subtitle: '🎣 pieger · 🔓 capturer · 🛡️ defendre',
+    disconnected: 'Deconnecte', connected: 'Connecte',
+    mainSection: 'Portail Captif Pirate — Ingenierie Sociale', mainDesc: 'Simuler de faux portails de connexion pour etudier le phishing',
+    sectionA: 'Visualisation du Portail', sectionB: 'Identifiants Recoltes', sectionC: 'Defi',
+    victims: 'Victimes', creds: 'Identifiants', views: 'Pages Vues',
+    startPortal: 'Lancer le Portail', stopPortal: 'Arreter', clearLog: 'Effacer',
+    canvasHint: 'Simulation visuelle du faux AP et des victimes',
+    challenge1: 'Comment un faux portail captif trompe-t-il les utilisateurs ?',
+    challenge2: 'Quels indices visuels aident a reperer un faux portail ?',
+    challenge3: 'Comment les organisations se defendent contre les faux points d\'acces ?',
+    revealBtn: 'Reveler',
+    challengeReveal1: 'Il cree un faux WiFi avec un nom familier. Les utilisateurs voient une page imitant un service de confiance.',
+    challengeReveal2: 'Verifier HTTPS, le domaine, les fautes de frappe. Ne jamais entrer de credentials sur un WiFi public.',
+    challengeReveal3: 'Utiliser 802.1X, deployer WIDS/WIPS, imposer un VPN et former les utilisateurs.',
+    portalStarted: 'Portail pirate actif — diffusion du faux SSID',
+    portalStopped: 'Portail desactive',
+    activityLog: 'Journal', eventsMsg: 'Evenements et messages',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce qu\'une attaque par portail captif ?', faq_a1: 'Un attaquant cree un faux AP WiFi avec une fausse page de connexion pour recolter les identifiants.',
+    faq_q2: 'Est-ce une vraie attaque ?', faq_a2: 'Non, c\'est une simulation educative. Tout fonctionne localement.',
+    faq_q3: 'Qu\'est-ce que l\'ingenierie sociale ?', faq_a3: 'Manipuler les gens pour qu\'ils revelent des informations confidentielles.',
+    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Selectionne un type de portail dans le menu deroulant.',
+    howto_2: 'Clique sur Lancer le Portail pour demarrer la simulation.',
+    howto_3: 'Observe les victimes simulees se connecter et soumettre leurs identifiants.',
+    howto_4: 'Ouvre la Visualisation du Portail pour voir le diagramme d\'attaque.',
+    wiki_cp_title: '🎣 Portails Captifs', wiki_cp: 'Pages web affichees aux nouveaux connectes. Les legitimes montrent les CGU ; les pirates volent les identifiants.',
+    wiki_se_title: '🧠 Ingenierie Sociale', wiki_se: 'Manipulation psychologique pour pousser a des erreurs de securite.',
+    wiki_et_title: '👿 Evil Twin', wiki_et: 'Un faux AP WiFi qui imite un AP legitime, exposant le trafic des utilisateurs.',
+    wiki_def_title: '🛡️ Defenses', wiki_def: 'VPN, verification HTTPS, 802.1X et formation des utilisateurs.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '🚀 Application prete !',
+    logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    langChanged: '🌐 Langue → Francais',
+    themeChanged: '🎨 Theme →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'بوابة اسر ESP', subtitle: '🎣 استدرج · 🔓 اصطد · 🛡️ دافع',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'بوابة اسر مزيفة — هندسة اجتماعية', mainDesc: 'محاكاة بوابات تسجيل دخول وهمية لدراسة التصيد',
+    sectionA: 'تصور البوابة', sectionB: 'بيانات الدخول المحصودة', sectionC: 'تحدي',
+    victims: 'ضحايا', creds: 'بيانات دخول', views: 'مشاهدات',
+    startPortal: 'تشغيل البوابة', stopPortal: 'إيقاف', clearLog: 'مسح السجل',
+    canvasHint: 'محاكاة بصرية لنقطة الوصول المزيفة والأجهزة الضحية',
+    challenge1: 'كيف تخدع بوابة الأسر المزيفة المستخدمين لإدخال بياناتهم؟',
+    challenge2: 'ما القرائن البصرية التي تساعد في اكتشاف بوابة أسر مزيفة؟',
+    challenge3: 'كيف يمكن للمؤسسات الدفاع ضد نقاط الوصول المزيفة؟',
+    revealBtn: 'كشف',
+    challengeReveal1: 'تنشئ شبكة WiFi مزيفة باسم مألوف. يرى المستخدمون صفحة تحاكي خدمة موثوقة.',
+    challengeReveal2: 'تحقق من HTTPS، تأكد من النطاق، ابحث عن الأخطاء، لا تدخل بيانات حساسة على WiFi عام.',
+    challengeReveal3: 'استخدم مصادقة 802.1X، انشر WIDS/WIPS، فرض VPN وعلم المستخدمين.',
+    portalStarted: 'البوابة المزيفة نشطة — بث SSID وهمي',
+    portalStopped: 'البوابة متوقفة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي هجمة البوابة الأسيرة؟', faq_a1: 'ينشئ المهاجم نقطة وصول WiFi مزيفة مع صفحة تسجيل دخول وهمية لحصاد بيانات الدخول.',
+    faq_q2: 'هل هذه هجمة حقيقية؟', faq_a2: 'لا، هذه محاكاة تعليمية. كل شيء يعمل محلياً في متصفحك.',
+    faq_q3: 'ما هي الهندسة الاجتماعية؟', faq_a3: 'التلاعب بالناس لكشف معلومات سرية عبر استغلال الثقة وعلم النفس.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك. لا اتصالات شبكة حقيقية.',
+    howto_1: 'اختر نوع البوابة من القائمة المنسدلة.',
+    howto_2: 'اضغط تشغيل البوابة لبدء المحاكاة.',
+    howto_3: 'شاهد الضحايا المحاكين يتصلون ويرسلون بياناتهم.',
+    howto_4: 'افتح تصور البوابة لرؤية مخطط الهجوم.',
+    wiki_cp_title: '🎣 البوابات الأسيرة', wiki_cp: 'صفحات ويب تظهر للمتصلين الجدد. الشرعية تعرض الشروط؛ المزيفة تسرق البيانات.',
+    wiki_se_title: '🧠 الهندسة الاجتماعية', wiki_se: 'تلاعب نفسي لدفع الناس لارتكاب أخطاء أمنية.',
+    wiki_et_title: '👿 التوأم الشرير', wiki_et: 'نقطة وصول WiFi مزيفة تحاكي نقطة شرعية وتكشف حركة المستخدمين.',
+    wiki_def_title: '🛡️ الدفاعات', wiki_def: 'VPN، التحقق من HTTPS، مصادقة 802.1X، وتوعية المستخدمين.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
@@ -1443,9 +1479,260 @@ function init() {
   initAR();
   initAIChat();
 
+  // App-specific init
+  initApp();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ CAPTIVE PORTAL ATTACK SIMULATION ═══════ */
+
+const PORTAL_TYPES = {
+  hotel:   { ssid: 'Hilton_Guest_WiFi', brand: 'Hilton Hotels', color: '#4a90d9' },
+  airport: { ssid: 'Airport_Free_WiFi', brand: 'Airport WiFi', color: '#34c759' },
+  cafe:    { ssid: 'Starbucks_WiFi',    brand: 'Coffee Shop', color: '#00704a' },
+  corp:    { ssid: 'CorpNet_Secure',    brand: 'Corporate SSO', color: '#ff9500' }
+};
+
+const FAKE_DEVICES = [
+  'iPhone 15','Samsung S24','Pixel 8','MacBook Air','iPad Pro',
+  'ThinkPad X1','OnePlus 12','Huawei P60','Surface Pro','Galaxy Tab'
+];
+const FAKE_EMAILS = [
+  'john.doe@gmail.com','alice.w@yahoo.com','bob_m@outlook.com','sara.k@company.com',
+  'mike.j@proton.me','emma.t@icloud.com','david.l@work.org','fatima.z@edu.net',
+  'omar.h@mail.com','lisa.p@corp.io','ahmed.s@gmail.com','karen.r@hotmail.com'
+];
+const FAKE_PASSWORDS = [
+  'password123','Welcome1!','Summer2024','MyP@ss','Qwerty1','iloveyou',
+  'Admin123!','letmein99','sunshine','trustno1','changeme!','p@ssw0rd'
+];
+
+let portalRunning = false;
+let portalTimer = null;
+let portalData = { victims: 0, creds: 0, views: 0 };
+let canvasEl, ctx;
+let portalDots = [];
+
+function revealChallenge(idx) {
+  const el = $('answer' + idx);
+  if (!el) return;
+  el.classList.toggle('visible');
+  playSound('click');
+}
+
+function randItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function getPortalType() {
+  const sel = $('portalType');
+  return sel ? sel.value : 'hotel';
+}
+
+function genVictimEvent() {
+  const pType = PORTAL_TYPES[getPortalType()];
+  const device = randItem(FAKE_DEVICES);
+  const email = randItem(FAKE_EMAILS);
+  const pass = randItem(FAKE_PASSWORDS);
+  const time = new Date().toLocaleTimeString();
+  const action = Math.random();
+
+  if (action < 0.3) {
+    return { type: 'connect', device, time, ssid: pType.ssid };
+  } else if (action < 0.6) {
+    return { type: 'view', device, time, ssid: pType.ssid };
+  } else {
+    return { type: 'cred', device, email, pass, time, ssid: pType.ssid };
+  }
+}
+
+function addVictimEntry(evt) {
+  const logEl = $('victimLog');
+  if (!logEl) return;
+  const div = document.createElement('div');
+  div.className = 'victim-entry';
+  if (evt.type === 'connect') {
+    div.innerHTML = `<span class="v-time">${evt.time}</span><span class="v-ssid">${evt.ssid}</span><span>${evt.device} connected</span>`;
+  } else if (evt.type === 'view') {
+    div.innerHTML = `<span class="v-time">${evt.time}</span><span class="v-ssid">${evt.ssid}</span><span>${evt.device} viewed portal</span>`;
+  } else {
+    div.innerHTML = `<span class="v-time">${evt.time}</span><span class="v-ssid">${evt.ssid}</span><span class="v-cred">${evt.email}:${evt.pass}</span>`;
+  }
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function addCredEntry(evt) {
+  if (evt.type !== 'cred') return;
+  const logEl = $('credLog');
+  if (!logEl) return;
+  const div = document.createElement('div');
+  div.className = 'victim-entry';
+  div.innerHTML = `<span class="v-time">${evt.time}</span><span>${evt.device}</span><span class="v-cred">${evt.email} : ${evt.pass}</span>`;
+  logEl.insertBefore(div, logEl.firstChild);
+}
+
+function updatePortalStats() {
+  const v = $('victimsConnected'), c = $('credsCollected'), p = $('portalViews');
+  if (v) v.textContent = portalData.victims;
+  if (c) c.textContent = portalData.creds;
+  if (p) p.textContent = portalData.views;
+}
+
+function initPortalCanvas() {
+  canvasEl = $('portalCanvas');
+  if (!canvasEl) return;
+  ctx = canvasEl.getContext('2d');
+  canvasEl.width = canvasEl.offsetWidth || 400;
+  canvasEl.height = 260;
+
+  function drawPortal() {
+    const W = canvasEl.width, H = canvasEl.height;
+    ctx.fillStyle = 'rgba(10,10,26,0.15)';
+    ctx.fillRect(0, 0, W, H);
+
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+    const pType = PORTAL_TYPES[getPortalType()];
+
+    // Draw rogue AP (center top)
+    ctx.save();
+    ctx.globalAlpha = portalRunning ? 1 : 0.3;
+    ctx.beginPath();
+    ctx.arc(W * 0.5, 40, 18, 0, Math.PI * 2);
+    ctx.fillStyle = pType.color;
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.font = '9px Orbitron, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(pType.ssid, W * 0.5, 70);
+    ctx.fillText('ROGUE AP', W * 0.5, 82);
+
+    // Broadcast rings
+    if (portalRunning) {
+      for (let r = 0; r < 3; r++) {
+        const phase = (Date.now() / 1000 + r * 0.7) % 2;
+        ctx.globalAlpha = Math.max(0, 0.4 - phase * 0.2);
+        ctx.beginPath();
+        ctx.arc(W * 0.5, 40, 25 + phase * 40, 0, Math.PI * 2);
+        ctx.strokeStyle = pType.color;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+
+    // Draw victim dots
+    for (let i = portalDots.length - 1; i >= 0; i--) {
+      const d = portalDots[i];
+      d.life -= 0.003;
+      if (d.life <= 0) { portalDots.splice(i, 1); continue; }
+
+      ctx.globalAlpha = d.life;
+      // Line from victim to AP
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(W * 0.5, 40);
+      ctx.strokeStyle = d.isCred ? '#ff4444' : 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = d.isCred ? 2 : 1;
+      ctx.setLineDash(d.isCred ? [] : [3, 5]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Device dot
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = d.isCred ? '#ff4444' : accent;
+      ctx.fill();
+
+      // Label
+      if (d.life > 0.6) {
+        ctx.fillStyle = '#ccc';
+        ctx.font = '8px Orbitron, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(d.label, d.x, d.y + 18);
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    requestAnimationFrame(drawPortal);
+  }
+  requestAnimationFrame(drawPortal);
+}
+
+function addPortalDot(evt) {
+  if (!canvasEl) return;
+  const W = canvasEl.width, H = canvasEl.height;
+  const angle = Math.random() * Math.PI * 0.8 + Math.PI * 0.1;
+  const dist = 80 + Math.random() * 80;
+  const x = W * 0.5 + Math.cos(angle) * dist;
+  const y = 100 + Math.sin(angle) * dist;
+  portalDots.push({ x, y, life: 1, label: evt.device, isCred: evt.type === 'cred' });
+}
+
+function doPortalTick() {
+  if (!portalRunning) return;
+  const evt = genVictimEvent();
+
+  if (evt.type === 'connect') {
+    portalData.victims++;
+    log(`📱 ${evt.device} connected to ${evt.ssid}`, 'rx');
+  } else if (evt.type === 'view') {
+    portalData.views++;
+    log(`👁️ ${evt.device} opened portal page`, 'info');
+  } else {
+    portalData.creds++;
+    portalData.views++;
+    log(`🔑 ${evt.device} submitted: ${evt.email}`, 'rx');
+  }
+
+  addVictimEntry(evt);
+  addCredEntry(evt);
+  addPortalDot(evt);
+  updatePortalStats();
+  playSound('click');
+
+  const delay = 1000 + Math.random() * 3000;
+  portalTimer = setTimeout(doPortalTick, delay);
+}
+
+function startPortal() {
+  const s = LANG[currentLang];
+  portalRunning = true;
+  setStatus(true);
+  log(s.portalStarted, 'success');
+  showToast(s.portalStarted, 2000);
+  doPortalTick();
+}
+
+function stopPortal() {
+  portalRunning = false;
+  if (portalTimer) { clearTimeout(portalTimer); portalTimer = null; }
+  setStatus(false);
+  log(LANG[currentLang].portalStopped, 'info');
+}
+
+function clearPortalLog() {
+  const vl = $('victimLog');
+  if (vl) vl.innerHTML = '';
+  const cl = $('credLog');
+  if (cl) cl.innerHTML = '';
+  portalData = { victims: 0, creds: 0, views: 0 };
+  portalDots = [];
+  updatePortalStats();
+}
+
+function initApp() {
+  initPortalCanvas();
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  const clearBtn = $('clearBtn');
+  if (startBtn) startBtn.onclick = startPortal;
+  if (stopBtn) stopBtn.onclick = stopPortal;
+  if (clearBtn) clearBtn.onclick = clearPortalLog;
+}

@@ -63,27 +63,42 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP WiFi Canary', subtitle: '🐤 watch · 🔔 alert · 🛡️ protect',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'WiFi Canary — Silent Monitor', mainDesc: 'Passive WiFi monitor alerting on suspicious network changes',
+    sectionA: 'Environment Canvas', sectionB: 'Alert Timeline', sectionC: 'Challenge',
+    scans: 'Scans', alerts: 'Alerts', apsDetected: 'APs Found',
+    startCanary: 'Arm Canary', stopCanary: 'Disarm',
+    statusOk: 'ALL CLEAR — No suspicious activity detected',
+    statusAlert: 'ALERT — Suspicious activity detected!',
+    canvasHint: 'Detected APs and anomalies visualized in real-time',
+    alertHint: 'Alert severity and frequency over time',
+    challenge1: 'What is a WiFi canary and how does it differ from WIDS?',
+    challenge2: 'What suspicious WiFi changes should trigger an alert?',
+    challenge3: 'Why is passive monitoring better than active scanning?',
+    revealBtn: 'Reveal',
+    challengeReveal1: 'A canary is passive and lightweight. WIDS is a full enterprise system with more complexity.',
+    challengeReveal2: 'New unknown APs, SSID spoofing, channel changes, deauth floods, signal anomalies.',
+    challengeReveal3: 'Passive is invisible to attackers, low power, and cannot be detected or evaded.',
+    canaryArmed: 'Canary armed — passive monitoring active',
+    canaryDisarmed: 'Canary disarmed',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is a WiFi canary?', faq_a1: 'A passive WiFi sensor that monitors the environment and alerts on suspicious changes.',
+    faq_q2: 'Is this real monitoring?', faq_a2: 'No, this is a simulation. No real WiFi scanning occurs.',
+    faq_q3: 'What is SSID spoofing?', faq_a3: 'An attacker creates an AP with the same name as a legitimate network but different MAC.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Click Arm Canary to start passive monitoring.',
+    howto_2: 'Watch for alerts as anomalies are detected.',
+    howto_3: 'Open Environment Canvas to see detected APs.',
+    howto_4: 'Check Alert Timeline for suspicious patterns.',
+    wiki_canary_title: '🐤 WiFi Canary', wiki_canary: 'Lightweight passive sensor watching for wireless anomalies.',
+    wiki_spoof_title: '🎭 SSID Spoofing', wiki_spoof: 'Same network name, different hardware. Evil twin technique.',
+    wiki_deauth2_title: '⚡ Deauth Detection', wiki_deauth2: 'Monitoring for deauth floods indicating active attacks.',
+    wiki_passive_title: '👁️ Passive Monitoring', wiki_passive: 'Listening without transmitting. Invisible and low-power.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
@@ -100,7 +115,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Canari WiFi ESP', subtitle: '🐤 surveiller · 🔔 alerter · 🛡️ proteger',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -137,7 +152,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'كناري WiFi ESP', subtitle: '🐤 راقب · 🔔 نبّه · 🛡️ احمِ',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -1443,9 +1458,162 @@ function init() {
   initAR();
   initAIChat();
 
+  // App-specific init
+  initApp();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ WIFI CANARY SIMULATION ═══════ */
+
+const KNOWN_APS = [
+  {ssid:'HomeNetwork',mac:'AA:BB:CC:DD:EE:01',ch:1,rssi:-45,color:'#34c759',x:0.3,y:0.3},
+  {ssid:'Office_5G',mac:'AA:BB:CC:DD:EE:02',ch:6,rssi:-52,color:'#4a90d9',x:0.7,y:0.3},
+  {ssid:'IoT_Devices',mac:'AA:BB:CC:DD:EE:03',ch:11,rssi:-60,color:'#ff9500',x:0.5,y:0.7}
+];
+
+const ANOMALY_TYPES = [
+  {type:'new_ap', severity:'warning', gen:()=>{const s=['SuspiciousAP','FreeWiFi_'+Math.floor(Math.random()*99),'linksys_'+Math.floor(Math.random()*9)];return{msg:'New AP detected: '+s[Math.floor(Math.random()*s.length)],ssid:s[0]};}},
+  {type:'ssid_spoof', severity:'critical', gen:()=>{const ap=KNOWN_APS[Math.floor(Math.random()*KNOWN_APS.length)];return{msg:'SSID spoof! "'+ap.ssid+'" from unknown MAC DE:AD:'+Math.floor(Math.random()*99).toString(16).toUpperCase(),ssid:ap.ssid};}},
+  {type:'deauth_flood', severity:'critical', gen:()=>({msg:'Deauth flood detected! '+Math.floor(10+Math.random()*90)+' frames/sec targeting '+KNOWN_APS[Math.floor(Math.random()*KNOWN_APS.length)].ssid})},
+  {type:'channel_change', severity:'warning', gen:()=>{const ap=KNOWN_APS[Math.floor(Math.random()*KNOWN_APS.length)];return{msg:ap.ssid+' changed channel: '+ap.ch+' → '+(ap.ch+5)};}},
+  {type:'signal_anomaly', severity:'info', gen:()=>{const ap=KNOWN_APS[Math.floor(Math.random()*KNOWN_APS.length)];return{msg:ap.ssid+' signal anomaly: '+ap.rssi+'dBm → '+Math.floor(ap.rssi-20+Math.random()*10)+'dBm'};}},
+  {type:'normal_scan', severity:'info', gen:()=>({msg:'Scan complete. '+KNOWN_APS.length+' known APs, all normal'})}
+];
+
+let canaryRunning=false, canaryTimer=null;
+let canaryCanvas, canaryCtx, alertCanvas, alertCtx;
+let scanCnt=0, alertCnt=0, detectedAPs=new Set();
+let canaryDots=[], alertTimeline=[];
+let isAlertState=false;
+
+function revealChallenge(idx){const el=$('answer'+idx);if(el)el.classList.toggle('visible');playSound('click');}
+
+function initCanaryCanvas(){
+  canaryCanvas=$('canaryCanvas');if(!canaryCanvas)return;
+  canaryCtx=canaryCanvas.getContext('2d');
+  canaryCanvas.width=canaryCanvas.offsetWidth||400;canaryCanvas.height=280;
+  function draw(){
+    const W=canaryCanvas.width,H=canaryCanvas.height;
+    canaryCtx.fillStyle='#0a0a1a';canaryCtx.fillRect(0,0,W,H);
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+    // Draw known APs
+    KNOWN_APS.forEach(ap=>{
+      const px=ap.x*W,py=ap.y*H;
+      canaryCtx.globalAlpha=0.08;canaryCtx.beginPath();canaryCtx.arc(px,py,80,0,Math.PI*2);canaryCtx.fillStyle=ap.color;canaryCtx.fill();
+      canaryCtx.globalAlpha=1;canaryCtx.beginPath();canaryCtx.arc(px,py,12,0,Math.PI*2);canaryCtx.fillStyle=ap.color;canaryCtx.fill();
+      canaryCtx.strokeStyle='#fff';canaryCtx.lineWidth=1.5;canaryCtx.stroke();
+      canaryCtx.fillStyle='#ccc';canaryCtx.font='8px Orbitron,monospace';canaryCtx.textAlign='center';
+      canaryCtx.fillText(ap.ssid,px,py+22);canaryCtx.fillText(ap.rssi+'dBm ch'+ap.ch,px,py+32);
+    });
+    // Draw canary sensor (center)
+    const cx=W*0.5,cy=H*0.5;
+    if(canaryRunning){
+      const phase=(Date.now()/2000)%1;
+      canaryCtx.globalAlpha=0.2*(1-phase);canaryCtx.beginPath();canaryCtx.arc(cx,cy,20+phase*120,0,Math.PI*2);
+      canaryCtx.strokeStyle=isAlertState?'#ff4444':'#34c759';canaryCtx.lineWidth=1;canaryCtx.stroke();
+    }
+    canaryCtx.globalAlpha=1;canaryCtx.beginPath();canaryCtx.arc(cx,cy,10,0,Math.PI*2);
+    canaryCtx.fillStyle=isAlertState?'#ff4444':'#34c759';canaryCtx.fill();
+    canaryCtx.fillStyle='#fff';canaryCtx.font='7px Orbitron,monospace';canaryCtx.fillText('CANARY',cx,cy-16);
+    // Draw anomaly dots
+    for(let i=canaryDots.length-1;i>=0;i--){
+      const d=canaryDots[i];d.life-=0.004;if(d.life<=0){canaryDots.splice(i,1);continue;}
+      canaryCtx.globalAlpha=d.life;canaryCtx.beginPath();canaryCtx.arc(d.x,d.y,6+((1-d.life)*10),0,Math.PI*2);
+      canaryCtx.strokeStyle=d.color;canaryCtx.lineWidth=2;canaryCtx.stroke();
+      if(d.life>0.7){canaryCtx.fillStyle=d.color;canaryCtx.font='7px Orbitron,monospace';canaryCtx.fillText(d.label,d.x,d.y-12);}
+    }
+    canaryCtx.globalAlpha=1;
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+function initAlertCanvas(){
+  alertCanvas=$('alertCanvas');if(!alertCanvas)return;
+  alertCtx=alertCanvas.getContext('2d');
+  alertCanvas.width=alertCanvas.offsetWidth||400;alertCanvas.height=200;
+  function draw(){
+    const W=alertCanvas.width,H=alertCanvas.height;
+    alertCtx.fillStyle='#0a0a1a';alertCtx.fillRect(0,0,W,H);
+    if(alertTimeline.length<2){requestAnimationFrame(draw);return;}
+    const barW=Math.max(3,W/Math.max(alertTimeline.length,1));
+    alertTimeline.forEach((d,i)=>{
+      const barH=d.severity==='critical'?(H-30)*0.9:d.severity==='warning'?(H-30)*0.5:(H-30)*0.2;
+      const x=i*barW;
+      alertCtx.fillStyle=d.severity==='critical'?'#ff4444':d.severity==='warning'?'#ff9500':'#4a90d9';
+      alertCtx.globalAlpha=0.8;alertCtx.fillRect(x,H-20-barH,barW-1,barH);
+    });
+    alertCtx.globalAlpha=1;alertCtx.strokeStyle='rgba(255,255,255,0.1)';alertCtx.beginPath();alertCtx.moveTo(0,H-20);alertCtx.lineTo(W,H-20);alertCtx.stroke();
+    alertCtx.fillStyle='#666';alertCtx.font='8px Orbitron,monospace';alertCtx.textAlign='center';alertCtx.fillText('TIME →',W/2,H-4);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+function addAlertEntry(severity,msg){
+  const logEl=$('alertLog');if(!logEl)return;
+  const div=document.createElement('div');div.className='alert-entry';
+  div.innerHTML='<span class="al-time">'+new Date().toLocaleTimeString()+'</span><span class="al-type '+severity+'">'+severity.toUpperCase()+'</span><span class="al-msg">'+msg+'</span>';
+  logEl.appendChild(div);logEl.scrollTop=logEl.scrollHeight;
+}
+
+function doCanaryTick(){
+  if(!canaryRunning)return;
+  scanCnt++;
+  // 70% normal, 30% anomaly
+  const isAnomaly=Math.random()>0.7;
+  let evt;
+  if(isAnomaly){
+    const anomalyPool=ANOMALY_TYPES.filter(a=>a.type!=='normal_scan');
+    const anomaly=anomalyPool[Math.floor(Math.random()*anomalyPool.length)];
+    const data=anomaly.gen();
+    evt={severity:anomaly.severity,msg:data.msg,type:anomaly.type};
+  } else {
+    evt={severity:'info',msg:ANOMALY_TYPES[ANOMALY_TYPES.length-1].gen().msg,type:'normal_scan'};
+  }
+
+  if(evt.severity==='critical'||evt.severity==='warning'){
+    alertCnt++;isAlertState=true;
+    const cs=$('canaryStatus');if(cs){cs.textContent=LANG[currentLang].statusAlert||'ALERT!';cs.className='canary-status alert';}
+    log('🚨 '+evt.msg,'error');playSound('error');
+    setTimeout(()=>{isAlertState=false;const cs2=$('canaryStatus');if(cs2&&canaryRunning){cs2.textContent=LANG[currentLang].statusOk||'ALL CLEAR';cs2.className='canary-status ok';}},3000);
+  } else {
+    log('📡 '+evt.msg,'info');
+  }
+
+  addAlertEntry(evt.severity,evt.msg);
+  alertTimeline.push({severity:evt.severity,ts:Date.now()});
+  if(alertTimeline.length>80)alertTimeline.shift();
+
+  // Add visual dot
+  if(canaryCanvas&&evt.type!=='normal_scan'){
+    const W=canaryCanvas.width,H=canaryCanvas.height;
+    const x=50+Math.random()*(W-100),y=30+Math.random()*(H-60);
+    const color=evt.severity==='critical'?'#ff4444':evt.severity==='warning'?'#ff9500':'#4a90d9';
+    canaryDots.push({x,y,life:1,color,label:evt.type.replace('_',' ')});
+  }
+
+  KNOWN_APS.forEach(ap=>detectedAPs.add(ap.ssid));
+  const sc=$('scanCount'),ac=$('alertCount'),apc=$('apCount');
+  if(sc)sc.textContent=scanCnt;if(ac)ac.textContent=alertCnt;if(apc)apc.textContent=detectedAPs.size;
+
+  const delay=1500+Math.random()*3000;
+  canaryTimer=setTimeout(doCanaryTick,delay);
+}
+
+function startCanary(){canaryRunning=true;setStatus(true);log(LANG[currentLang].canaryArmed,'success');showToast(LANG[currentLang].canaryArmed,2000);const cs=$('canaryStatus');if(cs){cs.textContent=LANG[currentLang].statusOk;cs.className='canary-status ok';}doCanaryTick();}
+function stopCanary(){canaryRunning=false;if(canaryTimer){clearTimeout(canaryTimer);canaryTimer=null;}setStatus(false);isAlertState=false;const cs=$('canaryStatus');if(cs){cs.textContent=LANG[currentLang].canaryDisarmed||'Disarmed';cs.className='canary-status ok';}log(LANG[currentLang].canaryDisarmed,'info');}
+function clearCanaryLog(){const el=$('alertLog');if(el)el.innerHTML='';scanCnt=0;alertCnt=0;detectedAPs.clear();canaryDots=[];alertTimeline=[];const sc=$('scanCount'),ac=$('alertCount'),apc=$('apCount');if(sc)sc.textContent='0';if(ac)ac.textContent='0';if(apc)apc.textContent='0';}
+
+function initApp(){
+  initCanaryCanvas();initAlertCanvas();
+  const startBtn=$('startBtn'),stopBtn=$('stopBtn'),clearBtn=$('clearBtn');
+  if(startBtn)startBtn.onclick=startCanary;
+  if(stopBtn)stopBtn.onclick=stopCanary;
+  if(clearBtn)clearBtn.onclick=clearCanaryLog;
+}

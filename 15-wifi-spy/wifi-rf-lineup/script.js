@@ -63,32 +63,37 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi RF Lineup', subtitle: 'Identify devices by RF signatures. WiFi fingerprinting',
+    disconnected: 'Idle', connected: 'Scanning',
+    mainSection: 'RF Fingerprinting', mainDesc: 'Device identification via RF signature analysis',
+    sectionA: 'Device Lineup', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is RF fingerprinting?', faq_a1: 'Identifying devices by their unique radio frequency emission characteristics.',
+    faq_q2: 'Is this real?', faq_a2: 'No, this is a simulation for educational purposes only.',
+    faq_q3: 'What makes each device unique?', faq_a3: 'Manufacturing variations create subtle differences in RF emissions.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Click Scan to start RF fingerprinting.',
+    howto_2: 'Watch the RF signature waveforms on the canvas.',
+    howto_3: 'Compare device signatures in the lineup.',
+    howto_4: 'Check match confidence percentages.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL support.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log with filtering.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays in your browser.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📻 RF Lineup ready!',
+    start: 'Scan', stop: 'Stop',
+    devices: 'Devices', confidence: 'Match', signature: 'Signature', scans: 'Scans',
+    simStarted: 'RF scanning started', simStopped: 'Scanning stopped',
+    deviceFound: 'Device fingerprint captured',
+    howItWorksText: 'RF fingerprinting identifies devices by analyzing their unique radio frequency emission patterns. Hardware imperfections create subtle but consistent variations in signals. This simulation generates synthetic RF signatures and demonstrates how devices can be identified by their radio characteristics.',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +105,37 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Identification RF WiFi', subtitle: 'Identifier les appareils par signatures RF',
+    disconnected: 'Inactif', connected: 'Analyse',
+    mainSection: 'Empreintes RF', mainDesc: 'Identification des appareils par analyse RF',
+    sectionA: 'Liste des Appareils', sectionB: 'Comment ca marche',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que l\'empreinte RF?', faq_a1: 'Identifier les appareils par leurs emissions radio uniques.',
+    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation educative.',
+    faq_q3: 'Qu\'est-ce qui rend chaque appareil unique?', faq_a3: 'Les variations de fabrication creent des differences subtiles.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui. Tout reste local.',
+    howto_1: 'Cliquez Scanner pour demarrer.',
+    howto_2: 'Observez les signatures RF.',
+    howto_3: 'Comparez les empreintes des appareils.',
+    howto_4: 'Verifiez les pourcentages de correspondance.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes integres.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Tout reste local.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📻 Identification RF prete!',
+    start: 'Scanner', stop: 'Arreter',
+    devices: 'Appareils', confidence: 'Correspondance', signature: 'Signature', scans: 'Scans',
+    simStarted: 'Analyse RF demarree', simStopped: 'Analyse arretee',
+    deviceFound: 'Empreinte capturee',
+    howItWorksText: 'L\'empreinte RF identifie les appareils en analysant leurs emissions radio uniques. Les imperfections materielles creent des variations subtiles.',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +147,37 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'بصمات RF للأجهزة', subtitle: 'تحديد الأجهزة من خلال بصمات التردد اللاسلكي',
+    disconnected: 'خامل', connected: 'مسح',
+    mainSection: 'بصمات RF', mainDesc: 'تحديد الأجهزة عبر تحليل بصمات التردد',
+    sectionA: 'قائمة الأجهزة', sectionB: 'كيف يعمل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي بصمة RF؟', faq_a1: 'تحديد الأجهزة من خلال خصائص انبعاثات الترددات الراديوية الفريدة.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة تعليمية فقط.',
+    faq_q3: 'ما الذي يجعل كل جهاز فريدًا؟', faq_a3: 'اختلافات التصنيع تخلق فروقات دقيقة في الانبعاثات.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'انقر مسح لبدء بصمات RF.',
+    howto_2: 'شاهد أشكال موجات البصمات.',
+    howto_3: 'قارن بصمات الأجهزة.',
+    howto_4: 'تحقق من نسب التطابق.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات محلية.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📻 بصمات RF جاهزة!',
+    start: 'مسح', stop: 'إيقاف',
+    devices: 'أجهزة', confidence: 'تطابق', signature: 'بصمة', scans: 'عمليات مسح',
+    simStarted: 'بدأ المسح', simStopped: 'توقف المسح',
+    deviceFound: 'تم التقاط بصمة جهاز',
+    howItWorksText: 'بصمة RF تحدد الأجهزة من خلال تحليل أنماط انبعاثات الترددات الراديوية الفريدة. عيوب التصنيع تخلق اختلافات دقيقة لكن ثابتة.',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1464,83 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi RF Lineup ═══════ */
+let simRunning=false,simInterval=null;
+let rfCanvas,rfCtx,rfDevices=[],scanCount=0;
+const DEV_TYPES=['Smartphone','Laptop','Tablet','IoT Sensor','Smart Watch','Router','Drone','Camera'];
+const COLORS=['#22c55e','#3b82f6','#a855f7','#ef4444','#f59e0b','#06b6d4','#ec4899','#84cc16'];
+
+function genSignature(){const pts=[];for(let i=0;i<64;i++)pts.push(Math.random()*0.6+0.2+Math.sin(i*0.3)*0.15);return pts;}
+
+function genDevice(){
+  return{type:DEV_TYPES[Math.floor(Math.random()*DEV_TYPES.length)],mac:'XX:XX:XX:XX:XX:XX'.replace(/X/g,()=>'0123456789ABCDEF'[Math.floor(Math.random()*16)]),signature:genSignature(),confidence:70+Math.floor(Math.random()*30),color:COLORS[Math.floor(Math.random()*COLORS.length)],freq:2412+Math.floor(Math.random()*13)*5};
+}
+
+function initRfCanvas(){
+  rfCanvas=$('rfCanvas');if(!rfCanvas)return;
+  rfCtx=rfCanvas.getContext('2d');rfCanvas.width=rfCanvas.offsetWidth*2;rfCanvas.height=rfCanvas.offsetHeight*2;rfCtx.scale(2,2);
+}
+
+function drawRfViz(){
+  if(!rfCtx)return;
+  const w=rfCanvas.offsetWidth,h=rfCanvas.offsetHeight;
+  rfCtx.fillStyle='rgba(10,10,26,0.12)';rfCtx.fillRect(0,0,w,h);
+  // Grid
+  rfCtx.strokeStyle='rgba(255,255,255,0.04)';rfCtx.lineWidth=0.5;
+  for(let y=0;y<h;y+=20){rfCtx.beginPath();rfCtx.moveTo(0,y);rfCtx.lineTo(w,y);rfCtx.stroke();}
+  // Draw signatures for last 4 devices
+  rfDevices.slice(-4).forEach((dev,idx)=>{
+    const baseY=20+idx*(h/4);
+    rfCtx.strokeStyle=dev.color;rfCtx.lineWidth=1.5;rfCtx.globalAlpha=0.8;
+    rfCtx.beginPath();
+    dev.signature.forEach((v,i)=>{
+      const x=(i/64)*w;const y=baseY+(v*h/5);
+      const jitter=Math.sin(Date.now()/500+i*0.5)*2;
+      i===0?rfCtx.moveTo(x,y+jitter):rfCtx.lineTo(x,y+jitter);
+    });
+    rfCtx.stroke();rfCtx.globalAlpha=1;
+    rfCtx.fillStyle=dev.color;rfCtx.font='9px monospace';
+    rfCtx.fillText(`${dev.type} ${dev.confidence}%`,5,baseY+8);
+  });
+}
+
+function addDeviceToList(d){
+  const list=$('deviceList');if(!list)return;
+  const el=document.createElement('div');el.className='packet-item';
+  el.innerHTML=`<span class="pkt-type" style="color:${d.color}">${d.type}</span><span class="pkt-data">${d.mac} | ${d.freq}MHz</span><span class="pkt-size">${d.confidence}%</span>`;
+  list.insertBefore(el,list.firstChild);
+  if(list.children.length>60)list.removeChild(list.lastChild);
+}
+
+function simTick(){
+  scanCount++;
+  const d=genDevice();rfDevices.push(d);
+  if(rfDevices.length>20)rfDevices.shift();
+  addDeviceToList(d);
+  $('devVal').textContent=rfDevices.length;
+  $('confVal').textContent=d.confidence+'%';
+  $('sigVal').textContent=d.type;
+  $('scanVal').textContent=scanCount;
+  log(`${LANG[currentLang].deviceFound}: ${d.type} @ ${d.freq}MHz (${d.confidence}%)`,'tx');
+}
+
+function startSim(){
+  if(simRunning)return;simRunning=true;setStatus(true);
+  $('startBtn').disabled=true;$('stopBtn').disabled=false;
+  rfDevices=[];scanCount=0;initRfCanvas();
+  log(LANG[currentLang].simStarted,'success');
+  simInterval=setInterval(simTick,1000);
+  (function loop(){if(!simRunning)return;drawRfViz();requestAnimationFrame(loop)})();
+}
+
+function stopSim(){
+  simRunning=false;if(simInterval)clearInterval(simInterval);
+  setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;
+  log(LANG[currentLang].simStopped,'info');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const s=$('startBtn'),t=$('stopBtn');
+  if(s)s.onclick=startSim;if(t)t.onclick=stopSim;
+});

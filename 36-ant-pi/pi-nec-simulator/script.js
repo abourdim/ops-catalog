@@ -63,10 +63,17 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Pi NEC Simulator', subtitle: '⚡ model · 📊 simulate · 💡 analyze',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'NEC Antenna Modeler', mainDesc: 'Electromagnetic antenna simulation engine',
+    sectionA: 'Radiation Pattern', sectionB: 'SWR & Impedance', sectionC: 'About NEC',
+    antType: 'Antenna Type', freqLabel: 'Frequency (MHz)', wireRadius: 'Wire Radius (mm)',
+    segments: 'Segments', groundType: 'Ground', runSim: 'Run Simulation', resetBtn: 'Reset',
+    gain: 'Gain', impedance: 'Impedance', swr: 'SWR', bandwidth: 'Bandwidth',
+    simRunning: 'Simulating...', simComplete: 'Simulation complete',
+    necInfo1: 'NEC is a method-of-moments solver for analyzing electromagnetic response of antennas.',
+    necInfo2: 'Running NEC on Raspberry Pi enables portable antenna design with real-time visualization.',
+    necInfo3: 'Adjust parameters to see how wire diameter, segmentation, frequency, and ground conditions affect performance.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +107,17 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Simulateur NEC Pi', subtitle: '⚡ modéliser · 📊 simuler · 💡 analyser',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Modélisateur NEC', mainDesc: 'Moteur de simulation électromagnétique d\'antennes',
+    sectionA: 'Diagramme de rayonnement', sectionB: 'TOS et impédance', sectionC: 'À propos de NEC',
+    antType: 'Type d\'antenne', freqLabel: 'Fréquence (MHz)', wireRadius: 'Rayon du fil (mm)',
+    segments: 'Segments', groundType: 'Sol', runSim: 'Lancer la simulation', resetBtn: 'Réinitialiser',
+    gain: 'Gain', impedance: 'Impédance', swr: 'TOS', bandwidth: 'Bande passante',
+    simRunning: 'Simulation en cours...', simComplete: 'Simulation terminée',
+    necInfo1: 'NEC est un solveur méthode des moments pour analyser la réponse électromagnétique des antennes.',
+    necInfo2: 'Exécuter NEC sur Raspberry Pi permet la conception d\'antennes portable avec visualisation en temps réel.',
+    necInfo3: 'Ajustez les paramètres pour voir comment le diamètre, la segmentation, la fréquence et le sol affectent les performances.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +151,17 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محاكي NEC على Pi', subtitle: '⚡ نمذجة · 📊 محاكاة · 💡 تحليل',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مُنمذج هوائيات NEC', mainDesc: 'محرك محاكاة كهرومغناطيسية للهوائيات',
+    sectionA: 'نمط الإشعاع', sectionB: 'نسبة الموجة الثابتة والمعاوقة', sectionC: 'حول NEC',
+    antType: 'نوع الهوائي', freqLabel: 'التردد (ميغاهرتز)', wireRadius: 'نصف قطر السلك (مم)',
+    segments: 'الشرائح', groundType: 'الأرضي', runSim: 'تشغيل المحاكاة', resetBtn: 'إعادة تعيين',
+    gain: 'الكسب', impedance: 'المعاوقة', swr: 'نسبة الموجة الثابتة', bandwidth: 'عرض النطاق',
+    simRunning: 'جارٍ المحاكاة...', simComplete: 'اكتملت المحاكاة',
+    necInfo1: 'NEC هو حلّال طريقة اللحظات لتحليل الاستجابة الكهرومغناطيسية للهوائيات.',
+    necInfo2: 'تشغيل NEC على Raspberry Pi يتيح تصميم هوائيات محمول مع تصور في الوقت الحقيقي.',
+    necInfo3: 'اضبط المعلمات لترى كيف يؤثر قطر السلك والتقسيم والتردد وظروف الأرض على الأداء.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1446,6 +1467,322 @@ function init() {
   log(LANG[currentLang].ready, 'success');
 }
 
+/* ═══════ NEC ANTENNA SIMULATION ═══════ */
+
+const ANT_MODELS = {
+  dipole:   { name:'Dipole', gainBase:2.15, fbRatio:0, lobes:2, zBase:[73,42.5] },
+  yagi:     { name:'Yagi-Uda', gainBase:7.1, fbRatio:20, lobes:1, zBase:[50,0] },
+  quad:     { name:'Quad Loop', gainBase:7.4, fbRatio:25, lobes:1, zBase:[125,0] },
+  vertical: { name:'Vertical 1/4λ', gainBase:5.15, fbRatio:0, lobes:1, zBase:[36,21] }
+};
+
+let simResult = null;
+
+function runNECSim() {
+  const type = $('antType')?.value || 'dipole';
+  const freq = parseFloat($('necFreq')?.value || 145);
+  const radius = parseFloat($('wireRadius')?.value || 1);
+  const segs = parseInt($('segments')?.value || 21);
+  const ground = $('groundType')?.value || 'free';
+  const model = ANT_MODELS[type];
+  const s = LANG[currentLang];
+
+  log(`⚡ ${s.simRunning || 'Simulating...'} ${model.name} @ ${freq} MHz`, 'info');
+  showToast(s.simRunning, 0);
+  setStatus(true);
+
+  setTimeout(() => {
+    // Compute wavelength
+    const lambda = 300 / freq;
+    // Gain adjustment based on ground
+    const groundGainMod = ground === 'perfect' ? 3 : ground === 'real' ? 1.5 : 0;
+    const gain = model.gainBase + groundGainMod + (Math.random() - 0.5) * 0.5;
+    // Impedance
+    const radiusFactor = 1 + (radius - 1) * 0.02;
+    const zr = model.zBase[0] * radiusFactor + (Math.random() - 0.5) * 5;
+    const zi = model.zBase[1] * radiusFactor + (Math.random() - 0.5) * 3;
+    const zMag = Math.sqrt(zr * zr + zi * zi);
+    // SWR
+    const gamma = Math.abs((zMag - 50) / (zMag + 50));
+    const swr = (1 + gamma) / (1 - gamma);
+    // Bandwidth (-3dB)
+    const bw = freq * 0.05 * (1 + radius * 0.1);
+
+    // Generate radiation pattern (360 points)
+    const pattern = [];
+    for (let deg = 0; deg < 360; deg++) {
+      const rad = deg * Math.PI / 180;
+      let r;
+      if (type === 'dipole') {
+        r = Math.abs(Math.cos(rad)); // figure-8
+      } else if (type === 'yagi' || type === 'quad') {
+        const front = Math.pow(Math.cos(rad / 2), 2);
+        const back = 0.1 * Math.pow(Math.cos((rad + Math.PI) / 2), 2);
+        r = Math.max(front, back);
+      } else { // vertical
+        r = Math.abs(Math.sin(rad + Math.PI / 4));
+      }
+      pattern.push(r * gain / model.gainBase);
+    }
+
+    simResult = { type, freq, gain, zr, zi, swr, bw, lambda, pattern, ground, segs };
+
+    // Update result box
+    const box = $('resultBox');
+    if (box) {
+      box.innerHTML = `
+        <div class="result-row"><span class="result-label">${s.antType || 'Type'}</span><span class="result-value">${model.name}</span></div>
+        <div class="result-row"><span class="result-label">${s.gain || 'Gain'}</span><span class="result-value">${gain.toFixed(2)} dBi</span></div>
+        <div class="result-row"><span class="result-label">${s.impedance || 'Impedance'}</span><span class="result-value">${zr.toFixed(1)} + j${zi.toFixed(1)} Ω</span></div>
+        <div class="result-row"><span class="result-label">${s.swr || 'SWR'}</span><span class="result-value">${swr.toFixed(2)}:1</span></div>
+        <div class="result-row"><span class="result-label">${s.bandwidth || 'BW'}</span><span class="result-value">${bw.toFixed(1)} MHz</span></div>
+        <div class="result-row"><span class="result-label">λ</span><span class="result-value">${lambda.toFixed(2)} m</span></div>
+      `;
+    }
+
+    drawAntennaModel();
+    drawRadiationPattern();
+    drawSWRChart();
+    hideToast();
+    log(`✅ ${s.simComplete || 'Simulation complete'}: ${gain.toFixed(1)} dBi, SWR ${swr.toFixed(2)}:1`, 'success');
+  }, 800);
+}
+
+function drawAntennaModel() {
+  const c = $('mainCanvas');
+  if (!c || !simResult) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  const cx = W / 2, cy = H / 2;
+
+  // Grid background
+  ctx.strokeStyle = 'rgba(255,255,255,.05)'; ctx.lineWidth = 1;
+  for (let x = 0; x < W; x += 30) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (let y = 0; y < H; y += 30) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+  // Ground plane
+  if (simResult.ground !== 'free') {
+    ctx.fillStyle = simResult.ground === 'perfect' ? 'rgba(51,255,51,.1)' : 'rgba(139,90,43,.15)';
+    ctx.fillRect(0, cy + 60, W, H - cy - 60);
+    ctx.strokeStyle = simResult.ground === 'perfect' ? '#33ff33' : '#8b5a2b';
+    ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(0, cy + 60); ctx.lineTo(W, cy + 60); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Draw antenna based on type
+  ctx.strokeStyle = accent; ctx.lineWidth = 3;
+  const type = simResult.type;
+  if (type === 'dipole') {
+    ctx.beginPath(); ctx.moveTo(cx - 100, cy); ctx.lineTo(cx + 100, cy); ctx.stroke();
+    ctx.fillStyle = '#f00'; ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+    // Segments
+    const segLen = 200 / simResult.segs;
+    ctx.fillStyle = 'rgba(255,255,255,.3)';
+    for (let i = 1; i < simResult.segs; i++) {
+      ctx.beginPath(); ctx.arc(cx - 100 + i * segLen, cy, 2, 0, Math.PI * 2); ctx.fill();
+    }
+  } else if (type === 'yagi') {
+    // Reflector
+    ctx.strokeStyle = '#888'; ctx.beginPath(); ctx.moveTo(cx - 110, cy - 70); ctx.lineTo(cx + 110, cy - 70); ctx.stroke();
+    // Driven
+    ctx.strokeStyle = accent; ctx.beginPath(); ctx.moveTo(cx - 95, cy); ctx.lineTo(cx + 95, cy); ctx.stroke();
+    ctx.fillStyle = '#f00'; ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+    // Director
+    ctx.strokeStyle = '#666'; ctx.beginPath(); ctx.moveTo(cx - 80, cy + 70); ctx.lineTo(cx + 80, cy + 70); ctx.stroke();
+    // Boom
+    ctx.strokeStyle = '#444'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy - 70); ctx.lineTo(cx, cy + 70); ctx.stroke();
+    // Labels
+    ctx.fillStyle = '#888'; ctx.font = '9px Orbitron,monospace'; ctx.textAlign = 'left';
+    ctx.fillText('Reflector', cx + 115, cy - 67);
+    ctx.fillText('Driven', cx + 100, cy + 3);
+    ctx.fillText('Director', cx + 85, cy + 73);
+  } else if (type === 'quad') {
+    const s = 60;
+    ctx.beginPath(); ctx.moveTo(cx - s, cy - s); ctx.lineTo(cx + s, cy - s); ctx.lineTo(cx + s, cy + s); ctx.lineTo(cx - s, cy + s); ctx.closePath(); ctx.stroke();
+    ctx.fillStyle = '#f00'; ctx.beginPath(); ctx.arc(cx - s, cy + s, 5, 0, Math.PI * 2); ctx.fill();
+  } else if (type === 'vertical') {
+    ctx.beginPath(); ctx.moveTo(cx, cy + 60); ctx.lineTo(cx, cy - 80); ctx.stroke();
+    ctx.fillStyle = '#f00'; ctx.beginPath(); ctx.arc(cx, cy + 60, 5, 0, Math.PI * 2); ctx.fill();
+    // Radials
+    ctx.strokeStyle = '#555'; ctx.lineWidth = 1;
+    for (let a = -60; a <= 60; a += 30) {
+      const rad = a * Math.PI / 180;
+      ctx.beginPath(); ctx.moveTo(cx, cy + 60); ctx.lineTo(cx + Math.sin(rad) * 90, cy + 60 + Math.cos(rad) * 20); ctx.stroke();
+    }
+  }
+
+  // Current distribution overlay
+  ctx.strokeStyle = 'rgba(255,100,100,.4)'; ctx.lineWidth = 1;
+  for (let i = 0; i < 20; i++) {
+    const t = Date.now() / 500 + i * 0.3;
+    const amp = Math.sin(t) * 8;
+    if (type === 'dipole') {
+      const x = cx - 100 + i * 10;
+      ctx.beginPath(); ctx.moveTo(x, cy + amp * Math.sin(i * Math.PI / 20)); ctx.lineTo(x + 10, cy + amp * Math.sin((i + 1) * Math.PI / 20)); ctx.stroke();
+    }
+  }
+
+  // Info overlay
+  ctx.fillStyle = accent; ctx.font = 'bold 12px Orbitron,monospace'; ctx.textAlign = 'left';
+  ctx.fillText(`${ANT_MODELS[type].name} @ ${simResult.freq} MHz`, 10, 20);
+  ctx.font = '10px Orbitron,monospace'; ctx.fillStyle = '#aaa';
+  ctx.fillText(`λ = ${simResult.lambda.toFixed(2)} m | Segs: ${simResult.segs}`, 10, 38);
+}
+
+function drawRadiationPattern() {
+  const c = $('canvasA');
+  if (!c || !simResult) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W / 2, cy = H / 2;
+  const maxR = Math.min(cx, cy) - 30;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  // Grid circles
+  ctx.strokeStyle = 'rgba(255,255,255,.1)'; ctx.lineWidth = 1;
+  for (let r = maxR / 4; r <= maxR; r += maxR / 4) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+  }
+  // Cross lines
+  ctx.beginPath(); ctx.moveTo(cx - maxR, cy); ctx.lineTo(cx + maxR, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, cy - maxR); ctx.lineTo(cx, cy + maxR); ctx.stroke();
+
+  // Angle labels
+  ctx.fillStyle = '#666'; ctx.font = '9px monospace'; ctx.textAlign = 'center';
+  ['0°', '90°', '180°', '270°'].forEach((lbl, i) => {
+    const a = i * Math.PI / 2;
+    ctx.fillText(lbl, cx + Math.cos(a) * (maxR + 15), cy - Math.sin(a) * (maxR + 15) + 3);
+  });
+
+  // dB scale labels
+  ctx.fillStyle = '#555'; ctx.textAlign = 'right';
+  for (let i = 1; i <= 4; i++) {
+    const db = -10 * (4 - i);
+    ctx.fillText(`${db} dB`, cx - maxR * i / 4 - 5, cy - 3);
+  }
+
+  // Pattern fill
+  ctx.fillStyle = `${accent}22`;
+  ctx.beginPath();
+  simResult.pattern.forEach((r, deg) => {
+    const rad = deg * Math.PI / 180;
+    const px = cx + Math.cos(rad) * r * maxR;
+    const py = cy - Math.sin(rad) * r * maxR;
+    deg === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  });
+  ctx.closePath(); ctx.fill();
+
+  // Pattern outline
+  ctx.strokeStyle = accent; ctx.lineWidth = 2;
+  ctx.beginPath();
+  simResult.pattern.forEach((r, deg) => {
+    const rad = deg * Math.PI / 180;
+    const px = cx + Math.cos(rad) * r * maxR;
+    const py = cy - Math.sin(rad) * r * maxR;
+    deg === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  });
+  ctx.closePath(); ctx.stroke();
+
+  // Max gain marker
+  const maxIdx = simResult.pattern.indexOf(Math.max(...simResult.pattern));
+  const maxRad = maxIdx * Math.PI / 180;
+  const mx = cx + Math.cos(maxRad) * simResult.pattern[maxIdx] * maxR;
+  const my = cy - Math.sin(maxRad) * simResult.pattern[maxIdx] * maxR;
+  ctx.fillStyle = '#ff4444'; ctx.beginPath(); ctx.arc(mx, my, 4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 10px Orbitron,monospace'; ctx.textAlign = 'left';
+  ctx.fillText(`${simResult.gain.toFixed(1)} dBi`, mx + 8, my - 5);
+}
+
+function drawSWRChart() {
+  const c = $('canvasB');
+  if (!c || !simResult) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  const pad = { l: 50, r: 20, t: 20, b: 30 };
+  const gW = W - pad.l - pad.r, gH = H - pad.t - pad.b;
+
+  // Generate SWR curve across frequency band
+  const fCenter = simResult.freq;
+  const fSpan = simResult.bw * 3;
+  const points = 200;
+  const swrData = [];
+
+  for (let i = 0; i < points; i++) {
+    const f = fCenter - fSpan + (2 * fSpan * i / points);
+    const df = Math.abs(f - fCenter) / (simResult.bw / 2);
+    const swrVal = 1 + (simResult.swr - 1) * df * df + Math.random() * 0.05;
+    swrData.push({ f, swr: Math.min(swrVal, 10) });
+  }
+
+  // Y axis (SWR 1-6)
+  ctx.strokeStyle = 'rgba(255,255,255,.08)'; ctx.lineWidth = 1;
+  ctx.fillStyle = '#666'; ctx.font = '9px monospace'; ctx.textAlign = 'right';
+  for (let s = 1; s <= 6; s++) {
+    const y = pad.t + gH - (s - 1) / 5 * gH;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+    ctx.fillText(`${s}:1`, pad.l - 5, y + 3);
+  }
+
+  // 2:1 SWR reference line
+  const y2 = pad.t + gH - (2 - 1) / 5 * gH;
+  ctx.strokeStyle = 'rgba(255,68,68,.4)'; ctx.setLineDash([5, 5]);
+  ctx.beginPath(); ctx.moveTo(pad.l, y2); ctx.lineTo(W - pad.r, y2); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // X axis labels
+  ctx.fillStyle = '#666'; ctx.textAlign = 'center';
+  for (let i = 0; i <= 4; i++) {
+    const f = fCenter - fSpan + (2 * fSpan * i / 4);
+    const x = pad.l + gW * i / 4;
+    ctx.fillText(`${f.toFixed(1)}`, x, H - 5);
+  }
+
+  // SWR curve
+  ctx.strokeStyle = accent; ctx.lineWidth = 2;
+  ctx.beginPath();
+  swrData.forEach((d, i) => {
+    const x = pad.l + (i / points) * gW;
+    const y = pad.t + gH - (d.swr - 1) / 5 * gH;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Min SWR marker
+  const minSWR = swrData.reduce((a, b) => a.swr < b.swr ? a : b);
+  const minX = pad.l + (swrData.indexOf(minSWR) / points) * gW;
+  const minY = pad.t + gH - (minSWR.swr - 1) / 5 * gH;
+  ctx.fillStyle = '#33ff33'; ctx.beginPath(); ctx.arc(minX, minY, 4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = '9px Orbitron,monospace';
+  ctx.fillText(`${minSWR.swr.toFixed(2)}:1 @ ${minSWR.f.toFixed(1)} MHz`, minX, minY - 10);
+}
+
+function resetNEC() {
+  simResult = null;
+  [$('mainCanvas'), $('canvasA'), $('canvasB')].forEach(c => {
+    if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height);
+  });
+  const box = $('resultBox');
+  if (box) box.innerHTML = '';
+  setStatus(false);
+  log('🔄 Reset', 'info');
+}
+
+function initNECSim() {
+  const runBtn = $('runSimBtn');
+  if (runBtn) runBtn.onclick = runNECSim;
+  const rstBtn = $('resetBtn');
+  if (rstBtn) rstBtn.onclick = resetNEC;
+}
+
 document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
-  : init();
+  ? document.addEventListener('DOMContentLoaded', () => { init(); initNECSim(); })
+  : (function(){ init(); initNECSim(); })();

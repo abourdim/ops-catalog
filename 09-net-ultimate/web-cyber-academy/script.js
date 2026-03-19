@@ -63,115 +63,130 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Cyber Academy', subtitle: '🛡️ Learn · 🔬 Practice · 🏆 Master cybersecurity',
+    disconnected: 'Offline', connected: 'Online',
+    mainSection: 'Interactive Lessons', mainDesc: 'Choose a topic and start learning cybersecurity',
+    sectionA: 'Hands-On Labs', sectionB: 'Threat Intelligence Map',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Cyber Academy?', faq_a1: 'A complete cybersecurity training platform with interactive lessons, labs, and challenges.',
+    faq_q2: 'Is this real hacking?', faq_a2: 'No. All attacks and scans are simulated locally for educational purposes.',
+    faq_q3: 'How do I track progress?', faq_a3: 'Complete lessons and quizzes. Your progress bar updates automatically.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select a cybersecurity topic from the grid.',
+    howto_2: 'Read the lesson and take the quiz.',
+    howto_3: 'Open Hands-On Labs for terminal practice.',
+    howto_4: 'Watch the Threat Map for live attack simulation.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🛡️ Cyber Academy ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    progressTitle: 'Your Progress', topicSelect: 'Select Topic', lessonTitle: 'Lesson', quizTitle: 'Quick Quiz',
+    t_network: 'Network Basics', t_crypto: 'Cryptography', t_web: 'Web Security',
+    t_malware: 'Malware Analysis', t_forensics: 'Digital Forensics', t_social: 'Social Engineering',
+    termTitle: 'Security Terminal', termHint: 'Practice security commands in a safe environment',
+    scanTitle: 'Network Scanner', scanHint: 'Simulate a network scan', scanRun: 'Scan',
+    threatTitle: 'Live Threat Map', threatHint: 'Simulated global cyber attack visualization',
+    startSim: 'Start Simulation', stopSim: 'Stop', attackStats: 'Attack Statistics',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Cyber Academie', subtitle: '🛡️ Apprendre · 🔬 Pratiquer · 🏆 Maitriser la cybersecurite',
+    disconnected: 'Hors ligne', connected: 'En ligne',
+    mainSection: 'Lecons Interactives', mainDesc: 'Choisissez un sujet et apprenez la cybersecurite',
+    sectionA: 'Labos Pratiques', sectionB: 'Carte des Menaces',
+    activityLog: 'Journal', eventsMsg: 'Evenements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'C\'est quoi Cyber Academie ?', faq_a1: 'Une plateforme complete de formation en cybersecurite.',
+    faq_q2: 'C\'est du vrai hacking ?', faq_a2: 'Non. Tout est simule localement pour l\'education.',
+    faq_q3: 'Comment suivre ma progression ?', faq_a3: 'Completez les lecons et quiz. La barre de progression se met a jour.',
+    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Selectionnez un sujet de cybersecurite.',
+    howto_2: 'Lisez la lecon et faites le quiz.',
+    howto_3: 'Ouvrez les Labos pour pratiquer.',
+    howto_4: 'Regardez la Carte des Menaces.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local-first.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '🛡️ Cyber Academie prete !',
+    logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    progressTitle: 'Votre Progression', topicSelect: 'Choisir un Sujet', lessonTitle: 'Lecon', quizTitle: 'Quiz Rapide',
+    t_network: 'Bases Reseau', t_crypto: 'Cryptographie', t_web: 'Securite Web',
+    t_malware: 'Analyse Malware', t_forensics: 'Forensique Numerique', t_social: 'Ingenierie Sociale',
+    termTitle: 'Terminal Securite', termHint: 'Pratiquez les commandes de securite',
+    scanTitle: 'Scanner Reseau', scanHint: 'Simuler un scan reseau', scanRun: 'Scanner',
+    threatTitle: 'Carte des Menaces', threatHint: 'Visualisation d\'attaques simulees',
+    startSim: 'Demarrer', stopSim: 'Arreter', attackStats: 'Statistiques Attaques',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'اكاديمية السايبر', subtitle: '🛡️ تعلم · 🔬 تدرب · 🏆 اتقن الامن السيبراني',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    mainSection: 'دروس تفاعلية', mainDesc: 'اختر موضوعا وابدأ تعلم الامن السيبراني',
+    sectionA: 'مختبرات عملية', sectionB: 'خريطة التهديدات',
+    activityLog: 'سجل النشاط', eventsMsg: 'الاحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    settings: '⚙️ الاعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
+    help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
+    faq_q1: 'ما هي اكاديمية السايبر؟', faq_a1: 'منصة تدريب شاملة في الامن السيبراني مع دروس ومختبرات وتحديات.',
+    faq_q2: 'هل هذا اختراق حقيقي؟', faq_a2: 'لا. كل الهجمات محاكاة محلية لاغراض تعليمية.',
+    faq_q3: 'كيف اتابع تقدمي؟', faq_a3: 'اكمل الدروس والاختبارات. شريط التقدم يتحدث تلقائيا.',
+    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر موضوع امن سيبراني.',
+    howto_2: 'اقرأ الدرس وخذ الاختبار.',
+    howto_3: 'افتح المختبرات للتدريب.',
+    howto_4: 'شاهد خريطة التهديدات.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي اولا.',
+    working: 'جار…',
+    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'اندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_space: 'فضاء', t_jungle: 'ادغال', t_robot: 'روبوت',
+    ready: '🛡️ اكاديمية السايبر جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    progressTitle: 'تقدمك', topicSelect: 'اختر موضوعا', lessonTitle: 'الدرس', quizTitle: 'اختبار سريع',
+    t_network: 'اساسيات الشبكات', t_crypto: 'التشفير', t_web: 'امن الويب',
+    t_malware: 'تحليل البرمجيات الخبيثة', t_forensics: 'الطب الشرعي الرقمي', t_social: 'الهندسة الاجتماعية',
+    termTitle: 'طرفية الامان', termHint: 'تدرب على اوامر الامان',
+    scanTitle: 'ماسح الشبكة', scanHint: 'محاكاة فحص شبكة', scanRun: 'فحص',
+    threatTitle: 'خريطة التهديدات', threatHint: 'تصور هجمات سيبرانية محاكاة',
+    startSim: 'بدء المحاكاة', stopSim: 'ايقاف', attackStats: 'احصائيات الهجمات',
   }
 };
 
@@ -1449,3 +1464,242 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ CYBER ACADEMY — SIMULATION ═══════ */
+(function(){
+  const LESSONS={
+    network:{title:'Network Fundamentals',content:'Networks connect devices using protocols. The OSI model has 7 layers: Physical, Data Link, Network, Transport, Session, Presentation, Application.\n\nKey concepts:\n- IP addresses identify devices (IPv4: 192.168.1.1, IPv6: fe80::1)\n- TCP provides reliable, ordered delivery (3-way handshake: SYN, SYN-ACK, ACK)\n- UDP is faster but unreliable (used for streaming, DNS)\n- Ports identify services (80=HTTP, 443=HTTPS, 22=SSH, 53=DNS)\n- Subnets divide networks (CIDR notation: /24 = 255.255.255.0)',quiz:{q:'Which transport protocol uses a 3-way handshake?',opts:['UDP','TCP','ICMP','ARP'],answer:1}},
+    crypto:{title:'Cryptography Essentials',content:'Cryptography protects data through mathematical transformations.\n\nSymmetric encryption: Same key encrypts and decrypts (AES-256, ChaCha20).\nAsymmetric encryption: Public key encrypts, private key decrypts (RSA, ECC).\n\nHashing: One-way function producing fixed-length output (SHA-256, bcrypt).\nDigital signatures: Prove authenticity using private key signing.\nTLS/SSL: Combines asymmetric (key exchange) + symmetric (data encryption).\n\nKey sizes matter: AES-128 has 2^128 possible keys.',quiz:{q:'What type of encryption uses different keys for encrypt and decrypt?',opts:['Symmetric','Asymmetric','Hashing','Encoding'],answer:1}},
+    web:{title:'Web Security',content:'Web applications face many attack vectors:\n\nXSS (Cross-Site Scripting): Injecting malicious scripts into web pages. Types: Reflected, Stored, DOM-based.\nSQL Injection: Manipulating database queries through user input. Prevention: parameterized queries.\nCSRF: Forcing users to make unwanted requests. Prevention: CSRF tokens.\nSSRF: Making the server request internal resources.\n\nDefenses: Input validation, output encoding, CSP headers, CORS, HTTPS, secure cookies (HttpOnly, Secure, SameSite).',quiz:{q:'What attack injects malicious scripts into web pages?',opts:['SQL Injection','CSRF','XSS','DDoS'],answer:2}},
+    malware:{title:'Malware Analysis Basics',content:'Malware = malicious software designed to harm or exploit.\n\nTypes:\n- Virus: Self-replicating, attaches to files\n- Worm: Self-propagating across networks\n- Trojan: Disguised as legitimate software\n- Ransomware: Encrypts files, demands payment\n- Rootkit: Hides deep in the OS\n- Spyware: Monitors user activity\n\nAnalysis methods:\n- Static: Examine code without running (disassembly, strings)\n- Dynamic: Run in sandbox, monitor behavior\n- Behavioral: Observe file, network, registry changes',quiz:{q:'Which malware type encrypts files and demands payment?',opts:['Trojan','Spyware','Worm','Ransomware'],answer:3}},
+    forensics:{title:'Digital Forensics',content:'Digital forensics investigates cyber incidents.\n\nProcess:\n1. Identification: Detect the incident\n2. Preservation: Create forensic images (bit-for-bit copies)\n3. Analysis: Examine evidence (file systems, memory, network logs)\n4. Documentation: Record findings\n5. Presentation: Report to stakeholders\n\nKey areas: Disk forensics, memory forensics, network forensics, mobile forensics.\nTools: File carving, timeline analysis, hash verification, metadata extraction.',quiz:{q:'What is the first step in digital forensics?',opts:['Analysis','Preservation','Identification','Documentation'],answer:2}},
+    social:{title:'Social Engineering',content:'Social engineering exploits human psychology, not technical vulnerabilities.\n\nTechniques:\n- Phishing: Fake emails/websites to steal credentials\n- Spear phishing: Targeted at specific individuals\n- Pretexting: Creating a fabricated scenario\n- Baiting: Leaving infected media (USB drives)\n- Tailgating: Following authorized person into secure area\n- Vishing: Voice phishing via phone calls\n\nDefenses: Security awareness training, verify requests through separate channels, multi-factor authentication.',quiz:{q:'What is targeted phishing at specific individuals called?',opts:['Vishing','Baiting','Spear phishing','Pretexting'],answer:2}}
+  };
+
+  const TERM_COMMANDS={
+    help:'Available commands:\n  nmap <target>    - Simulate network scan\n  whois <domain>   - Lookup domain info\n  ping <host>      - Test connectivity\n  traceroute <host>- Trace packet route\n  hash <text>      - Generate SHA-256 hash\n  base64 <text>    - Encode to Base64\n  decode64 <text>  - Decode from Base64\n  clear            - Clear terminal\n  whoami           - Current user\n  ifconfig         - Network interfaces',
+    whoami:'root (cyber-academy-student)',
+    ifconfig:'eth0: inet 192.168.1.100  netmask 255.255.255.0  broadcast 192.168.1.255\n      ether aa:bb:cc:dd:ee:ff  MTU 1500\nlo:   inet 127.0.0.1  netmask 255.0.0.0',
+  };
+
+  let completed = new Set();
+  let threatTimer = null;
+  let attackStats = {ddos:0,phish:0,malware:0,brute:0};
+
+  function updateProgress(){
+    const total = Object.keys(LESSONS).length;
+    const done = completed.size;
+    const bar = $('progressBar'); if(bar) bar.style.width = (done/total*100)+'%';
+    const txt = $('progressText'); if(txt) txt.textContent = done+' / '+total+' completed';
+  }
+
+  function loadLesson(topic){
+    const lesson = LESSONS[topic]; if(!lesson) return;
+    const titleEl = $('lessonTitle'); if(titleEl) titleEl.textContent = lesson.title;
+    const contentEl = $('lessonContent'); if(contentEl) contentEl.textContent = lesson.content;
+    // Load quiz
+    const qEl = $('quizQuestion'); if(qEl) qEl.textContent = lesson.quiz.q;
+    const optsEl = $('quizOptions'); if(optsEl){
+      optsEl.innerHTML='';
+      lesson.quiz.opts.forEach((opt,i)=>{
+        const btn = document.createElement('button');
+        btn.className='btn-sm'; btn.style.cssText='text-align:left;padding:8px 12px;width:100%';
+        btn.textContent = String.fromCharCode(65+i)+'. '+opt;
+        btn.onclick=function(){
+          const res=$('quizResult');
+          if(i===lesson.quiz.answer){
+            if(res) res.innerHTML='<span style="color:#4CAF50">Correct! Well done!</span>';
+            completed.add(topic); updateProgress();
+            playSound('success');
+            if(typeof log==='function') log('🏆 Quiz passed: '+lesson.title,'success');
+          } else {
+            if(res) res.innerHTML='<span style="color:#f44336">Wrong! Try again.</span>';
+            playSound('error');
+          }
+        };
+        optsEl.appendChild(btn);
+      });
+    }
+    const res=$('quizResult'); if(res) res.textContent='';
+    if(typeof log==='function') log('📖 Lesson loaded: '+lesson.title,'info');
+  }
+
+  /* ── Terminal ── */
+  function processCommand(cmd){
+    const parts=cmd.trim().split(/\s+/);
+    const base=parts[0].toLowerCase();
+    const arg=parts.slice(1).join(' ');
+    if(base==='clear') return '__CLEAR__';
+    if(TERM_COMMANDS[base]) return TERM_COMMANDS[base];
+    if(base==='nmap') return simulateNmap(arg||'192.168.1.0/24');
+    if(base==='whois') return 'Domain: '+(arg||'example.com')+'\nRegistrar: Simulated Registry\nCreated: 2020-01-15\nExpires: 2026-01-15\nName Servers: ns1.example.com, ns2.example.com\nStatus: Active';
+    if(base==='ping') return 'PING '+(arg||'8.8.8.8')+' 56 data bytes\n64 bytes: icmp_seq=1 ttl=64 time='+((Math.random()*50+5).toFixed(1))+'ms\n64 bytes: icmp_seq=2 ttl=64 time='+((Math.random()*50+5).toFixed(1))+'ms\n--- '+(arg||'8.8.8.8')+' ping statistics ---\n2 packets transmitted, 2 received, 0% loss';
+    if(base==='traceroute') return 'traceroute to '+(arg||'8.8.8.8')+'\n 1  192.168.1.1  '+(Math.random()*5+1).toFixed(1)+'ms\n 2  10.0.0.1  '+(Math.random()*10+5).toFixed(1)+'ms\n 3  172.16.0.1  '+(Math.random()*20+10).toFixed(1)+'ms\n 4  '+(arg||'8.8.8.8')+'  '+(Math.random()*50+20).toFixed(1)+'ms';
+    if(base==='hash'){const txt=arg||'hello'; let h=0; for(let i=0;i<txt.length;i++){h=((h<<5)-h)+txt.charCodeAt(i);h|=0;} return 'SHA-256 (simulated): '+Math.abs(h).toString(16).padStart(64,'0').slice(0,64);}
+    if(base==='base64') return btoa(arg||'hello');
+    if(base==='decode64') try{return atob(arg);}catch{return 'Error: Invalid Base64';}
+    return 'Command not found: '+base+'. Type "help" for available commands.';
+  }
+
+  function simulateNmap(target){
+    const hosts = []; const ports = [22,80,443,8080,3306,21,25,53];
+    for(let i=1;i<=5;i++){
+      const ip = '192.168.1.'+Math.floor(Math.random()*254+1);
+      const openPorts = ports.filter(()=>Math.random()>0.6);
+      hosts.push({ip,ports:openPorts});
+    }
+    let out='Starting Nmap scan of '+target+'...\n\n';
+    hosts.forEach(h=>{
+      out+='Host: '+h.ip+' Status: Up\n';
+      if(h.ports.length){
+        h.ports.forEach(p=>{
+          const svc={22:'ssh',80:'http',443:'https',8080:'http-proxy',3306:'mysql',21:'ftp',25:'smtp',53:'dns'}[p]||'unknown';
+          out+='  '+p+'/tcp  open  '+svc+'\n';
+        });
+      } else out+='  All ports filtered\n';
+      out+='\n';
+    });
+    out+='Nmap done: '+hosts.length+' hosts up';
+    return out;
+  }
+
+  /* ── Network Scanner Canvas ── */
+  function drawScanCanvas(results){
+    const c=$('scanCanvas'); if(!c) return;
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    if(!results.length) return;
+    const cx=W/2,cy=H/2;
+    results.forEach((h,i)=>{
+      const angle=(i/results.length)*Math.PI*2;
+      const r=60+Math.random()*30;
+      const x=cx+r*Math.cos(angle), y=cy+r*Math.sin(angle);
+      ctx.strokeStyle='rgba(76,175,80,.3)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();
+      ctx.beginPath();ctx.arc(x,y,8+h.ports.length*2,0,Math.PI*2);
+      ctx.fillStyle=h.ports.length>3?'#f44336':h.ports.length>1?'#FF9800':'#4CAF50';
+      ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='8px monospace';ctx.textAlign='center';
+      ctx.fillText(h.ip,x,y+16);
+    });
+    // Center node
+    ctx.beginPath();ctx.arc(cx,cy,12,0,Math.PI*2);ctx.fillStyle='var(--accent, #FFD700)';ctx.fill();
+    ctx.fillStyle='#000';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.fillText('YOU',cx,cy+3);
+  }
+
+  /* ── Threat Map ── */
+  const CITIES=[{n:'New York',x:.22,y:.35},{n:'London',x:.47,y:.28},{n:'Moscow',x:.6,y:.25},{n:'Beijing',x:.75,y:.32},{n:'Tokyo',x:.85,y:.35},{n:'Sydney',x:.83,y:.72},{n:'Sao Paulo',x:.3,y:.65},{n:'Cairo',x:.55,y:.4},{n:'Mumbai',x:.68,y:.45},{n:'Berlin',x:.52,y:.27},{n:'Lagos',x:.48,y:.52},{n:'Seoul',x:.82,y:.33}];
+  const ATTACK_TYPES=[{name:'DDoS',color:'#f44336',key:'ddos'},{name:'Phishing',color:'#FF9800',key:'phish'},{name:'Malware',color:'#9C27B0',key:'malware'},{name:'Brute Force',color:'#2196F3',key:'brute'}];
+  let attacks=[];
+
+  function drawThreatMap(){
+    const c=$('threatCanvas'); if(!c) return;
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    // Draw world outline (simplified)
+    ctx.fillStyle='rgba(255,255,255,.03)';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    // Cities
+    CITIES.forEach(city=>{
+      ctx.beginPath();ctx.arc(city.x*W,city.y*H,4,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,.4)';ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='8px sans-serif';ctx.textAlign='center';
+      ctx.fillText(city.n,city.x*W,city.y*H-8);
+    });
+    // Attack lines
+    attacks.forEach(a=>{
+      const alpha=Math.max(0,1-(Date.now()-a.t)/3000);
+      if(alpha<=0) return;
+      ctx.strokeStyle=a.color.replace(')',','+alpha+')').replace('rgb','rgba');
+      ctx.lineWidth=2;ctx.beginPath();
+      ctx.moveTo(a.sx*W,a.sy*H);ctx.lineTo(a.dx*W,a.dy*H);ctx.stroke();
+      // Impact circle
+      ctx.beginPath();ctx.arc(a.dx*W,a.dy*H,8*(1-alpha)+4,0,Math.PI*2);
+      ctx.strokeStyle=a.color.replace(')',','+alpha*.5+')').replace('rgb','rgba');
+      ctx.stroke();
+    });
+    attacks=attacks.filter(a=>(Date.now()-a.t)<3000);
+  }
+
+  function genAttack(){
+    const src=CITIES[Math.floor(Math.random()*CITIES.length)];
+    let dst=CITIES[Math.floor(Math.random()*CITIES.length)];
+    while(dst===src) dst=CITIES[Math.floor(Math.random()*CITIES.length)];
+    const type=ATTACK_TYPES[Math.floor(Math.random()*ATTACK_TYPES.length)];
+    attacks.push({sx:src.x,sy:src.y,dx:dst.x,dy:dst.y,color:type.color,t:Date.now()});
+    attackStats[type.key]++;
+    const s=$('stat'+type.key.charAt(0).toUpperCase()+type.key.slice(1));
+    if(!s){
+      const map={ddos:'statDDoS',phish:'statPhish',malware:'statMalware',brute:'statBrute'};
+      const el=$(map[type.key]); if(el) el.textContent=attackStats[type.key];
+    } else s.textContent=attackStats[type.key];
+    // Fix: use correct IDs
+    const dd=$('statDDoS'); if(dd) dd.textContent=attackStats.ddos;
+    const ph=$('statPhish'); if(ph) ph.textContent=attackStats.phish;
+    const mw=$('statMalware'); if(mw) mw.textContent=attackStats.malware;
+    const bf=$('statBrute'); if(bf) bf.textContent=attackStats.brute;
+    if(typeof log==='function') log('⚠️ '+type.name+': '+src.n+' → '+dst.n,'error');
+  }
+
+  function startThreatSim(){
+    if(threatTimer) return;
+    threatTimer=setInterval(()=>{genAttack();drawThreatMap();},800+Math.random()*1200);
+    drawThreatMap();
+  }
+  function stopThreatSim(){clearInterval(threatTimer);threatTimer=null;}
+
+  function waitReady(fn){if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn); else fn();}
+
+  waitReady(function(){
+    // Topics
+    document.querySelectorAll('.topic-btn').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.topic-btn').forEach(b=>b.classList.remove('primary'));
+        this.classList.add('primary');
+        loadLesson(this.dataset.topic);
+      });
+    });
+
+    // Terminal
+    const termInput=$('termInput'), termOutput=$('termOutput'), termRun=$('termRunBtn');
+    function runTerm(){
+      if(!termInput||!termOutput) return;
+      const cmd=termInput.value.trim();
+      if(!cmd) return;
+      termInput.value='';
+      const result=processCommand(cmd);
+      if(result==='__CLEAR__'){termOutput.textContent='root@cyber-lab:~# ';return;}
+      termOutput.textContent+='$ '+cmd+'\n'+result+'\n\n';
+      termOutput.scrollTop=termOutput.scrollHeight;
+    }
+    if(termRun) termRun.onclick=runTerm;
+    if(termInput) termInput.addEventListener('keydown',e=>{if(e.key==='Enter')runTerm();});
+
+    // Network Scanner
+    const scanBtn=$('scanBtn');
+    if(scanBtn) scanBtn.onclick=function(){
+      const target=($('scanTarget')||{}).value||'192.168.1.0/24';
+      const results=[];
+      for(let i=0;i<6;i++){
+        const ip='192.168.1.'+Math.floor(Math.random()*254+1);
+        const ports=[22,80,443,8080,3306,21,25,53].filter(()=>Math.random()>0.5);
+        results.push({ip,ports});
+      }
+      drawScanCanvas(results);
+      const out=$('scanResults');
+      if(out){
+        out.innerHTML=results.map(h=>'<div style="margin-bottom:4px"><span style="color:var(--accent)">'+h.ip+'</span> — '+h.ports.length+' open ports: '+h.ports.join(', ')+'</div>').join('');
+      }
+      if(typeof log==='function') log('🔍 Network scan complete: '+results.length+' hosts found','success');
+    };
+
+    // Threat map
+    const thrStart=$('threatStartBtn'); if(thrStart) thrStart.onclick=startThreatSim;
+    const thrStop=$('threatStopBtn'); if(thrStop) thrStop.onclick=stopThreatSim;
+
+    updateProgress();
+    setStatus(true);
+  });
+})();

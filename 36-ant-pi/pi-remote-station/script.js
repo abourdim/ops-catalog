@@ -63,10 +63,18 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Pi Remote Station', subtitle: '🌐 remote · 📡 control · 🎛️ station',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Remote Station Controller', mainDesc: 'Control rotators, switches and station equipment remotely',
+    sectionA: 'Rotator Compass', sectionB: 'System Monitor', sectionC: 'About Remote Stations',
+    azimuth: 'Azimuth:', elevation: 'Elevation:', connectStation: 'Connect Station',
+    gotoBtn: 'Go To Position', parkBtn: 'Park', trackBtn: 'Track Satellite',
+    cpuLabel: 'CPU', tempLabel: 'Temp', windLabel: 'Wind', powerLabel: 'Power',
+    rotating: 'Rotating...', parked: 'Parked', tracking: 'Tracking satellite...',
+    posReached: 'Position reached', stationConnected: 'Station connected',
+    rsInfo1: 'A remote antenna station allows operators to control rotators, switches, and equipment from anywhere via network.',
+    rsInfo2: 'A Raspberry Pi serves as the controller, interfacing with rotators via serial/USB and managing GPIO for relays.',
+    rsInfo3: 'This dashboard simulates a complete remote station with azimuth/elevation control, weather monitoring, and system health.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +108,18 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Station distante Pi', subtitle: '🌐 distant · 📡 contrôle · 🎛️ station',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Contrôleur de station distante', mainDesc: 'Contrôler rotateurs, commutateurs et équipements à distance',
+    sectionA: 'Boussole du rotateur', sectionB: 'Moniteur système', sectionC: 'À propos des stations distantes',
+    azimuth: 'Azimut :', elevation: 'Élévation :', connectStation: 'Connecter la station',
+    gotoBtn: 'Aller à la position', parkBtn: 'Stationner', trackBtn: 'Suivre un satellite',
+    cpuLabel: 'CPU', tempLabel: 'Temp', windLabel: 'Vent', powerLabel: 'Alim.',
+    rotating: 'Rotation en cours...', parked: 'Stationné', tracking: 'Suivi de satellite...',
+    posReached: 'Position atteinte', stationConnected: 'Station connectée',
+    rsInfo1: 'Une station d\'antenne distante permet de contrôler rotateurs, commutateurs et équipements depuis n\'importe où via le réseau.',
+    rsInfo2: 'Un Raspberry Pi sert de contrôleur, interfaçant les rotateurs via série/USB et gérant les GPIO pour les relais.',
+    rsInfo3: 'Ce tableau de bord simule une station distante complète avec contrôle azimut/élévation, météo et suivi de santé système.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +153,18 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محطة Pi البعيدة', subtitle: '🌐 بعيد · 📡 تحكم · 🎛️ محطة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'متحكم المحطة البعيدة', mainDesc: 'التحكم في الدوارات والمفاتيح والمعدات عن بعد',
+    sectionA: 'بوصلة الدوار', sectionB: 'مراقب النظام', sectionC: 'حول المحطات البعيدة',
+    azimuth: 'السمت:', elevation: 'الارتفاع:', connectStation: 'اتصال بالمحطة',
+    gotoBtn: 'الذهاب للموقع', parkBtn: 'إيقاف', trackBtn: 'تتبع القمر الصناعي',
+    cpuLabel: 'المعالج', tempLabel: 'الحرارة', windLabel: 'الرياح', powerLabel: 'الطاقة',
+    rotating: 'جارٍ الدوران...', parked: 'متوقف', tracking: 'جارٍ تتبع القمر الصناعي...',
+    posReached: 'تم الوصول للموقع', stationConnected: 'تم الاتصال بالمحطة',
+    rsInfo1: 'محطة الهوائي البعيدة تسمح للمشغلين بالتحكم في الدوارات والمفاتيح والمعدات من أي مكان عبر الشبكة.',
+    rsInfo2: 'Raspberry Pi يعمل كمتحكم، يتواصل مع الدوارات عبر التسلسلي/USB ويدير GPIO للمرحلات.',
+    rsInfo3: 'تحاكي هذه اللوحة محطة بعيدة كاملة مع التحكم بالسمت/الارتفاع ومراقبة الطقس وصحة النظام.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1446,6 +1470,366 @@ function init() {
   log(LANG[currentLang].ready, 'success');
 }
 
+/* ═══════ REMOTE STATION SIMULATION ═══════ */
+
+let stationConnected = false;
+let currentAz = 0, currentEl = 0;
+let targetAz = 0, targetEl = 0;
+let isRotating = false, isTracking = false;
+let rsAnimId = null;
+let cpuHistory = [], tempHistory = [];
+
+function drawCompass() {
+  const c = $('canvasA');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W / 2, cy = H / 2;
+  const R = Math.min(cx, cy) - 40;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  // Compass circle
+  ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, R * 0.7, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, R * 0.4, 0, Math.PI * 2); ctx.stroke();
+
+  // Degree ticks and labels
+  const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  for (let d = 0; d < 360; d += 5) {
+    const rad = (d - 90) * Math.PI / 180;
+    const inner = d % 30 === 0 ? R * 0.85 : d % 10 === 0 ? R * 0.9 : R * 0.93;
+    ctx.strokeStyle = d % 30 === 0 ? 'rgba(255,255,255,.4)' : 'rgba(255,255,255,.15)';
+    ctx.lineWidth = d % 30 === 0 ? 2 : 1;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(rad) * inner, cy + Math.sin(rad) * inner);
+    ctx.lineTo(cx + Math.cos(rad) * R, cy + Math.sin(rad) * R);
+    ctx.stroke();
+  }
+
+  // Cardinal directions
+  ctx.fillStyle = '#888'; ctx.font = 'bold 14px Orbitron,monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  dirs.forEach((dir, i) => {
+    const rad = (i * 45 - 90) * Math.PI / 180;
+    const lr = R + 20;
+    ctx.fillStyle = dir === 'N' ? '#ff4444' : '#888';
+    ctx.fillText(dir, cx + Math.cos(rad) * lr, cy + Math.sin(rad) * lr);
+  });
+
+  // Target azimuth indicator
+  const tRad = (targetAz - 90) * Math.PI / 180;
+  ctx.strokeStyle = 'rgba(255,255,0,.3)'; ctx.lineWidth = 1; ctx.setLineDash([5, 5]);
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(tRad) * R, cy + Math.sin(tRad) * R); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(255,255,0,.3)';
+  ctx.beginPath(); ctx.arc(cx + Math.cos(tRad) * R * 0.8, cy + Math.sin(tRad) * R * 0.8, 6, 0, Math.PI * 2); ctx.fill();
+
+  // Current azimuth needle
+  const aRad = (currentAz - 90) * Math.PI / 180;
+  ctx.strokeStyle = accent; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(aRad) * R * 0.85, cy + Math.sin(aRad) * R * 0.85); ctx.stroke();
+  // Needle tip
+  ctx.fillStyle = accent;
+  ctx.beginPath(); ctx.arc(cx + Math.cos(aRad) * R * 0.85, cy + Math.sin(aRad) * R * 0.85, 5, 0, Math.PI * 2); ctx.fill();
+
+  // Center hub
+  ctx.fillStyle = '#333'; ctx.beginPath(); ctx.arc(cx, cy, 12, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = accent; ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI * 2); ctx.fill();
+
+  // Elevation arc on the right
+  const eX = W - 60, eY = cy;
+  ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(eX, eY + R * 0.5, R * 0.5, -Math.PI / 2, 0); ctx.stroke();
+  // Elevation ticks
+  for (let e = 0; e <= 90; e += 15) {
+    const eRad = (-90 + e) * Math.PI / 180;
+    const er = R * 0.5;
+    ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(eX + Math.cos(eRad) * er * 0.85, eY + R * 0.5 + Math.sin(eRad) * er * 0.85);
+    ctx.lineTo(eX + Math.cos(eRad) * er, eY + R * 0.5 + Math.sin(eRad) * er);
+    ctx.stroke();
+    ctx.fillStyle = '#666'; ctx.font = '8px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(`${e}°`, eX + Math.cos(eRad) * er * 1.15, eY + R * 0.5 + Math.sin(eRad) * er * 1.15);
+  }
+  // Current elevation
+  const ceRad = (-90 + currentEl) * Math.PI / 180;
+  ctx.strokeStyle = '#4ecdc4'; ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(eX, eY + R * 0.5);
+  ctx.lineTo(eX + Math.cos(ceRad) * R * 0.45, eY + R * 0.5 + Math.sin(ceRad) * R * 0.45);
+  ctx.stroke();
+
+  // Info text
+  ctx.fillStyle = accent; ctx.font = 'bold 14px Orbitron,monospace'; ctx.textAlign = 'center';
+  ctx.fillText(`AZ: ${currentAz.toFixed(0)}°  EL: ${currentEl.toFixed(0)}°`, cx, H - 10);
+}
+
+function drawStationView() {
+  const c = $('mainCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  // Sky gradient
+  const skyGrad = ctx.createLinearGradient(0, 0, 0, H * 0.7);
+  skyGrad.addColorStop(0, '#0a0a2a');
+  skyGrad.addColorStop(1, '#1a1a4a');
+  ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, W, H * 0.7);
+
+  // Ground
+  ctx.fillStyle = '#1a2a1a'; ctx.fillRect(0, H * 0.7, W, H * 0.3);
+
+  // Stars
+  for (let i = 0; i < 50; i++) {
+    const sx = (Math.sin(i * 127.1 + 3.7) * 0.5 + 0.5) * W;
+    const sy = (Math.sin(i * 269.5 + 1.3) * 0.5 + 0.5) * H * 0.65;
+    const brightness = 0.3 + Math.sin(Date.now() / 1000 + i) * 0.2;
+    ctx.fillStyle = `rgba(255,255,255,${brightness})`;
+    ctx.beginPath(); ctx.arc(sx, sy, 1, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // Tower
+  const tx = W / 2, tBase = H * 0.7, tTop = H * 0.25;
+  ctx.strokeStyle = '#555'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(tx - 15, tBase); ctx.lineTo(tx - 8, tTop); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(tx + 15, tBase); ctx.lineTo(tx + 8, tTop); ctx.stroke();
+  // Cross braces
+  for (let y = tBase; y > tTop; y -= 30) {
+    const frac = (tBase - y) / (tBase - tTop);
+    const hw = 15 - frac * 7;
+    ctx.strokeStyle = '#444'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(tx - hw, y); ctx.lineTo(tx + hw, y); ctx.stroke();
+  }
+
+  // Rotator at top
+  ctx.fillStyle = '#666'; ctx.fillRect(tx - 10, tTop - 5, 20, 10);
+
+  // Antenna (rotated by elevation)
+  const elRad = -currentEl * Math.PI / 180;
+  ctx.save();
+  ctx.translate(tx, tTop);
+  ctx.rotate(elRad);
+  ctx.strokeStyle = accent; ctx.lineWidth = 2;
+  // Boom
+  ctx.beginPath(); ctx.moveTo(-40, 0); ctx.lineTo(40, 0); ctx.stroke();
+  // Elements
+  [-30, -10, 10, 30].forEach(x => {
+    const len = 20 - Math.abs(x) * 0.2;
+    ctx.beginPath(); ctx.moveTo(x, -len); ctx.lineTo(x, len); ctx.stroke();
+  });
+  ctx.restore();
+
+  // Satellite track if tracking
+  if (isTracking) {
+    const t = (Date.now() / 5000) % 1;
+    const satX = t * W;
+    const satY = H * 0.2 + Math.sin(t * Math.PI) * H * 0.3;
+    ctx.fillStyle = '#ff4444';
+    ctx.beginPath(); ctx.arc(satX, satY, 4, 0, Math.PI * 2); ctx.fill();
+    // Orbit trail
+    ctx.strokeStyle = 'rgba(255,68,68,.3)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    for (let i = 0; i <= 50; i++) {
+      const st = i / 50;
+      const sx = st * W;
+      const sy = H * 0.2 + Math.sin(st * Math.PI) * H * 0.3;
+      i === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+    }
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#ff8888'; ctx.font = '9px Orbitron,monospace'; ctx.textAlign = 'left';
+    ctx.fillText('SAT', satX + 8, satY - 5);
+  }
+
+  // Status overlay
+  ctx.fillStyle = stationConnected ? accent : '#888';
+  ctx.font = 'bold 11px Orbitron,monospace'; ctx.textAlign = 'left';
+  ctx.fillText(stationConnected ? 'ONLINE' : 'OFFLINE', 10, 20);
+  if (isRotating) { ctx.fillStyle = '#ffff00'; ctx.fillText('ROTATING', 10, 36); }
+  if (isTracking) { ctx.fillStyle = '#ff4444'; ctx.fillText('TRACKING', 10, isRotating ? 52 : 36); }
+}
+
+function drawSystemMonitor() {
+  const c = $('canvasB');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  // Push new data
+  const cpu = 15 + Math.random() * 30 + (isRotating ? 20 : 0) + (isTracking ? 15 : 0);
+  const temp = 40 + Math.random() * 10 + (isRotating ? 5 : 0);
+  cpuHistory.push(cpu); tempHistory.push(temp);
+  if (cpuHistory.length > 100) { cpuHistory.shift(); tempHistory.shift(); }
+
+  // Update stat displays
+  const cpuEl = $('cpuVal');
+  if (cpuEl) cpuEl.textContent = cpu.toFixed(0) + '%';
+  const tempEl = $('tempVal');
+  if (tempEl) tempEl.textContent = temp.toFixed(0) + '°C';
+  const windEl = $('windVal');
+  if (windEl) windEl.textContent = (5 + Math.random() * 20).toFixed(0) + ' km/h';
+  const pwrEl = $('powerVal');
+  if (pwrEl) { pwrEl.textContent = stationConnected ? 'OK' : 'OFF'; pwrEl.style.color = stationConnected ? 'var(--success)' : 'var(--error)'; }
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = 1;
+  for (let y = 0; y < H; y += 30) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+  // CPU line
+  ctx.strokeStyle = accent; ctx.lineWidth = 2;
+  ctx.beginPath();
+  cpuHistory.forEach((v, i) => {
+    const x = i * (W / 100);
+    const y = H - (v / 100) * H;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Temp line
+  ctx.strokeStyle = '#ff6b6b'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  tempHistory.forEach((v, i) => {
+    const x = i * (W / 100);
+    const y = H - (v / 80) * H;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Legend
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron,monospace'; ctx.textAlign = 'left';
+  ctx.fillText('CPU', W - 80, 15);
+  ctx.fillStyle = '#ff6b6b'; ctx.fillText('TEMP', W - 80, 30);
+}
+
+function updateResultBox() {
+  const box = $('resultBox');
+  if (!box) return;
+  const s = LANG[currentLang];
+  box.innerHTML = `
+    <div class="result-row"><span class="result-label">${s.azimuth || 'Azimuth'}</span><span class="result-value">${currentAz.toFixed(1)}°</span></div>
+    <div class="result-row"><span class="result-label">${s.elevation || 'Elevation'}</span><span class="result-value">${currentEl.toFixed(1)}°</span></div>
+    <div class="result-row"><span class="result-label">Status</span><span class="result-value" style="color:${stationConnected?'var(--success)':'var(--error)'}">${stationConnected?(s.connected||'Connected'):(s.disconnected||'Disconnected')}</span></div>
+    <div class="result-row"><span class="result-label">${s.windLabel || 'Wind'}</span><span class="result-value">${(5+Math.random()*20).toFixed(0)} km/h</span></div>
+  `;
+}
+
+async function rotateToTarget() {
+  if (!stationConnected || isRotating) return;
+  isRotating = true;
+  const s = LANG[currentLang];
+  log(`🔄 ${s.rotating || 'Rotating...'} AZ:${targetAz}° EL:${targetEl}°`, 'info');
+
+  while (Math.abs(currentAz - targetAz) > 1 || Math.abs(currentEl - targetEl) > 0.5) {
+    const dAz = targetAz - currentAz;
+    const dEl = targetEl - currentEl;
+    currentAz += Math.sign(dAz) * Math.min(Math.abs(dAz), 2);
+    currentEl += Math.sign(dEl) * Math.min(Math.abs(dEl), 1);
+    await new Promise(r => setTimeout(r, 30));
+  }
+  currentAz = targetAz; currentEl = targetEl;
+  isRotating = false;
+  log(`✅ ${s.posReached || 'Position reached'}: AZ ${currentAz}° EL ${currentEl}°`, 'success');
+  updateResultBox();
+  playSound('success');
+}
+
+function parkStation() {
+  targetAz = 0; targetEl = 0;
+  const azS = $('azSlider'), elS = $('elSlider');
+  if (azS) azS.value = 0;
+  if (elS) elS.value = 0;
+  const azD = $('azDisplay'), elD = $('elDisplay');
+  if (azD) azD.textContent = '0°';
+  if (elD) elD.textContent = '0°';
+  rotateToTarget();
+  const s = LANG[currentLang];
+  log(`🅿️ ${s.parked || 'Parked'}`, 'info');
+}
+
+async function trackSatellite() {
+  if (!stationConnected || isTracking) return;
+  isTracking = true;
+  const s = LANG[currentLang];
+  log(`🛰️ ${s.tracking || 'Tracking satellite...'}`, 'info');
+
+  for (let i = 0; i < 60 && isTracking; i++) {
+    const t = i / 60;
+    targetAz = 45 + t * 270;
+    targetEl = Math.sin(t * Math.PI) * 75;
+    currentAz += (targetAz - currentAz) * 0.1;
+    currentEl += (targetEl - currentEl) * 0.1;
+    const azS = $('azSlider'), elS = $('elSlider');
+    if (azS) azS.value = Math.round(currentAz);
+    if (elS) elS.value = Math.round(currentEl);
+    const azD = $('azDisplay'), elD = $('elDisplay');
+    if (azD) azD.textContent = currentAz.toFixed(0) + '°';
+    if (elD) elD.textContent = currentEl.toFixed(0) + '°';
+    await new Promise(r => setTimeout(r, 100));
+  }
+  isTracking = false;
+  log('🛰️ Track complete', 'success');
+}
+
+function toggleStationConnect() {
+  stationConnected = !stationConnected;
+  setStatus(stationConnected);
+  const s = LANG[currentLang];
+  if (stationConnected) {
+    log(`🟢 ${s.stationConnected || 'Station connected'}`, 'success');
+  } else {
+    isTracking = false;
+    log('🔴 Station disconnected', 'info');
+  }
+  updateResultBox();
+}
+
+function startRSAnimation() {
+  function frame() {
+    drawStationView();
+    drawCompass();
+    drawSystemMonitor();
+    rsAnimId = requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function initRemoteStation() {
+  const azS = $('azSlider'), elS = $('elSlider');
+  const azD = $('azDisplay'), elD = $('elDisplay');
+
+  if (azS) azS.addEventListener('input', () => {
+    targetAz = parseInt(azS.value);
+    if (azD) azD.textContent = targetAz + '°';
+  });
+  if (elS) elS.addEventListener('input', () => {
+    targetEl = parseInt(elS.value);
+    if (elD) elD.textContent = targetEl + '°';
+  });
+
+  const connBtn = $('connectStationBtn');
+  if (connBtn) connBtn.onclick = toggleStationConnect;
+
+  const gotoBtn = $('gotoBtn');
+  if (gotoBtn) gotoBtn.onclick = rotateToTarget;
+
+  const parkB = $('parkBtn');
+  if (parkB) parkB.onclick = parkStation;
+
+  const trackB = $('trackBtn');
+  if (trackB) trackB.onclick = trackSatellite;
+
+  updateResultBox();
+  startRSAnimation();
+}
+
 document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
-  : init();
+  ? document.addEventListener('DOMContentLoaded', () => { init(); initRemoteStation(); })
+  : (function(){ init(); initRemoteStation(); })();

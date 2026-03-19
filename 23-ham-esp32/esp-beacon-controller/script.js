@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP32 Beacon Controller', subtitle: '🔦 Beacon transmitter controller',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Beacon Controller', mainDesc: 'ESP32-based beacon transmitter controller',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Contrôleur Balise ESP32', subtitle: '🔦 Contrôleur de balise émettrice',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Contrôleur Balise', mainDesc: 'Contrôleur de balise émettrice sur ESP32',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'متحكم منارة ESP32', subtitle: '🔦 متحكم في جهاز إرسال المنارة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'متحكم المنارة', mainDesc: 'متحكم في جهاز إرسال المنارة على ESP32',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,76 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Start Beacon',stop:'Stop',simStarted:'Beacon started',simStopped:'Beacon stopped',theoryTitle:'Beacon Controller Theory',theoryDesc:'A beacon transmitter sends periodic signals on a fixed frequency to allow propagation testing. The ESP32 controls the keying, power level, and scheduling of CW/WSPR/FT8 beacon transmissions across amateur bands.',power:'Power (W)',interval:'Interval (s)',mode:'Mode',band:'Band'});
+Object.assign(LANG.fr, {start:'Démarrer Balise',stop:'Arrêter',simStarted:'Balise démarrée',simStopped:'Balise arrêtée',theoryTitle:'Théorie Balise',theoryDesc:'Une balise émet des signaux périodiques sur une fréquence fixe pour tester la propagation. L\'ESP32 contrôle le keying, la puissance et la programmation des émissions CW/WSPR/FT8 sur les bandes amateur.',power:'Puissance (W)',interval:'Intervalle (s)',mode:'Mode',band:'Bande'});
+Object.assign(LANG.ar, {start:'تشغيل المنارة',stop:'إيقاف',simStarted:'بدأت المنارة',simStopped:'توقفت المنارة',theoryTitle:'نظرية المنارة',theoryDesc:'ترسل المنارة إشارات دورية على تردد ثابت لاختبار الانتشار. يتحكم ESP32 في المفتاح والطاقة وجدولة إرسال CW/WSPR/FT8 عبر نطاقات الهواة.',power:'الطاقة (واط)',interval:'الفاصل (ثانية)',mode:'الوضع',band:'النطاق'});
+setLanguage(currentLang);
+
+
+/* ═══════ BEACON CONTROLLER SIM ═══════ */
+let simRunning=false,simTimer=null,beaconCount=0;
+const bcC=$('beaconCanvas'),bcCtx=bcC?bcC.getContext('2d'):null;
+const BANDS=['160m','80m','40m','20m','15m','10m'];
+const MODES=['CW','WSPR','FT8'];
+let beaconHistory=[];
+
+function drawBeacon(){
+  if(!bcCtx)return;const W=bcC.width,H=bcC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  bcCtx.fillStyle='#0a1628';bcCtx.fillRect(0,0,W,H);
+  // Timeline grid
+  bcCtx.strokeStyle='rgba(255,255,255,0.05)';bcCtx.lineWidth=0.5;
+  for(let i=0;i<BANDS.length;i++){const y=(i+0.5)*H/BANDS.length;bcCtx.beginPath();bcCtx.moveTo(0,y);bcCtx.lineTo(W,y);bcCtx.stroke();
+    bcCtx.fillStyle='rgba(255,255,255,0.3)';bcCtx.font='10px monospace';bcCtx.fillText(BANDS[i],4,y+4);}
+  // Beacon pulses
+  const now=Date.now();
+  beaconHistory.forEach(b=>{
+    const age=(now-b.ts)/30000;if(age>1)return;
+    const x=W-age*W;const y=(b.bandIdx+0.5)*H/BANDS.length;
+    const r=3+b.power/5;
+    bcCtx.globalAlpha=1-age;
+    bcCtx.beginPath();bcCtx.arc(x,y,r,0,Math.PI*2);
+    bcCtx.fillStyle=b.mode==='CW'?acc:b.mode==='WSPR'?acc2:'#22c55e';bcCtx.fill();
+    // Expanding ring
+    bcCtx.beginPath();bcCtx.arc(x,y,r+age*40,0,Math.PI*2);
+    bcCtx.strokeStyle=b.mode==='CW'?acc:b.mode==='WSPR'?acc2:'#22c55e';bcCtx.lineWidth=1;bcCtx.stroke();
+    bcCtx.globalAlpha=1;
+  });
+  // Legend
+  bcCtx.font='9px monospace';
+  [{c:acc,l:'CW'},{c:acc2,l:'WSPR'},{c:'#22c55e',l:'FT8'}].forEach((m,i)=>{
+    bcCtx.fillStyle=m.c;bcCtx.fillRect(W-90,8+i*14,8,8);bcCtx.fillStyle='rgba(255,255,255,0.5)';bcCtx.fillText(m.l,W-78,16+i*14);});
+}
+
+function transmitBeacon(){
+  const mode=($('modeSelect')||{value:'CW'}).value;
+  const power=+($('powerRange')||{value:5}).value;
+  const bandIdx=Math.floor(Math.random()*BANDS.length);
+  beaconCount++;
+  beaconHistory.push({mode,power,bandIdx,ts:Date.now()});
+  if(beaconHistory.length>200)beaconHistory.shift();
+  const bc=$('beaconCountDisp');if(bc)bc.textContent=beaconCount;
+  const bl=$('lastBeacon');if(bl)bl.textContent=BANDS[bandIdx]+' '+mode+' '+power+'W';
+  log('TX Beacon: '+BANDS[bandIdx]+' '+mode+' '+power+'W','tx');
+  drawBeacon();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);beaconCount=0;beaconHistory=[];
+  log(LANG[currentLang].simStarted||'Started','success');
+  const rate=+($('intervalRange')||{value:3}).value*1000;
+  transmitBeacon();simTimer=setInterval(transmitBeacon,rate);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_beacon(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('intervalRange'))$('intervalRange').oninput=function(){const d=$('intervalDisp');if(d)d.textContent=this.value+'s';};
+  if($('powerRange'))$('powerRange').oninput=function(){const d=$('powerDisp');if(d)d.textContent=this.value+'W';};
+  drawBeacon();
+}
+init_beacon();

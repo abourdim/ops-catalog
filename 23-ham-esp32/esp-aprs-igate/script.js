@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP32 APRS iGate', subtitle: '📡 Receive & relay APRS packets',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'APRS iGate', mainDesc: 'ESP32-based APRS internet gateway',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'ESP32 APRS iGate', subtitle: '📡 Réception et relais de paquets APRS',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'APRS iGate', mainDesc: 'Passerelle APRS internet sur ESP32',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'بوابة APRS ESP32', subtitle: '📡 استقبال وإعادة توجيه حزم APRS',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'بوابة APRS', mainDesc: 'بوابة إنترنت APRS على ESP32',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,86 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Start iGate',stop:'Stop',simStarted:'iGate started',simStopped:'iGate stopped',theoryTitle:'APRS iGate Theory',theoryDesc:'An APRS iGate (Internet Gateway) receives APRS packets on 144.390 MHz via a TNC, decodes them, and forwards them to the APRS-IS internet server network. The ESP32 handles packet decoding, deduplication, and TCP/IP connectivity.',packets:'Packets',relayed:'Relayed',dropped:'Dropped'});
+Object.assign(LANG.fr, {start:'Démarrer iGate',stop:'Arrêter',simStarted:'iGate démarré',simStopped:'iGate arrêté',theoryTitle:'Théorie iGate APRS',theoryDesc:'Un iGate APRS (passerelle Internet) reçoit les paquets APRS sur 144.390 MHz via un TNC, les décode et les transmet au réseau de serveurs APRS-IS. L\'ESP32 gère le décodage, la déduplication et la connectivité TCP/IP.',packets:'Paquets',relayed:'Relayés',dropped:'Rejetés'});
+Object.assign(LANG.ar, {start:'تشغيل البوابة',stop:'إيقاف',simStarted:'بدأت البوابة',simStopped:'توقفت البوابة',theoryTitle:'نظرية بوابة APRS',theoryDesc:'بوابة APRS (بوابة الإنترنت) تستقبل حزم APRS على تردد 144.390 MHz عبر TNC وتفك تشفيرها وتوجهها إلى شبكة خوادم APRS-IS. يتولى ESP32 فك التشفير وإزالة التكرار والاتصال بالإنترنت.',packets:'حزم',relayed:'مُعاد توجيهها',dropped:'مرفوضة'});
+setLanguage(currentLang);
+
+
+/* ═══════ APRS iGATE SIM ═══════ */
+const PREFIXES=['W1','W2','K3','N4','W5','K6','W7','K8','N9','VE3','VK2','JA1','DL1','F4','G3'];
+const SUFFIXES='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function randCall(){return PREFIXES[Math.floor(Math.random()*PREFIXES.length)]+SUFFIXES[Math.floor(Math.random()*26)]+SUFFIXES[Math.floor(Math.random()*26)]+SUFFIXES[Math.floor(Math.random()*26)];}
+const APRS_TYPES=[{sym:'/',type:'Position',gen:()=>{const lat=(25+Math.random()*25).toFixed(4);const lon=(-120+Math.random()*60).toFixed(4);return lat+'N/'+lon+'W';}},{sym:'>',type:'Status',gen:()=>{const msgs=['En route','QRV 146.52','Mobile','Base station','Portable'];return msgs[Math.floor(Math.random()*msgs.length)];}},{sym:'`',type:'Mic-E',gen:()=>'`'+String.fromCharCode(32+Math.floor(Math.random()*60)).repeat(6)},{sym:'!',type:'Weather',gen:()=>{const t=Math.floor(50+Math.random()*50);const w=Math.floor(Math.random()*360);return 'T'+t+'F W'+w+'deg';}}];
+
+let simRunning=false,simTimer=null,totalPkts=0,relayedPkts=0,droppedPkts=0;
+const mapC=$('igateCanvas'),mapCtx=mapC?mapC.getContext('2d'):null;
+let igateStations=[];
+
+function drawIgateMap(){
+  if(!mapCtx)return;const W=mapC.width,H=mapC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  mapCtx.fillStyle='#0a1628';mapCtx.fillRect(0,0,W,H);
+  // Grid
+  mapCtx.strokeStyle='rgba(255,255,255,0.05)';mapCtx.lineWidth=0.5;
+  for(let i=0;i<20;i++){mapCtx.beginPath();mapCtx.moveTo(i*W/20,0);mapCtx.lineTo(i*W/20,H);mapCtx.stroke();}
+  for(let i=0;i<10;i++){mapCtx.beginPath();mapCtx.moveTo(0,i*H/10);mapCtx.lineTo(W,i*H/10);mapCtx.stroke();}
+  // iGate center
+  mapCtx.beginPath();mapCtx.arc(W/2,H/2,8,0,Math.PI*2);mapCtx.fillStyle=acc;mapCtx.fill();
+  mapCtx.fillStyle='rgba(255,255,255,0.8)';mapCtx.font='bold 10px monospace';mapCtx.fillText('iGATE',W/2+12,H/2+4);
+  // Range circle
+  mapCtx.beginPath();mapCtx.arc(W/2,H/2,Math.min(W,H)*0.4,0,Math.PI*2);
+  mapCtx.strokeStyle='rgba(255,255,255,0.1)';mapCtx.lineWidth=1;mapCtx.stroke();
+  // Stations
+  igateStations.forEach((st,i)=>{
+    const age=(Date.now()-st.ts)/10000;const alpha=Math.max(0.2,1-age);
+    mapCtx.globalAlpha=alpha;
+    mapCtx.beginPath();mapCtx.arc(st.x,st.y,4,0,Math.PI*2);
+    mapCtx.fillStyle=st.relayed?'#22c55e':'#ef4444';mapCtx.fill();
+    if(i>=igateStations.length-8){mapCtx.fillStyle='rgba(255,255,255,0.6)';mapCtx.font='9px monospace';mapCtx.fillText(st.call,st.x+6,st.y-3);}
+    // Line to iGate
+    if(st.relayed){mapCtx.strokeStyle=acc2;mapCtx.lineWidth=0.5;mapCtx.beginPath();mapCtx.moveTo(st.x,st.y);mapCtx.lineTo(W/2,H/2);mapCtx.stroke();}
+    mapCtx.globalAlpha=1;
+  });
+}
+
+function receivePacket(){
+  const call=randCall();
+  const t=APRS_TYPES[Math.floor(Math.random()*APRS_TYPES.length)];
+  const payload=t.gen();
+  const W=mapC?mapC.width:400,H=mapC?mapC.height:300;
+  const angle=Math.random()*Math.PI*2;
+  const dist=50+Math.random()*(Math.min(W,H)*0.4);
+  const x=W/2+Math.cos(angle)*dist;
+  const y=H/2+Math.sin(angle)*dist;
+  const relayed=Math.random()>0.15;
+  totalPkts++;
+  if(relayed)relayedPkts++;else droppedPkts++;
+  igateStations.push({call,type:t.type,x,y,relayed,ts:Date.now()});
+  if(igateStations.length>100)igateStations.shift();
+  const raw=call+'>APRS,qAR,IGATE:'+t.sym+payload;
+  const pl=$('packetList');
+  if(pl){const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' '+(relayed?'\u2705':'\u274C')+' '+raw;d.style.color=relayed?'var(--text)':'var(--text-muted)';pl.appendChild(d);pl.scrollTop=pl.scrollHeight;}
+  const tc=$('totalCount');if(tc)tc.textContent=totalPkts;
+  const rc=$('relayCount');if(rc)rc.textContent=relayedPkts;
+  const dc=$('dropCount');if(dc)dc.textContent=droppedPkts;
+  log((relayed?'RX\u2192IS':'RX\u2718')+': '+raw,relayed?'rx':'error');
+  drawIgateMap();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);totalPkts=0;relayedPkts=0;droppedPkts=0;igateStations=[];
+  log(LANG[currentLang].simStarted||'Started','success');
+  receivePacket();simTimer=setInterval(()=>{receivePacket();if(Math.random()<0.4)receivePacket();},2000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_aprs_igate(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  drawIgateMap();
+}
+init_aprs_igate();

@@ -63,32 +63,30 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Bug Sweeper', subtitle: 'Bug Sweeper — RF Bug Detector',
+    disconnected: 'Idle', connected: 'Scanning',
+    mainSection: 'Bug Sweeper', mainDesc: 'Scan frequencies to find hidden listening devices',
+    sectionA: 'Detected Bugs', sectionB: 'RF Bug Types',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is Bug Sweeper?', faq_a1: 'An RF bug detector simulator. Scan frequency bands to find hidden listening devices.',
+    faq_q2: 'How do I scan?', faq_a2: 'Click Start Scan to begin real-time scanning, or Full Sweep for a complete band analysis.',
+    faq_q3: 'What are the colored peaks?', faq_a3: 'Green = normal signals. Yellow = suspicious. Red = likely bug detected!',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Select a frequency band from the dropdown.', howto_2: 'Click Start Scan for real-time monitoring.',
+    howto_3: 'Click Full Sweep for a complete band analysis.', howto_4: 'Check Detected Bugs section for suspicious signals.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes with dark and light variants.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual: English, Français, العربية with RTL support.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log with color-coded entries.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first. All data stays in your browser.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🚀 Bug Sweeper ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,35 +96,40 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    startScan: 'Start Scan', stopScan: 'Stop Scan', fullSweep: 'Full Sweep',
+    freqRange: 'Frequency Range:', threatLevel: 'Threat Level',
+    peakSignal: 'Peak Signal', scanStatus: 'Scan Status',
+    clear_status: 'CLEAR', suspicious: 'SUSPICIOUS', bugDetected: 'BUG DETECTED',
+    bugHint: 'Suspicious signals will appear here during scanning.',
+    sweepComplete: 'Full sweep complete', bugsFound: 'bugs found',
+    noBugs: 'No bugs detected', scanning: 'Scanning...',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
+    title: 'Balayeur RF', subtitle: 'Balayeur RF — Détecteur de mouchards',
+    disconnected: 'En attente', connected: 'Balayage',
+    mainSection: 'Balayeur RF', mainDesc: 'Scanner les fréquences pour trouver des mouchards',
+    sectionA: 'Mouchards Détectés', sectionB: 'Types de Mouchards RF',
+    activityLog: 'Journal', eventsMsg: 'Événements',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le Balayeur RF?', faq_a1: 'Un simulateur de détecteur de mouchards RF.',
+    faq_q2: 'Comment scanner?', faq_a2: 'Cliquez Démarrer pour le balayage en temps réel.',
+    faq_q3: 'Que signifient les couleurs?', faq_a3: 'Vert = normal. Jaune = suspect. Rouge = mouchard détecté!',
+    faq_q4: 'Données privées?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Sélectionnez une bande de fréquences.', howto_2: 'Cliquez Démarrer pour le monitoring.',
+    howto_3: 'Cliquez Balayage Complet pour l\'analyse.', howto_4: 'Vérifiez les mouchards détectés.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes avec variantes sombres et claires.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec support RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first. Données dans le navigateur.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '🚀 Balayeur RF prêt!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
@@ -135,34 +138,39 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
+    startScan: 'Démarrer', stopScan: 'Arrêter', fullSweep: 'Balayage Complet',
+    freqRange: 'Bande:', threatLevel: 'Niveau de Menace',
+    peakSignal: 'Signal Max', scanStatus: 'État du Scan',
+    clear_status: 'CLAIR', suspicious: 'SUSPECT', bugDetected: 'MOUCHARD DÉTECTÉ',
+    bugHint: 'Les signaux suspects apparaîtront ici.',
+    sweepComplete: 'Balayage complet', bugsFound: 'mouchards trouvés',
+    noBugs: 'Aucun mouchard détecté', scanning: 'Balayage...',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    title: 'كاسح التنصت', subtitle: 'كاسح التنصت — كشف أجهزة التنصت',
+    disconnected: 'خامل', connected: 'مسح',
+    mainSection: 'كاسح التنصت', mainDesc: 'مسح الترددات لإيجاد أجهزة التنصت المخفية',
+    sectionA: 'الأجهزة المكتشفة', sectionB: 'أنواع أجهزة التنصت',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو كاسح التنصت؟', faq_a1: 'محاكي لكشف أجهزة التنصت اللاسلكية.',
+    faq_q2: 'كيف أبدأ المسح؟', faq_a2: 'انقر بدء المسح للمراقبة الحية.',
+    faq_q3: 'ماذا تعني الألوان؟', faq_a3: 'أخضر = عادي. أصفر = مشبوه. أحمر = جهاز تنصت!',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر نطاق التردد.', howto_2: 'انقر بدء المسح للمراقبة.',
+    howto_3: 'انقر مسح شامل للتحليل الكامل.', howto_4: 'تحقق من الأجهزة المكتشفة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مع تنويعات.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع دعم RTL.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ وملون.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولاً. البيانات في المتصفح.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🚀 كاسح التنصت جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +180,13 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    startScan: 'بدء المسح', stopScan: 'إيقاف', fullSweep: 'مسح شامل',
+    freqRange: 'النطاق:', threatLevel: 'مستوى التهديد',
+    peakSignal: 'أقوى إشارة', scanStatus: 'حالة المسح',
+    clear_status: 'آمن', suspicious: 'مشبوه', bugDetected: 'جهاز تنصت!',
+    bugHint: 'ستظهر الإشارات المشبوهة هنا.',
+    sweepComplete: 'اكتمل المسح الشامل', bugsFound: 'أجهزة مكتشفة',
+    noBugs: 'لم يتم اكتشاف أجهزة', scanning: 'جارٍ المسح...',
   }
 };
 
@@ -1444,6 +1459,317 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+
+  /* ═══ BUG SWEEPER SETUP ═══ */
+  initBugSweeper();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: BUG SWEEPER — RF Bug Detector
+   ═══════════════════════════════════════════════════════════════ */
+
+const BANDS = {
+  wifi:      { label:'WiFi 2.4 GHz', center:2437, span:80, unit:'MHz' },
+  wifi5:     { label:'WiFi 5 GHz', center:5500, span:500, unit:'MHz' },
+  bluetooth: { label:'Bluetooth', center:2441, span:80, unit:'MHz' },
+  gsm:       { label:'GSM 900', center:900, span:70, unit:'MHz' },
+  ism:       { label:'ISM 433', center:433, span:30, unit:'MHz' },
+  uhf:       { label:'UHF', center:1500, span:2700, unit:'MHz' },
+};
+
+let specCanvas, specCtx, specW=780, specH=300;
+let scanning = false, sweeping = false;
+let noiseFloor = [], signalPeaks = [], detectedBugs = [];
+let scanFrame = 0, sweepPos = 0;
+let currentBand = 'wifi';
+
+function generateNoise(len) {
+  const arr = new Float32Array(len);
+  for (let i=0; i<len; i++) arr[i] = -90 + Math.random()*8 - 4;
+  return arr;
+}
+
+function generateBugs(band) {
+  const b = BANDS[band];
+  const bugs = [];
+  const numBugs = Math.floor(Math.random()*3);
+  for (let i=0; i<numBugs; i++) {
+    bugs.push({
+      freq: b.center - b.span/2 + Math.random()*b.span,
+      power: -40 + Math.random()*25,
+      width: 1 + Math.random()*4,
+      type: ['Audio Bug','Video TX','GSM Relay','WiFi Mic','BLE Beacon'][Math.floor(Math.random()*5)],
+      detected: false
+    });
+  }
+  // Always some normal signals
+  const numNormal = 3 + Math.floor(Math.random()*5);
+  for (let i=0; i<numNormal; i++) {
+    signalPeaks.push({
+      freq: b.center - b.span/2 + Math.random()*b.span,
+      power: -70 + Math.random()*15,
+      width: 2 + Math.random()*8,
+      normal: true
+    });
+  }
+  return bugs;
+}
+
+function drawSpectrum() {
+  if (!specCtx) return;
+  specCtx.fillStyle = '#0a0a1a';
+  specCtx.fillRect(0,0,specW,specH);
+  const b = BANDS[currentBand];
+  const freqStart = b.center - b.span/2;
+  const freqEnd = b.center + b.span/2;
+
+  // Grid
+  specCtx.strokeStyle = 'rgba(255,255,255,0.05)';
+  specCtx.lineWidth = 1;
+  for (let i=0; i<=10; i++) {
+    const x = i*specW/10;
+    specCtx.beginPath(); specCtx.moveTo(x,0); specCtx.lineTo(x,specH); specCtx.stroke();
+    // Freq labels
+    specCtx.fillStyle = 'rgba(255,255,255,0.3)';
+    specCtx.font = '9px monospace';
+    specCtx.textAlign = 'center';
+    specCtx.fillText((freqStart + i*b.span/10).toFixed(0), x, specH-4);
+  }
+  for (let i=0; i<=5; i++) {
+    const y = i*specH/5;
+    specCtx.beginPath(); specCtx.moveTo(0,y); specCtx.lineTo(specW,y); specCtx.stroke();
+    specCtx.fillStyle = 'rgba(255,255,255,0.3)';
+    specCtx.font = '9px monospace';
+    specCtx.textAlign = 'left';
+    specCtx.fillText((-30 - i*15) + ' dBm', 4, y+10);
+  }
+
+  // Noise floor
+  if (scanning || sweeping) {
+    specCtx.beginPath();
+    specCtx.strokeStyle = 'rgba(34,197,94,0.6)';
+    specCtx.lineWidth = 1.5;
+    const bins = specW;
+    for (let i=0; i<bins; i++) {
+      let val = noiseFloor[i] || -90;
+      val += (Math.random()-0.5)*3;
+      // Add signal peaks
+      const freq = freqStart + (i/bins)*b.span;
+      signalPeaks.forEach(p => {
+        const dist = Math.abs(freq - p.freq);
+        if (dist < p.width*3) val = Math.max(val, p.power * Math.exp(-(dist*dist)/(2*p.width*p.width)));
+      });
+      detectedBugs.forEach(bug => {
+        const dist = Math.abs(freq - bug.freq);
+        if (dist < bug.width*3) {
+          const bugPow = bug.power + Math.sin(scanFrame*0.1)*3;
+          val = Math.max(val, bugPow * Math.exp(-(dist*dist)/(2*bug.width*bug.width)));
+        }
+      });
+      const y = specH * (1 - (val + 100) / 70);
+      if (i===0) specCtx.moveTo(i, y);
+      else specCtx.lineTo(i, y);
+    }
+    specCtx.stroke();
+
+    // Fill under curve with gradient
+    specCtx.lineTo(specW, specH); specCtx.lineTo(0, specH); specCtx.closePath();
+    const grad = specCtx.createLinearGradient(0,0,0,specH);
+    grad.addColorStop(0, 'rgba(239,68,68,0.3)');
+    grad.addColorStop(0.5, 'rgba(234,179,8,0.15)');
+    grad.addColorStop(1, 'rgba(34,197,94,0.05)');
+    specCtx.fillStyle = grad;
+    specCtx.fill();
+
+    // Bug markers
+    detectedBugs.forEach(bug => {
+      const x = ((bug.freq - freqStart) / b.span) * specW;
+      const y = specH * (1 - (bug.power + 100) / 70);
+      specCtx.beginPath();
+      specCtx.arc(x, y, 6 + Math.sin(scanFrame*0.15)*2, 0, Math.PI*2);
+      specCtx.strokeStyle = '#ef4444';
+      specCtx.lineWidth = 2;
+      specCtx.stroke();
+      specCtx.fillStyle = 'rgba(239,68,68,0.3)';
+      specCtx.fill();
+      specCtx.fillStyle = '#ef4444';
+      specCtx.font = 'bold 10px monospace';
+      specCtx.textAlign = 'center';
+      specCtx.fillText(bug.type, x, y - 12);
+      specCtx.fillText(bug.freq.toFixed(1)+' MHz', x, y - 2);
+    });
+  }
+
+  // Sweep line
+  if (sweeping) {
+    const sx = (sweepPos / 100) * specW;
+    specCtx.strokeStyle = 'rgba(59,130,246,0.8)';
+    specCtx.lineWidth = 2;
+    specCtx.beginPath(); specCtx.moveTo(sx,0); specCtx.lineTo(sx,specH); specCtx.stroke();
+  }
+
+  // Center frequency label
+  specCtx.fillStyle = 'rgba(255,255,255,0.5)';
+  specCtx.font = '11px monospace';
+  specCtx.textAlign = 'center';
+  specCtx.fillText(b.label + ' (' + freqStart.toFixed(0) + '-' + freqEnd.toFixed(0) + ' ' + b.unit + ')', specW/2, 14);
+}
+
+function updateBugUI() {
+  const s = LANG[currentLang];
+  const threatFill = $('threatFill');
+  const threatText = $('threatText');
+  const peakFreqEl = $('peakFreq');
+  const peakPowerEl = $('peakPower');
+  const scanInfo = $('scanInfo');
+
+  if (detectedBugs.length === 0) {
+    if (threatFill) { threatFill.style.width = scanning ? '15%' : '0%'; threatFill.style.background = '#22c55e'; }
+    if (threatText) { threatText.textContent = s.clear_status; threatText.style.color = '#22c55e'; }
+  } else if (detectedBugs.length <= 1) {
+    if (threatFill) { threatFill.style.width = '55%'; threatFill.style.background = '#eab308'; }
+    if (threatText) { threatText.textContent = s.suspicious; threatText.style.color = '#eab308'; }
+  } else {
+    if (threatFill) { threatFill.style.width = '90%'; threatFill.style.background = '#ef4444'; }
+    if (threatText) { threatText.textContent = s.bugDetected; threatText.style.color = '#ef4444'; }
+  }
+
+  // Find strongest signal
+  let strongest = null;
+  [...detectedBugs, ...signalPeaks].forEach(p => {
+    if (!strongest || p.power > strongest.power) strongest = p;
+  });
+  if (strongest && scanning) {
+    if (peakFreqEl) peakFreqEl.textContent = strongest.freq.toFixed(1) + ' MHz';
+    if (peakPowerEl) peakPowerEl.textContent = strongest.power.toFixed(0) + ' dBm';
+  }
+
+  if (scanInfo) {
+    scanInfo.innerHTML = `Band: <strong>${BANDS[currentBand].label}</strong><br>` +
+      `Bugs: <strong style="color:${detectedBugs.length?'#ef4444':'#22c55e'}">${detectedBugs.length}</strong><br>` +
+      `Signals: <strong>${signalPeaks.length + detectedBugs.length}</strong><br>` +
+      `Status: <strong>${scanning ? s.scanning : 'Idle'}</strong>`;
+  }
+}
+
+function updateBugList() {
+  const list = $('bugList');
+  if (!list) return;
+  list.innerHTML = '';
+  detectedBugs.forEach(bug => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);';
+    row.innerHTML = `<span style="color:#ef4444;font-size:1.2em;">&#x26A0;</span><span style="flex:1;font-size:.78rem;"><strong>${bug.type}</strong></span><span style="font-size:.7rem;color:var(--text-muted);">${bug.freq.toFixed(1)} MHz / ${bug.power.toFixed(0)} dBm</span>`;
+    list.appendChild(row);
+  });
+}
+
+function buildBugDatabase() {
+  const el = $('bugDatabase');
+  if (!el) return;
+  const types = [
+    { name:'Audio Bug', freq:'88-108 MHz / 433 MHz', desc:'Transmits room audio on FM or ISM band' },
+    { name:'GSM Bug', freq:'900/1800 MHz', desc:'Uses cellular network to relay conversations' },
+    { name:'WiFi Camera', freq:'2.4/5 GHz', desc:'Streams video over WiFi networks' },
+    { name:'Bluetooth Mic', freq:'2.4 GHz', desc:'Short-range audio via BLE protocol' },
+    { name:'UHF Tracker', freq:'300-470 MHz', desc:'Burst transmissions for location tracking' },
+    { name:'Spread Spectrum', freq:'Various', desc:'Frequency-hopping device, hard to detect' },
+  ];
+  let html = '<div style="display:grid;grid-template-columns:auto 1fr 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Type</strong><strong style="font-size:.7rem;">Frequency</strong><strong style="font-size:.7rem;">Description</strong>';
+  types.forEach(t => {
+    html += `<span style="color:#ef4444;">${t.name}</span><span style="color:var(--accent);">${t.freq}</span><span style="color:var(--text-muted);">${t.desc}</span>`;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function startScan() {
+  const b = BANDS[currentBand];
+  scanning = true;
+  sweeping = false;
+  scanFrame = 0;
+  noiseFloor = generateNoise(specW);
+  signalPeaks = [];
+  detectedBugs = generateBugs(currentBand);
+  setStatus(true);
+  updateBugList();
+  const s = LANG[currentLang];
+  $('scanBtn').innerHTML = `<span class="btn-icon">&#x23F9;</span> <span>${s.stopScan}</span>`;
+  log(`Scanning ${b.label}...`, 'info');
+  if (detectedBugs.length > 0) {
+    setTimeout(() => {
+      detectedBugs.forEach(bug => {
+        log(`WARNING: ${bug.type} detected at ${bug.freq.toFixed(1)} MHz (${bug.power.toFixed(0)} dBm)`, 'error');
+      });
+      updateBugList();
+      playSound('error');
+    }, 1500 + Math.random()*2000);
+  }
+}
+
+function stopScan() {
+  scanning = false;
+  setStatus(false);
+  const s = LANG[currentLang];
+  $('scanBtn').innerHTML = `<span class="btn-icon">&#x1F4E1;</span> <span>${s.startScan}</span>`;
+  log('Scan stopped', 'info');
+}
+
+function fullSweep() {
+  if (sweeping) return;
+  sweeping = true;
+  scanning = true;
+  sweepPos = 0;
+  noiseFloor = generateNoise(specW);
+  signalPeaks = [];
+  detectedBugs = generateBugs(currentBand);
+  setStatus(true);
+  log('Full sweep started...', 'info');
+
+  const sweepInterval = setInterval(() => {
+    sweepPos += 0.5;
+    if (sweepPos >= 100) {
+      clearInterval(sweepInterval);
+      sweeping = false;
+      const s = LANG[currentLang];
+      log(`${s.sweepComplete}: ${detectedBugs.length} ${s.bugsFound}`, detectedBugs.length ? 'error' : 'success');
+      updateBugList();
+      if (detectedBugs.length) playSound('error');
+      else playSound('success');
+    }
+  }, 30);
+}
+
+function bugSweeperLoop() {
+  if (scanning) scanFrame++;
+  drawSpectrum();
+  updateBugUI();
+  requestAnimationFrame(bugSweeperLoop);
+}
+
+function initBugSweeper() {
+  specCanvas = $('spectrumCanvas');
+  if (specCanvas) {
+    specCtx = specCanvas.getContext('2d');
+    specW = specCanvas.width;
+    specH = specCanvas.height;
+  }
+
+  const scanBtn = $('scanBtn');
+  if (scanBtn) scanBtn.onclick = () => { scanning ? stopScan() : startScan(); };
+
+  const sweepBtn = $('sweepBtn');
+  if (sweepBtn) sweepBtn.onclick = fullSweep;
+
+  const bandSel = $('bandSelect');
+  if (bandSel) bandSel.addEventListener('change', () => {
+    currentBand = bandSel.value;
+    if (scanning) { stopScan(); startScan(); }
+  });
+
+  buildBugDatabase();
+  bugSweeperLoop();
 }
 
 document.readyState === 'loading'

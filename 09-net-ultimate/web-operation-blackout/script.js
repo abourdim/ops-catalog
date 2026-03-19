@@ -63,115 +63,112 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Operation Blackout', subtitle: '⚡ Detect · 🔧 Respond · 🔄 Restore services',
+    disconnected: 'Offline', connected: 'Online',
+    mainSection: 'Incident Dashboard', mainDesc: 'Monitor and respond to network outage scenarios',
+    sectionA: 'Incident Response', sectionB: 'Infrastructure Map',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
-    helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
+    settings: '⚙️ Settings', language: 'Language', helpSettings: '❓ Help', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Operation Blackout?', faq_a1: 'A network outage simulator. Practice incident response and service restoration.',
+    faq_q2: 'Are these real outages?', faq_a2: 'No. All scenarios are simulated locally for educational purposes.',
+    faq_q3: 'What is MTTR?', faq_a3: 'Mean Time To Recovery. The average time it takes to restore a failed service.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Click Trigger Outage to simulate a failure.',
+    howto_2: 'Click on failed services to restore them.',
+    howto_3: 'Use Response Actions for different recovery strategies.',
+    howto_4: 'Monitor the timeline and infrastructure map.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
+    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus', t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⚡ Operation Blackout ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
-    whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
-    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    soundEffects: '🔊 Sound effects', whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
+    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...', splashHint: 'tap to skip',
+    newVersion: 'UPDATE', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    servicesTitle: 'Service Status', triggerOutage: 'Trigger Outage', restoreAll: 'Restore All',
+    randomScenario: 'Random Scenario', timelineTitle: 'Outage Timeline',
+    uptime: 'Uptime', mttr: 'MTTR', incidents: 'Incidents', severity: 'Severity',
+    incidentLog: 'Incident Log', responseActions: 'Response Actions',
+    infraTitle: 'Infrastructure Topology', infraHint: 'Click a node to view details',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Operation Blackout', subtitle: '⚡ Detecter · 🔧 Repondre · 🔄 Restaurer les services',
+    disconnected: 'Hors ligne', connected: 'En ligne',
+    mainSection: 'Tableau d\'Incidents', mainDesc: 'Surveillez et repondez aux pannes reseau',
+    sectionA: 'Reponse aux Incidents', sectionB: 'Carte d\'Infrastructure',
+    activityLog: 'Journal', eventsMsg: 'Evenements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'C\'est quoi ?', faq_a1: 'Simulateur de pannes reseau pour pratiquer la reponse aux incidents.',
+    faq_q2: 'Ce sont de vraies pannes ?', faq_a2: 'Non. Tout est simule localement.',
+    faq_q3: 'Qu\'est-ce que le MTTR ?', faq_a3: 'Temps Moyen de Retablissement.',
+    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Cliquez Declencher Panne pour simuler.',
+    howto_2: 'Cliquez sur les services en panne.',
+    howto_3: 'Utilisez les Actions de Reponse.',
+    howto_4: 'Surveillez la chronologie.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local-first.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous', t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '⚡ Operation Blackout pret !',
+    logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    soundEffects: '🔊 Effets sonores', whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...', splashHint: 'appuyer pour passer',
+    newVersion: 'MAJ', langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    servicesTitle: 'Etat des Services', triggerOutage: 'Declencher Panne', restoreAll: 'Tout Restaurer',
+    randomScenario: 'Scenario Aleatoire', timelineTitle: 'Chronologie des Pannes',
+    uptime: 'Disponibilite', mttr: 'MTTR', incidents: 'Incidents', severity: 'Severite',
+    incidentLog: 'Journal d\'Incidents', responseActions: 'Actions de Reponse',
+    infraTitle: 'Topologie d\'Infrastructure', infraHint: 'Cliquez sur un noeud',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'عملية الانقطاع', subtitle: '⚡ اكتشاف · 🔧 استجابة · 🔄 استعادة الخدمات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    mainSection: 'لوحة الحوادث', mainDesc: 'راقب واستجب لسيناريوهات انقطاع الشبكة',
+    sectionA: 'الاستجابة للحوادث', sectionB: 'خريطة البنية التحتية',
+    activityLog: 'سجل النشاط', eventsMsg: 'الاحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    settings: '⚙️ الاعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
+    help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
+    faq_q1: 'ما هي عملية الانقطاع؟', faq_a1: 'محاكي انقطاع شبكة لممارسة الاستجابة للحوادث.',
+    faq_q2: 'هل هذه انقطاعات حقيقية؟', faq_a2: 'لا. كل السيناريوهات محاكاة محلية.',
+    faq_q3: 'ما هو MTTR؟', faq_a3: 'متوسط وقت الاستعادة.',
+    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اضغط تفعيل الانقطاع لمحاكاة عطل.',
+    howto_2: 'اضغط على الخدمات المعطلة لاستعادتها.',
+    howto_3: 'استخدم اجراءات الاستجابة.',
+    howto_4: 'راقب الخط الزمني وخريطة البنية التحتية.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي اولا.',
+    working: 'جار…',
+    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'اندلس', t_riad: 'رياض', t_medina: 'مدينة',
+    t_space: 'فضاء', t_jungle: 'ادغال', t_robot: 'روبوت',
+    ready: '⚡ عملية الانقطاع جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    soundEffects: '🔊 مؤثرات صوتية', whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
+    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...', splashHint: 'انقر للتخطي',
+    newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    servicesTitle: 'حالة الخدمات', triggerOutage: 'تفعيل الانقطاع', restoreAll: 'استعادة الكل',
+    randomScenario: 'سيناريو عشوائي', timelineTitle: 'الخط الزمني للانقطاع',
+    uptime: 'وقت التشغيل', mttr: 'متوسط الاستعادة', incidents: 'الحوادث', severity: 'الخطورة',
+    incidentLog: 'سجل الحوادث', responseActions: 'اجراءات الاستجابة',
+    infraTitle: 'طوبولوجيا البنية التحتية', infraHint: 'اضغط على عقدة للتفاصيل',
   }
 };
 
@@ -1449,3 +1446,271 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ OPERATION BLACKOUT — SIMULATION ═══════ */
+(function(){
+  const SERVICES=[
+    {id:'web',name:'Web Server',icon:'🌐',type:'frontend'},
+    {id:'api',name:'API Gateway',icon:'🔌',type:'backend'},
+    {id:'db',name:'Database',icon:'🗄️',type:'data'},
+    {id:'cache',name:'Redis Cache',icon:'⚡',type:'data'},
+    {id:'auth',name:'Auth Service',icon:'🔑',type:'backend'},
+    {id:'cdn',name:'CDN',icon:'🌍',type:'frontend'},
+    {id:'lb',name:'Load Balancer',icon:'⚖️',type:'infra'},
+    {id:'dns',name:'DNS Server',icon:'📛',type:'infra'},
+    {id:'mail',name:'Email Service',icon:'📧',type:'backend'},
+    {id:'queue',name:'Message Queue',icon:'📬',type:'data'},
+    {id:'monitor',name:'Monitoring',icon:'📊',type:'infra'},
+    {id:'backup',name:'Backup System',icon:'💾',type:'data'},
+  ];
+
+  const SCENARIOS=[
+    {name:'Database Cascade Failure',affected:['db','cache','api','auth'],severity:'critical',desc:'Primary database went down, cascading to dependent services'},
+    {name:'CDN Edge Outage',affected:['cdn','web'],severity:'major',desc:'CDN provider experiencing regional outage'},
+    {name:'DDoS Attack',affected:['lb','web','api','cdn'],severity:'critical',desc:'Distributed denial-of-service attack overwhelming infrastructure'},
+    {name:'DNS Hijacking',affected:['dns','web','mail'],severity:'critical',desc:'DNS records compromised, traffic being redirected'},
+    {name:'Certificate Expiry',affected:['web','api','auth'],severity:'major',desc:'TLS certificates expired, HTTPS connections failing'},
+    {name:'Memory Leak',affected:['api','cache'],severity:'minor',desc:'Gradual memory exhaustion in API and cache services'},
+    {name:'Ransomware Incident',affected:['db','backup','auth','mail'],severity:'critical',desc:'Ransomware detected encrypting data stores'},
+    {name:'Power Grid Failure',affected:['web','api','db','cache','auth','lb','dns','mail','queue','monitor','backup'],severity:'critical',desc:'Complete data center power loss'},
+  ];
+
+  const RESPONSE_EFFECTS={
+    restart:{msg:'Restarting affected services... Service cycle takes 30-60 seconds.',restores:2},
+    failover:{msg:'Initiating failover to standby cluster... Switching traffic to DR site.',restores:3},
+    rollback:{msg:'Rolling back to last known good configuration... Reverting changes.',restores:1},
+    scale:{msg:'Scaling up additional instances... Provisioning new compute resources.',restores:2},
+    isolate:{msg:'Isolating compromised services... Implementing network quarantine.',restores:1},
+    dns:{msg:'Redirecting DNS to healthy endpoints... TTL propagation in progress.',restores:2},
+  };
+
+  let services = SERVICES.map(s=>({...s,status:'healthy',downSince:null}));
+  let incidentHistory=[];
+  let totalIncidents=0;
+  let totalDowntime=0;
+  let timelineData=[];
+
+  function getStatusColor(s){return s==='healthy'?'#4CAF50':s==='degraded'?'#FF9800':'#f44336';}
+  function getStatusIcon(s){return s==='healthy'?'✅':s==='degraded'?'⚠️':'❌';}
+
+  function renderServiceGrid(){
+    const grid=$('serviceGrid'); if(!grid) return;
+    grid.innerHTML='';
+    services.forEach(svc=>{
+      const div=document.createElement('div');
+      div.style.cssText='padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center;cursor:pointer;transition:all .3s;border-left:3px solid '+getStatusColor(svc.status);
+      div.innerHTML=`<div style="font-size:1.3rem">${svc.icon}</div><div style="font-size:.75rem;font-weight:bold;margin-top:4px">${svc.name}</div><div style="font-size:.7rem;color:${getStatusColor(svc.status)}">${getStatusIcon(svc.status)} ${svc.status.toUpperCase()}</div>`;
+      div.onclick=()=>toggleService(svc.id);
+      grid.appendChild(div);
+    });
+  }
+
+  function toggleService(id){
+    const svc=services.find(s=>s.id===id);
+    if(!svc) return;
+    if(svc.status==='down'){
+      restoreService(id);
+    } else {
+      killService(id);
+    }
+  }
+
+  function killService(id){
+    const svc=services.find(s=>s.id===id);
+    if(!svc||svc.status==='down') return;
+    svc.status='down'; svc.downSince=Date.now();
+    totalIncidents++;
+    addIncidentEntry('🔴 '+svc.name+' went DOWN','error');
+    if(typeof log==='function') log('❌ '+svc.name+' DOWN','error');
+    playSound('error');
+    updateDashboard();
+  }
+
+  function restoreService(id){
+    const svc=services.find(s=>s.id===id);
+    if(!svc||svc.status==='healthy') return;
+    if(svc.downSince) totalDowntime+=(Date.now()-svc.downSince)/1000;
+    svc.status='healthy'; svc.downSince=null;
+    addIncidentEntry('🟢 '+svc.name+' RESTORED','success');
+    if(typeof log==='function') log('✅ '+svc.name+' restored','success');
+    playSound('success');
+    updateDashboard();
+  }
+
+  function addIncidentEntry(msg,type){
+    const el=$('incidentTimeline'); if(!el) return;
+    const entry=document.createElement('div');
+    entry.style.cssText='padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);color:'+(type==='error'?'#f44336':type==='success'?'#4CAF50':'var(--text)');
+    entry.textContent='['+new Date().toLocaleTimeString()+'] '+msg;
+    el.insertBefore(entry,el.firstChild);
+    incidentHistory.push({time:Date.now(),msg,type});
+    timelineData.push({time:Date.now(),down:services.filter(s=>s.status==='down').length});
+  }
+
+  function triggerOutage(){
+    const scenario=SCENARIOS[Math.floor(Math.random()*SCENARIOS.length)];
+    addIncidentEntry('🚨 SCENARIO: '+scenario.name+' — '+scenario.desc,'error');
+    if(typeof log==='function') log('🚨 '+scenario.name,'error');
+    scenario.affected.forEach(id=>killService(id));
+    const sevEl=$('severityDisplay');
+    if(sevEl){
+      sevEl.textContent=scenario.severity.toUpperCase();
+      sevEl.style.color=scenario.severity==='critical'?'#f44336':scenario.severity==='major'?'#FF9800':'#FF9800';
+    }
+  }
+
+  function restoreAll(){
+    services.forEach(svc=>{if(svc.status==='down')restoreService(svc.id);});
+    const sevEl=$('severityDisplay'); if(sevEl){sevEl.textContent='Normal';sevEl.style.color='#4CAF50';}
+  }
+
+  function updateDashboard(){
+    renderServiceGrid();
+    const downCount=services.filter(s=>s.status==='down').length;
+    const upPct=((services.length-downCount)/services.length*100).toFixed(1);
+    const upEl=$('uptimeDisplay'); if(upEl){upEl.textContent=upPct+'%';upEl.style.color=upPct==='100.0'?'#4CAF50':parseFloat(upPct)>80?'#FF9800':'#f44336';}
+    const mttrEl=$('mttrDisplay'); if(mttrEl) mttrEl.textContent=totalIncidents?Math.round(totalDowntime/totalIncidents)+'s':'0s';
+    const incEl=$('incidentCount'); if(incEl) incEl.textContent=totalIncidents;
+    drawTimeline();
+    drawInfrastructure();
+  }
+
+  function drawTimeline(){
+    const c=$('outageCanvas'); if(!c) return;
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    // Grid
+    ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;
+    for(let y=0;y<H;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    if(!timelineData.length) return;
+    const minT=timelineData[0].time,maxT=timelineData[timelineData.length-1].time||minT+1;
+    const range=Math.max(maxT-minT,1);
+    // Draw area
+    ctx.beginPath(); ctx.moveTo(0,H);
+    timelineData.forEach(d=>{
+      const x=((d.time-minT)/range)*W;
+      const y=H-(d.down/services.length)*H;
+      ctx.lineTo(x,y);
+    });
+    ctx.lineTo(W,H); ctx.closePath();
+    const grad=ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0,'rgba(244,67,54,.4)');grad.addColorStop(1,'rgba(244,67,54,.05)');
+    ctx.fillStyle=grad; ctx.fill();
+    // Line
+    ctx.beginPath();
+    timelineData.forEach((d,i)=>{
+      const x=((d.time-minT)/range)*W;
+      const y=H-(d.down/services.length)*H;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle='#f44336';ctx.lineWidth=2;ctx.stroke();
+    // Labels
+    ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='10px monospace';
+    ctx.fillText('100% down',4,16);ctx.fillText('All healthy',4,H-6);
+  }
+
+  function drawInfrastructure(){
+    const c=$('infraCanvas'); if(!c) return;
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    // Layout services in layers
+    const layers={frontend:[],backend:[],data:[],infra:[]};
+    services.forEach(s=>{ if(layers[s.type]) layers[s.type].push(s); });
+    const layerNames=['infra','frontend','backend','data'];
+    const layerY={infra:50,frontend:130,backend:220,data:310};
+    const layerLabels={infra:'Infrastructure',frontend:'Frontend',backend:'Backend',data:'Data Layer'};
+    // Draw connections
+    ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=1;
+    const positions={};
+    layerNames.forEach(ln=>{
+      const items=layers[ln]; if(!items) return;
+      items.forEach((svc,i)=>{
+        const x=W/(items.length+1)*(i+1);
+        const y=layerY[ln];
+        positions[svc.id]={x,y};
+      });
+    });
+    // Dependency lines
+    const deps=[['lb','web'],['lb','api'],['web','cdn'],['api','db'],['api','cache'],['api','auth'],['api','queue'],['auth','db'],['dns','web'],['dns','cdn'],['monitor','api'],['monitor','db'],['db','backup']];
+    deps.forEach(([a,b])=>{
+      if(!positions[a]||!positions[b]) return;
+      const sa=services.find(s=>s.id===a),sb=services.find(s=>s.id===b);
+      ctx.strokeStyle=(sa.status==='down'||sb.status==='down')?'rgba(244,67,54,.3)':'rgba(255,255,255,.1)';
+      ctx.lineWidth=1;ctx.beginPath();
+      ctx.moveTo(positions[a].x,positions[a].y);ctx.lineTo(positions[b].x,positions[b].y);ctx.stroke();
+    });
+    // Layer labels
+    ctx.fillStyle='rgba(255,255,255,.15)';ctx.font='11px sans-serif';
+    layerNames.forEach(ln=>{ctx.fillText(layerLabels[ln],8,layerY[ln]-12);});
+    // Nodes
+    services.forEach(svc=>{
+      const p=positions[svc.id]; if(!p) return;
+      const col=getStatusColor(svc.status);
+      // Glow for down services
+      if(svc.status==='down'){
+        ctx.beginPath();ctx.arc(p.x,p.y,20,0,Math.PI*2);
+        ctx.fillStyle='rgba(244,67,54,.15)';ctx.fill();
+      }
+      ctx.beginPath();ctx.arc(p.x,p.y,14,0,Math.PI*2);
+      ctx.fillStyle=col;ctx.globalAlpha=0.8;ctx.fill();ctx.globalAlpha=1;
+      ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='#fff';ctx.font='12px sans-serif';ctx.textAlign='center';
+      ctx.fillText(svc.icon,p.x,p.y+4);
+      ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='9px monospace';
+      ctx.fillText(svc.name,p.x,p.y+28);
+    });
+  }
+
+  function executeResponse(action){
+    const effect=RESPONSE_EFFECTS[action];
+    if(!effect) return;
+    const resEl=$('responseResult');
+    if(resEl) resEl.innerHTML='<span style="color:var(--accent)">'+effect.msg+'</span>';
+    addIncidentEntry('🛠️ Action: '+action.toUpperCase(),'info');
+    if(typeof log==='function') log('🛠️ Response action: '+action,'info');
+    // Restore some services
+    const downServices=services.filter(s=>s.status==='down');
+    const toRestore=downServices.slice(0,Math.min(effect.restores,downServices.length));
+    let delay=800;
+    toRestore.forEach((svc,i)=>{
+      setTimeout(()=>restoreService(svc.id),delay*(i+1));
+    });
+  }
+
+  function waitReady(fn){if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn); else fn();}
+
+  waitReady(function(){
+    renderServiceGrid();
+    // Controls
+    const trigBtn=$('triggerOutageBtn'); if(trigBtn) trigBtn.onclick=triggerOutage;
+    const restBtn=$('restoreAllBtn'); if(restBtn) restBtn.onclick=restoreAll;
+    const scenBtn=$('autoScenarioBtn'); if(scenBtn) scenBtn.onclick=triggerOutage;
+    // Response actions
+    document.querySelectorAll('.response-btn').forEach(btn=>{
+      btn.addEventListener('click',function(){executeResponse(this.dataset.action);});
+    });
+    // Infrastructure canvas click
+    const ic=$('infraCanvas'); if(ic) ic.addEventListener('click',function(e){
+      const rect=ic.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width*ic.width;
+      const y=(e.clientY-rect.top)/rect.height*ic.height;
+      // Find nearest service
+      let nearest=null,minDist=Infinity;
+      services.forEach(svc=>{
+        const layers2={frontend:[],backend:[],data:[],infra:[]};
+        services.forEach(s=>{if(layers2[s.type])layers2[s.type].push(s);});
+        const layerItems=layers2[svc.type]||[];
+        const idx=layerItems.indexOf(svc);
+        const layerY2={infra:50,frontend:130,backend:220,data:310};
+        const px=ic.width/(layerItems.length+1)*(idx+1);
+        const py=layerY2[svc.type];
+        const dist=Math.sqrt((x-px)**2+(y-py)**2);
+        if(dist<minDist){minDist=dist;nearest=svc;}
+      });
+      if(nearest&&minDist<30) toggleService(nearest.id);
+    });
+    drawInfrastructure();
+    setStatus(true);
+    addIncidentEntry('🟢 System initialized. All services healthy.','success');
+  });
+})();

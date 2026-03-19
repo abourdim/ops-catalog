@@ -1449,3 +1449,102 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"Ham Exam Trainer","subtitle":"📝 Ham radio license exam trainer with practice questions","sectionA":"Theory","sectionB":"Controls","sectionC":"Exam Practice","mainSection":"Ham Exam Trainer","mainDesc":"Practice for your ham radio license exam","start":"Start Exam","stop":"End Exam","simStarted":"Exam started!","simStopped":"Exam ended","theoryTitle":"Ham Radio License Exam","theoryDesc":"Practice Technician, General, and Extra class license exam questions covering regulations, operating, electronics, and safety.","questionNum":"Question","of":"of","correct":"Correct!","wrong":"Wrong!","score":"Score","nextQ":"Next","prevQ":"Previous","submit":"Submit","review":"Review","techClass":"Technician","genClass":"General","extraClass":"Extra","category":"Category","progress":"Progress","passed":"PASSED!","failed":"Try again"});
+Object.assign(LANG.fr, {"title":"Entraineur Examen Radio","subtitle":"📝 Entraineur d'examen de licence radio amateur","sectionA":"Theorie","sectionB":"Controles","sectionC":"Examen Pratique","mainSection":"Entraineur Examen Radio","mainDesc":"Entrainez-vous pour l'examen de licence radio amateur","start":"Commencer","stop":"Terminer","simStarted":"Examen commence!","simStopped":"Examen termine","theoryTitle":"Examen Licence Radio Amateur","theoryDesc":"Pratiquez les questions d'examen couvrant la reglementation, l'exploitation, l'electronique et la securite.","questionNum":"Question","of":"sur","correct":"Correct!","wrong":"Faux!","score":"Score","nextQ":"Suivant","prevQ":"Precedent","submit":"Soumettre","review":"Reviser","techClass":"Technicien","genClass":"General","extraClass":"Extra","category":"Categorie","progress":"Progression","passed":"REUSSI!","failed":"Reessayez"});
+Object.assign(LANG.ar, {"title":"مدرب امتحان الراديو","subtitle":"📝 مدرب امتحان رخصة الراديو الهاوي مع أسئلة تدريبية","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"التدريب على الامتحان","mainSection":"مدرب امتحان الراديو","mainDesc":"تدرب على امتحان رخصة الراديو الهاوي","start":"بدء الامتحان","stop":"إنهاء الامتحان","simStarted":"بدأ الامتحان!","simStopped":"انتهى الامتحان","theoryTitle":"امتحان رخصة الراديو الهاوي","theoryDesc":"تدرب على أسئلة الامتحان التي تغطي اللوائح والتشغيل والإلكترونيات والسلامة.","questionNum":"سؤال","of":"من","correct":"صحيح!","wrong":"خطأ!","score":"النتيجة","nextQ":"التالي","prevQ":"السابق","submit":"إرسال","review":"مراجعة","techClass":"تقني","genClass":"عام","extraClass":"متقدم","category":"الفئة","progress":"التقدم","passed":"ناجح!","failed":"حاول مرة أخرى"});
+setLanguage(currentLang);
+
+
+/* ═══════ HAM EXAM TRAINER SIM ═══════ */
+let simRunning=false,examIdx=0,examScore=0,examAnswers=[];
+const examQuestions=[
+  {q:'What is the minimum age requirement to hold a ham radio license in most countries?',a:['No minimum age','16 years','18 years','21 years'],correct:0,cat:'Regulations'},
+  {q:'What does SWR stand for?',a:['Standing Wave Ratio','Signal Wave Resistance','Short Wave Radio','Standard Wave Response'],correct:0,cat:'Electronics'},
+  {q:'What is the purpose of a dummy load?',a:['To test transmitter without radiating','To increase power output','To filter harmonics','To match impedance'],correct:0,cat:'Equipment'},
+  {q:'Which band is best for local communication?',a:['2 meters (VHF)','20 meters (HF)','160 meters (MF)','6 meters (VHF)'],correct:0,cat:'Operating'},
+  {q:'What is the impedance of most amateur radio coaxial cable?',a:['50 ohms','75 ohms','100 ohms','300 ohms'],correct:0,cat:'Electronics'},
+  {q:'What does CQ mean in ham radio?',a:['Calling any station','Emergency call','Channel query','Clear frequency'],correct:0,cat:'Operating'},
+  {q:'What is the phonetic alphabet word for the letter M?',a:['Mike','Metro','Maine','Morse'],correct:0,cat:'Operating'},
+  {q:'What type of emission is FM voice?',a:['F3E','A3E','J3E','C3F'],correct:0,cat:'Regulations'},
+  {q:'What is the purpose of a balun?',a:['Match balanced to unbalanced','Amplify signal','Filter noise','Generate RF'],correct:0,cat:'Electronics'},
+  {q:'What frequency range is the 20-meter band?',a:['14.000-14.350 MHz','21.000-21.450 MHz','7.000-7.300 MHz','28.000-29.700 MHz'],correct:0,cat:'Regulations'},
+  {q:'What is the maximum power output for a Technician licensee on VHF?',a:['1500 watts PEP','100 watts','500 watts','50 watts'],correct:0,cat:'Regulations'},
+  {q:'What does RST stand for in a signal report?',a:['Readability, Strength, Tone','Reception, Signal, Transmission','Radio Signal Test','Receive Send Transmit'],correct:0,cat:'Operating'}
+];
+
+function showQuestion(){
+  const qe=$('questionText'),ne=$('questionNum'),pe=$('progressBar');
+  if(!qe)return;
+  const q=examQuestions[examIdx];
+  qe.textContent=q.q;
+  if(ne)ne.textContent=(LANG[currentLang].questionNum||'Question')+' '+(examIdx+1)+' '+(LANG[currentLang].of||'of')+' '+examQuestions.length;
+  if(pe)pe.style.width=((examIdx+1)/examQuestions.length*100)+'%';
+  const ce=$('catDisplay');if(ce)ce.textContent=q.cat;
+  const opts=$('optionsContainer');
+  if(opts){opts.innerHTML='';
+    q.a.forEach((a,i)=>{
+      const btn=document.createElement('button');
+      btn.className='btn-sm';btn.style.cssText='width:100%;text-align:left;padding:10px 14px;margin-bottom:6px;border-radius:10px';
+      btn.textContent=String.fromCharCode(65+i)+'. '+a;
+      if(examAnswers[examIdx]===i){btn.style.borderColor='var(--accent)';btn.style.background='var(--glow)';}
+      btn.onclick=()=>selectAnswer(i);
+      opts.appendChild(btn);
+    });
+  }
+  const fb=$('examFeedback');if(fb)fb.textContent='';
+}
+
+function selectAnswer(idx){
+  examAnswers[examIdx]=idx;
+  const q=examQuestions[examIdx];
+  const fb=$('examFeedback');
+  if(idx===q.correct){
+    if(fb){fb.textContent=LANG[currentLang].correct||'Correct!';fb.style.color='#4ade80';}
+    log('Q'+(examIdx+1)+': Correct!','success');
+  }else{
+    if(fb){fb.textContent=(LANG[currentLang].wrong||'Wrong!')+' Answer: '+q.a[q.correct];fb.style.color='#f87171';}
+    log('Q'+(examIdx+1)+': Wrong','error');
+  }
+  showQuestion();
+}
+
+function nextQuestion(){if(examIdx<examQuestions.length-1){examIdx++;showQuestion();}}
+function prevQuestion(){if(examIdx>0){examIdx--;showQuestion();}}
+function finishExam(){
+  examScore=0;
+  examQuestions.forEach((q,i)=>{if(examAnswers[i]===q.correct)examScore++;});
+  const pct=Math.round(examScore/examQuestions.length*100);
+  const passed=pct>=70;
+  const fb=$('examFeedback');
+  if(fb){fb.textContent=examScore+'/'+examQuestions.length+' ('+pct+'%) '+(passed?(LANG[currentLang].passed||'PASSED!'):(LANG[currentLang].failed||'Try again'));
+    fb.style.color=passed?'#4ade80':'#f87171';}
+  const se=$('scoreDisplay');if(se)se.textContent=pct+'%';
+  log('Exam finished: '+examScore+'/'+examQuestions.length+' ('+pct+'%)',passed?'success':'error');
+  // Draw result on canvas
+  const c=$('examCanvas'),ctx=c?c.getContext('2d'):null;
+  if(ctx){
+    const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+    const accent2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+    // Pie chart
+    const cx2=W/2,cy2=H/2,r=Math.min(cx2,cy2)-20;
+    ctx.beginPath();ctx.moveTo(cx2,cy2);ctx.arc(cx2,cy2,r,0,Math.PI*2*(examScore/examQuestions.length));ctx.fillStyle=accent;ctx.fill();
+    ctx.beginPath();ctx.moveTo(cx2,cy2);ctx.arc(cx2,cy2,r,Math.PI*2*(examScore/examQuestions.length),Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.1)';ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText(pct+'%',cx2,cy2+8);
+  }
+  simRunning=false;setStatus(false);
+}
+
+function startSim(){simRunning=true;examIdx=0;examScore=0;examAnswers=[];setStatus(true);
+  log(LANG[currentLang].simStarted||'Started','success');showQuestion();}
+function stopSim(){finishExam();}
+function init_exam_trainer(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('nextBtn'))$('nextBtn').onclick=nextQuestion;
+  if($('prevBtn'))$('prevBtn').onclick=prevQuestion;
+}
+init_exam_trainer();

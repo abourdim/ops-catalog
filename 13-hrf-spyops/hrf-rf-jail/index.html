@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>RF Jail — Workshop DIY</title>
+  <meta name="description" content="Virtual Faraday cage — monitor and block specific frequencies — Workshop-DIY." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="RF Jail — Workshop DIY" />
+  <meta property="og:description" content="Create a virtual Faraday cage. Monitor and block specific frequencies." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -72,22 +72,62 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">&#x1F512;</span> <span data-i18n="mainSection">RF Jail</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Virtual Faraday cage — monitor and block frequencies</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Spectrum Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="jailCanvas" width="780" height="300" style="width:100%;display:block;background:#0a0a1a;cursor:crosshair;"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="cageBtn" class="primary"><span class="btn-icon">&#x1F512;</span> <span data-i18n="activateCage">Activate Cage</span></button>
+          <button id="addBlockBtn"><span class="btn-icon">&#x1F6AB;</span> <span data-i18n="blockFreq">Block Frequency</span></button>
+          <button id="clearBlocksBtn"><span class="btn-icon">&#x1F5D1;</span> <span data-i18n="clearBlocks">Clear Blocks</span></button>
+          <div style="flex:1;"></div>
+          <label style="font-size:.8rem;color:var(--text-muted);" data-i18n="shielding">Shielding:</label>
+          <input id="shieldLevel" type="range" min="0" max="100" value="80" style="width:100px;" />
+          <span id="shieldLabel" style="font-size:.8rem;color:var(--accent);">80 dB</span>
+        </div>
+
+        <!-- Status Panels -->
+        <div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F6E1; <span data-i18n="cageStatus">Cage Status</span></div>
+            <div id="cageMeter" style="height:24px;border-radius:12px;background:rgba(0,0,0,.3);margin:8px 0;overflow:hidden;">
+              <div id="cageFill" style="height:100%;width:0%;border-radius:12px;transition:width .3s;background:#22c55e;"></div>
+            </div>
+            <div id="cageText" style="font-family:var(--font-h);font-size:1rem;text-align:center;color:#ef4444;" data-i18n="inactive">INACTIVE</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F6AB; <span data-i18n="blockedBands">Blocked Bands</span></div>
+            <div id="blockList" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;max-height:80px;overflow-y:auto;"></div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4CA; <span data-i18n="leakage">Leakage Monitor</span></div>
+            <div id="leakStats" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- SECTION A — Blocked Signals -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F6AB;</span> <span data-i18n="sectionA">Blocked Signals</span></summary>
+        <div class="card">
+          <div id="blockedLog" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="jailHint">Click on the spectrum to add frequency blocks.</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- SECTION B — Faraday Cage Info -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">Faraday Cage Science</span></summary>
+        <div class="card">
+          <div id="faradayDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
       </details>
 
     </div>

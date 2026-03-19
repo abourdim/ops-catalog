@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Field Comms Kit — Workshop DIY</title>
-  <meta name="description" content="Mesh + HF + panic button backpack"/>
+  <title>kit-field-comms — Workshop DIY</title>
+  <meta name="description" content="Field communications kit. Portable secure comms setup"/>
   <meta name="author" content="Workshop-DIY — abourdim"/>
-  <meta property="og:title" content="Field Comms Kit — Workshop DIY"/>
-  <meta property="og:description" content="Mesh + HF + panic button backpack"/>
+  <meta property="og:title" content="kit-field-comms — Workshop DIY"/>
+  <meta property="og:description" content="Field communications kit. Portable secure comms setup"/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="icon-512.png"/>
   <link rel="icon" href="favicon.ico" sizes="any"/>
@@ -16,13 +16,23 @@
   <meta name="theme-color" content="#08091a"/>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .sim-canvas{width:100%;border-radius:8px;border:1px solid var(--card-border,rgba(255,255,255,.1));background:#0a0a1a;display:block;cursor:crosshair}
+    .stat-box{background:rgba(0,0,0,.25);border-radius:8px;padding:.5rem .75rem;border:1px solid var(--card-border,rgba(255,255,255,.1))}
+    .stat-label{font-size:.7rem;opacity:.6;text-transform:uppercase;letter-spacing:1px}
+    .stat-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700;color:var(--accent,#d4a017)}
+    .progress-wrap{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+    .progress-bar{height:100%;background:var(--accent,#d4a017);border-radius:3px;transition:width .3s}
+    .fire-btn{background:rgba(244,67,54,.2)!important;border-color:#f44336!important;color:#f44336!important}
+    .freq-display{font-family:'Orbitron',monospace;font-size:2rem;text-align:center;color:var(--accent,#d4a017);padding:.5rem;letter-spacing:2px}
+  </style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Field Comms Kit</div>
-      <div class="splash-sub" data-i18n="subtitle">🎒 Mesh + HF + panic button backpack</div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">Field Communications Kit — Portable Secure Comms</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -33,65 +43,66 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Field Comms Kit</h1><div class="subtitle" data-i18n="subtitle">🎒 Mesh + HF + panic button backpack</div></div>
+          <div><h1 data-i18n="title">kit-field-comms</h1><div class="subtitle" data-i18n="subtitle">Field Communications Kit — Portable Secure Comms</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
-            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
-            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
-            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+            <button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button>
+            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button>
+            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#128220;</button>
           </div>
           <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
         </div>
       </div>
       <div class="card" id="mainCard">
         <div class="card-header"><div>
-          <div class="card-title"><span class="icon">🎒</span> <span data-i18n="mainSection">Field Comms Kit</span></div>
-          <div class="card-subtitle"><span data-i18n="mainDesc">Mesh + HF + panic button backpack</span> <span class="version-tag">v1.2</span></div>
+          <div class="card-title"><span class="icon">&#128225;</span> <span data-i18n="mainSection">Field Comms — Secure Channel</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Portable encrypted comms with mesh relay and HF backup</span> <span class="version-tag">v1.0</span></div>
         </div></div>
         <div class="control-section">
+          <div class="freq-display" id="freqDisplay">145.800 MHz</div>
+          <canvas id="simCanvas" class="sim-canvas" width="480" height="160"></canvas>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
-            <div class="stat-box"><div class="stat-label" data-i18n="fcStat1">Status</div><div class="stat-val" id="fcS1">STANDBY</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="fcStat2">Signal</div><div class="stat-val" id="fcS2">--</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="fcStat3">Events</div><div class="stat-val" id="fcS3">0</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="fcStat4">Uptime</div><div class="stat-val" id="fcS4">00:00</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="statLink">Link Status</div><div class="stat-val" id="statLink">STANDBY</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="statSNR">Signal / Noise</div><div class="stat-val" id="statSNR">-- dB</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="statPackets">Packets TX</div><div class="stat-val" id="statPackets">0</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="statUptime">Uptime</div><div class="stat-val" id="statUptime">00:00</div></div>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-sm primary" onclick="fcActivate()"><span class="btn-icon">🎒</span> <span data-i18n="fcActivate">Activate</span></button>
-            <button class="btn-sm" onclick="fcAction1()"><span class="btn-icon">▶️</span> <span data-i18n="fcAct1">Run Scan</span></button>
-            <button class="btn-sm fire-btn" onclick="fcEmergency()"><span class="btn-icon">🔥</span> <span data-i18n="fcEmerg">Emergency</span></button>
+          <div class="progress-wrap"><div class="progress-bar" id="sigBar" style="width:0%"></div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <button class="btn-sm primary" id="btnActivate"><span class="btn-icon">&#128225;</span> <span data-i18n="btnActivate">Open Channel</span></button>
+            <button class="btn-sm" id="btnScan"><span class="btn-icon">&#128269;</span> <span data-i18n="btnScan">Freq Scan</span></button>
+            <button class="btn-sm" id="btnSendMsg"><span class="btn-icon">&#9993;&#65039;</span> <span data-i18n="btnSend">Send Burst</span></button>
+            <button class="btn-sm fire-btn" id="btnPanic"><span class="btn-icon">&#127384;</span> <span data-i18n="btnPanic">Panic Signal</span></button>
           </div>
-          <div class="progress-wrap" style="margin-top:10px"><div class="progress-bar" id="fcBar" style="width:0%"></div></div>
-          <canvas id="fcCanvas" width="400" height="120" style="width:100%;margin-top:10px;border-radius:8px;background:#0a0a1a"></canvas>
         </div>
       </div>
-      <details class="collapsible"><summary><span class="icon">📡</span> <span data-i18n="sectionA">Mesh Network</span></summary>
+      <details class="collapsible"><summary><span class="icon">&#128225;</span> <span data-i18n="sectionA">Mesh Network Relay</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📡</span> <span data-i18n="fcSecA">Mesh Network</span></h3>
-          <div id="fcSecAContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <canvas id="meshCanvas" class="sim-canvas" width="480" height="140"></canvas>
+          <div id="meshInfo" style="font-family:monospace;font-size:.8rem;color:var(--accent);padding:8px;min-height:60px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="fcSecAAction()"><span data-i18n="fcSecABtn">Execute</span></button>
-            <button class="btn-sm" onclick="fcSecAReset()"><span data-i18n="fcSecARst">Reset</span></button>
+            <button class="btn-sm primary" id="btnMeshPing"><span data-i18n="btnMeshPing">Ping Nodes</span></button>
+            <button class="btn-sm" id="btnMeshReset"><span data-i18n="btnMeshReset">Reset Mesh</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">📻</span> <span data-i18n="sectionB">HF Radio</span></summary>
+      <details class="collapsible"><summary><span class="icon">&#128251;</span> <span data-i18n="sectionB">HF Backup Radio</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📻</span> <span data-i18n="fcSecB">HF Radio</span></h3>
-          <div id="fcSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <canvas id="hfCanvas" class="sim-canvas" width="480" height="120"></canvas>
+          <div id="hfInfo" style="font-family:monospace;font-size:.8rem;color:var(--accent);padding:8px;min-height:60px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="fcSecBAction()"><span data-i18n="fcSecBBtn">Execute</span></button>
-            <button class="btn-sm" onclick="fcSecBReset()"><span data-i18n="fcSecBRst">Reset</span></button>
+            <button class="btn-sm primary" id="btnHfTune"><span data-i18n="btnHfTune">Auto-Tune</span></button>
+            <button class="btn-sm" id="btnHfReset"><span data-i18n="btnHfReset">Reset HF</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">🆘</span> <span data-i18n="sectionC">Panic System</span></summary>
+      <details class="collapsible"><summary><span class="icon">&#127384;</span> <span data-i18n="sectionC">Emergency Protocol</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">🆘</span> <span data-i18n="fcSecC">Panic System</span></h3>
-          <div id="fcSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div id="emergInfo" style="font-family:monospace;font-size:.8rem;color:#f44336;padding:8px;min-height:80px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="fcSecCAction()"><span data-i18n="fcSecCBtn">Execute</span></button>
-            <button class="btn-sm" onclick="fcSecCReset()"><span data-i18n="fcSecCRst">Reset</span></button>
+            <button class="btn-sm fire-btn" id="btnEmergExec"><span data-i18n="btnEmergExec">Execute Protocol</span></button>
+            <button class="btn-sm" id="btnEmergReset"><span data-i18n="btnEmergReset">Stand Down</span></button>
           </div>
         </div></div>
       </details>
@@ -103,50 +114,51 @@
   <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
   <div class="sidebar-overlay" id="helpOverlay"></div>
   <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
-    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#10067; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
     <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
     <div class="sidebar-body">
       <div class="help-content active" id="helpFaq">
-        <details class="help-item"><summary data-i18n="faq_q1">What is Field Comms Kit?</summary><p data-i18n="faq_a1">Mesh + HF + panic button backpack</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">How do I change the theme?</summary><p data-i18n="faq_a2">Open Settings and pick a theme.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">How do I change the language?</summary><p data-i18n="faq_a3">Open Settings and pick your language. Arabic enables RTL.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q1">What is the Field Comms Kit?</summary><p data-i18n="faq_a1">A portable secure communications backpack with mesh networking, HF radio backup, and encrypted burst messaging for field operations.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">How does the mesh network work?</summary><p data-i18n="faq_a2">Nodes automatically discover peers and relay encrypted packets. Each node extends range by hopping messages through the mesh.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What is burst transmission?</summary><p data-i18n="faq_a3">Data is compressed and sent in a rapid burst to minimize interception time. The shorter the transmission, the harder it is to detect.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">What does the panic button do?</summary><p data-i18n="faq_a4">Broadcasts an emergency SOS on all frequencies with GPS coordinates. Auto-wipes sensitive data from the kit after transmission.</p></details>
       </div>
       <div class="help-content" id="helpHowto">
-        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Explore the main dashboard.</p></div>
-        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Open sections for more controls.</p></div>
-        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Check the Activity Log.</p></div>
-        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Settings to customize.</p></div>
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Open Channel to establish a secure communications link.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Use Freq Scan to find clear frequencies with low interference.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Send Burst to transmit encrypted data packets to field agents.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use the Panic Signal only in emergencies — it broadcasts on all bands.</p></div>
       </div>
       <div class="help-content" id="helpWiki">
-        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">EN/FR/AR with RTL.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">All data local.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_mesh_title">&#128225; Mesh Networking</h3><p data-i18n="wiki_mesh">Decentralized peer-to-peer communication where each node relays data. No single point of failure. Range extends with each added node.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_hf_title">&#128251; HF Radio</h3><p data-i18n="wiki_hf">High-Frequency radio (3-30 MHz) can bounce signals off the ionosphere for long-range comms without satellites or infrastructure.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_burst_title">&#9889; Burst Transmission</h3><p data-i18n="wiki_burst">Compress data into ultra-short transmissions (milliseconds) to evade signal interception and direction-finding equipment.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_crypto_title">&#128272; Field Encryption</h3><p data-i18n="wiki_crypto">End-to-end AES-256 encryption with rotating keys. Messages are indistinguishable from noise without the correct key material.</p></div>
       </div>
     </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <div class="sidebar-overlay" id="settingsOverlay"></div>
   <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
-    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#9881;&#65039; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div>
     <div class="sidebar-body">
-      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div>
+      <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>&#127468;&#127463; EN</option><option value="fr">&#127467;&#127479; FR</option><option value="ar">&#127465;&#127487; &#1593;&#1585;&#1576;&#1610;</option></select></div>
       <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div>
-      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">🔊 Sound effects</span></label></div>
-      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
-      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
-      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+      <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">&#128266; Sound effects</span></label></div>
+      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127908;</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+      <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#129707;</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">&#1587;&#1576;&#1581;&#1575;&#1606; &#1575;&#1604;&#1604;&#1607;</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#127925;</span> <span data-i18n="musicMode">Music reactive</span></button></div>
     </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <aside class="sidebar" id="logPanel" aria-label="Activity Log">
     <div class="resize-handle" id="logResizeHandle"></div>
-    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
-    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
+    <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">&#128220; Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#129529;</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#128203;</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#128190;</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div></div>
+    <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#10003;</button><button class="log-filter" data-filter="error">&#10007;</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
     <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
-    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
-  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>
   <script src="script.js"></script>
 </body>
 </html>

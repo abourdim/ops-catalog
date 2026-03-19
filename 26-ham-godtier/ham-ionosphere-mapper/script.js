@@ -1449,3 +1449,80 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"Ionosphere Mapper","subtitle":"🌐 Map ionospheric conditions, predict propagation","sectionA":"Theory","sectionB":"Controls","sectionC":"Ionosphere Map","mainSection":"Ionosphere Mapper","mainDesc":"Map ionospheric conditions and predict propagation paths","start":"Start Mapping","stop":"Stop","simStarted":"Mapping started","simStopped":"Mapping stopped","theoryTitle":"Ionosphere Theory","theoryDesc":"The ionosphere reflects HF radio waves. Layers (D, E, F1, F2) vary with solar activity, time, and season. foF2 determines maximum usable frequency.","foF2":"foF2 (MHz)","muf":"MUF (MHz)","layer":"Layer","sunspot":"SSN","txLat":"TX Lat","txLon":"TX Lon","rxLat":"RX Lat","rxLon":"RX Lon","calcPath":"Calculate Path","hops":"Hops","distance":"Distance"});
+Object.assign(LANG.fr, {"title":"Cartographe Ionosphere","subtitle":"🌐 Cartographier les conditions ionospheriques","sectionA":"Theorie","sectionB":"Controles","sectionC":"Carte Ionosphere","mainSection":"Cartographe Ionosphere","mainDesc":"Cartographier les conditions ionospheriques et predire la propagation","start":"Demarrer Cartographie","stop":"Arreter","simStarted":"Cartographie demarree","simStopped":"Cartographie arretee","theoryTitle":"Theorie de l'Ionosphere","theoryDesc":"L'ionosphere reflechit les ondes HF. Les couches (D, E, F1, F2) varient avec l'activite solaire, l'heure et la saison.","foF2":"foF2 (MHz)","muf":"MUF (MHz)","layer":"Couche","sunspot":"SSN","txLat":"Lat TX","txLon":"Lon TX","rxLat":"Lat RX","rxLon":"Lon RX","calcPath":"Calculer Trajet","hops":"Sauts","distance":"Distance"});
+Object.assign(LANG.ar, {"title":"راسم الأيونوسفير","subtitle":"🌐 رسم خريطة الظروف الأيونوسفيرية وتوقع الانتشار","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"خريطة الأيونوسفير","mainSection":"راسم الأيونوسفير","mainDesc":"رسم خريطة الظروف الأيونوسفيرية وتوقع مسارات الانتشار","start":"بدء الرسم","stop":"إيقاف","simStarted":"بدأ الرسم","simStopped":"توقف الرسم","theoryTitle":"نظرية الأيونوسفير","theoryDesc":"يعكس الأيونوسفير موجات HF. تتغير الطبقات (D، E، F1، F2) مع النشاط الشمسي والوقت والموسم.","foF2":"foF2 (ميغاهرتز)","muf":"MUF (ميغاهرتز)","layer":"الطبقة","sunspot":"SSN","txLat":"خط عرض المرسل","txLon":"خط طول المرسل","rxLat":"خط عرض المستقبل","rxLon":"خط طول المستقبل","calcPath":"حساب المسار","hops":"القفزات","distance":"المسافة"});
+setLanguage(currentLang);
+
+
+/* ═══════ IONOSPHERE MAPPER SIM ═══════ */
+let simRunning=false,simTimer=null;
+const ionCanvas=$('ionCanvas'),ionCtx=ionCanvas?ionCanvas.getContext('2d'):null;
+let foF2=5,muf=14,ssn=80;
+
+function drawIonosphere(){
+  if(!ionCtx)return;
+  const W=ionCanvas.width,H=ionCanvas.height;
+  ionCtx.clearRect(0,0,W,H);
+  // Earth
+  ionCtx.fillStyle='#1a3a2a';ionCtx.fillRect(0,H*0.8,W,H*0.2);
+  ionCtx.fillStyle='#4ade80';ionCtx.font='12px sans-serif';ionCtx.fillText('Earth Surface',10,H*0.85);
+  // Layers
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const accent2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  const layers=[
+    {name:'D Layer',y:H*0.7,h:20,color:'rgba(248,113,113,0.3)',active:currentTime()>=6&&currentTime()<=18},
+    {name:'E Layer',y:H*0.55,h:25,color:'rgba(251,191,36,0.3)',active:true},
+    {name:'F1 Layer',y:H*0.38,h:20,color:'rgba(56,189,248,0.3)',active:currentTime()>=8&&currentTime()<=16},
+    {name:'F2 Layer',y:H*0.2,h:30,color:'rgba(192,132,252,0.4)',active:true}
+  ];
+  layers.forEach(l=>{
+    if(l.active){
+      ionCtx.fillStyle=l.color;
+      for(let x=0;x<W;x++){
+        const density=0.5+0.5*Math.sin(x/50+Date.now()/2000);
+        ionCtx.globalAlpha=density*0.6;
+        ionCtx.fillRect(x,l.y,1,l.h);
+      }
+      ionCtx.globalAlpha=1;
+    }
+    ionCtx.fillStyle=l.active?accent:'rgba(255,255,255,0.2)';
+    ionCtx.font='11px sans-serif';ionCtx.fillText(l.name+(l.active?' [ACTIVE]':' [inactive]'),10,l.y-4);
+  });
+  // Signal path
+  const txX=W*0.15,rxX=W*0.85;
+  ionCtx.strokeStyle=accent;ionCtx.lineWidth=2;ionCtx.setLineDash([5,3]);
+  ionCtx.beginPath();ionCtx.moveTo(txX,H*0.78);
+  const bounceY=H*0.25;const midX=W/2;
+  ionCtx.quadraticCurveTo(midX,bounceY-20,rxX,H*0.78);
+  ionCtx.stroke();ionCtx.setLineDash([]);
+  // TX/RX markers
+  ionCtx.fillStyle='#f87171';ionCtx.beginPath();ionCtx.arc(txX,H*0.78,6,0,Math.PI*2);ionCtx.fill();
+  ionCtx.fillStyle='#4ade80';ionCtx.beginPath();ionCtx.arc(rxX,H*0.78,6,0,Math.PI*2);ionCtx.fill();
+  ionCtx.fillStyle='#fff';ionCtx.font='10px sans-serif';
+  ionCtx.fillText('TX',txX-8,H*0.78+18);ionCtx.fillText('RX',rxX-8,H*0.78+18);
+  // Update values
+  foF2=3+Math.random()*8;muf=foF2*3.2*(1+ssn/200);
+  ssn=Math.max(0,Math.min(200,ssn+Math.floor(Math.random()*11)-5));
+  const fe=$('foF2Val');if(fe)fe.textContent=foF2.toFixed(1);
+  const me=$('mufVal');if(me)me.textContent=muf.toFixed(1);
+  const se=$('ssnVal');if(se)se.textContent=ssn;
+  log('foF2='+foF2.toFixed(1)+' MUF='+muf.toFixed(1)+' SSN='+ssn,'info');
+}
+
+function currentTime(){return new Date().getHours();}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);
+  log(LANG[currentLang].simStarted||'Started','success');
+  drawIonosphere();simTimer=setInterval(drawIonosphere,4000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+function init_ionosphere(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  drawIonosphere();
+}
+init_ionosphere();

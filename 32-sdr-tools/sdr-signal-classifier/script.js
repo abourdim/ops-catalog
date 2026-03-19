@@ -63,23 +63,23 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Signal Classifier', subtitle: '🤖 AI-assisted signal classification — Identify modulation types',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Signal Classifier', mainDesc: 'Identify modulation types with AI analysis',
+    sectionA: 'Classification Results', sectionB: 'Modulation Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    faq_q1: 'What is the Signal Classifier?', faq_a1: 'An AI-assisted tool that identifies modulation types from signal features.',
+    faq_q2: 'What modulations are detected?', faq_a2: 'AM, FM, SSB, PSK, QAM, FSK, OFDM and CW.',
+    faq_q3: 'How does classification work?', faq_a3: 'Feature extraction analyzes bandwidth, symmetry, and cyclostationary properties.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select or generate a test signal.',
+    howto_2: 'Click Classify to analyze the signal.',
+    howto_3: 'View confidence scores for each modulation type.',
+    howto_4: 'Check the constellation diagram for visual analysis.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🤖 Signal Classifier ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Classifieur Signal SDR', subtitle: '🤖 Classification IA de signaux — Identifier les types de modulation',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Classifieur Signal', mainDesc: 'Identifier les modulations par analyse IA',
+    sectionA: 'Résultats Classification', sectionB: 'Théorie Modulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🤖 Classifieur Signal prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مصنف إشارات SDR', subtitle: '🤖 تصنيف إشارات بالذكاء الاصطناعي — تعرف على أنواع التعديل',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مصنف الإشارات', mainDesc: 'تعرف على أنواع التعديل بتحليل ذكي',
+    sectionA: 'نتائج التصنيف', sectionB: 'نظرية التعديل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🤖 مصنف الإشارات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,155 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR SIGNAL CLASSIFIER SIMULATION ═══════ */
+
+const MOD_TYPES = ['AM', 'FM', 'SSB', 'PSK', 'QAM', 'FSK', 'OFDM', 'CW'];
+const MOD_COLORS = { AM: '#f44', FM: '#4af', SSB: '#fa0', PSK: '#4f4', QAM: '#f4f', FSK: '#ff0', OFDM: '#0ff', CW: '#aaa' };
+
+function generateModSignal(type, N) {
+  const buf = new Float32Array(N), ibuf = new Float32Array(N);
+  const fc = 0.25;
+  for (let i = 0; i < N; i++) {
+    const t = i / N;
+    const noise = 0.05 * (Math.random() - 0.5);
+    switch (type) {
+      case 'AM': buf[i] = (1 + 0.5 * Math.sin(2 * Math.PI * 5 * t)) * Math.cos(2 * Math.PI * fc * N * t) + noise; ibuf[i] = (1 + 0.5 * Math.sin(2 * Math.PI * 5 * t)) * Math.sin(2 * Math.PI * fc * N * t); break;
+      case 'FM': buf[i] = Math.cos(2 * Math.PI * fc * N * t + 5 * Math.sin(2 * Math.PI * 3 * t)) + noise; ibuf[i] = Math.sin(2 * Math.PI * fc * N * t + 5 * Math.sin(2 * Math.PI * 3 * t)); break;
+      case 'SSB': buf[i] = Math.cos(2 * Math.PI * (fc + 0.02 * Math.sin(2 * Math.PI * 2 * t)) * N * t) + noise; ibuf[i] = Math.sin(2 * Math.PI * (fc + 0.02 * Math.sin(2 * Math.PI * 2 * t)) * N * t); break;
+      case 'PSK': { const sym = Math.floor(t * 20) % 4; const phase = sym * Math.PI / 2; buf[i] = Math.cos(2 * Math.PI * fc * N * t + phase) + noise; ibuf[i] = Math.sin(2 * Math.PI * fc * N * t + phase); } break;
+      case 'QAM': { const sym = Math.floor(t * 16) % 16; const ai = ((sym % 4) - 1.5) / 1.5, aq = ((Math.floor(sym / 4)) - 1.5) / 1.5; buf[i] = ai * Math.cos(2 * Math.PI * fc * N * t) - aq * Math.sin(2 * Math.PI * fc * N * t) + noise; ibuf[i] = ai * Math.sin(2 * Math.PI * fc * N * t) + aq * Math.cos(2 * Math.PI * fc * N * t); } break;
+      case 'FSK': { const bit = Math.floor(t * 10) % 2; const ff = fc + (bit ? 0.05 : -0.05); buf[i] = Math.cos(2 * Math.PI * ff * N * t) + noise; ibuf[i] = Math.sin(2 * Math.PI * ff * N * t); } break;
+      case 'OFDM': { let v = 0, vi = 0; for (let k = 0; k < 8; k++) { v += Math.cos(2 * Math.PI * (fc * N + k * 4) * t); vi += Math.sin(2 * Math.PI * (fc * N + k * 4) * t); } buf[i] = v / 8 + noise; ibuf[i] = vi / 8; } break;
+      case 'CW': buf[i] = Math.cos(2 * Math.PI * fc * N * t) * (Math.sin(2 * Math.PI * 5 * t) > 0 ? 1 : 0) + noise; ibuf[i] = Math.sin(2 * Math.PI * fc * N * t) * (Math.sin(2 * Math.PI * 5 * t) > 0 ? 1 : 0); break;
+    }
+  }
+  return { re: buf, im: ibuf };
+}
+
+function classifySignal(re, im, N) {
+  // Feature extraction
+  const power = re.reduce((s, v) => s + v * v, 0) / N;
+  let zeroCross = 0; for (let i = 1; i < N; i++) if (re[i] * re[i - 1] < 0) zeroCross++;
+  const bandwidth = zeroCross / N;
+  let envVar = 0; for (let i = 0; i < N; i++) { const env = Math.sqrt(re[i] * re[i] + im[i] * im[i]); envVar += (env - Math.sqrt(power)) ** 2; } envVar /= N;
+  let phaseChanges = 0; for (let i = 1; i < N; i++) { const dp = Math.atan2(im[i], re[i]) - Math.atan2(im[i - 1], re[i - 1]); if (Math.abs(dp) > 0.5) phaseChanges++; } phaseChanges /= N;
+
+  // Simple classifier (simulated scores)
+  const scores = {};
+  MOD_TYPES.forEach(m => {
+    let score = 0.05 + Math.random() * 0.1;
+    switch (m) {
+      case 'AM': score += envVar > 0.05 ? 0.5 : 0.1; score += bandwidth < 0.3 ? 0.2 : 0; break;
+      case 'FM': score += bandwidth > 0.3 ? 0.4 : 0.05; score += envVar < 0.02 ? 0.3 : 0; break;
+      case 'SSB': score += envVar > 0.02 && envVar < 0.1 ? 0.35 : 0.05; score += bandwidth < 0.25 ? 0.2 : 0; break;
+      case 'PSK': score += phaseChanges > 0.1 ? 0.5 : 0.05; score += envVar < 0.05 ? 0.2 : 0; break;
+      case 'QAM': score += phaseChanges > 0.15 && envVar > 0.03 ? 0.55 : 0.05; break;
+      case 'FSK': score += bandwidth > 0.2 && phaseChanges < 0.15 ? 0.4 : 0.05; break;
+      case 'OFDM': score += bandwidth > 0.35 && envVar > 0.04 ? 0.5 : 0.05; break;
+      case 'CW': score += envVar > 0.15 && phaseChanges < 0.05 ? 0.5 : 0.05; break;
+    }
+    scores[m] = Math.min(score, 0.99);
+  });
+  // Normalize
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  Object.keys(scores).forEach(k => scores[k] /= total);
+  return scores;
+}
+
+function drawConstellation(re, im, N) {
+  const c = $('constCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  // Axes
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2, h); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+
+  // Points
+  const step = Math.max(1, Math.floor(N / 500));
+  ctx.fillStyle = 'rgba(0,255,100,0.4)';
+  for (let i = 0; i < N; i += step) {
+    const x = w / 2 + (re[i] * w / 3);
+    const y = h / 2 - (im[i] * h / 3);
+    ctx.beginPath(); ctx.arc(x, y, 1.5, 0, 2 * Math.PI); ctx.fill();
+  }
+
+  ctx.fillStyle = '#0f0'; ctx.font = 'bold 11px Orbitron,monospace'; ctx.fillText('I/Q Constellation', 4, 14);
+  ctx.fillStyle = '#667'; ctx.font = '9px monospace'; ctx.fillText('I', w - 12, h / 2 - 4); ctx.fillText('Q', w / 2 + 4, 12);
+}
+
+function drawClassScores(scores) {
+  const c = $('scoresCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const barH = 24, gap = 6, startY = 25;
+  sorted.forEach(([mod, score], i) => {
+    const y = startY + i * (barH + gap);
+    const bw = score * (w - 160);
+    ctx.fillStyle = (MOD_COLORS[mod] || '#888') + '33'; ctx.fillRect(60, y, w - 160, barH);
+    ctx.fillStyle = MOD_COLORS[mod] || '#888'; ctx.fillRect(60, y, bw, barH);
+    ctx.fillStyle = '#fff'; ctx.font = '11px Orbitron,monospace';
+    ctx.fillText(mod, 4, y + 17);
+    ctx.fillText((score * 100).toFixed(1) + '%', 70 + bw + 6, y + 17);
+    if (i === 0) { ctx.fillStyle = '#ff0'; ctx.fillText('★', w - 20, y + 17); }
+  });
+
+  ctx.fillStyle = '#4af'; ctx.font = 'bold 13px Orbitron,monospace'; ctx.fillText('Classification Scores', 10, 16);
+
+  // Update result display
+  $('classResult').textContent = sorted[0][0];
+  $('classConf').textContent = (sorted[0][1] * 100).toFixed(1) + '%';
+}
+
+function drawSignalWaveform(re, N) {
+  const c = $('waveCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+
+  ctx.strokeStyle = '#4af'; ctx.lineWidth = 1.5; ctx.beginPath();
+  const show = Math.min(N, 500);
+  for (let i = 0; i < show; i++) {
+    const x = (i / show) * w, y = h / 2 - re[i] * (h / 2.5);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.fillStyle = '#4af'; ctx.font = 'bold 11px Orbitron,monospace'; ctx.fillText('Input Signal', 4, 14);
+}
+
+function runClassification() {
+  const L = LANG[currentLang];
+  const type = $('modSelect').value;
+  const N = 2048;
+  log(L.classStarted || 'Classification started', 'info');
+  showToast(L.working); setStatus(true);
+
+  const sig = generateModSignal(type, N);
+  const scores = classifySignal(sig.re, sig.im, N);
+
+  drawSignalWaveform(sig.re, N);
+  drawConstellation(sig.re, sig.im, N);
+  drawClassScores(scores);
+
+  hideToast();
+  const best = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];
+  log((L.classComplete || 'Classification complete') + ' | Input: ' + type + ' | Result: ' + best[0] + ' (' + (best[1] * 100).toFixed(1) + '%)', 'success');
+}
+
+function resetClassification() {
+  ['waveCanvas', 'constCanvas', 'scoresCanvas'].forEach(id => { const c = $(id); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+  $('classResult').textContent = '--'; $('classConf').textContent = '--';
+  setStatus(false); log(LANG[currentLang].resetDone || 'Reset', 'info');
+}
+
+function initSignalClassifier() {
+  const cb = $('classifyBtn'); if (cb) cb.onclick = () => setTimeout(runClassification, 50);
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetClassification;
+}
+
+document.addEventListener('DOMContentLoaded', initSignalClassifier);

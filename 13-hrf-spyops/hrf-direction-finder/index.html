@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Direction Finder — Workshop DIY</title>
+  <meta name="description" content="Triangulate signal sources with multiple receivers — Workshop-DIY educational web app." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Direction Finder — Workshop DIY" />
+  <meta property="og:description" content="Triangulate signal sources. Locate hidden transmitters on a map." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -72,22 +72,58 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">&#x1F4CD;</span> <span data-i18n="mainSection">Direction Finder</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Triangulate signal sources on the map</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Map Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="mapCanvas" width="780" height="450" style="width:100%;display:block;background:#0a1a0a;cursor:crosshair;"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="addReceiverBtn" class="primary"><span class="btn-icon">&#x1F4E1;</span> <span data-i18n="addReceiver">Add Receiver</span></button>
+          <button id="newTargetBtn"><span class="btn-icon">&#x1F3AF;</span> <span data-i18n="newTarget">New Target</span></button>
+          <button id="triangulateBtn"><span class="btn-icon">&#x1F4D0;</span> <span data-i18n="triangulate">Triangulate</span></button>
+          <button id="resetBtn"><span class="btn-icon">&#x1F504;</span> <span data-i18n="resetMap">Reset</span></button>
+          <div style="flex:1;"></div>
+          <span id="accuracyLabel" style="font-family:var(--font-h);font-size:.85rem;color:var(--accent);">Accuracy: ---</span>
+        </div>
+
+        <!-- Info Panels -->
+        <div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4E1; <span data-i18n="receivers">Receivers</span></div>
+            <div id="receiverList" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;max-height:100px;overflow-y:auto;"></div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F3AF; <span data-i18n="targetInfo">Target Info</span></div>
+            <div id="targetInfo" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F9ED; <span data-i18n="bearings">Bearings</span></div>
+            <div id="bearingInfo" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- SECTION A — Located Signals -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F4CD;</span> <span data-i18n="sectionA">Located Signals</span></summary>
+        <div class="card">
+          <div id="locatedList" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="locateHint">Place receivers on the map, then triangulate to find the target.</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- SECTION B — DF Techniques -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">DF Techniques</span></summary>
+        <div class="card">
+          <div id="dfDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
       </details>
 
     </div>

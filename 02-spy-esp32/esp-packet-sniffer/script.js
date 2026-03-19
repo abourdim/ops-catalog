@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Packet Sniffer — WiFi Radar', subtitle: '📡 Capture and analyze WiFi packets in real time',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'WiFi Packet Radar', mainDesc: 'Real-time 802.11 frame capture and visualization',
+    sectionA: 'How It Works', sectionB: 'Lab — Packet Analysis', sectionC: 'Challenges',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Packet Sniffer?', faq_a1: 'A WiFi packet capture simulator. Watch 802.11 frames in real time, decode headers, and identify devices.',
+    faq_q2: 'What are 802.11 frames?', faq_a2: 'WiFi frames are the data units in wireless networks. Types include Beacon (AP announcements), Probe (device searches), Data, and Deauth.',
+    faq_q3: 'What is monitor mode?', faq_a3: 'Monitor mode lets the ESP32 capture ALL wireless frames, not just those addressed to it. Essential for packet sniffing.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No real packets are captured.',
+    howto_1: 'Click "Start Capture" to begin sniffing WiFi packets (simulated).',
+    howto_2: 'Select a channel from the channel bar to focus on specific frequencies.',
+    howto_3: 'Watch the radar for device positions based on signal strength.',
+    howto_4: 'Open "Lab" to generate packets, filter by type, and view hex dumps.',
+    wiki_monitor_title: '📡 Monitor Mode', wiki_monitor: 'In promiscuous/monitor mode, the WiFi chip captures all frames regardless of destination address.',
+    wiki_frames_title: '📦 Frame Types', wiki_frames: 'Management frames (beacon, probe, auth), Control frames (ACK, RTS/CTS), and Data frames carry actual payload.',
+    wiki_oui_title: '🏷️ OUI Lookup', wiki_oui: 'The first 3 bytes of a MAC address identify the manufacturer (OUI). This helps identify device types.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'This simulator runs 100% in your browser. No real packets are captured or transmitted.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Packet Sniffer ready — start capturing!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Sniffer de Paquets — Radar WiFi', subtitle: '📡 Capturez et analysez les paquets WiFi en temps réel',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Radar de Paquets WiFi', mainDesc: 'Capture de trames 802.11 en temps réel',
+    sectionA: 'Comment ça marche', sectionB: 'Labo — Analyse de Paquets', sectionC: 'Défis',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Sniffer de Paquets prêt — lancez la capture !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'ملتقط الحزم — رادار WiFi', subtitle: '📡 التقط وحلل حزم WiFi في الوقت الحقيقي',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'رادار حزم WiFi', mainDesc: 'التقاط إطارات 802.11 في الوقت الحقيقي',
+    sectionA: 'كيف يعمل', sectionB: 'مختبر — تحليل الحزم', sectionC: 'التحديات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 ملتقط الحزم جاهز — ابدأ الالتقاط!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,252 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════════════════════════════════════════════════════════
+   PACKET SNIFFER — WiFi Radar Simulation
+   ═══════════════════════════════════════════════════════════ */
+
+(function PacketSnifferSim() {
+  const radarCanvas = $('radarCanvas');
+  if (!radarCanvas) return;
+  const rctx = radarCanvas.getContext('2d');
+
+  const FRAME_TYPES = [
+    {type:'beacon',icon:'📡',color:'#22c55e',label:'Beacon'},
+    {type:'probe',icon:'🔍',color:'#3b82f6',label:'Probe Req'},
+    {type:'data',icon:'📦',color:'#f59e0b',label:'Data'},
+    {type:'deauth',icon:'💀',color:'#ef4444',label:'Deauth'},
+  ];
+  const MACS = ['AA:BB:CC:11:22:33','DE:AD:BE:EF:00:01','CA:FE:BA:BE:12:34','F0:0D:CA:FE:56:78','12:34:56:78:9A:BC','78:9A:BC:DE:F0:12','D4:E5:F6:A1:B2:C3','BE:EF:00:11:22:33'];
+  const VENDORS = ['Apple','Samsung','Google','Huawei','Intel','TP-Link','Netgear','Xiaomi'];
+
+  let packets = [];
+  let devices = [];
+  let channel = 1;
+  let sniffing = false;
+  let sniffTimer = null;
+  let sweepAngle = 0;
+  let pktFilter = 'all';
+  let lastPkt = null;
+
+  // Challenges
+  let ch1Channels = new Set();
+  let ch2Types = new Set();
+
+  function randHex(n) { let s=''; for(let i=0;i<n;i++) s+=('0'+Math.floor(Math.random()*256).toString(16)).slice(-2); return s.toUpperCase(); }
+
+  function genPacket() {
+    const ft = FRAME_TYPES[Math.floor(Math.random()*FRAME_TYPES.length)];
+    const srcIdx = Math.floor(Math.random()*MACS.length);
+    const pkt = {
+      type: ft.type, icon: ft.icon, color: ft.color, label: ft.label,
+      src: MACS[srcIdx], dst: ft.type === 'beacon' ? 'FF:FF:FF:FF:FF:FF' : MACS[Math.floor(Math.random()*MACS.length)],
+      rssi: -30 - Math.floor(Math.random()*60),
+      channel,
+      hex: randHex(32),
+      time: new Date(),
+      vendor: VENDORS[srcIdx % VENDORS.length],
+    };
+    packets.push(pkt);
+    lastPkt = pkt;
+    // Track device
+    if (!devices.find(d => d.mac === pkt.src)) {
+      devices.push({mac: pkt.src, vendor: pkt.vendor, rssi: pkt.rssi, pkts: 1, angle: Math.random()*Math.PI*2, dist: (Math.abs(pkt.rssi)-30)/60});
+    } else {
+      const d = devices.find(d => d.mac === pkt.src);
+      d.pkts++;
+      d.rssi = pkt.rssi;
+    }
+    // Update challenges
+    ch1Channels.add(channel);
+    ch2Types.add(pkt.type);
+    updateChallenges();
+    return pkt;
+  }
+
+  function addPacketToList(pkt) {
+    const list = $('packetList');
+    if (!list) return;
+    const line = document.createElement('div');
+    line.className = 'packet-line';
+    line.dataset.pktfilter = pkt.type;
+    line.innerHTML = `<span class="pkt-icon">${pkt.icon}</span><span class="pkt-type" style="color:${pkt.color}">${pkt.label}</span><span>${pkt.src.substring(0,8)}...</span><span class="pkt-hex">${pkt.hex.substring(0,24)}...</span><span class="pkt-time">${pkt.time.toLocaleTimeString()}</span>`;
+    line.onclick = () => showHexDump(pkt);
+    if (pktFilter !== 'all' && pkt.type !== pktFilter) line.style.display = 'none';
+    list.prepend(line);
+    if (list.children.length > 100) list.lastChild.remove();
+  }
+
+  function updateDeviceGrid() {
+    const grid = $('deviceGrid');
+    if (!grid) return;
+    // Keep headers, clear rest
+    while (grid.children.length > 4) grid.lastChild.remove();
+    devices.forEach(d => {
+      const icons = {beacon:'📡',probe:'🔍',data:'📦',deauth:'💀'};
+      ['📱','💻','📶','🔌'][Math.floor(Math.random()*4)]; // just variety
+      const typeIcon = '📱';
+      [typeIcon, d.mac, d.rssi + ' dBm', String(d.pkts)].forEach(text => {
+        const span = document.createElement('span');
+        span.textContent = text;
+        span.style.fontSize = '.78rem';
+        grid.appendChild(span);
+      });
+    });
+  }
+
+  function updateStats() {
+    const sd = $('statDevices'); if (sd) sd.innerHTML = `📱 Devices: ${devices.length}`;
+    const sp = $('statPackets'); if (sp) sp.innerHTML = `📦 Packets: ${packets.length}`;
+    const sc = $('statChannel'); if (sc) sc.innerHTML = `📡 Ch: ${channel}`;
+  }
+
+  function showHexDump(pkt) {
+    const hex = $('labHexViewer');
+    if (hex) {
+      let out = '';
+      for (let i = 0; i < pkt.hex.length; i += 32) {
+        const chunk = pkt.hex.substring(i, i+32);
+        const offset = (i/2).toString(16).padStart(4,'0');
+        const bytes = chunk.match(/.{2}/g)?.join(' ') || '';
+        const ascii = chunk.match(/.{2}/g)?.map(h => { const c = parseInt(h,16); return c >= 32 && c <= 126 ? String.fromCharCode(c) : '.'; }).join('') || '';
+        out += `<span class="hex-offset">${offset}</span>${bytes}<span class="hex-ascii">${ascii}</span>\n`;
+      }
+      hex.innerHTML = out;
+    }
+    const dec = $('labDecodeOutput');
+    if (dec) {
+      dec.textContent = `Frame Type: ${pkt.label}\nSource: ${pkt.src}\nDest: ${pkt.dst}\nRSSI: ${pkt.rssi} dBm\nChannel: ${pkt.channel}\nVendor: ${pkt.vendor}`;
+    }
+  }
+
+  function startSniff() {
+    if (sniffing) return;
+    sniffing = true;
+    log('▶️ Packet capture started on channel ' + channel, 'info');
+    setStatus(true);
+    sniffTimer = setInterval(() => {
+      if (Math.random() < 0.7) {
+        const pkt = genPacket();
+        addPacketToList(pkt);
+        updateDeviceGrid();
+        updateStats();
+      }
+    }, 400);
+  }
+
+  function stopSniff() {
+    sniffing = false;
+    if (sniffTimer) { clearInterval(sniffTimer); sniffTimer = null; }
+    log('⏹️ Capture stopped', 'info');
+  }
+
+  function clearPackets() {
+    packets = [];
+    const list = $('packetList'); if (list) list.innerHTML = '';
+    updateStats();
+    log('🗑️ Packets cleared', 'info');
+  }
+
+  // Channel bar
+  function buildChannelBar() {
+    const bar = $('channelBar');
+    if (!bar) return;
+    for (let ch = 1; ch <= 14; ch++) {
+      const btn = document.createElement('button');
+      btn.className = 'ch-btn' + (ch === 1 ? ' active' : '');
+      btn.textContent = ch;
+      btn.onclick = () => {
+        channel = ch;
+        bar.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateStats();
+        log(`📡 Channel switched to ${ch}`, 'info');
+      };
+      bar.appendChild(btn);
+    }
+  }
+
+  // Filter bar
+  const filterBar = $('labFilterBar');
+  if (filterBar) {
+    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.onclick = () => {
+        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        pktFilter = btn.dataset.pktfilter;
+        const list = $('packetList');
+        if (list) {
+          Array.from(list.children).forEach(line => {
+            line.style.display = (pktFilter === 'all' || line.dataset.pktfilter === pktFilter) ? '' : 'none';
+          });
+        }
+      };
+    });
+  }
+
+  // Challenges
+  function updateChallenges() {
+    const c1 = $('ch1Status');
+    if (c1) c1.textContent = ch1Channels.size >= 3 ? 'Complete! ✓' : `Pending (${ch1Channels.size}/3 channels)`;
+    const c2 = $('ch2Status');
+    if (c2) c2.textContent = ch2Types.size >= 4 ? 'Complete! ✓' : `Pending (${ch2Types.size}/4 types)`;
+    const c3 = $('ch3Status');
+    if (c3) c3.textContent = devices.length >= 5 ? 'Complete! ✓' : `Pending (${devices.length}/5 devices)`;
+  }
+
+  // Radar
+  function drawRadar() {
+    const W = radarCanvas.width, H = radarCanvas.height;
+    const cx = W/2, cy = H/2, R = Math.min(W,H)/2 - 10;
+    rctx.clearRect(0, 0, W, H);
+
+    // Rings
+    for (let i = 1; i <= 3; i++) {
+      rctx.beginPath(); rctx.arc(cx, cy, R*i/3, 0, Math.PI*2);
+      rctx.strokeStyle = 'rgba(0,255,65,0.1)'; rctx.lineWidth = 1; rctx.stroke();
+    }
+    rctx.strokeStyle = 'rgba(0,255,65,0.05)';
+    rctx.beginPath(); rctx.moveTo(cx, cy-R); rctx.lineTo(cx, cy+R); rctx.stroke();
+    rctx.beginPath(); rctx.moveTo(cx-R, cy); rctx.lineTo(cx+R, cy); rctx.stroke();
+
+    // Sweep
+    sweepAngle += 0.02;
+    rctx.beginPath(); rctx.moveTo(cx, cy);
+    rctx.arc(cx, cy, R, sweepAngle - 0.4, sweepAngle);
+    rctx.closePath();
+    const grad = rctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    grad.addColorStop(0, 'rgba(0,255,65,0.25)');
+    grad.addColorStop(1, 'rgba(0,255,65,0)');
+    rctx.fillStyle = grad;
+    rctx.fill();
+
+    // Devices
+    devices.forEach(d => {
+      const r = d.dist * R;
+      const x = cx + Math.cos(d.angle) * r;
+      const y = cy + Math.sin(d.angle) * r;
+      rctx.beginPath(); rctx.arc(x, y, 4, 0, Math.PI*2);
+      rctx.fillStyle = '#00ff41';
+      rctx.shadowColor = '#00ff41'; rctx.shadowBlur = 6;
+      rctx.fill(); rctx.shadowBlur = 0;
+    });
+
+    // Center
+    rctx.beginPath(); rctx.arc(cx, cy, 5, 0, Math.PI*2);
+    rctx.fillStyle = '#00ff41'; rctx.fill();
+
+    requestAnimationFrame(drawRadar);
+  }
+
+  // Bindings
+  const startBtn = $('startSniffBtn'); if (startBtn) startBtn.onclick = startSniff;
+  const stopBtn = $('stopSniffBtn'); if (stopBtn) stopBtn.onclick = stopSniff;
+  const clearBtn = $('clearPacketsBtn'); if (clearBtn) clearBtn.onclick = clearPackets;
+  const genBtn = $('labGenBtn'); if (genBtn) genBtn.onclick = () => { const p = genPacket(); addPacketToList(p); updateDeviceGrid(); updateStats(); };
+  const burstBtn = $('labBurstBtn'); if (burstBtn) burstBtn.onclick = () => { for(let i=0;i<10;i++){const p=genPacket();addPacketToList(p);} updateDeviceGrid(); updateStats(); log('💥 Burst: 10 packets generated','info'); };
+
+  buildChannelBar();
+  setStatus(true);
+  drawRadar();
+})();

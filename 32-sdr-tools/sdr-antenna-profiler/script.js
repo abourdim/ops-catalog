@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Antenna Profiler', subtitle: '📡 Profile antenna performance — Gain, pattern, SWR plots',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Antenna Profiler', mainDesc: 'Visualize gain, radiation pattern and SWR',
+    sectionA: 'SWR Analysis', sectionB: 'Antenna Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is the Antenna Profiler?', faq_a1: 'A tool to simulate and visualize antenna radiation patterns, gain curves and SWR.',
+    faq_q2: 'What antenna types are supported?', faq_a2: 'Dipole, Yagi, Patch and Helical antenna simulations.',
+    faq_q3: 'How is the radiation pattern drawn?', faq_a3: 'A polar canvas plot shows simulated dBi gain at every angle.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Select an antenna type from the dropdown.',
+    howto_2: 'Set the center frequency for analysis.',
+    howto_3: 'Click Profile to generate gain and SWR plots.',
+    howto_4: 'Expand sections for SWR chart and theory.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first. All data stays in your browser.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Antenna Profiler ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,34 +98,41 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    antennaType: 'Antenna Type', frequency: 'Frequency (MHz)', profileBtn: '📡 Profile', resetBtn: '↺ Reset',
+    dipole: 'Dipole', yagi: 'Yagi (3-el)', patch: 'Patch', helical: 'Helical',
+    peakGain: 'Peak Gain', beamwidth: 'Beamwidth', minSWR: 'Min SWR',
+    theoryIntro: 'Antenna fundamentals:', theory1: 'Dipole: omnidirectional, ~2.15 dBi gain',
+    theory2: 'Yagi: directional, higher gain with more elements', theory3: 'Patch: compact, used in arrays for beamforming',
+    theory4: 'SWR < 2 means good impedance match', theory5: 'Radiation pattern shows spatial gain distribution',
+    profileStarted: '📡 Profiling started', profileComplete: '📡 Profile complete', resetDone: '↺ Reset',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Profilage Antenne SDR', subtitle: '📡 Profilage antenne — Gain, diagramme, ROS',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Profilage Antenne', mainDesc: 'Visualiser gain, diagramme de rayonnement et ROS',
+    sectionA: 'Analyse ROS', sectionB: 'Théorie Antenne',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le Profilage Antenne ?', faq_a1: 'Un outil pour simuler et visualiser les diagrammes de rayonnement, le gain et le ROS.',
+    faq_q2: 'Quels types d\'antennes ?', faq_a2: 'Dipôle, Yagi, Patch et Hélicoïdale.',
+    faq_q3: 'Comment le diagramme est tracé ?', faq_a3: 'Un tracé polaire montre le gain simulé en dBi à chaque angle.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Sélectionnez un type d\'antenne.',
+    howto_2: 'Réglez la fréquence centrale.',
+    howto_3: 'Cliquez Profiler pour générer les graphes.',
+    howto_4: 'Dépliez les sections pour le ROS et la théorie.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout reste dans votre navigateur.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Profilage Antenne prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -135,34 +142,41 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
+    antennaType: 'Type Antenne', frequency: 'Fréquence (MHz)', profileBtn: '📡 Profiler', resetBtn: '↺ Réinitialiser',
+    dipole: 'Dipôle', yagi: 'Yagi (3-él)', patch: 'Patch', helical: 'Hélicoïdale',
+    peakGain: 'Gain Max', beamwidth: 'Ouverture', minSWR: 'ROS Min',
+    theoryIntro: 'Fondamentaux des antennes :', theory1: 'Dipôle : omnidirectionnel, ~2.15 dBi',
+    theory2: 'Yagi : directif, gain plus élevé avec plus d\'éléments', theory3: 'Patch : compact, utilisé en réseau pour le beamforming',
+    theory4: 'ROS < 2 = bon accord d\'impédance', theory5: 'Le diagramme montre la distribution spatiale du gain',
+    profileStarted: '📡 Profilage lancé', profileComplete: '📡 Profilage terminé', resetDone: '↺ Réinitialisé',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محلل هوائيات SDR', subtitle: '📡 تحليل أداء الهوائي — الكسب والنمط ومعامل الموجة الراكدة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محلل الهوائي', mainDesc: 'عرض الكسب ونمط الإشعاع ومعامل الموجة الراكدة',
+    sectionA: 'تحليل SWR', sectionB: 'نظرية الهوائيات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو محلل الهوائي؟', faq_a1: 'أداة لمحاكاة وعرض أنماط إشعاع الهوائي والكسب ومعامل الموجة الراكدة.',
+    faq_q2: 'ما أنواع الهوائيات المدعومة؟', faq_a2: 'ثنائي القطب، ياغي، رقعة ولولبي.',
+    faq_q3: 'كيف يُرسم نمط الإشعاع؟', faq_a3: 'رسم قطبي يُظهر الكسب المحاكى بالـ dBi لكل زاوية.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'اختر نوع الهوائي من القائمة.',
+    howto_2: 'اضبط تردد المركز للتحليل.',
+    howto_3: 'اضغط تحليل لتوليد مخططات الكسب والـ SWR.',
+    howto_4: 'وسّع الأقسام لمخطط SWR والنظرية.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ وملون.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات تبقى في متصفحك.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 محلل الهوائي جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +186,13 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    antennaType: 'نوع الهوائي', frequency: 'التردد (ميغاهرتز)', profileBtn: '📡 تحليل', resetBtn: '↺ إعادة',
+    dipole: 'ثنائي القطب', yagi: 'ياغي (3 عناصر)', patch: 'رقعة', helical: 'لولبي',
+    peakGain: 'أقصى كسب', beamwidth: 'عرض الحزمة', minSWR: 'أدنى SWR',
+    theoryIntro: 'أساسيات الهوائيات:', theory1: 'ثنائي القطب: شامل الاتجاهات، ~2.15 dBi',
+    theory2: 'ياغي: اتجاهي، كسب أعلى مع المزيد من العناصر', theory3: 'رقعة: مدمج، يُستخدم في المصفوفات',
+    theory4: 'SWR < 2 يعني توافق جيد للمعاوقة', theory5: 'نمط الإشعاع يُظهر التوزيع المكاني للكسب',
+    profileStarted: '📡 بدأ التحليل', profileComplete: '📡 اكتمل التحليل', resetDone: '↺ إعادة ضبط',
   }
 };
 
@@ -1449,3 +1470,194 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR ANTENNA PROFILER SIMULATION ═══════ */
+
+const ANTENNA_MODELS = {
+  dipole: { maxGain: 2.15, beamwidth: 78, elements: 1 },
+  yagi:   { maxGain: 7.5,  beamwidth: 48, elements: 3 },
+  patch:  { maxGain: 6.0,  beamwidth: 65, elements: 1 },
+  helical:{ maxGain: 10.0, beamwidth: 36, elements: 1 }
+};
+
+function antennaGain(type, angleDeg) {
+  const m = ANTENNA_MODELS[type];
+  const a = angleDeg * Math.PI / 180;
+  switch (type) {
+    case 'dipole': {
+      const sinA = Math.sin(a + Math.PI / 2);
+      return m.maxGain * Math.max(0.05, Math.abs(sinA));
+    }
+    case 'yagi': {
+      const cosA = Math.cos(a);
+      return m.maxGain * Math.max(0.02, Math.pow(Math.max(0, cosA), 2.5) + 0.08 * Math.abs(Math.sin(a * 3)));
+    }
+    case 'patch': {
+      const cosA = Math.cos(a);
+      return m.maxGain * Math.max(0.03, Math.pow(Math.max(0, cosA), 1.8) + 0.05 * Math.pow(Math.max(0, -cosA), 1.5));
+    }
+    case 'helical': {
+      const cosA = Math.cos(a);
+      return m.maxGain * Math.max(0.01, Math.pow(Math.max(0, cosA), 4) + 0.03 * Math.abs(Math.sin(a * 5)));
+    }
+    default: return 0;
+  }
+}
+
+function computeSWR(freqMHz, centerMHz) {
+  const delta = Math.abs(freqMHz - centerMHz) / centerMHz;
+  const base = 1.0 + 0.3 * Math.random();
+  return base + 15 * delta * delta + 2 * Math.pow(delta, 0.5);
+}
+
+function drawRadiationPattern() {
+  const c = $('patternCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const cx = w / 2, cy = h / 2, radius = Math.min(cx, cy) - 30;
+  const type = $('antennaSelect').value;
+
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  // Grid circles
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  for (let r = 0.25; r <= 1; r += 0.25) {
+    ctx.beginPath(); ctx.arc(cx, cy, radius * r, 0, 2 * Math.PI); ctx.stroke();
+    ctx.fillStyle = '#445'; ctx.font = '9px monospace';
+    ctx.fillText((r * ANTENNA_MODELS[type].maxGain).toFixed(1) + ' dBi', cx + 3, cy - radius * r + 12);
+  }
+  // Axis lines
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  for (let a = 0; a < 360; a += 30) {
+    const rad = a * Math.PI / 180;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + radius * Math.cos(rad), cy + radius * Math.sin(rad)); ctx.stroke();
+    ctx.fillStyle = '#556'; ctx.font = '9px monospace';
+    ctx.fillText(a + '°', cx + (radius + 12) * Math.cos(rad) - 8, cy + (radius + 12) * Math.sin(rad) + 3);
+  }
+
+  // Radiation pattern
+  const maxG = ANTENNA_MODELS[type].maxGain;
+  ctx.strokeStyle = '#0f0'; ctx.lineWidth = 2; ctx.beginPath();
+  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+  grad.addColorStop(0, 'rgba(0,255,100,0.1)'); grad.addColorStop(1, 'rgba(0,255,100,0.02)');
+  for (let deg = 0; deg <= 360; deg++) {
+    const g = antennaGain(type, deg);
+    const r = (g / maxG) * radius;
+    const rad = deg * Math.PI / 180;
+    const x = cx + r * Math.cos(rad), y = cy + r * Math.sin(rad);
+    if (deg === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath(); ctx.stroke();
+  ctx.fillStyle = grad; ctx.fill();
+
+  // Peak arrow
+  let peakDeg = 0, peakG = 0;
+  for (let d = 0; d < 360; d++) { const g = antennaGain(type, d); if (g > peakG) { peakG = g; peakDeg = d; } }
+  const pr = (peakG / maxG) * radius, pRad = peakDeg * Math.PI / 180;
+  ctx.fillStyle = '#ff0'; ctx.beginPath();
+  ctx.arc(cx + pr * Math.cos(pRad), cy + pr * Math.sin(pRad), 4, 0, 2 * Math.PI); ctx.fill();
+  ctx.fillStyle = '#ff0'; ctx.font = 'bold 11px Orbitron,monospace';
+  ctx.fillText(peakG.toFixed(1) + ' dBi', cx + pr * Math.cos(pRad) + 8, cy + pr * Math.sin(pRad) - 6);
+
+  // Title
+  ctx.fillStyle = '#0f0'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText(type.toUpperCase() + ' Radiation Pattern', 10, 18);
+}
+
+function drawSWRChart() {
+  const c = $('swrCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const center = parseFloat($('freqSlider').value);
+  const span = center * 0.4;
+  const fMin = center - span / 2, fMax = center + span / 2;
+
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  for (let i = 1; i <= 4; i++) { const y = h - (i / 5) * h; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); ctx.fillStyle = '#556'; ctx.font = '9px monospace'; ctx.fillText(i + ':1', 4, y - 2); }
+
+  // SWR curve
+  ctx.strokeStyle = '#f44'; ctx.lineWidth = 2; ctx.beginPath();
+  const pts = 200;
+  for (let i = 0; i <= pts; i++) {
+    const f = fMin + (i / pts) * (fMax - fMin);
+    const swr = computeSWR(f, center);
+    const x = (i / pts) * w, y = h - (Math.min(swr, 5) / 5) * h;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // 2:1 line
+  ctx.setLineDash([4, 4]); ctx.strokeStyle = '#4f4'; ctx.lineWidth = 1;
+  const y2 = h - (2 / 5) * h; ctx.beginPath(); ctx.moveTo(0, y2); ctx.lineTo(w, y2); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#4f4'; ctx.font = '9px monospace'; ctx.fillText('SWR=2 threshold', w - 110, y2 - 4);
+
+  // Frequency labels
+  ctx.fillStyle = '#889'; ctx.font = '9px monospace';
+  for (let i = 0; i <= 4; i++) { const f = fMin + (i / 4) * (fMax - fMin); ctx.fillText(f.toFixed(1) + ' MHz', (i / 4) * w + 4, h - 4); }
+
+  ctx.fillStyle = '#f44'; ctx.font = 'bold 13px Orbitron,monospace'; ctx.fillText('SWR vs Frequency', 10, 18);
+}
+
+function drawGainCanvas() {
+  const c = $('gainCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const type = $('antennaSelect').value;
+  const m = ANTENNA_MODELS[type];
+
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  // Gain vs angle (linear)
+  ctx.strokeStyle = '#4af'; ctx.lineWidth = 2; ctx.beginPath();
+  for (let deg = 0; deg < 360; deg++) {
+    const g = antennaGain(type, deg);
+    const x = (deg / 360) * w, y = h - (g / m.maxGain) * (h - 30) - 10;
+    if (deg === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = '#889'; ctx.font = '9px monospace';
+  for (let d = 0; d <= 360; d += 60) ctx.fillText(d + '°', (d / 360) * w + 2, h - 2);
+  ctx.fillStyle = '#4af'; ctx.font = 'bold 13px Orbitron,monospace'; ctx.fillText('Gain vs Angle (' + type + ')', 10, 18);
+}
+
+function runProfile() {
+  const L = LANG[currentLang];
+  const type = $('antennaSelect').value;
+  const freq = parseFloat($('freqSlider').value);
+  log(L.profileStarted, 'info');
+  showToast(L.working); setStatus(true);
+
+  drawRadiationPattern();
+  drawSWRChart();
+  drawGainCanvas();
+
+  // Compute stats
+  const m = ANTENNA_MODELS[type];
+  let peakG = 0;
+  for (let d = 0; d < 360; d++) { const g = antennaGain(type, d); if (g > peakG) peakG = g; }
+  const swr = computeSWR(freq, freq);
+
+  $('peakGainVal').textContent = peakG.toFixed(2) + ' dBi';
+  $('beamwidthVal').textContent = m.beamwidth + '°';
+  $('swrVal').textContent = swr.toFixed(2) + ':1';
+
+  hideToast();
+  log(`${L.profileComplete} | ${type} @ ${freq} MHz | Peak=${peakG.toFixed(1)} dBi SWR=${swr.toFixed(2)}`, 'success');
+}
+
+function resetProfile() {
+  ['patternCanvas', 'swrCanvas', 'gainCanvas'].forEach(id => { const c = $(id); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+  $('peakGainVal').textContent = '--'; $('beamwidthVal').textContent = '--'; $('swrVal').textContent = '--';
+  setStatus(false); log(LANG[currentLang].resetDone, 'info');
+}
+
+function initAntennaProfiler() {
+  const pb = $('profileBtn'); if (pb) pb.onclick = () => setTimeout(runProfile, 50);
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetProfile;
+  const fs = $('freqSlider');
+  if (fs) { fs.oninput = function () { $('freqVal').textContent = this.value + ' MHz'; }; }
+}
+
+document.addEventListener('DOMContentLoaded', initAntennaProfiler);

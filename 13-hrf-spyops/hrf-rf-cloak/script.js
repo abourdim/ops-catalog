@@ -63,115 +63,103 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'RF Cloak', subtitle: 'RF Cloak — Signal Masking & Frequency Hopping',
+    disconnected: 'Exposed', connected: 'Cloaked',
+    mainSection: 'RF Cloak', mainDesc: 'Signal masking and frequency hopping simulation',
+    sectionA: 'Cloak Events', sectionB: 'Evasion Techniques',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
+    clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is RF Cloak?', faq_a1: 'A simulator for making devices invisible to RF detection through signal masking.',
+    faq_q2: 'How does frequency hopping work?', faq_a2: 'The signal rapidly changes frequency according to a pseudo-random pattern.',
+    faq_q3: 'What is spread spectrum?', faq_a3: 'Spreading the signal across a wide bandwidth so it looks like noise.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Select a cloaking mode.', howto_2: 'Click Activate Cloak.',
+    howto_3: 'Adjust the hop rate with the slider.', howto_4: 'Watch the visibility meter drop.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 RF Cloak ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    activateCloak: 'Activate Cloak', deactivateCloak: 'Deactivate', hopRate: 'Hop Rate:',
+    visibility: 'Visibility', cloakStats: 'Cloak Stats', hopPattern: 'Hop Pattern',
+    visible: 'VISIBLE', hidden: 'HIDDEN', partial: 'PARTIAL',
+    cloakHint: 'Activate the cloak to see masking in action.',
+    cloakOn: 'Cloak activated', cloakOff: 'Cloak deactivated',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Camouflage RF', subtitle: 'Camouflage RF — Masquage de Signal',
+    disconnected: 'Exposé', connected: 'Camouflé',
+    mainSection: 'Camouflage RF', mainDesc: 'Masquage de signal et saut de fréquence',
+    sectionA: 'Événements', sectionB: 'Techniques d\'évasion',
+    activityLog: 'Journal', eventsMsg: 'Événements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le Camouflage RF?', faq_a1: 'Un simulateur de masquage RF.',
+    faq_q2: 'Comment fonctionne le saut?', faq_a2: 'Le signal change rapidement de fréquence.',
+    faq_q3: 'Spectre étalé?', faq_a3: 'Étaler le signal pour qu\'il ressemble à du bruit.',
+    faq_q4: 'Données privées?', faq_a4: 'Oui.',
+    howto_1: 'Choisissez un mode.', howto_2: 'Cliquez Activer.',
+    howto_3: 'Ajustez la vitesse de saut.', howto_4: 'Observez la visibilité baisser.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal.', wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Camouflage RF prêt!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    activateCloak: 'Activer', deactivateCloak: 'Désactiver', hopRate: 'Vitesse:',
+    visibility: 'Visibilité', cloakStats: 'Stats', hopPattern: 'Motif de Saut',
+    visible: 'VISIBLE', hidden: 'CACHÉ', partial: 'PARTIEL',
+    cloakHint: 'Activez le camouflage pour voir le masquage.', cloakOn: 'Camouflage activé', cloakOff: 'Camouflage désactivé',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'عباءة RF', subtitle: 'عباءة RF — إخفاء الإشارات',
+    disconnected: 'مكشوف', connected: 'مخفي',
+    mainSection: 'عباءة RF', mainDesc: 'محاكاة إخفاء الإشارات وقفز الترددات',
+    sectionA: 'أحداث الإخفاء', sectionB: 'تقنيات التهرب',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي عباءة RF؟', faq_a1: 'محاكي لإخفاء الأجهزة من الكشف اللاسلكي.',
+    faq_q2: 'كيف يعمل قفز الترددات؟', faq_a2: 'تتغير الإشارة بسرعة وفق نمط عشوائي.',
+    faq_q3: 'ما هو الطيف المنتشر؟', faq_a3: 'نشر الإشارة لتبدو كضوضاء.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
+    howto_1: 'اختر وضع الإخفاء.', howto_2: 'انقر تفعيل.',
+    howto_3: 'اضبط سرعة القفز.', howto_4: 'راقب مقياس الرؤية.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 عباءة RF جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    activateCloak: 'تفعيل الإخفاء', deactivateCloak: 'إلغاء', hopRate: 'سرعة القفز:',
+    visibility: 'الرؤية', cloakStats: 'إحصائيات', hopPattern: 'نمط القفز',
+    visible: 'مرئي', hidden: 'مخفي', partial: 'جزئي',
+    cloakHint: 'فعّل الإخفاء لرؤية المحاكاة.', cloakOn: 'تم تفعيل الإخفاء', cloakOff: 'تم إلغاء الإخفاء',
   }
 };
 
@@ -1444,6 +1432,189 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initRFCloak();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: RF CLOAK — Signal Masking & Frequency Hopping
+   ═══════════════════════════════════════════════════════════════ */
+
+let cloakCanvas, cloakCtx, cW=780, cH=300;
+let hopCanvas, hopCtx;
+let cloaked = false, cloakMode = 'noise', hopRate = 10;
+let frame = 0, currentHopFreq = 500, hopHistory = [];
+
+function drawCloakSpectrum() {
+  if (!cloakCtx) return;
+  frame++;
+  cloakCtx.fillStyle = '#0a0a1a';
+  cloakCtx.fillRect(0,0,cW,cH);
+
+  // Grid
+  cloakCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+  for (let x=0; x<cW; x+=40) { cloakCtx.beginPath(); cloakCtx.moveTo(x,0); cloakCtx.lineTo(x,cH); cloakCtx.stroke(); }
+  for (let y=0; y<cH; y+=50) { cloakCtx.beginPath(); cloakCtx.moveTo(0,y); cloakCtx.lineTo(cW,y); cloakCtx.stroke(); }
+
+  const midY = cH * 0.6;
+
+  // Original signal (what detector would see without cloak)
+  cloakCtx.beginPath();
+  cloakCtx.strokeStyle = cloaked ? 'rgba(239,68,68,0.15)' : 'rgba(239,68,68,0.6)';
+  cloakCtx.lineWidth = cloaked ? 1 : 2;
+  const sigFreq = 500;
+  const sigWidth = 30;
+  for (let x=0; x<cW; x++) {
+    const freq = (x/cW)*1000;
+    const dist = Math.abs(freq - sigFreq);
+    let power = -90 + (Math.random()-0.5)*4;
+    if (dist < sigWidth) power = -30 + Math.random()*5;
+    const y = cH * (1 - (power+100)/80);
+    x===0 ? cloakCtx.moveTo(x,y) : cloakCtx.lineTo(x,y);
+  }
+  cloakCtx.stroke();
+
+  if (cloaked) {
+    cloakCtx.beginPath();
+    cloakCtx.strokeStyle = '#22c55e';
+    cloakCtx.lineWidth = 2;
+
+    if (frame % Math.max(1, Math.floor(60/hopRate)) === 0) {
+      currentHopFreq = 50 + Math.random()*900;
+      hopHistory.push(currentHopFreq);
+      if (hopHistory.length > 50) hopHistory.shift();
+    }
+
+    for (let x=0; x<cW; x++) {
+      const freq = (x/cW)*1000;
+      let power = -90 + (Math.random()-0.5)*6;
+
+      switch(cloakMode) {
+        case 'noise':
+          power += (Math.random()-0.5)*20;
+          break;
+        case 'hop':
+          const dist = Math.abs(freq - currentHopFreq);
+          if (dist < 15) power = -45 + Math.random()*8;
+          break;
+        case 'spread':
+          power += -70 + Math.random()*12;
+          break;
+        case 'mirror':
+          const mirrorFreq = 1000 - 500;
+          const mDist = Math.abs(freq - mirrorFreq);
+          if (mDist < 30) power = -35 + Math.random()*8;
+          break;
+      }
+      const y = cH * (1 - (power+100)/80);
+      x===0 ? cloakCtx.moveTo(x,y) : cloakCtx.lineTo(x,y);
+    }
+    cloakCtx.stroke();
+  }
+
+  // Labels
+  cloakCtx.fillStyle = 'rgba(255,255,255,0.4)';
+  cloakCtx.font = '10px monospace';
+  cloakCtx.textAlign = 'left';
+  cloakCtx.fillText('0 MHz', 4, cH-4);
+  cloakCtx.textAlign = 'right';
+  cloakCtx.fillText('1000 MHz', cW-4, cH-4);
+  cloakCtx.textAlign = 'center';
+  cloakCtx.fillText(cloaked ? 'CLOAKED - '+cloakMode.toUpperCase() : 'UNCLOAKED', cW/2, 14);
+  if (!cloaked) {
+    cloakCtx.fillStyle = 'rgba(239,68,68,0.5)';
+    cloakCtx.fillText('SIGNAL EXPOSED at 500 MHz', cW/2, 28);
+  }
+}
+
+function drawHopPattern() {
+  if (!hopCtx) return;
+  const w = 200, h = 80;
+  hopCtx.fillStyle = 'rgba(0,0,0,0.3)';
+  hopCtx.fillRect(0,0,w,h);
+  if (hopHistory.length < 2) return;
+  hopCtx.beginPath();
+  hopCtx.strokeStyle = '#22c55e';
+  hopCtx.lineWidth = 1.5;
+  const step = w / Math.max(hopHistory.length-1, 1);
+  hopHistory.forEach((f,i) => {
+    const x = i*step;
+    const y = h - (f/1000)*h;
+    i===0 ? hopCtx.moveTo(x,y) : hopCtx.lineTo(x,y);
+  });
+  hopCtx.stroke();
+}
+
+function updateCloakUI() {
+  const s = LANG[currentLang];
+  const visFill = $('visFill');
+  const visText = $('visText');
+  if (cloaked) {
+    const vis = cloakMode==='noise' ? 20 : cloakMode==='hop' ? 10 : cloakMode==='spread' ? 5 : 30;
+    if (visFill) { visFill.style.width = vis+'%'; visFill.style.background = vis<15 ? '#22c55e' : '#eab308'; }
+    if (visText) { visText.textContent = vis<15 ? s.hidden : s.partial; visText.style.color = vis<15 ? '#22c55e' : '#eab308'; }
+  } else {
+    if (visFill) { visFill.style.width = '80%'; visFill.style.background = '#ef4444'; }
+    if (visText) { visText.textContent = s.visible; visText.style.color = '#ef4444'; }
+  }
+  const stats = $('cloakStats');
+  if (stats) {
+    stats.innerHTML = `Mode: <strong>${cloakMode}</strong><br>` +
+      `Hop Rate: <strong>${hopRate} Hz</strong><br>` +
+      `Status: <strong>${cloaked ? 'Active' : 'Inactive'}</strong><br>` +
+      `Hops: <strong>${hopHistory.length}</strong>`;
+  }
+}
+
+function buildEvasionDatabase() {
+  const el = $('evasionDatabase');
+  if (!el) return;
+  const techniques = [
+    { name:'Noise Masking', desc:'Raise noise floor to hide the signal in background noise' },
+    { name:'Frequency Hopping', desc:'Rapidly change frequencies using a pseudo-random sequence' },
+    { name:'Spread Spectrum', desc:'Spread signal power across wide bandwidth below noise floor' },
+    { name:'Signal Mirroring', desc:'Create decoy signals on different frequencies' },
+    { name:'Power Control', desc:'Reduce transmit power to minimize detection range' },
+    { name:'Burst Transmission', desc:'Transmit in very short bursts to avoid detection' },
+  ];
+  let html = '<div style="display:grid;grid-template-columns:auto 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Technique</strong><strong style="font-size:.7rem;">Description</strong>';
+  techniques.forEach(t => { html += `<span style="color:var(--accent);">${t.name}</span><span style="color:var(--text-muted);">${t.desc}</span>`; });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function cloakLoop() {
+  drawCloakSpectrum();
+  drawHopPattern();
+  updateCloakUI();
+  requestAnimationFrame(cloakLoop);
+}
+
+function initRFCloak() {
+  cloakCanvas = $('cloakCanvas');
+  if (cloakCanvas) { cloakCtx = cloakCanvas.getContext('2d'); cW = cloakCanvas.width; cH = cloakCanvas.height; }
+  hopCanvas = $('hopCanvas');
+  if (hopCanvas) { hopCtx = hopCanvas.getContext('2d'); }
+
+  const cBtn = $('cloakBtn');
+  if (cBtn) cBtn.onclick = () => {
+    cloaked = !cloaked;
+    const s = LANG[currentLang];
+    cBtn.innerHTML = cloaked ? `<span class="btn-icon">&#x1F6D1;</span> <span>${s.deactivateCloak}</span>` : `<span class="btn-icon">&#x1F576;</span> <span>${s.activateCloak}</span>`;
+    setStatus(cloaked);
+    log(cloaked ? s.cloakOn : s.cloakOff, cloaked ? 'success' : 'info');
+    if (cloaked) playSound('success');
+  };
+
+  const modeSel = $('cloakMode');
+  if (modeSel) modeSel.addEventListener('change', () => { cloakMode = modeSel.value; hopHistory = []; });
+
+  const rateSlider = $('hopRate');
+  const rateLabel = $('hopLabel');
+  if (rateSlider) rateSlider.addEventListener('input', () => { hopRate = parseInt(rateSlider.value); if (rateLabel) rateLabel.textContent = hopRate+' Hz'; });
+
+  buildEvasionDatabase();
+  cloakLoop();
 }
 
 document.readyState === 'loading'

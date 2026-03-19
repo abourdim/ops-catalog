@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP32 Remote SDR', subtitle: '📻 Control SDR remotely via ESP32',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Remote SDR', mainDesc: 'Control SDR receiver remotely via ESP32 web interface',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'ESP32 SDR Distant', subtitle: '📻 Contrôle SDR à distance via ESP32',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'SDR Distant', mainDesc: 'Contrôle récepteur SDR à distance via ESP32',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'ESP32 SDR عن بعد', subtitle: '📻 التحكم في SDR عن بعد عبر ESP32',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'SDR عن بعد', mainDesc: 'التحكم في مستقبل SDR عن بعد عبر واجهة ESP32',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,83 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Connect SDR',stop:'Disconnect',simStarted:'SDR connected',simStopped:'SDR disconnected',theoryTitle:'Remote SDR Theory',theoryDesc:'A Software Defined Radio (SDR) converts RF signals to digital using an ADC, then processes them in software. The ESP32 provides a web interface to remotely tune frequency, change demodulation mode, adjust gain, and view the waterfall spectrum display.',freq:'Frequency (MHz)',gain:'Gain (dB)',demod:'Demodulation'});
+Object.assign(LANG.fr, {start:'Connecter SDR',stop:'Déconnecter',simStarted:'SDR connecté',simStopped:'SDR déconnecté',theoryTitle:'Théorie SDR Distant',theoryDesc:'Un SDR (Radio Logicielle) convertit les signaux RF en numérique via un ADC, puis les traite par logiciel. L\'ESP32 fournit une interface web pour accorder la fréquence, changer le mode de démodulation, ajuster le gain et afficher le spectre en cascade.',freq:'Fréquence (MHz)',gain:'Gain (dB)',demod:'Démodulation'});
+Object.assign(LANG.ar, {start:'اتصال SDR',stop:'قطع الاتصال',simStarted:'SDR متصل',simStopped:'SDR غير متصل',theoryTitle:'نظرية SDR عن بعد',theoryDesc:'يحول SDR (الراديو المعرف بالبرمجيات) إشارات RF إلى رقمية عبر ADC ثم يعالجها برمجيًا. يوفر ESP32 واجهة ويب للضبط على التردد وتغيير وضع فك التشكيل وضبط الكسب وعرض طيف الشلال.',freq:'التردد (MHz)',gain:'الكسب (dB)',demod:'فك التشكيل'});
+setLanguage(currentLang);
+
+
+/* ═══════ REMOTE SDR SIM ═══════ */
+let simRunning=false,simTimer=null,sdrFreq=14.2,sdrGain=30;
+const wfC=$('waterfallCanvas'),wfCtx=wfC?wfC.getContext('2d'):null;
+let wfData=[];const WF_ROWS=200,WF_COLS=256;
+
+function genSpectrum(){
+  const row=new Float32Array(WF_COLS);
+  for(let i=0;i<WF_COLS;i++){
+    let v=-120+Math.random()*10+sdrGain*0.3;
+    // Add some signals
+    const cf=WF_COLS/2;
+    if(Math.abs(i-cf)<3)v+=30+Math.random()*10;
+    if(Math.abs(i-cf+40)<2)v+=20+Math.random()*8;
+    if(Math.abs(i-cf-60)<4)v+=15+Math.random()*12;
+    if(Math.abs(i-cf+80)<2&&Math.random()>0.5)v+=25;
+    row[i]=v;
+  }
+  return row;
+}
+
+function heatColor(v){
+  const n=Math.max(0,Math.min(1,(v+120)/80));
+  if(n<0.25)return `rgb(0,0,${Math.floor(n*4*180)})`;
+  if(n<0.5)return `rgb(0,${Math.floor((n-0.25)*4*255)},180)`;
+  if(n<0.75)return `rgb(${Math.floor((n-0.5)*4*255)},255,${180-Math.floor((n-0.5)*4*180)})`;
+  return `rgb(255,255,${Math.floor((n-0.75)*4*255)})`;
+}
+
+function drawWaterfall(){
+  if(!wfCtx)return;const W=wfC.width,H=wfC.height;
+  wfCtx.fillStyle='#000';wfCtx.fillRect(0,0,W,H);
+  const rowH=H/Math.min(wfData.length,WF_ROWS);
+  const colW=W/WF_COLS;
+  wfData.forEach((row,ri)=>{
+    const y=ri*rowH;
+    for(let ci=0;ci<WF_COLS;ci++){wfCtx.fillStyle=heatColor(row[ci]);wfCtx.fillRect(ci*colW,y,colW+1,rowH+1);}
+  });
+  // Frequency labels
+  wfCtx.fillStyle='rgba(255,255,255,0.5)';wfCtx.font='10px monospace';
+  const bw=0.192;
+  for(let i=0;i<=4;i++){const f=sdrFreq-bw/2+i*bw/4;wfCtx.fillText(f.toFixed(3),i*W/4+2,H-4);}
+  // Center marker
+  wfCtx.strokeStyle='rgba(255,0,0,0.5)';wfCtx.lineWidth=1;wfCtx.setLineDash([4,4]);
+  wfCtx.beginPath();wfCtx.moveTo(W/2,0);wfCtx.lineTo(W/2,H);wfCtx.stroke();wfCtx.setLineDash([]);
+}
+
+function sdrStep(){
+  const row=genSpectrum();
+  wfData.push(row);if(wfData.length>WF_ROWS)wfData.shift();
+  drawWaterfall();
+  // Decode signals randomly
+  if(Math.random()<0.15){const modes=['CW','SSB','AM','FT8','RTTY'];const m=modes[Math.floor(Math.random()*modes.length)];
+    const offset=(-50+Math.floor(Math.random()*100));const snr=-10+Math.floor(Math.random()*30);
+    log('Decode: '+m+' @ '+(sdrFreq*1000+offset).toFixed(1)+' kHz SNR:'+snr+'dB','rx');}
+  const fd=$('freqReadout');if(fd)fd.textContent=sdrFreq.toFixed(3)+' MHz';
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);wfData=[];
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(sdrStep,150);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_sdr(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('freqRange'))$('freqRange').oninput=function(){sdrFreq=parseFloat(this.value);const d=$('freqDisp');if(d)d.textContent=sdrFreq.toFixed(3)+' MHz';};
+  if($('gainRange'))$('gainRange').oninput=function(){sdrGain=parseFloat(this.value);const d=$('gainDisp');if(d)d.textContent=this.value+' dB';};
+  drawWaterfall();
+}
+init_sdr();

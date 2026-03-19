@@ -63,32 +63,38 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-signal-intercept', subtitle: '📡 signal intercept — capture transmissions',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Signal Intercept Station', mainDesc: 'Capture and analyze radio transmissions in real-time',
+    sectionA: 'Waterfall Display', sectionB: 'Signal Decoder', sectionC: 'Intel Report',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is signal interception?', faq_a1: 'Signal interception is the capture and analysis of radio transmissions across frequency bands for intelligence gathering.',
+    faq_q2: 'What frequency bands can I scan?', faq_a2: 'VHF (30-300 MHz), UHF (300-3000 MHz), and SHF (3-30 GHz) bands with AM, FM, SSB, and digital modulation.',
+    faq_q3: 'How does the waterfall display work?', faq_a3: 'The waterfall shows signal intensity over time and frequency. Bright colors indicate strong signals.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.',
+    howto_1: 'Select frequency band and modulation type.',
+    howto_2: 'Click Start Scan to begin intercepting signals.',
+    howto_3: 'Watch the waterfall display and spectrum analyzer.',
+    howto_4: 'Decode captured signals and generate intelligence reports.',
+    wiki_sigint_title: '📡 SIGINT', wiki_sigint: 'Signals Intelligence involves intercepting electronic signals for reconnaissance and analysis.',
+    wiki_sdr_title: '📻 SDR', wiki_sdr: 'Software Defined Radio uses software to process radio signals, replacing traditional hardware components.',
+    wiki_mod_title: '🔊 Modulation', wiki_mod: 'Modulation encodes data onto carrier waves using AM, FM, SSB, or digital techniques like PSK and QAM.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Signal intercept station ready!',
+    sigLabel: 'INTERCEPT STATUS', idle: 'IDLE', scanning: 'SCANNING', captured: 'CAPTURED',
+    bandLabel: 'Frequency Band', modLabel: 'Modulation',
+    scanBtn: 'Start Scan', stopBtn: 'Stop', captureLabel: 'CAPTURED SIGNAL DATA',
+    scanStarted: '📡 Signal scan started', scanStopped: '🔴 Scan stopped',
+    sigCaptured: '📡 Signal captured!', decoded: '🔓 Signal decoded',
+    ftSecABtn: 'Capture', ftSecARst: 'Reset', ftSecBBtn: 'Decode', ftSecBRst: 'Reset',
+    ftSecCBtn: 'Generate', ftSecCRst: 'Reset',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +106,38 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-signal-intercept', subtitle: '📡 interception de signal — capturer les transmissions',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Station d\'Interception de Signal', mainDesc: 'Capturer et analyser les transmissions radio en temps réel',
+    sectionA: 'Affichage Cascade', sectionB: 'Décodeur de Signal', sectionC: 'Rapport de Renseignement',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que l\'interception de signal ?', faq_a1: 'L\'interception est la capture et l\'analyse des transmissions radio pour le renseignement.',
+    faq_q2: 'Quelles bandes de fréquences ?', faq_a2: 'VHF (30-300 MHz), UHF (300-3000 MHz) et SHF (3-30 GHz) avec AM, FM, SSB et numérique.',
+    faq_q3: 'Comment fonctionne l\'affichage cascade ?', faq_a3: 'La cascade montre l\'intensité du signal dans le temps et la fréquence.',
+    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement. C\'est une simulation.',
+    howto_1: 'Sélectionne la bande de fréquence et le type de modulation.',
+    howto_2: 'Clique sur Démarrer le scan pour intercepter les signaux.',
+    howto_3: 'Observe l\'affichage cascade et l\'analyseur de spectre.',
+    howto_4: 'Décode les signaux capturés et génère des rapports.',
+    wiki_sigint_title: '📡 SIGINT', wiki_sigint: 'Le SIGINT implique l\'interception des signaux électroniques pour la reconnaissance.',
+    wiki_sdr_title: '📻 SDR', wiki_sdr: 'La radio logicielle utilise des logiciels pour traiter les signaux radio.',
+    wiki_mod_title: '🔊 Modulation', wiki_mod: 'La modulation encode les données sur des ondes porteuses via AM, FM, SSB ou numérique.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Station d\'interception prête !',
+    sigLabel: 'ÉTAT D\'INTERCEPTION', idle: 'INACTIF', scanning: 'SCAN', captured: 'CAPTURÉ',
+    bandLabel: 'Bande de Fréquence', modLabel: 'Modulation',
+    scanBtn: 'Démarrer le scan', stopBtn: 'Arrêter', captureLabel: 'DONNÉES SIGNAL CAPTURÉ',
+    scanStarted: '📡 Scan démarré', scanStopped: '🔴 Scan arrêté',
+    sigCaptured: '📡 Signal capturé !', decoded: '🔓 Signal décodé',
+    ftSecABtn: 'Capturer', ftSecARst: 'Réinitialiser', ftSecBBtn: 'Décoder', ftSecBRst: 'Réinitialiser',
+    ftSecCBtn: 'Générer', ftSecCRst: 'Réinitialiser',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +149,38 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'pi-signal-intercept', subtitle: '📡 اعتراض الإشارات — التقاط البث',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محطة اعتراض الإشارات', mainDesc: 'التقاط وتحليل البث اللاسلكي في الوقت الحقيقي',
+    sectionA: 'عرض الشلال', sectionB: 'فك تشفير الإشارة', sectionC: 'تقرير استخباراتي',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
+    faq_q1: 'ما هو اعتراض الإشارات؟', faq_a1: 'اعتراض الإشارات هو التقاط وتحليل البث اللاسلكي عبر نطاقات الترددات.',
+    faq_q2: 'ما نطاقات التردد المتاحة؟', faq_a2: 'VHF و UHF و SHF مع تعديل AM و FM و SSB والرقمي.',
+    faq_q3: 'كيف يعمل عرض الشلال؟', faq_a3: 'يُظهر الشلال شدة الإشارة عبر الزمن والتردد.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    howto_1: 'اختر نطاق التردد ونوع التعديل.',
+    howto_2: 'انقر بدء المسح لبدء اعتراض الإشارات.',
+    howto_3: 'راقب عرض الشلال ومحلل الطيف.',
+    howto_4: 'فك تشفير الإشارات وأنشئ تقارير استخباراتية.',
+    wiki_sigint_title: '📡 استخبارات الإشارات', wiki_sigint: 'تتضمن اعتراض الإشارات الإلكترونية للاستطلاع والتحليل.',
+    wiki_sdr_title: '📻 الراديو البرمجي', wiki_sdr: 'يستخدم البرمجيات لمعالجة الإشارات الراديوية.',
+    wiki_mod_title: '🔊 التعديل', wiki_mod: 'التعديل يشفر البيانات على موجات حاملة باستخدام AM و FM و SSB أو تقنيات رقمية.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 محطة اعتراض الإشارات جاهزة!',
+    sigLabel: 'حالة الاعتراض', idle: 'خامل', scanning: 'مسح', captured: 'تم الالتقاط',
+    bandLabel: 'نطاق التردد', modLabel: 'التعديل',
+    scanBtn: 'بدء المسح', stopBtn: 'إيقاف', captureLabel: 'بيانات الإشارة الملتقطة',
+    scanStarted: '📡 بدأ المسح', scanStopped: '🔴 توقف المسح',
+    sigCaptured: '📡 تم الالتقاط!', decoded: '🔓 تم فك التشفير',
+    ftSecABtn: 'التقاط', ftSecARst: 'إعادة', ftSecBBtn: 'فك تشفير', ftSecBRst: 'إعادة',
+    ftSecCBtn: 'إنشاء', ftSecCRst: 'إعادة',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1461,34 @@ function init() {
   initAR();
   initAIChat();
 
+  initSignalIntercept();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SIGNAL INTERCEPT SIMULATION ═══════ */
+let siScanning=false,siInterval=null,siCaptured=[];
+const SI_BANDS={vhf:'VHF 30-300MHz',uhf:'UHF 300-3000MHz',shf:'SHF 3-30GHz'};
+
+function siDrawSpectrum(){const c=$('ftCanvas');if(!c)return;const ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(0,255,100,0.06)';for(let y=0;y<H;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}for(let x=0;x<W;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}ctx.strokeStyle='#0f8';ctx.lineWidth=1.5;ctx.beginPath();for(let x=0;x<W;x++){const noise=-90+Math.random()*20;const hasSig=siScanning&&(Math.sin(x*0.05+Date.now()*0.001)>0.7);const val=hasSig?noise+40+Math.random()*20:noise;const y=H-((val+100)/100)*(H-20)-10;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#0f8';ctx.font='10px Orbitron,monospace';const band=($('bandSelect')||{}).value||'uhf';ctx.fillText('SPECTRUM: '+(SI_BANDS[band]||band),10,14);if(siScanning){ctx.fillStyle='#f44';ctx.fillText('● SCANNING',W-100,14);}}
+
+function siDrawWaterfall(){const c=$('waterfallCanvas');if(!c)return;const ctx=c.getContext('2d'),W=c.width,H=c.height;const img=ctx.getImageData(0,0,W,H-2);ctx.putImageData(img,0,2);for(let x=0;x<W;x++){const noise=Math.random()*40;const hasSig=siScanning&&(Math.sin(x*0.03+Date.now()*0.002)>0.6);const val=hasSig?noise+60:noise;ctx.fillStyle=`rgb(${Math.min(255,val*4)},${Math.min(255,val*2)},${Math.min(255,val)})`;ctx.fillRect(x,0,1,2);}}
+
+function siStartScan(){if(siScanning)return;siScanning=true;const s=LANG[currentLang];const sv=$('sigValue');if(sv){sv.textContent=s.scanning||'SCANNING';sv.style.color='#fc0';}setStatus(true);log(s.scanStarted,'success');playSound('success');siInterval=setInterval(()=>{siDrawSpectrum();siDrawWaterfall();if(Math.random()<0.1){const freq=(100+Math.random()*2900).toFixed(1);const str=(-80+Math.random()*60).toFixed(1);const hex=Array.from({length:8},()=>Math.floor(Math.random()*256).toString(16).toUpperCase().padStart(2,'0')).join(' ');siCaptured.push({freq,str,hex,time:new Date().toLocaleTimeString()});const cd=$('captureDisplay');if(cd)cd.textContent=`[${new Date().toLocaleTimeString()}] ${freq}MHz ${str}dBm | ${hex}`;log(`${s.sigCaptured} ${freq}MHz ${str}dBm`,'rx');if(sv){sv.textContent=s.captured||'CAPTURED';sv.style.color='#4f4';}setTimeout(()=>{if(sv&&siScanning){sv.textContent=s.scanning||'SCANNING';sv.style.color='#fc0';}},1000);}},150);}
+
+function siStopScan(){if(siInterval){clearInterval(siInterval);siInterval=null;}siScanning=false;const s=LANG[currentLang];const sv=$('sigValue');if(sv){sv.textContent=s.idle||'IDLE';sv.style.color='#888';}setStatus(false);log(s.scanStopped,'error');playSound('error');}
+
+function ftSecAAction(){log('📡 Waterfall snapshot','success');playSound('success');const el=$('ftSecAContent');if(el)el.textContent='Captured: '+siCaptured.length+' signals';}
+function ftSecAReset(){const c=$('waterfallCanvas');if(c){const ctx=c.getContext('2d');ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,c.width,c.height);}const el=$('ftSecAContent');if(el)el.textContent='';}
+function ftSecBAction(){const s=LANG[currentLang];if(siCaptured.length===0){log('No signals','error');return;}const last=siCaptured[siCaptured.length-1];const el=$('ftSecBContent');if(el)el.innerHTML=`DECODED SIGNAL<br>==============<br>Freq: ${last.freq} MHz<br>Strength: ${last.str} dBm<br>Hex: ${last.hex}<br>Time: ${last.time}<br>Mod: ${($('modSelect')||{}).value||'FM'}`;log(s.decoded,'success');playSound('success');}
+function ftSecBReset(){const el=$('ftSecBContent');if(el)el.textContent='';}
+function ftSecCAction(){const el=$('ftSecCContent');if(el)el.innerHTML=`SIGINT REPORT<br>=============<br>Date: ${new Date().toLocaleString()}<br>Band: ${SI_BANDS[($('bandSelect')||{}).value]||'UHF'}<br>Mod: ${($('modSelect')||{}).value||'FM'}<br>Signals: ${siCaptured.length}<br>=============<br>${siCaptured.slice(-5).map(s=>s.time+' '+s.freq+'MHz '+s.str+'dBm').join('<br>')}`;}
+function ftSecCReset(){const el=$('ftSecCContent');if(el)el.textContent='';}
+function ftActivate(){siStartScan();}
+function ftAction1(){ftSecAAction();}
+function ftEmergency(){siStopScan();}
+
+function initSignalIntercept(){const sb=$('scanBtn'),stb=$('stopScanBtn');if(sb)sb.onclick=siStartScan;if(stb)stb.onclick=siStopScan;siDrawSpectrum();}

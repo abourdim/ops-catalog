@@ -1449,3 +1449,93 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"Radio Observatory","subtitle":"📡 365-day radio observation log","sectionA":"Theory","sectionB":"Controls","sectionC":"Observatory Log","mainSection":"Radio Observatory","mainDesc":"365-day radio observation log and spectrum analysis","start":"Start Observing","stop":"Stop","simStarted":"Observation started","simStopped":"Observation stopped","theoryTitle":"Radio Observatory Theory","theoryDesc":"A radio observatory monitors electromagnetic emissions across the spectrum. Log solar bursts, Jupiter emissions, meteor scatter, and more over 365 days.","dayNum":"Day","totalObs":"Total Obs","solarBurst":"Solar Bursts","meteorScatter":"Meteor Scatter","jupiterEmission":"Jupiter","noiseFloor":"Noise Floor","peakFreq":"Peak Freq","addObs":"Add Observation","obsType":"Type","intensity":"Intensity","heatmap":"Activity Heatmap"});
+Object.assign(LANG.fr, {"title":"Observatoire Radio","subtitle":"📡 Journal d'observation radio sur 365 jours","sectionA":"Theorie","sectionB":"Controles","sectionC":"Journal Observatoire","mainSection":"Observatoire Radio","mainDesc":"Journal d'observation radio 365 jours et analyse spectrale","start":"Commencer Observation","stop":"Arreter","simStarted":"Observation demarree","simStopped":"Observation arretee","theoryTitle":"Theorie Observatoire Radio","theoryDesc":"Un observatoire radio surveille les emissions electromagnetiques a travers le spectre. Enregistrez les sursauts solaires, les emissions de Jupiter, la diffusion meteorique et plus.","dayNum":"Jour","totalObs":"Total Obs","solarBurst":"Sursauts Solaires","meteorScatter":"Diffusion Meteor","jupiterEmission":"Jupiter","noiseFloor":"Plancher Bruit","peakFreq":"Freq Pic","addObs":"Ajouter Observation","obsType":"Type","intensity":"Intensite","heatmap":"Carte Thermique"});
+Object.assign(LANG.ar, {"title":"مرصد الراديو","subtitle":"📡 سجل رصد راديو لمدة 365 يوم","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"سجل المرصد","mainSection":"مرصد الراديو","mainDesc":"سجل رصد راديو لمدة 365 يوم وتحليل الطيف","start":"بدء الرصد","stop":"إيقاف","simStarted":"بدأ الرصد","simStopped":"توقف الرصد","theoryTitle":"نظرية مرصد الراديو","theoryDesc":"يراقب مرصد الراديو الانبعاثات الكهرومغناطيسية عبر الطيف. سجل الانفجارات الشمسية وانبعاثات المشتري وتشتت النيازك والمزيد على مدار 365 يومًا.","dayNum":"اليوم","totalObs":"إجمالي الرصد","solarBurst":"انفجارات شمسية","meteorScatter":"تشتت نيزكي","jupiterEmission":"المشتري","noiseFloor":"أرضية الضوضاء","peakFreq":"تردد الذروة","addObs":"إضافة رصد","obsType":"النوع","intensity":"الشدة","heatmap":"خريطة حرارية"});
+setLanguage(currentLang);
+
+
+/* ═══════ RADIO OBSERVATORY SIM ═══════ */
+let simRunning=false,simTimer=null,obsDay=1,observations=[],obsCounts={solar:0,meteor:0,jupiter:0,noise:0};
+const obsCanvas=$('obsCanvas'),obsCtx=obsCanvas?obsCanvas.getContext('2d'):null;
+const obsTypes=['Solar Burst','Meteor Scatter','Jupiter Emission','Noise Event'];
+
+function addObservation(type){
+  const intensity=Math.floor(Math.random()*10)+1;
+  const freq=(Math.random()*100+10).toFixed(1);
+  const obs={day:obsDay,type:type||obsTypes[Math.floor(Math.random()*obsTypes.length)],intensity,freq,time:new Date().toLocaleTimeString()};
+  observations.push(obs);
+  if(obs.type.includes('Solar'))obsCounts.solar++;
+  else if(obs.type.includes('Meteor'))obsCounts.meteor++;
+  else if(obs.type.includes('Jupiter'))obsCounts.jupiter++;
+  else obsCounts.noise++;
+  updateObsDisplay();
+  log('Day '+obsDay+': '+obs.type+' Int='+intensity+' F='+freq+'MHz','success');
+}
+
+function updateObsDisplay(){
+  const de=$('dayEl');if(de)de.textContent=obsDay;
+  const te=$('totalEl');if(te)te.textContent=observations.length;
+  const se=$('solarEl');if(se)se.textContent=obsCounts.solar;
+  const me=$('meteorEl');if(me)me.textContent=obsCounts.meteor;
+  const je=$('jupiterEl');if(je)je.textContent=obsCounts.jupiter;
+  drawHeatmap();
+}
+
+function drawHeatmap(){
+  if(!obsCtx)return;
+  const W=obsCanvas.width,H=obsCanvas.height;
+  obsCtx.clearRect(0,0,W,H);
+  const cellW=W/52,cellH=H/7;
+  // Draw 365-day grid (52 weeks x 7 days)
+  for(let w=0;w<52;w++){
+    for(let d=0;d<7;d++){
+      const dayNum=w*7+d+1;
+      if(dayNum>365)continue;
+      const count=observations.filter(o=>o.day===dayNum).length;
+      const alpha=Math.min(1,count/5);
+      const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+      obsCtx.fillStyle=count>0?accent:'rgba(255,255,255,0.05)';
+      obsCtx.globalAlpha=count>0?0.2+alpha*0.8:1;
+      obsCtx.fillRect(w*cellW+1,d*cellH+1,cellW-2,cellH-2);
+    }
+  }
+  obsCtx.globalAlpha=1;
+  // Current day marker
+  const cw=Math.floor((obsDay-1)/7),cd=(obsDay-1)%7;
+  obsCtx.strokeStyle='#fff';obsCtx.lineWidth=2;
+  obsCtx.strokeRect(cw*cellW,cd*cellH,cellW,cellH);
+  // Spectrum display at bottom
+  const specH=40,specY=H-specH;
+  obsCtx.fillStyle='rgba(0,0,0,0.5)';obsCtx.fillRect(0,specY,W,specH);
+  for(let x=0;x<W;x++){
+    const noise=Math.random()*15;
+    const hasSig=Math.random()<0.02;
+    const h=hasSig?20+Math.random()*15:noise;
+    const accent2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+    obsCtx.fillStyle=hasSig?accent2:'rgba(255,255,255,0.2)';
+    obsCtx.fillRect(x,specY+specH-h,1,h);
+  }
+}
+
+function advanceDay(){
+  obsDay++;if(obsDay>365)obsDay=1;
+  if(Math.random()<0.4)addObservation();
+  updateObsDisplay();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(advanceDay,2000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+function init_observatory(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('addObsBtn'))$('addObsBtn').onclick=()=>addObservation();
+  drawHeatmap();
+}
+init_observatory();

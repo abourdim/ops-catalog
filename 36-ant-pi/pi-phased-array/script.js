@@ -63,10 +63,17 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Pi Phased Array', subtitle: '🎛️ steer · 📡 beam · ⚡ phase',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Beam Steering Controller', mainDesc: 'Electronically steer antenna beams with phase control',
+    sectionA: 'Array Factor Pattern', sectionB: 'Phase Distribution', sectionC: 'About Phased Arrays',
+    numElements: 'Array Elements', freqLabel: 'Frequency (MHz)', steerAngle: 'Beam Steering Angle:',
+    spacing: 'Element Spacing (λ)', applySteer: 'Apply Steering', scanBeam: 'Scan Beam',
+    beamDir: 'Beam Direction', arrayGain: 'Array Gain', sidelobes: 'First Sidelobe',
+    beamWidth: 'Beam Width (-3dB)', scanning: 'Scanning...', steered: 'Beam steered to',
+    paInfo1: 'A phased array antenna consists of multiple radiating elements whose phases are controlled to steer the beam without physical movement.',
+    paInfo2: 'By adjusting the phase of each element, the combined radiation pattern can be steered to any direction. A Raspberry Pi can control phase shifters via SPI or I2C.',
+    paInfo3: 'This simulator shows how element count, spacing, and phase progression affect beam direction, gain, and sidelobe levels.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +107,17 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Réseau phasé Pi', subtitle: '🎛️ orienter · 📡 faisceau · ⚡ phase',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Contrôleur de faisceau', mainDesc: 'Orienter les faisceaux électroniquement par contrôle de phase',
+    sectionA: 'Facteur de réseau', sectionB: 'Distribution de phase', sectionC: 'À propos des réseaux phasés',
+    numElements: 'Éléments du réseau', freqLabel: 'Fréquence (MHz)', steerAngle: 'Angle d\'orientation :',
+    spacing: 'Espacement (λ)', applySteer: 'Appliquer', scanBeam: 'Balayage',
+    beamDir: 'Direction du faisceau', arrayGain: 'Gain du réseau', sidelobes: 'Premier lobe secondaire',
+    beamWidth: 'Largeur de faisceau (-3dB)', scanning: 'Balayage en cours...', steered: 'Faisceau orienté à',
+    paInfo1: 'Un réseau phasé est composé de plusieurs éléments rayonnants dont les phases individuelles sont contrôlées pour orienter le faisceau sans mouvement physique.',
+    paInfo2: 'En ajustant la phase de chaque élément, le diagramme de rayonnement combiné peut être orienté dans n\'importe quelle direction.',
+    paInfo3: 'Ce simulateur montre comment le nombre d\'éléments, l\'espacement et la progression de phase affectent la direction, le gain et les lobes secondaires.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +151,17 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مصفوفة طورية Pi', subtitle: '🎛️ توجيه · 📡 حزمة · ⚡ طور',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'متحكم توجيه الحزمة', mainDesc: 'توجيه حزم الهوائي إلكترونيًا بالتحكم في الطور',
+    sectionA: 'نمط معامل المصفوفة', sectionB: 'توزيع الطور', sectionC: 'حول المصفوفات الطورية',
+    numElements: 'عناصر المصفوفة', freqLabel: 'التردد (ميغاهرتز)', steerAngle: 'زاوية التوجيه:',
+    spacing: 'التباعد (λ)', applySteer: 'تطبيق التوجيه', scanBeam: 'مسح الحزمة',
+    beamDir: 'اتجاه الحزمة', arrayGain: 'كسب المصفوفة', sidelobes: 'أول فص جانبي',
+    beamWidth: 'عرض الحزمة (-3dB)', scanning: 'جارٍ المسح...', steered: 'تم توجيه الحزمة إلى',
+    paInfo1: 'هوائي المصفوفة الطورية يتكون من عناصر مشعة متعددة يتم التحكم في أطوارها لتوجيه الحزمة بدون حركة فيزيائية.',
+    paInfo2: 'بضبط طور كل عنصر، يمكن توجيه نمط الإشعاع المجمع في أي اتجاه. يمكن لـ Raspberry Pi التحكم في محولات الطور عبر SPI أو I2C.',
+    paInfo3: 'يوضح هذا المحاكي كيف يؤثر عدد العناصر والتباعد وتدرج الطور على اتجاه الحزمة والكسب ومستويات الفصوص الجانبية.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1446,6 +1467,321 @@ function init() {
   log(LANG[currentLang].ready, 'success');
 }
 
+/* ═══════ PHASED ARRAY SIMULATION ═══════ */
+
+let paSteerAngle = 0;
+let paAnimId = null;
+let paScanActive = false;
+
+function computeArrayFactor(N, d, steerDeg, freq) {
+  const lambda = 300 / freq;
+  const k = 2 * Math.PI / lambda;
+  const dMeters = d * lambda;
+  const steerRad = steerDeg * Math.PI / 180;
+  const beta = -k * dMeters * Math.sin(steerRad);
+  const pattern = [];
+
+  for (let deg = -180; deg < 180; deg++) {
+    const theta = deg * Math.PI / 180;
+    const psi = k * dMeters * Math.sin(theta) + beta;
+    let af;
+    if (Math.abs(psi * N / 2) < 1e-6) {
+      af = N;
+    } else {
+      af = Math.abs(Math.sin(N * psi / 2) / Math.sin(psi / 2));
+    }
+    pattern.push({ deg, val: af / N });
+  }
+  return pattern;
+}
+
+function drawPAMain() {
+  const c = $('mainCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const N = parseInt($('numElements')?.value || 4);
+  const freq = parseFloat($('paFreq')?.value || 435);
+  const d = parseFloat($('spacing')?.value || 0.5);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  // Draw antenna array at bottom
+  const arrayY = H - 50;
+  const elemSpacing = Math.min(60, (W - 100) / N);
+  const arrayStartX = W / 2 - (N - 1) * elemSpacing / 2;
+
+  // Phase per element
+  const lambda = 300 / freq;
+  const k = 2 * Math.PI / lambda;
+  const beta = -k * d * lambda * Math.sin(paSteerAngle * Math.PI / 180);
+
+  for (let i = 0; i < N; i++) {
+    const ex = arrayStartX + i * elemSpacing;
+    const phase = (i * beta * 180 / Math.PI) % 360;
+
+    // Element
+    ctx.fillStyle = accent; ctx.strokeStyle = accent; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(ex, arrayY); ctx.lineTo(ex, arrayY - 20); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ex - 8, arrayY - 15); ctx.lineTo(ex, arrayY - 25); ctx.lineTo(ex + 8, arrayY - 15); ctx.stroke();
+    ctx.beginPath(); ctx.arc(ex, arrayY + 4, 3, 0, Math.PI * 2); ctx.fill();
+
+    // Phase indicator
+    ctx.fillStyle = '#888'; ctx.font = '8px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(`${phase.toFixed(0)}°`, ex, arrayY + 18);
+  }
+
+  // Draw beam direction
+  const beamRad = paSteerAngle * Math.PI / 180;
+  const beamLen = 150;
+  const bx = W / 2 + Math.sin(beamRad) * beamLen;
+  const by = arrayY - 30 - Math.cos(beamRad) * beamLen;
+
+  // Beam cone
+  const beamWidth = 30 / N; // narrower with more elements
+  const bwRad = beamWidth * Math.PI / 180;
+  ctx.fillStyle = `${accent}15`;
+  ctx.beginPath();
+  ctx.moveTo(W / 2, arrayY - 30);
+  ctx.lineTo(W / 2 + Math.sin(beamRad - bwRad) * beamLen * 1.5, arrayY - 30 - Math.cos(beamRad - bwRad) * beamLen * 1.5);
+  ctx.lineTo(W / 2 + Math.sin(beamRad + bwRad) * beamLen * 1.5, arrayY - 30 - Math.cos(beamRad + bwRad) * beamLen * 1.5);
+  ctx.closePath(); ctx.fill();
+
+  // Main beam arrow
+  ctx.strokeStyle = accent; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(W / 2, arrayY - 30); ctx.lineTo(bx, by); ctx.stroke();
+  // Arrowhead
+  ctx.fillStyle = accent;
+  ctx.beginPath();
+  const aLen = 10, aAng = 0.4;
+  ctx.moveTo(bx, by);
+  ctx.lineTo(bx - aLen * Math.sin(beamRad - aAng), by + aLen * Math.cos(beamRad - aAng));
+  ctx.lineTo(bx - aLen * Math.sin(beamRad + aAng), by + aLen * Math.cos(beamRad + aAng));
+  ctx.closePath(); ctx.fill();
+
+  // Wavefronts
+  const t = Date.now() / 600;
+  ctx.strokeStyle = `${accent}40`; ctx.lineWidth = 1;
+  for (let w = 0; w < 5; w++) {
+    const dist = ((t + w * 0.3) % 1.5) * beamLen;
+    const wx = W / 2 + Math.sin(beamRad) * dist;
+    const wy = arrayY - 30 - Math.cos(beamRad) * dist;
+    ctx.beginPath(); ctx.arc(wx, wy, 15 + w * 5, beamRad - Math.PI / 2 - bwRad * 2, beamRad - Math.PI / 2 + bwRad * 2); ctx.stroke();
+  }
+
+  // Labels
+  ctx.fillStyle = accent; ctx.font = 'bold 12px Orbitron,monospace'; ctx.textAlign = 'left';
+  ctx.fillText(`${N}-Element Array @ ${freq} MHz`, 10, 20);
+  ctx.font = '10px Orbitron,monospace'; ctx.fillStyle = '#aaa';
+  ctx.fillText(`Beam: ${paSteerAngle}° | Spacing: ${d}λ`, 10, 38);
+}
+
+function drawArrayFactor() {
+  const c = $('canvasA');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const N = parseInt($('numElements')?.value || 4);
+  const freq = parseFloat($('paFreq')?.value || 435);
+  const d = parseFloat($('spacing')?.value || 0.5);
+  const pattern = computeArrayFactor(N, d, paSteerAngle, freq);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  const cx = W / 2, cy = H / 2;
+  const maxR = Math.min(cx, cy) - 30;
+
+  // Polar grid
+  ctx.strokeStyle = 'rgba(255,255,255,.1)'; ctx.lineWidth = 1;
+  for (let r = maxR / 4; r <= maxR; r += maxR / 4) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+  }
+  ctx.beginPath(); ctx.moveTo(cx - maxR, cy); ctx.lineTo(cx + maxR, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, cy - maxR); ctx.lineTo(cx, cy + maxR); ctx.stroke();
+
+  // Angle labels
+  ctx.fillStyle = '#666'; ctx.font = '9px monospace'; ctx.textAlign = 'center';
+  for (let a = 0; a < 360; a += 30) {
+    const rad = a * Math.PI / 180;
+    ctx.fillText(`${a}°`, cx + Math.cos(rad) * (maxR + 15), cy - Math.sin(rad) * (maxR + 15) + 3);
+  }
+
+  // Pattern fill
+  ctx.fillStyle = `${accent}22`;
+  ctx.beginPath();
+  pattern.forEach((p, i) => {
+    const rad = (p.deg + 90) * Math.PI / 180;
+    const r = p.val * maxR;
+    const px = cx + Math.cos(rad) * r;
+    const py = cy - Math.sin(rad) * r;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  });
+  ctx.closePath(); ctx.fill();
+
+  // Pattern outline
+  ctx.strokeStyle = accent; ctx.lineWidth = 2;
+  ctx.beginPath();
+  pattern.forEach((p, i) => {
+    const rad = (p.deg + 90) * Math.PI / 180;
+    const r = p.val * maxR;
+    const px = cx + Math.cos(rad) * r;
+    const py = cy - Math.sin(rad) * r;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  });
+  ctx.closePath(); ctx.stroke();
+
+  // Max direction marker
+  const maxP = pattern.reduce((a, b) => a.val > b.val ? a : b);
+  const maxRad = (maxP.deg + 90) * Math.PI / 180;
+  const mx = cx + Math.cos(maxRad) * maxP.val * maxR;
+  const my = cy - Math.sin(maxRad) * maxP.val * maxR;
+  ctx.fillStyle = '#ff4444'; ctx.beginPath(); ctx.arc(mx, my, 4, 0, Math.PI * 2); ctx.fill();
+}
+
+function drawPhaseDistribution() {
+  const c = $('canvasB');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const N = parseInt($('numElements')?.value || 4);
+  const freq = parseFloat($('paFreq')?.value || 435);
+  const d = parseFloat($('spacing')?.value || 0.5);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  const lambda = 300 / freq;
+  const k = 2 * Math.PI / lambda;
+  const beta = -k * d * lambda * Math.sin(paSteerAngle * Math.PI / 180);
+
+  const pad = { l: 50, r: 20, t: 30, b: 40 };
+  const gW = W - pad.l - pad.r, gH = H - pad.t - pad.b;
+  const barW = Math.min(50, gW / N - 10);
+
+  // Y axis (phase -360 to 360)
+  ctx.strokeStyle = 'rgba(255,255,255,.08)'; ctx.lineWidth = 1;
+  ctx.fillStyle = '#666'; ctx.font = '9px monospace'; ctx.textAlign = 'right';
+  for (let p = -360; p <= 360; p += 90) {
+    const y = pad.t + gH / 2 - (p / 360) * (gH / 2);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+    ctx.fillText(`${p}°`, pad.l - 5, y + 3);
+  }
+
+  // Zero line
+  ctx.strokeStyle = 'rgba(255,255,255,.2)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad.l, pad.t + gH / 2); ctx.lineTo(W - pad.r, pad.t + gH / 2); ctx.stroke();
+
+  // Bars
+  for (let i = 0; i < N; i++) {
+    const phase = (i * beta * 180 / Math.PI) % 360;
+    const normPhase = ((phase + 360) % 360) - 180; // normalize to -180..180
+    const bx = pad.l + (i + 0.5) * (gW / N) - barW / 2;
+    const barH = (normPhase / 360) * gH;
+    const by = pad.t + gH / 2;
+
+    ctx.fillStyle = accent + '88';
+    ctx.fillRect(bx, by - Math.max(0, barH), barW, Math.abs(barH));
+    ctx.strokeStyle = accent; ctx.lineWidth = 1;
+    ctx.strokeRect(bx, by - Math.max(0, barH), barW, Math.abs(barH));
+
+    // Labels
+    ctx.fillStyle = '#aaa'; ctx.font = '9px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(`E${i + 1}`, bx + barW / 2, H - 10);
+    ctx.fillStyle = accent; ctx.font = 'bold 9px Orbitron,monospace';
+    ctx.fillText(`${normPhase.toFixed(0)}°`, bx + barW / 2, by - barH - 5);
+  }
+}
+
+function applySteer() {
+  paSteerAngle = parseInt($('steerSlider')?.value || 0);
+  const N = parseInt($('numElements')?.value || 4);
+  const d = parseFloat($('spacing')?.value || 0.5);
+  const s = LANG[currentLang];
+
+  setStatus(true);
+  drawPAMain();
+  drawArrayFactor();
+  drawPhaseDistribution();
+
+  // Compute results
+  const gain = 10 * Math.log10(N) + 2.15;
+  const bw3dB = (51 / (N * d)).toFixed(1);
+  const sll = N >= 8 ? -13.3 : N >= 4 ? -11.3 : -6;
+
+  const box = $('resultBox');
+  if (box) {
+    box.innerHTML = `
+      <div class="result-row"><span class="result-label">${s.beamDir || 'Beam Direction'}</span><span class="result-value">${paSteerAngle}°</span></div>
+      <div class="result-row"><span class="result-label">${s.arrayGain || 'Array Gain'}</span><span class="result-value">${gain.toFixed(1)} dBi</span></div>
+      <div class="result-row"><span class="result-label">${s.beamWidth || 'Beam Width'}</span><span class="result-value">${bw3dB}°</span></div>
+      <div class="result-row"><span class="result-label">${s.sidelobes || 'Sidelobes'}</span><span class="result-value">${sll} dB</span></div>
+      <div class="result-row"><span class="result-label">${s.numElements || 'Elements'}</span><span class="result-value">${N}</span></div>
+    `;
+  }
+
+  log(`📡 ${s.steered || 'Beam steered to'} ${paSteerAngle}° (${gain.toFixed(1)} dBi)`, 'success');
+  playSound('click');
+}
+
+async function scanBeam() {
+  if (paScanActive) return;
+  paScanActive = true;
+  const s = LANG[currentLang];
+  const slider = $('steerSlider');
+  log(`🔍 ${s.scanning || 'Scanning...'}`, 'info');
+
+  for (let a = -90; a <= 90; a += 5) {
+    if (!paScanActive) break;
+    paSteerAngle = a;
+    if (slider) slider.value = a;
+    const disp = $('angleDisplay');
+    if (disp) disp.textContent = a + '°';
+    drawPAMain();
+    drawArrayFactor();
+    drawPhaseDistribution();
+    await new Promise(r => setTimeout(r, 50));
+  }
+  applySteer();
+  paScanActive = false;
+}
+
+function startPAAnimation() {
+  function frame() {
+    drawPAMain();
+    paAnimId = requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function initPhasedArray() {
+  const slider = $('steerSlider');
+  const disp = $('angleDisplay');
+  if (slider) {
+    slider.addEventListener('input', () => {
+      paSteerAngle = parseInt(slider.value);
+      if (disp) disp.textContent = paSteerAngle + '°';
+      drawPAMain();
+      drawArrayFactor();
+      drawPhaseDistribution();
+    });
+  }
+
+  const steerBtn = $('steerBtn');
+  if (steerBtn) steerBtn.onclick = applySteer;
+
+  const scanBtn = $('scanBeamBtn');
+  if (scanBtn) scanBtn.onclick = scanBeam;
+
+  [$('numElements'), $('paFreq'), $('spacing')].forEach(el => {
+    if (el) el.addEventListener('change', applySteer);
+  });
+
+  applySteer();
+  startPAAnimation();
+}
+
 document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
-  : init();
+  ? document.addEventListener('DOMContentLoaded', () => { init(); initPhasedArray(); })
+  : (function(){ init(); initPhasedArray(); })();

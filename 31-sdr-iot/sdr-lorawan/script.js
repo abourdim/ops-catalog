@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR LoRaWAN Decoder', subtitle: '📶 LoRaWAN Decoder — Long-Range IoT',
+    disconnected: 'Disconnected', connected: 'Decoding',
+    mainSection: 'LoRaWAN Decoder', mainDesc: 'Decode long-range IoT network packets',
+    sectionA: 'Packet Analysis', sectionB: 'LoRaWAN Theory',
+    started: '▶ Decoding LoRa packets', stopped: '⏹ Decoding stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📶 LoRaWAN Decoder ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -1332,6 +1333,16 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ LoRaWAN SIMULATION ═══════ */
+let _lr_run=false,_lr_fr=null,_lr_cnt=0,_lr_hist=[];
+function _lr_gen(){const s=new Float32Array(256);for(let i=0;i<256;i++)s[i]=-115+(Math.random()-.5)*4;if(Math.random()<0.12){_lr_cnt++;const sf=parseInt($('sfSelect')?$('sfSelect').value:7);const bw=Math.max(2,14-sf);const pk=100+Math.floor(Math.random()*56);for(let i=-bw;i<=bw;i++)if(pk+i>=0&&pk+i<256)s[pk+i]+=(25+sf*2)*(1-Math.abs(i)/bw);}return s;}
+function _lr_draw1(spec){const c=$('loraCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+120)/50*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('LoRa CSS Spectrum',4,12);}
+function _lr_draw2(){const c=$('packetCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='rgba(10,10,26,0.3)';ctx.fillRect(0,0,w,h);_lr_hist.push(_lr_cnt);if(_lr_hist.length>500)_lr_hist.shift();ctx.strokeStyle='#4af';ctx.lineWidth=1.5;ctx.beginPath();const show=Math.min(200,_lr_hist.length);for(let i=0;i<show;i++){const v=_lr_hist[_lr_hist.length-show+i],x=i/show*w,y=h-v/20*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
+function _lr_stats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('pktCountVal',_lr_cnt);el('devAddrVal','0x'+Math.floor(Math.random()*0xFFFFFF).toString(16).padStart(6,'0').toUpperCase());el('rssiVal',(-80-Math.random()*40).toFixed(0)+' dBm');el('snrVal',(-5+Math.random()*15).toFixed(1)+' dB');}
+function _lr_loop(){if(!_lr_run)return;const spec=_lr_gen();_lr_draw1(spec);_lr_draw2();_lr_stats();_lr_fr=requestAnimationFrame(_lr_loop);}
+function startLr(){if(_lr_run)return;_lr_run=true;_lr_cnt=0;_lr_hist=[];setStatus(true);log(LANG[currentLang].started,'success');_lr_loop();}
+function stopLr(){_lr_run=false;if(_lr_fr)cancelAnimationFrame(_lr_fr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1453,9 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startLr;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopLr;
 
   log(LANG[currentLang].ready, 'success');
 }

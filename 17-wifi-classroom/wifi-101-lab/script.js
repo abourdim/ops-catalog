@@ -63,10 +63,20 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi 101 Lab', subtitle: 'Learn channels, frequencies & modulation',
+    disconnected: 'Idle', connected: 'Scanning',
+    mainSection: 'WiFi Fundamentals Lab', mainDesc: 'Interactive WiFi channel & frequency explorer',
+    sectionA: 'Modulation Visualizer', sectionB: 'Channel Map', sectionC: 'How It Works',
+    start: 'Start Lab', stop: 'Stop',
+    freq24: '2.4 GHz Band', freq5: '5 GHz Band',
+    channel: 'Channel', frequency: 'Frequency', bandwidth: 'Bandwidth',
+    modulation: 'Modulation', ofdm: 'OFDM', dsss: 'DSSS', cck: 'CCK',
+    signalStrength: 'Signal Strength', noiseFloor: 'Noise Floor',
+    snr: 'SNR', dataRate: 'Data Rate',
+    labReady: 'WiFi 101 Lab ready!',
+    chSelected: 'Channel selected',
+    scanStarted: 'Lab scan started', scanStopped: 'Lab scan stopped',
+    howItWorksText: 'WiFi uses radio frequencies in the 2.4 GHz and 5 GHz bands. Each band is divided into channels. Modulation techniques like OFDM and DSSS encode data onto carrier waves. This lab simulates channel scanning and modulation visualization.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +110,20 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi 101 Labo', subtitle: 'Apprenez canaux, frequences & modulation',
+    disconnected: 'Inactif', connected: 'Balayage',
+    mainSection: 'Labo Fondamentaux WiFi', mainDesc: 'Explorateur interactif de canaux & frequences WiFi',
+    sectionA: 'Visualiseur de Modulation', sectionB: 'Carte des Canaux', sectionC: 'Comment ca marche',
+    start: 'Demarrer', stop: 'Arreter',
+    freq24: 'Bande 2,4 GHz', freq5: 'Bande 5 GHz',
+    channel: 'Canal', frequency: 'Frequence', bandwidth: 'Bande passante',
+    modulation: 'Modulation', ofdm: 'OFDM', dsss: 'DSSS', cck: 'CCK',
+    signalStrength: 'Force du signal', noiseFloor: 'Plancher de bruit',
+    snr: 'RSB', dataRate: 'Debit',
+    labReady: 'Labo WiFi 101 pret!',
+    chSelected: 'Canal selectionne',
+    scanStarted: 'Scan demarre', scanStopped: 'Scan arrete',
+    howItWorksText: 'Le WiFi utilise les frequences radio des bandes 2,4 GHz et 5 GHz. Chaque bande est divisee en canaux. Les techniques de modulation comme OFDM et DSSS encodent les donnees. Ce labo simule le balayage des canaux et la visualisation de la modulation.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +157,20 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'مختبر WiFi 101', subtitle: 'تعلم القنوات والترددات والتضمين',
+    disconnected: 'خامل', connected: 'مسح',
+    mainSection: 'مختبر أساسيات WiFi', mainDesc: 'مستكشف تفاعلي لقنوات وترددات WiFi',
+    sectionA: 'عارض التضمين', sectionB: 'خريطة القنوات', sectionC: 'كيف يعمل',
+    start: 'ابدأ', stop: 'إيقاف',
+    freq24: 'نطاق 2.4 جيجاهرتز', freq5: 'نطاق 5 جيجاهرتز',
+    channel: 'قناة', frequency: 'تردد', bandwidth: 'عرض النطاق',
+    modulation: 'تضمين', ofdm: 'OFDM', dsss: 'DSSS', cck: 'CCK',
+    signalStrength: 'قوة الإشارة', noiseFloor: 'أرضية الضوضاء',
+    snr: 'نسبة الإشارة للضوضاء', dataRate: 'معدل البيانات',
+    labReady: 'مختبر WiFi 101 جاهز!',
+    chSelected: 'تم اختيار القناة',
+    scanStarted: 'بدأ المسح', scanStopped: 'توقف المسح',
+    howItWorksText: 'يستخدم WiFi ترددات الراديو في نطاقي 2.4 و5 جيجاهرتز. كل نطاق مقسم إلى قنوات. تقنيات التضمين مثل OFDM وDSSS ترمز البيانات على موجات حاملة. هذا المختبر يحاكي مسح القنوات وتصور التضمين.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1444,8 +1474,201 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+
+  /* ═══════ APP INIT — WiFi 101 Lab ═══════ */
+  initWifi101Lab();
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi 101 Lab ═══════ */
+const CHANNELS_24 = [];
+for (let i = 1; i <= 14; i++) CHANNELS_24.push({ num: i, freq: 2412 + (i - 1) * 5, bw: 22 });
+const CHANNELS_5 = [36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,149,153,157,161,165].map(n => ({ num: n, freq: 5000 + n * 5, bw: 20 }));
+
+let labRunning = false, labInterval = null, labCanvas, labCtx;
+let modCanvas, modCtx, modAnim;
+let selectedBand = '2.4', selectedChannel = null;
+
+function initWifi101Lab() {
+  labCanvas = $('labCanvas');
+  modCanvas = $('modCanvas');
+  if (labCanvas) labCtx = labCanvas.getContext('2d');
+  if (modCanvas) modCtx = modCanvas.getContext('2d');
+
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  if (startBtn) startBtn.onclick = startLab;
+  if (stopBtn) stopBtn.onclick = stopLab;
+
+  const bandSel = $('bandSelect');
+  if (bandSel) bandSel.onchange = () => { selectedBand = bandSel.value; drawChannelMap(); };
+
+  drawChannelMap();
+  startModulationViz();
+}
+
+function startLab() {
+  if (labRunning) return;
+  labRunning = true;
+  setStatus(true);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = true;
+  if (p) p.disabled = false;
+  log(LANG[currentLang].scanStarted, 'success');
+  labInterval = setInterval(() => {
+    updateLabStats();
+    drawChannelMap();
+  }, 1500);
+}
+
+function stopLab() {
+  labRunning = false;
+  if (labInterval) clearInterval(labInterval);
+  setStatus(false);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = false;
+  if (p) p.disabled = true;
+  log(LANG[currentLang].scanStopped, 'info');
+}
+
+function updateLabStats() {
+  const chs = selectedBand === '2.4' ? CHANNELS_24 : CHANNELS_5;
+  const ch = chs[Math.floor(Math.random() * chs.length)];
+  const signal = -20 - Math.floor(Math.random() * 60);
+  const noise = -90 - Math.floor(Math.random() * 10);
+  const snr = signal - noise;
+  const rate = Math.max(1, Math.floor(snr * 2.5));
+
+  const sigEl = $('statSignal'), noiseEl = $('statNoise'), snrEl = $('statSNR'), rateEl = $('statRate');
+  if (sigEl) sigEl.textContent = signal + ' dBm';
+  if (noiseEl) noiseEl.textContent = noise + ' dBm';
+  if (snrEl) snrEl.textContent = snr + ' dB';
+  if (rateEl) rateEl.textContent = rate + ' Mbps';
+
+  log(`Ch ${ch.num} (${ch.freq} MHz): ${signal} dBm, SNR ${snr} dB`, 'rx');
+}
+
+function drawChannelMap() {
+  if (!labCtx) return;
+  const c = labCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  labCtx.scale(dpr, dpr);
+  const w = c.clientWidth, h = c.clientHeight;
+  labCtx.clearRect(0, 0, w, h);
+
+  const chs = selectedBand === '2.4' ? CHANNELS_24 : CHANNELS_5;
+  const minF = chs[0].freq - 15, maxF = chs[chs.length - 1].freq + 15;
+  const fRange = maxF - minF;
+
+  // draw grid
+  labCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+  labCtx.lineWidth = 1;
+  for (let i = 0; i <= 10; i++) {
+    const y = 30 + (h - 60) * i / 10;
+    labCtx.beginPath(); labCtx.moveTo(40, y); labCtx.lineTo(w - 10, y); labCtx.stroke();
+  }
+
+  // draw channels as bell curves
+  chs.forEach((ch, idx) => {
+    const cx = 40 + (ch.freq - minF) / fRange * (w - 50);
+    const apCount = Math.floor(Math.random() * 8);
+    const intensity = Math.min(1, apCount / 6);
+    const r = Math.floor(34 + intensity * 200);
+    const g = Math.floor(197 - intensity * 150);
+    const b = Math.floor(94);
+    labCtx.fillStyle = `rgba(${r},${g},${b},0.3)`;
+    labCtx.strokeStyle = `rgb(${r},${g},${b})`;
+    labCtx.lineWidth = 2;
+    labCtx.beginPath();
+    const bwPx = ch.bw / fRange * (w - 50);
+    for (let x = cx - bwPx; x <= cx + bwPx; x++) {
+      const d = (x - cx) / (bwPx / 2);
+      const y = h - 30 - (h - 70) * Math.exp(-d * d * 2) * (0.3 + intensity * 0.7);
+      if (x === cx - bwPx) labCtx.moveTo(x, h - 30);
+      labCtx.lineTo(x, y);
+    }
+    labCtx.lineTo(cx + bwPx, h - 30);
+    labCtx.closePath();
+    labCtx.fill();
+    labCtx.stroke();
+
+    // channel label
+    labCtx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#fff';
+    labCtx.font = '10px Orbitron, monospace';
+    labCtx.textAlign = 'center';
+    labCtx.fillText(ch.num, cx, h - 10);
+    labCtx.fillText(ch.freq + '', cx, 18);
+  });
+}
+
+function startModulationViz() {
+  if (!modCtx) return;
+  let phase = 0;
+  function drawMod() {
+    const c = modCanvas;
+    const dpr = window.devicePixelRatio || 1;
+    c.width = c.clientWidth * dpr;
+    c.height = c.clientHeight * dpr;
+    modCtx.scale(dpr, dpr);
+    const w = c.clientWidth, h = c.clientHeight;
+    modCtx.clearRect(0, 0, w, h);
+
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+    // Carrier wave
+    modCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+    modCtx.lineWidth = 1;
+    modCtx.beginPath();
+    for (let x = 0; x < w; x++) {
+      const y = h / 2 + Math.sin((x + phase) * 0.05) * h * 0.3;
+      x === 0 ? modCtx.moveTo(x, y) : modCtx.lineTo(x, y);
+    }
+    modCtx.stroke();
+
+    // OFDM subcarriers
+    const subcarriers = 8;
+    for (let sc = 0; sc < subcarriers; sc++) {
+      const freq = 0.02 + sc * 0.015;
+      const amp = h * 0.12;
+      const hue = (sc / subcarriers) * 360;
+      modCtx.strokeStyle = `hsla(${hue}, 80%, 60%, 0.6)`;
+      modCtx.lineWidth = 1.5;
+      modCtx.beginPath();
+      for (let x = 0; x < w; x++) {
+        const y = h / 2 + Math.sin((x + phase * (1 + sc * 0.2)) * freq) * amp;
+        x === 0 ? modCtx.moveTo(x, y) : modCtx.lineTo(x, y);
+      }
+      modCtx.stroke();
+    }
+
+    // Combined modulated signal
+    modCtx.strokeStyle = accent;
+    modCtx.lineWidth = 2;
+    modCtx.beginPath();
+    for (let x = 0; x < w; x++) {
+      let y = 0;
+      for (let sc = 0; sc < subcarriers; sc++) {
+        const freq = 0.02 + sc * 0.015;
+        y += Math.sin((x + phase * (1 + sc * 0.2)) * freq) * (h * 0.04);
+      }
+      y = h / 2 + y;
+      x === 0 ? modCtx.moveTo(x, y) : modCtx.lineTo(x, y);
+    }
+    modCtx.stroke();
+
+    // Labels
+    modCtx.fillStyle = accent;
+    modCtx.font = '11px Orbitron, monospace';
+    modCtx.textAlign = 'left';
+    modCtx.fillText('OFDM Subcarriers', 10, 16);
+
+    phase += 2;
+    modAnim = requestAnimationFrame(drawMod);
+  }
+  drawMod();
+}

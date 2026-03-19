@@ -3,293 +3,75 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>esp-roaming-visualizer — Workshop DIY</title>
+  <meta name="description" content="Visualize WiFi roaming. ESP32 simulates client handoff — educational simulation." />
   <meta name="author" content="Workshop-DIY — abourdim" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="esp-roaming-visualizer — Workshop DIY" />
+  <meta property="og:description" content="Visualize WiFi roaming. ESP32 simulates client handoff." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
-
-  <!-- PWA -->
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#08091a" />
-
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .roam-canvas { width:100%; height:320px; border-radius:8px; background:#0a0a1a; border:1px solid var(--border); display:block; }
+    .stats-row { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
+    .stat-box { flex:1; min-width:80px; padding:.5rem; text-align:center; border-radius:8px; background:rgba(0,0,0,.2); border:1px solid var(--border); }
+    .stat-box .stat-num { font-family:'Orbitron',monospace; font-size:1.2rem; font-weight:700; color:var(--accent); }
+    .stat-box .stat-label { font-size:.65rem; color:var(--text-muted); text-transform:uppercase; }
+    .roam-log { max-height:180px; overflow-y:auto; padding:.5rem; background:rgba(0,0,0,.3); border-radius:8px; font-family:'Orbitron',monospace; font-size:.7rem; border:1px solid var(--border); }
+    .roam-entry { display:flex; gap:.5rem; padding:.25rem 0; border-bottom:1px solid rgba(255,255,255,.05); }
+    .roam-entry .r-time { color:var(--text-muted); min-width:55px; }
+    .roam-entry .r-ap { color:var(--accent); font-weight:700; }
+    .roam-entry .r-rssi { color:#34c759; }
+    .challenge-card { padding:.8rem; margin-bottom:.5rem; border-radius:8px; background:rgba(0,0,0,.15); border:1px solid var(--border); }
+    .challenge-card p { margin:0 0 .5rem; font-size:.85rem; }
+    .challenge-answer { display:none; padding:.5rem; margin-top:.5rem; border-radius:6px; background:rgba(0,0,0,.2); font-size:.8rem; color:var(--accent); border-left:3px solid var(--accent); }
+    .challenge-answer.visible { display:block; }
+  </style>
 </head>
-
 <body>
-  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
-  <div class="splash" id="splash" onclick="dismissSplash()">
-    <div class="splash-inner">
-      <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
-      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
-    </div>
-  </div>
-
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">📱 roam · 📡 handoff · 📊 visualize</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
   <div class="app">
     <div class="deco-band top-band" aria-hidden="true"></div>
-
     <div class="rows-container">
-
-      <!-- ═══════════════════ HEADER ═══════════════════ -->
       <div class="header">
-        <div class="bismillah" aria-hidden="true">
-          <span class="bism-ornament">&#x2726;</span>
-          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
-          <span class="bism-ornament">&#x2726;</span>
-        </div>
-
-        <div class="title-block">
-          <div class="logo-wrap" id="logoWrap"></div>
-          <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
-          </div>
-        </div>
-
-        <div class="header-right">
-          <div class="header-buttons">
-            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
-            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
-            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
-          </div>
-          <div class="status-pill" id="statusPill">
-            <span class="status-dot" id="statusDot"></span>
-            <span id="statusText" data-i18n="disconnected">Disconnected</span>
-          </div>
-        </div>
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">WiFi Roaming Visualizer</h1><div class="subtitle" data-i18n="subtitle">📱 roam · 📡 handoff · 📊 visualize</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
       </div>
-
-      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
       <div class="card" id="mainCard">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
-          </div>
+        <div class="card-header"><div><div class="card-title"><span class="icon">📱</span> <span data-i18n="mainSection">WiFi Roaming — Client Handoff</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Visualize how clients roam between APs based on signal strength</span> <span class="version-tag">v1.0</span></div></div></div>
+        <div class="stats-row" style="padding:0 .5rem">
+          <div class="stat-box"><div class="stat-num" id="handoffCount">0</div><div class="stat-label" data-i18n="handoffs">Handoffs</div></div>
+          <div class="stat-box"><div class="stat-num" id="currentAP">—</div><div class="stat-label" data-i18n="currentAP">Current AP</div></div>
+          <div class="stat-box"><div class="stat-num" id="rssiVal">—</div><div class="stat-label" data-i18n="rssi">RSSI dBm</div></div>
         </div>
+        <div style="padding:.5rem"><div class="roam-log" id="roamLog"></div></div>
+        <div style="display:flex; gap:.5rem; padding:.5rem; flex-wrap:wrap"><button id="startBtn" class="primary" data-i18n="startRoam">Start Roaming</button><button id="stopBtn" data-i18n="stopRoam">Stop</button><button id="clearBtn" data-i18n="clearLog">Clear</button></div>
       </div>
-
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
-      </details>
-
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
-      </details>
-
+      <details class="collapsible"><summary><span class="icon">🗺️</span> <span data-i18n="sectionA">Roaming Canvas</span></summary><div class="card"><canvas id="roamCanvas" class="roam-canvas" height="320"></canvas><div class="hint" data-i18n="canvasHint">Client moves between AP coverage zones — signal strength shown in real-time</div></div></details>
+      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionB">Signal Graph</span></summary><div class="card"><canvas id="signalCanvas" class="roam-canvas" height="200"></canvas><div class="hint" data-i18n="signalHint">RSSI values from each AP as client moves</div></div></details>
+      <details class="collapsible"><summary><span class="icon">🏆</span> <span data-i18n="sectionC">Challenge</span></summary><div class="card"><div style="padding:1rem">
+        <div class="challenge-card"><p data-i18n="challenge1">What triggers a WiFi client to roam to a different AP?</p><button class="button" onclick="revealChallenge(0)" data-i18n="revealBtn">Reveal</button><div class="challenge-answer" id="answer0" data-i18n="challengeReveal1">When the signal from the current AP drops below a threshold (-70 dBm typical), the client scans for a stronger AP and reconnects.</div></div>
+        <div class="challenge-card"><p data-i18n="challenge2">What is the difference between 802.11r and 802.11k?</p><button class="button" onclick="revealChallenge(1)" data-i18n="revealBtn">Reveal</button><div class="challenge-answer" id="answer1" data-i18n="challengeReveal2">802.11r (Fast BSS Transition) speeds up handoff by pre-authenticating. 802.11k provides neighbor AP reports so clients know where to roam.</div></div>
+        <div class="challenge-card"><p data-i18n="challenge3">Why do some devices stick to a weak AP instead of roaming?</p><button class="button" onclick="revealChallenge(2)" data-i18n="revealBtn">Reveal</button><div class="challenge-answer" id="answer2" data-i18n="challengeReveal3">Sticky client behavior: some devices prefer the known AP even with weak signal. 802.11v allows APs to suggest clients roam (BSS Transition Management).</div></div>
+      </div></div></details>
     </div>
-
-    <!-- ═══════════════════ FOOTER ═══════════════════ -->
-    <footer class="app-footer">
-      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
-      <span class="hijri-date" id="hijriDate"></span>
-    </footer>
-
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
     <div class="deco-band bottom-band" aria-hidden="true"></div>
   </div>
-
-  <!-- Matrix rain canvas (hidden by default) -->
   <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
-
-  <!-- Debug panel (hidden, ?debug=1 to show) -->
-  <div id="debugPanel" class="debug-panel">
-    <span id="debugFps">0 FPS</span>
-    <span id="debugMem">0 MB</span>
-  </div>
-
-  <!-- ═══════════════════ LEFT PANEL — Help ═══════════════════ -->
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
   <div class="sidebar-overlay" id="helpOverlay"></div>
-  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="help">❓ Help</span>
-      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
-    </div>
-
-    <div class="help-tabs">
-      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
-      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
-      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button>
-    </div>
-
-    <div class="sidebar-body">
-      <!-- FAQ -->
-      <div class="help-content active" id="helpFaq">
-        <details class="help-item">
-          <summary data-i18n="faq_q1">What is this app?</summary>
-          <p data-i18n="faq_a1">A Workshop-DIY educational web app. Explore, create, and innovate!</p>
-        </details>
-        <details class="help-item">
-          <summary data-i18n="faq_q2">How do I change the theme?</summary>
-          <p data-i18n="faq_a2">Open Settings (⚙️) and pick a theme from the dropdown.</p>
-        </details>
-        <details class="help-item">
-          <summary data-i18n="faq_q3">How do I change the language?</summary>
-          <p data-i18n="faq_a3">Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.</p>
-        </details>
-        <details class="help-item">
-          <summary data-i18n="faq_q4">Is my data private?</summary>
-          <p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere.</p>
-        </details>
-      </div>
-
-      <!-- How-To -->
-      <div class="help-content" id="helpHowto">
-        <div class="help-step">
-          <span class="help-step-num">1</span>
-          <p data-i18n="howto_1">Explore the main section to get started with the app.</p>
-        </div>
-        <div class="help-step">
-          <span class="help-step-num">2</span>
-          <p data-i18n="howto_2">Open collapsible sections to access more features.</p>
-        </div>
-        <div class="help-step">
-          <span class="help-step-num">3</span>
-          <p data-i18n="howto_3">Check the Activity Log (📜) for events and messages.</p>
-        </div>
-        <div class="help-step">
-          <span class="help-step-num">4</span>
-          <p data-i18n="howto_4">Use Settings (⚙️) to customize theme and language.</p>
-        </div>
-      </div>
-
-      <!-- Wiki -->
-      <div class="help-content" id="helpWiki">
-        <div class="wiki-entry">
-          <h3 data-i18n="wiki_themes_title">🎨 Themes</h3>
-          <p data-i18n="wiki_themes">8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).</p>
-        </div>
-        <div class="wiki-entry">
-          <h3 data-i18n="wiki_i18n_title">🌐 Languages</h3>
-          <p data-i18n="wiki_i18n">Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.</p>
-        </div>
-        <div class="wiki-entry">
-          <h3 data-i18n="wiki_log_title">📜 Activity Log</h3>
-          <p data-i18n="wiki_log">Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.</p>
-        </div>
-        <div class="wiki-entry">
-          <h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3>
-          <p data-i18n="wiki_privacy">Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-footer">
-      <span>Workshop DIY</span>
-      <span class="badge"><strong>v1.2</strong></span>
-    </div>
-  </aside>
-
-  <!-- ═══════════════════ RIGHT PANEL — Settings ═══════════════════ -->
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is WiFi roaming?</summary><p data-i18n="faq_a1">When a device moves between access points and seamlessly switches connection to maintain connectivity.</p></details><details class="help-item"><summary data-i18n="faq_q2">What is RSSI?</summary><p data-i18n="faq_a2">Received Signal Strength Indicator measured in dBm. Closer to 0 is stronger. -30 dBm is excellent, -80 dBm is poor.</p></details><details class="help-item"><summary data-i18n="faq_q3">What is a handoff?</summary><p data-i18n="faq_a3">The process of transferring a client from one AP to another while maintaining the connection.</p></details><details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser.</p></details></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Start Roaming to begin the simulation.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Watch the client device move between AP coverage zones.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Open the Roaming Canvas to see the visual handoff process.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Check the Signal Graph for RSSI values over time.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_roam_title">📱 Roaming</h3><p data-i18n="wiki_roam">Client switches between APs based on signal strength. Critical for enterprise WiFi.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_rssi_title">📊 RSSI</h3><p data-i18n="wiki_rssi">Received Signal Strength Indicator. Measured in dBm. Drives roaming decisions.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_bss_title">🔄 BSS Transition</h3><p data-i18n="wiki_bss">802.11v allows APs to suggest roaming to clients, solving sticky client issues.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_fast_title">⚡ Fast Roaming</h3><p data-i18n="wiki_fast">802.11r pre-authenticates clients with target AP, reducing handoff time to under 50ms.</p></div></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
   <div class="sidebar-overlay" id="settingsOverlay"></div>
-  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
-      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
-    </div>
-
-    <div class="sidebar-body">
-      <div class="sidebar-group">
-        <label class="sidebar-label" data-i18n="language">Language</label>
-        <select id="langSelect" class="sidebar-select" aria-label="Language">
-          <option value="en" selected>🇬🇧 EN</option>
-          <option value="fr">🇫🇷 FR</option>
-          <option value="ar">🇩🇿 عربي</option>
-        </select>
-      </div>
-      <div class="sidebar-group">
-        <label class="sidebar-label" data-i18n="theme">Theme</label>
-        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
-          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
-          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
-          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
-          <option value="riad" data-i18n-opt="t_riad">Riad</option>
-          <option value="medina" data-i18n-opt="t_medina">Medina</option>
-          <option value="space" data-i18n-opt="t_space">Space</option>
-          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
-          <option value="robot" data-i18n-opt="t_robot">Robot</option>
-        </select>
-      </div>
-      <div class="sidebar-group">
-        <label class="toggle-ctrl">
-          <input type="checkbox" id="soundToggle" class="checkbox-ctrl" />
-          <span data-i18n="soundEffects">🔊 Sound effects</span>
-        </label>
-      </div>
-      <div class="sidebar-group">
-        <button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button>
-      </div>
-      <div class="sidebar-group">
-        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
-        <div class="dhikr-display" id="dhikrDisplay" style="display:none">
-          <span class="dhikr-label">سبحان الله</span>
-          <span class="dhikr-count" id="dhikrCounter">0</span>
-          <button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button>
-        </div>
-      </div>
-      <div class="sidebar-group">
-        <button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button>
-      </div>
-    </div>
-
-    <div class="sidebar-footer">
-      <span>Workshop DIY</span>
-      <span class="badge"><strong>v1.2</strong></span>
-    </div>
-  </aside>
-
-  <!-- ═══════════════════ RIGHT PANEL — Activity Log (docked) ═══════════════════ -->
-  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
-    <div class="resize-handle" id="logResizeHandle"></div>
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
-      <div class="log-controls">
-        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
-        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
-        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
-        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
-      </div>
-    </div>
-
-    <div class="log-filters" id="logFilters">
-      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
-      <button class="log-filter" data-filter="info">Info</button>
-      <button class="log-filter" data-filter="success">✓</button>
-      <button class="log-filter" data-filter="error">✗</button>
-      <button class="log-filter" data-filter="tx">TX</button>
-      <button class="log-filter" data-filter="rx">RX</button>
-    </div>
-
-    <div class="sidebar-body log-body">
-      <div class="log" id="logContainer" aria-live="polite"></div>
-    </div>
-
-    <div class="sidebar-footer">
-      <span data-i18n="eventsMsg">Events &amp; messages</span>
-      <span class="badge"><strong>v1.2</strong></span>
-    </div>
-  </aside>
-
-  <!-- Toast -->
-  <div id="toastIndicator" class="toast-indicator">
-    <div class="toast-inner">
-      <div class="spinner"></div>
-      <div id="toastMessage" class="toast-text">Working…</div>
-    </div>
-  </div>
-
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="ar">🇩🇿 عربي</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option><option value="zellige" data-i18n-opt="t_zellige">Zellige</option><option value="andalus" data-i18n-opt="t_andalus">Andalus</option><option value="riad" data-i18n-opt="t_riad">Riad</option><option value="medina" data-i18n-opt="t_medina">Medina</option><option value="space" data-i18n-opt="t_space">Space</option><option value="jungle" data-i18n-opt="t_jungle">Jungle</option><option value="robot" data-i18n-opt="t_robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label></div><div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div><div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div><div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
   <script src="script.js"></script>
 </body>
 </html>

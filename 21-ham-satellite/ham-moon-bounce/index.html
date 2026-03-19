@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Moon Bounce EME — Workshop DIY</title>
+  <meta name="description" content="Moon Bounce — Earth-Moon-Earth communication simulator." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Moon Bounce EME — Workshop DIY" />
+  <meta property="og:description" content="Earth-Moon-Earth communication simulator." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -21,6 +21,16 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .eme-display{text-align:center;padding:10px}
+    .eme-delay{font-family:'Orbitron',monospace;font-size:2rem;color:var(--accent);margin:8px 0}
+    .eme-info{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+    .eme-cell{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:8px;padding:10px;text-align:center}
+    .eme-cell .ev{font-family:'Orbitron',monospace;font-size:1.2rem;color:var(--accent)}
+    .eme-cell .el{font-size:.7rem;color:var(--text-muted);margin-top:2px}
+    .msg-box{font-family:monospace;font-size:.78rem;background:#000;color:#0f0;padding:10px;border-radius:8px;max-height:140px;overflow-y:auto;margin:8px 0;line-height:1.5}
+    @media(max-width:600px){.eme-info{grid-template-columns:1fr}}
+  </style>
 </head>
 
 <body>
@@ -72,22 +82,71 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🌙</span> <span data-i18n="mainSection">Moon Bounce EME</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Earth-Moon-Earth communication simulator</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Theory ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card">
+          <h3 data-i18n="theoryTitle">Earth-Moon-Earth (EME)</h3>
+          <p data-i18n="theoryDesc">EME or Moon Bounce uses the Moon as a passive reflector for radio signals. The round-trip delay is ~2.56 seconds. Path loss is extreme (~250 dB at 1296 MHz), requiring high-gain antennas and sensitive receivers. Common bands: 144 MHz, 432 MHz, 1296 MHz.</p>
+          <div class="control-section">
+            <table style="width:100%;font-size:.85rem;border-collapse:collapse">
+              <tr style="border-bottom:1px solid var(--border,rgba(255,255,255,.1))"><th style="text-align:left;padding:4px">Parameter</th><th style="text-align:left;padding:4px">Value</th></tr>
+              <tr><td style="padding:4px">Moon Distance</td><td>~384,400 km</td></tr>
+              <tr><td style="padding:4px">Round-trip Delay</td><td>~2.56 s</td></tr>
+              <tr><td style="padding:4px">Path Loss (1296 MHz)</td><td>~271 dB</td></tr>
+              <tr><td style="padding:4px">Common Modes</td><td>CW, JT65, QRA64</td></tr>
+            </table>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Controls ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <label class="sidebar-label" data-i18n="bandSelect">Band</label>
+            <select id="bandSelect" class="sidebar-select">
+              <option value="144">144 MHz (2m)</option>
+              <option value="432">432 MHz (70cm)</option>
+              <option value="1296" selected>1296 MHz (23cm)</option>
+            </select>
+            <label class="sidebar-label" style="margin-top:8px" data-i18n="txPower">TX Power (W)</label>
+            <input type="range" id="powerRange" min="100" max="1500" value="500" step="50" style="width:100%">
+            <div style="text-align:center;font-family:'Orbitron',monospace;color:var(--accent)" id="powerLabel">500 W</div>
+            <label class="sidebar-label" style="margin-top:8px" data-i18n="msgLabel">Message</label>
+            <input type="text" id="msgInput" class="sidebar-select" value="CQ CQ CQ DE W1ABC" maxlength="30" style="font-family:monospace">
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button id="txBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">📡</span> <span data-i18n="transmit">Transmit</span></button>
+              <button id="listenBtn" class="btn-sm" style="flex:1"><span class="btn-icon">👂</span> <span data-i18n="listen">Listen</span></button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — EME Display ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🌙</span> <span data-i18n="sectionC">EME Display</span></summary>
+        <div class="card">
+          <canvas id="emeCanvas" width="800" height="300" style="width:100%;height:220px;border-radius:8px;background:#000;display:block"></canvas>
+          <div class="eme-display">
+            <div style="font-size:.85rem;color:var(--text-muted)" data-i18n="roundTrip">Round-trip Delay</div>
+            <div class="eme-delay" id="delayDisplay">2.56 s</div>
+          </div>
+          <div class="eme-info">
+            <div class="eme-cell"><div class="ev" id="pathLoss">271</div><div class="el" data-i18n="pathLossLabel">Path Loss (dB)</div></div>
+            <div class="eme-cell"><div class="ev" id="moonElev">0.0</div><div class="el" data-i18n="moonElevLabel">Moon Elev (deg)</div></div>
+            <div class="eme-cell"><div class="ev" id="echoSnr">-20</div><div class="el" data-i18n="echoSnrLabel">Echo SNR (dB)</div></div>
+            <div class="eme-cell"><div class="ev" id="txCount">0</div><div class="el" data-i18n="txCountLabel">Transmissions</div></div>
+          </div>
+          <div class="msg-box" id="msgLog">Awaiting transmission...</div>
+        </div>
       </details>
 
     </div>

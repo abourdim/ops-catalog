@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Yagi Antenna Optimizer', subtitle: '📶 Adjust elements for maximum gain',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Yagi Optimizer', mainDesc: 'Configure elements and frequency to optimize Yagi gain',
+    sectionA: 'Radiation Pattern', sectionB: 'Gain vs Elements', sectionC: 'Yagi Design Guide',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Yagi Optimizer?', faq_a1: 'Design and optimize Yagi-Uda antennas. Adjust element count, spacing and lengths for maximum forward gain and front-to-back ratio.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -100,16 +100,16 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Optimiseur Yagi', subtitle: '📶 Ajuster les éléments pour un gain maximum',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Optimiseur Yagi', mainDesc: 'Configurez les éléments et la fréquence pour optimiser le gain',
+    sectionA: 'Diagramme de rayonnement', sectionB: 'Gain vs Éléments', sectionC: 'Guide Yagi',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que l\'Optimiseur Yagi ?', faq_a1: 'Concevez et optimisez les antennes Yagi-Uda. Ajustez le nombre d\'éléments et l\'espacement pour un gain maximal.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -137,16 +137,16 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محسّن ياغي', subtitle: '📶 ضبط العناصر لأقصى كسب',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محسّن ياغي', mainDesc: 'اضبط العناصر والتردد لتحسين كسب ياغي',
+    sectionA: 'نمط الإشعاع', sectionB: 'الكسب مقابل العناصر', sectionC: 'دليل ياغي',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو محسّن ياغي؟', faq_a1: 'صمم وحسّن هوائيات ياغي-أودا. اضبط عدد العناصر والتباعد والأطوال لأقصى كسب أمامي.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -1449,3 +1449,223 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ YAGI ANTENNA OPTIMIZER SIMULATION ═══════ */
+
+(function() {
+  const C = 299792458;
+
+  function waitForDOM(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  waitForDOM(function() {
+    const mc = document.getElementById('mainControls');
+    if (!mc) return;
+    mc.innerHTML = `
+      <div class="control-section">
+        <div class="grid-2">
+          <div><label>Frequency (MHz)</label><input type="number" id="yagiFreq" value="144" min="1" max="3000" step="0.1"></div>
+          <div><label>Number of Elements</label><input type="number" id="yagiN" value="5" min="2" max="20" step="1"></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Boom Diameter (mm)</label><input type="number" id="yagiBoom" value="25" min="5" max="100" step="1"></div>
+          <div><label>Element Diameter (mm)</label><input type="number" id="yagiElem" value="6" min="1" max="25" step="0.5"></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Director Spacing (lambda)</label><input type="range" id="yagiSpacing" value="0.3" min="0.15" max="0.45" step="0.01"><span id="yagiSpVal">0.30</span></div>
+          <div><button class="primary" id="yagiCalcBtn" style="width:100%;margin-top:14px;">📶 Optimize Yagi</button></div>
+        </div>
+      </div>`;
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const canvasA = document.getElementById('canvasA');
+    const ctxA = canvasA ? canvasA.getContext('2d') : null;
+    const canvasB = document.getElementById('canvasB');
+    const ctxB = canvasB ? canvasB.getContext('2d') : null;
+    const resultBox = document.getElementById('resultBox');
+    const secC = document.getElementById('sectionCContent');
+
+    const spSlider = document.getElementById('yagiSpacing');
+    const spVal = document.getElementById('yagiSpVal');
+    if (spSlider && spVal) spSlider.addEventListener('input', () => { spVal.textContent = parseFloat(spSlider.value).toFixed(2); });
+
+    function calcYagi() {
+      const freq = parseFloat(document.getElementById('yagiFreq').value) || 144;
+      const N = parseInt(document.getElementById('yagiN').value) || 5;
+      const boomD = (parseFloat(document.getElementById('yagiBoom').value) || 25) / 1000;
+      const elemD = (parseFloat(document.getElementById('yagiElem').value) || 6) / 1000;
+      const spacing = parseFloat(document.getElementById('yagiSpacing').value) || 0.3;
+      const lambda = C / (freq * 1e6);
+      const reflLen = lambda * 0.482;
+      const drivenLen = lambda * 0.468;
+      const dirLen0 = lambda * 0.442;
+      const numDir = Math.max(0, N - 2);
+      const reflSpacing = lambda * 0.2;
+      const dirSpacing = lambda * spacing;
+      const boomLen = reflSpacing + numDir * dirSpacing;
+      const gain = 7.1 + 10 * Math.log10(N - 1) + (spacing - 0.25) * 5;
+      const fb = 12 + N * 2.5;
+      const bw3dB = 52 / Math.sqrt(Math.pow(10, gain / 10));
+      const impedance = 25 + (N > 3 ? -3 * (N - 3) : 0);
+      const swrBW = (freq / (10 + N * 3)) * 2;
+
+      const elements = [];
+      elements.push({ type: 'Reflector', len: reflLen, pos: 0 });
+      elements.push({ type: 'Driven', len: drivenLen, pos: reflSpacing });
+      for (let i = 0; i < numDir; i++) {
+        const shrink = 1 - 0.01 * i;
+        elements.push({ type: `Director ${i + 1}`, len: dirLen0 * shrink, pos: reflSpacing + (i + 1) * dirSpacing });
+      }
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        const rows = elements.map(e => `<div class="result-row"><span class="result-label">${e.type}</span><span class="result-value">${(e.len * 1000).toFixed(1)}mm @ ${(e.pos * 1000).toFixed(0)}mm</span></div>`).join('');
+        resultBox.innerHTML = `
+          <div class="result-row"><span class="result-label">Gain</span><span class="result-value">${gain.toFixed(1)} dBi</span></div>
+          <div class="result-row"><span class="result-label">F/B Ratio</span><span class="result-value">${fb.toFixed(1)} dB</span></div>
+          <div class="result-row"><span class="result-label">Beamwidth</span><span class="result-value">${bw3dB.toFixed(1)} deg</span></div>
+          <div class="result-row"><span class="result-label">Feed Z</span><span class="result-value">~${Math.max(12, impedance).toFixed(0)} Ohm</span></div>
+          <div class="result-row"><span class="result-label">Boom Length</span><span class="result-value">${(boomLen * 1000).toFixed(0)} mm (${(boomLen / lambda).toFixed(2)} lambda)</span></div>
+          <div class="result-row"><span class="result-label">Wavelength</span><span class="result-value">${(lambda * 1000).toFixed(1)} mm</span></div>
+          ${rows}`;
+      }
+
+      drawYagi(ctx, canvas, elements, lambda, freq, gain);
+      drawPattern(ctxA, canvasA, gain, fb, bw3dB);
+      drawGainChart(ctxB, canvasB, freq, spacing);
+      fillNotes(secC, freq, N, gain, fb, impedance, boomLen, lambda);
+      if (typeof log === 'function') log(`Yagi ${N}-el: ${gain.toFixed(1)} dBi, F/B=${fb.toFixed(1)} dB @ ${freq} MHz`, 'success');
+    }
+
+    function drawYagi(ctx, cvs, elems, lambda, freq, gain) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const maxPos = elems[elems.length - 1].pos;
+      const scale = (W - 2 * pad) / (maxPos || 1);
+      const cy = H / 2;
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(pad, cy); ctx.lineTo(pad + maxPos * scale, cy); ctx.stroke();
+      elems.forEach(e => {
+        const x = pad + e.pos * scale;
+        const halfLen = (e.len / lambda) * (H * 0.35);
+        ctx.strokeStyle = e.type === 'Driven' ? '#ff4444' : e.type === 'Reflector' ? '#4444ff' : '#d4a03c';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(x, cy - halfLen); ctx.lineTo(x, cy + halfLen); ctx.stroke();
+      });
+      ctx.fillStyle = '#33ff33';
+      ctx.beginPath();
+      ctx.moveTo(W - pad + 5, cy);
+      ctx.lineTo(W - pad - 10, cy - 8);
+      ctx.lineTo(W - pad - 10, cy + 8);
+      ctx.fill();
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${elems.length}-Element Yagi @ ${freq} MHz (${gain.toFixed(1)} dBi)`, W / 2, 14);
+      ctx.font = '8px Orbitron, monospace';
+      ctx.fillStyle = '#4444ff'; ctx.fillText('R', pad, H - 8);
+      ctx.fillStyle = '#ff4444'; ctx.fillText('DE', pad + elems[1].pos * scale, H - 8);
+      ctx.fillStyle = '#d4a03c'; ctx.fillText('DIR >>>', W / 2 + 20, H - 8);
+    }
+
+    function drawPattern(ctx, cvs, gain, fb, bw) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2, r = Math.min(W, H) * 0.4;
+      ctx.strokeStyle = '#2a2d45';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 3; i++) {
+        ctx.beginPath(); ctx.arc(cx, cy, r * i / 3, 0, 2 * Math.PI); ctx.stroke();
+      }
+      const bwRad = bw * Math.PI / 180;
+      const backLobe = Math.pow(10, -fb / 20);
+      ctx.strokeStyle = '#33ff33';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let a = 0; a <= 360; a++) {
+        const rad = a * Math.PI / 180;
+        let g;
+        if (Math.abs(rad) < Math.PI / 2 || Math.abs(rad - 2 * Math.PI) < Math.PI / 2) {
+          g = Math.exp(-2.77 * Math.pow(rad / bwRad, 2));
+        } else {
+          g = backLobe * (0.5 + 0.5 * Math.cos(rad));
+        }
+        g = Math.max(0.02, Math.min(1, g));
+        const px = cx + r * g * Math.cos(rad - Math.PI / 2);
+        const py = cy + r * g * Math.sin(rad - Math.PI / 2);
+        if (a === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(51,255,51,0.08)';
+      ctx.fill();
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`Radiation Pattern (${gain.toFixed(1)} dBi, BW=${bw.toFixed(0)} deg)`, cx, 12);
+    }
+
+    function drawGainChart(ctx, cvs, freq, spacing) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      const gains = [];
+      for (let n = 2; n <= 15; n++) {
+        const g = 7.1 + 10 * Math.log10(n - 1) + (spacing - 0.25) * 5;
+        gains.push(g);
+        const x = pad + ((n - 2) / 13) * gW;
+        const y = pad + gH - ((g - 5) / 15) * gH;
+        if (n === 2) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      gains.forEach((g, i) => {
+        const x = pad + (i / 13) * gW;
+        const y = pad + gH - ((g - 5) / 15) * gH;
+        ctx.fillStyle = '#d4a03c';
+        ctx.beginPath(); ctx.arc(x, y, 3, 0, 2 * Math.PI); ctx.fill();
+      });
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Gain vs Number of Elements', W / 2, 14);
+      ctx.font = '8px Orbitron, monospace';
+      ctx.fillText('2', pad, H - 5);
+      ctx.fillText('15 elements', W - pad, H - 5);
+      ctx.fillText('5 dBi', pad - 5, pad + gH);
+      ctx.fillText('20 dBi', pad - 5, pad);
+    }
+
+    function fillNotes(el, freq, N, gain, fb, Z, boomLen, lambda) {
+      if (!el) return;
+      el.innerHTML = `
+        <p><strong>Yagi Design Guide:</strong></p>
+        <p>${N}-element Yagi for ${freq} MHz: estimated gain ${gain.toFixed(1)} dBi, F/B ratio ${fb.toFixed(1)} dB.</p>
+        <p>Feed impedance ~${Math.max(12, Z).toFixed(0)} Ohm. ${Z < 50 ? 'Use a gamma match, T-match, or hairpin match to transform to 50 Ohm.' : ''}</p>
+        <p>Boom length: ${(boomLen * 1000).toFixed(0)}mm (${(boomLen / lambda).toFixed(2)} wavelengths).</p>
+        <p>Adding more directors increases gain but with diminishing returns. Each additional element adds ~1 dB.</p>
+        <p>Reflector spacing of 0.2 lambda is optimal. Director spacing of 0.3 lambda is a good starting point.</p>
+        <p>Insulated elements from the boom, or apply NBS correction factors for conductive through-boom mounting.</p>`;
+    }
+
+    document.getElementById('yagiCalcBtn').addEventListener('click', calcYagi);
+    calcYagi();
+  });
+})();

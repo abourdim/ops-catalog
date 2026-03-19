@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR TPMS Scanner', subtitle: '🛞 TPMS Scanner — Tire Pressure Decoder',
+    disconnected: 'Disconnected', connected: 'Scanning',
+    mainSection: 'TPMS Scanner', mainDesc: 'Decode tire pressure sensor signals',
+    sectionA: 'Tire Data', sectionB: 'TPMS Theory',
+    started: '▶ Scanning TPMS signals', stopped: '⏹ Scan stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🛞 TPMS Scanner ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -1332,6 +1333,18 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ TPMS SIMULATION ═══════ */
+let _tp_run=false,_tp_fr=null,_tp_cnt=0;
+const _tp_tires=[];
+function _tp_initTires(){const n=$('vehicleSelect')?($('vehicleSelect').value==='truck'?6:4):4;_tp_tires.length=0;for(let i=0;i<n;i++)_tp_tires.push({id:'0x'+Math.floor(Math.random()*0xFFFF).toString(16).toUpperCase(),psi:30+Math.random()*5,temp:20+Math.random()*15});}
+function _tp_gen(){const s=new Float32Array(256);for(let i=0;i<256;i++)s[i]=-112+(Math.random()-.5)*4;if(Math.random()<0.1){_tp_cnt++;const pk=120+Math.floor(Math.random()*16);for(let i=-2;i<3;i++)if(pk+i>=0&&pk+i<256)s[pk+i]+=32*(1-Math.abs(i)/3);const t=_tp_tires[Math.floor(Math.random()*_tp_tires.length)];t.psi+=((Math.random()-.5)*0.2);t.temp+=((Math.random()-.5)*0.5);}return s;}
+function _tp_draw1(spec){const c=$('tpmsCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+115)/45*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('TPMS Signal',4,12);}
+function _tp_draw2(){const c=$('tireCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const n=_tp_tires.length;_tp_tires.forEach((t,i)=>{const x=40+i*(w-80)/Math.max(n-1,1),y=h/2;const ok=t.psi>28&&t.psi<38;ctx.fillStyle=ok?'#4f8':'#f44';ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();ctx.fillStyle='#000';ctx.font='bold 11px Orbitron,monospace';ctx.textAlign='center';ctx.fillText(t.psi.toFixed(1),x,y-2);ctx.fillText('PSI',x,y+12);ctx.fillStyle='#aaa';ctx.font='9px monospace';ctx.fillText(t.temp.toFixed(0)+'°C',x,y+30);ctx.fillText(t.id,x,y-30);ctx.textAlign='start';});}
+function _tp_stats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('sensorsVal',_tp_tires.length);const ap=_tp_tires.reduce((s,t)=>s+t.psi,0)/_tp_tires.length;const at=_tp_tires.reduce((s,t)=>s+t.temp,0)/_tp_tires.length;el('avgPressVal',ap.toFixed(1)+' PSI');el('avgTempVal',at.toFixed(1)+' °C');const low=_tp_tires.filter(t=>t.psi<29);el('alertsVal',low.length?low.length+' LOW PRESSURE':'None');}
+function _tp_loop(){if(!_tp_run)return;const spec=_tp_gen();_tp_draw1(spec);_tp_draw2();_tp_stats();_tp_fr=requestAnimationFrame(_tp_loop);}
+function startTp(){if(_tp_run)return;_tp_run=true;_tp_cnt=0;_tp_initTires();setStatus(true);log(LANG[currentLang].started,'success');_tp_loop();}
+function stopTp(){_tp_run=false;if(_tp_fr)cancelAnimationFrame(_tp_fr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1455,9 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startTp;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopTp;
 
   log(LANG[currentLang].ready, 'success');
 }

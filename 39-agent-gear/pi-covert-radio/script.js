@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-covert-radio', subtitle: 'Covert Radio Transceiver — Hidden Communications',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Covert Radio — Hidden Transceiver', mainDesc: 'Frequency-hopping spread spectrum radio with stealth mode',
+    sectionA: 'Frequency Manager', sectionB: 'Message Queue', sectionC: 'Signal Intelligence',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📻 Covert Radio ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-covert-radio', subtitle: 'Radio Clandestine — Communications Cachées',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Radio Clandestine — Émetteur-Récepteur', mainDesc: 'Radio à saut de fréquence avec mode furtif',
+    sectionA: 'Gestionnaire Fréquences', sectionB: 'File Messages', sectionC: 'Renseignement Signal',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📻 Radio Clandestine prête !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'راديو سري', subtitle: 'جهاز إرسال واستقبال سري — اتصالات مخفية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'راديو سري — جهاز إرسال مخفي', mainDesc: 'راديو بقفز التردد وطيف منتشر مع وضع تخفي',
+    sectionA: 'مدير الترددات', sectionB: 'قائمة الرسائل', sectionC: 'استخبارات الإشارة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📻 الراديو السري جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1443,49 @@ function init() {
   initAR();
   initAIChat();
 
+  initCovertRadio();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ COVERT RADIO SIMULATION ═══════ */
+(function(){
+  let crTx=false,crStealth=false,crFreq=7050,crHopping=false,crHopInt=null,msgQueue=[];const crWave=[];
+
+  window.initCovertRadio=function(){
+    const c=$('simCanvas');if(c){c.width=c.offsetWidth||480;c.height=140;for(let i=0;i<c.width;i++)crWave.push(0);requestAnimationFrame(crAnim);}
+    const vfo=$('crVfo');if(vfo)vfo.oninput=()=>{crFreq=parseInt(vfo.value);const fd=$('crFreqDisplay');if(fd)fd.textContent=(crFreq/1000).toFixed(3)+' MHz';};
+    const bt=$('btnCrTx');if(bt)bt.onclick=()=>{crTx=!crTx;setStatus(crTx);const s=$('crStatus');if(s)s.textContent=crTx?'ON AIR':'OFF AIR';log(crTx?'📻 Transmitting on '+(crFreq/1000).toFixed(3)+' MHz':'🔴 TX off',crTx?'tx':'info');for(let i=0;i<10;i++)crWave.push(0.7+Math.random()*0.3);playSound('click');};
+    const bs=$('btnCrStealth');if(bs)bs.onclick=()=>{crStealth=!crStealth;const m=$('crMode');if(m)m.textContent=crStealth?'STEALTH':'USB';const p=$('crPower');if(p)p.textContent=crStealth?'0.1W':'0.5W';log(crStealth?'🕵 Stealth mode ON — LPI active':'📻 Stealth off — normal mode',crStealth?'success':'info');playSound('click');};
+    const bh=$('btnCrHop');if(bh)bh.onclick=()=>{if(crHopping){clearInterval(crHopInt);crHopInt=null;crHopping=false;log('📻 Frequency hopping stopped','info');}else{crHopping=true;log('📻 Frequency hopping started — FHSS active','tx');crHopInt=setInterval(()=>{crFreq=1000+Math.random()*29000|0;const fd=$('crFreqDisplay');if(fd)fd.textContent=(crFreq/1000).toFixed(3)+' MHz';const vf=$('crVfo');if(vf)vf.value=crFreq;},500);}playSound('click');};
+    const bsi=$('btnCrSilence');if(bsi)bsi.onclick=()=>{crTx=false;crHopping=false;if(crHopInt){clearInterval(crHopInt);crHopInt=null;}setStatus(false);const s=$('crStatus');if(s)s.textContent='SILENT';log('🔇 RADIO SILENCE — all emissions stopped','error');playSound('error');};
+    const bfs=$('btnFreqScan');if(bfs)bfs.onclick=()=>{const c2=$('freqCanvas'),info=$('freqInfo');if(c2){const ctx=c2.getContext('2d');c2.width=c2.offsetWidth||480;const w=c2.width,h=c2.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);for(let x=0;x<w;x+=2){const v=Math.random()*0.3+(Math.random()>0.93?0.5:0);ctx.fillStyle=v>0.4?'#ffaa00':'rgba(0,255,65,0.3)';ctx.fillRect(x,h-v*h,1,v*h);}ctx.fillStyle='#fff';ctx.font='10px Orbitron,monospace';ctx.fillText('1 MHz',5,h-5);ctx.fillText('30 MHz',w-55,h-5);}if(info)info.textContent='Scan: 1-30 MHz | Active signals: '+(2+Math.random()*5|0);log('📊 Band scan complete','success');playSound('click');};
+    const bfc=$('btnFreqClear');if(bfc)bfc.onclick=()=>{const i=$('freqInfo');if(i)i.textContent='';};
+    const bmq=$('btnMsgQueue');if(bmq)bmq.onclick=()=>{const id='MSG-'+String(msgQueue.length+1).padStart(3,'0');msgQueue.push({id:id,time:new Date().toLocaleTimeString()});const i=$('msgQueueInfo');if(i)i.textContent=msgQueue.map(m=>m.id+' ['+m.time+'] queued').join('\n');log('✉️ '+id+' queued for transmission','tx');playSound('click');};
+    const bmf=$('btnMsgFlush');if(bmf)bmf.onclick=()=>{log('✉️ Flushing '+msgQueue.length+' messages...','tx');msgQueue=[];const i=$('msgQueueInfo');if(i)i.textContent='Queue empty';playSound('success');};
+  };
+
+  function crAnim(){
+    const c=$('simCanvas');if(!c){requestAnimationFrame(crAnim);return;}
+    const ctx=c.getContext('2d'),w=c.width,h=c.height;
+    const v=crTx?(crStealth?0.05+Math.random()*0.1:0.2+Math.random()*0.5):Math.random()*0.03;
+    crWave.push(v);if(crWave.length>w)crWave.splice(0,crWave.length-w);
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(0,200,255,0.05)';ctx.lineWidth=1;
+    for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#00bcd4';
+    ctx.strokeStyle=crTx?accent:'rgba(100,100,100,0.3)';ctx.lineWidth=crStealth?1:2;ctx.beginPath();
+    const st=Math.max(0,crWave.length-w);
+    for(let i=st;i<crWave.length;i++){const x=i-st,y=h/2-crWave[i]*h*0.4*Math.sin((i+Date.now()*0.01)*0.12);i===st?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
+    // S-meter update
+    const sm=$('crSNR');if(sm&&crTx)sm.textContent='S'+(3+Math.random()*6|0);
+    const bar=$('crBar');if(bar)bar.style.width=(crTx?40+Math.random()*50:0)+'%';
+    // SIGINT canvas
+    const sc=$('sigintCanvas');if(sc&&crTx){const sctx=sc.getContext('2d');sc.width=sc.offsetWidth||480;const sw=sc.width,sh=sc.height;sctx.fillStyle='#0a0a1a';sctx.fillRect(0,0,sw,sh);for(let x=0;x<sw;x+=3){const sv=Math.random()*0.2;sctx.fillStyle='rgba(0,200,255,0.3)';sctx.fillRect(x,sh-sv*sh,2,sv*sh);}const si=$('sigintInfo');if(si)si.textContent='Monitoring: '+(crFreq/1000).toFixed(3)+' MHz | SIGINT: '+(Math.random()>0.85?'INTERCEPT':'clear');}
+    requestAnimationFrame(crAnim);
+  }
+})();

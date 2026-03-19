@@ -63,115 +63,106 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Covert Antenna', subtitle: '📎 Disguised antenna design and deployment',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Covert Antenna', mainDesc: 'Design hidden antennas disguised as everyday objects',
+    sectionA: 'Disguise Lab', sectionB: 'Performance', sectionC: 'Build Guide',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is Covert Antenna?', faq_a1: 'A simulator for designing hidden antennas disguised as everyday objects like umbrellas, pens, and picture frames.',
+    faq_q2: 'How do disguises work?', faq_a2: 'Select an everyday object as cover, then tune the hidden antenna inside it for optimal stealth and signal performance.',
+    faq_q3: 'What is the stealth rating?', faq_a3: 'Stealth rating measures how well the antenna blends in. Higher ratings mean the antenna is harder to detect visually.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    howto_1: 'Pick a disguise object from the Disguise Lab.', howto_2: 'Adjust frequency and power in Performance.',
+    howto_3: 'Follow the Build Guide for assembly steps.', howto_4: 'Activate the covert antenna and monitor signal.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'EN/FR/AR with RTL.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data local.',
+    working: 'Working…', t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📎 Covert antenna system ready!', logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    caStat1: 'Status', caStat2: 'Signal', caStat3: 'Events', caStat4: 'Uptime',
+    caActivate: 'Activate', caAct1: 'Run Scan', caEmerg: 'Emergency',
+    caSecA: 'Disguise Lab', caSecABtn: 'Apply Disguise', caSecARst: 'Reset',
+    caSecB: 'Performance Monitor', caSecBBtn: 'Run Test', caSecBRst: 'Reset',
+    caSecC: 'Build Guide', caSecCBtn: 'Next Step', caSecCRst: 'Restart',
+    activated: '📎 Covert antenna activated!', deactivated: '📎 Antenna deactivated',
+    scanning: '🔍 Scanning environment...', scanDone: '✅ Scan complete!',
+    emergency: '🚨 Emergency shutdown!', disguiseApplied: '🎭 Disguise applied!',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Antenne Secrète', subtitle: '📎 Conception d\'antennes déguisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Antenne Secrète', mainDesc: 'Concevez des antennes cachées dans des objets du quotidien',
+    sectionA: 'Labo Déguisement', sectionB: 'Performance', sectionC: 'Guide Construction',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    faq_q1: 'Qu\'est-ce que Antenne Secrète ?', faq_a1: 'Un simulateur pour concevoir des antennes cachées dans des objets du quotidien.',
+    faq_q2: 'Comment fonctionnent les déguisements ?', faq_a2: 'Choisissez un objet de couverture puis réglez l\'antenne cachée.',
+    faq_q3: 'Qu\'est-ce que l\'indice de furtivité ?', faq_a3: 'Il mesure la discrétion visuelle de l\'antenne.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Choisissez un déguisement dans le Labo.', howto_2: 'Ajustez la fréquence et la puissance.',
+    howto_3: 'Suivez le guide de construction.', howto_4: 'Activez et surveillez le signal.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'EN/FR/AR avec RTL.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout est local.',
+    working: 'En cours…', t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📎 Système d\'antenne secrète prêt !', logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    caStat1: 'Statut', caStat2: 'Signal', caStat3: 'Événements', caStat4: 'Temps',
+    caActivate: 'Activer', caAct1: 'Scanner', caEmerg: 'Urgence',
+    activated: '📎 Antenne secrète activée !', deactivated: '📎 Antenne désactivée',
+    scanning: '🔍 Scan en cours...', scanDone: '✅ Scan terminé !',
+    emergency: '🚨 Arrêt d\'urgence !', disguiseApplied: '🎭 Déguisement appliqué !',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'هوائي سري', subtitle: '📎 تصميم هوائيات مخفية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'هوائي سري', mainDesc: 'صمم هوائيات مخفية داخل أشياء يومية',
+    sectionA: 'مختبر التمويه', sectionB: 'الأداء', sectionC: 'دليل البناء',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    faq_q1: 'ما هو الهوائي السري؟', faq_a1: 'محاكي لتصميم هوائيات مخفية داخل أشياء يومية كالمظلات والأقلام.',
+    faq_q2: 'كيف يعمل التمويه؟', faq_a2: 'اختر جسمًا للتغطية ثم اضبط الهوائي المخفي بداخله.',
+    faq_q3: 'ما هو تصنيف التخفي؟', faq_a3: 'يقيس مدى اندماج الهوائي بصريًا مع المحيط.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
+    howto_1: 'اختر تمويهًا من المختبر.', howto_2: 'اضبط التردد والطاقة.',
+    howto_3: 'اتبع دليل البناء.', howto_4: 'فعّل الهوائي وراقب الإشارة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'EN/FR/AR مع RTL.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات محلية.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '📎 نظام الهوائي السري جاهز!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    caStat1: 'الحالة', caStat2: 'الإشارة', caStat3: 'الأحداث', caStat4: 'وقت التشغيل',
+    caActivate: 'تفعيل', caAct1: 'مسح', caEmerg: 'طوارئ',
+    activated: '📎 تم تفعيل الهوائي السري!', deactivated: '📎 تم إيقاف الهوائي',
+    scanning: '🔍 جارٍ المسح...', scanDone: '✅ اكتمل المسح!',
+    emergency: '🚨 إيقاف طارئ!', disguiseApplied: '🎭 تم تطبيق التمويه!',
   }
 };
 
@@ -1443,9 +1434,212 @@ function init() {
   initAR();
   initAIChat();
 
+  // Covert Antenna simulation
+  initCovertAntenna();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ COVERT ANTENNA SIMULATION ═══════ */
+
+const CA_DISGUISES = [
+  { id: 'umbrella', icon: '☂️', name: 'Umbrella', stealth: 85, gain: 3.2 },
+  { id: 'pen', icon: '🖊️', name: 'Pen', stealth: 95, gain: 1.5 },
+  { id: 'frame', icon: '🖼️', name: 'Picture Frame', stealth: 80, gain: 4.1 },
+  { id: 'book', icon: '📕', name: 'Book', stealth: 90, gain: 2.8 },
+  { id: 'plant', icon: '🌿', name: 'Potted Plant', stealth: 75, gain: 5.0 },
+  { id: 'lamp', icon: '💡', name: 'Desk Lamp', stealth: 70, gain: 6.2 },
+  { id: 'clock', icon: '🕐', name: 'Wall Clock', stealth: 82, gain: 4.5 },
+  { id: 'bag', icon: '👜', name: 'Handbag', stealth: 88, gain: 3.0 },
+];
+
+let caState = { active: false, disguise: null, signal: 0, events: 0, uptime: 0, uptimeTimer: null, animFrame: null };
+
+function initCovertAntenna() {
+  setStatus(false);
+  const secA = $('caSecAContent');
+  if (secA) {
+    let html = '<div class="disguise-grid">';
+    CA_DISGUISES.forEach(d => {
+      html += `<div class="disguise-card" id="dis-${d.id}" onclick="caSelectDisguise('${d.id}')">
+        <span class="d-icon">${d.icon}</span>
+        <span class="d-name">${d.name}</span>
+        <span class="d-rating">Stealth: ${d.stealth}%</span>
+      </div>`;
+    });
+    html += '</div>';
+    secA.innerHTML = html;
+  }
+  const secB = $('caSecBContent');
+  if (secB) secB.innerHTML = '<div id="caPerfData" style="font-family:monospace;font-size:12px">No data yet. Activate antenna first.</div>';
+  const secC = $('caSecCContent');
+  if (secC) secC.innerHTML = '<div id="caBuildSteps">1. Select a disguise object<br>2. Activate the covert antenna<br>3. Run environment scan<br>4. Monitor performance metrics</div>';
+  drawCovertCanvas();
+}
+
+function caSelectDisguise(id) {
+  const d = CA_DISGUISES.find(x => x.id === id);
+  if (!d) return;
+  caState.disguise = d;
+  document.querySelectorAll('.disguise-card').forEach(c => c.classList.remove('active'));
+  const el = $('dis-' + id);
+  if (el) el.classList.add('active');
+  log(`🎭 Disguise selected: ${d.icon} ${d.name} (Stealth: ${d.stealth}%)`, 'info');
+  playSound('click');
+}
+
+function caActivate() {
+  if (caState.active) {
+    caState.active = false;
+    setStatus(false);
+    clearInterval(caState.uptimeTimer);
+    if (caState.animFrame) cancelAnimationFrame(caState.animFrame);
+    $('caS1').textContent = 'STANDBY';
+    $('caS2').textContent = '--';
+    const bar = $('caBar');
+    if (bar) bar.style.width = '0%';
+    log(LANG[currentLang].deactivated, 'info');
+    return;
+  }
+  if (!caState.disguise) {
+    log('⚠️ Select a disguise first!', 'error');
+    return;
+  }
+  caState.active = true;
+  caState.uptime = 0;
+  setStatus(true);
+  $('caS1').textContent = 'ACTIVE';
+  log(LANG[currentLang].activated, 'success');
+  caState.uptimeTimer = setInterval(() => {
+    caState.uptime++;
+    const m = String(Math.floor(caState.uptime / 60)).padStart(2, '0');
+    const s = String(caState.uptime % 60).padStart(2, '0');
+    $('caS4').textContent = `${m}:${s}`;
+  }, 1000);
+  animateCovert();
+}
+
+function animateCovert() {
+  if (!caState.active) return;
+  const sig = 40 + Math.random() * 50 + (caState.disguise ? caState.disguise.gain * 2 : 0);
+  caState.signal = Math.min(99, sig);
+  $('caS2').textContent = Math.round(caState.signal) + '%';
+  const bar = $('caBar');
+  if (bar) bar.style.width = caState.signal + '%';
+  drawCovertCanvas();
+  caState.animFrame = requestAnimationFrame(animateCovert);
+}
+
+function caAction1() {
+  if (!caState.active) { log('⚠️ Activate antenna first!', 'error'); return; }
+  log(LANG[currentLang].scanning, 'info');
+  showToast(LANG[currentLang].scanning, 2000);
+  caState.events++;
+  $('caS3').textContent = caState.events;
+  setTimeout(() => {
+    const threats = Math.floor(Math.random() * 3);
+    log(LANG[currentLang].scanDone + ` ${threats} threats detected.`, threats > 0 ? 'error' : 'success');
+    playSound(threats > 0 ? 'error' : 'success');
+  }, 2000);
+}
+
+function caEmergency() {
+  caState.active = false;
+  setStatus(false);
+  clearInterval(caState.uptimeTimer);
+  if (caState.animFrame) cancelAnimationFrame(caState.animFrame);
+  $('caS1').textContent = 'EMERGENCY';
+  $('caS2').textContent = '0%';
+  const bar = $('caBar');
+  if (bar) bar.style.width = '0%';
+  log(LANG[currentLang].emergency, 'error');
+  playSound('error');
+}
+
+function caSecAAction() {
+  if (!caState.disguise) { log('⚠️ Select a disguise first!', 'error'); return; }
+  log(LANG[currentLang].disguiseApplied + ` ${caState.disguise.icon} ${caState.disguise.name}`, 'success');
+  playSound('success');
+}
+
+function caSecAReset() {
+  caState.disguise = null;
+  document.querySelectorAll('.disguise-card').forEach(c => c.classList.remove('active'));
+  log('🔄 Disguise reset', 'info');
+}
+
+function caSecBAction() {
+  if (!caState.active) { log('⚠️ Activate antenna first!', 'error'); return; }
+  const perf = $('caPerfData');
+  if (perf) {
+    const d = caState.disguise;
+    perf.innerHTML = `Disguise: ${d.icon} ${d.name}<br>Stealth Rating: ${d.stealth}%<br>Antenna Gain: ${d.gain} dBi<br>Signal Strength: ${Math.round(caState.signal)}%<br>Freq: ${(400 + Math.random() * 200).toFixed(1)} MHz<br>Noise Floor: -${(90 + Math.random() * 20).toFixed(1)} dBm`;
+  }
+  log('📊 Performance test complete', 'success');
+}
+
+function caSecBReset() {
+  const perf = $('caPerfData');
+  if (perf) perf.innerHTML = 'No data yet. Activate antenna first.';
+}
+
+let caBuildStep = 0;
+const CA_BUILD_STEPS = [
+  '1. Select a disguise object from the lab',
+  '2. Hollow out the interior for antenna elements',
+  '3. Wind copper wire in fractal pattern for broadband reception',
+  '4. Add ground plane with conductive tape',
+  '5. Connect SMA adapter and coax cable',
+  '6. Test with VNA for impedance matching',
+  '7. Seal and camouflage all visible components',
+  '8. Final stealth assessment and field test'
+];
+
+function caSecCAction() {
+  caBuildStep = Math.min(caBuildStep + 1, CA_BUILD_STEPS.length - 1);
+  const el = $('caBuildSteps');
+  if (el) el.innerHTML = CA_BUILD_STEPS.slice(0, caBuildStep + 1).join('<br>');
+  log(`🔧 Build step ${caBuildStep + 1}/${CA_BUILD_STEPS.length}`, 'info');
+}
+
+function caSecCReset() {
+  caBuildStep = 0;
+  const el = $('caBuildSteps');
+  if (el) el.innerHTML = CA_BUILD_STEPS[0];
+}
+
+function drawCovertCanvas() {
+  const canvas = $('caCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, w, h);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  // Draw signal waveform
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const t = Date.now() / 1000;
+  for (let x = 0; x < w; x++) {
+    const sig = caState.active ? caState.signal / 100 : 0.1;
+    const y = h / 2 + Math.sin(x * 0.05 + t * 3) * (h * 0.3 * sig) + Math.sin(x * 0.02 + t) * (h * 0.1);
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  // Draw stealth indicator
+  if (caState.disguise) {
+    ctx.fillStyle = accent;
+    ctx.globalAlpha = 0.3;
+    const stealthW = (caState.disguise.stealth / 100) * w;
+    ctx.fillRect(0, h - 8, stealthW, 8);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px Orbitron, monospace';
+    ctx.fillText(`STEALTH: ${caState.disguise.stealth}%`, 5, h - 12);
+  }
+}

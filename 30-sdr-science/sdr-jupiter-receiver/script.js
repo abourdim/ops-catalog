@@ -63,115 +63,115 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Jupiter Receiver', subtitle: '🪐 Jupiter Radio Receiver — Io-induced decametric',
+    disconnected: 'Disconnected', connected: 'Receiving',
+    mainSection: 'Jupiter Radio Receiver', mainDesc: 'Receive Jupiter radio emissions and Io-induced decametric bursts',
+    sectionA: 'Signal Statistics', sectionB: 'Jupiter Radio Science',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
-    helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
-    whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
-    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    faq_q1: 'What is the Jupiter Receiver?', faq_a1: 'A simulator for receiving Jupiter\'s decametric radio emissions including Io-induced storms.',
+    faq_q2: 'What frequency range?', faq_a2: 'Jupiter emits strongly between 18-28 MHz in the decametric band.',
+    faq_q3: 'What are S-bursts and L-bursts?', faq_a3: 'S-bursts are short millisecond pulses; L-bursts are longer broadband emissions lasting seconds.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select a signal source type (Io-A, S-burst, etc).',
+    howto_2: 'Adjust the center frequency to 20.1 MHz for best reception.',
+    howto_3: 'Click Start Rx to begin receiving simulated signals.',
+    howto_4: 'Watch the spectrogram for burst patterns.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL support.',
+    working: 'Working…', filterAll: 'All', soundEffects: 'Sound effects',
+    ready: '🪐 Jupiter Receiver ready!', logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
+    export: 'Export', splashHint: 'tap to skip',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus', t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    freqLabel: 'Center Frequency (MHz)', gainLabel: 'Gain (dB)', sourceLabel: 'Signal Source',
+    srcIoA: 'Io-A Storm', srcIoB: 'Io-B Storm', srcNoise: 'Jovian Noise Storm', srcSBurst: 'S-Burst', srcLBurst: 'L-Burst',
+    startRx: '▶ Start Rx', stopRx: '⏹ Stop',
+    peakFreq: 'Peak Freq:', peakPower: 'Peak Power:', noiseFloor: 'Noise Floor:', snr: 'SNR:', burstCount: 'Burst Count:',
+    theoryIntro: 'Jupiter is the strongest radio source in the solar system after the Sun:',
+    theory1: 'Decametric emissions occur between 10-40 MHz',
+    theory2: 'Io-induced storms are triggered by the Io flux tube',
+    theory3: 'S-bursts are short (<1ms) with frequency drift ~20 MHz/s',
+    theory4: 'L-bursts last 0.5-5 seconds with broadband character',
+    theory5: 'Best received with a dipole antenna at ~20 MHz',
+    rxStarted: '▶ Receiving Jupiter signals', rxStopped: '⏹ Receiver stopped',
+    burstDetected: '⚡ Burst detected!',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
+    title: 'Récepteur Jupiter SDR', subtitle: '🪐 Récepteur Radio Jupiter — Décamétrique induit par Io',
+    disconnected: 'Déconnecté', connected: 'Réception',
+    mainSection: 'Récepteur Radio Jupiter', mainDesc: 'Recevoir les émissions radio de Jupiter et les sursauts décamétriques',
+    sectionA: 'Statistiques Signal', sectionB: 'Science Radio Jupiter',
+    activityLog: 'Journal', eventsMsg: 'Événements',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    faq_q1: 'Qu\'est-ce que le Récepteur Jupiter?', faq_a1: 'Un simulateur de réception des émissions radio décamétriques de Jupiter.',
+    faq_q2: 'Quelle bande de fréquence?', faq_a2: 'Jupiter émet fortement entre 18-28 MHz dans la bande décamétrique.',
+    faq_q3: 'Que sont les S-bursts et L-bursts?', faq_a3: 'Les S-bursts sont des impulsions courtes; les L-bursts sont des émissions large bande plus longues.',
+    faq_q4: 'Mes données sont privées?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Sélectionnez un type de source (Io-A, S-burst, etc).',
+    howto_2: 'Réglez la fréquence centrale à 20.1 MHz.',
+    howto_3: 'Cliquez Démarrer pour recevoir les signaux simulés.',
+    howto_4: 'Observez le spectrogramme pour les motifs de sursauts.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    working: 'En cours…', filterAll: 'Tout', soundEffects: 'Effets sonores',
+    ready: '🪐 Récepteur Jupiter prêt!', logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', splashHint: 'appuyer pour passer',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous', t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    freqLabel: 'Fréquence Centrale (MHz)', gainLabel: 'Gain (dB)', sourceLabel: 'Source Signal',
+    srcIoA: 'Tempête Io-A', srcIoB: 'Tempête Io-B', srcNoise: 'Bruit Jovien', srcSBurst: 'S-Burst', srcLBurst: 'L-Burst',
+    startRx: '▶ Démarrer Rx', stopRx: '⏹ Arrêter',
+    peakFreq: 'Fréq. Pic:', peakPower: 'Puissance Pic:', noiseFloor: 'Plancher Bruit:', snr: 'RSB:', burstCount: 'Compteur Sursauts:',
+    theoryIntro: 'Jupiter est la source radio la plus forte du système solaire après le Soleil:',
+    theory1: 'Les émissions décamétriques se produisent entre 10-40 MHz',
+    theory2: 'Les tempêtes induites par Io sont déclenchées par le tube de flux Io',
+    theory3: 'Les S-bursts sont courts (<1ms) avec dérive ~20 MHz/s',
+    theory4: 'Les L-bursts durent 0.5-5 secondes avec caractère large bande',
+    theory5: 'Meilleure réception avec une antenne dipôle à ~20 MHz',
+    rxStarted: '▶ Réception signaux Jupiter', rxStopped: '⏹ Récepteur arrêté',
+    burstDetected: '⚡ Sursaut détecté!',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    title: 'مستقبل المشتري SDR', subtitle: '🪐 مستقبل راديو المشتري — انبعاثات ديكامترية بتأثير آيو',
+    disconnected: 'غير متصل', connected: 'استقبال',
+    mainSection: 'مستقبل راديو المشتري', mainDesc: 'استقبال انبعاثات المشتري الراديوية والانفجارات الديكامترية',
+    sectionA: 'إحصائيات الإشارة', sectionB: 'علوم راديو المشتري',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيفية الاستخدام', wiki: 'ويكي',
+    faq_q1: 'ما هو مستقبل المشتري؟', faq_a1: 'محاكي لاستقبال الانبعاثات الراديوية الديكامترية للمشتري.',
+    faq_q2: 'ما نطاق التردد؟', faq_a2: 'المشتري يبث بقوة بين 18-28 ميغاهرتز.',
+    faq_q3: 'ما هي انفجارات S و L؟', faq_a3: 'انفجارات S قصيرة بالميلي ثانية؛ انفجارات L أطول وواسعة النطاق.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر نوع مصدر الإشارة.',
+    howto_2: 'اضبط التردد المركزي على 20.1 ميغاهرتز.',
+    howto_3: 'انقر ابدأ الاستقبال لبدء المحاكاة.',
+    howto_4: 'راقب المخطط الطيفي لأنماط الانفجارات.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    working: 'جارٍ…', filterAll: 'الكل', soundEffects: 'مؤثرات صوتية',
+    ready: '🪐 مستقبل المشتري جاهز!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل',
+    export: 'تصدير', splashHint: 'انقر للتخطي',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس', t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    freqLabel: 'التردد المركزي (ميغاهرتز)', gainLabel: 'الكسب (ديسيبل)', sourceLabel: 'مصدر الإشارة',
+    srcIoA: 'عاصفة Io-A', srcIoB: 'عاصفة Io-B', srcNoise: 'ضجيج المشتري', srcSBurst: 'انفجار S', srcLBurst: 'انفجار L',
+    startRx: '▶ ابدأ الاستقبال', stopRx: '⏹ إيقاف',
+    peakFreq: 'تردد الذروة:', peakPower: 'طاقة الذروة:', noiseFloor: 'أرضية الضجيج:', snr: 'نسبة الإشارة:', burstCount: 'عدد الانفجارات:',
+    theoryIntro: 'المشتري أقوى مصدر راديوي في النظام الشمسي بعد الشمس:',
+    theory1: 'الانبعاثات الديكامترية تحدث بين 10-40 ميغاهرتز',
+    theory2: 'عواصف آيو تُحفَّز بواسطة أنبوب التدفق',
+    theory3: 'انفجارات S قصيرة (<1مللي ثانية) مع انجراف ~20 ميغاهرتز/ث',
+    theory4: 'انفجارات L تدوم 0.5-5 ثوانٍ مع طابع واسع النطاق',
+    theory5: 'أفضل استقبال بهوائي ثنائي القطب عند ~20 ميغاهرتز',
+    rxStarted: '▶ استقبال إشارات المشتري', rxStopped: '⏹ توقف المستقبل',
+    burstDetected: '⚡ تم رصد انفجار!',
   }
 };
 
@@ -1332,6 +1332,128 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ JUPITER RADIO SIMULATION ═══════ */
+let jRunning = false, jAnimFrame = null, jBurstCount = 0;
+const SPEC_W = 700, SPEC_H = 200, SPEC_COLS = 350;
+let specData = [];
+for (let i = 0; i < SPEC_COLS; i++) specData.push(new Float32Array(128));
+
+function jupiterGenSpectrum(source, freq, gain) {
+  const spec = new Float32Array(128);
+  const nf = -120 + (50 - gain) * 0.5;
+  for (let i = 0; i < 128; i++) spec[i] = nf + (Math.random() - 0.5) * 4;
+  const centerBin = Math.round((freq - 18) / 10 * 128);
+  const isBurst = Math.random() < (source === 's-burst' ? 0.3 : source === 'l-burst' ? 0.15 : source === 'noise' ? 0.08 : 0.12);
+  if (isBurst) {
+    jBurstCount++;
+    const bw = source === 's-burst' ? 3 : source === 'l-burst' ? 15 : source === 'noise' ? 25 : 8;
+    const pk = source === 's-burst' ? 25 : source === 'l-burst' ? 18 : 12;
+    for (let i = 0; i < 128; i++) {
+      const d = Math.abs(i - centerBin);
+      if (d < bw) spec[i] += pk * (1 - d / bw) + Math.random() * 5;
+    }
+    if (source === 'io-a' || source === 'io-b') {
+      const drift = source === 'io-a' ? 5 : -5;
+      const dBin = centerBin + drift;
+      for (let i = 0; i < 128; i++) {
+        const d = Math.abs(i - dBin);
+        if (d < 4) spec[i] += 15 * (1 - d / 4);
+      }
+    }
+  }
+  return spec;
+}
+
+function drawSpectrogram() {
+  const c = $('spectrogramCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const colW = w / SPEC_COLS;
+  for (let col = 0; col < specData.length; col++) {
+    const sp = specData[col];
+    for (let i = 0; i < 128; i++) {
+      const v = Math.max(0, Math.min(1, (sp[i] + 130) / 50));
+      const r = Math.floor(v * 255), g = Math.floor(v * 120), b = Math.floor((1 - v) * 80);
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(col * colW, (127 - i) / 128 * h, colW + 1, h / 128 + 1);
+    }
+  }
+  ctx.fillStyle = '#aaa'; ctx.font = '10px Orbitron,monospace';
+  ctx.fillText('18 MHz', 2, h - 4); ctx.fillText('28 MHz', 2, 12);
+  ctx.fillText('Spectrogram', w - 90, 12);
+}
+
+function drawWaveform(spec) {
+  const c = $('waveformCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.strokeStyle = accent; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let i = 0; i < 128; i++) {
+    const x = i / 128 * w, y = h / 2 - (spec[i] + 110) / 40 * h * 0.4;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron,monospace';
+  ctx.fillText('Frequency Spectrum', 4, 12);
+}
+
+function drawPower(spec) {
+  const c = $('powerCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = 'rgba(10,10,26,0.3)'; ctx.fillRect(0, 0, w, h);
+  let total = 0;
+  for (let i = 0; i < 128; i++) total += Math.pow(10, spec[i] / 10);
+  const pwr = 10 * Math.log10(total / 128);
+  const y = h - ((pwr + 130) / 50) * h;
+  const xOff = (Date.now() / 50) % w;
+  ctx.fillStyle = '#4f8'; ctx.fillRect(xOff, y, 2, h - y);
+  ctx.fillStyle = '#aaa'; ctx.font = '10px Orbitron,monospace';
+  ctx.fillText('Total Power: ' + pwr.toFixed(1) + ' dBm', 4, 12);
+}
+
+function updateJupiterStats(spec, freq) {
+  let peak = -999, peakIdx = 0, sum = 0;
+  for (let i = 0; i < 128; i++) { sum += spec[i]; if (spec[i] > peak) { peak = spec[i]; peakIdx = i; } }
+  const nf = sum / 128;
+  const pf = 18 + peakIdx / 128 * 10;
+  const el = (id, v) => { const e = $(id); if (e) e.textContent = v; };
+  el('peakFreqVal', pf.toFixed(2) + ' MHz');
+  el('peakPowerVal', peak.toFixed(1) + ' dBm');
+  el('noiseFloorVal', nf.toFixed(1) + ' dBm');
+  el('snrVal', (peak - nf).toFixed(1) + ' dB');
+  el('burstCountVal', jBurstCount);
+}
+
+function jupiterLoop() {
+  if (!jRunning) return;
+  const source = $('sourceSelect').value;
+  const freq = parseFloat($('freqSlider').value);
+  const gain = parseInt($('gainSlider').value);
+  const spec = jupiterGenSpectrum(source, freq, gain);
+  specData.push(spec);
+  if (specData.length > SPEC_COLS) specData.shift();
+  drawSpectrogram();
+  drawWaveform(spec);
+  drawPower(spec);
+  updateJupiterStats(spec, freq);
+  jAnimFrame = requestAnimationFrame(jupiterLoop);
+}
+
+function startJupiter() {
+  if (jRunning) return;
+  jRunning = true; jBurstCount = 0;
+  specData = []; for (let i = 0; i < SPEC_COLS; i++) specData.push(new Float32Array(128));
+  setStatus(true); log(LANG[currentLang].rxStarted, 'success');
+  jupiterLoop();
+}
+function stopJupiter() {
+  jRunning = false; if (jAnimFrame) cancelAnimationFrame(jAnimFrame);
+  setStatus(false); log(LANG[currentLang].rxStopped, 'info');
+}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1564,12 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  // Jupiter simulation wiring
+  const startB = $('startBtn'); if (startB) startB.onclick = startJupiter;
+  const stopB = $('stopBtn'); if (stopB) stopB.onclick = stopJupiter;
+  const fSlider = $('freqSlider'); if (fSlider) fSlider.oninput = function() { $('freqVal').textContent = parseFloat(this.value).toFixed(1) + ' MHz'; };
+  const gSlider = $('gainSlider'); if (gSlider) gSlider.oninput = function() { $('gainVal').textContent = this.value + ' dB'; };
 
   log(LANG[currentLang].ready, 'success');
 }

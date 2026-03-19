@@ -63,32 +63,42 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Cipher Suite', subtitle: '🔐 Encrypt · 🔓 Decrypt · 🎬 Visualize',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Cipher Workbench', mainDesc: 'Select a cipher, enter text & key, encrypt or decrypt',
+    sectionA: 'Cipher Reference & Analysis', sectionB: 'RSA Key Lab & Key Generator', sectionC: 'Crypto Challenges',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is this app?', faq_a1: 'An all-in-one cryptography learning toolkit. Explore classical and modern ciphers, encrypt/decrypt messages, and learn how crypto works step by step.',
+    faq_q2: 'What is the difference between symmetric and asymmetric?', faq_a2: 'Symmetric ciphers (Caesar, Vigenere, AES, OTP) use the same key. Asymmetric (RSA) uses a public key to encrypt and a private key to decrypt.',
+    faq_q3: 'Is the RSA here real?', faq_a3: 'No. Simplified RSA with small primes for learning. Real RSA uses 2048+ bit keys.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q5: 'What is steganography?', faq_a5: 'Steganography hides secret messages inside ordinary-looking data like images.',
+    faq_q6: 'What is a one-time pad?', faq_a6: 'The only mathematically proven unbreakable cipher. Key must be truly random, same length as message, never reused.',
+    howto_1: 'Select a cipher type from the dropdown.',
+    howto_2: 'Enter your key (shift number, keyword, or auto-generate for RSA).',
+    howto_3: 'Type your plaintext and click Encrypt or Decrypt.',
+    howto_4: 'Watch the step-by-step animation to see how the cipher works.',
+    howto_5: 'Open Section A for cipher references and frequency analysis.',
+    howto_6: 'Try Crypto Challenges in Section C to test your skills!',
+    wiki_caesar_title: 'Caesar Cipher', wiki_caesar: 'Shifts each letter by a fixed number. Used by Julius Caesar (~58 BC).',
+    wiki_vigenere_title: 'Vigenere Cipher', wiki_vigenere: 'Polyalphabetic cipher using a keyword. Resisted cryptanalysis for 300 years.',
+    wiki_rsa_title: 'RSA Algorithm', wiki_rsa: 'Asymmetric encryption based on factoring large numbers. Foundation of TLS/SSL.',
+    wiki_aes_title: 'AES Encryption', wiki_aes: 'Advanced Encryption Standard. Our demo uses XOR-based simulation.',
+    wiki_otp_title: 'One-Time Pad', wiki_otp: 'Mathematically unbreakable when used correctly. Used by spies in the Cold War.',
+    wiki_stego_title: 'Steganography', wiki_stego: 'Hides messages in images using LSB encoding, invisible to the human eye.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual: English, Francais, Arabic.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔐 Cipher Suite ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,71 +108,115 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    cipherType: 'Cipher Type', keyLabel: 'Key / Shift', plainLabel: 'Plaintext', cipherLabel: 'Ciphertext',
+    encrypt: 'Encrypt', decrypt: 'Decrypt', vizTitle: 'Step-by-Step Visualization',
+    vizHint: 'Watch how your cipher works letter by letter',
+    vizPlay: 'Animate', vizStep: 'Step', vizReset: 'Reset', speed: 'Speed',
+    freqAnalysis: 'Frequency Analysis', freqHint: 'Analyze letter frequencies in ciphertext',
+    analyze: 'Analyze', vigTable: 'Vigenere Table', showTable: 'Show Table',
+    rsaKeyGen: 'RSA Key Generator', rsaKeyHint: 'Generate small RSA keys for learning (NOT real security)',
+    genKeys: 'Generate Keys', otpGen: 'One-Time Pad Generator', otpGenHint: 'Generate a truly random key',
+    otpLength: 'Length', generate: 'Generate',
+    stegoLab: 'Steganography Lab', stegoHint: 'Hide messages inside images using LSB encoding',
+    loadImg: 'Load Image', hideMsg: 'Hide Message', revealMsg: 'Reveal Message', download: 'Download',
+    stegoReady: 'Load an image to begin',
+    challengeTitle: 'Crack the Code', challengeHint: 'Practice breaking ciphers',
+    check: 'Check', compareTitle: 'Cipher Comparison',
+    col_cipher: 'Cipher', col_type: 'Type', col_keylen: 'Key Length', col_security: 'Security', col_era: 'Era',
+    c_caesar: 'Caesar Shift', c_vigenere: 'Vigenere', c_rsa: 'RSA (simplified)', c_aes: 'AES (XOR-based)', c_otp: 'One-Time Pad', c_stego: 'Steganography',
+    keyHintCaesar: 'Enter a number 1-25 for the shift amount',
+    encrypted: 'Encrypted', decrypted: 'Decrypted',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Suite Crypto', subtitle: '🔐 Chiffrer · 🔓 Dechiffrer · 🎬 Visualiser',
+    disconnected: 'Deconnecte', connected: 'Connecte',
+    mainSection: 'Atelier Crypto', mainDesc: 'Choisissez un chiffrement, entrez texte et cle',
+    sectionA: 'Reference & Analyse', sectionB: 'Labo RSA & Generateur', sectionC: 'Defis Crypto',
+    activityLog: 'Journal', eventsMsg: 'Evenements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Un toolkit de cryptographie tout-en-un pour apprendre les chiffrements classiques et modernes.',
+    faq_q2: 'Difference symetrique / asymetrique ?', faq_a2: 'Symetrique: meme cle. Asymetrique (RSA): cle publique pour chiffrer, privee pour dechiffrer.',
+    faq_q3: 'Le RSA est reel ?', faq_a3: 'Non. RSA simplifie avec petits nombres premiers pour l\'apprentissage.',
+    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    faq_q5: 'C\'est quoi la steganographie ?', faq_a5: 'Cacher des messages dans des images.',
+    faq_q6: 'C\'est quoi le masque jetable ?', faq_a6: 'Le seul chiffrement mathematiquement incassable.',
+    howto_1: 'Choisissez un type de chiffrement.',
+    howto_2: 'Entrez votre cle.',
+    howto_3: 'Tapez votre texte et cliquez Chiffrer ou Dechiffrer.',
+    howto_4: 'Regardez l\'animation etape par etape.',
+    howto_5: 'Section A pour references et analyse de frequence.',
+    howto_6: 'Essayez les Defis Crypto en Section C!',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local-first.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '🔐 Suite Crypto prete !',
+    logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    langChanged: '🌐 Langue → Francais',
+    themeChanged: '🎨 Theme →',
+    cipherType: 'Type de chiffrement', keyLabel: 'Cle / Decalage', plainLabel: 'Texte clair', cipherLabel: 'Texte chiffre',
+    encrypt: 'Chiffrer', decrypt: 'Dechiffrer', vizTitle: 'Visualisation Etape par Etape',
+    vizHint: 'Regardez comment le chiffrement fonctionne lettre par lettre',
+    vizPlay: 'Animer', vizStep: 'Etape', vizReset: 'Reset', speed: 'Vitesse',
+    freqAnalysis: 'Analyse de Frequence', freqHint: 'Analysez les frequences des lettres',
+    analyze: 'Analyser', vigTable: 'Table Vigenere', showTable: 'Afficher',
+    rsaKeyGen: 'Generateur RSA', rsaKeyHint: 'Generer des cles RSA pour l\'apprentissage',
+    genKeys: 'Generer Cles', otpGen: 'Generateur Masque Jetable', otpGenHint: 'Generer une cle aleatoire',
+    otpLength: 'Longueur', generate: 'Generer',
+    stegoLab: 'Labo Steganographie', stegoHint: 'Cacher des messages dans des images',
+    loadImg: 'Charger Image', hideMsg: 'Cacher Message', revealMsg: 'Reveler Message', download: 'Telecharger',
+    stegoReady: 'Chargez une image pour commencer',
+    challengeTitle: 'Craquez le Code', challengeHint: 'Entrainez-vous a casser des chiffrements',
+    check: 'Verifier', compareTitle: 'Comparaison des Chiffrements',
+    col_cipher: 'Chiffrement', col_type: 'Type', col_keylen: 'Longueur Cle', col_security: 'Securite', col_era: 'Epoque',
+    c_caesar: 'Cesar', c_vigenere: 'Vigenere', c_rsa: 'RSA (simplifie)', c_aes: 'AES (XOR)', c_otp: 'Masque Jetable', c_stego: 'Steganographie',
+    keyHintCaesar: 'Entrez un nombre 1-25',
+    encrypted: 'Chiffre', decrypted: 'Dechiffre',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'جناح التشفير', subtitle: '🔐 تشفير · 🔓 فك التشفير · 🎬 تصور',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    mainSection: 'ورشة التشفير', mainDesc: 'اختر شيفرة، أدخل النص والمفتاح، شفّر أو فك التشفير',
+    sectionA: 'مرجع وتحليل الشيفرات', sectionB: 'مختبر RSA ومولد المفاتيح', sectionC: 'تحديات التشفير',
+    activityLog: 'سجل النشاط', eventsMsg: 'الاحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    settings: '⚙️ الاعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة واعدادات', settingsTab: '⚙️',
+    help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
+    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'مجموعة ادوات تشفير شاملة للتعلم. استكشف الشيفرات الكلاسيكية والحديثة.',
+    faq_q2: 'ما الفرق بين المتماثل وغير المتماثل؟', faq_a2: 'المتماثل: نفس المفتاح. غير المتماثل (RSA): مفتاح عام للتشفير وخاص لفك التشفير.',
+    faq_q3: 'هل RSA حقيقي؟', faq_a3: 'لا. RSA مبسط بأعداد اولية صغيرة للتعلم.',
+    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي في متصفحك.',
+    faq_q5: 'ما هو اخفاء المعلومات؟', faq_a5: 'اخفاء رسائل سرية داخل صور.',
+    faq_q6: 'ما هو القناع لمرة واحدة؟', faq_a6: 'التشفير الوحيد غير القابل للكسر رياضيا.',
+    howto_1: 'اختر نوع الشيفرة.',
+    howto_2: 'أدخل مفتاحك.',
+    howto_3: 'اكتب نصك واضغط تشفير او فك التشفير.',
+    howto_4: 'شاهد الرسوم المتحركة خطوة بخطوة.',
+    howto_5: 'افتح القسم أ للمراجع وتحليل التردد.',
+    howto_6: 'جرب تحديات التشفير في القسم ج!',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي اولا.',
+    working: 'جار…',
+    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'اندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_space: 'فضاء', t_jungle: 'ادغال', t_robot: 'روبوت',
+    ready: '🔐 جناح التشفير جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +226,24 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    cipherType: 'نوع الشيفرة', keyLabel: 'المفتاح / الازاحة', plainLabel: 'النص الأصلي', cipherLabel: 'النص المشفر',
+    encrypt: 'تشفير', decrypt: 'فك التشفير', vizTitle: 'تصور خطوة بخطوة',
+    vizHint: 'شاهد كيف تعمل الشيفرة حرفا بحرف',
+    vizPlay: 'تشغيل', vizStep: 'خطوة', vizReset: 'اعادة', speed: 'السرعة',
+    freqAnalysis: 'تحليل التردد', freqHint: 'حلل ترددات الحروف في النص المشفر',
+    analyze: 'تحليل', vigTable: 'جدول فيجينير', showTable: 'عرض الجدول',
+    rsaKeyGen: 'مولد مفاتيح RSA', rsaKeyHint: 'توليد مفاتيح RSA صغيرة للتعلم',
+    genKeys: 'توليد المفاتيح', otpGen: 'مولد القناع لمرة واحدة', otpGenHint: 'توليد مفتاح عشوائي',
+    otpLength: 'الطول', generate: 'توليد',
+    stegoLab: 'مختبر اخفاء المعلومات', stegoHint: 'اخف رسائل داخل صور باستخدام ترميز LSB',
+    loadImg: 'تحميل صورة', hideMsg: 'اخفاء رسالة', revealMsg: 'كشف رسالة', download: 'تنزيل',
+    stegoReady: 'حمّل صورة للبدء',
+    challengeTitle: 'اكسر الشيفرة', challengeHint: 'تدرب على كسر الشيفرات',
+    check: 'تحقق', compareTitle: 'مقارنة الشيفرات',
+    col_cipher: 'الشيفرة', col_type: 'النوع', col_keylen: 'طول المفتاح', col_security: 'الأمان', col_era: 'العصر',
+    c_caesar: 'شيفرة قيصر', c_vigenere: 'فيجينير', c_rsa: 'RSA (مبسط)', c_aes: 'AES (XOR)', c_otp: 'قناع لمرة واحدة', c_stego: 'اخفاء المعلومات',
+    keyHintCaesar: 'أدخل رقم 1-25 لمقدار الازاحة',
+    encrypted: 'تم التشفير', decrypted: 'تم فك التشفير',
   }
 };
 
@@ -1449,3 +1521,541 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ CIPHER SUITE — SIMULATION CODE ═══════ */
+
+(function() {
+  function waitReady(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  /* ── Caesar cipher ── */
+  function caesarEncrypt(text, shift) {
+    shift = ((shift % 26) + 26) % 26;
+    return text.replace(/[a-zA-Z]/g, c => {
+      const base = c <= 'Z' ? 65 : 97;
+      return String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);
+    });
+  }
+  function caesarDecrypt(text, shift) { return caesarEncrypt(text, 26 - shift); }
+
+  /* ── Vigenere cipher ── */
+  function vigEncrypt(text, key) {
+    if (!key) return text;
+    key = key.toUpperCase();
+    let ki = 0;
+    return text.replace(/[a-zA-Z]/g, c => {
+      const base = c <= 'Z' ? 65 : 97;
+      const shift = key.charCodeAt(ki % key.length) - 65;
+      ki++;
+      return String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);
+    });
+  }
+  function vigDecrypt(text, key) {
+    if (!key) return text;
+    key = key.toUpperCase();
+    let ki = 0;
+    return text.replace(/[a-zA-Z]/g, c => {
+      const base = c <= 'Z' ? 65 : 97;
+      const shift = key.charCodeAt(ki % key.length) - 65;
+      ki++;
+      return String.fromCharCode((c.charCodeAt(0) - base - shift + 26) % 26 + base);
+    });
+  }
+
+  /* ── XOR-based AES simulation ── */
+  function xorEncrypt(text, key) {
+    if (!key) return text;
+    return Array.from(text).map((c, i) =>
+      String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))
+    ).join('');
+  }
+  function xorToHex(text, key) {
+    if (!key) return text;
+    return Array.from(text).map((c, i) =>
+      (c.charCodeAt(0) ^ key.charCodeAt(i % key.length)).toString(16).padStart(2, '0')
+    ).join(' ');
+  }
+  function hexToXorDecrypt(hex, key) {
+    if (!key) return hex;
+    const bytes = hex.trim().split(/\s+/);
+    return bytes.map((b, i) =>
+      String.fromCharCode(parseInt(b, 16) ^ key.charCodeAt(i % key.length))
+    ).join('');
+  }
+
+  /* ── Simplified RSA ── */
+  function gcd(a, b) { while (b) { [a, b] = [b, a % b]; } return a; }
+  function modPow(base, exp, mod) {
+    let result = 1n; base = BigInt(base) % BigInt(mod);
+    exp = BigInt(exp);
+    const m = BigInt(mod);
+    while (exp > 0n) {
+      if (exp % 2n === 1n) result = (result * base) % m;
+      exp = exp / 2n;
+      base = (base * base) % m;
+    }
+    return Number(result);
+  }
+  function rsaEncryptChar(charCode, e, n) { return modPow(charCode, e, n); }
+  function rsaDecryptChar(cipher, d, n) { return modPow(cipher, d, n); }
+
+  let rsaKeys = null;
+
+  /* ── One-Time Pad ── */
+  function otpEncrypt(text, key) {
+    return Array.from(text).map((c, i) => {
+      if (i >= key.length) return c;
+      return String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i));
+    }).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
+  }
+  function otpDecrypt(hex, key) {
+    const bytes = hex.trim().split(/\s+/);
+    return bytes.map((b, i) => {
+      const val = parseInt(b, 16);
+      if (i >= key.length) return String.fromCharCode(val);
+      return String.fromCharCode(val ^ key.charCodeAt(i));
+    }).join('');
+  }
+
+  /* ── Visualization state ── */
+  let vizSteps = [];
+  let vizIndex = 0;
+  let vizAnimating = false;
+
+  function buildVizSteps(text, cipher, key, mode) {
+    vizSteps = [];
+    vizIndex = 0;
+    for (let i = 0; i < text.length && i < cipher.length; i++) {
+      vizSteps.push({ input: text[i], output: cipher[i], index: i });
+    }
+  }
+
+  function renderVizStep(container) {
+    if (!container) return;
+    if (vizIndex >= vizSteps.length) {
+      container.innerHTML += '\n✅ Complete!';
+      return;
+    }
+    const s = vizSteps[vizIndex];
+    const line = `[${s.index}] '${s.input}' → '${s.output}'`;
+    container.innerHTML += line + '\n';
+    vizIndex++;
+  }
+
+  async function animateViz() {
+    const container = $('vizContainer');
+    if (!container || vizAnimating) return;
+    vizAnimating = true;
+    container.textContent = '';
+    vizIndex = 0;
+    const speedSlider = $('vizSpeed');
+    while (vizIndex < vizSteps.length && vizAnimating) {
+      const delay = speedSlider ? (850 - parseInt(speedSlider.value)) : 300;
+      renderVizStep(container);
+      await new Promise(r => setTimeout(r, delay));
+    }
+    if (vizIndex >= vizSteps.length && container) container.innerHTML += '\n✅ Complete!';
+    vizAnimating = false;
+  }
+
+  /* ── Frequency analysis ── */
+  function drawFreqChart(text) {
+    const el = $('freqChart');
+    if (!el) return;
+    const freq = {};
+    const letters = text.toUpperCase().replace(/[^A-Z]/g, '');
+    if (!letters.length) { el.innerHTML = '<span style="opacity:.5">No alphabetic characters found</span>'; return; }
+    for (const c of letters) freq[c] = (freq[c] || 0) + 1;
+    const max = Math.max(...Object.values(freq));
+    const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
+    let html = '<div style="display:flex;gap:2px;align-items:flex-end;height:120px;overflow-x:auto">';
+    for (const [letter, count] of sorted) {
+      const pct = (count / max * 100).toFixed(0);
+      html += `<div style="display:flex;flex-direction:column;align-items:center;min-width:18px">
+        <span style="font-size:.6rem;color:var(--accent)">${count}</span>
+        <div style="width:14px;background:var(--accent);height:${pct}%;border-radius:2px 2px 0 0;min-height:2px;transition:height .3s"></div>
+        <span style="font-size:.65rem;margin-top:2px">${letter}</span>
+      </div>`;
+    }
+    html += '</div>';
+    el.innerHTML = html;
+    if (typeof log === 'function') log('📊 Frequency analysis complete', 'success');
+  }
+
+  /* ── Vigenere table ── */
+  function showVigTable() {
+    const el = $('vigTableContainer');
+    if (!el) return;
+    if (el.style.display === 'block') { el.style.display = 'none'; return; }
+    el.style.display = 'block';
+    let html = '<table style="border-collapse:collapse;font-size:.55rem;font-family:monospace">';
+    html += '<tr><th style="padding:2px 4px;border:1px solid var(--border)"></th>';
+    for (let i = 0; i < 26; i++) html += `<th style="padding:2px 4px;border:1px solid var(--border);color:var(--accent)">${String.fromCharCode(65 + i)}</th>`;
+    html += '</tr>';
+    for (let r = 0; r < 26; r++) {
+      html += `<tr><th style="padding:2px 4px;border:1px solid var(--border);color:var(--accent)">${String.fromCharCode(65 + r)}</th>`;
+      for (let c = 0; c < 26; c++) {
+        html += `<td style="padding:2px 4px;border:1px solid var(--border);text-align:center">${String.fromCharCode(65 + (r + c) % 26)}</td>`;
+      }
+      html += '</tr>';
+    }
+    html += '</table>';
+    el.innerHTML = html;
+  }
+
+  /* ── RSA Key Generation ── */
+  function isPrime(n) {
+    if (n < 2) return false;
+    for (let i = 2; i <= Math.sqrt(n); i++) if (n % i === 0) return false;
+    return true;
+  }
+
+  function generateRSAKeys() {
+    const pEl = $('rsaP'), qEl = $('rsaQ'), out = $('rsaKeyOutput');
+    if (!pEl || !qEl || !out) return;
+    const p = parseInt(pEl.value), q = parseInt(qEl.value);
+    if (!isPrime(p) || !isPrime(q)) { out.textContent = 'Error: p and q must be prime!'; return; }
+    if (p === q) { out.textContent = 'Error: p and q must be different!'; return; }
+    const n = p * q;
+    const phi = (p - 1) * (q - 1);
+    let e = 3;
+    while (e < phi && gcd(e, phi) !== 1) e += 2;
+    // Find d: modular inverse of e mod phi
+    let d = 1;
+    while ((d * e) % phi !== 1) d++;
+    rsaKeys = { p, q, n, phi, e, d };
+    out.textContent = `p = ${p}, q = ${q}\nn = p × q = ${n}\nφ(n) = (p-1)(q-1) = ${phi}\ne = ${e} (public exponent)\nd = ${d} (private exponent)\n\nPublic Key:  (e=${e}, n=${n})\nPrivate Key: (d=${d}, n=${n})`;
+    if (typeof log === 'function') log('🔑 RSA keys generated', 'success');
+  }
+
+  /* ── OTP Key Generation ── */
+  function generateOTPKey() {
+    const lenEl = $('otpLength'), out = $('otpKeyOutput');
+    if (!lenEl || !out) return;
+    const len = parseInt(lenEl.value) || 32;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let key = '';
+    for (let i = 0; i < len; i++) key += chars[Math.floor(Math.random() * chars.length)];
+    out.textContent = key;
+    if (typeof log === 'function') log('🎲 OTP key generated (' + len + ' chars)', 'success');
+  }
+
+  /* ── Steganography ── */
+  let stegoImage = null;
+
+  function initStego() {
+    const canvas = $('stegoCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    // Draw placeholder pattern
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#444';
+    ctx.font = '14px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Drop or load an image', canvas.width / 2, canvas.height / 2);
+  }
+
+  function loadStegoImage() {
+    const fileInput = $('stegoFileInput');
+    if (fileInput) fileInput.click();
+  }
+
+  function handleStegoFile(file) {
+    const canvas = $('stegoCanvas'), status = $('stegoStatus');
+    if (!canvas || !file) return;
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.onload = function() {
+      canvas.width = Math.min(img.width, 640);
+      canvas.height = Math.min(img.height, 400);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      stegoImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      if (status) status.textContent = `Image loaded: ${canvas.width}x${canvas.height}`;
+      if (typeof log === 'function') log('🖼️ Image loaded for steganography', 'info');
+    };
+    img.src = URL.createObjectURL(file);
+  }
+
+  function stegoHide() {
+    const canvas = $('stegoCanvas'), status = $('stegoStatus');
+    const plainInput = $('plainInput');
+    if (!canvas || !stegoImage || !plainInput) {
+      if (status) status.textContent = 'Load an image and enter text first!';
+      return;
+    }
+    const msg = plainInput.value;
+    if (!msg) { if (status) status.textContent = 'Enter a message in the plaintext field!'; return; }
+    const ctx = canvas.getContext('2d');
+    const imgData = new ImageData(new Uint8ClampedArray(stegoImage.data), stegoImage.width, stegoImage.height);
+    const binary = Array.from(msg + '\0').map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join('');
+    if (binary.length > imgData.data.length / 4) {
+      if (status) status.textContent = 'Message too long for this image!';
+      return;
+    }
+    for (let i = 0; i < binary.length; i++) {
+      imgData.data[i * 4] = (imgData.data[i * 4] & 0xFE) | parseInt(binary[i]);
+    }
+    ctx.putImageData(imgData, 0, 0);
+    if (status) status.textContent = 'Message hidden in image! (' + msg.length + ' chars)';
+    if (typeof log === 'function') log('🫥 Message hidden in image', 'success');
+  }
+
+  function stegoReveal() {
+    const canvas = $('stegoCanvas'), status = $('stegoStatus'), output = $('cipherOutput');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let binary = '';
+    for (let i = 0; i < imgData.data.length / 4 && binary.length < 8000; i++) {
+      binary += (imgData.data[i * 4] & 1).toString();
+    }
+    let msg = '';
+    for (let i = 0; i < binary.length; i += 8) {
+      const charCode = parseInt(binary.substr(i, 8), 2);
+      if (charCode === 0) break;
+      msg += String.fromCharCode(charCode);
+    }
+    if (output) output.value = msg || '(no hidden message found)';
+    if (status) status.textContent = msg ? 'Message revealed! (' + msg.length + ' chars)' : 'No hidden message found.';
+    if (typeof log === 'function') log('👁️ Steganography reveal attempt', 'info');
+  }
+
+  function stegoDownload() {
+    const canvas = $('stegoCanvas');
+    if (!canvas) return;
+    const a = document.createElement('a');
+    a.download = 'stego-image.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  }
+
+  /* ── Cipher info content ── */
+  const CIPHER_INFO = {
+    caesar: { en: 'Caesar cipher shifts each letter by a fixed amount. Key: a number 1-25. Easy to crack by brute force (only 25 keys). Used by Julius Caesar in 58 BC.', fr: 'Le chiffrement Cesar decale chaque lettre d\'un montant fixe. Cle: un nombre 1-25.', ar: 'شيفرة قيصر تزيح كل حرف بمقدار ثابت. المفتاح: رقم 1-25.' },
+    vigenere: { en: 'Vigenere uses a keyword to determine different shifts for each letter. Much harder to crack than Caesar. Called "le chiffre indechiffrable" for 300 years.', fr: 'Vigenere utilise un mot-cle pour des decalages differents. Appele "le chiffre indechiffrable" pendant 300 ans.', ar: 'فيجينير يستخدم كلمة مفتاح لتحديد ازاحات مختلفة لكل حرف.' },
+    rsa: { en: 'RSA is asymmetric encryption. Uses two keys: public (encrypt) and private (decrypt). Based on difficulty of factoring large numbers. Our demo uses small primes.', fr: 'RSA est un chiffrement asymetrique avec cle publique et privee. Base sur la difficulte de factoriser de grands nombres.', ar: 'RSA تشفير غير متماثل. يستخدم مفتاحين: عام (تشفير) وخاص (فك تشفير).' },
+    aes: { en: 'AES (Advanced Encryption Standard) is the world\'s most used symmetric cipher. Our demo simulates it with XOR operation, showing the core concept of key mixing.', fr: 'AES est le chiffrement symetrique le plus utilise. Notre demo simule avec XOR.', ar: 'AES هو المعيار العالمي للتشفير المتماثل. محاكاتنا تستخدم عملية XOR.' },
+    otp: { en: 'One-Time Pad is the ONLY mathematically proven unbreakable cipher. Rules: key must be truly random, same length as message, and NEVER reused.', fr: 'Le masque jetable est le SEUL chiffrement mathematiquement incassable. La cle doit etre aleatoire, de meme longueur que le message, et jamais reutilisee.', ar: 'القناع لمرة واحدة هو الشيفرة الوحيدة المستحيلة الكسر رياضيا. المفتاح يجب ان يكون عشوائيا وبنفس طول الرسالة.' },
+    stego: { en: 'Steganography hides messages inside images by modifying the least significant bit (LSB) of pixel values. The changes are invisible to the human eye.', fr: 'La steganographie cache des messages dans des images en modifiant le bit de poids faible (LSB) des pixels.', ar: 'اخفاء المعلومات يخفي رسائل داخل صور عبر تعديل البت الاقل اهمية (LSB) في قيم البكسل.' }
+  };
+
+  /* ── Challenges ── */
+  const CHALLENGES = [
+    { cipher: 'KHOOR ZRUOG', type: 'caesar', answer: 'HELLO WORLD', clue: 'Caesar cipher, shift = 3' },
+    { cipher: 'LHKTS NCUQF', type: 'vigenere', answer: 'HELLO WORLD', clue: 'Vigenere, keyword = "DELTA"' },
+    { cipher: 'WKH TXLFN EURZQ IRA', type: 'caesar', answer: 'THE QUICK BROWN FOX', clue: 'Caesar cipher, shift = 3' },
+    { cipher: 'SVOOL DLIOW', type: 'caesar', answer: 'HELLO WORLD', clue: 'Atbash cipher (hint: reverse alphabet, shift = 1 from end)' },
+    { cipher: '48 65 6c 6c 6f', type: 'hex', answer: 'Hello', clue: 'Hex encoding — each pair is an ASCII code' },
+  ];
+
+  /* ── Comparison table data ── */
+  const COMPARE_DATA = [
+    ['Caesar', 'Symmetric', '1 number (1-25)', '⭐', '58 BC'],
+    ['Vigenere', 'Symmetric', 'Keyword', '⭐⭐', '1553'],
+    ['AES-256', 'Symmetric', '256 bits', '⭐⭐⭐⭐⭐', '2001'],
+    ['RSA', 'Asymmetric', '2048+ bits', '⭐⭐⭐⭐⭐', '1977'],
+    ['OTP', 'Symmetric', '= message length', '⭐⭐⭐⭐⭐', '1882'],
+    ['Steganography', 'Hiding', 'Image', '⭐⭐⭐', 'Ancient'],
+  ];
+
+  /* ── Main encrypt/decrypt ── */
+  function doEncrypt() {
+    const cipherType = ($('cipherSelect') || {}).value || 'caesar';
+    const key = ($('keyInput') || {}).value || '';
+    const plain = ($('plainInput') || {}).value || '';
+    const output = $('cipherOutput');
+    if (!plain) return;
+    let result = '';
+
+    switch (cipherType) {
+      case 'caesar': result = caesarEncrypt(plain, parseInt(key) || 3); break;
+      case 'vigenere': result = vigEncrypt(plain, key || 'KEY'); break;
+      case 'aes': result = xorToHex(plain, key || 'secret'); break;
+      case 'otp': result = otpEncrypt(plain, key || 'random'); break;
+      case 'rsa':
+        if (!rsaKeys) { if (output) output.value = 'Generate RSA keys first (Section B)!'; return; }
+        result = Array.from(plain).map(c => rsaEncryptChar(c.charCodeAt(0), rsaKeys.e, rsaKeys.n)).join(' ');
+        break;
+      case 'stego': stegoHide(); return;
+      default: result = plain;
+    }
+    if (output) output.value = result;
+    buildVizSteps(plain, result, key, 'encrypt');
+    if (typeof log === 'function') log('🔒 ' + (LANG[currentLang].encrypted || 'Encrypted') + ' (' + cipherType + ')', 'success');
+    playSound('success');
+  }
+
+  function doDecrypt() {
+    const cipherType = ($('cipherSelect') || {}).value || 'caesar';
+    const key = ($('keyInput') || {}).value || '';
+    const cipher = ($('cipherOutput') || {}).value || ($('plainInput') || {}).value || '';
+    const output = $('cipherOutput');
+    if (!cipher) return;
+    let result = '';
+
+    switch (cipherType) {
+      case 'caesar': result = caesarDecrypt(cipher, parseInt(key) || 3); break;
+      case 'vigenere': result = vigDecrypt(cipher, key || 'KEY'); break;
+      case 'aes': result = hexToXorDecrypt(cipher, key || 'secret'); break;
+      case 'otp': result = otpDecrypt(cipher, key || 'random'); break;
+      case 'rsa':
+        if (!rsaKeys) { if (output) output.value = 'Generate RSA keys first!'; return; }
+        result = cipher.trim().split(/\s+/).map(n => String.fromCharCode(rsaDecryptChar(parseInt(n), rsaKeys.d, rsaKeys.n))).join('');
+        break;
+      case 'stego': stegoReveal(); return;
+      default: result = cipher;
+    }
+    const plainInput = $('plainInput');
+    if (plainInput) plainInput.value = result;
+    if (typeof log === 'function') log('🔓 ' + (LANG[currentLang].decrypted || 'Decrypted') + ' (' + cipherType + ')', 'success');
+    playSound('success');
+  }
+
+  /* ── Key hint updates ── */
+  function updateKeyHint() {
+    const hint = $('keyHint');
+    const sel = ($('cipherSelect') || {}).value;
+    if (!hint) return;
+    const hints = {
+      caesar: 'Enter a number 1-25 for the shift amount',
+      vigenere: 'Enter a keyword (letters only)',
+      rsa: 'Generate keys in Section B first, then enter text',
+      aes: 'Enter a passphrase for XOR encryption',
+      otp: 'Enter a random key (same length as message)',
+      stego: 'Load an image in Section B, then enter your message',
+    };
+    hint.textContent = hints[sel] || '';
+  }
+
+  /* ── Wire up UI ── */
+  waitReady(function() {
+    // Encrypt / Decrypt
+    const encBtn = $('encryptBtn'); if (encBtn) encBtn.onclick = doEncrypt;
+    const decBtn = $('decryptBtn'); if (decBtn) decBtn.onclick = doDecrypt;
+
+    // Swap
+    const swapBtn = $('swapBtn'); if (swapBtn) swapBtn.onclick = function() {
+      const p = $('plainInput'), c = $('cipherOutput');
+      if (p && c) { const tmp = p.value; p.value = c.value; c.value = tmp; }
+    };
+
+    // Clear
+    const clearBtn = $('clearAllBtn'); if (clearBtn) clearBtn.onclick = function() {
+      const p = $('plainInput'), c = $('cipherOutput'), k = $('keyInput');
+      if (p) p.value = ''; if (c) c.value = ''; if (k) k.value = '';
+      const viz = $('vizContainer'); if (viz) viz.textContent = '';
+    };
+
+    // Copy ciphertext
+    const copyBtn = $('copyCipherBtn'); if (copyBtn) copyBtn.onclick = function() {
+      const c = $('cipherOutput');
+      if (c) navigator.clipboard.writeText(c.value).then(() => {
+        if (typeof log === 'function') log('📋 Ciphertext copied', 'info');
+      });
+    };
+
+    // Cipher type change
+    const cipherSel = $('cipherSelect');
+    if (cipherSel) cipherSel.addEventListener('change', updateKeyHint);
+
+    // Visualization buttons
+    const vizPlay = $('vizPlayBtn'); if (vizPlay) vizPlay.onclick = animateViz;
+    const vizStep = $('vizStepBtn'); if (vizStep) vizStep.onclick = function() {
+      renderVizStep($('vizContainer'));
+    };
+    const vizReset = $('vizResetBtn'); if (vizReset) vizReset.onclick = function() {
+      vizIndex = 0; vizAnimating = false;
+      const c = $('vizContainer'); if (c) c.textContent = '';
+    };
+
+    // Frequency analysis
+    const freqBtn = $('freqBtn'); if (freqBtn) freqBtn.onclick = function() {
+      const c = $('cipherOutput');
+      drawFreqChart(c ? c.value : '');
+    };
+
+    // Vigenere table
+    const vigBtn = $('showVigTableBtn'); if (vigBtn) vigBtn.onclick = showVigTable;
+
+    // RSA key generation
+    const rsaGen = $('rsaGenBtn'); if (rsaGen) rsaGen.onclick = generateRSAKeys;
+
+    // OTP key generation
+    const otpGen = $('otpGenBtn'); if (otpGen) otpGen.onclick = generateOTPKey;
+
+    // Steganography
+    initStego();
+    const stegoLoad = $('stegoLoadBtn'); if (stegoLoad) stegoLoad.onclick = loadStegoImage;
+    const stegoFile = $('stegoFileInput'); if (stegoFile) stegoFile.addEventListener('change', function() {
+      if (this.files[0]) handleStegoFile(this.files[0]);
+    });
+    const stegoHideBtn = $('stegoHideBtn'); if (stegoHideBtn) stegoHideBtn.onclick = stegoHide;
+    const stegoRevealBtn = $('stegoRevealBtn'); if (stegoRevealBtn) stegoRevealBtn.onclick = stegoReveal;
+    const stegoDl = $('stegoDownloadBtn'); if (stegoDl) stegoDl.onclick = stegoDownload;
+
+    // Cipher info tabs
+    document.querySelectorAll('.cipher-info-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.cipher-info-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const info = CIPHER_INFO[this.dataset.cipherInfo];
+        const el = $('cipherInfoContent');
+        if (el && info) el.textContent = info[currentLang] || info.en;
+      });
+    });
+    // Show default cipher info
+    const infoEl = $('cipherInfoContent');
+    if (infoEl) infoEl.textContent = (CIPHER_INFO.caesar[currentLang] || CIPHER_INFO.caesar.en);
+
+    // Challenges
+    document.querySelectorAll('.challenge-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const level = parseInt(this.dataset.level) - 1;
+        const ch = CHALLENGES[level];
+        if (!ch) return;
+        const text = $('challengeText'), clue = $('challengeClue'), result = $('challengeResult');
+        if (text) text.textContent = ch.cipher;
+        if (clue) clue.textContent = ch.clue;
+        if (result) result.textContent = '';
+        const answer = $('challengeAnswer'); if (answer) answer.value = '';
+      });
+    });
+
+    const checkBtn = $('challengeCheckBtn'); if (checkBtn) checkBtn.onclick = function() {
+      const text = $('challengeText'), answer = $('challengeAnswer'), result = $('challengeResult');
+      if (!text || !answer || !result) return;
+      const currentCipher = text.textContent;
+      const ch = CHALLENGES.find(c => c.cipher === currentCipher);
+      if (!ch) { result.textContent = 'Select a challenge first!'; return; }
+      if (answer.value.trim().toUpperCase() === ch.answer.toUpperCase()) {
+        result.innerHTML = '<span style="color:#4CAF50">✅ Correct!</span>';
+        playSound('success');
+        if (typeof log === 'function') log('🏆 Challenge solved!', 'success');
+      } else {
+        result.innerHTML = '<span style="color:#f44336">❌ Try again!</span>';
+        playSound('error');
+      }
+    };
+
+    // Comparison table
+    const tbody = $('compareBody');
+    if (tbody) {
+      COMPARE_DATA.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border)';
+        row.forEach((cell, i) => {
+          const td = document.createElement('td');
+          td.style.cssText = 'padding:6px;' + (i === 0 ? 'text-align:left;font-weight:bold;color:var(--accent)' : 'text-align:center');
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    setStatus(true);
+  });
+})();

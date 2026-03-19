@@ -63,32 +63,30 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Jamming Lab', subtitle: 'Educational WiFi jamming simulator. Understand DoS attacks and defenses',
+    disconnected: 'Idle', connected: 'Simulating',
+    mainSection: 'Jamming Simulator', mainDesc: 'Understand DoS attacks and defenses',
+    sectionA: 'Attack Log', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is WiFi jamming?', faq_a1: 'Disrupting WiFi by flooding channels with interference signals.',
+    faq_q2: 'Is this real?', faq_a2: 'No, educational simulation only. No actual signals are transmitted.',
+    faq_q3: 'What is deauth?', faq_a3: 'Sending fake deauthentication frames to disconnect clients from an AP.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select an attack type.', howto_2: 'Click Simulate to start.',
+    howto_3: 'Watch attack patterns and defense.', howto_4: 'Observe how defense adapts over time.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⚡ Jamming Lab ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,80 +96,69 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    start: 'Simulate', stop: 'Stop', packets: 'Packets', dropRate: 'Drop Rate', clients: 'Clients', defense: 'Defense',
+    deauthAtk: 'Deauth', noiseAtk: 'Noise Flood', beaconAtk: 'Beacon Spam', defenseLabel: 'Defense Strength',
+    simStarted: 'Simulation started', simStopped: 'Simulation stopped',
+    deauthSent: 'Deauth frame sent', noiseSent: 'Noise burst', beaconSpam: 'Fake beacon',
+    clientDrop: 'Client disconnected', defenseUp: 'Defense strengthened',
+    howItWorksText: 'WiFi jamming disrupts wireless communication. Deauth attacks send fake disconnection frames. Noise flooding overwhelms channels with random signals. Beacon spam creates fake APs. This simulator shows attack patterns and how defense mechanisms like 802.11w MFP adapt.',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Labo Brouillage WiFi', subtitle: 'Simulateur de brouillage WiFi educatif',
+    disconnected: 'Inactif', connected: 'Simulation',
+    mainSection: 'Simulateur de Brouillage', mainDesc: 'Comprendre les attaques DoS et les defenses',
+    sectionA: 'Journal d\'Attaque', sectionB: 'Comment ca marche',
+    activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    faq_q1: 'Brouillage WiFi?', faq_a1: 'Perturbation du WiFi en inondant les canaux.',
+    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation educative.',
+    faq_q3: 'Deauth?', faq_a3: 'Envoi de faux trames de deauthentification.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui, tout local.',
+    howto_1: 'Choisissez un type d\'attaque.', howto_2: 'Cliquez Simuler.', howto_3: 'Observez les motifs.', howto_4: 'Voyez la defense s\'adapter.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.', wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local.',
+    working: 'En cours…', t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '⚡ Labo Brouillage pret!', logCleared: 'Efface', copied: 'Copie!', copyFail: 'Echec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
+    whisperMode: 'Murmure', breathingGuide: 'Respiration', dhikrTap: 'Tap', musicMode: 'Musique',
+    chatPlaceholder: 'Parle...', splashHint: 'appuyer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    start: 'Simuler', stop: 'Arreter', packets: 'Paquets', dropRate: 'Taux perte', clients: 'Clients', defense: 'Defense',
+    deauthAtk: 'Deauth', noiseAtk: 'Bruit', beaconAtk: 'Balises', defenseLabel: 'Force de defense',
+    simStarted: 'Simulation demarree', simStopped: 'Simulation arretee',
+    deauthSent: 'Trame deauth envoyee', noiseSent: 'Salve de bruit', beaconSpam: 'Fausse balise',
+    clientDrop: 'Client deconnecte', defenseUp: 'Defense renforcee',
+    howItWorksText: 'Le brouillage WiFi perturbe les communications sans fil. Les attaques deauth envoient de faux trames. Le bruit inonde les canaux.',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'مختبر تشويش WiFi', subtitle: 'محاكي تشويش WiFi تعليمي. فهم هجمات DoS والدفاعات',
+    disconnected: 'خامل', connected: 'محاكاة',
+    mainSection: 'محاكي التشويش', mainDesc: 'فهم هجمات حجب الخدمة والدفاعات',
+    sectionA: 'سجل الهجمات', sectionB: 'كيف يعمل',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
+    settings: '⚙️ الإعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    faq_q1: 'ما هو تشويش WiFi؟', faq_a1: 'تعطيل WiFi عبر إغراق القنوات بالتداخل.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة تعليمية فقط.',
+    faq_q3: 'ما هو Deauth؟', faq_a3: 'إرسال إطارات إلغاء مصادقة مزيفة لفصل العملاء.',
+    faq_q4: 'خصوصية؟', faq_a4: 'نعم، كل شيء محلي.',
+    howto_1: 'اختر نوع الهجوم.', howto_2: 'انقر محاكاة.', howto_3: 'شاهد أنماط الهجوم والدفاع.', howto_4: 'لاحظ تكيف الدفاع.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي.',
+    wiki_log_title: '📜 سجل', wiki_log: 'مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '⚡ مختبر التشويش جاهز!', logCleared: 'تم المسح', copied: 'تم النسخ!', copyFail: 'فشل',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات', whisperMode: 'همس', breathingGuide: 'تنفس',
+    dhikrTap: 'اضغط', musicMode: 'موسيقى', chatPlaceholder: 'تحدث...', splashHint: 'انقر للتخطي',
+    newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    start: 'محاكاة', stop: 'إيقاف', packets: 'حزم', dropRate: 'نسبة الفقد', clients: 'عملاء', defense: 'دفاع',
+    deauthAtk: 'إلغاء مصادقة', noiseAtk: 'إغراق ضوضاء', beaconAtk: 'إشارات مزيفة', defenseLabel: 'قوة الدفاع',
+    simStarted: 'بدأت المحاكاة', simStopped: 'توقفت المحاكاة',
+    deauthSent: 'إطار deauth مرسل', noiseSent: 'دفعة ضوضاء', beaconSpam: 'إشارة مزيفة',
+    clientDrop: 'عميل مفصول', defenseUp: 'تعزز الدفاع',
+    howItWorksText: 'تشويش WiFi يعطل الاتصال اللاسلكي. هجمات Deauth ترسل إطارات فصل مزيفة. إغراق الضوضاء يطغى على القنوات.',
   }
 };
 
@@ -1449,3 +1436,105 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Jamming Lab ═══════ */
+let simRunning=false,simInterval=null,simAnim=null;
+let jCanvas,jCtx,pktCount=0,dropRate=0,clientCount=8,defenseLevel=0;
+let attackType='deauth',waveData=[],particles=[];
+
+function initJCanvas(){jCanvas=$('jamCanvas');if(!jCanvas)return;jCtx=jCanvas.getContext('2d');jCanvas.width=jCanvas.offsetWidth*2;jCanvas.height=jCanvas.offsetHeight*2;jCtx.scale(2,2);}
+
+function drawJam(){
+  if(!jCtx)return;const w=jCanvas.offsetWidth,h=jCanvas.offsetHeight;
+  jCtx.fillStyle='rgba(10,10,26,0.1)';jCtx.fillRect(0,0,w,h);
+  // channel grid
+  const channels=13,cw=w/(channels+1);
+  jCtx.strokeStyle='rgba(255,255,255,0.06)';jCtx.lineWidth=0.5;
+  for(let i=1;i<=channels;i++){const x=i*cw;jCtx.beginPath();jCtx.moveTo(x,10);jCtx.lineTo(x,h-20);jCtx.stroke();jCtx.fillStyle='rgba(255,255,255,0.3)';jCtx.font='7px monospace';jCtx.fillText('Ch'+i,x-8,h-6);}
+  // normal traffic baseline
+  jCtx.strokeStyle='rgba(59,130,246,0.3)';jCtx.lineWidth=1;jCtx.beginPath();
+  for(let x=0;x<w;x++){const y=h/2+Math.sin(x*0.05+Date.now()*0.001)*15*(1-defenseLevel/100);if(x===0)jCtx.moveTo(x,y);else jCtx.lineTo(x,y);}jCtx.stroke();
+  // attack waves
+  if(simRunning){
+    const colors={deauth:'rgba(239,68,68,0.6)',noise:'rgba(245,158,11,0.5)',beacon:'rgba(168,85,247,0.5)'};
+    jCtx.strokeStyle=colors[attackType]||colors.deauth;jCtx.lineWidth=2;jCtx.beginPath();
+    for(let x=0;x<w;x++){
+      let y;
+      if(attackType==='deauth'){y=h/2+Math.sin(x*0.15+Date.now()*0.005)*30*(Math.random()>0.7?2:1);}
+      else if(attackType==='noise'){y=h/2+(Math.random()-0.5)*60;}
+      else{y=h/2+Math.sin(x*0.02+Date.now()*0.003)*20+Math.sin(x*0.1)*15;}
+      y=y*(1-defenseLevel/200);
+      if(x===0)jCtx.moveTo(x,y);else jCtx.lineTo(x,y);
+    }jCtx.stroke();
+    // defense shield line
+    if(defenseLevel>10){
+      jCtx.strokeStyle='rgba(34,197,94,'+(defenseLevel/150)+')';jCtx.lineWidth=1.5;jCtx.setLineDash([5,5]);
+      jCtx.beginPath();jCtx.moveTo(0,h*0.25);jCtx.lineTo(w,h*0.25);jCtx.moveTo(0,h*0.75);jCtx.lineTo(w,h*0.75);jCtx.stroke();jCtx.setLineDash([]);
+    }
+  }
+  // particles (attack indicators)
+  particles=particles.filter(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.life-=0.02;
+    if(p.life<=0)return false;
+    jCtx.beginPath();jCtx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
+    jCtx.fillStyle=p.color.replace(')',','+p.life+')').replace('rgb','rgba');jCtx.fill();
+    return true;
+  });
+  // attack type label
+  const labels={deauth:'DEAUTH FLOOD',noise:'NOISE JAMMING',beacon:'BEACON SPAM'};
+  jCtx.fillStyle='rgba(239,68,68,0.5)';jCtx.font='bold 9px monospace';
+  jCtx.fillText(simRunning?labels[attackType]:'IDLE',8,18);
+  jCtx.fillStyle='rgba(34,197,94,0.5)';jCtx.fillText('DEF: '+defenseLevel.toFixed(0)+'%',w-70,18);
+}
+
+function spawnParticles(x,y,color,count){
+  for(let i=0;i<count;i++){
+    particles.push({x,y,vx:(Math.random()-0.5)*3,vy:(Math.random()-0.5)*3,r:2+Math.random()*3,life:1,color});
+  }
+}
+
+function simTick(){
+  pktCount++;const s=LANG[currentLang];
+  // attack effects
+  const baseDropChance=attackType==='deauth'?0.4:attackType==='noise'?0.6:0.2;
+  const effectiveDrop=baseDropChance*(1-defenseLevel/120);
+  if(Math.random()<effectiveDrop&&clientCount>0){
+    clientCount=Math.max(0,clientCount-1);dropRate=Math.min(100,dropRate+5);
+    log(s.clientDrop+' ('+clientCount+' left)','error');
+    const jw=jCanvas?jCanvas.offsetWidth:200;const jh=jCanvas?jCanvas.offsetHeight:200;
+    spawnParticles(Math.random()*jw,Math.random()*jh,'rgb(239,68,68)',5);
+  } else if(Math.random()<0.3&&clientCount<12){
+    clientCount++;dropRate=Math.max(0,dropRate-2);
+  }
+  // defense adapts
+  defenseLevel=Math.min(95,defenseLevel+0.3+Math.random()*0.5);
+  dropRate=Math.max(0,dropRate-0.5);
+  // log attack
+  if(pktCount%3===0){
+    if(attackType==='deauth')log(s.deauthSent+' #'+pktCount,'tx');
+    else if(attackType==='noise')log(s.noiseSent+' Ch'+Math.ceil(Math.random()*13),'tx');
+    else log(s.beaconSpam+' "FakeAP_'+Math.floor(Math.random()*999)+'"','tx');
+  }
+  if(defenseLevel>30&&pktCount%8===0)log(s.defenseUp+' → '+defenseLevel.toFixed(0)+'%','success');
+  // update stats
+  $('pktVal').textContent=pktCount;
+  $('dropVal').textContent=dropRate.toFixed(0)+'%';$('dropVal').style.color=dropRate>30?'#ef4444':dropRate>10?'#f59e0b':'#22c55e';
+  $('cliVal').textContent=clientCount;$('cliVal').style.color=clientCount<4?'#ef4444':'var(--accent)';
+  $('defVal').textContent=defenseLevel.toFixed(0)+'%';
+  $('defenseFill').style.width=defenseLevel+'%';
+  // update jam list
+  const list=$('jamList');if(list){const d=document.createElement('div');
+    const cls=attackType==='deauth'?'deauth':pktCount%2===0?'attack':'defense';
+    d.className='jam-item '+cls;
+    d.innerHTML='<span class="jam-type">'+attackType.toUpperCase()+'</span><span class="jam-data">Pkt #'+pktCount+' | Drop: '+dropRate.toFixed(0)+'% | Clients: '+clientCount+'</span><span class="jam-status" style="color:'+(defenseLevel>50?'#22c55e':'#f59e0b')+'">DEF '+defenseLevel.toFixed(0)+'%</span>';
+    list.insertBefore(d,list.firstChild);if(list.children.length>60)list.removeChild(list.lastChild);}
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);$('startBtn').disabled=true;$('stopBtn').disabled=false;pktCount=0;dropRate=0;clientCount=8;defenseLevel=0;particles=[];initJCanvas();log(LANG[currentLang].simStarted,'success');simInterval=setInterval(simTick,700);(function loop(){if(!simRunning)return;drawJam();simAnim=requestAnimationFrame(loop)})();}
+function stopSim(){simRunning=false;if(simInterval)clearInterval(simInterval);if(simAnim)cancelAnimationFrame(simAnim);setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;log(LANG[currentLang].simStopped,'info');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;
+  const btns=[{id:'atkDeauth',type:'deauth'},{id:'atkNoise',type:'noise'},{id:'atkBeacon',type:'beacon'}];
+  btns.forEach(b=>{const el=$(b.id);if(el)el.onclick=()=>{attackType=b.type;btns.forEach(x=>{const e=$(x.id);if(e)e.classList.toggle('active',x.type===b.type);});}});
+});

@@ -1449,3 +1449,99 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"Moon Bounce EME",subtitle:"🌙 Earth-Moon-Earth communication simulator",mainSection:"Moon Bounce EME",mainDesc:"Earth-Moon-Earth communication simulator",sectionA:"Theory",sectionB:"Controls",sectionC:"EME Display",theoryTitle:"Earth-Moon-Earth (EME)",theoryDesc:"EME uses the Moon as a passive reflector. Round-trip delay is ~2.56s. Path loss is extreme (~250 dB at 1296 MHz).",bandSelect:"Band",txPower:"TX Power (W)",msgLabel:"Message",transmit:"Transmit",listen:"Listen",roundTrip:"Round-trip Delay",pathLossLabel:"Path Loss (dB)",moonElevLabel:"Moon Elev (deg)",echoSnrLabel:"Echo SNR (dB)",txCountLabel:"Transmissions",txSent:"Signal transmitted",echoReceived:"Echo received from Moon",noEcho:"No echo - Moon below horizon"});
+Object.assign(LANG.fr, {title:"Rebond Lunaire EME",subtitle:"🌙 Simulateur de communication Terre-Lune-Terre",mainSection:"Rebond Lunaire EME",mainDesc:"Simulateur de communication Terre-Lune-Terre",sectionA:"Theorie",sectionB:"Controles",sectionC:"Affichage EME",theoryTitle:"Terre-Lune-Terre (EME)",theoryDesc:"L'EME utilise la Lune comme reflecteur passif. Le delai aller-retour est ~2.56s.",bandSelect:"Bande",txPower:"Puissance TX (W)",msgLabel:"Message",transmit:"Emettre",listen:"Ecouter",roundTrip:"Delai aller-retour",pathLossLabel:"Perte (dB)",moonElevLabel:"Elev Lune (deg)",echoSnrLabel:"RSB Echo (dB)",txCountLabel:"Transmissions",txSent:"Signal emis",echoReceived:"Echo recu de la Lune",noEcho:"Pas d'echo - Lune sous l'horizon"});
+Object.assign(LANG.ar, {title:"ارتداد القمر EME",subtitle:"🌙 محاكي اتصال الارض-القمر-الارض",mainSection:"ارتداد القمر EME",mainDesc:"محاكي اتصال الارض-القمر-الارض",sectionA:"النظرية",sectionB:"التحكم",sectionC:"عرض EME",theoryTitle:"الارض-القمر-الارض (EME)",theoryDesc:"يستخدم EME القمر كعاكس سلبي. التأخير ذهابا وإيابا حوالي 2.56 ثانية.",bandSelect:"النطاق",txPower:"قدرة الارسال (واط)",msgLabel:"الرسالة",transmit:"ارسال",listen:"استماع",roundTrip:"تأخير الرحلة",pathLossLabel:"خسارة المسار (dB)",moonElevLabel:"ارتفاع القمر (درجة)",echoSnrLabel:"SNR الصدى (dB)",txCountLabel:"الارسالات",txSent:"تم ارسال الاشارة",echoReceived:"تم استقبال الصدى من القمر",noEcho:"لا صدى - القمر تحت الافق"});
+setLanguage(currentLang);
+
+
+/* ═══════ MOON BOUNCE SIM ═══════ */
+let emeTx=0,emeAnim=null,moonAngle=0,signalPhase=0;
+const emeC=$('emeCanvas'),emeX=emeC?emeC.getContext('2d'):null;
+const BAND_LOSS={144:252,432:263,1296:271};
+
+function drawEME(){
+  if(!emeX)return;
+  const W=emeC.width,H=emeC.height;
+  emeX.fillStyle='#050510';emeX.fillRect(0,0,W,H);
+  // Stars
+  for(let i=0;i<50;i++){emeX.fillStyle='rgba(255,255,255,'+(0.2+Math.random()*0.6)+')';emeX.fillRect(Math.random()*W,Math.random()*H,1,1);}
+  // Earth
+  const ex=120,ey=H-60;
+  emeX.beginPath();emeX.arc(ex,ey,50,0,Math.PI*2);
+  const eg=emeX.createRadialGradient(ex-10,ey-10,5,ex,ey,50);
+  eg.addColorStop(0,'#4488cc');eg.addColorStop(0.7,'#226699');eg.addColorStop(1,'#113355');
+  emeX.fillStyle=eg;emeX.fill();
+  emeX.fillStyle='rgba(100,200,100,.3)';emeX.beginPath();emeX.ellipse(ex+10,ey-10,15,20,0.5,0,Math.PI*2);emeX.fill();
+  emeX.font='bold 11px Orbitron,monospace';emeX.fillStyle='#fff';emeX.fillText('Earth',ex-20,ey+65);
+  // Moon
+  const moonElev=40*Math.sin(moonAngle*Math.PI/180);
+  const mx=W-140,my=60+H*0.3*(1-moonElev/40);
+  emeX.beginPath();emeX.arc(mx,my,35,0,Math.PI*2);
+  const mg=emeX.createRadialGradient(mx-8,my-8,3,mx,my,35);
+  mg.addColorStop(0,'#e8e0d0');mg.addColorStop(0.8,'#b0a890');mg.addColorStop(1,'#807060');
+  emeX.fillStyle=mg;emeX.fill();
+  // Craters
+  for(let i=0;i<6;i++){emeX.beginPath();emeX.arc(mx-15+Math.sin(i*1.1)*20,my-10+Math.cos(i*1.7)*15,3+i%3,0,Math.PI*2);emeX.fillStyle='rgba(0,0,0,.15)';emeX.fill();}
+  emeX.font='bold 11px Orbitron,monospace';emeX.fillStyle='#fff';emeX.fillText('Moon',mx-18,my+50);
+  // Signal path
+  if(signalPhase>0){
+    const progress=Math.min(1,signalPhase);
+    // TX beam
+    const bx=ex+50+(mx-50-ex)*progress;const by=ey-50+(my+35-ey+50)*progress;
+    emeX.strokeStyle='rgba(255,200,50,.7)';emeX.lineWidth=2;emeX.setLineDash([6,4]);
+    emeX.beginPath();emeX.moveTo(ex+40,ey-30);emeX.lineTo(bx,by);emeX.stroke();
+    emeX.setLineDash([]);
+    // Pulse dot
+    emeX.beginPath();emeX.arc(bx,by,4,0,Math.PI*2);emeX.fillStyle='#ffcc33';emeX.fill();
+    if(signalPhase>1){
+      const rp=Math.min(1,signalPhase-1);
+      const rx=mx-35+(ex+50-mx+35)*rp;const ry=my+35+(ey-50-my-35)*rp;
+      emeX.strokeStyle='rgba(100,200,255,.5)';emeX.lineWidth=1.5;emeX.setLineDash([4,6]);
+      emeX.beginPath();emeX.moveTo(mx-30,my+20);emeX.lineTo(rx,ry);emeX.stroke();
+      emeX.setLineDash([]);
+      emeX.beginPath();emeX.arc(rx,ry,3,0,Math.PI*2);emeX.fillStyle='#66ccff';emeX.fill();
+    }
+    signalPhase+=0.02;
+    if(signalPhase>2.2)signalPhase=0;
+  }
+  // Moon elevation
+  moonAngle=(moonAngle+0.1)%360;
+  const me=$('moonElev');if(me)me.textContent=moonElev.toFixed(1);
+  emeAnim=requestAnimationFrame(drawEME);
+}
+
+function transmitEME(){
+  const band=$('bandSelect')?$('bandSelect').value:'1296';
+  const power=$('powerRange')?parseInt($('powerRange').value):500;
+  const msg=$('msgInput')?$('msgInput').value:'CQ';
+  const moonElev=40*Math.sin(moonAngle*Math.PI/180);
+  emeTx++;
+  const tc=$('txCount');if(tc)tc.textContent=emeTx;
+  const pl=BAND_LOSS[band]||271;
+  const plE=$('pathLoss');if(plE)plE.textContent=pl;
+  signalPhase=0.01;
+  log(LANG[currentLang].txSent+': '+msg,'tx');
+  if(moonElev>0){
+    const snr=-30+10*Math.log10(power/100)+moonElev*0.3+Math.random()*5;
+    const se=$('echoSnr');if(se)se.textContent=snr.toFixed(1);
+    setTimeout(()=>{
+      const ml=$('msgLog');
+      if(ml){const echo='['+new Date().toISOString().substr(11,8)+'] ECHO: '+msg+' (SNR: '+snr.toFixed(1)+' dB)';ml.textContent=echo+'\n'+ml.textContent.split('\n').slice(0,15).join('\n');}
+      log(LANG[currentLang].echoReceived+' SNR:'+snr.toFixed(1)+'dB','rx');
+    },2560);
+  } else {
+    log(LANG[currentLang].noEcho,'error');
+  }
+}
+
+(function initEME(){
+  const tb=$('txBtn');if(tb)tb.onclick=transmitEME;
+  const lb=$('listenBtn');if(lb)lb.onclick=function(){log('Listening on '+(($('bandSelect')?$('bandSelect').value:'1296')+' MHz...'),'info');};
+  const pr=$('powerRange');const pl=$('powerLabel');
+  if(pr&&pl)pr.addEventListener('input',()=>{pl.textContent=pr.value+' W';});
+  drawEME();setStatus(true);
+})();

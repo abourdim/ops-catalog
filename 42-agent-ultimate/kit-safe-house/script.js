@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Safe House', subtitle: '🏠 Safe house security operations',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Safe House', mainDesc: 'Sweep for bugs, secure comms, perimeter monitoring',
+    sectionA: 'Bug Sweeper', sectionB: 'Secure Comms', sectionC: 'Perimeter Watch',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🏠 Safe house security ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Planque Sécurisée', subtitle: '🏠 Sécurité de la planque',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🏠 Sécurité planque prête !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'المخبأ الآمن', subtitle: '🏠 أمن المخبأ الآمن',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🏠 أمن المخبأ جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,117 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initSafeHouse();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SAFE HOUSE SECURITY SIMULATION ═══════ */
+let shState = { active: false, bugs: [], commsSecure: false, perimeterBreaches: 0, zones: ['Front Door','Back Door','Window N','Window S','Roof','Basement'], zoneStatus: {}, uptime: 0, uptimeTimer: null, animFrame: null };
+
+function initSafeHouse() {
+  setStatus(false);
+  shState.zones.forEach(z => shState.zoneStatus[z] = 'clear');
+  drawShCanvas();
+}
+
+function shActivate() {
+  if (shState.active) { shState.active = false; setStatus(false); clearInterval(shState.uptimeTimer); if (shState.animFrame) cancelAnimationFrame(shState.animFrame); log('🏠 Safe house systems offline', 'info'); return; }
+  shState.active = true; shState.uptime = 0; setStatus(true); log('🏠 Safe house security active!', 'success');
+  shState.uptimeTimer = setInterval(() => {
+    shState.uptime++;
+    const s4 = $('shS4'); if (s4) s4.textContent = String(Math.floor(shState.uptime/60)).padStart(2,'0')+':'+String(shState.uptime%60).padStart(2,'0');
+    if (Math.random() < 0.03) shPerimeterEvent();
+  }, 1000);
+  animateSh();
+}
+
+function animateSh() { if (!shState.active) return; drawShCanvas(); shState.animFrame = requestAnimationFrame(animateSh); }
+
+function shPerimeterEvent() {
+  const zone = shState.zones[Math.floor(Math.random() * shState.zones.length)];
+  shState.zoneStatus[zone] = 'alert';
+  shState.perimeterBreaches++;
+  const s3 = $('shS3'); if (s3) s3.textContent = shState.perimeterBreaches;
+  log(`🚨 Motion detected: ${zone}!`, 'error'); playSound('error');
+  setTimeout(() => { shState.zoneStatus[zone] = 'clear'; }, 5000);
+}
+
+function shAction1() {
+  if (!shState.active) { log('Activate first!', 'error'); return; }
+  log('🔍 Sweeping for bugs...', 'info'); showToast('Sweeping...', 3000);
+  setTimeout(() => {
+    const found = Math.floor(Math.random() * 3);
+    shState.bugs = [];
+    for (let i = 0; i < found; i++) shState.bugs.push({ type: ['Audio','Video','GPS','RF'][Math.floor(Math.random()*4)], room: ['Kitchen','Bedroom','Office','Bathroom'][Math.floor(Math.random()*4)], freq: (400+Math.random()*600).toFixed(1) });
+    const s2 = $('shS2'); if (s2) s2.textContent = found;
+    log(found > 0 ? `🐛 ${found} bugs found! COMPROMISED!` : '✅ Clean sweep - no bugs detected', found > 0 ? 'error' : 'success');
+    playSound(found > 0 ? 'error' : 'success');
+  }, 3000);
+}
+
+function shEmergency() { shState.active = false; setStatus(false); clearInterval(shState.uptimeTimer); if (shState.animFrame) cancelAnimationFrame(shState.animFrame); log('🚨 EVACUATE! Safe house compromised!', 'error'); playSound('error'); }
+
+function shSecAAction() {
+  const el = $('shSecAContent');
+  if (shState.bugs.length === 0) { if (el) el.innerHTML = 'No bugs detected. Run sweep first.'; return; }
+  if (el) el.innerHTML = shState.bugs.map(b => `🐛 ${b.type} bug in ${b.room} @ ${b.freq} MHz`).join('<br>') + '<br><br>Recommendation: Neutralize all devices immediately!';
+}
+function shSecAReset() { shState.bugs = []; const s2 = $('shS2'); if (s2) s2.textContent = '0'; const el = $('shSecAContent'); if (el) el.innerHTML = ''; }
+function shSecBAction() {
+  shState.commsSecure = !shState.commsSecure;
+  const el = $('shSecBContent');
+  if (el) el.innerHTML = shState.commsSecure ? '🔒 Encrypted channel ACTIVE<br>Protocol: AES-256-GCM<br>Key Exchange: X25519<br>Status: SECURE' : '🔓 Standard communications<br>WARNING: May be monitored';
+  log(shState.commsSecure ? '🔒 Secure comms established' : '🔓 Secure comms disabled', shState.commsSecure ? 'success' : 'info');
+}
+function shSecBReset() { shState.commsSecure = false; const el = $('shSecBContent'); if (el) el.innerHTML = ''; }
+function shSecCAction() {
+  const el = $('shSecCContent');
+  if (el) el.innerHTML = shState.zones.map(z => {
+    const status = shState.zoneStatus[z];
+    return `${status === 'alert' ? '🔴' : '🟢'} ${z}: ${status.toUpperCase()}`;
+  }).join('<br>') + `<br><br>Total breaches: ${shState.perimeterBreaches}`;
+}
+function shSecCReset() {
+  shState.perimeterBreaches = 0; shState.zones.forEach(z => shState.zoneStatus[z] = 'clear');
+  const s3 = $('shS3'); if (s3) s3.textContent = '0';
+  const el = $('shSecCContent'); if (el) el.innerHTML = '';
+}
+
+function drawShCanvas() {
+  const canvas = $('shCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (!shState.active) return;
+  // House floor plan
+  ctx.strokeStyle = accent; ctx.lineWidth = 2;
+  ctx.strokeRect(w*0.2, h*0.15, w*0.6, h*0.7);
+  ctx.strokeRect(w*0.2, h*0.15, w*0.3, h*0.35); // room 1
+  ctx.strokeRect(w*0.5, h*0.15, w*0.3, h*0.35); // room 2
+  ctx.strokeRect(w*0.2, h*0.5, w*0.3, h*0.35); // room 3
+  ctx.strokeRect(w*0.5, h*0.5, w*0.3, h*0.35); // room 4
+  // Zone indicators
+  const positions = [[w*0.35,h*0.05],[w*0.35,h*0.92],[w*0.12,h*0.3],[w*0.12,h*0.65],[w*0.5,h*0.08],[w*0.5,h*0.92]];
+  shState.zones.forEach((z, i) => {
+    const [x, y] = positions[i] || [w*0.5, h*0.5];
+    const isAlert = shState.zoneStatus[z] === 'alert';
+    ctx.fillStyle = isAlert ? '#f44336' : '#4caf50';
+    ctx.beginPath(); ctx.arc(x, y, isAlert ? 6 + Math.sin(Date.now()/200)*2 : 4, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '8px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(z, x, y - 8);
+  });
+  // Bug indicators
+  shState.bugs.forEach((b, i) => {
+    const bx = w*0.3 + (i % 2) * w*0.3;
+    const by = h*0.3 + Math.floor(i/2) * h*0.3;
+    ctx.fillStyle = '#f44336'; ctx.font = '14px sans-serif'; ctx.fillText('🐛', bx, by);
+  });
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron'; ctx.textAlign = 'left';
+  ctx.fillText(`BUGS: ${shState.bugs.length} | BREACHES: ${shState.perimeterBreaches} | COMMS: ${shState.commsSecure ? 'SECURE' : 'OPEN'}`, 5, h - 5);
+}

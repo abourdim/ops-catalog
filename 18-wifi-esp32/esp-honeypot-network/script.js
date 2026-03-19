@@ -63,27 +63,40 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP Honeypot Network', subtitle: '🍯 deploy · 📡 monitor · 🔍 analyze',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Honeypot Network — Fake AP Deployment', mainDesc: 'Deploy multiple fake APs to study attacker behavior',
+    sectionA: 'Network Topology', sectionB: 'Attack Timeline', sectionC: 'Challenge',
+    probes: 'Probes', associations: 'Associations', attackers: 'Attackers',
+    deployNetwork: 'Deploy Network', stopNetwork: 'Shutdown', clearLog: 'Clear Log',
+    canvasHint: 'Live topology of honeypot APs and attacker connections',
+    timelineHint: 'Attack frequency over time per honeypot AP',
+    challenge1: 'Why deploy multiple honeypot APs instead of just one?',
+    challenge2: 'What information can honeypot APs collect from attackers?',
+    challenge3: 'How do you distinguish real users from attackers on honeypot APs?',
+    revealBtn: 'Reveal',
+    challengeReveal1: 'Multiple APs with different SSIDs attract different attacker profiles and cover more attack vectors.',
+    challengeReveal2: 'Probe requests reveal device history, MAC addresses identify hardware, association attempts show tools used.',
+    challengeReveal3: 'Attackers probe many SSIDs rapidly, use randomized MACs, attempt deauth attacks, and try to intercept traffic.',
+    networkStarted: 'Honeypot network deployed — all APs broadcasting',
+    networkStopped: 'Honeypot network shut down',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is a honeypot network?', faq_a1: 'A collection of fake WiFi APs designed to attract and study attackers. Each AP mimics a different network type.',
+    faq_q2: 'Is this real?', faq_a2: 'No, this is a simulation. No real WiFi networks are created. Everything runs in your browser.',
+    faq_q3: 'What is a probe request?', faq_a3: 'When a device searches for known WiFi networks, it sends probe requests revealing previously connected networks.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No real network connections are made.',
+    howto_1: 'Click Deploy Network to activate all honeypot APs.',
+    howto_2: 'Watch the attack log for probe requests and associations.',
+    howto_3: 'Open Network Topology to see the live canvas visualization.',
+    howto_4: 'Check Attack Timeline to see frequency patterns.',
+    wiki_hp_title: '🍯 Honeypot APs', wiki_hp: 'Fake access points that log all wireless activity to attract attackers.',
+    wiki_probe_title: '📡 Probe Requests', wiki_probe: 'Broadcast frames sent by devices searching for known networks.',
+    wiki_deauth_title: '⚡ Deauth Attacks', wiki_deauth: 'Deauthentication frames that disconnect users from legitimate APs.',
+    wiki_wids_title: '🛡️ WIDS', wiki_wids: 'Wireless Intrusion Detection System monitoring for rogue APs and attacks.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
@@ -100,27 +113,40 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Reseau Honeypot ESP', subtitle: '🍯 deployer · 📡 surveiller · 🔍 analyser',
+    disconnected: 'Deconnecte', connected: 'Connecte',
+    mainSection: 'Reseau Honeypot — Deploiement de faux AP', mainDesc: 'Deployer plusieurs faux AP pour etudier les attaquants',
+    sectionA: 'Topologie Reseau', sectionB: 'Chronologie des Attaques', sectionC: 'Defi',
+    probes: 'Sondes', associations: 'Associations', attackers: 'Attaquants',
+    deployNetwork: 'Deployer le Reseau', stopNetwork: 'Arreter', clearLog: 'Effacer',
+    canvasHint: 'Topologie en direct des AP honeypot et connexions attaquants',
+    timelineHint: 'Frequence des attaques par AP honeypot',
+    challenge1: 'Pourquoi deployer plusieurs AP honeypot au lieu d\'un seul ?',
+    challenge2: 'Quelles informations les AP honeypot collectent des attaquants ?',
+    challenge3: 'Comment distinguer les vrais utilisateurs des attaquants ?',
+    revealBtn: 'Reveler',
+    challengeReveal1: 'Plusieurs AP avec differents SSID attirent differents profils d\'attaquants.',
+    challengeReveal2: 'Les requetes probe revelent l\'historique des appareils, les MAC identifient le materiel.',
+    challengeReveal3: 'Les attaquants sondent rapidement plusieurs SSID et utilisent des MAC aleatoires.',
+    networkStarted: 'Reseau honeypot deploye — tous les AP diffusent',
+    networkStopped: 'Reseau honeypot arrete',
+    activityLog: 'Journal', eventsMsg: 'Evenements et messages',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce qu\'un reseau honeypot ?', faq_a1: 'Un ensemble de faux AP WiFi concus pour attirer et etudier les attaquants.',
+    faq_q2: 'Est-ce reel ?', faq_a2: 'Non, c\'est une simulation. Aucun vrai reseau WiFi n\'est cree.',
+    faq_q3: 'Qu\'est-ce qu\'une requete probe ?', faq_a3: 'Quand un appareil cherche des reseaux connus, il envoie des requetes probe revelant ses connexions passees.',
+    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Clique sur Deployer le Reseau pour activer tous les AP.',
+    howto_2: 'Observe le journal d\'attaques pour les sondes et associations.',
+    howto_3: 'Ouvre Topologie Reseau pour la visualisation canvas en direct.',
+    howto_4: 'Verifie la Chronologie des Attaques pour les tendances.',
+    wiki_hp_title: '🍯 AP Honeypot', wiki_hp: 'Faux points d\'acces qui enregistrent toute activite sans fil.',
+    wiki_probe_title: '📡 Requetes Probe', wiki_probe: 'Trames diffusees par les appareils cherchant des reseaux connus.',
+    wiki_deauth_title: '⚡ Attaques Deauth', wiki_deauth: 'Trames de desauthentification qui deconnectent les utilisateurs des AP legitimes.',
+    wiki_wids_title: '🛡️ WIDS', wiki_wids: 'Systeme de detection d\'intrusion sans fil surveillant les AP pirates.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
@@ -137,27 +163,40 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'شبكة مصائد ESP', subtitle: '🍯 انشر · 📡 راقب · 🔍 حلّل',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'شبكة المصائد — نشر نقاط وصول وهمية', mainDesc: 'نشر عدة نقاط وصول مزيفة لدراسة سلوك المهاجمين',
+    sectionA: 'طوبولوجيا الشبكة', sectionB: 'الجدول الزمني للهجمات', sectionC: 'تحدي',
+    probes: 'استكشافات', associations: 'ارتباطات', attackers: 'مهاجمون',
+    deployNetwork: 'نشر الشبكة', stopNetwork: 'إيقاف', clearLog: 'مسح السجل',
+    canvasHint: 'طوبولوجيا حية لنقاط الوصول المصائد واتصالات المهاجمين',
+    timelineHint: 'تكرار الهجمات عبر الزمن لكل نقطة وصول',
+    challenge1: 'لماذا ننشر عدة نقاط وصول مصائد بدلاً من واحدة؟',
+    challenge2: 'ما المعلومات التي تجمعها نقاط الوصول المصائد من المهاجمين؟',
+    challenge3: 'كيف تميز المستخدمين الحقيقيين من المهاجمين؟',
+    revealBtn: 'كشف',
+    challengeReveal1: 'عدة نقاط وصول بأسماء مختلفة تجذب ملفات تعريف مختلفة للمهاجمين.',
+    challengeReveal2: 'طلبات الاستكشاف تكشف تاريخ الأجهزة وعناوين MAC تحدد العتاد.',
+    challengeReveal3: 'المهاجمون يستكشفون عدة شبكات بسرعة ويستخدمون MAC عشوائية.',
+    networkStarted: 'شبكة المصائد منشورة — جميع نقاط الوصول تبث',
+    networkStopped: 'شبكة المصائد متوقفة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي شبكة المصائد؟', faq_a1: 'مجموعة من نقاط وصول WiFi مزيفة مصممة لجذب ودراسة المهاجمين.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، هذه محاكاة. لا يتم إنشاء شبكات WiFi حقيقية.',
+    faq_q3: 'ما هو طلب الاستكشاف؟', faq_a3: 'عندما يبحث جهاز عن شبكات معروفة يرسل طلبات استكشاف تكشف الشبكات السابقة.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
+    howto_1: 'اضغط نشر الشبكة لتفعيل جميع نقاط الوصول المصائد.',
+    howto_2: 'راقب سجل الهجمات لطلبات الاستكشاف والارتباطات.',
+    howto_3: 'افتح طوبولوجيا الشبكة للتصور الحي.',
+    howto_4: 'تفقد الجدول الزمني للهجمات لرؤية الأنماط.',
+    wiki_hp_title: '🍯 نقاط وصول مصائد', wiki_hp: 'نقاط وصول مزيفة تسجل كل النشاط اللاسلكي لجذب المهاجمين.',
+    wiki_probe_title: '📡 طلبات الاستكشاف', wiki_probe: 'إطارات بث ترسلها الأجهزة بحثاً عن شبكات معروفة.',
+    wiki_deauth_title: '⚡ هجمات إلغاء المصادقة', wiki_deauth: 'إطارات تفصل المستخدمين عن نقاط الوصول الشرعية.',
+    wiki_wids_title: '🛡️ WIDS', wiki_wids: 'نظام كشف التسلل اللاسلكي الذي يراقب نقاط الوصول المزيفة والهجمات.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
@@ -1443,9 +1482,265 @@ function init() {
   initAR();
   initAIChat();
 
+  // App-specific init
+  initApp();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ HONEYPOT NETWORK SIMULATION ═══════ */
+
+const HONEYPOT_APS = [
+  { id: 'ap1', ssid: 'HP-Office-5G', x: 0.2, y: 0.3, color: '#4a90d9' },
+  { id: 'ap2', ssid: 'FreeWiFi_Public', x: 0.5, y: 0.2, color: '#34c759' },
+  { id: 'ap3', ssid: 'NETGEAR-Guest', x: 0.8, y: 0.3, color: '#ff9500' },
+  { id: 'ap4', ssid: 'linksys_IoT', x: 0.5, y: 0.7, color: '#ff3b30' }
+];
+
+const ATTACKER_MACS = [
+  'AA:BB:CC:11:22:33','DE:AD:BE:EF:00:01','CA:FE:BA:BE:99:77',
+  '00:11:22:33:44:55','66:77:88:99:AA:BB','11:22:33:44:55:66',
+  'FA:KE:MA:C0:00:01','BA:D0:AC:E5:12:34','DE:VI:CE:00:FF:AA'
+];
+const ATTACKER_TOOLS = ['aircrack-ng','wifiphisher','fluxion','bettercap','mdk4','reaver'];
+const ATK_TYPES = ['probe','assoc','deauth','data_sniff'];
+
+let netRunning = false;
+let netTimer = null;
+let netStats = { probes: 0, assoc: 0, attackers: new Set() };
+let netCanvas, netCtx, tlCanvas, tlCtx;
+let netDots = [];
+let tlData = [];
+let tlStartTime = 0;
+
+function revealChallenge(idx) {
+  const el = $('answer' + idx);
+  if (!el) return;
+  el.classList.toggle('visible');
+  playSound('click');
+}
+
+function randItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function genNetEvent() {
+  const ap = randItem(HONEYPOT_APS);
+  const mac = randItem(ATTACKER_MACS);
+  const tool = randItem(ATTACKER_TOOLS);
+  const type = randItem(ATK_TYPES);
+  const time = new Date().toLocaleTimeString();
+  return { ap, mac, tool, type, time };
+}
+
+function addAtkEntry(evt) {
+  const logEl = $('atkLog');
+  if (!logEl) return;
+  const div = document.createElement('div');
+  div.className = 'atk-entry';
+  const typeLabel = evt.type === 'probe' ? 'PROBE' : evt.type === 'assoc' ? 'ASSOC' : evt.type === 'deauth' ? 'DEAUTH' : 'SNIFF';
+  div.innerHTML = `<span class="a-time">${evt.time}</span><span class="a-ap">${evt.ap.ssid}</span><span class="a-ip">${evt.mac}</span><span>${typeLabel}</span>`;
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function updateNetStats() {
+  const p = $('totalProbes'), a = $('totalAssoc'), at = $('totalAttackers');
+  if (p) p.textContent = netStats.probes;
+  if (a) a.textContent = netStats.assoc;
+  if (at) at.textContent = netStats.attackers.size;
+}
+
+function initNetCanvas() {
+  netCanvas = $('netCanvas');
+  if (!netCanvas) return;
+  netCtx = netCanvas.getContext('2d');
+  netCanvas.width = netCanvas.offsetWidth || 400;
+  netCanvas.height = 300;
+
+  function drawNet() {
+    const W = netCanvas.width, H = netCanvas.height;
+    netCtx.fillStyle = 'rgba(10,10,26,0.12)';
+    netCtx.fillRect(0, 0, W, H);
+
+    // Draw APs
+    HONEYPOT_APS.forEach(ap => {
+      const px = ap.x * W, py = ap.y * H;
+      netCtx.save();
+      netCtx.globalAlpha = netRunning ? 1 : 0.3;
+      netCtx.beginPath();
+      netCtx.arc(px, py, 14, 0, Math.PI * 2);
+      netCtx.fillStyle = ap.color;
+      netCtx.fill();
+      netCtx.strokeStyle = '#fff';
+      netCtx.lineWidth = 2;
+      netCtx.stroke();
+      // Broadcast rings
+      if (netRunning) {
+        const phase = (Date.now() / 1200) % 2;
+        netCtx.globalAlpha = Math.max(0, 0.3 - phase * 0.15);
+        netCtx.beginPath();
+        netCtx.arc(px, py, 18 + phase * 30, 0, Math.PI * 2);
+        netCtx.strokeStyle = ap.color;
+        netCtx.lineWidth = 1;
+        netCtx.stroke();
+      }
+      netCtx.globalAlpha = 1;
+      netCtx.fillStyle = '#ccc';
+      netCtx.font = '8px Orbitron, monospace';
+      netCtx.textAlign = 'center';
+      netCtx.fillText(ap.ssid, px, py + 24);
+      netCtx.restore();
+    });
+
+    // Draw attacker dots
+    for (let i = netDots.length - 1; i >= 0; i--) {
+      const d = netDots[i];
+      d.life -= 0.005;
+      if (d.life <= 0) { netDots.splice(i, 1); continue; }
+      netCtx.globalAlpha = d.life;
+      netCtx.beginPath();
+      netCtx.moveTo(d.x, d.y);
+      netCtx.lineTo(d.apX, d.apY);
+      netCtx.strokeStyle = d.isDeauth ? '#ff4444' : 'rgba(255,255,255,0.2)';
+      netCtx.lineWidth = d.isDeauth ? 2 : 1;
+      netCtx.stroke();
+      netCtx.beginPath();
+      netCtx.arc(d.x, d.y, 5, 0, Math.PI * 2);
+      netCtx.fillStyle = d.isDeauth ? '#ff4444' : '#ffcc00';
+      netCtx.fill();
+      if (d.life > 0.7) {
+        netCtx.fillStyle = '#aaa';
+        netCtx.font = '7px Orbitron, monospace';
+        netCtx.fillText(d.mac.slice(-5), d.x, d.y - 8);
+      }
+    }
+    netCtx.globalAlpha = 1;
+    requestAnimationFrame(drawNet);
+  }
+  requestAnimationFrame(drawNet);
+}
+
+function initTimelineCanvas() {
+  tlCanvas = $('timelineCanvas');
+  if (!tlCanvas) return;
+  tlCtx = tlCanvas.getContext('2d');
+  tlCanvas.width = tlCanvas.offsetWidth || 400;
+  tlCanvas.height = 200;
+
+  function drawTimeline() {
+    const W = tlCanvas.width, H = tlCanvas.height;
+    tlCtx.fillStyle = '#0a0a1a';
+    tlCtx.fillRect(0, 0, W, H);
+    if (tlData.length < 2) { requestAnimationFrame(drawTimeline); return; }
+
+    const maxVal = Math.max(...tlData.map(d => d.count), 1);
+    const barW = Math.max(2, W / Math.max(tlData.length, 1));
+
+    tlData.forEach((d, i) => {
+      const barH = (d.count / maxVal) * (H - 30);
+      const x = i * barW;
+      const ap = HONEYPOT_APS.find(a => a.ssid === d.ssid);
+      tlCtx.fillStyle = ap ? ap.color : '#888';
+      tlCtx.globalAlpha = 0.8;
+      tlCtx.fillRect(x, H - 20 - barH, barW - 1, barH);
+    });
+
+    tlCtx.globalAlpha = 1;
+    tlCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+    tlCtx.beginPath();
+    tlCtx.moveTo(0, H - 20);
+    tlCtx.lineTo(W, H - 20);
+    tlCtx.stroke();
+
+    tlCtx.fillStyle = '#666';
+    tlCtx.font = '8px Orbitron, monospace';
+    tlCtx.textAlign = 'center';
+    tlCtx.fillText('TIME →', W / 2, H - 4);
+
+    requestAnimationFrame(drawTimeline);
+  }
+  requestAnimationFrame(drawTimeline);
+}
+
+function addNetDot(evt) {
+  if (!netCanvas) return;
+  const W = netCanvas.width, H = netCanvas.height;
+  const apX = evt.ap.x * W, apY = evt.ap.y * H;
+  const angle = Math.random() * Math.PI * 2;
+  const dist = 60 + Math.random() * 80;
+  const x = apX + Math.cos(angle) * dist;
+  const y = apY + Math.sin(angle) * dist;
+  netDots.push({ x: Math.max(10, Math.min(W - 10, x)), y: Math.max(10, Math.min(H - 10, y)), apX, apY, life: 1, mac: evt.mac, isDeauth: evt.type === 'deauth' });
+}
+
+function doNetTick() {
+  if (!netRunning) return;
+  const evt = genNetEvent();
+
+  if (evt.type === 'probe') {
+    netStats.probes++;
+    log(`📡 PROBE ${evt.mac} → ${evt.ap.ssid}`, 'rx');
+  } else if (evt.type === 'assoc') {
+    netStats.assoc++;
+    log(`🔗 ASSOC ${evt.mac} → ${evt.ap.ssid} (${evt.tool})`, 'rx');
+  } else if (evt.type === 'deauth') {
+    log(`⚡ DEAUTH ${evt.mac} targeting ${evt.ap.ssid}`, 'error');
+  } else {
+    log(`👁️ SNIFF ${evt.mac} on ${evt.ap.ssid} (${evt.tool})`, 'info');
+  }
+
+  netStats.attackers.add(evt.mac);
+  addAtkEntry(evt);
+  addNetDot(evt);
+  updateNetStats();
+  tlData.push({ ssid: evt.ap.ssid, count: 1, ts: Date.now() });
+  if (tlData.length > 100) tlData.shift();
+  playSound('click');
+
+  const delay = 600 + Math.random() * 2500;
+  netTimer = setTimeout(doNetTick, delay);
+}
+
+function startNetwork() {
+  const s = LANG[currentLang];
+  netRunning = true;
+  tlStartTime = Date.now();
+  setStatus(true);
+  log(s.networkStarted, 'success');
+  showToast(s.networkStarted, 2000);
+  HONEYPOT_APS.forEach(ap => {
+    const el = $(ap.id + 'Status');
+    if (el) { el.textContent = 'Active'; el.className = 'ap-status active'; }
+  });
+  doNetTick();
+}
+
+function stopNetwork() {
+  netRunning = false;
+  if (netTimer) { clearTimeout(netTimer); netTimer = null; }
+  setStatus(false);
+  log(LANG[currentLang].networkStopped, 'info');
+}
+
+function clearNetLog() {
+  const el = $('atkLog');
+  if (el) el.innerHTML = '';
+  netStats = { probes: 0, assoc: 0, attackers: new Set() };
+  netDots = [];
+  tlData = [];
+  updateNetStats();
+}
+
+function initApp() {
+  initNetCanvas();
+  initTimelineCanvas();
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  const clearBtn = $('clearBtn');
+  if (startBtn) startBtn.onclick = startNetwork;
+  if (stopBtn) stopBtn.onclick = stopNetwork;
+  if (clearBtn) clearBtn.onclick = clearNetLog;
+}

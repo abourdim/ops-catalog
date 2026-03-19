@@ -63,115 +63,127 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Network Time Machine', subtitle: '📡 Capture · ⏪ Replay · 🔍 Analyze packets through time',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Packet Timeline', mainDesc: 'Replay network captures through time',
+    sectionA: 'Packet Table', sectionB: 'Network Topology',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is this app?', faq_a1: 'A network packet capture replayer. Simulates ESP32 capturing packets and lets you replay them through time.',
+    faq_q2: 'Is this real network data?', faq_a2: 'No. Simulated packets for educational purposes. No actual network sniffing.',
+    faq_q3: 'What protocols are simulated?', faq_a3: 'TCP, UDP, ICMP, HTTP, DNS, and ARP packets are simulated.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Click Capture to start generating simulated packets.',
+    howto_2: 'Use Play/Pause to replay the packet timeline.',
+    howto_3: 'Click packets on the timeline to inspect details.',
+    howto_4: 'Open Packet Table to filter by protocol.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Network Time Machine ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    capture: 'Capture', play: 'Play', timeControl: 'Time Control', speedLabel: 'Speed:', timeLabel: 'Time:',
+    packetDetail: 'Packet Details', filterLabel: 'Filter Packets',
+    col_time: 'Time', col_src: 'Source', col_dst: 'Dest', col_proto: 'Proto', col_len: 'Len', col_info: 'Info',
+    protoStats: 'Protocol Distribution', topoTitle: 'Live Topology Map', topoHint: 'Visualize discovered hosts',
+    refresh: 'Refresh', resetTopo: 'Reset', espStatus: 'ESP32 Status',
+    capturing: 'Capturing...', stopped: 'Stopped', pktCaptured: 'Packet captured',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Machine Temporelle Reseau', subtitle: '📡 Capturer · ⏪ Rejouer · 🔍 Analyser les paquets',
+    disconnected: 'Deconnecte', connected: 'Connecte',
+    mainSection: 'Chronologie Paquets', mainDesc: 'Rejouez les captures reseau dans le temps',
+    sectionA: 'Table des Paquets', sectionB: 'Topologie Reseau',
+    activityLog: 'Journal', eventsMsg: 'Evenements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'C\'est quoi ?', faq_a1: 'Un rejoueur de captures reseau simule. L\'ESP32 capture, le navigateur rejoue.',
+    faq_q2: 'Donnees reelles ?', faq_a2: 'Non. Paquets simules pour l\'education.',
+    faq_q3: 'Quels protocoles ?', faq_a3: 'TCP, UDP, ICMP, HTTP, DNS et ARP simules.',
+    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Cliquez Capturer pour generer des paquets.',
+    howto_2: 'Utilisez Lecture/Pause pour rejouer.',
+    howto_3: 'Cliquez sur un paquet pour l\'inspecter.',
+    howto_4: 'Ouvrez la table pour filtrer par protocole.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local-first.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '📡 Machine Temporelle Reseau prete !',
+    logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    capture: 'Capturer', play: 'Lecture', timeControl: 'Controle Temps', speedLabel: 'Vitesse:', timeLabel: 'Temps:',
+    packetDetail: 'Details Paquet', filterLabel: 'Filtrer Paquets',
+    col_time: 'Temps', col_src: 'Source', col_dst: 'Dest', col_proto: 'Proto', col_len: 'Taille', col_info: 'Info',
+    protoStats: 'Distribution Protocoles', topoTitle: 'Carte Topologie', topoHint: 'Visualiser les hotes',
+    refresh: 'Actualiser', resetTopo: 'Reset', espStatus: 'Statut ESP32',
+    capturing: 'Capture...', stopped: 'Arrete', pktCaptured: 'Paquet capture',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'آلة زمن الشبكة', subtitle: '📡 التقاط · ⏪ اعادة · 🔍 تحليل الحزم عبر الزمن',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    mainSection: 'الخط الزمني للحزم', mainDesc: 'اعد تشغيل التقاطات الشبكة عبر الزمن',
+    sectionA: 'جدول الحزم', sectionB: 'طوبولوجيا الشبكة',
+    activityLog: 'سجل النشاط', eventsMsg: 'الاحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    settings: '⚙️ الاعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
+    help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
+    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'محاكي اعادة تشغيل التقاط حزم الشبكة. ESP32 يلتقط، المتصفح يعيد التشغيل.',
+    faq_q2: 'هل هذه بيانات حقيقية؟', faq_a2: 'لا. حزم محاكاة لاغراض تعليمية.',
+    faq_q3: 'اي بروتوكولات؟', faq_a3: 'TCP، UDP، ICMP، HTTP، DNS و ARP محاكاة.',
+    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اضغط التقاط لتوليد حزم محاكاة.',
+    howto_2: 'استخدم تشغيل/ايقاف لاعادة التشغيل.',
+    howto_3: 'اضغط على حزمة لفحص تفاصيلها.',
+    howto_4: 'افتح جدول الحزم للتصفية حسب البروتوكول.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي اولا.',
+    working: 'جار…',
+    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'اندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_space: 'فضاء', t_jungle: 'ادغال', t_robot: 'روبوت',
+    ready: '📡 آلة زمن الشبكة جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    capture: 'التقاط', play: 'تشغيل', timeControl: 'التحكم بالوقت', speedLabel: 'السرعة:', timeLabel: 'الوقت:',
+    packetDetail: 'تفاصيل الحزمة', filterLabel: 'تصفية الحزم',
+    col_time: 'الوقت', col_src: 'المصدر', col_dst: 'الوجهة', col_proto: 'البروتوكول', col_len: 'الحجم', col_info: 'معلومات',
+    protoStats: 'توزيع البروتوكولات', topoTitle: 'خريطة الطوبولوجيا', topoHint: 'تصور المضيفين المكتشفين',
+    refresh: 'تحديث', resetTopo: 'اعادة', espStatus: 'حالة ESP32',
+    capturing: 'جار الالتقاط...', stopped: 'متوقف', pktCaptured: 'تم التقاط حزمة',
   }
 };
 
@@ -1449,3 +1461,263 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ NETWORK TIME MACHINE — SIMULATION ═══════ */
+(function() {
+  const PROTOS = ['TCP','UDP','ICMP','HTTP','DNS','ARP'];
+  const PROTO_COLORS = {TCP:'#4CAF50',UDP:'#2196F3',ICMP:'#FF9800',HTTP:'#9C27B0',DNS:'#00BCD4',ARP:'#FF5722'};
+  const HOSTS = ['192.168.1.1','192.168.1.10','192.168.1.25','192.168.1.50','10.0.0.1','10.0.0.5','172.16.0.1','8.8.8.8','1.1.1.1','93.184.216.34'];
+  const INFO_TEMPLATES = {
+    TCP:['SYN → SYN-ACK → ACK (3-way handshake)','PSH ACK Seq=1024 Ack=512 Win=65535','FIN ACK — connection closing','RST — connection reset','[Retransmission] Seq=2048'],
+    UDP:['Src Port: 5353 → Dst Port: 5353 (mDNS)','Src Port: 67 → Dst Port: 68 (DHCP)','NTP Query v4','SSDP M-SEARCH'],
+    ICMP:['Echo (ping) request id=0x1234 seq=1','Echo (ping) reply id=0x1234 seq=1','Destination unreachable','TTL exceeded in transit'],
+    HTTP:['GET /index.html HTTP/1.1','POST /api/data HTTP/1.1 (JSON)','HTTP/1.1 200 OK (text/html)','HTTP/1.1 404 Not Found'],
+    DNS:['Standard query A www.example.com','Standard query response CNAME → A 93.184.216.34','Standard query AAAA ipv6.example.com','Query PTR 1.168.192.in-addr.arpa'],
+    ARP:['Who has 192.168.1.1? Tell 192.168.1.10','192.168.1.1 is at aa:bb:cc:dd:ee:ff','Gratuitous ARP for 192.168.1.50']
+  };
+
+  let packets = [];
+  let capturing = false;
+  let captureInterval = null;
+  let playing = false;
+  let playTimer = null;
+  let playIndex = 0;
+  let speed = 1;
+  let uptimeStart = Date.now();
+  let uptimeInterval = null;
+  let activeFilter = 'all';
+
+  function randEl(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function randIP(){ return randEl(HOSTS); }
+  function randPort(){ return 1024 + Math.floor(Math.random()*64000); }
+
+  function genPacket(t){
+    const proto = randEl(PROTOS);
+    let src = randIP(), dst = randIP();
+    while(dst===src) dst = randIP();
+    return {
+      id: packets.length+1, time: t.toFixed(3), src, dst, proto,
+      srcPort: randPort(), dstPort: proto==='HTTP'?80:proto==='DNS'?53:randPort(),
+      len: 40 + Math.floor(Math.random()*1400),
+      info: randEl(INFO_TEMPLATES[proto]),
+      ttl: 32 + Math.floor(Math.random()*96),
+      flags: proto==='TCP'? ['SYN','ACK','PSH','FIN','RST'][Math.floor(Math.random()*5)] : ''
+    };
+  }
+
+  /* ── Timeline Canvas ── */
+  function drawTimeline(){
+    const c = $('timelineCanvas'); if(!c) return;
+    const ctx = c.getContext('2d');
+    const W = c.width, H = c.height;
+    ctx.clearRect(0,0,W,H);
+    // Grid
+    ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=1;
+    for(let x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    if(!packets.length) return;
+    const maxT = Math.max(...packets.map(p=>parseFloat(p.time)),1);
+    const protoY = {}; PROTOS.forEach((p,i) => protoY[p] = 25 + i * (H-50)/PROTOS.length);
+    // Draw packets
+    packets.forEach((pkt,i)=>{
+      const x = (parseFloat(pkt.time)/maxT)*(W-40)+20;
+      const y = protoY[pkt.proto] || H/2;
+      const col = PROTO_COLORS[pkt.proto]||'#fff';
+      ctx.beginPath();
+      ctx.arc(x, y, 4 + Math.min(pkt.len/400, 4), 0, Math.PI*2);
+      ctx.fillStyle = i < playIndex ? col : col+'44';
+      ctx.fill();
+      if(i === playIndex-1){ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();}
+    });
+    // Proto labels
+    ctx.font='11px monospace'; ctx.fillStyle='rgba(255,255,255,.5)';
+    PROTOS.forEach(p => { ctx.fillStyle=PROTO_COLORS[p]+'aa'; ctx.fillText(p, 4, protoY[p]+4); });
+    // Playhead
+    if(playIndex>0 && playIndex<=packets.length){
+      const px = (parseFloat(packets[playIndex-1].time)/maxT)*(W-40)+20;
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,H); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
+  /* ── Packet Table ── */
+  function updateTable(){
+    const tbody = $('packetTableBody'); if(!tbody) return;
+    tbody.innerHTML='';
+    const filtered = activeFilter==='all' ? packets : packets.filter(p=>p.proto===activeFilter);
+    filtered.slice(-60).forEach(pkt=>{
+      const tr = document.createElement('tr');
+      tr.style.cssText='border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer';
+      tr.onclick = ()=> showPacketDetail(pkt);
+      const col = PROTO_COLORS[pkt.proto]||'#fff';
+      tr.innerHTML=`<td style="padding:4px">${pkt.id}</td><td style="padding:4px">${pkt.time}s</td><td style="padding:4px;font-family:monospace;font-size:.65rem">${pkt.src}</td><td style="padding:4px;font-family:monospace;font-size:.65rem">${pkt.dst}</td><td style="padding:4px;text-align:center"><span style="color:${col};font-weight:bold">${pkt.proto}</span></td><td style="padding:4px;text-align:center">${pkt.len}</td><td style="padding:4px;font-size:.65rem;opacity:.7">${pkt.info}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ── Protocol Chart ── */
+  function drawProtoChart(){
+    const c = $('protoChart'); if(!c) return;
+    const ctx = c.getContext('2d');
+    const W=c.width, H=c.height;
+    ctx.clearRect(0,0,W,H);
+    if(!packets.length) return;
+    const counts = {};
+    packets.forEach(p=> counts[p.proto]=(counts[p.proto]||0)+1);
+    const total = packets.length;
+    const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    const barW = Math.min(50, (W-40)/entries.length - 8);
+    const maxC = Math.max(...entries.map(e=>e[1]));
+    entries.forEach(([proto,count],i)=>{
+      const x = 20 + i*(barW+8);
+      const barH = (count/maxC)*(H-50);
+      ctx.fillStyle = PROTO_COLORS[proto]||'#888';
+      ctx.fillRect(x, H-30-barH, barW, barH);
+      ctx.fillStyle='rgba(255,255,255,.6)';
+      ctx.font='10px monospace';
+      ctx.textAlign='center';
+      ctx.fillText(proto, x+barW/2, H-16);
+      ctx.fillText(count+' ('+(count/total*100).toFixed(0)+'%)', x+barW/2, H-34-barH);
+    });
+  }
+
+  /* ── Topology Canvas ── */
+  function drawTopology(){
+    const c = $('topoCanvas'); if(!c) return;
+    const ctx = c.getContext('2d');
+    const W=c.width, H=c.height;
+    ctx.clearRect(0,0,W,H);
+    const hosts = [...new Set(packets.flatMap(p=>[p.src,p.dst]))];
+    if(!hosts.length) return;
+    const positions = {};
+    const cx=W/2, cy=H/2, r=Math.min(W,H)/2-40;
+    hosts.forEach((h,i)=>{
+      const angle = (i/hosts.length)*Math.PI*2 - Math.PI/2;
+      positions[h] = { x: cx + r*Math.cos(angle), y: cy + r*Math.sin(angle) };
+    });
+    // Draw links
+    const links = {};
+    packets.forEach(p=>{
+      const k = [p.src,p.dst].sort().join('-');
+      links[k] = (links[k]||0)+1;
+    });
+    Object.entries(links).forEach(([k,count])=>{
+      const [a,b]=k.split('-');
+      if(!positions[a]||!positions[b]) return;
+      ctx.strokeStyle=`rgba(255,255,255,${Math.min(count/10,.4)})`;
+      ctx.lineWidth=Math.min(count/3,4);
+      ctx.beginPath(); ctx.moveTo(positions[a].x,positions[a].y); ctx.lineTo(positions[b].x,positions[b].y); ctx.stroke();
+    });
+    // Draw nodes
+    hosts.forEach(h=>{
+      const p=positions[h];
+      const pktCount = packets.filter(pk=>pk.src===h||pk.dst===h).length;
+      const sz = 6 + Math.min(pktCount/5,10);
+      ctx.beginPath(); ctx.arc(p.x,p.y,sz,0,Math.PI*2);
+      ctx.fillStyle = h.startsWith('192')?'#4CAF50':h.startsWith('10')?'#2196F3':'#FF9800';
+      ctx.fill(); ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,.7)'; ctx.font='9px monospace'; ctx.textAlign='center';
+      ctx.fillText(h, p.x, p.y + sz + 12);
+    });
+  }
+
+  function showPacketDetail(pkt){
+    const el = $('packetInfo'); if(!el) return;
+    el.textContent = `Packet #${pkt.id}\nTime:     ${pkt.time}s\nSource:   ${pkt.src}:${pkt.srcPort}\nDest:     ${pkt.dst}:${pkt.dstPort}\nProtocol: ${pkt.proto}\nLength:   ${pkt.len} bytes\nTTL:      ${pkt.ttl}\nFlags:    ${pkt.flags||'N/A'}\nInfo:     ${pkt.info}`;
+  }
+
+  function updateESPStatus(){
+    const cnt = $('espPktCount'); if(cnt) cnt.textContent = packets.length;
+    const buf = $('espBuffer'); if(buf) buf.textContent = Math.min(100,(packets.length/200*100)).toFixed(0)+'%';
+    const up = $('espUptime'); if(up){
+      const s = Math.floor((Date.now()-uptimeStart)/1000);
+      const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+      up.textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    }
+  }
+
+  /* ── Capture ── */
+  function startCapture(){
+    if(capturing) { stopCapture(); return; }
+    capturing = true;
+    const btn = $('captureBtn');
+    if(btn) btn.innerHTML = '<span class="btn-icon">⏹️</span> Stop';
+    setStatus(true);
+    let t = packets.length ? parseFloat(packets[packets.length-1].time)+0.1 : 0;
+    captureInterval = setInterval(()=>{
+      t += 0.05 + Math.random()*0.2;
+      const pkt = genPacket(t);
+      packets.push(pkt);
+      drawTimeline();
+      updateTable();
+      drawProtoChart();
+      updateESPStatus();
+      if(typeof log==='function') log('📡 '+pkt.proto+' '+pkt.src+' → '+pkt.dst+' ('+pkt.len+'B)','rx');
+      playSound('click');
+    }, 300 + Math.random()*400);
+  }
+
+  function stopCapture(){
+    capturing = false; clearInterval(captureInterval);
+    const btn = $('captureBtn');
+    if(btn) btn.innerHTML = '<span class="btn-icon">📡</span> Capture';
+  }
+
+  /* ── Playback ── */
+  function startPlay(){
+    if(playing||!packets.length) return;
+    playing=true; if(playIndex>=packets.length) playIndex=0;
+    playTimer = setInterval(()=>{
+      if(playIndex>=packets.length){stopPlay();return;}
+      showPacketDetail(packets[playIndex]);
+      playIndex++;
+      drawTimeline();
+      const sl=$('timeSlider'); if(sl) sl.value=((playIndex/packets.length)*100).toFixed(0);
+      const tv=$('timeVal'); if(tv && packets[playIndex-1]) tv.textContent=packets[playIndex-1].time+'s';
+    }, 200/speed);
+  }
+  function stopPlay(){ playing=false; clearInterval(playTimer); }
+  function rewind(){ stopPlay(); playIndex=0; drawTimeline(); }
+
+  function waitReady(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn); else fn(); }
+
+  waitReady(function(){
+    // Controls
+    const capBtn=$('captureBtn'); if(capBtn) capBtn.onclick=startCapture;
+    const playBtn=$('playBtn'); if(playBtn) playBtn.onclick=startPlay;
+    const pauseBtn=$('pauseBtn'); if(pauseBtn) pauseBtn.onclick=stopPlay;
+    const rewBtn=$('rewindBtn'); if(rewBtn) rewBtn.onclick=rewind;
+    const ffBtn=$('fastFwdBtn'); if(ffBtn) ffBtn.onclick=function(){ speed=Math.min(speed*2,8); const sv=$('speedVal'); if(sv) sv.textContent=speed+'x'; };
+    const clrBtn=$('clearPktsBtn'); if(clrBtn) clrBtn.onclick=function(){ stopCapture(); stopPlay(); packets=[]; playIndex=0; drawTimeline(); updateTable(); drawProtoChart(); drawTopology(); updateESPStatus(); };
+    // Speed slider
+    const ss=$('speedSlider'); if(ss) ss.addEventListener('input',function(){ speed=parseFloat(this.value); const sv=$('speedVal'); if(sv) sv.textContent=speed+'x'; });
+    // Time slider
+    const ts=$('timeSlider'); if(ts) ts.addEventListener('input',function(){ if(!packets.length) return; playIndex=Math.floor(this.value/100*packets.length); drawTimeline(); if(packets[playIndex]) showPacketDetail(packets[playIndex]); });
+    // Timeline click
+    const tc=$('timelineCanvas'); if(tc) tc.addEventListener('click',function(e){
+      if(!packets.length) return;
+      const rect=tc.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width;
+      const idx=Math.floor(x*packets.length);
+      if(packets[idx]){ playIndex=idx+1; showPacketDetail(packets[idx]); drawTimeline(); }
+    });
+    // Filters
+    document.querySelectorAll('.pkt-filter').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.pkt-filter').forEach(b=>b.classList.remove('active'));
+        this.classList.add('active');
+        activeFilter=this.dataset.proto;
+        updateTable();
+      });
+    });
+    // Topology
+    const topoRef=$('topoRefreshBtn'); if(topoRef) topoRef.onclick=drawTopology;
+    const topoRst=$('topoResetBtn'); if(topoRst) topoRst.onclick=function(){ packets=[]; drawTopology(); };
+    // ESP uptime
+    uptimeInterval=setInterval(updateESPStatus,1000);
+    // Init canvases
+    drawTimeline(); drawTopology();
+    setStatus(true);
+  });
+})();

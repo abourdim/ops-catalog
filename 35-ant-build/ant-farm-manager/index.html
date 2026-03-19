@@ -170,6 +170,13 @@
     .meter { height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:4px 0; }
     .meter-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .3s; }
     .compass { position:relative; width:200px; height:200px; margin:0 auto; }
+    .farm-status { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:10px; font-size:.7rem; font-weight:600; }
+    .farm-status.active { background:#33ff3322; color:#33ff33; border:1px solid #33ff3344; }
+    .farm-status.maintenance { background:#ffaa0022; color:#ffaa00; border:1px solid #ffaa0044; }
+    .farm-status.needs-repair { background:#ff444422; color:#ff4444; border:1px solid #ff444444; }
+    .rotator-dial { width:80px; height:80px; border:2px solid var(--border); border-radius:50%; position:relative; margin:0 auto; }
+    .rotator-needle { position:absolute; top:50%; left:50%; width:2px; height:35px; background:var(--success); transform-origin:bottom center; border-radius:1px; }
+    .tower-icon { font-size:1.2rem; }
   </style>
 </head>
 <body>
@@ -188,7 +195,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Antenna Farm Manager</h1><div class="subtitle" data-i18n="subtitle">🏗️ Relay switching and status monitoring</div></div>
+          <div><h1 data-i18n="title">Antenna Farm Manager</h1><div class="subtitle" data-i18n="subtitle">\u{1F3D7}\uFE0F Manage an antenna farm. Track antennas, rotators, feedlines</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -204,8 +211,8 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🏗️</span> <span data-i18n="mainSection">Antenna Selector</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Switch between antennas with relay control and scheduling</span> <span class="version-tag">v1.0</span></div>
+            <div class="card-title"><span class="icon">\u{1F3D7}\uFE0F</span> <span data-i18n="mainSection">Farm Overview</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Add, track and manage your antenna farm installations</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
         <div id="mainControls"></div>
@@ -215,19 +222,19 @@
 
       <!-- SECTION A -->
       <details class="collapsible">
-        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Antenna Status</span></summary>
+        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Antenna Inventory</span></summary>
         <div class="card"><div id="sectionAContent"></div><canvas id="canvasA" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION B -->
       <details class="collapsible">
-        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Switch Schedule</span></summary>
+        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Rotator Status</span></summary>
         <div class="card"><div id="sectionBContent"></div><canvas id="canvasB" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION C -->
       <details class="collapsible">
-        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Maintenance Log</span></summary>
+        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Feedline Map</span></summary>
         <div class="card"><div id="sectionCContent" style="font-size:.78rem; line-height:1.6;"></div></div>
       </details>
     </div>

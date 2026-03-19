@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Mission: Impossible', subtitle: '💣 Self-destructing briefing system',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Mission: Impossible', mainDesc: 'Timer, identity verification, tamper detection',
+    sectionA: 'Briefing Decoder', sectionB: 'Identity Verify', sectionC: 'Tamper Detection',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '💣 Mission briefing system ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Mission: Impossible', subtitle: '💣 Briefing auto-destructible',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '💣 Système de briefing prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مهمة مستحيلة', subtitle: '💣 نظام إحاطة ذاتي التدمير',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '💣 نظام الإحاطة جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,101 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initMissionImpossible();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ MISSION IMPOSSIBLE SIMULATION ═══════ */
+let miState = { active: false, countdown: 30, timer: null, verified: false, tampered: false, message: '', animFrame: null };
+const MI_MISSIONS = [
+  'Infiltrate the embassy and retrieve the cipher key.',
+  'Extract the double agent before sunrise.',
+  'Intercept the satellite transmission at coordinates 47.3N 8.5E.',
+  'Disable the surveillance network in sector 7.',
+  'Deliver the package to the safe house undetected.',
+];
+
+function initMissionImpossible() { setStatus(false); drawMiCanvas(); }
+
+function miActivate() {
+  if (miState.active) { miState.active = false; setStatus(false); clearInterval(miState.timer); if (miState.animFrame) cancelAnimationFrame(miState.animFrame); log('💣 Briefing cancelled', 'info'); return; }
+  miState.active = true; miState.countdown = 30; miState.verified = false; miState.tampered = false;
+  miState.message = MI_MISSIONS[Math.floor(Math.random() * MI_MISSIONS.length)];
+  setStatus(true); log('💣 MISSION BRIEFING INITIATED — This message will self-destruct!', 'success');
+  const s1 = $('miS1'); if (s1) s1.textContent = 'ACTIVE';
+  miState.timer = setInterval(() => {
+    miState.countdown--;
+    const s4 = $('miS4'); if (s4) s4.textContent = miState.countdown + 's';
+    const bar = $('miBar'); if (bar) bar.style.width = (miState.countdown / 30 * 100) + '%';
+    if (miState.countdown <= 0) { miSelfDestruct(); }
+    if (miState.countdown <= 5) playSound('error');
+  }, 1000);
+  animateMi();
+}
+
+function animateMi() { if (!miState.active) return; drawMiCanvas(); miState.animFrame = requestAnimationFrame(animateMi); }
+
+function miSelfDestruct() {
+  clearInterval(miState.timer); miState.active = false;
+  setStatus(false);
+  if (miState.animFrame) cancelAnimationFrame(miState.animFrame);
+  const s1 = $('miS1'); if (s1) s1.textContent = 'DESTROYED';
+  miState.message = '';
+  log('💥 MESSAGE SELF-DESTRUCTED!', 'error'); playSound('error');
+  const canvas = $('miCanvas');
+  if (canvas) { const ctx = canvas.getContext('2d'); ctx.fillStyle = '#f44336'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#fff'; ctx.font = 'bold 16px Orbitron'; ctx.textAlign = 'center'; ctx.fillText('SELF-DESTRUCTED', canvas.width/2, canvas.height/2); }
+}
+
+function miAction1() {
+  if (!miState.active) { log('Activate briefing first!', 'error'); return; }
+  miState.verified = true;
+  const s2 = $('miS2'); if (s2) s2.textContent = 'VERIFIED';
+  log('🔐 Identity verified — Briefing decoded!', 'success'); playSound('success');
+}
+
+function miEmergency() { miSelfDestruct(); }
+
+function miSecAAction() {
+  const el = $('miSecAContent');
+  if (!miState.active) { if (el) el.innerHTML = 'No active briefing.'; return; }
+  if (!miState.verified) { if (el) el.innerHTML = '🔒 IDENTITY NOT VERIFIED. Cannot decode briefing.'; return; }
+  if (el) el.innerHTML = `<div style="border:1px solid var(--accent);padding:12px;border-radius:8px;font-family:monospace;font-size:13px">📋 <b>CLASSIFIED BRIEFING</b><br><br>${miState.message}<br><br>⏱️ Time remaining: ${miState.countdown}s<br>⚠️ This message will self-destruct.</div>`;
+}
+function miSecAReset() { const el = $('miSecAContent'); if (el) el.innerHTML = ''; }
+function miSecBAction() { miAction1(); }
+function miSecBReset() { miState.verified = false; const s2 = $('miS2'); if (s2) s2.textContent = '--'; log('🔄 Verification reset', 'info'); }
+function miSecCAction() {
+  const tampered = Math.random() > 0.7;
+  const s3 = $('miS3'); if (s3) s3.textContent = tampered ? '⚠️ TAMPER' : '✅ CLEAR';
+  log(tampered ? '⚠️ Tamper detected! Briefing compromised!' : '✅ No tampering detected', tampered ? 'error' : 'success');
+  if (tampered) { miState.tampered = true; playSound('error'); }
+}
+function miSecCReset() { miState.tampered = false; const s3 = $('miS3'); if (s3) s3.textContent = '--'; }
+
+function drawMiCanvas() {
+  const canvas = $('miCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (!miState.active) return;
+  // Countdown display
+  const urgency = miState.countdown / 30;
+  ctx.fillStyle = urgency < 0.2 ? '#f44336' : urgency < 0.5 ? '#ff9800' : accent;
+  ctx.font = 'bold 40px Orbitron, monospace'; ctx.textAlign = 'center';
+  ctx.fillText(String(miState.countdown).padStart(2, '0'), w/2, h/2 + 15);
+  ctx.font = '10px Orbitron'; ctx.fillText('SECONDS TO SELF-DESTRUCT', w/2, h/2 + 35);
+  // Pulsing ring
+  const t = Date.now() / 1000;
+  const pulse = Math.sin(t * (miState.countdown < 10 ? 8 : 3)) * 0.5 + 0.5;
+  ctx.strokeStyle = urgency < 0.2 ? `rgba(244,67,54,${pulse})` : accent;
+  ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(w/2, h/2, 50 + pulse * 5, 0, Math.PI * 2); ctx.stroke();
+  // Status
+  ctx.fillStyle = '#fff'; ctx.font = '10px Orbitron'; ctx.textAlign = 'left';
+  ctx.fillText(miState.verified ? '🔐 VERIFIED' : '🔒 UNVERIFIED', 5, 15);
+}

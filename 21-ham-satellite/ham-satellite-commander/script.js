@@ -1449,3 +1449,131 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"Satellite Commander",subtitle:"🎯 Full satellite ground station dashboard",mainSection:"Satellite Commander",mainDesc:"Full satellite ground station dashboard",sectionA:"Satellite Tracking",sectionB:"Rotator & Radio",sectionC:"Ground Station",selectSat:"Select Satellite",azLabel:"Azimuth",elLabel:"Elevation",uplinkLabel:"Uplink",downlinkLabel:"Downlink",dopplerCorr:"Doppler Corrected",autoTrack:"Auto Track",stop:"Stop",passInfo:"Pass Info",aosLabel:"AOS:",losLabel:"LOS:",maxElLabel:"Max El:",stationStatus:"Station Status",rotatorLabel:"Rotator:",radioLabel:"Radio:",tncLabel:"TNC:",simStarted:"Auto-tracking started",simStopped:"Tracking stopped",satChanged:"Now tracking",passStarted:"Pass started",passEnded:"Pass ended"});
+Object.assign(LANG.fr, {title:"Commandant Satellite",subtitle:"🎯 Tableau de bord station sol satellite",mainSection:"Commandant Satellite",mainDesc:"Tableau de bord complet station sol",sectionA:"Suivi Satellite",sectionB:"Rotateur & Radio",sectionC:"Station Sol",selectSat:"Choisir le Satellite",azLabel:"Azimut",elLabel:"Elevation",uplinkLabel:"Montee",downlinkLabel:"Descente",dopplerCorr:"Corrige Doppler",autoTrack:"Suivi Auto",stop:"Arreter",passInfo:"Info Passage",aosLabel:"AOS:",losLabel:"LOS:",maxElLabel:"El Max:",stationStatus:"Etat Station",rotatorLabel:"Rotateur:",radioLabel:"Radio:",tncLabel:"TNC:",simStarted:"Suivi automatique demarre",simStopped:"Suivi arrete",satChanged:"Suivi de",passStarted:"Passage demarre",passEnded:"Passage termine"});
+Object.assign(LANG.ar, {title:"قائد الاقمار",subtitle:"🎯 لوحة تحكم محطة ارضية كاملة",mainSection:"قائد الاقمار",mainDesc:"لوحة تحكم محطة ارضية كاملة",sectionA:"تتبع الاقمار",sectionB:"الدوار والراديو",sectionC:"المحطة الارضية",selectSat:"اختيار القمر",azLabel:"السمت",elLabel:"الارتفاع",uplinkLabel:"الصعود",downlinkLabel:"النزول",dopplerCorr:"مصحح دوبلر",autoTrack:"تتبع تلقائي",stop:"ايقاف",passInfo:"معلومات المرور",aosLabel:"AOS:",losLabel:"LOS:",maxElLabel:"اقصى ارتفاع:",stationStatus:"حالة المحطة",rotatorLabel:"الدوار:",radioLabel:"الراديو:",tncLabel:"TNC:",simStarted:"بدا التتبع التلقائي",simStopped:"توقف التتبع",satChanged:"يتم تتبع",passStarted:"بدأ المرور",passEnded:"انتهى المرور"});
+setLanguage(currentLang);
+
+
+/* ═══════ SATELLITE COMMANDER SIM ═══════ */
+const SAT_DB={
+  iss:{name:'ISS (ZARYA)',up:'145.990',down:'437.800',inc:51.6},
+  noaa18:{name:'NOAA-18',up:'--',down:'137.912',inc:99.0},
+  ao91:{name:'AO-91',up:'435.250',down:'145.960',inc:98.2},
+  so50:{name:'SO-50',up:'145.850',down:'436.795',inc:64.6},
+  meteor:{name:'Meteor-M2',up:'--',down:'137.100',inc:98.7}
+};
+let cmdRunning=false,cmdAnim=null,cmdAngle=0,cmdSat='noaa18';
+const trkC=$('trackCanvas'),trkX=trkC?trkC.getContext('2d'):null;
+const spcC=$('specCanvas'),spcX=spcC?spcC.getContext('2d'):null;
+
+function drawRotGauge(id,value,max,label){
+  const c=$(id);if(!c)return;const ctx=c.getContext('2d');
+  const W=c.width,H=c.height,cx=W/2,cy=H/2,r=W/2-8;
+  ctx.clearRect(0,0,W,H);
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=6;ctx.stroke();
+  const angle=(value/max)*Math.PI*2-Math.PI/2;
+  ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,angle);ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.lineWidth=6;ctx.lineCap='round';ctx.stroke();
+  // Needle
+  const nx=cx+Math.cos(angle)*r*0.7,ny=cy+Math.sin(angle)*r*0.7;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(nx,ny);ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=2;ctx.stroke();
+}
+
+function drawTrackMap(){
+  if(!trkX)return;
+  const W=trkC.width,H=trkC.height;
+  trkX.fillStyle='#060d1a';trkX.fillRect(0,0,W,H);
+  // Grid
+  trkX.strokeStyle='rgba(255,255,255,.05)';trkX.lineWidth=0.5;
+  for(let i=0;i<18;i++){const x=i*W/18;trkX.beginPath();trkX.moveTo(x,0);trkX.lineTo(x,H);trkX.stroke();}
+  for(let i=0;i<9;i++){const y=i*H/9;trkX.beginPath();trkX.moveTo(0,y);trkX.lineTo(W,y);trkX.stroke();}
+  // Simplified landmasses
+  trkX.fillStyle='rgba(80,160,80,.12)';trkX.strokeStyle='rgba(80,160,80,.25)';trkX.lineWidth=1;
+  [[0.2,0.3,0.1,0.12],[0.28,0.6,0.04,0.15],[0.52,0.35,0.04,0.1],[0.53,0.58,0.05,0.12],[0.7,0.3,0.12,0.12],[0.82,0.65,0.04,0.06]].forEach(([cx,cy,rx,ry])=>{
+    trkX.beginPath();trkX.ellipse(cx*W,cy*H,rx*W,ry*H,0,0,Math.PI*2);trkX.fill();trkX.stroke();
+  });
+  // Draw all satellites
+  const colors=['#ff4444','#44ff44','#4488ff','#ffaa00','#ff44ff'];
+  let i=0;
+  for(const key in SAT_DB){
+    const s=SAT_DB[key];
+    const offset=i*72;
+    const angle=(cmdAngle+offset)%360;
+    const lat=s.inc*Math.sin(angle*Math.PI/180);
+    const lon=(angle*4)%360-180;
+    const px=((lon+180)/360)*W,py=((90-lat)/180)*H;
+    const isActive=key===cmdSat;
+    trkX.beginPath();trkX.arc(px,py,isActive?6:3,0,Math.PI*2);trkX.fillStyle=colors[i%5];trkX.fill();
+    if(isActive){trkX.beginPath();trkX.arc(px,py,10,0,Math.PI*2);trkX.strokeStyle=colors[i%5];trkX.lineWidth=1.5;trkX.stroke();
+      trkX.font='bold 9px Orbitron,monospace';trkX.fillStyle='#fff';trkX.fillText(s.name,px+12,py+3);}
+    i++;
+  }
+}
+
+function updateCmd(){
+  if(!cmdRunning)return;
+  cmdAngle=(cmdAngle+0.3)%360;
+  const s=SAT_DB[cmdSat];
+  const lat=s.inc*Math.sin(cmdAngle*Math.PI/180);
+  const lon=(cmdAngle*4)%360-180;
+  const elev=Math.max(0,40-Math.abs(lat-36)*2+Math.random()*3);
+  const az=(cmdAngle*2+30)%360;
+  const doppler=((cmdAngle%180)-90)*25;
+
+  drawRotGauge('azGauge',az,360);
+  drawRotGauge('elGauge',elev,90);
+  const avE=$('azVal');if(avE)avE.textContent=az.toFixed(0)+'°';
+  const evE=$('elVal');if(evE)evE.textContent=elev.toFixed(1)+'°';
+
+  const upF=$('uplinkFreq');if(upF)upF.textContent=s.up==='--'?'--':(parseFloat(s.up)+doppler/1e6).toFixed(6)+' MHz';
+  const dnF=$('downlinkFreq');if(dnF)dnF.textContent=(parseFloat(s.down)-doppler/1e6).toFixed(6)+' MHz';
+
+  const rs=$('rotStatus');if(rs)rs.textContent=elev>2?'TRACKING':'PARKING';
+  const rds=$('radioStatus');if(rds)rds.textContent=elev>2?'RX ACTIVE':'STANDBY';
+  const me=$('maxElVal');if(me)me.textContent=elev.toFixed(0)+' deg';
+
+  drawTrackMap();
+
+  // Spectrum
+  if(spcX){
+    spcX.fillStyle='rgba(0,0,0,0.3)';spcX.fillRect(0,0,spcC.width,spcC.height);
+    spcX.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+    spcX.lineWidth=1;spcX.beginPath();
+    for(let x=0;x<spcC.width;x++){
+      let v=5+Math.random()*8;
+      if(elev>2&&Math.abs(x-spcC.width/2)<30)v+=20+Math.random()*30;
+      const y=spcC.height-(v/80)*spcC.height;
+      x===0?spcX.moveTo(x,y):spcX.lineTo(x,y);
+    }
+    spcX.stroke();
+  }
+
+  // Sat list update
+  const sl=$('satList');
+  if(sl&&cmdAngle%10<0.5){
+    let html='';
+    for(const key in SAT_DB){const st=SAT_DB[key];const a=(cmdAngle+Object.keys(SAT_DB).indexOf(key)*72)%360;const la=(st.inc*Math.sin(a*Math.PI/180)).toFixed(1);const lo=((a*4)%360-180).toFixed(1);
+      html+='<div class="sat-entry"><span>'+(key===cmdSat?'> ':'')+st.name+'</span><span>'+la+'° / '+lo+'°</span></div>';}
+    sl.innerHTML=html;
+  }
+
+  cmdAnim=requestAnimationFrame(updateCmd);
+}
+
+function startCmd(){if(cmdRunning)return;cmdRunning=true;log(LANG[currentLang].simStarted,'success');setStatus(true);updateCmd();}
+function stopCmd(){cmdRunning=false;if(cmdAnim)cancelAnimationFrame(cmdAnim);log(LANG[currentLang].simStopped,'info');setStatus(false);
+  const rs=$('rotStatus');if(rs)rs.textContent='IDLE';const rds=$('radioStatus');if(rds)rds.textContent='STANDBY';}
+
+(function initCommander(){
+  const tb=$('trackBtn'),sb=$('stopBtn');
+  if(tb)tb.onclick=startCmd;if(sb)sb.onclick=stopCmd;
+  const ss=$('satSelect');
+  if(ss)ss.addEventListener('change',()=>{cmdSat=ss.value;const s=SAT_DB[cmdSat];
+    log((LANG[currentLang].satChanged||'Now tracking')+' '+s.name,'info');
+    const cl=$('cmdLog');if(cl){cl.textContent='['+new Date().toISOString().substr(11,8)+'] TRK > '+s.name+' selected\n'+cl.textContent.split('\n').slice(0,15).join('\n');}
+  });
+  drawTrackMap();
+})();

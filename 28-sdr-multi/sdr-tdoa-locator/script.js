@@ -63,22 +63,29 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR TDOA Locator', subtitle: '📍 Time Difference of Arrival — triangulate signal sources',
+    disconnected: 'Disconnected', connected: 'Locating',
+    mainSection: 'TDOA Triangulation', mainDesc: 'Triangulate signal sources using time difference of arrival',
+    sectionA: 'TDOA Results', sectionB: 'Theory & Notes',
+    noiseLabel: 'Noise Level', numRxLabel: 'Receivers',
+    locateBtn: '📍 Locate Signal', newTxBtn: '🎲 New TX Position', resetBtn: '↺ Reset',
+    tdoaTheory: 'TDOA measures the time difference a signal takes to reach multiple receivers. The intersection of hyperbolas defined by time differences gives the transmitter location.',
+    theory1: 'TDOA uses time differences, not absolute times — no clock sync needed at TX',
+    theory2: 'Each receiver pair defines a hyperbola of possible TX locations',
+    theory3: '3+ receivers needed for 2D location, 4+ for 3D',
+    theory4: 'Precision depends on receiver geometry and synchronization accuracy',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is TDOA?', faq_a1: 'Time Difference of Arrival uses multiple receivers to locate a signal source by measuring arrival time differences.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Click Locate Signal to triangulate the hidden transmitter.',
+    howto_2: 'Watch hyperbolas form from receiver time differences.',
+    howto_3: 'Adjust noise and receiver count to see precision changes.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
@@ -88,7 +95,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📍 TDOA Locator ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,22 +107,29 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Localisateur TDOA SDR', subtitle: '📍 Différence de temps d\'arrivée — trianguler les sources de signaux',
+    disconnected: 'Déconnecté', connected: 'Localisation',
+    mainSection: 'Triangulation TDOA', mainDesc: 'Trianguler les sources de signaux par différence de temps d\'arrivée',
+    sectionA: 'Résultats TDOA', sectionB: 'Théorie & Notes',
+    noiseLabel: 'Niveau de bruit', numRxLabel: 'Récepteurs',
+    locateBtn: '📍 Localiser le signal', newTxBtn: '🎲 Nouvelle position TX', resetBtn: '↺ Réinitialiser',
+    tdoaTheory: 'Le TDOA mesure la différence de temps d\'arrivée d\'un signal à plusieurs récepteurs.',
+    theory1: 'Le TDOA utilise des différences de temps, pas des temps absolus',
+    theory2: 'Chaque paire de récepteurs définit une hyperbole de positions possibles',
+    theory3: '3+ récepteurs nécessaires pour la localisation 2D, 4+ pour la 3D',
+    theory4: 'La précision dépend de la géométrie des récepteurs et de la synchronisation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le TDOA ?', faq_a1: 'Le TDOA utilise plusieurs récepteurs pour localiser une source de signal en mesurant les différences de temps d\'arrivée.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Clique sur Localiser pour trianguler l\'émetteur caché.',
+    howto_2: 'Observe les hyperboles formées par les différences de temps.',
+    howto_3: 'Ajuste le bruit et le nombre de récepteurs.',
     howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
     wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
@@ -125,7 +139,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📍 Localisateur TDOA prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,22 +151,29 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'محدد موقع TDOA SDR', subtitle: '📍 فرق زمن الوصول — تثليث مصادر الإشارات',
+    disconnected: 'غير متصل', connected: 'تحديد الموقع',
+    mainSection: 'تثليث TDOA', mainDesc: 'تثليث مصادر الإشارات باستخدام فرق زمن الوصول',
+    sectionA: 'نتائج TDOA', sectionB: 'النظرية والملاحظات',
+    noiseLabel: 'مستوى الضوضاء', numRxLabel: 'المستقبلات',
+    locateBtn: '📍 تحديد الإشارة', newTxBtn: '🎲 موقع TX جديد', resetBtn: '↺ إعادة',
+    tdoaTheory: 'يقيس TDOA فرق الزمن الذي تستغرقه الإشارة للوصول إلى عدة مستقبلات. تقاطع القطوع الزائدة يعطي موقع المرسل.',
+    theory1: 'TDOA يستخدم فروق الزمن لا الأزمنة المطلقة',
+    theory2: 'كل زوج مستقبلات يحدد قطعًا زائدًا من المواقع المحتملة',
+    theory3: '3+ مستقبلات للتحديد ثنائي البعد، 4+ للثلاثي',
+    theory4: 'الدقة تعتمد على هندسة المستقبلات ودقة التزامن',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو TDOA؟', faq_a1: 'فرق زمن الوصول يستخدم عدة مستقبلات لتحديد موقع مصدر الإشارة بقياس فروق أزمنة الوصول.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'انقر تحديد الإشارة لتثليث المرسل المخفي.',
+    howto_2: 'شاهد القطوع الزائدة تتشكل من فروق الأزمنة.',
+    howto_3: 'اضبط الضوضاء وعدد المستقبلات لرؤية تغيرات الدقة.',
     howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
     wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
@@ -162,7 +183,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📍 محدد موقع TDOA جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1470,195 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ TDOA LOCATOR SIMULATION ═══════ */
+const C_LIGHT = 299792458;
+const RX_COLORS = ['#4af','#f84','#4f4','#fc4','#a4f','#f4a'];
+let tdoaRx = [];
+let tdoaTx = { x: 0, y: 0 };
+let tdoaEstimate = null;
+let tdoaHyperbolas = [];
+
+function initReceivers(count) {
+  const c = $('tdoaMap'); if (!c) return;
+  const w = c.width, h = c.height;
+  tdoaRx = [];
+  const margin = 60;
+  for (let i = 0; i < count; i++) {
+    const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
+    tdoaRx.push({
+      x: w / 2 + Math.cos(angle) * (w / 2 - margin),
+      y: h / 2 + Math.sin(angle) * (h / 2 - margin),
+      label: 'RX-' + (i + 1), color: RX_COLORS[i % RX_COLORS.length]
+    });
+  }
+}
+
+function randomTx() {
+  const c = $('tdoaMap'); if (!c) return;
+  tdoaTx = { x: 80 + Math.random() * (c.width - 160), y: 80 + Math.random() * (c.height - 160) };
+  tdoaEstimate = null;
+  tdoaHyperbolas = [];
+  drawTdoaMap();
+  log('🎲 New TX position generated (hidden)', 'info');
+}
+
+function drawTdoaMap() {
+  const c = $('tdoaMap'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,.04)'; ctx.lineWidth = 0.5;
+  for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+  for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+  // Hyperbolas
+  tdoaHyperbolas.forEach(hyp => {
+    ctx.strokeStyle = hyp.color; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let t = 0; t < hyp.points.length; t++) {
+      const p = hyp.points[t];
+      t === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  });
+  // Receivers
+  tdoaRx.forEach(r => {
+    ctx.beginPath(); ctx.arc(r.x, r.y, 10, 0, Math.PI * 2);
+    ctx.fillStyle = r.color; ctx.globalAlpha = 0.25; ctx.fill();
+    ctx.globalAlpha = 1; ctx.strokeStyle = r.color; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = r.color; ctx.font = '11px Orbitron,monospace'; ctx.fillText(r.label, r.x - 14, r.y + 24);
+  });
+  // Estimated position
+  if (tdoaEstimate) {
+    ctx.beginPath(); ctx.arc(tdoaEstimate.x, tdoaEstimate.y, 12, 0, Math.PI * 2);
+    ctx.strokeStyle = '#ff0'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#ff0'; ctx.font = 'bold 11px Orbitron,monospace'; ctx.fillText('EST', tdoaEstimate.x - 10, tdoaEstimate.y - 16);
+    // Show real TX
+    ctx.beginPath(); ctx.arc(tdoaTx.x, tdoaTx.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#f44'; ctx.fill();
+    ctx.fillStyle = '#f44'; ctx.font = 'bold 11px Orbitron,monospace'; ctx.fillText('TX', tdoaTx.x - 8, tdoaTx.y - 10);
+    // Error line
+    ctx.strokeStyle = 'rgba(255,100,100,.4)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(tdoaTx.x, tdoaTx.y); ctx.lineTo(tdoaEstimate.x, tdoaEstimate.y); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function computeHyperbola(r1, r2, tdDiff, w, h) {
+  const points = [];
+  const cx = (r1.x + r2.x) / 2, cy = (r1.y + r2.y) / 2;
+  const dx = r2.x - r1.x, dy = r2.y - r1.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const a = Math.abs(tdDiff) * 150; // scaled
+  if (a >= dist / 2) return points;
+  const b = Math.sqrt((dist / 2) * (dist / 2) - a * a);
+  const angle = Math.atan2(dy, dx);
+  for (let t = -2; t <= 2; t += 0.02) {
+    const hx = a * Math.cosh(t);
+    const hy = b * Math.sinh(t);
+    const sign = tdDiff >= 0 ? 1 : -1;
+    const rx = cx + (sign * hx * Math.cos(angle) - hy * Math.sin(angle));
+    const ry = cy + (sign * hx * Math.sin(angle) + hy * Math.cos(angle));
+    if (rx >= 0 && rx <= w && ry >= 0 && ry <= h) points.push({ x: rx, y: ry });
+  }
+  return points;
+}
+
+function locateSignal() {
+  const c = $('tdoaMap'); if (!c) return;
+  const w = c.width, h = c.height;
+  const noiseAmt = +$('noiseSlider').value / 100;
+  // Compute distances and time diffs
+  const dists = tdoaRx.map(r => Math.sqrt((r.x - tdoaTx.x) ** 2 + (r.y - tdoaTx.y) ** 2));
+  const toa = dists.map(d => d / 300 + noiseAmt * (Math.random() - 0.5) * 0.5);
+  // Generate hyperbolas
+  tdoaHyperbolas = [];
+  for (let i = 1; i < tdoaRx.length; i++) {
+    const tdDiff = toa[i] - toa[0];
+    const pts = computeHyperbola(tdoaRx[0], tdoaRx[i], tdDiff, w, h);
+    const mixColor = tdoaRx[i].color;
+    tdoaHyperbolas.push({ points: pts, color: mixColor });
+  }
+  // Estimate TX by grid search (simple TDOA solver)
+  let bestX = 0, bestY = 0, bestErr = Infinity;
+  for (let gx = 10; gx < w; gx += 5) {
+    for (let gy = 10; gy < h; gy += 5) {
+      let err = 0;
+      const d0 = Math.sqrt((gx - tdoaRx[0].x) ** 2 + (gy - tdoaRx[0].y) ** 2);
+      for (let i = 1; i < tdoaRx.length; i++) {
+        const di = Math.sqrt((gx - tdoaRx[i].x) ** 2 + (gy - tdoaRx[i].y) ** 2);
+        const expectedDiff = (di - d0) / 300;
+        const actualDiff = toa[i] - toa[0];
+        err += (expectedDiff - actualDiff) ** 2;
+      }
+      if (err < bestErr) { bestErr = err; bestX = gx; bestY = gy; }
+    }
+  }
+  tdoaEstimate = { x: bestX, y: bestY };
+  const errDist = Math.sqrt((bestX - tdoaTx.x) ** 2 + (bestY - tdoaTx.y) ** 2);
+  drawTdoaMap();
+  drawTdoaWaves(toa);
+  updateTdoaInfo(dists, toa, errDist);
+  setStatus(true);
+  log('📍 Signal located! Error: ' + errDist.toFixed(1) + ' px (' + (errDist * 5).toFixed(0) + ' m)', errDist < 30 ? 'success' : 'info');
+}
+
+function drawTdoaWaves(toa) {
+  ['tdoaWave1', 'tdoaWave2'].forEach((cid, idx) => {
+    const c = $(cid); if (!c) return;
+    const ctx = c.getContext('2d'), w = c.width, h = c.height;
+    ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+    const rx1 = tdoaRx[idx * 2] || tdoaRx[0];
+    const rx2 = tdoaRx[idx * 2 + 1] || tdoaRx[1];
+    [rx1, rx2].forEach((rx, si) => {
+      const toaVal = toa[idx * 2 + si] || toa[si];
+      const delay = toaVal * 20;
+      ctx.strokeStyle = rx.color; ctx.lineWidth = 1.5; ctx.beginPath();
+      for (let i = 0; i < w; i++) {
+        const t = (i - delay * 10) / 40;
+        const v = Math.exp(-t * t * 0.1) * Math.sin(t * 8) * (h / 3);
+        const y = h / 2 - v;
+        i === 0 ? ctx.moveTo(i, y) : ctx.lineTo(i, y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = rx.color; ctx.font = '10px Orbitron,monospace';
+      ctx.fillText(rx.label + ' (t=' + (toa[idx * 2 + si] || toa[si]).toFixed(2) + ')', 4, 13 + si * 14);
+    });
+  });
+}
+
+function updateTdoaInfo(dists, toa, errDist) {
+  const el = $('tdoaInfo'); if (!el) return;
+  el.innerHTML = tdoaRx.map((r, i) => `
+    <div class="tdoa-card" style="border-left:3px solid ${r.color}">
+      <div>${r.label}</div>
+      <div class="big">${(dists[i] * 5).toFixed(0)} m</div>
+      <div style="opacity:.7">t = ${toa[i].toFixed(3)} ms</div>
+    </div>
+  `).join('') + `<div class="tdoa-card" style="border-left:3px solid #ff0"><div>Error</div><div class="big">${(errDist * 5).toFixed(0)} m</div></div>`;
+}
+
+function resetTdoa() {
+  tdoaEstimate = null; tdoaHyperbolas = [];
+  const numRx = +($('rxSlider')?.value || 4);
+  initReceivers(numRx); randomTx();
+  ['tdoaWave1','tdoaWave2'].forEach(id => {
+    const c = $(id); if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, c.width, c.height); }
+  });
+  const el = $('tdoaInfo'); if (el) el.innerHTML = '';
+  setStatus(false);
+  log('↺ TDOA locator reset', 'info');
+}
+
+(function initTdoaSim() {
+  const lb = $('locateBtn'); if (lb) lb.onclick = locateSignal;
+  const nb = $('newTxBtn'); if (nb) nb.onclick = randomTx;
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetTdoa;
+  const ns = $('noiseSlider'); if (ns) ns.oninput = function() { $('noiseVal').textContent = this.value; };
+  const rs = $('rxSlider'); if (rs) rs.oninput = function() {
+    $('rxVal').textContent = this.value;
+    initReceivers(+this.value); randomTx();
+  };
+  setTimeout(() => { initReceivers(4); randomTx(); }, 600);
+})();

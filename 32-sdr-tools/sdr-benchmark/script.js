@@ -63,23 +63,23 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Benchmark', subtitle: '🏋️ SDR hardware benchmark — Processing speed, dynamic range, sensitivity',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'SDR Benchmark', mainDesc: 'Test processing speed, dynamic range, sensitivity',
+    sectionA: 'Benchmark Results', sectionB: 'SDR Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    faq_q1: 'What is the SDR Benchmark?', faq_a1: 'A tool to test SDR processing speed, dynamic range and sensitivity.',
+    faq_q2: 'What metrics are tested?', faq_a2: 'FFT throughput, sample processing rate, SFDR and noise floor.',
+    faq_q3: 'How accurate are results?', faq_a3: 'Simulated benchmarks show relative performance across configurations.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select sample rate and FFT size.',
+    howto_2: 'Choose the test type to benchmark.',
+    howto_3: 'Click Run Benchmark to start testing.',
+    howto_4: 'View results in the chart below.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🏋️ SDR Benchmark ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Benchmark SDR', subtitle: '🏋️ Benchmark matériel SDR — Vitesse, plage dynamique, sensibilité',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Benchmark SDR', mainDesc: 'Tester vitesse, plage dynamique, sensibilité',
+    sectionA: 'Résultats Benchmark', sectionB: 'Théorie SDR',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🏋️ Benchmark SDR prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'اختبار أداء SDR', subtitle: '🏋️ اختبار أداء SDR — السرعة والنطاق الديناميكي والحساسية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'اختبار الأداء', mainDesc: 'اختبر سرعة المعالجة والنطاق الديناميكي والحساسية',
+    sectionA: 'نتائج الاختبار', sectionB: 'نظرية SDR',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🏋️ اختبار الأداء جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,139 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR BENCHMARK SIMULATION ═══════ */
+
+function benchFFT(N, iters) {
+  const re = new Float32Array(N), im = new Float32Array(N);
+  for (let i = 0; i < N; i++) re[i] = Math.sin(2 * Math.PI * 5 * i / N) + 0.5 * Math.random();
+  const t0 = performance.now();
+  for (let it = 0; it < iters; it++) {
+    const outRe = new Float32Array(re), outIm = new Float32Array(im);
+    let j = 0;
+    for (let i = 0; i < N; i++) {
+      if (i < j) { let tr = outRe[i]; outRe[i] = outRe[j]; outRe[j] = tr; let ti = outIm[i]; outIm[i] = outIm[j]; outIm[j] = ti; }
+      let m = N >> 1; while (m >= 1 && j >= m) { j -= m; m >>= 1; } j += m;
+    }
+    for (let len = 2; len <= N; len <<= 1) {
+      const half = len >> 1, wRe = Math.cos(-2 * Math.PI / len), wIm = Math.sin(-2 * Math.PI / len);
+      for (let i = 0; i < N; i += len) {
+        let uRe = 1, uIm = 0;
+        for (let k = 0; k < half; k++) {
+          const tRe = uRe * outRe[i + k + half] - uIm * outIm[i + k + half];
+          const tIm = uRe * outIm[i + k + half] + uIm * outRe[i + k + half];
+          outRe[i + k + half] = outRe[i + k] - tRe; outIm[i + k + half] = outIm[i + k] - tIm;
+          outRe[i + k] += tRe; outIm[i + k] += tIm;
+          const newU = uRe * wRe - uIm * wIm; uIm = uRe * wIm + uIm * wRe; uRe = newU;
+        }
+      }
+    }
+  }
+  return performance.now() - t0;
+}
+
+function benchSampleRate(sps, durationMs) {
+  const samples = Math.floor(sps * durationMs / 1000);
+  const buf = new Float32Array(samples);
+  const t0 = performance.now();
+  for (let i = 0; i < samples; i++) buf[i] = Math.sin(2 * Math.PI * 1000 * i / sps) + 0.1 * Math.random();
+  return { time: performance.now() - t0, samples };
+}
+
+function drawBenchChart(results) {
+  const c = $('benchCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  const maxT = Math.max(...results.map(r => r.time), 1);
+  const barH = 40, gap = 12, startY = 30;
+  const colors = ['#4af', '#f44', '#4f4', '#fa0', '#f4f'];
+
+  results.forEach((r, i) => {
+    const y = startY + i * (barH + gap);
+    const bw = (r.time / maxT) * (w - 220);
+    ctx.fillStyle = colors[i % colors.length] + '33'; ctx.fillRect(140, y, w - 220, barH);
+    ctx.fillStyle = colors[i % colors.length]; ctx.fillRect(140, y, bw, barH);
+    ctx.fillStyle = '#fff'; ctx.font = '12px Orbitron,monospace';
+    ctx.fillText(r.label, 4, y + 26);
+    ctx.fillText(r.time.toFixed(1) + ' ms', 150 + bw + 8, y + 26);
+  });
+
+  ctx.fillStyle = '#4af'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText('Benchmark Results', 10, 18);
+}
+
+function drawMetricsChart() {
+  const c = $('metricsCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  // Simulated metrics
+  const sfdr = 60 + Math.random() * 20;
+  const noiseFloor = -120 + Math.random() * 20;
+  const sensitivity = -110 + Math.random() * 15;
+  const dr = sfdr + Math.abs(noiseFloor);
+
+  const metrics = [
+    { label: 'SFDR', value: sfdr, unit: 'dB', max: 100, color: '#4f4' },
+    { label: 'Noise Floor', value: Math.abs(noiseFloor), unit: 'dBm', max: 150, color: '#f44' },
+    { label: 'Dynamic Range', value: dr, unit: 'dB', max: 200, color: '#4af' },
+    { label: 'Sensitivity', value: Math.abs(sensitivity), unit: 'dBm', max: 150, color: '#fa0' },
+  ];
+
+  const barH = 30, gap = 10, startY = 30;
+  metrics.forEach((m, i) => {
+    const y = startY + i * (barH + gap);
+    const bw = (m.value / m.max) * (w - 240);
+    ctx.fillStyle = m.color + '22'; ctx.fillRect(140, y, w - 240, barH);
+    ctx.fillStyle = m.color; ctx.fillRect(140, y, bw, barH);
+    ctx.fillStyle = '#fff'; ctx.font = '11px Orbitron,monospace';
+    ctx.fillText(m.label, 4, y + 20);
+    ctx.fillText(m.value.toFixed(1) + ' ' + m.unit, 150 + bw + 6, y + 20);
+  });
+
+  $('sfdrVal').textContent = sfdr.toFixed(1) + ' dB';
+  $('noiseVal').textContent = noiseFloor.toFixed(1) + ' dBm';
+  $('drVal').textContent = dr.toFixed(1) + ' dB';
+
+  ctx.fillStyle = '#4af'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText('SDR Metrics', 10, 18);
+}
+
+function runBenchmark() {
+  const L = LANG[currentLang];
+  log(L.benchStarted || 'Benchmark started', 'info');
+  showToast(L.working); setStatus(true);
+
+  const fftSize = +$('fftSizeSelect').value;
+  const sps = +$('spsSelect').value;
+  const iters = 100;
+
+  const results = [];
+  [64, 256, 1024, 4096].forEach(n => {
+    const t = benchFFT(n, iters);
+    results.push({ label: 'FFT-' + n, time: t });
+  });
+
+  const sr = benchSampleRate(sps, 100);
+  results.push({ label: sps / 1e6 + ' MSPS', time: sr.time });
+
+  drawBenchChart(results);
+  drawMetricsChart();
+
+  hideToast();
+  log((L.benchComplete || 'Benchmark complete') + ' | FFT-' + fftSize + ': ' + benchFFT(fftSize, iters).toFixed(1) + 'ms', 'success');
+}
+
+function resetBenchmark() {
+  ['benchCanvas', 'metricsCanvas'].forEach(id => { const c = $(id); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+  $('sfdrVal').textContent = '--'; $('noiseVal').textContent = '--'; $('drVal').textContent = '--';
+  setStatus(false); log(LANG[currentLang].resetDone || 'Reset', 'info');
+}
+
+function initBenchmark() {
+  const rb = $('benchBtn'); if (rb) rb.onclick = () => setTimeout(runBenchmark, 50);
+  const rs = $('resetBtn'); if (rs) rs.onclick = resetBenchmark;
+}
+
+document.addEventListener('DOMContentLoaded', initBenchmark);

@@ -63,115 +63,109 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Hackathon Arena', subtitle: '⚔️ Compete · ⏱️ Race · 🏆 Conquer challenges',
+    disconnected: 'Offline', connected: 'Online',
+    mainSection: 'Challenge Arena', mainDesc: 'Solve hacking challenges against the clock',
+    sectionA: 'Leaderboard', sectionB: 'Challenge Statistics',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
-    helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
+    settings: '⚙️ Settings', language: 'Language', helpSettings: '❓ Help', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Hackathon Arena?', faq_a1: 'A competitive hacking challenge platform with timer, scoring, and progressive difficulty.',
+    faq_q2: 'How does scoring work?', faq_a2: 'Points depend on difficulty level and time remaining. Faster = more bonus points.',
+    faq_q3: 'Are these real exploits?', faq_a3: 'No. All challenges are educational puzzles simulated locally.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Select difficulty and click Start Game.',
+    howto_2: 'Read the challenge and enter the flag.',
+    howto_3: 'Use hints if stuck (costs points).',
+    howto_4: 'Check the leaderboard for rankings.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
+    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus', t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⚔️ Hackathon Arena ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
-    whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
-    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    soundEffects: '🔊 Sound effects', whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
+    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...', splashHint: 'tap to skip',
+    newVersion: 'UPDATE', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    timerLabel: 'Time Remaining', scoreLabel: 'Score', levelLabel: 'Difficulty',
+    startGame: 'Start Game', resetGame: 'Reset', challengeLabel: 'Challenge',
+    submit: 'Submit', hint: 'Hint', rankings: 'Rankings', statsTitle: 'Performance Overview',
+    col_team: 'Team', col_score: 'Score', col_solved: 'Solved', col_time: 'Time',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Arene Hackathon', subtitle: '⚔️ Competir · ⏱️ Courir · 🏆 Conquerir',
+    disconnected: 'Hors ligne', connected: 'En ligne',
+    mainSection: 'Arene des Defis', mainDesc: 'Resolvez des defis contre la montre',
+    sectionA: 'Classement', sectionB: 'Statistiques',
+    activityLog: 'Journal', eventsMsg: 'Evenements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'C\'est quoi ?', faq_a1: 'Plateforme de defis hacking competitifs.',
+    faq_q2: 'Comment marche le scoring ?', faq_a2: 'Points selon difficulte et temps restant.',
+    faq_q3: 'Ce sont de vrais exploits ?', faq_a3: 'Non. Puzzles educatifs simules.',
+    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Choisissez la difficulte et demarrez.',
+    howto_2: 'Lisez le defi et entrez le flag.',
+    howto_3: 'Utilisez les indices si bloque.',
+    howto_4: 'Consultez le classement.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local-first.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous', t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '⚔️ Arene Hackathon prete !',
+    logCleared: 'Journal efface', copied: 'Copie !', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    soundEffects: '🔊 Effets sonores', whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...', splashHint: 'appuyer pour passer',
+    newVersion: 'MAJ', langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    timerLabel: 'Temps Restant', scoreLabel: 'Score', levelLabel: 'Difficulte',
+    startGame: 'Demarrer', resetGame: 'Reinitialiser', challengeLabel: 'Defi',
+    submit: 'Soumettre', hint: 'Indice', rankings: 'Classement', statsTitle: 'Apercu Performance',
+    col_team: 'Equipe', col_score: 'Score', col_solved: 'Resolus', col_time: 'Temps',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'ساحة الهاكاثون', subtitle: '⚔️ تنافس · ⏱️ سابق · 🏆 اقهر التحديات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    mainSection: 'ساحة التحديات', mainDesc: 'حل تحديات الاختراق ضد الوقت',
+    sectionA: 'لوحة الصدارة', sectionB: 'احصائيات التحديات',
+    activityLog: 'سجل النشاط', eventsMsg: 'الاحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    settings: '⚙️ الاعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
+    help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
+    faq_q1: 'ما هي ساحة الهاكاثون؟', faq_a1: 'منصة تحديات اختراق تنافسية مع مؤقت ونقاط.',
+    faq_q2: 'كيف يعمل التنقيط؟', faq_a2: 'النقاط حسب الصعوبة والوقت المتبقي.',
+    faq_q3: 'هل هذه اختراقات حقيقية؟', faq_a3: 'لا. ألغاز تعليمية محاكاة.',
+    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر الصعوبة واضغط بدء.',
+    howto_2: 'اقرأ التحدي وأدخل العلم.',
+    howto_3: 'استخدم التلميحات اذا علقت.',
+    howto_4: 'تحقق من لوحة الصدارة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي اولا.',
+    working: 'جار…',
+    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'اندلس', t_riad: 'رياض', t_medina: 'مدينة',
+    t_space: 'فضاء', t_jungle: 'ادغال', t_robot: 'روبوت',
+    ready: '⚔️ ساحة الهاكاثون جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    soundEffects: '🔊 مؤثرات صوتية', whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
+    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...', splashHint: 'انقر للتخطي',
+    newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    timerLabel: 'الوقت المتبقي', scoreLabel: 'النقاط', levelLabel: 'الصعوبة',
+    startGame: 'بدء اللعبة', resetGame: 'اعادة', challengeLabel: 'التحدي',
+    submit: 'ارسال', hint: 'تلميح', rankings: 'الترتيب', statsTitle: 'نظرة عامة على الاداء',
+    col_team: 'الفريق', col_score: 'النقاط', col_solved: 'محلول', col_time: 'الوقت',
   }
 };
 
@@ -1449,3 +1443,208 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ HACKATHON ARENA — SIMULATION ═══════ */
+(function(){
+  const CHALLENGES=[
+    {cat:'Crypto',q:'Decode this Caesar cipher (shift 13): URYYB JBEYQ',flag:'HELLO WORLD',hint:'ROT13 is a special case of Caesar cipher. A↔N, B↔O, etc.',pts:100,diff:1},
+    {cat:'Web',q:'What HTTP status code means "Forbidden"?',flag:'403',hint:'It is between 400 (Bad Request) and 404 (Not Found).',pts:100,diff:1},
+    {cat:'Network',q:'What port does HTTPS use by default?',flag:'443',hint:'HTTP uses port 80. HTTPS adds security...',pts:100,diff:1},
+    {cat:'Binary',q:'Convert the binary 01001000 01101001 to ASCII text.',flag:'Hi',hint:'H=72=01001000, i=105=01101001',pts:150,diff:2},
+    {cat:'Crypto',q:'Decode Base64: Y3liZXJfaGVybw==',flag:'cyber_hero',hint:'Base64 uses characters A-Z, a-z, 0-9, +, / and = for padding.',pts:150,diff:2},
+    {cat:'Web',q:'What XSS payload would trigger an alert?\nComplete: <script>_____(1)</script>',flag:'alert',hint:'The simplest JavaScript popup function.',pts:200,diff:2},
+    {cat:'Forensics',q:'A file starts with bytes: 89 50 4E 47. What file format is it?',flag:'PNG',hint:'These are magic bytes. 50 4E 47 = P N G in ASCII.',pts:200,diff:3},
+    {cat:'Network',q:'What protocol resolves domain names to IP addresses?',flag:'DNS',hint:'Domain Name ___.',pts:100,diff:1},
+    {cat:'Crypto',q:'Decode hex: 666c61677b68346336337d',flag:'flag{h4c63}',hint:'Each pair of hex digits is one ASCII character. 66=f, 6c=l...',pts:250,diff:3},
+    {cat:'Binary',q:'What is 0xFF in decimal?',flag:'255',hint:'F=15 in hex. FF = 15*16 + 15.',pts:150,diff:2},
+    {cat:'Web',q:'What SQL injection bypasses login: admin\' --\nWhat does -- do in SQL?',flag:'comment',hint:'In SQL, -- starts a single-line...',pts:300,diff:4},
+    {cat:'Forensics',q:'In network forensics, what tool captures packets?\n(Starts with W, rhymes with "wire park")',flag:'Wireshark',hint:'Wire + shark = the most popular packet analyzer.',pts:200,diff:3},
+    {cat:'Crypto',q:'What hash function produces a 256-bit digest and is part of SHA-2?',flag:'SHA-256',hint:'Secure Hash Algorithm, 256-bit variant.',pts:300,diff:4},
+    {cat:'Network',q:'What layer 2 protocol maps IP addresses to MAC addresses?',flag:'ARP',hint:'Address Resolution ___.',pts:250,diff:3},
+    {cat:'Binary',q:'What is the result of 10110011 XOR 11001100 in binary?',flag:'01111111',hint:'XOR: 0^0=0, 0^1=1, 1^0=1, 1^1=0',pts:350,diff:4},
+    {cat:'Web',q:'What HTTP header prevents clickjacking?\n(X-Frame-___)',flag:'Options',hint:'X-Frame-Options: DENY or SAMEORIGIN.',pts:400,diff:5},
+    {cat:'Crypto',q:'What key exchange protocol provides forward secrecy?\n(Diffie-___)',flag:'Hellman',hint:'Named after Whitfield Diffie and Martin...',pts:400,diff:5},
+  ];
+
+  const TEAMS=[
+    {name:'CyberWolves',color:'#4CAF50'},{name:'ByteBandits',color:'#2196F3'},
+    {name:'NullPointers',color:'#FF9800'},{name:'RootAccess',color:'#9C27B0'},
+    {name:'PacketStorm',color:'#f44336'},{name:'ZeroDaySquad',color:'#00BCD4'},
+    {name:'YOU',color:'#FFD700'}
+  ];
+
+  let score=0, timeLeft=300, timer=null, currentChallenge=null, solved=[], difficulty=1;
+  let hintUsed=false, gameActive=false;
+
+  function fmt(s){const m=Math.floor(s/60),sec=s%60;return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');}
+
+  function updateDisplay(){
+    const td=$('timerDisplay'); if(td) td.textContent=fmt(timeLeft);
+    const sd=$('scoreDisplay'); if(sd) sd.textContent=score;
+    const dd=$('diffDisplay'); if(dd) dd.textContent='Level '+difficulty;
+    if(td && timeLeft<=30) td.style.color='#f44336';
+    else if(td && timeLeft<=60) td.style.color='#FF9800';
+    else if(td) td.style.color='var(--accent)';
+  }
+
+  function getAvailableChallenge(){
+    const avail=CHALLENGES.filter(c=>!solved.includes(c.q)&&c.diff<=difficulty);
+    if(!avail.length) return CHALLENGES.filter(c=>!solved.includes(c.q))[0]||null;
+    return avail[Math.floor(Math.random()*avail.length)];
+  }
+
+  function loadChallenge(){
+    const ch=getAvailableChallenge();
+    if(!ch){
+      const box=$('challengeText'); if(box) box.textContent='All challenges completed! Final score: '+score;
+      stopGame(); return;
+    }
+    currentChallenge=ch; hintUsed=false;
+    const cat=$('challengeCategory'); if(cat) cat.textContent='['+ch.cat+'] Challenge ('+ch.pts+' pts)';
+    const hint=$('challengeHint'); if(hint) hint.textContent='Difficulty: Level '+ch.diff;
+    const box=$('challengeText'); if(box) box.textContent=ch.q;
+    const res=$('flagResult'); if(res) res.textContent='';
+    const inp=$('flagInput'); if(inp) inp.value='';
+    if(typeof log==='function') log('🧩 New challenge: ['+ch.cat+'] '+ch.pts+' pts','info');
+  }
+
+  function submitFlag(){
+    if(!currentChallenge||!gameActive) return;
+    const inp=$('flagInput'); if(!inp) return;
+    const answer=inp.value.trim();
+    const res=$('flagResult');
+    if(answer.toLowerCase()===currentChallenge.flag.toLowerCase()){
+      const bonus=Math.floor(timeLeft/10);
+      const pts=currentChallenge.pts+(hintUsed?0:50)+bonus;
+      score+=pts;
+      solved.push(currentChallenge.q);
+      if(res) res.innerHTML='<span style="color:#4CAF50">Correct! +'+pts+' points ('+bonus+' time bonus)</span>';
+      playSound('success');
+      if(typeof log==='function') log('🚩 Flag captured! +'+pts+' pts','success');
+      updateDisplay(); drawProgress(); updateLeaderboard(); drawStats();
+      setTimeout(loadChallenge,1500);
+    } else {
+      if(res) res.innerHTML='<span style="color:#f44336">Wrong flag! Try again.</span>';
+      playSound('error');
+    }
+  }
+
+  function showHint(){
+    if(!currentChallenge) return;
+    hintUsed=true;
+    const res=$('flagResult');
+    if(res) res.innerHTML='<span style="color:#FF9800">Hint: '+currentChallenge.hint+'</span>';
+    if(typeof log==='function') log('💡 Hint used (no hint bonus)','info');
+  }
+
+  function startGame(){
+    if(gameActive) return;
+    gameActive=true; score=0; timeLeft=300; solved=[];
+    difficulty=parseInt(($('diffSelect')||{}).value||'1');
+    updateDisplay(); loadChallenge();
+    timer=setInterval(()=>{
+      timeLeft--;
+      if(timeLeft<=0){stopGame();return;}
+      updateDisplay();
+    },1000);
+    setStatus(true);
+    if(typeof log==='function') log('▶️ Game started! Level '+difficulty,'success');
+  }
+
+  function stopGame(){
+    gameActive=false; clearInterval(timer);
+    const box=$('challengeText');
+    if(box) box.textContent='Game Over! Final Score: '+score+' | Challenges Solved: '+solved.length+'/'+CHALLENGES.length;
+    updateLeaderboard(); drawStats();
+    if(typeof log==='function') log('🏁 Game over! Score: '+score,'info');
+  }
+
+  function resetGame(){
+    stopGame(); score=0; timeLeft=300; solved=[]; currentChallenge=null;
+    updateDisplay();
+    const box=$('challengeText'); if(box) box.textContent='';
+    const res=$('flagResult'); if(res) res.textContent='';
+    const hint=$('challengeHint'); if(hint) hint.textContent='Start the game to receive challenges';
+    drawProgress(); drawStats();
+  }
+
+  /* ── Progress Canvas ── */
+  function drawProgress(){
+    const c=$('progressCanvas'); if(!c) return;
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    const total=CHALLENGES.length;
+    const bw=Math.min(30,(W-20)/total-4);
+    CHALLENGES.forEach((ch,i)=>{
+      const x=10+i*(bw+4);
+      const isSolved=solved.includes(ch.q);
+      ctx.fillStyle=isSolved?'#4CAF50':'rgba(255,255,255,.1)';
+      ctx.fillRect(x,20,bw,H-40);
+      ctx.fillStyle=isSolved?'rgba(255,255,255,.8)':'rgba(255,255,255,.3)';
+      ctx.font='8px monospace';ctx.textAlign='center';
+      ctx.fillText(ch.cat.slice(0,3),x+bw/2,H-8);
+      ctx.fillText('L'+ch.diff,x+bw/2,14);
+    });
+  }
+
+  /* ── Leaderboard ── */
+  function updateLeaderboard(){
+    const tbody=$('leaderBody'); if(!tbody) return;
+    tbody.innerHTML='';
+    const teams=TEAMS.map(t=>{
+      if(t.name==='YOU') return{...t,score,solved:solved.length,time:fmt(300-timeLeft)};
+      const s=Math.floor(Math.random()*500+100);
+      const sv=Math.floor(Math.random()*8);
+      return{...t,score:s,solved:sv,time:fmt(Math.floor(Math.random()*200+60))};
+    }).sort((a,b)=>b.score-a.score);
+    teams.forEach((t,i)=>{
+      const tr=document.createElement('tr');
+      tr.style.cssText='border-bottom:1px solid rgba(255,255,255,.05);'+(t.name==='YOU'?'background:rgba(255,215,0,.1)':'');
+      tr.innerHTML=`<td style="padding:6px;text-align:center;font-weight:bold">${i+1}</td><td style="padding:6px;color:${t.color};font-weight:bold">${t.name}</td><td style="padding:6px;text-align:center">${t.score}</td><td style="padding:6px;text-align:center">${t.solved}</td><td style="padding:6px;text-align:center;font-family:monospace">${t.time}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ── Stats Canvas ── */
+  function drawStats(){
+    const c=$('statsCanvas'); if(!c) return;
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    const cats={};
+    CHALLENGES.forEach(ch=>{
+      if(!cats[ch.cat]) cats[ch.cat]={total:0,solved:0};
+      cats[ch.cat].total++;
+      if(solved.includes(ch.q)) cats[ch.cat].solved++;
+    });
+    const entries=Object.entries(cats);
+    const barW=Math.min(60,(W-40)/entries.length-10);
+    const colors=['#4CAF50','#2196F3','#FF9800','#9C27B0','#f44336','#00BCD4'];
+    entries.forEach(([cat,data],i)=>{
+      const x=20+i*(barW+10);
+      const totalH=(data.total/8)*(H-60);
+      const solvedH=(data.solved/8)*(H-60);
+      ctx.fillStyle='rgba(255,255,255,.08)'; ctx.fillRect(x,H-30-totalH,barW,totalH);
+      ctx.fillStyle=colors[i%colors.length]; ctx.fillRect(x,H-30-solvedH,barW,solvedH);
+      ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='10px monospace';ctx.textAlign='center';
+      ctx.fillText(cat,x+barW/2,H-14);
+      ctx.fillText(data.solved+'/'+data.total,x+barW/2,H-34-totalH);
+    });
+    // Solved list
+    const list=$('solvedList'); if(list){
+      list.innerHTML=solved.length?solved.map((_,i)=>'<span style="display:inline-block;padding:4px 8px;border-radius:4px;background:#4CAF50;color:#fff;font-size:.7rem">Challenge '+(i+1)+'</span>').join(''):'<span style="opacity:.5;font-size:.8rem">No challenges solved yet</span>';
+    }
+  }
+
+  function waitReady(fn){if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn); else fn();}
+
+  waitReady(function(){
+    const startBtn=$('startGameBtn'); if(startBtn) startBtn.onclick=startGame;
+    const resetBtn=$('resetGameBtn'); if(resetBtn) resetBtn.onclick=resetGame;
+    const submitBtn=$('submitFlagBtn'); if(submitBtn) submitBtn.onclick=submitFlag;
+    const hintBt=$('hintBtn'); if(hintBt) hintBt.onclick=showHint;
+    const flagIn=$('flagInput'); if(flagIn) flagIn.addEventListener('keydown',e=>{if(e.key==='Enter')submitFlag();});
+    const diffSel=$('diffSelect'); if(diffSel) diffSel.addEventListener('change',function(){ difficulty=parseInt(this.value); updateDisplay(); });
+    updateDisplay(); drawProgress(); updateLeaderboard(); drawStats();
+    setStatus(true);
+  });
+})();

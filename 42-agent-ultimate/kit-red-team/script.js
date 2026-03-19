@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Red Team Toolkit', subtitle: '🔴 Offensive recon, scanning, exploitation',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Red Team Toolkit', mainDesc: 'Recon, scanning, exploitation workflow',
+    sectionA: 'Recon Phase', sectionB: 'Scanning Phase', sectionC: 'Exploitation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔴 Red team toolkit ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Boîte à Outils Red Team', subtitle: '🔴 Reconnaissance offensive et exploitation',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔴 Boîte à outils Red Team prête !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'أدوات الفريق الأحمر', subtitle: '🔴 استطلاع هجومي ومسح واستغلال',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔴 أدوات الفريق الأحمر جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,98 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initRedTeam();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ RED TEAM TOOLKIT SIMULATION ═══════ */
+let rtState = { active: false, phase: 'idle', targets: [], vulns: [], exploits: 0, uptime: 0, uptimeTimer: null, animFrame: null };
+
+function initRedTeam() { setStatus(false); drawRtCanvas(); }
+
+function rtActivate() {
+  if (rtState.active) { rtState.active = false; setStatus(false); clearInterval(rtState.uptimeTimer); if (rtState.animFrame) cancelAnimationFrame(rtState.animFrame); log('🔴 Red team disengaged', 'info'); return; }
+  rtState.active = true; rtState.uptime = 0; rtState.phase = 'recon'; setStatus(true); log('🔴 Red team engaged! Phase: RECON', 'success');
+  const s1 = $('rtS1'); if (s1) s1.textContent = 'RECON';
+  rtState.uptimeTimer = setInterval(() => { rtState.uptime++; const s4 = $('rtS4'); if (s4) s4.textContent = String(Math.floor(rtState.uptime/60)).padStart(2,'0')+':'+String(rtState.uptime%60).padStart(2,'0'); }, 1000);
+  animateRt();
+}
+
+function animateRt() { if (!rtState.active) return; drawRtCanvas(); rtState.animFrame = requestAnimationFrame(animateRt); }
+
+function rtAction1() {
+  if (!rtState.active) { log('Engage red team first!', 'error'); return; }
+  const phases = ['recon', 'scanning', 'exploitation'];
+  const idx = phases.indexOf(rtState.phase);
+  rtState.phase = phases[(idx + 1) % phases.length];
+  const s1 = $('rtS1'); if (s1) s1.textContent = rtState.phase.toUpperCase();
+  log(`🔴 Phase: ${rtState.phase.toUpperCase()}`, 'info');
+  const bar = $('rtBar'); if (bar) bar.style.width = ((idx + 1) / 3 * 100) + '%';
+}
+
+function rtEmergency() { rtState.active = false; setStatus(false); clearInterval(rtState.uptimeTimer); if (rtState.animFrame) cancelAnimationFrame(rtState.animFrame); log('🚨 Operation aborted!', 'error'); playSound('error'); }
+
+function rtSecAAction() {
+  if (!rtState.active) { log('Engage first!', 'error'); return; }
+  const hosts = Math.floor(5 + Math.random() * 15);
+  rtState.targets = [];
+  for (let i = 0; i < hosts; i++) rtState.targets.push({ ip: `192.168.${Math.floor(Math.random()*5)}.${Math.floor(1+Math.random()*254)}`, os: ['Linux','Windows','macOS','Unknown'][Math.floor(Math.random()*4)], ports: Math.floor(1+Math.random()*10) });
+  const el = $('rtSecAContent');
+  if (el) el.innerHTML = rtState.targets.map(t => `${t.ip} | ${t.os} | ${t.ports} open ports`).join('<br>');
+  const s2 = $('rtS2'); if (s2) s2.textContent = hosts;
+  log(`🔍 Recon: ${hosts} hosts discovered`, 'success');
+}
+function rtSecAReset() { rtState.targets = []; const el = $('rtSecAContent'); if (el) el.innerHTML = ''; }
+function rtSecBAction() {
+  if (rtState.targets.length === 0) { log('Run recon first!', 'error'); return; }
+  const vulnTypes = ['CVE-2024-1234 (RCE)','CVE-2023-5678 (SQLi)','Weak SSH Keys','Default Credentials','Open Admin Panel','Unpatched Apache','SSL/TLS Vuln'];
+  rtState.vulns = [];
+  rtState.targets.forEach(t => { if (Math.random() > 0.4) rtState.vulns.push({ ip: t.ip, vuln: vulnTypes[Math.floor(Math.random()*vulnTypes.length)], severity: ['Low','Medium','High','Critical'][Math.floor(Math.random()*4)] }); });
+  const el = $('rtSecBContent');
+  if (el) el.innerHTML = rtState.vulns.map(v => `<span style="color:${v.severity==='Critical'?'#f44336':v.severity==='High'?'#ff9800':'inherit'}">${v.ip}: ${v.vuln} [${v.severity}]</span>`).join('<br>');
+  const s3 = $('rtS3'); if (s3) s3.textContent = rtState.vulns.length;
+  log(`🔬 Scan: ${rtState.vulns.length} vulnerabilities found`, rtState.vulns.length > 0 ? 'success' : 'info');
+}
+function rtSecBReset() { rtState.vulns = []; const el = $('rtSecBContent'); if (el) el.innerHTML = ''; }
+function rtSecCAction() {
+  if (rtState.vulns.length === 0) { log('Run scan first!', 'error'); return; }
+  const critical = rtState.vulns.filter(v => v.severity === 'Critical' || v.severity === 'High');
+  const exploited = critical.slice(0, Math.ceil(critical.length * 0.6));
+  rtState.exploits += exploited.length;
+  const el = $('rtSecCContent');
+  if (el) el.innerHTML = exploited.map(e => `✅ Exploited: ${e.ip} via ${e.vuln}`).join('<br>') + (exploited.length === 0 ? 'No exploitable targets.' : '');
+  log(`💥 ${exploited.length} targets exploited!`, exploited.length > 0 ? 'success' : 'info');
+  if (exploited.length > 0) playSound('success');
+}
+function rtSecCReset() { rtState.exploits = 0; const el = $('rtSecCContent'); if (el) el.innerHTML = ''; }
+
+function drawRtCanvas() {
+  const canvas = $('rtCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const t = Date.now() / 1000;
+  // Hacker-style scrolling text
+  ctx.fillStyle = accent; ctx.font = '10px monospace'; ctx.globalAlpha = 0.3;
+  for (let i = 0; i < 8; i++) {
+    const text = `0x${Math.floor(Math.random()*0xFFFF).toString(16).padStart(4,'0')} ${['NOP','MOV','JMP','CALL','RET','PUSH','POP','XOR'][Math.floor(Math.random()*8)]} ${Math.floor(Math.random()*256).toString(16)}`;
+    ctx.fillText(text, 5 + (i % 4) * 100, 12 + Math.floor(i/4) * 15 + ((t * 20) % 30));
+  }
+  ctx.globalAlpha = 1;
+  // Network graph
+  rtState.targets.slice(0, 8).forEach((tgt, i) => {
+    const x = 30 + (i % 4) * (w/4);
+    const y = h * 0.5 + Math.floor(i/4) * 35;
+    ctx.fillStyle = rtState.vulns.find(v => v.ip === tgt.ip) ? '#f44336' : '#4caf50';
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.beginPath(); ctx.moveTo(w/2, h - 10); ctx.lineTo(x, y); ctx.stroke();
+  });
+  ctx.fillStyle = '#fff'; ctx.font = '10px Orbitron';
+  ctx.fillText(`PHASE: ${rtState.phase.toUpperCase()} | TARGETS: ${rtState.targets.length} | VULNS: ${rtState.vulns.length}`, 5, h - 5);
+}

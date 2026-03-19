@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>SDR Signal Classifier — Workshop DIY</title>
+  <meta name="description" content="AI-assisted signal classification — Identify modulation types." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="SDR Signal Classifier — Workshop DIY" />
+  <meta property="og:description" content="AI-assisted signal classification — Identify modulation types." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -29,7 +29,7 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-sub" data-i18n="subtitle">🤖 AI-assisted signal classification — Identify modulation types</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">SDR Signal Classifier</h1>
+            <div class="subtitle" data-i18n="subtitle">🤖 AI-assisted signal classification — Identify modulation types</div>
           </div>
         </div>
 
@@ -72,22 +72,50 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🤖</span> <span data-i18n="mainSection">Signal Classifier</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Identify modulation types with AI analysis</span> <span class="version-tag">v1.2</span></div>
           </div>
+        </div>
+        <canvas id="waveCanvas" width="800" height="150" style="width:100%;border-radius:8px;margin:8px 0;background:#0a0a1a;"></canvas>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <canvas id="constCanvas" width="300" height="300" style="flex:1;min-width:200px;border-radius:8px;background:#0a0a1a;"></canvas>
+          <canvas id="scoresCanvas" width="500" height="300" style="flex:2;min-width:300px;border-radius:8px;background:#0a0a1a;"></canvas>
+        </div>
+        <div class="control-section" style="margin-top:8px;">
+          <label>Modulation Type (test signal)</label>
+          <select id="modSelect" class="sidebar-select">
+            <option value="AM">AM</option><option value="FM">FM</option><option value="SSB">SSB</option>
+            <option value="PSK">PSK (BPSK/QPSK)</option><option value="QAM">16-QAM</option><option value="FSK">FSK</option>
+            <option value="OFDM">OFDM</option><option value="CW">CW (Morse)</option>
+          </select>
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-sm primary" id="classifyBtn">🤖 Classify</button>
+            <button class="btn-sm" id="resetBtn" data-i18n="resetBtn">↺ Reset</button>
+          </div>
+        </div>
+        <div style="font-family:monospace;font-size:13px;line-height:2;margin-top:8px;">
+          <div>🏷️ Classification: <strong id="classResult">--</strong></div>
+          <div>📊 Confidence: <strong id="classConf">--</strong></div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Results ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📊</span> <span data-i18n="sectionA">Classification Results</span></summary>
+        <div class="card"><p>Classification scores are displayed in the bar chart above. The constellation diagram (I/Q plot) shows the signal's complex baseband representation, which is a key feature for modulation identification.</p></div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Theory ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📖</span> <span data-i18n="sectionB">Modulation Theory</span></summary>
+        <div class="card"><p>Signal modulation fundamentals:</p>
+          <ul style="margin:8px 0;padding-left:20px;line-height:1.8;">
+            <li>AM: amplitude varies, carrier visible in spectrum</li>
+            <li>FM: constant envelope, frequency deviation carries information</li>
+            <li>PSK: phase changes at symbol boundaries (BPSK, QPSK)</li>
+            <li>QAM: both amplitude and phase vary (16-QAM, 64-QAM)</li>
+            <li>OFDM: multiple subcarriers, used in Wi-Fi and LTE</li>
+          </ul></div>
       </details>
 
     </div>
@@ -128,16 +156,16 @@
       <!-- FAQ -->
       <div class="help-content active" id="helpFaq">
         <details class="help-item">
-          <summary data-i18n="faq_q1">What is this app?</summary>
-          <p data-i18n="faq_a1">A Workshop-DIY educational web app. Explore, create, and innovate!</p>
+          <summary data-i18n="faq_q1">What is the Signal Classifier?</summary>
+          <p data-i18n="faq_a1">An AI-assisted tool that identifies modulation types from signal features.</p>
         </details>
         <details class="help-item">
-          <summary data-i18n="faq_q2">How do I change the theme?</summary>
-          <p data-i18n="faq_a2">Open Settings (⚙️) and pick a theme from the dropdown.</p>
+          <summary data-i18n="faq_q2">What modulations are detected?</summary>
+          <p data-i18n="faq_a2">AM, FM, SSB, PSK, QAM, FSK, OFDM and CW.</p>
         </details>
         <details class="help-item">
-          <summary data-i18n="faq_q3">How do I change the language?</summary>
-          <p data-i18n="faq_a3">Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.</p>
+          <summary data-i18n="faq_q3">How does classification work?</summary>
+          <p data-i18n="faq_a3">Feature extraction analyzes bandwidth, symmetry, and cyclostationary properties.</p>
         </details>
         <details class="help-item">
           <summary data-i18n="faq_q4">Is my data private?</summary>
@@ -149,19 +177,19 @@
       <div class="help-content" id="helpHowto">
         <div class="help-step">
           <span class="help-step-num">1</span>
-          <p data-i18n="howto_1">Explore the main section to get started with the app.</p>
+          <p data-i18n="howto_1">Select or generate a test signal.</p>
         </div>
         <div class="help-step">
           <span class="help-step-num">2</span>
-          <p data-i18n="howto_2">Open collapsible sections to access more features.</p>
+          <p data-i18n="howto_2">Click Classify to analyze the signal.</p>
         </div>
         <div class="help-step">
           <span class="help-step-num">3</span>
-          <p data-i18n="howto_3">Check the Activity Log (📜) for events and messages.</p>
+          <p data-i18n="howto_3">View confidence scores for each modulation type.</p>
         </div>
         <div class="help-step">
           <span class="help-step-num">4</span>
-          <p data-i18n="howto_4">Use Settings (⚙️) to customize theme and language.</p>
+          <p data-i18n="howto_4">Check the constellation diagram for visual analysis.</p>
         </div>
       </div>
 

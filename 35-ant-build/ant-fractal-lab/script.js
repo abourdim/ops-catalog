@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Fractal Antenna Lab', subtitle: '🔬 Fractal antenna laboratory. Explore fractal geometry for antennas',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Fractal Designer', mainDesc: 'Generate and analyze fractal antenna geometries',
+    sectionA: 'Fractal Geometry', sectionB: 'Frequency Response', sectionC: 'Iteration Analysis',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Fractal Antenna Lab?', faq_a1: 'Explore fractal geometry applied to antenna design — Koch, Sierpinski, Minkowski, and Hilbert curves for multi-band operation.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Select a fractal type (Koch, Sierpinski, Minkowski, Hilbert).',
+    howto_2: 'Set the iteration depth and base frequency.',
+    howto_3: 'View the generated fractal geometry and its frequency response.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
+    working: 'Generating…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔬 Fractal lab ready — explore fractal antennas!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +100,32 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Labo Antennes Fractales', subtitle: '🔬 Laboratoire d\'antennes fractales. Explorez la géométrie fractale',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Concepteur Fractal', mainDesc: 'Générez et analysez des géométries d\'antennes fractales',
+    sectionA: 'Géométrie Fractale', sectionB: 'Réponse en Fréquence', sectionC: 'Analyse d\'Itérations',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Labo Fractales ?', faq_a1: 'Explorez la géométrie fractale appliquée aux antennes — Koch, Sierpinski, Minkowski et Hilbert.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
+    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Sélectionne un type de fractale (Koch, Sierpinski, etc.).',
+    howto_2: 'Définis la profondeur d\'itération et la fréquence de base.',
+    howto_3: 'Consulte la géométrie générée et sa réponse en fréquence.',
+    howto_4: 'Utilise Paramètres (⚙️) pour le thème et la langue.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Données locales.',
+    working: 'Génération en cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔬 Labo prêt — explorez les antennes fractales !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +137,32 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مختبر الهوائيات الكسورية', subtitle: '🔬 مختبر هوائيات كسورية. استكشف الهندسة الكسورية للهوائيات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مصمم كسوري', mainDesc: 'ولّد وحلّل هندسات هوائيات كسورية',
+    sectionA: 'الهندسة الكسورية', sectionB: 'الاستجابة الترددية', sectionC: 'تحليل التكرارات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
+    faq_q1: 'ما هو مختبر الهوائيات الكسورية؟', faq_a1: 'استكشف الهندسة الكسورية المطبقة على تصميم الهوائيات — كوخ، سيربينسكي، مينكوفسكي وهيلبرت.',
+    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات واختر مظهرًا.',
+    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات واختر لغتك.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر نوع الكسوري (كوخ، سيربينسكي، مينكوفسكي، هيلبرت).',
+    howto_2: 'حدد عمق التكرار والتردد الأساسي.',
+    howto_3: 'اعرض الهندسة الكسورية المولّدة واستجابتها الترددية.',
+    howto_4: 'استخدم الإعدادات للمظهر واللغة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'بيانات محلية فقط.',
+    working: 'جارٍ التوليد…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔬 المختبر جاهز — استكشف الهوائيات الكسورية!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,236 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ FRACTAL ANTENNA LAB — SIMULATION ═══════ */
+
+const FRACTAL_TYPES = ['Koch Curve', 'Sierpinski Triangle', 'Minkowski Island', 'Hilbert Curve'];
+let fractalType = 0, fractalIter = 3, fractalFreq = 145;
+
+function initFractalApp() {
+  const mc = $('mainControls');
+  mc.innerHTML = `
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Fractal Type</label>
+        <select id="fractalSelect">${FRACTAL_TYPES.map((t,i) => `<option value="${i}">${t}</option>`).join('')}</select>
+      </div>
+      <div><label>Iteration Depth</label><input type="range" id="fractalIter" min="1" max="6" value="3" /><span id="iterLabel">3</span></div>
+    </div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Base Frequency (MHz)</label><input type="number" id="fractalFreq" value="145" min="1" max="6000" /></div>
+      <div><label>Scale Factor</label><input type="range" id="fractalScale" min="0.5" max="2" step="0.1" value="1" /></div>
+    </div>
+    <button class="primary" id="generateBtn" style="width:100%">\u{1F52C} Generate Fractal Antenna</button>`;
+  $('fractalSelect').addEventListener('change', e => { fractalType = +e.target.value; });
+  $('fractalIter').addEventListener('input', e => { fractalIter = +e.target.value; $('iterLabel').textContent = e.target.value; });
+  $('fractalFreq').addEventListener('change', e => { fractalFreq = +e.target.value; });
+  $('generateBtn').addEventListener('click', generateFractal);
+  drawFractalIdle();
+}
+
+function drawFractalIdle() {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '14px Orbitron'; ctx.fillStyle = '#7c4dff'; ctx.textAlign = 'center';
+  ctx.fillText('\u{1F52C} FRACTAL ANTENNA LAB', W / 2, H / 2 - 10);
+  ctx.font = '10px Tajawal'; ctx.fillStyle = '#888';
+  ctx.fillText('Select fractal type and iteration depth, then generate', W / 2, H / 2 + 15);
+}
+
+function kochCurve(ctx, x1, y1, x2, y2, iter) {
+  if (iter === 0) { ctx.lineTo(x2, y2); return; }
+  const dx = x2 - x1, dy = y2 - y1;
+  const ax = x1 + dx / 3, ay = y1 + dy / 3;
+  const bx = x1 + dx * 2 / 3, by = y1 + dy * 2 / 3;
+  const px = (ax + bx) / 2 - (by - ay) * Math.sqrt(3) / 2;
+  const py = (ay + by) / 2 + (bx - ax) * Math.sqrt(3) / 2;
+  kochCurve(ctx, x1, y1, ax, ay, iter - 1);
+  kochCurve(ctx, ax, ay, px, py, iter - 1);
+  kochCurve(ctx, px, py, bx, by, iter - 1);
+  kochCurve(ctx, bx, by, x2, y2, iter - 1);
+}
+
+function sierpinski(ctx, x, y, size, iter) {
+  if (iter === 0) {
+    ctx.beginPath();
+    ctx.moveTo(x, y - size);
+    ctx.lineTo(x - size * 0.866, y + size * 0.5);
+    ctx.lineTo(x + size * 0.866, y + size * 0.5);
+    ctx.closePath(); ctx.stroke();
+    return;
+  }
+  const hs = size / 2;
+  sierpinski(ctx, x, y - hs, hs, iter - 1);
+  sierpinski(ctx, x - hs * 0.866, y + hs * 0.5, hs, iter - 1);
+  sierpinski(ctx, x + hs * 0.866, y + hs * 0.5, hs, iter - 1);
+}
+
+function minkowski(ctx, x1, y1, x2, y2, iter) {
+  if (iter === 0) { ctx.lineTo(x2, y2); return; }
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.sqrt(dx * dx + dy * dy);
+  const ux = dx / len, uy = dy / len;
+  const nx = -uy, ny = ux;
+  const s = len / 4;
+  const pts = [
+    [x1, y1],
+    [x1 + ux * s, y1 + uy * s],
+    [x1 + ux * s + nx * s, y1 + uy * s + ny * s],
+    [x1 + ux * 2 * s + nx * s, y1 + uy * 2 * s + ny * s],
+    [x1 + ux * 2 * s, y1 + uy * 2 * s],
+    [x1 + ux * 3 * s, y1 + uy * 3 * s],
+    [x2, y2]
+  ];
+  for (let i = 0; i < pts.length - 1; i++) {
+    minkowski(ctx, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1], iter - 1);
+  }
+}
+
+function hilbert(ctx, x, y, ax, ay, bx, by, iter) {
+  if (iter <= 0) {
+    ctx.lineTo(x + (ax + bx) / 2, y + (ay + by) / 2);
+    return;
+  }
+  hilbert(ctx, x, y, bx / 2, by / 2, ax / 2, ay / 2, iter - 1);
+  hilbert(ctx, x + ax / 2, y + ay / 2, ax / 2, ay / 2, bx / 2, by / 2, iter - 1);
+  hilbert(ctx, x + ax / 2 + bx / 2, y + ay / 2 + by / 2, ax / 2, ay / 2, bx / 2, by / 2, iter - 1);
+  hilbert(ctx, x + ax / 2 + bx, y + ay / 2 + by, -bx / 2, -by / 2, -ax / 2, -ay / 2, iter - 1);
+}
+
+function generateFractal() {
+  playSound('click');
+  const type = FRACTAL_TYPES[fractalType];
+  fractalFreq = +$('fractalFreq').value;
+  fractalIter = +$('fractalIter').value;
+  const scale = +$('fractalScale').value;
+  log(`Generating: ${type} iter=${fractalIter} at ${fractalFreq} MHz`, 'tx');
+  drawFractalGeometry(type, fractalIter, scale);
+  drawFrequencyResponse(type, fractalIter);
+  showIterationAnalysis(type, fractalIter, scale);
+  const wl = 300 / fractalFreq;
+  const segments = Math.pow(4, fractalIter);
+  const effectiveLen = wl * scale * (1 + fractalIter * 0.3);
+  const rb = $('resultBox');
+  rb.style.display = 'block';
+  rb.innerHTML = `
+    <div class="result-row"><span class="result-label">Fractal</span><span class="result-value">${type}</span></div>
+    <div class="result-row"><span class="result-label">Iterations</span><span class="result-value">${fractalIter}</span></div>
+    <div class="result-row"><span class="result-label">Base Freq</span><span class="result-value">${fractalFreq} MHz</span></div>
+    <div class="result-row"><span class="result-label">Wavelength</span><span class="result-value">${wl.toFixed(3)} m</span></div>
+    <div class="result-row"><span class="result-label">Segments</span><span class="result-value">${segments}</span></div>
+    <div class="result-row"><span class="result-label">Eff. Length</span><span class="result-value">${effectiveLen.toFixed(3)} m</span></div>
+    <div class="result-row"><span class="result-label">Resonant Bands</span><span class="result-value">${fractalIter + 1}</span></div>`;
+  log(`Segments: ${segments} | Eff. length: ${effectiveLen.toFixed(3)}m | Bands: ${fractalIter + 1}`, 'success');
+  playSound('success');
+}
+
+function drawFractalGeometry(type, iter, scale) {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, cx = W / 2, cy = H / 2;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#7c4dff'; ctx.textAlign = 'center';
+  ctx.fillText(`${type} \u2014 Iteration ${iter}`, cx, 15);
+  ctx.strokeStyle = '#b388ff'; ctx.lineWidth = 1.5;
+  const s = Math.min(W, H) * 0.35 * scale;
+  if (type === 'Koch Curve') {
+    ctx.beginPath(); ctx.moveTo(cx - s, cy + s * 0.3);
+    kochCurve(ctx, cx - s, cy + s * 0.3, cx + s, cy + s * 0.3, iter);
+    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + s, cy + s * 0.3);
+    kochCurve(ctx, cx + s, cy + s * 0.3, cx, cy - s * 0.866 + s * 0.3, iter);
+    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy - s * 0.866 + s * 0.3);
+    kochCurve(ctx, cx, cy - s * 0.866 + s * 0.3, cx - s, cy + s * 0.3, iter);
+    ctx.stroke();
+  } else if (type === 'Sierpinski Triangle') {
+    sierpinski(ctx, cx, cy, s, iter);
+  } else if (type === 'Minkowski Island') {
+    const hs = s * 0.7;
+    ctx.beginPath(); ctx.moveTo(cx - hs, cy - hs);
+    minkowski(ctx, cx - hs, cy - hs, cx + hs, cy - hs, iter);
+    minkowski(ctx, cx + hs, cy - hs, cx + hs, cy + hs, iter);
+    minkowski(ctx, cx + hs, cy + hs, cx - hs, cy + hs, iter);
+    minkowski(ctx, cx - hs, cy + hs, cx - hs, cy - hs, iter);
+    ctx.stroke();
+  } else if (type === 'Hilbert Curve') {
+    ctx.beginPath(); ctx.moveTo(cx - s, cy - s);
+    hilbert(ctx, cx - s, cy - s, s * 2, 0, 0, s * 2, iter);
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#ff4444'; ctx.beginPath(); ctx.arc(cx, cy + s * 0.3, 4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#ff4444'; ctx.font = '8px Orbitron'; ctx.fillText('Feed', cx + 10, cy + s * 0.3 + 3);
+}
+
+function drawFrequencyResponse(type, iter) {
+  const cv = $('canvasA'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, pad = 40, gW = W - pad * 2, gH = H - pad * 2;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#7c4dff'; ctx.textAlign = 'center';
+  ctx.fillText('Multi-Band Frequency Response', W / 2, 15);
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 5; i++) {
+    const y = pad + (i / 5) * gH;
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+    ctx.fillStyle = '#666'; ctx.font = '7px Orbitron'; ctx.textAlign = 'right';
+    ctx.fillText((10 - i * 2).toFixed(0) + ':1', pad - 4, y + 3);
+  }
+  ctx.strokeStyle = '#b388ff'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i <= gW; i++) {
+    const fRatio = 0.2 + (i / gW) * 4.8;
+    let swr = 8;
+    for (let h = 1; h <= iter + 1; h++) {
+      const resonance = h;
+      const dist = Math.abs(fRatio - resonance);
+      const bw = 0.15 + 0.05 * h;
+      const dip = 1.2 + 0.3 * h + Math.pow(dist / bw, 2) * 8;
+      swr = Math.min(swr, dip);
+    }
+    swr = Math.max(1, Math.min(swr, 10));
+    const y = pad + ((10 - swr) / 10) * gH;
+    i === 0 ? ctx.moveTo(pad, y) : ctx.lineTo(pad + i, y);
+  }
+  ctx.stroke();
+  ctx.strokeStyle = '#33ff3344'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+  const twoToOneY = pad + ((10 - 2) / 10) * gH;
+  ctx.beginPath(); ctx.moveTo(pad, twoToOneY); ctx.lineTo(W - pad, twoToOneY); ctx.stroke();
+  ctx.setLineDash([]); ctx.fillStyle = '#33ff33'; ctx.font = '7px Tajawal'; ctx.textAlign = 'left';
+  ctx.fillText('2:1 SWR', W - pad + 3, twoToOneY + 3);
+  ctx.fillStyle = '#888'; ctx.font = '7px Orbitron'; ctx.textAlign = 'center';
+  for (let i = 1; i <= iter + 1; i++) {
+    const x = pad + ((i - 0.2) / 5) * gW;
+    ctx.fillStyle = '#b388ff'; ctx.fillText(`f\u00D7${i}`, x, H - pad + 15);
+  }
+}
+
+function showIterationAnalysis(type, iter, scale) {
+  const wl = 300 / fractalFreq;
+  let rows = '';
+  for (let i = 1; i <= iter + 1; i++) {
+    const resFreq = fractalFreq * i / scale;
+    const resWl = 300 / resFreq;
+    rows += `<div class="result-row"><span class="result-label">Band ${i}: ${resFreq.toFixed(1)} MHz</span><span class="result-value">\u03BB = ${resWl.toFixed(3)} m</span></div>`;
+  }
+  const cv = $('canvasB'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#7c4dff'; ctx.textAlign = 'center';
+  ctx.fillText('Iteration Complexity Analysis', W / 2, 15);
+  for (let it = 1; it <= 6; it++) {
+    const x = 30 + (it - 1) * 55;
+    const segments = type === 'Koch Curve' ? Math.pow(4, it) : type === 'Sierpinski Triangle' ? Math.pow(3, it) : Math.pow(4, it);
+    const h = Math.log2(segments) / 15 * (H - 50);
+    ctx.fillStyle = it <= iter ? '#b388ff' : '#333';
+    ctx.fillRect(x, H - 25 - h, 40, h);
+    ctx.fillStyle = '#fff'; ctx.font = '7px Orbitron'; ctx.textAlign = 'center';
+    ctx.fillText(`n=${it}`, x + 20, H - 10);
+    ctx.fillText(segments.toString(), x + 20, H - 30 - h);
+  }
+  $('sectionCContent').innerHTML = `<p><strong>${type} \u2014 Iteration Analysis</strong></p>
+    <p>Fractal antennas achieve multi-band resonance through self-similar geometry. Each iteration adds resonant bands while reducing physical size.</p>
+    <div class="result-box">${rows}</div>
+    <p style="margin-top:6px;opacity:.7">Higher iterations increase complexity but diminish returns beyond iteration 4-5 due to manufacturing limits.</p>`;
+}
+
+initFractalApp();

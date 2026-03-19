@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'ESP32 Digi Repeater', subtitle: '🔁 Store-and-forward digital relay',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Digital Repeater', mainDesc: 'ESP32 store-and-forward digital relay',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Répéteur Digi ESP32', subtitle: '🔁 Relais numérique store-and-forward',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Répéteur Numérique', mainDesc: 'Relais numérique store-and-forward sur ESP32',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مكرر رقمي ESP32', subtitle: '🔁 ترحيل رقمي بالتخزين وإعادة التوجيه',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'المكرر الرقمي', mainDesc: 'ترحيل رقمي بالتخزين وإعادة التوجيه على ESP32',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,81 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Start Repeater',stop:'Stop',simStarted:'Repeater started',simStopped:'Repeater stopped',theoryTitle:'Digital Repeater Theory',theoryDesc:'A digital repeater (digipeater) receives digital packets, stores them briefly, then retransmits them to extend coverage. The ESP32 handles AX.25 packet decoding, deduplication via heard-list, and controlled retransmission with configurable paths and aliases.',stored:'Stored',forwarded:'Forwarded',queue:'Queue'});
+Object.assign(LANG.fr, {start:'Démarrer Répéteur',stop:'Arrêter',simStarted:'Répéteur démarré',simStopped:'Répéteur arrêté',theoryTitle:'Théorie Répéteur Numérique',theoryDesc:'Un répéteur numérique (digipeater) reçoit des paquets numériques, les stocke brièvement, puis les retransmet pour étendre la couverture. L\'ESP32 gère le décodage AX.25, la déduplication et la retransmission contrôlée.',stored:'Stockés',forwarded:'Transmis',queue:'File'});
+Object.assign(LANG.ar, {start:'تشغيل المكرر',stop:'إيقاف',simStarted:'بدأ المكرر',simStopped:'توقف المكرر',theoryTitle:'نظرية المكرر الرقمي',theoryDesc:'المكرر الرقمي يستقبل الحزم الرقمية ويخزنها مؤقتًا ثم يعيد إرسالها لتوسيع التغطية. يتولى ESP32 فك تشفير AX.25 وإزالة التكرار وإعادة الإرسال المتحكم فيها.',stored:'مخزنة',forwarded:'معاد توجيهها',queue:'طابور'});
+setLanguage(currentLang);
+
+
+/* ═══════ DIGI REPEATER SIM ═══════ */
+const CALLS=['W1ABC','K3DEF','N4GHI','W5JKL','K6MNO','W7PQR','VE3STU','DL1VWX'];
+let simRunning=false,simTimer=null,storedPkts=0,fwdPkts=0,queue=[];
+const drC=$('digiCanvas'),drCtx=drC?drC.getContext('2d'):null;
+let nodes=[];
+
+function initNodes(){
+  if(!drC)return;const W=drC.width,H=drC.height;
+  nodes=[{x:W/2,y:H/2,call:'DIGI',isRepeater:true}];
+  for(let i=0;i<8;i++){const a=i*Math.PI*2/8;const r=120+Math.random()*60;
+    nodes.push({x:W/2+Math.cos(a)*r,y:H/2+Math.sin(a)*r,call:CALLS[i%CALLS.length],isRepeater:false,active:false,activeTs:0});}
+}
+
+function drawDigi(){
+  if(!drCtx)return;const W=drC.width,H=drC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  drCtx.fillStyle='#0a1628';drCtx.fillRect(0,0,W,H);
+  const now=Date.now();
+  // Draw links
+  nodes.forEach(n=>{if(n.isRepeater)return;
+    drCtx.strokeStyle='rgba(255,255,255,0.08)';drCtx.lineWidth=1;
+    drCtx.beginPath();drCtx.moveTo(n.x,n.y);drCtx.lineTo(nodes[0].x,nodes[0].y);drCtx.stroke();
+    if(n.active&&now-n.activeTs<2000){const p=(now-n.activeTs)/2000;
+      drCtx.strokeStyle=acc2;drCtx.lineWidth=2;drCtx.globalAlpha=1-p;
+      drCtx.beginPath();drCtx.moveTo(n.x,n.y);drCtx.lineTo(nodes[0].x,nodes[0].y);drCtx.stroke();drCtx.globalAlpha=1;}
+  });
+  // Draw nodes
+  nodes.forEach(n=>{
+    drCtx.beginPath();drCtx.arc(n.x,n.y,n.isRepeater?10:6,0,Math.PI*2);
+    drCtx.fillStyle=n.isRepeater?acc:n.active&&now-n.activeTs<2000?'#22c55e':'rgba(255,255,255,0.3)';drCtx.fill();
+    drCtx.fillStyle='rgba(255,255,255,0.7)';drCtx.font=(n.isRepeater?'bold ':'')+' 9px monospace';drCtx.fillText(n.call,n.x+12,n.y+4);
+  });
+  // Queue indicator
+  drCtx.fillStyle='rgba(255,255,255,0.4)';drCtx.font='10px monospace';
+  drCtx.fillText('Queue: '+queue.length+' | Stored: '+storedPkts+' | Fwd: '+fwdPkts,10,H-10);
+}
+
+function digiStep(){
+  const srcIdx=1+Math.floor(Math.random()*(nodes.length-1));
+  const src=nodes[srcIdx];
+  const dstIdx=1+Math.floor(Math.random()*(nodes.length-1));
+  if(dstIdx===srcIdx)return;
+  const dst=nodes[dstIdx];
+  src.active=true;src.activeTs=Date.now();
+  storedPkts++;queue.push({from:src.call,to:dst.call,ts:Date.now()});
+  if(queue.length>20)queue.shift();
+  log('RX: '+src.call+'\u2192'+dst.call+' via DIGI (stored)','rx');
+  const qs=$('queueSize');if(qs)qs.textContent=queue.length;
+  const ss=$('storedDisp');if(ss)ss.textContent=storedPkts;
+  // Forward after delay
+  setTimeout(()=>{fwdPkts++;dst.active=true;dst.activeTs=Date.now();
+    const fs=$('fwdDisp');if(fs)fs.textContent=fwdPkts;
+    log('TX: '+src.call+'\u2192'+dst.call+' forwarded','tx');drawDigi();},800);
+  drawDigi();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);storedPkts=0;fwdPkts=0;queue=[];initNodes();
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(digiStep,2500);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_digi(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  initNodes();drawDigi();
+}
+init_digi();

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>SDR Correlation Detector — Workshop DIY</title>
+  <meta name="description" content="Cross-correlate signals from multiple SDR receivers." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="SDR Correlation Detector — Workshop DIY" />
+  <meta property="og:description" content="Cross-correlate signals from multiple SDR receivers." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -29,7 +29,7 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-sub" data-i18n="subtitle">📡 Cross-correlate signals from multiple SDR receivers</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">SDR Correlation Detector</h1>
+            <div class="subtitle" data-i18n="subtitle">📡 Cross-correlate signals from multiple SDR receivers</div>
           </div>
         </div>
 
@@ -72,22 +72,46 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">📡</span> <span data-i18n="mainSection">Correlation Analysis</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Cross-correlate signals from multiple SDR receivers</span> <span class="version-tag">v1.0</span></div>
+          </div>
+        </div>
+        <canvas id="sigCanvas1" width="800" height="120" style="width:100%;border-radius:8px;margin:4px 0;background:#0a0a1a;"></canvas>
+        <canvas id="sigCanvas2" width="800" height="120" style="width:100%;border-radius:8px;margin:4px 0;background:#0a0a1a;"></canvas>
+        <canvas id="corrCanvas" width="800" height="150" style="width:100%;border-radius:8px;margin:4px 0;background:#0a0a1a;"></canvas>
+        <div class="control-section" style="margin-top:8px;">
+          <label data-i18n="freqLabel">Signal Frequency (Hz)</label>
+          <input type="range" id="freqSlider" min="1" max="20" value="5" style="width:100%"/><span id="freqVal">5</span>
+          <label data-i18n="delayLabel">Receiver Delay (samples)</label>
+          <input type="range" id="delaySlider" min="0" max="100" value="20" style="width:100%"/><span id="delayVal">20</span>
+          <label data-i18n="noiseLabel">Noise Level</label>
+          <input type="range" id="noiseSlider" min="0" max="100" value="30" style="width:100%"/><span id="noiseVal">30</span>
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-sm primary" id="corrBtn" data-i18n="corrBtn">📡 Correlate</button>
+            <button class="btn-sm" id="resetBtn" data-i18n="resetBtn">↺ Reset</button>
           </div>
         </div>
       </div>
 
       <!-- ═══════════════════ SECTION A ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📊</span> <span data-i18n="sectionA">Correlation Results</span></summary>
+        <div class="card"><div id="resultsPanel" style="font-family:monospace;font-size:13px;line-height:2;">
+          <p data-i18n="corrTheory">Cross-correlation measures similarity between two signals at different time lags. The peak indicates the time delay between receivers.</p>
+        </div></div>
       </details>
 
       <!-- ═══════════════════ SECTION B ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📖</span> <span data-i18n="sectionB">Theory &amp; Notes</span></summary>
+        <div class="card">
+          <ul style="margin:8px 0;padding-left:20px;line-height:1.8;">
+            <li data-i18n="theory1">Cross-correlation R(τ) = ∫ x(t) · y(t+τ) dt</li>
+            <li data-i18n="theory2">Peak location reveals the time delay between signals</li>
+            <li data-i18n="theory3">Works even with noisy signals — averaging improves SNR</li>
+            <li data-i18n="theory4">Used in TDOA, radar, sonar, and radio astronomy</li>
+          </ul>
+        </div>
       </details>
 
     </div>

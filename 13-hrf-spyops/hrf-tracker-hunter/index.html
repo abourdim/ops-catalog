@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Tracker Hunter — Workshop DIY</title>
+  <meta name="description" content="Find and disable GPS/Bluetooth trackers — scan, identify and locate — Workshop-DIY." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Tracker Hunter — Workshop DIY" />
+  <meta property="og:description" content="Find and disable GPS/Bluetooth trackers. Scan, identify, and locate tracking devices." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -72,22 +72,57 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">&#x1F50E;</span> <span data-i18n="mainSection">Tracker Hunter</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Find and disable GPS/Bluetooth trackers</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Radar Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="radarCanvas" width="780" height="400" style="width:100%;display:block;background:#0a0a0a;"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="scanTrackersBtn" class="primary"><span class="btn-icon">&#x1F50E;</span> <span data-i18n="scanTrackers">Scan Trackers</span></button>
+          <button id="deepScanBtn"><span class="btn-icon">&#x1F4E1;</span> <span data-i18n="deepScan">Deep Scan</span></button>
+          <button id="neutralizeBtn"><span class="btn-icon">&#x1F6D1;</span> <span data-i18n="neutralize">Neutralize All</span></button>
+          <div style="flex:1;"></div>
+          <span id="trackerCount" style="font-family:var(--font-h);font-size:1rem;color:var(--accent);">0 trackers</span>
+        </div>
+
+        <!-- Info Panels -->
+        <div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x26A0; <span data-i18n="threatMap">Threat Map</span></div>
+            <div id="threatInfo" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4F1; <span data-i18n="nearest">Nearest Tracker</span></div>
+            <div id="nearestInfo" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;">---</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4CA; <span data-i18n="signalAnalysis">Signal Analysis</span></div>
+            <div id="sigAnalysis" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- SECTION A — Found Trackers -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F4F1;</span> <span data-i18n="sectionA">Found Trackers</span></summary>
+        <div class="card">
+          <div id="trackerList" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="trackerHint">Scan to find hidden GPS and Bluetooth trackers nearby.</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- SECTION B — Tracker Types -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">Tracker Types</span></summary>
+        <div class="card">
+          <div id="trackerDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
       </details>
 
     </div>

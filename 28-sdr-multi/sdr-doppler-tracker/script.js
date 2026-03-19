@@ -63,22 +63,29 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Doppler Tracker', subtitle: '📡 Track moving transmitters via Doppler shift',
+    disconnected: 'Disconnected', connected: 'Tracking',
+    mainSection: 'Doppler Tracking', mainDesc: 'Track moving transmitters via Doppler shift across multiple receivers',
+    sectionA: 'Doppler Measurements', sectionB: 'Theory & Notes',
+    txFreqLabel: 'TX Frequency (MHz)', txSpeedLabel: 'TX Speed (km/h)', noiseLabel: 'Noise Level',
+    startBtn: '▶ Start Tracking', stopBtn: '⏹ Stop', resetBtn: '↺ Reset',
+    dopplerTheory: 'The Doppler effect causes a frequency shift when a transmitter moves relative to a receiver. By measuring the shift at multiple receivers, we can determine velocity and direction.',
+    theory1: 'Doppler shift: Δf = f₀ · (v/c) · cos(θ)',
+    theory2: 'Multiple receivers allow velocity vector estimation',
+    theory3: 'Used in radar, satellite tracking, and wildlife monitoring',
+    theory4: 'SDR receivers provide precise frequency measurements for Doppler analysis',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Doppler tracking?', faq_a1: 'Doppler tracking uses frequency shifts to detect and track moving transmitters across multiple SDR receivers.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Set the transmitter frequency and speed using the sliders.',
+    howto_2: 'Click Start Tracking to begin the Doppler simulation.',
+    howto_3: 'Observe the frequency shifts at each receiver position.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
@@ -88,7 +95,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Doppler Tracker ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,22 +107,29 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Traqueur Doppler SDR', subtitle: '📡 Suivre les émetteurs mobiles par effet Doppler',
+    disconnected: 'Déconnecté', connected: 'En suivi',
+    mainSection: 'Suivi Doppler', mainDesc: 'Suivre les émetteurs mobiles par effet Doppler multi-récepteurs',
+    sectionA: 'Mesures Doppler', sectionB: 'Théorie & Notes',
+    txFreqLabel: 'Fréquence TX (MHz)', txSpeedLabel: 'Vitesse TX (km/h)', noiseLabel: 'Niveau de bruit',
+    startBtn: '▶ Démarrer le suivi', stopBtn: '⏹ Stop', resetBtn: '↺ Réinitialiser',
+    dopplerTheory: 'L\'effet Doppler provoque un décalage de fréquence lorsqu\'un émetteur se déplace par rapport à un récepteur.',
+    theory1: 'Décalage Doppler : Δf = f₀ · (v/c) · cos(θ)',
+    theory2: 'Plusieurs récepteurs permettent d\'estimer le vecteur vitesse',
+    theory3: 'Utilisé en radar, suivi satellite et surveillance de la faune',
+    theory4: 'Les récepteurs SDR fournissent des mesures de fréquence précises pour l\'analyse Doppler',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le suivi Doppler ?', faq_a1: 'Le suivi Doppler utilise les décalages de fréquence pour détecter et suivre des émetteurs mobiles via plusieurs récepteurs SDR.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
+    howto_1: 'Règle la fréquence et la vitesse de l\'émetteur avec les curseurs.',
+    howto_2: 'Clique sur Démarrer pour lancer la simulation Doppler.',
+    howto_3: 'Observe les décalages de fréquence à chaque récepteur.',
     howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
     wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
@@ -125,7 +139,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Traqueur Doppler prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,22 +151,29 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'متتبع دوبلر SDR', subtitle: '📡 تتبع المرسلات المتحركة عبر تأثير دوبلر',
+    disconnected: 'غير متصل', connected: 'قيد التتبع',
+    mainSection: 'تتبع دوبلر', mainDesc: 'تتبع المرسلات المتحركة عبر تأثير دوبلر بمستقبلات متعددة',
+    sectionA: 'قياسات دوبلر', sectionB: 'النظرية والملاحظات',
+    txFreqLabel: 'تردد الإرسال (ميغاهرتز)', txSpeedLabel: 'سرعة المرسل (كم/س)', noiseLabel: 'مستوى الضوضاء',
+    startBtn: '▶ بدء التتبع', stopBtn: '⏹ إيقاف', resetBtn: '↺ إعادة',
+    dopplerTheory: 'يسبب تأثير دوبلر انزياحًا في التردد عندما يتحرك المرسل بالنسبة للمستقبل. بقياس الانزياح عند عدة مستقبلات يمكن تحديد السرعة والاتجاه.',
+    theory1: 'انزياح دوبلر: Δf = f₀ · (v/c) · cos(θ)',
+    theory2: 'عدة مستقبلات تسمح بتقدير متجه السرعة',
+    theory3: 'يُستخدم في الرادار وتتبع الأقمار الصناعية ومراقبة الحياة البرية',
+    theory4: 'مستقبلات SDR توفر قياسات تردد دقيقة لتحليل دوبلر',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو تتبع دوبلر؟', faq_a1: 'تتبع دوبلر يستخدم انزياحات التردد لكشف وتتبع المرسلات المتحركة عبر عدة مستقبلات SDR.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
+    howto_1: 'اضبط تردد وسرعة المرسل بالمنزلقات.',
+    howto_2: 'انقر بدء التتبع لتشغيل محاكاة دوبلر.',
+    howto_3: 'راقب انزياحات التردد عند كل مستقبل.',
     howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
     wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
@@ -162,7 +183,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 متتبع دوبلر جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1470,202 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ DOPPLER TRACKING SIMULATION ═══════ */
+const C = 299792458; // speed of light m/s
+const receivers = [
+  { x: 100, y: 280, label: 'RX-1', color: '#4af' },
+  { x: 400, y: 60,  label: 'RX-2', color: '#f84' },
+  { x: 700, y: 280, label: 'RX-3', color: '#4f4' }
+];
+let tx = { x: 50, y: 170, vx: 2, vy: 0 };
+let dopplerAnim = null;
+let dopplerRunning = false;
+let dopplerHistory = [];
+let specBuf = [[],[],[]];
+const SPEC_LEN = 200;
+
+function dopplerShift(f0, vRel) {
+  return f0 * (1 + vRel / C);
+}
+
+function drawMap() {
+  const c = $('mapCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  // grid
+  ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = 0.5;
+  for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+  for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+  // trail
+  ctx.strokeStyle = 'rgba(255,200,50,.3)'; ctx.lineWidth = 2; ctx.beginPath();
+  dopplerHistory.forEach((p, i) => { i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); });
+  ctx.stroke();
+  // receivers
+  receivers.forEach(r => {
+    ctx.beginPath(); ctx.arc(r.x, r.y, 10, 0, Math.PI * 2);
+    ctx.fillStyle = r.color; ctx.globalAlpha = 0.3; ctx.fill();
+    ctx.globalAlpha = 1; ctx.strokeStyle = r.color; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = r.color; ctx.font = '11px Orbitron,monospace'; ctx.fillText(r.label, r.x - 14, r.y + 24);
+    // line to TX
+    ctx.strokeStyle = r.color; ctx.globalAlpha = 0.15; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(tx.x, tx.y); ctx.stroke();
+    ctx.globalAlpha = 1;
+  });
+  // transmitter
+  const pulse = (Date.now() % 1000) / 1000;
+  ctx.beginPath(); ctx.arc(tx.x, tx.y, 8 + pulse * 12, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(255,200,50,${0.6 - pulse * 0.6})`; ctx.lineWidth = 2; ctx.stroke();
+  ctx.beginPath(); ctx.arc(tx.x, tx.y, 6, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffc832'; ctx.fill();
+  ctx.fillStyle = '#ffc832'; ctx.font = 'bold 11px Orbitron,monospace'; ctx.fillText('TX', tx.x - 8, tx.y - 14);
+  // velocity arrow
+  const arrowLen = Math.sqrt(tx.vx * tx.vx + tx.vy * tx.vy) * 15;
+  const angle = Math.atan2(tx.vy, tx.vx);
+  ctx.strokeStyle = '#ffc832'; ctx.lineWidth = 2; ctx.beginPath();
+  ctx.moveTo(tx.x, tx.y);
+  ctx.lineTo(tx.x + Math.cos(angle) * arrowLen, tx.y + Math.sin(angle) * arrowLen);
+  ctx.stroke();
+}
+
+function drawSpectrum(canvasId, buf, color, label, shift) {
+  const c = $(canvasId); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const mx = Math.max(...buf.map(Math.abs), 1);
+  ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let i = 0; i < buf.length; i++) {
+    const x = i / buf.length * w, y = h / 2 - (buf[i] / mx) * (h / 2 - 4);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.fillStyle = color; ctx.font = '10px Orbitron,monospace';
+  ctx.fillText(label, 4, 13);
+  ctx.fillText((shift >= 0 ? '+' : '') + shift.toFixed(1) + ' Hz', 4, h - 6);
+}
+
+function drawDopplerHist() {
+  const c = $('dopplerHist'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (dopplerHistory.length < 2) return;
+  const N = Math.min(dopplerHistory.length, SPEC_LEN);
+  receivers.forEach((r, ri) => {
+    ctx.strokeStyle = r.color; ctx.lineWidth = 1.2; ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const d = dopplerHistory[dopplerHistory.length - N + i];
+      const val = d.shifts[ri];
+      const x = i / N * w, y = h / 2 - (val / 500) * (h / 2 - 4);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  });
+  ctx.fillStyle = '#fff'; ctx.font = '10px Orbitron,monospace';
+  ctx.fillText('Doppler Shift History', 4, 13);
+  // zero line
+  ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+}
+
+function updateRxInfo(shifts, dists) {
+  const el = $('rxInfo'); if (!el) return;
+  el.innerHTML = receivers.map((r, i) => `
+    <div class="rx-card" style="border-left:3px solid ${r.color}">
+      <div>${r.label}</div>
+      <div class="freq">${(+$('txFreqSlider').value + shifts[i] / 1e6).toFixed(4)} MHz</div>
+      <div class="shift">${(shifts[i] >= 0 ? '+' : '')}${shifts[i].toFixed(1)} Hz | ${dists[i].toFixed(0)} m</div>
+    </div>
+  `).join('');
+}
+
+function stepDoppler() {
+  const c = $('mapCanvas'); if (!c) return;
+  const w = c.width, h = c.height;
+  const noiseAmt = +$('noiseSlider').value / 100;
+  const speedKmh = +$('txSpeedSlider').value;
+  const speedMs = speedKmh / 3.6;
+  const f0 = +$('txFreqSlider').value * 1e6;
+
+  // Move TX
+  tx.x += tx.vx; tx.y += tx.vy;
+  // Bounce off walls
+  if (tx.x < 20 || tx.x > w - 20) { tx.vx *= -1; tx.x = Math.max(20, Math.min(w - 20, tx.x)); }
+  if (tx.y < 20 || tx.y > h - 20) { tx.vy *= -1; tx.y = Math.max(20, Math.min(h - 20, tx.y)); }
+  // Slight random sway
+  tx.vy += (Math.random() - 0.5) * 0.15;
+  tx.vy = Math.max(-1.5, Math.min(1.5, tx.vy));
+
+  const speed = Math.sqrt(tx.vx * tx.vx + tx.vy * tx.vy);
+  const normSpeed = speedMs / (speed || 1);
+
+  const shifts = [];
+  const dists = [];
+  receivers.forEach((r, ri) => {
+    const dx = tx.x - r.x, dy = tx.y - r.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) * 5; // scale to meters
+    dists.push(dist);
+    // radial velocity component
+    const vRad = (tx.vx * dx + tx.vy * dy) / (Math.sqrt(dx * dx + dy * dy) || 1) * normSpeed;
+    const shift = f0 * vRad / C + (Math.random() - 0.5) * noiseAmt * 50;
+    shifts.push(shift);
+    // spectrum buffer
+    const sig = Math.sin(2 * Math.PI * (5 + shift / 100) * specBuf[ri].length / SPEC_LEN) + noiseAmt * (Math.random() * 2 - 1);
+    specBuf[ri].push(sig);
+    if (specBuf[ri].length > SPEC_LEN) specBuf[ri].shift();
+  });
+
+  dopplerHistory.push({ x: tx.x, y: tx.y, shifts: [...shifts] });
+  if (dopplerHistory.length > 600) dopplerHistory.shift();
+
+  drawMap();
+  drawSpectrum('specCanvas1', specBuf[0], receivers[0].color, receivers[0].label, shifts[0]);
+  drawSpectrum('specCanvas2', specBuf[1], receivers[1].color, receivers[1].label, shifts[1]);
+  drawSpectrum('specCanvas3', specBuf[2], receivers[2].color, receivers[2].label, shifts[2]);
+  drawDopplerHist();
+  updateRxInfo(shifts, dists);
+
+  if (dopplerRunning) dopplerAnim = requestAnimationFrame(stepDoppler);
+}
+
+function startDoppler() {
+  if (dopplerRunning) return;
+  const c = $('mapCanvas'); if (!c) return;
+  const speedKmh = +$('txSpeedSlider').value;
+  const angle = Math.random() * Math.PI * 2;
+  const spd = speedKmh / 3.6 / 20;
+  tx = { x: 50 + Math.random() * 100, y: 80 + Math.random() * 180, vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd };
+  dopplerHistory = [];
+  specBuf = [[], [], []];
+  dopplerRunning = true;
+  setStatus(true);
+  log('📡 Doppler tracking started — TX moving at ' + speedKmh + ' km/h', 'success');
+  stepDoppler();
+}
+
+function stopDoppler() {
+  dopplerRunning = false;
+  if (dopplerAnim) cancelAnimationFrame(dopplerAnim);
+  setStatus(false);
+  log('⏹ Doppler tracking stopped', 'info');
+}
+
+function resetDoppler() {
+  stopDoppler();
+  dopplerHistory = [];
+  specBuf = [[], [], []];
+  ['mapCanvas', 'specCanvas1', 'specCanvas2', 'specCanvas3', 'dopplerHist'].forEach(id => {
+    const c = $(id); if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, c.width, c.height); }
+  });
+  const el = $('rxInfo'); if (el) el.innerHTML = '';
+  log('↺ Doppler tracker reset', 'info');
+}
+
+(function initDopplerSim() {
+  const sb = $('startBtn'); if (sb) sb.onclick = startDoppler;
+  const stb = $('stopBtn'); if (stb) stb.onclick = stopDoppler;
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetDoppler;
+  const fs = $('txFreqSlider'); if (fs) fs.oninput = function() { $('txFreqVal').textContent = (+this.value).toFixed(1); };
+  const ss = $('txSpeedSlider'); if (ss) ss.oninput = function() { $('txSpeedVal').textContent = this.value; };
+  const ns = $('noiseSlider'); if (ns) ns.oninput = function() { $('noiseVal').textContent = this.value; };
+  setTimeout(startDoppler, 600);
+})();

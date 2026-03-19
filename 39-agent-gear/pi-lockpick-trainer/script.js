@@ -63,32 +63,31 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-lockpick-trainer', subtitle: '🔓 lockpick trainer — learn lock mechanisms',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Lockpick Training Simulator', mainDesc: 'Learn pin tumbler lock mechanisms through simulation',
+    sectionA: 'Pin Analysis', sectionB: 'Practice Log', sectionC: 'Skill Report',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is this simulator?', faq_a1: 'A lockpick training simulator that teaches pin tumbler lock mechanisms through interactive practice.',
+    faq_q2: 'How does pin picking work?', faq_a2: 'Apply tension with wrench, then push each pin to the shear line. Pins set in a specific order based on binding.',
+    faq_q3: 'What lock types are available?', faq_a3: 'Pin tumbler, wafer, and disc detainer locks with varying difficulty levels from 3 to 7 pins.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.',
+    howto_1: 'Choose difficulty and lock type.',
+    howto_2: 'Click Pick Pin to attempt picking the current binding pin.',
+    howto_3: 'Watch the canvas for pin positions and tension feedback.',
+    howto_4: 'Set all pins to unlock. Reset to try again with a new lock.',
+    wiki_pin_title: '🔓 Pin Tumbler Locks', wiki_pin: 'Pin tumbler locks use spring-loaded pin stacks. The correct key pushes each pin pair to the shear line.',
+    wiki_pick_title: '🔧 Lock Picking', wiki_pick: 'Lock picking exploits manufacturing tolerances. Tension creates binding order, letting pins be set one by one.',
+    wiki_types_title: '🔐 Lock Types', wiki_types: 'Pin tumbler, wafer, disc detainer, and tubular locks each use different mechanisms requiring unique techniques.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔓 Lockpick trainer ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,34 +97,42 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    lockLabel: 'LOCK STATUS', locked: 'LOCKED', unlocked: 'UNLOCKED', picking: 'PICKING',
+    tensionLabel: 'TENSION WRENCH', diffLabel: 'Difficulty', typeLabel: 'Lock Type',
+    diff3: '3 Pins (Easy)', diff5: '5 Pins (Medium)', diff7: '7 Pins (Hard)',
+    typePin: 'Pin Tumbler', typeWafer: 'Wafer', typeDisc: 'Disc Detainer',
+    pickBtn: 'Pick Pin', resetBtn: 'Reset Lock', feedbackLabel: 'PICK FEEDBACK',
+    pinSet: '🔓 Pin set! Binding pin found at position', pinFail: '🔴 Pin slipped! Too much tension',
+    lockOpen: '🔓 LOCK OPENED! All pins set successfully', lockReset: '🔄 Lock reset with new pin configuration',
+    ftSecABtn: 'Analyze', ftSecARst: 'Reset', ftSecBBtn: 'Log Attempt', ftSecBRst: 'Reset',
+    ftSecCBtn: 'Generate', ftSecCRst: 'Reset',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-lockpick-trainer', subtitle: '🔓 simulateur crochetage — apprendre les mécanismes',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Simulateur de Crochetage', mainDesc: 'Apprendre les mécanismes de serrure à goupilles par simulation',
+    sectionA: 'Analyse des Goupilles', sectionB: 'Journal de Pratique', sectionC: 'Rapport de Compétence',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que ce simulateur ?', faq_a1: 'Un simulateur d\'entraînement au crochetage qui enseigne les mécanismes de serrure à goupilles.',
+    faq_q2: 'Comment fonctionne le crochetage ?', faq_a2: 'Applique une tension avec l\'entraîneur, puis pousse chaque goupille jusqu\'à la ligne de cisaillement.',
+    faq_q3: 'Quels types de serrures sont disponibles ?', faq_a3: 'Serrures à goupilles, à lamelles et à disques avec des niveaux de difficulté de 3 à 7 goupilles.',
+    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé. C\'est une simulation.',
+    howto_1: 'Choisis la difficulté et le type de serrure.',
+    howto_2: 'Clique sur Crocheter pour tenter la goupille liante.',
+    howto_3: 'Observe le canvas pour les positions des goupilles et la tension.',
+    howto_4: 'Place toutes les goupilles pour déverrouiller. Réinitialise pour réessayer.',
+    wiki_pin_title: '🔓 Serrures à Goupilles', wiki_pin: 'Les serrures à goupilles utilisent des empilements à ressort. La bonne clé pousse chaque paire de goupilles à la ligne de cisaillement.',
+    wiki_pick_title: '🔧 Crochetage', wiki_pick: 'Le crochetage exploite les tolérances de fabrication. La tension crée un ordre de liaison permettant de placer les goupilles une par une.',
+    wiki_types_title: '🔐 Types de Serrures', wiki_types: 'Goupilles, lamelles, disques et tubulaires utilisent chacun des mécanismes différents nécessitant des techniques uniques.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔓 Simulateur de crochetage prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -135,34 +142,42 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
+    lockLabel: 'ÉTAT DE LA SERRURE', locked: 'VERROUILLÉE', unlocked: 'DÉVERROUILLÉE', picking: 'CROCHETAGE',
+    tensionLabel: 'ENTRAÎNEUR DE TENSION', diffLabel: 'Difficulté', typeLabel: 'Type de serrure',
+    diff3: '3 Goupilles (Facile)', diff5: '5 Goupilles (Moyen)', diff7: '7 Goupilles (Difficile)',
+    typePin: 'Goupilles', typeWafer: 'Lamelles', typeDisc: 'Disques',
+    pickBtn: 'Crocheter', resetBtn: 'Réinitialiser', feedbackLabel: 'RETOUR CROCHETAGE',
+    pinSet: '🔓 Goupille placée ! Position', pinFail: '🔴 Goupille glissée ! Trop de tension',
+    lockOpen: '🔓 SERRURE OUVERTE ! Toutes les goupilles placées', lockReset: '🔄 Serrure réinitialisée',
+    ftSecABtn: 'Analyser', ftSecARst: 'Réinitialiser', ftSecBBtn: 'Enregistrer', ftSecBRst: 'Réinitialiser',
+    ftSecCBtn: 'Générer', ftSecCRst: 'Réinitialiser',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'pi-lockpick-trainer', subtitle: '🔓 محاكي فتح الأقفال — تعلم آليات القفل',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محاكي تدريب فتح الأقفال', mainDesc: 'تعلم آليات قفل المسامير من خلال المحاكاة',
+    sectionA: 'تحليل المسامير', sectionB: 'سجل التدريب', sectionC: 'تقرير المهارة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هذا المحاكي؟', faq_a1: 'محاكي تدريب فتح الأقفال يعلم آليات قفل المسامير من خلال الممارسة التفاعلية.',
+    faq_q2: 'كيف يعمل فتح المسامير؟', faq_a2: 'اضغط بالتوتر، ثم ادفع كل مسمار لخط القص. المسامير تُثبت بترتيب معين حسب الربط.',
+    faq_q3: 'ما أنواع الأقفال المتاحة؟', faq_a3: 'أقفال مسامير ورقائق وأقراص بمستويات صعوبة مختلفة من 3 إلى 7 مسامير.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات. هذه محاكاة فقط.',
+    howto_1: 'اختر الصعوبة ونوع القفل.',
+    howto_2: 'انقر فتح المسمار لمحاولة فتح مسمار الربط الحالي.',
+    howto_3: 'راقب اللوحة لمواقع المسامير وردود فعل التوتر.',
+    howto_4: 'ثبت كل المسامير لفتح القفل. أعد التعيين للمحاولة مرة أخرى.',
+    wiki_pin_title: '🔓 أقفال المسامير', wiki_pin: 'تستخدم أقفال المسامير أكوامًا مزودة بنوابض. المفتاح الصحيح يدفع كل زوج من المسامير لخط القص.',
+    wiki_pick_title: '🔧 فتح الأقفال', wiki_pick: 'فتح الأقفال يستغل تحملات التصنيع. التوتر يخلق ترتيب ربط يسمح بتثبيت المسامير واحدًا تلو الآخر.',
+    wiki_types_title: '🔐 أنواع الأقفال', wiki_types: 'أقفال المسامير والرقائق والأقراص والأنبوبية كل منها يستخدم آليات مختلفة تتطلب تقنيات فريدة.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔓 محاكي فتح الأقفال جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -172,6 +187,15 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    lockLabel: 'حالة القفل', locked: 'مقفل', unlocked: 'مفتوح', picking: 'فتح',
+    tensionLabel: 'مفتاح التوتر', diffLabel: 'الصعوبة', typeLabel: 'نوع القفل',
+    diff3: '3 مسامير (سهل)', diff5: '5 مسامير (متوسط)', diff7: '7 مسامير (صعب)',
+    typePin: 'مسامير', typeWafer: 'رقائق', typeDisc: 'أقراص',
+    pickBtn: 'فتح المسمار', resetBtn: 'إعادة تعيين', feedbackLabel: 'ردود فعل الفتح',
+    pinSet: '🔓 تم تثبيت المسمار! الموقع', pinFail: '🔴 انزلق المسمار! توتر زائد',
+    lockOpen: '🔓 القفل مفتوح! كل المسامير مثبتة', lockReset: '🔄 تم إعادة تعيين القفل',
+    ftSecABtn: 'تحليل', ftSecARst: 'إعادة', ftSecBBtn: 'تسجيل', ftSecBRst: 'إعادة',
+    ftSecCBtn: 'إنشاء', ftSecCRst: 'إعادة',
   }
 };
 
@@ -1443,9 +1467,187 @@ function init() {
   initAR();
   initAIChat();
 
+  // Lockpick simulation
+  initLockpick();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ LOCKPICK SIMULATION ═══════ */
+
+let lpPins = [], lpBindOrder = [], lpCurrentPin = 0, lpTension = 0, lpSetPins = 0;
+let lpAttempts = 0, lpSuccesses = 0, lpHistory = [];
+
+function lpGenerateLock() {
+  const n = parseInt(($('diffSelect') || {}).value || '5');
+  lpPins = Array.from({ length: n }, () => ({ height: 20 + Math.random() * 60, set: false }));
+  lpBindOrder = Array.from({ length: n }, (_, i) => i);
+  for (let i = lpBindOrder.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [lpBindOrder[i], lpBindOrder[j]] = [lpBindOrder[j], lpBindOrder[i]]; }
+  lpCurrentPin = 0; lpSetPins = 0; lpTension = 0;
+  lpUpdateStatus('locked');
+  lpDrawLock();
+}
+
+function lpUpdateStatus(state) {
+  const s = LANG[currentLang];
+  const val = $('lockValue');
+  if (!val) return;
+  if (state === 'locked') { val.textContent = s.locked || 'LOCKED'; val.style.color = '#f44'; }
+  else if (state === 'unlocked') { val.textContent = s.unlocked || 'UNLOCKED'; val.style.color = '#4f4'; }
+  else { val.textContent = s.picking || 'PICKING'; val.style.color = '#fc0'; }
+  const tf = $('tensionFill');
+  if (tf) tf.style.width = lpTension + '%';
+}
+
+function lpDrawLock() {
+  const c = $('ftCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, W, H);
+  // Lock body
+  ctx.fillStyle = '#1a1a2e';
+  ctx.fillRect(20, 30, W - 40, H - 60);
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(20, 30, W - 40, H - 60);
+  // Shear line
+  const shearY = H * 0.5;
+  ctx.strokeStyle = 'rgba(255,255,0,0.3)';
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(20, shearY); ctx.lineTo(W - 20, shearY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#fc0';
+  ctx.font = '9px Orbitron, monospace';
+  ctx.fillText('SHEAR LINE', W - 90, shearY - 4);
+  // Pins
+  const n = lpPins.length;
+  const gap = (W - 60) / n;
+  for (let i = 0; i < n; i++) {
+    const x = 40 + i * gap;
+    const pin = lpPins[i];
+    const bindIdx = lpBindOrder.indexOf(i);
+    // Driver pin (top)
+    ctx.fillStyle = pin.set ? 'rgba(0,255,100,0.6)' : (bindIdx === lpCurrentPin ? 'rgba(255,200,0,0.6)' : 'rgba(255,80,80,0.4)');
+    const driverH = pin.set ? shearY - 34 : shearY - 34 + (pin.height * 0.3);
+    ctx.fillRect(x, 34, gap - 8, Math.max(10, driverH));
+    // Key pin (bottom)
+    ctx.fillStyle = pin.set ? 'rgba(0,255,100,0.8)' : 'rgba(100,150,255,0.5)';
+    const keyTop = pin.set ? shearY : shearY + 4;
+    const keyH = pin.height * 0.6;
+    ctx.fillRect(x, keyTop, gap - 8, keyH);
+    // Spring
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 1;
+    for (let s = 0; s < 3; s++) {
+      const sy = 32 + s * 3;
+      ctx.beginPath(); ctx.moveTo(x + 2, sy); ctx.lineTo(x + gap - 10, sy + 1.5); ctx.stroke();
+    }
+    // Pin number
+    ctx.fillStyle = bindIdx === lpCurrentPin && !pin.set ? '#fc0' : '#888';
+    ctx.font = '10px Orbitron, monospace';
+    ctx.fillText((i + 1).toString(), x + gap / 2 - 8, H - 8);
+  }
+  // Labels
+  ctx.fillStyle = '#0f8';
+  ctx.font = '10px Orbitron, monospace';
+  ctx.fillText('LOCK CROSS-SECTION', 24, 22);
+  const type = ($('typeSelect') || {}).value || 'pin';
+  ctx.fillText(type.toUpperCase() + ' TUMBLER', W - 130, 22);
+  ctx.fillText('SET: ' + lpSetPins + '/' + n, W / 2 - 20, 22);
+}
+
+function lpPickPin() {
+  if (lpSetPins >= lpPins.length) return;
+  lpAttempts++;
+  lpTension = Math.min(100, lpTension + 15 + Math.random() * 20);
+  lpUpdateStatus('picking');
+  const bindPinIdx = lpBindOrder[lpCurrentPin];
+  const success = Math.random() < (lpTension > 80 ? 0.3 : 0.7);
+  const s = LANG[currentLang];
+  if (success) {
+    lpPins[bindPinIdx].set = true;
+    lpSetPins++;
+    lpCurrentPin++;
+    log(`${s.pinSet} ${bindPinIdx + 1}`, 'success');
+    playSound('success');
+    if (lpSetPins >= lpPins.length) {
+      lpUpdateStatus('unlocked');
+      lpSuccesses++;
+      lpHistory.push({ time: new Date().toLocaleTimeString(), pins: lpPins.length, attempts: lpAttempts, result: 'open' });
+      log(s.lockOpen, 'success');
+      setStatus(true);
+    }
+  } else {
+    // Overset — reset some pins
+    const resetCount = Math.floor(Math.random() * lpSetPins) + 1;
+    for (let i = 0; i < resetCount && lpCurrentPin > 0; i++) {
+      lpCurrentPin--;
+      lpPins[lpBindOrder[lpCurrentPin]].set = false;
+      lpSetPins--;
+    }
+    lpTension = Math.max(0, lpTension - 30);
+    log(s.pinFail, 'error');
+    playSound('error');
+  }
+  lpDrawLock();
+  const fb = $('feedbackDisplay');
+  if (fb) fb.textContent = `[${new Date().toLocaleTimeString()}] Pin ${bindPinIdx + 1} | Tension: ${lpTension.toFixed(0)}% | Set: ${lpSetPins}/${lpPins.length} | ${success ? 'SET' : 'SLIP'}`;
+}
+
+function lpResetLock() {
+  const s = LANG[currentLang];
+  lpAttempts = 0;
+  setStatus(false);
+  lpGenerateLock();
+  log(s.lockReset, 'info');
+  playSound('click');
+  const fb = $('feedbackDisplay');
+  if (fb) fb.textContent = '--';
+}
+
+function lpDrawPinAnalysis() {
+  const c = $('pinAnalysisCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, W, H);
+  const n = lpPins.length;
+  const barW = (W - 40) / n;
+  for (let i = 0; i < n; i++) {
+    const h = (lpPins[i].height / 80) * (H - 30);
+    ctx.fillStyle = lpPins[i].set ? '#0f8' : '#f44';
+    ctx.fillRect(20 + i * barW, H - h - 10, barW - 4, h);
+    ctx.fillStyle = '#fff';
+    ctx.font = '9px monospace';
+    ctx.fillText('P' + (i + 1), 20 + i * barW + 4, H - 2);
+  }
+  ctx.fillStyle = '#0f8';
+  ctx.font = '10px Orbitron, monospace';
+  ctx.fillText('PIN HEIGHT ANALYSIS', 10, 14);
+}
+
+function ftSecAAction() { lpDrawPinAnalysis(); const el = $('ftSecAContent'); if (el) el.textContent = 'Bind order: ' + lpBindOrder.map(i => 'P' + (i + 1)).join(' > '); log('📊 Pin analysis complete', 'success'); }
+function ftSecAReset() { const c = $('pinAnalysisCanvas'); if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, c.width, c.height); } const el = $('ftSecAContent'); if (el) el.textContent = ''; }
+function ftSecBAction() { lpHistory.push({ time: new Date().toLocaleTimeString(), pins: lpPins.length, attempts: lpAttempts, result: lpSetPins >= lpPins.length ? 'open' : 'partial' }); const el = $('ftSecBContent'); if (el) el.innerHTML = lpHistory.map((h, i) => `#${i + 1} [${h.time}] ${h.pins}P ${h.attempts}att ${h.result}`).join('<br>'); log('📝 Attempt logged', 'info'); }
+function ftSecBReset() { lpHistory = []; const el = $('ftSecBContent'); if (el) el.textContent = ''; }
+function ftSecCAction() { const el = $('ftSecCContent'); if (el) el.innerHTML = `LOCKPICK SKILL REPORT\n======================\nDate: ${new Date().toLocaleString()}\nTotal Attempts: ${lpHistory.length}\nSuccesses: ${lpSuccesses}\nSuccess Rate: ${lpHistory.length > 0 ? ((lpSuccesses / lpHistory.length) * 100).toFixed(1) : 0}%\nCurrent Lock: ${lpPins.length} pins\nPins Set: ${lpSetPins}/${lpPins.length}\n======================`.replace(/\n/g, '<br>'); }
+function ftSecCReset() { const el = $('ftSecCContent'); if (el) el.textContent = ''; }
+
+function ftActivate() { lpPickPin(); }
+function ftAction1() { ftSecAAction(); }
+function ftEmergency() { lpResetLock(); }
+
+function initLockpick() {
+  const pickBtn = $('pickBtn');
+  const resetBtn = $('resetLockBtn');
+  if (pickBtn) pickBtn.onclick = lpPickPin;
+  if (resetBtn) resetBtn.onclick = lpResetLock;
+  lpGenerateLock();
+}

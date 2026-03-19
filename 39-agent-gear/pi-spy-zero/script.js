@@ -63,32 +63,36 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-spy-zero', subtitle: '🕵️ Pi Zero spy device — miniature surveillance',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Pi Zero Spy Device', mainDesc: 'Miniature surveillance platform with camera and sensors',
+    sectionA: 'Sensor Feed', sectionB: 'Recordings', sectionC: 'Mission Report',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Pi Spy Zero?', faq_a1: 'A miniature surveillance platform on Pi Zero with camera, mic, motion, and thermal sensors.',
+    faq_q2: 'What modes?', faq_a2: 'Reconnaissance (passive), Record (store), and Live Stream (real-time) modes.',
+    faq_q3: 'What sensors?', faq_a3: 'Camera, microphone, motion detector, and thermal sensor with real-time telemetry.',
+    faq_q4: 'Is data private?', faq_a4: 'Yes. Everything runs locally. Simulation only.',
+    howto_1: 'Select operation mode and sensor type.',
+    howto_2: 'Click Deploy to activate the spy device.',
+    howto_3: 'Monitor the sensor feed and telemetry data.',
+    howto_4: 'Save recordings and generate mission reports.',
+    wiki_pizero_title: '🕵️ Pi Zero', wiki_pizero: 'Tiny single-board computer ideal for covert applications.',
+    wiki_surv_title: '📹 Surveillance', wiki_surv: 'Systems combining cameras, mics, and sensors for monitoring.',
+    wiki_covert_title: '🔒 Covert Ops', wiki_covert: 'Concealed devices for recon, recording, and intelligence.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🕵️ Spy device ready!',
+    devLabel: 'DEVICE STATUS', modeLabel: 'Operation Mode', sensorLabel: 'Sensor',
+    deployBtn: 'Deploy', recallBtn: 'Recall', telLabel: 'TELEMETRY DATA',
+    deployed: '🕵️ Device deployed', recalled: '🔴 Device recalled',
+    ftSecABtn: 'Capture', ftSecARst: 'Reset', ftSecBBtn: 'Save', ftSecBRst: 'Reset',
+    ftSecCBtn: 'Generate', ftSecCRst: 'Reset',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +104,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-spy-zero', subtitle: '🕵️ dispositif espion Pi Zero — surveillance miniature',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Dispositif Espion Pi Zero', mainDesc: 'Plateforme de surveillance miniature',
+    sectionA: 'Flux Capteur', sectionB: 'Enregistrements', sectionC: 'Rapport de Mission',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +129,12 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🕵️ Dispositif espion prêt !',
+    devLabel: 'ÉTAT DU DISPOSITIF', modeLabel: 'Mode', sensorLabel: 'Capteur',
+    deployBtn: 'Déployer', recallBtn: 'Rappeler', telLabel: 'TÉLÉMÉTRIE',
+    deployed: '🕵️ Dispositif déployé', recalled: '🔴 Dispositif rappelé',
+    ftSecABtn: 'Capturer', ftSecARst: 'Réinitialiser', ftSecBBtn: 'Sauvegarder', ftSecBRst: 'Réinitialiser',
+    ftSecCBtn: 'Générer', ftSecCRst: 'Réinitialiser',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +146,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'pi-spy-zero', subtitle: '🕵️ جهاز تجسس Pi Zero — مراقبة مصغرة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'جهاز تجسس Pi Zero', mainDesc: 'منصة مراقبة مصغرة مع كاميرا وأجهزة استشعار',
+    sectionA: 'بث المستشعر', sectionB: 'التسجيلات', sectionC: 'تقرير المهمة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +171,12 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🕵️ جهاز التجسس جاهز!',
+    devLabel: 'حالة الجهاز', modeLabel: 'وضع التشغيل', sensorLabel: 'المستشعر',
+    deployBtn: 'نشر', recallBtn: 'استدعاء', telLabel: 'بيانات القياس',
+    deployed: '🕵️ تم نشر الجهاز', recalled: '🔴 تم استدعاء الجهاز',
+    ftSecABtn: 'التقاط', ftSecARst: 'إعادة', ftSecBBtn: 'حفظ', ftSecBRst: 'إعادة',
+    ftSecCBtn: 'إنشاء', ftSecCRst: 'إعادة',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1457,31 @@ function init() {
   initAR();
   initAIChat();
 
+  initSpyZero();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SPY ZERO SIMULATION ═══════ */
+let szDeployed=false,szInterval=null,szRecordings=[];
+function szDrawCanvas(){const c=$('ftCanvas');if(!c)return;const ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(0,255,100,0.06)';for(let y=0;y<H;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}for(let x=0;x<W;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+const sensor=($('sensorSelect')||{}).value||'camera';ctx.fillStyle='#0f8';ctx.font='10px Orbitron,monospace';ctx.fillText('SENSOR: '+sensor.toUpperCase(),10,14);
+if(szDeployed){ctx.fillStyle='#f44';ctx.fillText('● ACTIVE',W-80,14);ctx.strokeStyle='#0f8';ctx.lineWidth=1;ctx.beginPath();for(let x=0;x<W;x++){const y=H/2+Math.sin(x*0.05+Date.now()*0.003)*30+Math.random()*10;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();for(let i=0;i<5;i++){if(Math.random()>0.7){const bx=Math.random()*W,by=40+Math.random()*(H-60);ctx.fillStyle='rgba(255,0,0,0.5)';ctx.beginPath();ctx.arc(bx,by,3+Math.random()*5,0,Math.PI*2);ctx.fill();}}}else{ctx.fillStyle='#888';ctx.font='14px Orbitron,monospace';ctx.fillText('STANDBY',W/2-30,H/2);}}
+
+function szDeploy(){if(szDeployed)return;szDeployed=true;const s=LANG[currentLang];const dv=$('devValue');if(dv){dv.textContent='ACTIVE';dv.style.color='#4f4';}setStatus(true);log(s.deployed,'success');playSound('success');szInterval=setInterval(()=>{szDrawCanvas();const tel=$('telDisplay');if(tel){const cpu=(20+Math.random()*30).toFixed(1),temp=(35+Math.random()*15).toFixed(1),bat=(70+Math.random()*25).toFixed(0);tel.textContent='['+new Date().toLocaleTimeString()+'] CPU:'+cpu+'% TEMP:'+temp+'C BAT:'+bat+'%';}if(Math.random()<0.05){const hex=Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).toUpperCase().padStart(2,'0')).join(' ');log('📡 TX: '+hex,'tx');}},200);}
+
+function szRecall(){if(szInterval){clearInterval(szInterval);szInterval=null;}szDeployed=false;const s=LANG[currentLang];const dv=$('devValue');if(dv){dv.textContent='STANDBY';dv.style.color='#888';}setStatus(false);log(s.recalled,'error');playSound('error');szDrawCanvas();}
+
+function ftSecAAction(){const c=$('sensorCanvas');if(c){const ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);for(let y=0;y<H;y+=4){for(let x=0;x<W;x+=4){const v=Math.random()*255;ctx.fillStyle='rgb(0,'+Math.floor(v*0.8)+',0)';ctx.fillRect(x,y,3,3);}}ctx.fillStyle='#0f8';ctx.font='10px Orbitron,monospace';ctx.fillText('SENSOR FEED',10,14);}log('📸 Sensor capture','success');playSound('success');const el=$('ftSecAContent');if(el)el.textContent='Frame captured at '+new Date().toLocaleTimeString();}
+function ftSecAReset(){const c=$('sensorCanvas');if(c){const ctx=c.getContext('2d');ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,c.width,c.height);}const el=$('ftSecAContent');if(el)el.textContent='';}
+function ftSecBAction(){szRecordings.push({time:new Date().toLocaleTimeString(),sensor:($('sensorSelect')||{}).value||'camera',mode:($('opModeSelect')||{}).value||'record'});const el=$('ftSecBContent');if(el)el.innerHTML=szRecordings.map((r,i)=>'#'+(i+1)+' ['+r.time+'] '+r.sensor+' ('+r.mode+')').join('<br>');log('💾 Recording saved','success');}
+function ftSecBReset(){szRecordings=[];const el=$('ftSecBContent');if(el)el.textContent='';}
+function ftSecCAction(){const el=$('ftSecCContent');if(el)el.innerHTML='SPY ZERO MISSION REPORT<br>========================<br>Date: '+new Date().toLocaleString()+'<br>Mode: '+(($('opModeSelect')||{}).value||'record')+'<br>Sensor: '+(($('sensorSelect')||{}).value||'camera')+'<br>Recordings: '+szRecordings.length+'<br>Status: '+(szDeployed?'ACTIVE':'STANDBY')+'<br>========================';}
+function ftSecCReset(){const el=$('ftSecCContent');if(el)el.textContent='';}
+function ftActivate(){szDeploy();}
+function ftAction1(){ftSecAAction();}
+function ftEmergency(){szRecall();}
+function initSpyZero(){const db=$('deployBtn'),rb=$('recallBtn');if(db)db.onclick=szDeploy;if(rb)rb.onclick=szRecall;szDrawCanvas();}

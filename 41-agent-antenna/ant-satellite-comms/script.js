@@ -63,115 +63,100 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Satellite Comms Station', subtitle: '🛰️ Uplink/downlink management',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Satellite Comms Station', mainDesc: 'Satellite communication uplink/downlink management',
+    sectionA: 'Orbit Tracker', sectionB: 'Link Budget', sectionC: 'Signal Monitor',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    faq_q1: 'What is Satellite Comms Station?', faq_a1: 'A ground station simulator for managing satellite uplink and downlink communications.',
+    faq_q2: 'How do I track satellites?', faq_a2: 'The Orbit Tracker shows satellite positions. Select a satellite to lock the antenna.',
+    faq_q3: 'What is link budget?', faq_a3: 'Link budget calculates signal strength from ground station to satellite including path loss and gains.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Activate the ground station.', howto_2: 'Track satellite orbits.',
+    howto_3: 'Calculate link budget parameters.', howto_4: 'Monitor uplink/downlink signals.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'EN/FR/AR with RTL.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data local.',
+    working: 'Working…', t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🛰️ Satellite comms station ready!', logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    scStat1: 'Status', scStat2: 'Uplink', scStat3: 'Downlink', scStat4: 'Elevation',
+    scActivate: 'Power On', scAct1: 'Lock Satellite', scEmerg: 'Emergency',
+    activated: '🛰️ Ground station powered on!', deactivated: '🛰️ Station powered down',
+    locked: '🔒 Satellite locked!', lostSignal: '📡 Signal lost!',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Station Satellite', subtitle: '🛰️ Gestion liaison montante/descendante',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Station Satellite', mainDesc: 'Gestion des communications satellite montante/descendante',
+    sectionA: 'Suivi Orbital', sectionB: 'Bilan Liaison', sectionC: 'Moniteur Signal',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    faq_q1: 'Qu\'est-ce que la Station Satellite ?', faq_a1: 'Un simulateur de station sol pour les communications satellite.',
+    faq_q2: 'Comment suivre les satellites ?', faq_a2: 'Le suivi orbital montre les positions. Sélectionnez un satellite pour verrouiller.',
+    faq_q3: 'Qu\'est-ce que le bilan de liaison ?', faq_a3: 'Il calcule la puissance du signal entre la station sol et le satellite.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Activez la station sol.', howto_2: 'Suivez les orbites satellites.',
+    howto_3: 'Calculez le bilan de liaison.', howto_4: 'Surveillez les signaux.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'EN/FR/AR avec RTL.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout est local.',
+    working: 'En cours…', t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🛰️ Station satellite prête !', logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    scStat1: 'Statut', scStat2: 'Montée', scStat3: 'Descente', scStat4: 'Élévation',
+    scActivate: 'Allumer', scAct1: 'Verrouiller', scEmerg: 'Urgence',
+    activated: '🛰️ Station sol activée !', deactivated: '🛰️ Station éteinte',
+    locked: '🔒 Satellite verrouillé !', lostSignal: '📡 Signal perdu !',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محطة اتصالات فضائية', subtitle: '🛰️ إدارة الوصلة الصاعدة/النازلة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محطة اتصالات فضائية', mainDesc: 'إدارة اتصالات القمر الصناعي',
+    sectionA: 'تتبع المدار', sectionB: 'ميزانية الوصلة', sectionC: 'مراقبة الإشارة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    faq_q1: 'ما هي محطة الاتصالات الفضائية؟', faq_a1: 'محاكي محطة أرضية لإدارة اتصالات القمر الصناعي.',
+    faq_q2: 'كيف أتتبع الأقمار؟', faq_a2: 'تتبع المدار يعرض مواقع الأقمار. اختر قمرًا للقفل.',
+    faq_q3: 'ما هي ميزانية الوصلة؟', faq_a3: 'تحسب قوة الإشارة بين المحطة والقمر الصناعي.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
+    howto_1: 'فعّل المحطة الأرضية.', howto_2: 'تتبع مدارات الأقمار.',
+    howto_3: 'احسب معلمات الوصلة.', howto_4: 'راقب الإشارات.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'EN/FR/AR مع RTL.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات محلية.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🛰️ محطة الاتصالات الفضائية جاهزة!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    scStat1: 'الحالة', scStat2: 'صاعدة', scStat3: 'نازلة', scStat4: 'الارتفاع',
+    scActivate: 'تشغيل', scAct1: 'قفل', scEmerg: 'طوارئ',
+    activated: '🛰️ تم تشغيل المحطة!', deactivated: '🛰️ تم إيقاف المحطة',
+    locked: '🔒 تم قفل القمر الصناعي!', lostSignal: '📡 فقدان الإشارة!',
   }
 };
 
@@ -1442,10 +1427,156 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initSatComms();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SATELLITE COMMS SIMULATION ═══════ */
+const SC_SATS = [
+  { name: 'SAT-A1', orbit: 'LEO', alt: 550, freq: 1575.42, period: 95 },
+  { name: 'SAT-B3', orbit: 'MEO', alt: 20200, freq: 2492.028, period: 720 },
+  { name: 'SAT-C7', orbit: 'GEO', alt: 35786, freq: 4199.5, period: 1440 },
+  { name: 'SAT-D2', orbit: 'LEO', alt: 780, freq: 437.5, period: 100 },
+];
+let scState = { active: false, locked: null, uplink: 0, downlink: 0, elevation: 0, uptime: 0, uptimeTimer: null, animFrame: null, satAngle: 0 };
+
+function initSatComms() {
+  setStatus(false);
+  drawScCanvas();
+}
+
+function scActivate() {
+  if (scState.active) {
+    scState.active = false; setStatus(false); clearInterval(scState.uptimeTimer);
+    if (scState.animFrame) cancelAnimationFrame(scState.animFrame);
+    const s1 = $('scS1'); if (s1) s1.textContent = 'OFF';
+    log(LANG[currentLang].deactivated, 'info'); return;
+  }
+  scState.active = true; scState.uptime = 0; setStatus(true);
+  const s1 = $('scS1'); if (s1) s1.textContent = 'ONLINE';
+  log(LANG[currentLang].activated, 'success');
+  scState.uptimeTimer = setInterval(() => {
+    scState.uptime++;
+    const s4 = $('scS4');
+    if (s4) s4.textContent = String(Math.floor(scState.uptime/60)).padStart(2,'0')+':'+String(scState.uptime%60).padStart(2,'0');
+  }, 1000);
+  animateSc();
+}
+
+function animateSc() {
+  if (!scState.active) return;
+  scState.satAngle = (scState.satAngle + 0.5) % 360;
+  scState.elevation = Math.max(0, 45 + 40 * Math.sin(scState.satAngle * Math.PI / 180));
+  scState.uplink = scState.locked ? 60 + Math.random() * 35 : 0;
+  scState.downlink = scState.locked ? 55 + Math.random() * 40 : 0;
+  const s2 = $('scS2'); if (s2) s2.textContent = scState.locked ? Math.round(scState.uplink)+'%' : '--';
+  const s3 = $('scS3'); if (s3) s3.textContent = scState.locked ? Math.round(scState.downlink)+'%' : '--';
+  const s4e = $('scS4'); // reuse for elevation display
+  const bar = $('scBar'); if (bar) bar.style.width = (scState.locked ? (scState.uplink + scState.downlink)/2 : 0) + '%';
+  drawScCanvas();
+  scState.animFrame = requestAnimationFrame(animateSc);
+}
+
+function scAction1() {
+  if (!scState.active) { log('Power on station first!', 'error'); return; }
+  const sat = SC_SATS[Math.floor(Math.random() * SC_SATS.length)];
+  scState.locked = sat;
+  log(LANG[currentLang].locked + ` ${sat.name} (${sat.orbit} @ ${sat.alt} km)`, 'success');
+  playSound('success');
+}
+
+function scEmergency() {
+  scState.active = false; scState.locked = null; setStatus(false);
+  clearInterval(scState.uptimeTimer);
+  if (scState.animFrame) cancelAnimationFrame(scState.animFrame);
+  const s1 = $('scS1'); if (s1) s1.textContent = 'EMERGENCY';
+  log('🚨 Emergency shutdown!', 'error'); playSound('error');
+}
+
+function scSecAAction() {
+  const el = $('scSecAContent');
+  if (el) {
+    el.innerHTML = '<canvas id="scOrbitCanvas" width="350" height="200" style="width:100%;border-radius:8px;background:#050520"></canvas>';
+    drawOrbitCanvas();
+  }
+}
+function scSecAReset() { const el = $('scSecAContent'); if (el) el.innerHTML = ''; }
+function scSecBAction() {
+  const el = $('scSecBContent');
+  if (!scState.locked) { log('Lock a satellite first!', 'error'); return; }
+  const s = scState.locked;
+  const pathLoss = (20 * Math.log10(s.alt * 1000) + 20 * Math.log10(s.freq * 1e6) - 147.55).toFixed(1);
+  el.innerHTML = `Satellite: ${s.name}<br>Orbit: ${s.orbit} @ ${s.alt} km<br>Frequency: ${s.freq} MHz<br>Free-space Path Loss: ${pathLoss} dB<br>Antenna Gain (TX): 42 dBi<br>Antenna Gain (RX): 38 dBi<br>Est. C/N0: ${(50 + Math.random()*10).toFixed(1)} dB-Hz`;
+  log('📊 Link budget calculated', 'success');
+}
+function scSecBReset() { const el = $('scSecBContent'); if (el) el.innerHTML = ''; }
+function scSecCAction() {
+  const el = $('scSecCContent');
+  if (!scState.locked) { log('Lock a satellite first!', 'error'); return; }
+  el.innerHTML = `Uplink: ${Math.round(scState.uplink)}% | ${scState.locked.freq} MHz<br>Downlink: ${Math.round(scState.downlink)}%<br>Elevation: ${scState.elevation.toFixed(1)}\u00B0<br>Doppler Shift: ${(Math.random() * 5 - 2.5).toFixed(2)} kHz<br>BER: ${(1e-6 * Math.random()).toExponential(2)}`;
+}
+function scSecCReset() { const el = $('scSecCContent'); if (el) el.innerHTML = ''; }
+
+function drawScCanvas() {
+  const canvas = $('scCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#050520'; ctx.fillRect(0, 0, w, h);
+  // Stars
+  for (let i = 0; i < 30; i++) {
+    ctx.fillStyle = `rgba(255,255,255,${0.3 + Math.random()*0.7})`;
+    ctx.fillRect(((i * 137) % w), ((i * 89 + scState.satAngle * 0.1) % h), 1, 1);
+  }
+  // Earth curve at bottom
+  ctx.fillStyle = '#1a3a5c'; ctx.beginPath(); ctx.arc(w/2, h + 80, 120, 0, Math.PI * 2); ctx.fill();
+  // Ground station
+  ctx.fillStyle = accent; ctx.fillRect(w/2 - 3, h - 25, 6, 15);
+  ctx.beginPath(); ctx.arc(w/2, h - 25, 10, Math.PI, 0); ctx.stroke();
+  // Satellite
+  if (scState.active) {
+    const sa = scState.satAngle * Math.PI / 180;
+    const sx = w/2 + Math.cos(sa) * 140;
+    const sy = 30 + Math.sin(sa) * 20;
+    ctx.fillStyle = scState.locked ? '#4caf50' : '#888';
+    ctx.fillRect(sx - 8, sy - 3, 16, 6);
+    ctx.fillRect(sx - 2, sy - 8, 4, 16);
+    // Signal beam
+    if (scState.locked) {
+      ctx.strokeStyle = accent; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(w/2, h - 25); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron, monospace';
+  ctx.fillText(scState.locked ? `LOCKED: ${scState.locked.name}` : 'NO LOCK', 5, 15);
+}
+
+function drawOrbitCanvas() {
+  const canvas = $('scOrbitCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height, cx = w/2, cy = h/2;
+  ctx.fillStyle = '#050520'; ctx.fillRect(0, 0, w, h);
+  // Earth
+  ctx.fillStyle = '#1a3a5c'; ctx.beginPath(); ctx.arc(cx, cy, 30, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#2a5a8c'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('Earth', cx, cy + 4);
+  // Orbits
+  SC_SATS.forEach((sat, i) => {
+    const r = 40 + i * 25;
+    ctx.strokeStyle = `hsl(${i * 90}, 70%, 50%)`; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.ellipse(cx, cy, r, r * 0.6, 0, 0, Math.PI * 2); ctx.stroke();
+    const a = (scState.satAngle + i * 90) * Math.PI / 180;
+    const sx = cx + Math.cos(a) * r;
+    const sy = cy + Math.sin(a) * r * 0.6;
+    ctx.fillStyle = scState.locked === sat ? '#4caf50' : `hsl(${i * 90}, 70%, 50%)`;
+    ctx.beginPath(); ctx.arc(sx, sy, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = '8px monospace'; ctx.textAlign = 'left';
+    ctx.fillText(sat.name, sx + 6, sy + 3);
+  });
+}

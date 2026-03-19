@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Go-Box Dashboard — Workshop DIY</title>
+  <meta name="description" content="Portable ham radio station dashboard and checklist." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Go-Box Dashboard — Workshop DIY" />
+  <meta property="og:description" content="Portable ham radio station dashboard and checklist." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -29,7 +29,7 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-sub" data-i18n="subtitle">🧰 Portable ham radio station checklist</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">Go-Box Dashboard</h1>
+            <div class="subtitle" data-i18n="subtitle">🧰 Portable ham radio station checklist</div>
           </div>
         </div>
 
@@ -68,26 +68,45 @@
         </div>
       </div>
 
-      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
       <div class="card" id="mainCard">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
-          </div>
-        </div>
+        <div class="card-header"><div>
+            <div class="card-title"><span class="icon">🧰</span> <span data-i18n="mainSection">Go-Box Station</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Portable ham radio station dashboard and checklist</span> <span class="version-tag">v1.0</span></div>
+        </div></div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card"><h3 data-i18n="theoryTitle">Go-Box Theory</h3><p data-i18n="theoryDesc">A Go-Box is a self-contained portable ham radio station in a rugged case for rapid deployment during emergencies or field operations.</p></div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">✅</span> <span data-i18n="sectionB">Checklist</span></summary>
+        <div class="card">
+          <div id="checklistContainer" style="max-height:250px;overflow-y:auto"></div>
+          <div style="margin-top:8px">
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;height:8px;overflow:hidden"><div id="progressBar" style="height:100%;background:var(--accent);width:0%;transition:width .3s"></div></div>
+            <div style="text-align:center;font-size:.78rem;margin-top:4px;color:var(--text-muted)">Checked: <strong id="checkDisp" style="color:var(--accent)">0/0</strong></div>
+          </div>
+        </div>
+      </details>
+
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionC">Station Status</span></summary>
+        <div class="card">
+          <div class="control-section" style="margin-bottom:8px">
+            <div style="display:flex;gap:8px">
+              <button id="startBtn" class="btn-sm primary" style="flex:1"><span data-i18n="start">Power On</span></button>
+              <button id="stopBtn" class="btn-sm" style="flex:1"><span data-i18n="stop">Power Off</span></button>
+            </div>
+          </div>
+          <canvas id="goboxCanvas" width="500" height="120" style="width:100%;height:120px;background:#0a1628;border-radius:8px;display:block"></canvas>
+          <div style="display:flex;justify-content:space-around;flex-wrap:wrap;margin-top:8px;font-size:.82rem;gap:6px">
+            <span>Battery: <strong id="battDisp" style="color:#22c55e">100%</strong></span>
+            <span>Temp: <strong id="tempDisp" style="color:var(--accent)">22.0°C</strong></span>
+            <span>Power: <strong id="powerDisp" style="color:var(--accent2)">0W</strong></span>
+          </div>
+        </div>
       </details>
 
     </div>

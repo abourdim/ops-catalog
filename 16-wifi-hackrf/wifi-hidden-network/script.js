@@ -63,32 +63,30 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Hidden Network Detector', subtitle: 'Reveal hidden WiFi networks. Active probing and passive monitoring',
+    disconnected: 'Idle', connected: 'Scanning',
+    mainSection: 'Hidden Network Scanner', mainDesc: 'Active probing & passive monitoring simulation',
+    sectionA: 'Detected Networks', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What are hidden networks?', faq_a1: 'WiFi networks that don\'t broadcast their SSID in beacon frames.',
+    faq_q2: 'Is this real?', faq_a2: 'No, simulation for educational purposes.',
+    faq_q3: 'Active vs Passive?', faq_a3: 'Passive listens for beacons. Active sends probe requests to reveal SSIDs.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Click Scan to start monitoring.', howto_2: 'Watch the radar visualization.',
+    howto_3: 'Check detected networks below.', howto_4: 'Toggle Active/Passive mode.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Hidden Network Detector ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,80 +96,66 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    start: 'Scan', stop: 'Stop', totalNets: 'Networks', hiddenNets: 'Hidden', probes: 'Probes', revealed: 'Revealed',
+    passive: 'Passive', active: 'Active Probe',
+    simStarted: 'Scan started', simStopped: 'Scan stopped', networkFound: 'Network detected',
+    hiddenFound: 'HIDDEN network revealed', probeReq: 'Probe request sent',
+    howItWorksText: 'Hidden networks broadcast beacons with empty SSIDs. By capturing probe responses and correlating MAC addresses, we can reveal these networks. Passive mode listens for beacons; Active mode sends directed probe requests.',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Detecteur Reseaux WiFi Caches', subtitle: 'Reveler les reseaux WiFi caches',
+    disconnected: 'Inactif', connected: 'Analyse',
+    mainSection: 'Scanner Reseaux Caches', mainDesc: 'Sondage actif et surveillance passive',
+    sectionA: 'Reseaux Detectes', sectionB: 'Comment ca marche',
+    activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    faq_q1: 'Reseaux caches?', faq_a1: 'Reseaux WiFi qui ne diffusent pas leur SSID.',
+    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation educative.',
+    faq_q3: 'Actif vs Passif?', faq_a3: 'Passif ecoute les balises. Actif envoie des sondes.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui, tout local.',
+    howto_1: 'Cliquez Scanner.', howto_2: 'Observez le radar.', howto_3: 'Consultez les reseaux.', howto_4: 'Basculez Actif/Passif.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.', wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local.',
+    working: 'En cours…', t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📡 Detecteur pret!', logCleared: 'Efface', copied: 'Copie!', copyFail: 'Echec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
+    whisperMode: 'Murmure', breathingGuide: 'Respiration', dhikrTap: 'Tap', musicMode: 'Musique',
+    chatPlaceholder: 'Parle...', splashHint: 'appuyer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    start: 'Scanner', stop: 'Arreter', totalNets: 'Reseaux', hiddenNets: 'Caches', probes: 'Sondes', revealed: 'Reveles',
+    passive: 'Passif', active: 'Sonde Active',
+    simStarted: 'Scan demarre', simStopped: 'Scan arrete', networkFound: 'Reseau detecte',
+    hiddenFound: 'Reseau CACHE revele', probeReq: 'Sonde envoyee',
+    howItWorksText: 'Les reseaux caches diffusent des balises avec des SSID vides. En capturant les reponses aux sondes, on peut les reveler.',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'كاشف شبكات WiFi المخفية', subtitle: 'كشف شبكات WiFi المخفية. فحص نشط ومراقبة سلبية',
+    disconnected: 'خامل', connected: 'فحص',
+    mainSection: 'ماسح الشبكات المخفية', mainDesc: 'محاكاة الفحص النشط والمراقبة السلبية',
+    sectionA: 'الشبكات المكتشفة', sectionB: 'كيف يعمل',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
+    settings: '⚙️ الإعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    faq_q1: 'ما هي الشبكات المخفية؟', faq_a1: 'شبكات WiFi لا تبث اسمها SSID في إطارات الإشارة.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة تعليمية فقط.',
+    faq_q3: 'نشط أم سلبي؟', faq_a3: 'السلبي يستمع للإشارات. النشط يرسل طلبات فحص.',
+    faq_q4: 'خصوصية؟', faq_a4: 'نعم، كل شيء محلي.',
+    howto_1: 'انقر فحص للبدء.', howto_2: 'شاهد الرادار.', howto_3: 'تابع الشبكات المكتشفة.', howto_4: 'بدّل بين النشط والسلبي.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي.',
+    wiki_log_title: '📜 سجل', wiki_log: 'مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '📡 كاشف الشبكات المخفية جاهز!', logCleared: 'تم المسح', copied: 'تم النسخ!', copyFail: 'فشل',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات', whisperMode: 'همس', breathingGuide: 'تنفس',
+    dhikrTap: 'اضغط', musicMode: 'موسيقى', chatPlaceholder: 'تحدث...', splashHint: 'انقر للتخطي',
+    newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    start: 'فحص', stop: 'إيقاف', totalNets: 'شبكات', hiddenNets: 'مخفية', probes: 'فحوصات', revealed: 'مكشوفة',
+    passive: 'سلبي', active: 'فحص نشط',
+    simStarted: 'بدأ الفحص', simStopped: 'توقف الفحص', networkFound: 'تم اكتشاف شبكة',
+    hiddenFound: 'تم كشف شبكة مخفية', probeReq: 'تم إرسال طلب فحص',
+    howItWorksText: 'الشبكات المخفية تبث إشارات بدون SSID. بالتقاط استجابات الفحص وربط عناوين MAC يمكننا كشفها.',
   }
 };
 
@@ -1449,3 +1433,104 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Hidden Network Detector ═══════ */
+let simRunning=false,simInterval=null,simAnim=null;
+let sCanvas,sCtx,networks=[],probeCount=0,revealCount=0,radarAngle=0;
+let scanMode='passive';
+
+const SSID_POOL=['HomeNet','OfficeWiFi','CafeConnect','IoT-Hub','SmartHome','GuestNet','LabNetwork','SecureVPN','MeshNode','Printer_5G','CCTV_Net','ServerRoom','Hotspot','FiberLink','CloudGW'];
+const HIDDEN_SSID_POOL=['***HIDDEN***','<hidden>','<no SSID>','[cloaked]','<empty>'];
+const VENDOR_OUI=['00:1A:2B','AA:BB:CC','DE:AD:BE','C0:FF:EE','BA:DC:AB','FE:ED:FA','08:00:27','DC:A6:32','B8:27:EB','00:50:56'];
+
+function randMAC(){return VENDOR_OUI[Math.floor(Math.random()*VENDOR_OUI.length)]+':'+
+  Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase()+':'+
+  Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase()+':'+
+  Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase();}
+
+function initSCanvas(){sCanvas=$('scanCanvas');if(!sCanvas)return;sCtx=sCanvas.getContext('2d');sCanvas.width=sCanvas.offsetWidth*2;sCanvas.height=sCanvas.offsetHeight*2;sCtx.scale(2,2);}
+
+function drawRadar(){
+  if(!sCtx)return;const w=sCanvas.offsetWidth,h=sCanvas.offsetHeight;
+  const cx=w/2,cy=h/2,r=Math.min(cx,cy)-15;
+  sCtx.fillStyle='rgba(10,10,26,0.08)';sCtx.fillRect(0,0,w,h);
+  // radar circles
+  sCtx.strokeStyle='rgba(34,197,94,0.15)';sCtx.lineWidth=0.5;
+  for(let i=1;i<=4;i++){sCtx.beginPath();sCtx.arc(cx,cy,r*i/4,0,Math.PI*2);sCtx.stroke();}
+  // crosshairs
+  sCtx.beginPath();sCtx.moveTo(cx-r,cy);sCtx.lineTo(cx+r,cy);sCtx.moveTo(cx,cy-r);sCtx.lineTo(cx,cy+r);sCtx.stroke();
+  // sweep
+  radarAngle+=0.03;
+  const grad=sCtx.createConicalGradient?null:null;
+  sCtx.save();sCtx.translate(cx,cy);sCtx.rotate(radarAngle);
+  sCtx.beginPath();sCtx.moveTo(0,0);sCtx.arc(0,0,r,0,0.5);sCtx.closePath();
+  sCtx.fillStyle='rgba(34,197,94,0.12)';sCtx.fill();
+  sCtx.strokeStyle='#22c55e';sCtx.lineWidth=1.5;
+  sCtx.beginPath();sCtx.moveTo(0,0);sCtx.lineTo(r*Math.cos(0),r*Math.sin(0));sCtx.stroke();
+  sCtx.restore();
+  // network blips
+  networks.forEach(n=>{
+    const age=(Date.now()-n.ts)/5000;if(age>1)return;
+    const nx=cx+n.dx*r,ny=cy+n.dy*r;
+    const alpha=1-age;
+    sCtx.beginPath();sCtx.arc(nx,ny,n.hidden?5:3,0,Math.PI*2);
+    sCtx.fillStyle=n.hidden?(n.revealed?'rgba(245,158,11,'+alpha+')':'rgba(239,68,68,'+alpha+')'):'rgba(59,130,246,'+alpha+')';
+    sCtx.fill();
+    if(n.hidden&&n.revealed){sCtx.strokeStyle='rgba(245,158,11,'+alpha+')';sCtx.lineWidth=1;sCtx.stroke();}
+    sCtx.fillStyle='rgba(255,255,255,'+(alpha*0.7)+')';sCtx.font='7px monospace';
+    sCtx.fillText(n.revealed?n.realSSID:n.ssid,nx+7,ny+3);
+  });
+  // label
+  sCtx.fillStyle='rgba(34,197,94,0.6)';sCtx.font='8px monospace';
+  sCtx.fillText(scanMode==='active'?'ACTIVE PROBE':'PASSIVE MONITOR',8,h-6);
+  sCtx.fillText('Networks: '+networks.length,w-90,h-6);
+}
+
+function genNetwork(){
+  const isHidden=Math.random()<(scanMode==='active'?0.35:0.25);
+  const realSSID=SSID_POOL[Math.floor(Math.random()*SSID_POOL.length)]+'_'+Math.floor(Math.random()*100);
+  const angle=Math.random()*Math.PI*2,dist=0.15+Math.random()*0.7;
+  return{
+    ssid:isHidden?HIDDEN_SSID_POOL[Math.floor(Math.random()*HIDDEN_SSID_POOL.length)]:realSSID,
+    realSSID:realSSID,bssid:randMAC(),ch:Math.floor(Math.random()*13)+1,
+    rssi:-30-Math.floor(Math.random()*60),hidden:isHidden,revealed:false,
+    security:['WPA2','WPA3','WEP','Open'][Math.floor(Math.random()*4)],
+    dx:Math.cos(angle)*dist,dy:Math.sin(angle)*dist,ts:Date.now()
+  };
+}
+
+function simTick(){
+  const net=genNetwork();networks.push(net);
+  if(networks.length>50)networks.shift();
+  // active mode reveals hidden networks
+  if(scanMode==='active'&&net.hidden&&Math.random()<0.6){
+    net.revealed=true;revealCount++;
+    probeCount++;
+    log(LANG[currentLang].hiddenFound+': '+net.realSSID+' ('+net.bssid+')','success');
+  } else if(scanMode==='active'){
+    probeCount++;
+    if(probeCount%3===0)log(LANG[currentLang].probeReq+' → Ch'+net.ch,'tx');
+  } else {
+    log(LANG[currentLang].networkFound+': '+(net.hidden?'<hidden>':net.ssid)+' Ch'+net.ch+' '+net.rssi+'dBm','rx');
+  }
+  const totalH=networks.filter(n=>n.hidden).length;
+  $('totalVal').textContent=networks.length;
+  $('hiddenVal').textContent=totalH;$('hiddenVal').style.color=totalH>0?'#ef4444':'#22c55e';
+  $('probeVal').textContent=probeCount;
+  $('revealVal').textContent=revealCount;$('revealVal').style.color=revealCount>0?'#f59e0b':'var(--accent)';
+  // update list
+  const list=$('netList');if(list){const d=document.createElement('div');
+    d.className='net-item'+(net.hidden?' hidden-net':'');
+    d.innerHTML='<span class="net-ssid">'+(net.revealed?net.realSSID:net.ssid)+'</span><span class="net-info">'+net.bssid+' | Ch'+net.ch+' | '+net.security+(net.revealed?' | REVEALED':'')+'</span><span class="net-rssi" style="color:'+(net.rssi>-50?'#22c55e':net.rssi>-70?'#f59e0b':'#ef4444')+'">'+net.rssi+' dBm</span>';
+    list.insertBefore(d,list.firstChild);if(list.children.length>60)list.removeChild(list.lastChild);}
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);$('startBtn').disabled=true;$('stopBtn').disabled=false;networks=[];probeCount=0;revealCount=0;initSCanvas();log(LANG[currentLang].simStarted,'success');simInterval=setInterval(simTick,800);(function loop(){if(!simRunning)return;drawRadar();simAnim=requestAnimationFrame(loop)})();}
+function stopSim(){simRunning=false;if(simInterval)clearInterval(simInterval);if(simAnim)cancelAnimationFrame(simAnim);setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;log(LANG[currentLang].simStopped,'info');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;
+  const pm=$('passiveMode'),am=$('activeMode');
+  if(pm)pm.onclick=()=>{scanMode='passive';pm.classList.add('active');am.classList.remove('active');};
+  if(am)am.onclick=()=>{scanMode='active';am.classList.add('active');pm.classList.remove('active');};
+});

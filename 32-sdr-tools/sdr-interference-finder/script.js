@@ -63,23 +63,23 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Interference Finder', subtitle: '🔍 Find RF interference sources — Spectrogram analysis',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Interference Finder', mainDesc: 'Detect and visualize RF interference sources',
+    sectionA: 'Interference Log', sectionB: 'RFI Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    faq_q1: 'What is the Interference Finder?', faq_a1: 'A tool to detect and visualize RF interference using spectrogram analysis.',
+    faq_q2: 'What types of interference?', faq_a2: 'Narrowband spurs, broadband noise, pulsed interference and harmonics.',
+    faq_q3: 'How does detection work?', faq_a3: 'The spectrogram highlights power anomalies above the noise floor.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Set the center frequency and bandwidth.',
+    howto_2: 'Click Scan to start spectrogram capture.',
+    howto_3: 'Watch for highlighted interference in the waterfall.',
+    howto_4: 'Check the Interference Log for detected sources.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔍 Interference Finder ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Détecteur Interférences SDR', subtitle: '🔍 Trouver les sources d\'interférences RF — Analyse spectrogramme',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Détecteur Interférences', mainDesc: 'Détecter et visualiser les sources d\'interférences RF',
+    sectionA: 'Journal Interférences', sectionB: 'Théorie RFI',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔍 Détecteur Interférences prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'كاشف تداخل SDR', subtitle: '🔍 إيجاد مصادر التداخل — تحليل الطيف الزمني',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'كاشف التداخل', mainDesc: 'كشف وعرض مصادر التداخل الراديوي',
+    sectionA: 'سجل التداخلات', sectionB: 'نظرية التداخل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔍 كاشف التداخل جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,162 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR INTERFERENCE FINDER SIMULATION ═══════ */
+
+let scanRunning = false, scanAnim = null;
+const waterfallData = [];
+const WATERFALL_ROWS = 120, FFT_BINS = 512;
+
+function generateSpectrum(centerMHz, bwMHz) {
+  const bins = new Float32Array(FFT_BINS);
+  // Noise floor
+  for (let i = 0; i < FFT_BINS; i++) bins[i] = -100 + Math.random() * 8;
+
+  // Random narrowband interference
+  const numSpurs = 2 + Math.floor(Math.random() * 4);
+  for (let s = 0; s < numSpurs; s++) {
+    const bin = Math.floor(Math.random() * FFT_BINS);
+    const power = -60 + Math.random() * 40;
+    const width = 1 + Math.floor(Math.random() * 6);
+    for (let i = -width; i <= width; i++) {
+      const idx = bin + i;
+      if (idx >= 0 && idx < FFT_BINS) bins[idx] = Math.max(bins[idx], power - Math.abs(i) * 3);
+    }
+  }
+
+  // Pulsed broadband interference (occasional)
+  if (Math.random() < 0.15) {
+    const start = Math.floor(Math.random() * FFT_BINS * 0.5);
+    const width = 50 + Math.floor(Math.random() * 100);
+    for (let i = start; i < Math.min(start + width, FFT_BINS); i++) bins[i] += 20 + Math.random() * 15;
+  }
+
+  return bins;
+}
+
+function powerToColor(dBm) {
+  const norm = Math.max(0, Math.min(1, (dBm + 110) / 60));
+  if (norm < 0.33) return `rgb(0,0,${Math.floor(norm * 3 * 200)})`;
+  if (norm < 0.66) return `rgb(0,${Math.floor((norm - 0.33) * 3 * 255)},${Math.floor((0.66 - norm) * 3 * 200)})`;
+  return `rgb(${Math.floor((norm - 0.66) * 3 * 255)},${Math.floor((1 - norm) * 255)},0)`;
+}
+
+function drawSpectrogram() {
+  const c = $('spectrogramCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  const rowH = h / WATERFALL_ROWS;
+  const binW = w / FFT_BINS;
+
+  for (let r = 0; r < waterfallData.length; r++) {
+    const row = waterfallData[r];
+    for (let b = 0; b < FFT_BINS; b++) {
+      ctx.fillStyle = powerToColor(row[b]);
+      ctx.fillRect(b * binW, r * rowH, binW + 1, rowH + 1);
+    }
+  }
+
+  // Overlay interference markers
+  if (waterfallData.length > 0) {
+    const latest = waterfallData[waterfallData.length - 1];
+    const threshold = -70;
+    ctx.strokeStyle = '#f00'; ctx.lineWidth = 2;
+    for (let b = 0; b < FFT_BINS; b++) {
+      if (latest[b] > threshold) {
+        const x = b * binW;
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+    }
+  }
+
+  ctx.fillStyle = '#0f0'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText('Spectrogram / Waterfall', 10, 18);
+}
+
+function drawPowerSpectrum() {
+  const c = $('powerCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  if (waterfallData.length === 0) return;
+  const latest = waterfallData[waterfallData.length - 1];
+
+  // Grid
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  for (let i = 1; i < 5; i++) { const y = (i / 5) * h; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); ctx.fillStyle = '#556'; ctx.font = '9px monospace'; ctx.fillText((-110 + i * 12) + ' dBm', 4, y - 2); }
+
+  // Spectrum line
+  ctx.strokeStyle = '#0f0'; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let i = 0; i < FFT_BINS; i++) {
+    const x = (i / FFT_BINS) * w;
+    const y = h - ((latest[i] + 110) / 60) * h;
+    if (i === 0) ctx.moveTo(x, Math.max(0, Math.min(h, y))); else ctx.lineTo(x, Math.max(0, Math.min(h, y)));
+  }
+  ctx.stroke();
+
+  // Threshold line
+  ctx.setLineDash([4, 4]); ctx.strokeStyle = '#f44'; ctx.lineWidth = 1;
+  const ty = h - ((-70 + 110) / 60) * h;
+  ctx.beginPath(); ctx.moveTo(0, ty); ctx.lineTo(w, ty); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#f44'; ctx.font = '9px monospace'; ctx.fillText('Interference threshold', w - 140, ty - 4);
+
+  // Detect & count interference
+  let count = 0;
+  for (let b = 0; b < FFT_BINS; b++) if (latest[b] > -70) count++;
+  $('intCountVal').textContent = count;
+  $('peakPowerVal').textContent = Math.max(...latest).toFixed(1) + ' dBm';
+  $('noiseFloorVal').textContent = (latest.reduce((a, b) => a + b, 0) / FFT_BINS).toFixed(1) + ' dBm';
+
+  ctx.fillStyle = '#0f0'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText('Power Spectrum', 10, 18);
+}
+
+function scanTick() {
+  if (!scanRunning) return;
+  const center = parseFloat($('centerFreq').value);
+  const bw = parseFloat($('bwSelect').value);
+  const spectrum = generateSpectrum(center, bw);
+  waterfallData.push(spectrum);
+  if (waterfallData.length > WATERFALL_ROWS) waterfallData.shift();
+  drawSpectrogram();
+  drawPowerSpectrum();
+  scanAnim = requestAnimationFrame(scanTick);
+}
+
+function startScan() {
+  if (scanRunning) return;
+  scanRunning = true;
+  waterfallData.length = 0;
+  const L = LANG[currentLang];
+  log(L.scanStarted || 'Scan started', 'info');
+  setStatus(true);
+  $('scanBtn').textContent = '⏹ Stop';
+  $('scanBtn').onclick = stopScan;
+  scanTick();
+}
+
+function stopScan() {
+  scanRunning = false;
+  if (scanAnim) cancelAnimationFrame(scanAnim);
+  const L = LANG[currentLang];
+  log(L.scanStopped || 'Scan stopped', 'success');
+  $('scanBtn').textContent = LANG[currentLang].scanBtn || '🔍 Scan';
+  $('scanBtn').onclick = startScan;
+}
+
+function resetScan() {
+  stopScan();
+  waterfallData.length = 0;
+  ['spectrogramCanvas', 'powerCanvas'].forEach(id => { const c = $(id); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+  $('intCountVal').textContent = '--'; $('peakPowerVal').textContent = '--'; $('noiseFloorVal').textContent = '--';
+  setStatus(false); log(LANG[currentLang].resetDone || 'Reset', 'info');
+}
+
+function initInterferenceFinder() {
+  const sb = $('scanBtn'); if (sb) sb.onclick = startScan;
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetScan;
+}
+
+document.addEventListener('DOMContentLoaded', initInterferenceFinder);

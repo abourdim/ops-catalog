@@ -63,23 +63,23 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Band Allocator', subtitle: '📻 Spectrum band allocation — Visualize who uses which frequencies',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Band Allocation', mainDesc: 'Interactive spectrum band allocation viewer',
+    sectionA: 'Band Details', sectionB: 'Spectrum Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    faq_q1: 'What is the Band Allocator?', faq_a1: 'A tool to visualize radio frequency allocations across the spectrum.',
+    faq_q2: 'What bands are shown?', faq_a2: 'VLF through SHF — amateur, broadcast, maritime, aviation, ISM and more.',
+    faq_q3: 'Can I zoom into a band?', faq_a3: 'Use the range selector to focus on specific frequency ranges.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select a frequency range from the dropdown.',
+    howto_2: 'Hover over bands to see allocation details.',
+    howto_3: 'Click Render to draw the spectrum map.',
+    howto_4: 'Expand Band Details for service information.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📻 Band Allocator ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Allocation Bandes SDR', subtitle: '📻 Allocation spectrale — Visualisez les fréquences utilisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Allocation Bandes', mainDesc: 'Visualiseur interactif d\'allocation spectrale',
+    sectionA: 'Détails Bandes', sectionB: 'Théorie Spectre',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📻 Allocateur de Bandes prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مخصص نطاقات SDR', subtitle: '📻 عرض تخصيص النطاقات — من يستخدم أي تردد',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'تخصيص النطاقات', mainDesc: 'عارض تفاعلي لتخصيص نطاقات الطيف',
+    sectionA: 'تفاصيل النطاقات', sectionB: 'نظرية الطيف',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📻 مخصص النطاقات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,147 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR BAND ALLOCATOR SIMULATION ═══════ */
+
+const BANDS = [
+  { name: 'LF Navigation', start: 0.03, end: 0.3, color: '#4a2', service: 'Navigation/Maritime' },
+  { name: 'AM Broadcast', start: 0.535, end: 1.705, color: '#f80', service: 'Broadcasting' },
+  { name: '160m Amateur', start: 1.8, end: 2.0, color: '#e22', service: 'Amateur Radio' },
+  { name: '80m Amateur', start: 3.5, end: 4.0, color: '#e22', service: 'Amateur Radio' },
+  { name: 'Shortwave Broadcast', start: 5.9, end: 6.2, color: '#f80', service: 'Broadcasting' },
+  { name: '40m Amateur', start: 7.0, end: 7.3, color: '#e22', service: 'Amateur Radio' },
+  { name: 'Shortwave 31m', start: 9.4, end: 9.9, color: '#f80', service: 'Broadcasting' },
+  { name: '20m Amateur', start: 14.0, end: 14.35, color: '#e22', service: 'Amateur Radio' },
+  { name: 'CB Radio', start: 26.965, end: 27.405, color: '#a4f', service: 'Citizens Band' },
+  { name: '10m Amateur', start: 28.0, end: 29.7, color: '#e22', service: 'Amateur Radio' },
+  { name: 'VHF Low TV', start: 54, end: 72, color: '#28f', service: 'Television' },
+  { name: 'FM Broadcast', start: 87.5, end: 108, color: '#f80', service: 'Broadcasting' },
+  { name: 'Airband', start: 108, end: 137, color: '#0af', service: 'Aviation' },
+  { name: '2m Amateur', start: 144, end: 148, color: '#e22', service: 'Amateur Radio' },
+  { name: 'Marine VHF', start: 156, end: 162, color: '#0aa', service: 'Maritime' },
+  { name: 'DAB Radio', start: 174, end: 230, color: '#f80', service: 'Broadcasting' },
+  { name: 'UHF TV', start: 470, end: 698, color: '#28f', service: 'Television' },
+  { name: '70cm Amateur', start: 430, end: 440, color: '#e22', service: 'Amateur Radio' },
+  { name: 'Cellular 700', start: 698, end: 806, color: '#fa0', service: 'Cellular' },
+  { name: 'Cellular 850', start: 824, end: 894, color: '#fa0', service: 'Cellular' },
+  { name: 'GPS L1', start: 1575, end: 1576, color: '#0f0', service: 'Navigation' },
+  { name: 'Wi-Fi 2.4G', start: 2400, end: 2484, color: '#f4f', service: 'ISM/Wi-Fi' },
+  { name: 'ISM 900', start: 902, end: 928, color: '#f4f', service: 'ISM' },
+  { name: 'Cellular 1900', start: 1850, end: 1990, color: '#fa0', service: 'Cellular' },
+  { name: 'LTE 2600', start: 2500, end: 2690, color: '#fa0', service: 'Cellular' },
+  { name: 'Wi-Fi 5G', start: 5150, end: 5850, color: '#f4f', service: 'ISM/Wi-Fi' },
+];
+
+const RANGES = {
+  hf:   { min: 0, max: 30 },
+  vhf:  { min: 30, max: 300 },
+  uhf:  { min: 300, max: 3000 },
+  full: { min: 0, max: 6000 },
+};
+
+function drawBandAllocation() {
+  const c = $('bandCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const range = RANGES[$('rangeSelect').value];
+  const fMin = range.min, fMax = range.max;
+
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+
+  // Grid
+  ctx.strokeStyle = '#1a2a3a'; ctx.lineWidth = 0.5;
+  const steps = 10;
+  for (let i = 0; i <= steps; i++) {
+    const x = (i / steps) * w;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+    const f = fMin + (i / steps) * (fMax - fMin);
+    ctx.fillStyle = '#667'; ctx.font = '9px monospace';
+    ctx.fillText(f >= 1000 ? (f / 1000).toFixed(1) + ' GHz' : f.toFixed(1) + ' MHz', x + 2, h - 4);
+  }
+
+  // Draw bands
+  const bandH = 40, topY = 20;
+  let row = 0;
+  const filtered = BANDS.filter(b => b.end > fMin && b.start < fMax);
+  filtered.sort((a, b) => a.start - b.start);
+
+  const rows = []; // track end positions per row
+  filtered.forEach(band => {
+    const x1 = Math.max(0, ((band.start - fMin) / (fMax - fMin)) * w);
+    const x2 = Math.min(w, ((band.end - fMin) / (fMax - fMin)) * w);
+    const bw = Math.max(x2 - x1, 2);
+
+    // Find free row
+    let r = 0;
+    while (rows[r] && rows[r] > x1 - 2) r++;
+    rows[r] = x1 + bw;
+
+    const y = topY + r * (bandH + 4);
+    ctx.fillStyle = band.color + '66'; ctx.fillRect(x1, y, bw, bandH);
+    ctx.strokeStyle = band.color; ctx.lineWidth = 1;
+    ctx.strokeRect(x1, y, bw, bandH);
+
+    // Label
+    if (bw > 20) {
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 9px monospace';
+      ctx.save(); ctx.beginPath(); ctx.rect(x1, y, bw, bandH); ctx.clip();
+      ctx.fillText(band.name, x1 + 3, y + 14);
+      ctx.fillStyle = '#aaa'; ctx.font = '8px monospace';
+      ctx.fillText(band.service, x1 + 3, y + 26);
+      ctx.fillText(band.start.toFixed(1) + '-' + band.end.toFixed(1), x1 + 3, y + 36);
+      ctx.restore();
+    }
+  });
+
+  // Title
+  ctx.fillStyle = '#0f0'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText('Spectrum Band Allocation (' + $('rangeSelect').value.toUpperCase() + ')', 10, 14);
+}
+
+function drawBandDetails() {
+  const c = $('detailCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const range = RANGES[$('rangeSelect').value];
+
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const filtered = BANDS.filter(b => b.end > range.min && b.start < range.max);
+
+  // Service color legend
+  const services = {};
+  filtered.forEach(b => { services[b.service] = b.color; });
+  const entries = Object.entries(services);
+  const cols = Math.min(entries.length, 4);
+  const colW = w / cols;
+  entries.forEach(([name, color], i) => {
+    const col = i % cols, row = Math.floor(i / cols);
+    const x = col * colW + 10, y = 16 + row * 22;
+    ctx.fillStyle = color; ctx.fillRect(x, y, 12, 12);
+    ctx.fillStyle = '#ccc'; ctx.font = '11px monospace';
+    ctx.fillText(name + ' (' + filtered.filter(b => b.service === name).length + ')', x + 18, y + 11);
+  });
+
+  ctx.fillStyle = '#4af'; ctx.font = 'bold 13px Orbitron,monospace';
+  ctx.fillText('Service Legend', 10, 12);
+}
+
+function renderBands() {
+  const L = LANG[currentLang];
+  log(L.renderStarted || 'Rendering spectrum', 'info');
+  showToast(L.working); setStatus(true);
+  drawBandAllocation();
+  drawBandDetails();
+  hideToast();
+  log(L.renderComplete || 'Render complete', 'success');
+}
+
+function resetBands() {
+  ['bandCanvas', 'detailCanvas'].forEach(id => { const c = $(id); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+  setStatus(false); log(LANG[currentLang].resetDone || 'Reset', 'info');
+}
+
+function initBandAllocator() {
+  const rb = $('renderBtn'); if (rb) rb.onclick = () => setTimeout(renderBands, 50);
+  const rs = $('resetBtn'); if (rs) rs.onclick = resetBands;
+}
+
+document.addEventListener('DOMContentLoaded', initBandAllocator);

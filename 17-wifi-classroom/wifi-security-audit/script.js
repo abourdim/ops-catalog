@@ -63,10 +63,20 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Security Audit', subtitle: 'Checklist, scanner, vulnerability assessment',
+    disconnected: 'Ready', connected: 'Auditing',
+    mainSection: 'Security Audit Dashboard', mainDesc: 'WiFi security checklist & vulnerability scanner',
+    sectionA: 'Vulnerability Scanner', sectionB: 'Audit Checklist', sectionC: 'How It Works',
+    start: 'Start Audit', stop: 'Stop Audit',
+    overall: 'Overall Score', critical: 'Critical', high: 'High', medium: 'Medium', low: 'Low',
+    passed: 'Passed', failed: 'Failed', warning: 'Warning',
+    encryption: 'Encryption', authMethod: 'Authentication', firmware: 'Firmware', openPorts: 'Open Ports',
+    defaultCreds: 'Default Credentials', hiddenSSID: 'Hidden SSID', guestNetwork: 'Guest Network',
+    macFiltering: 'MAC Filtering', wps: 'WPS Disabled', logging: 'Logging Enabled',
+    scanning: 'Scanning...', scanComplete: 'Scan complete!',
+    auditReady: 'Security audit dashboard ready!',
+    vulnFound: 'Vulnerability found', noVuln: 'No vulnerability',
+    howItWorksText: 'A WiFi security audit checks your network configuration against best practices. It verifies encryption strength, authentication methods, firmware updates, port exposure, and more. This simulation runs a virtual audit and scores your network security posture.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +110,20 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Audit Securite WiFi', subtitle: 'Checklist, scanner, evaluation de vulnerabilites',
+    disconnected: 'Pret', connected: 'Audit en cours',
+    mainSection: 'Tableau de Bord Audit', mainDesc: 'Checklist & scanner de vulnerabilites WiFi',
+    sectionA: 'Scanner de Vulnerabilites', sectionB: 'Checklist d\'Audit', sectionC: 'Comment ca marche',
+    start: 'Lancer l\'audit', stop: 'Arreter',
+    overall: 'Score Global', critical: 'Critique', high: 'Eleve', medium: 'Moyen', low: 'Faible',
+    passed: 'Reussi', failed: 'Echoue', warning: 'Attention',
+    encryption: 'Chiffrement', authMethod: 'Authentification', firmware: 'Firmware', openPorts: 'Ports Ouverts',
+    defaultCreds: 'Identifiants par defaut', hiddenSSID: 'SSID Cache', guestNetwork: 'Reseau Invite',
+    macFiltering: 'Filtrage MAC', wps: 'WPS Desactive', logging: 'Journalisation',
+    scanning: 'Scan en cours...', scanComplete: 'Scan termine!',
+    auditReady: 'Tableau d\'audit pret!',
+    vulnFound: 'Vulnerabilite trouvee', noVuln: 'Pas de vulnerabilite',
+    howItWorksText: 'Un audit de securite WiFi verifie la configuration reseau selon les meilleures pratiques. Il verifie le chiffrement, l\'authentification, les mises a jour firmware, l\'exposition des ports et plus.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +157,20 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'تدقيق أمان WiFi', subtitle: 'قائمة مراجعة، ماسح، تقييم الثغرات',
+    disconnected: 'جاهز', connected: 'تدقيق جارٍ',
+    mainSection: 'لوحة تدقيق الأمان', mainDesc: 'قائمة مراجعة وماسح ثغرات WiFi',
+    sectionA: 'ماسح الثغرات', sectionB: 'قائمة المراجعة', sectionC: 'كيف يعمل',
+    start: 'ابدأ التدقيق', stop: 'إيقاف',
+    overall: 'النتيجة الإجمالية', critical: 'حرج', high: 'عالي', medium: 'متوسط', low: 'منخفض',
+    passed: 'ناجح', failed: 'فاشل', warning: 'تحذير',
+    encryption: 'التشفير', authMethod: 'المصادقة', firmware: 'البرنامج الثابت', openPorts: 'المنافذ المفتوحة',
+    defaultCreds: 'بيانات اعتماد افتراضية', hiddenSSID: 'SSID مخفي', guestNetwork: 'شبكة الضيوف',
+    macFiltering: 'فلترة MAC', wps: 'WPS معطل', logging: 'التسجيل مفعل',
+    scanning: 'جارٍ المسح...', scanComplete: 'اكتمل المسح!',
+    auditReady: 'لوحة التدقيق جاهزة!',
+    vulnFound: 'تم العثور على ثغرة', noVuln: 'لا توجد ثغرات',
+    howItWorksText: 'يفحص تدقيق أمان WiFi تكوين شبكتك وفقاً لأفضل الممارسات. يتحقق من قوة التشفير وطرق المصادقة وتحديثات البرنامج الثابت وتعرض المنافذ والمزيد.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1444,8 +1474,189 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initSecurityAudit();
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Security Audit ═══════ */
+const AUDIT_CHECKS = [
+  { id: 'encryption', key: 'encryption', weight: 20, desc: 'WPA3/WPA2 encryption check' },
+  { id: 'authMethod', key: 'authMethod', weight: 15, desc: 'Authentication method (SAE/PSK/Enterprise)' },
+  { id: 'firmware', key: 'firmware', weight: 10, desc: 'Router firmware up to date' },
+  { id: 'openPorts', key: 'openPorts', weight: 15, desc: 'Unnecessary open ports' },
+  { id: 'defaultCreds', key: 'defaultCreds', weight: 20, desc: 'Default credentials changed' },
+  { id: 'hiddenSSID', key: 'hiddenSSID', weight: 5, desc: 'SSID broadcast settings' },
+  { id: 'guestNetwork', key: 'guestNetwork', weight: 5, desc: 'Guest network isolation' },
+  { id: 'macFiltering', key: 'macFiltering', weight: 3, desc: 'MAC address filtering' },
+  { id: 'wps', key: 'wps', weight: 5, desc: 'WPS disabled' },
+  { id: 'logging', key: 'logging', weight: 2, desc: 'Security logging enabled' }
+];
+
+let auditRunning = false, auditInterval = null, auditCanvas, auditCtx;
+let auditResults = [], auditIdx = 0, overallScore = 0;
+let vulnCounts = { critical: 0, high: 0, medium: 0, low: 0 };
+
+function initSecurityAudit() {
+  auditCanvas = $('auditCanvas');
+  if (auditCanvas) auditCtx = auditCanvas.getContext('2d');
+
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  if (startBtn) startBtn.onclick = startAudit;
+  if (stopBtn) stopBtn.onclick = stopAudit;
+
+  // Checklist toggles
+  AUDIT_CHECKS.forEach(check => {
+    const cb = $('check_' + check.id);
+    if (cb) cb.onchange = () => recalcScore();
+  });
+
+  drawAuditGauge();
+}
+
+function startAudit() {
+  if (auditRunning) return;
+  auditRunning = true;
+  auditResults = [];
+  auditIdx = 0;
+  overallScore = 0;
+  vulnCounts = { critical: 0, high: 0, medium: 0, low: 0 };
+  setStatus(true);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = true;
+  if (p) p.disabled = false;
+  log(LANG[currentLang].auditReady, 'success');
+
+  // Reset checklist visuals
+  AUDIT_CHECKS.forEach(check => {
+    const row = $('row_' + check.id);
+    if (row) row.style.opacity = '0.5';
+    const status = $('status_' + check.id);
+    if (status) { status.textContent = '...'; status.style.color = 'var(--text-muted)'; }
+  });
+
+  auditInterval = setInterval(runNextCheck, 1200);
+}
+
+function stopAudit() {
+  auditRunning = false;
+  if (auditInterval) clearInterval(auditInterval);
+  setStatus(false);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = false;
+  if (p) p.disabled = true;
+}
+
+function runNextCheck() {
+  if (auditIdx >= AUDIT_CHECKS.length) {
+    stopAudit();
+    log(`${LANG[currentLang].scanComplete} Score: ${overallScore}%`, 'success');
+    return;
+  }
+
+  const check = AUDIT_CHECKS[auditIdx];
+  const passed = Math.random() > 0.35;
+  const severity = !passed ? (check.weight >= 15 ? 'critical' : check.weight >= 10 ? 'high' : check.weight >= 5 ? 'medium' : 'low') : null;
+
+  if (!passed && severity) vulnCounts[severity]++;
+
+  auditResults.push({ ...check, passed, severity });
+
+  // Update UI
+  const row = $('row_' + check.id);
+  if (row) row.style.opacity = '1';
+  const status = $('status_' + check.id);
+  const checkName = LANG[currentLang][check.key] || check.id;
+  if (status) {
+    if (passed) {
+      status.textContent = LANG[currentLang].passed;
+      status.style.color = '#22c55e';
+    } else {
+      status.textContent = `${LANG[currentLang].failed} (${LANG[currentLang][severity] || severity})`;
+      status.style.color = severity === 'critical' ? '#ef4444' : severity === 'high' ? '#f97316' : '#fbbf24';
+    }
+  }
+
+  log(`${checkName}: ${passed ? LANG[currentLang].noVuln : LANG[currentLang].vulnFound + ' (' + severity + ')'}`, passed ? 'success' : 'error');
+
+  recalcScore();
+  auditIdx++;
+}
+
+function recalcScore() {
+  let totalWeight = 0, earnedWeight = 0;
+  auditResults.forEach(r => {
+    totalWeight += r.weight;
+    if (r.passed) earnedWeight += r.weight;
+  });
+
+  // Also count manual checklist items
+  AUDIT_CHECKS.forEach(check => {
+    const cb = $('check_' + check.id);
+    if (cb && cb.checked && !auditResults.find(r => r.id === check.id)) {
+      totalWeight += check.weight;
+      earnedWeight += check.weight;
+    }
+  });
+
+  overallScore = totalWeight > 0 ? Math.round(earnedWeight / totalWeight * 100) : 0;
+
+  const scoreEl = $('overallScore');
+  if (scoreEl) scoreEl.textContent = overallScore + '%';
+
+  const critEl = $('critCount'), highEl = $('highCount'), medEl = $('medCount'), lowEl = $('lowCount');
+  if (critEl) critEl.textContent = vulnCounts.critical;
+  if (highEl) highEl.textContent = vulnCounts.high;
+  if (medEl) medEl.textContent = vulnCounts.medium;
+  if (lowEl) lowEl.textContent = vulnCounts.low;
+
+  drawAuditGauge();
+}
+
+function drawAuditGauge() {
+  if (!auditCtx || !auditCanvas) return;
+  const c = auditCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  auditCtx.scale(dpr, dpr);
+  const w = c.clientWidth, h = c.clientHeight;
+  auditCtx.clearRect(0, 0, w, h);
+
+  const cx = w / 2, cy = h - 20;
+  const radius = Math.min(w / 2 - 20, h - 30);
+  const startAngle = Math.PI;
+  const endAngle = 2 * Math.PI;
+
+  // Background arc
+  auditCtx.beginPath();
+  auditCtx.arc(cx, cy, radius, startAngle, endAngle);
+  auditCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+  auditCtx.lineWidth = 16;
+  auditCtx.lineCap = 'round';
+  auditCtx.stroke();
+
+  // Score arc
+  const scoreAngle = startAngle + (overallScore / 100) * Math.PI;
+  const color = overallScore >= 80 ? '#22c55e' : overallScore >= 50 ? '#fbbf24' : '#ef4444';
+  auditCtx.beginPath();
+  auditCtx.arc(cx, cy, radius, startAngle, scoreAngle);
+  auditCtx.strokeStyle = color;
+  auditCtx.lineWidth = 16;
+  auditCtx.lineCap = 'round';
+  auditCtx.stroke();
+
+  // Score text
+  auditCtx.fillStyle = color;
+  auditCtx.font = 'bold 24px Orbitron, monospace';
+  auditCtx.textAlign = 'center';
+  auditCtx.fillText(overallScore + '%', cx, cy - 10);
+
+  // Label
+  auditCtx.fillStyle = 'rgba(255,255,255,0.5)';
+  auditCtx.font = '10px Orbitron, monospace';
+  auditCtx.fillText('SECURITY SCORE', cx, cy + 8);
+}

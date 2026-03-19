@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Fox Hunt Builder', subtitle: '🦊 Build fox hunt transmitters. Hidden transmitter antennas',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Fox Transmitter Designer', mainDesc: 'Design compact hidden transmitter antennas for fox hunting',
+    sectionA: 'Antenna Layout', sectionB: 'Signal Coverage', sectionC: 'Build Instructions',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Fox Hunt Builder?', faq_a1: 'Design and simulate compact antennas for ARDF (Amateur Radio Direction Finding) fox hunt transmitters.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Choose a fox transmitter band (80m, 2m, 70cm).',
+    howto_2: 'Select an antenna type suited for hiding.',
+    howto_3: 'View the coverage pattern and signal strength map.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
+    working: 'Building…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🦊 Fox builder ready — design your hidden transmitter!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +100,32 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Constructeur Chasse au Renard', subtitle: '🦊 Construisez des émetteurs cachés. Antennes pour chasse au renard',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Concepteur d\'Émetteur', mainDesc: 'Concevez des antennes compactes cachées pour la chasse au renard',
+    sectionA: 'Plan de l\'Antenne', sectionB: 'Couverture du Signal', sectionC: 'Instructions de Montage',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Constructeur Chasse au Renard ?', faq_a1: 'Concevez et simulez des antennes compactes pour émetteurs cachés ARDF.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
+    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Choisis une bande pour l\'émetteur (80m, 2m, 70cm).',
+    howto_2: 'Sélectionne un type d\'antenne adapté à la dissimulation.',
+    howto_3: 'Consulte le diagramme de couverture et la carte de signal.',
+    howto_4: 'Utilise Paramètres (⚙️) pour le thème et la langue.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Données locales.',
+    working: 'Construction en cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🦊 Constructeur prêt — concevez votre émetteur caché !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +137,32 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'بنّاء صيد الثعلب', subtitle: '🦊 ابنِ مرسلات صيد الثعلب. هوائيات المرسلات المخفية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مصمم مرسل الثعلب', mainDesc: 'صمم هوائيات مدمجة مخفية لصيد الثعلب اللاسلكي',
+    sectionA: 'مخطط الهوائي', sectionB: 'تغطية الإشارة', sectionC: 'تعليمات البناء',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
+    faq_q1: 'ما هو بنّاء صيد الثعلب؟', faq_a1: 'صمم وحاكِ هوائيات مدمجة لمرسلات صيد الثعلب ARDF.',
+    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات واختر مظهرًا.',
+    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات واختر لغتك.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر نطاق المرسل (80م، 2م، 70سم).',
+    howto_2: 'اختر نوع هوائي مناسب للإخفاء.',
+    howto_3: 'اعرض نمط التغطية وخريطة قوة الإشارة.',
+    howto_4: 'استخدم الإعدادات للمظهر واللغة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'بيانات محلية فقط.',
+    working: 'جارٍ البناء…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🦊 البنّاء جاهز — صمم مرسلك المخفي!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,213 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ FOX HUNT BUILDER — SIMULATION ═══════ */
+
+const FOX_BANDS = [
+  { name: '80m (3.5 MHz)', freq: 3.55, wl: 84.5, antennas: ['Quarter-Wave Wire', 'Loaded Whip', 'Tiny Loop'] },
+  { name: '2m (144 MHz)', freq: 145, wl: 2.07, antennas: ['Rubber Duck', 'Slim Jim', 'Tape Measure Yagi'] },
+  { name: '70cm (432 MHz)', freq: 432, wl: 0.69, antennas: ['Stubby Whip', 'Helical', 'PCB Patch'] }
+];
+
+const FOX_ANTENNA_DATA = {
+  'Quarter-Wave Wire': { gain: -1, swr: 1.6, size: 'Large (21m wire)', hide: 2, power: 5, range: 2000 },
+  'Loaded Whip': { gain: -3, swr: 2.0, size: 'Medium (1.5m)', hide: 5, power: 2, range: 800 },
+  'Tiny Loop': { gain: -8, swr: 1.8, size: 'Small (30cm)', hide: 9, power: 1, range: 300 },
+  'Rubber Duck': { gain: -2, swr: 1.5, size: 'Tiny (15cm)', hide: 10, power: 5, range: 500 },
+  'Slim Jim': { gain: 3, swr: 1.3, size: 'Medium (1m)', hide: 4, power: 5, range: 5000 },
+  'Tape Measure Yagi': { gain: 7, swr: 1.4, size: 'Large (1.5m)', hide: 2, power: 5, range: 10000 },
+  'Stubby Whip': { gain: -1, swr: 1.7, size: 'Tiny (8cm)', hide: 10, power: 2, range: 300 },
+  'Helical': { gain: 5, swr: 1.5, size: 'Small (20cm)', hide: 7, power: 3, range: 1500 },
+  'PCB Patch': { gain: 6, swr: 1.3, size: 'Tiny (10cm)', hide: 9, power: 2, range: 1000 }
+};
+
+let foxBand = 0, foxAnt = 0, foxPower = 1;
+
+function initFoxApp() {
+  const mc = $('mainControls');
+  mc.innerHTML = `
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Band</label>
+        <select id="foxBandSelect">${FOX_BANDS.map((b,i) => `<option value="${i}">${b.name}</option>`).join('')}</select>
+      </div>
+      <div><label>Antenna</label>
+        <select id="foxAntSelect">${FOX_BANDS[0].antennas.map((a,i) => `<option value="${i}">${a}</option>`).join('')}</select>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>TX Power (W)</label><input type="number" id="foxPower" value="1" min="0.01" max="5" step="0.1" /></div>
+      <div><label>Terrain</label>
+        <select id="foxTerrain"><option value="open">Open Field</option><option value="forest">Forest</option><option value="urban">Urban</option></select>
+      </div>
+    </div>
+    <button class="primary" id="foxBuildBtn" style="width:100%">\u{1F98A} Build Fox Transmitter</button>`;
+  $('foxBandSelect').addEventListener('change', e => {
+    foxBand = +e.target.value;
+    const sel = $('foxAntSelect');
+    sel.innerHTML = FOX_BANDS[foxBand].antennas.map((a,i) => `<option value="${i}">${a}</option>`).join('');
+    foxAnt = 0;
+  });
+  $('foxAntSelect').addEventListener('change', e => { foxAnt = +e.target.value; });
+  $('foxBuildBtn').addEventListener('click', buildFox);
+  drawFoxIdle();
+}
+
+function buildFox() {
+  playSound('click');
+  const band = FOX_BANDS[foxBand];
+  const antName = band.antennas[foxAnt];
+  const ant = FOX_ANTENNA_DATA[antName];
+  foxPower = +$('foxPower').value;
+  const terrain = $('foxTerrain').value;
+  const terrainFactor = { open: 1, forest: 0.5, urban: 0.3 }[terrain];
+  const effectiveRange = ant.range * (foxPower / 5) * terrainFactor;
+  log(`Building: ${antName} on ${band.name} @ ${foxPower}W`, 'tx');
+  drawFoxAntenna(antName, band);
+  drawCoverageMap(ant, effectiveRange, terrain);
+  showBuildInstructions(antName, band, ant);
+  const rb = $('resultBox');
+  rb.style.display = 'block';
+  rb.innerHTML = `
+    <div class="result-row"><span class="result-label">Antenna</span><span class="result-value">${antName}</span></div>
+    <div class="result-row"><span class="result-label">Band</span><span class="result-value">${band.name}</span></div>
+    <div class="result-row"><span class="result-label">Gain</span><span class="result-value">${ant.gain} dBi</span></div>
+    <div class="result-row"><span class="result-label">SWR</span><span class="result-value">${ant.swr}:1</span></div>
+    <div class="result-row"><span class="result-label">Size</span><span class="result-value">${ant.size}</span></div>
+    <div class="result-row"><span class="result-label">Hideability</span><span class="result-value">${'\u2B50'.repeat(Math.ceil(ant.hide / 2))}</span></div>
+    <div class="result-row"><span class="result-label">TX Power</span><span class="result-value">${foxPower} W</span></div>
+    <div class="result-row"><span class="result-label">Est. Range</span><span class="result-value">${Math.round(effectiveRange)} m</span></div>`;
+  log(`Range: ~${Math.round(effectiveRange)}m | Hide score: ${ant.hide}/10`, 'success');
+  playSound('success');
+}
+
+function drawFoxIdle() {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '16px Orbitron'; ctx.fillStyle = '#ff8800'; ctx.textAlign = 'center';
+  ctx.fillText('\u{1F98A} FOX HUNT BUILDER', W / 2, H / 2 - 10);
+  ctx.font = '10px Tajawal'; ctx.fillStyle = '#888';
+  ctx.fillText('Design a hidden transmitter antenna for ARDF', W / 2, H / 2 + 15);
+}
+
+function drawFoxAntenna(antName, band) {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, cx = W / 2, cy = H / 2;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#ff8800'; ctx.textAlign = 'center';
+  ctx.fillText(`${antName} \u2014 ${band.name}`, cx, 18);
+  ctx.strokeStyle = '#d4a03c'; ctx.lineWidth = 2;
+  if (antName.includes('Wire') || antName.includes('Slim')) {
+    ctx.beginPath(); ctx.moveTo(cx, cy - 60); ctx.lineTo(cx, cy + 60); ctx.stroke();
+    ctx.strokeStyle = '#ff8800'; ctx.setLineDash([5, 5]);
+    ctx.beginPath(); ctx.moveTo(cx - 40, cy); ctx.lineTo(cx + 40, cy); ctx.stroke();
+    ctx.setLineDash([]);
+  } else if (antName.includes('Yagi')) {
+    for (let i = -2; i <= 2; i++) {
+      ctx.strokeStyle = i === 0 ? '#ff8800' : '#d4a03c';
+      ctx.lineWidth = i === 0 ? 3 : 1.5;
+      const w = 30 - Math.abs(i) * 5;
+      ctx.beginPath(); ctx.moveTo(cx - w, cy + i * 25); ctx.lineTo(cx + w, cy + i * 25); ctx.stroke();
+    }
+    ctx.strokeStyle = '#555'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx, cy - 50); ctx.lineTo(cx, cy + 50); ctx.stroke();
+  } else if (antName.includes('Loop')) {
+    ctx.beginPath(); ctx.arc(cx, cy, 40, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#ff880033'; ctx.fill();
+  } else if (antName.includes('Helical')) {
+    for (let i = 0; i < 20; i++) {
+      const y = cy - 50 + i * 5;
+      const x = cx + 20 * Math.sin(i * 0.8);
+      ctx.fillStyle = '#d4a03c'; ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI * 2); ctx.fill();
+    }
+  } else if (antName.includes('Patch') || antName.includes('PCB')) {
+    ctx.fillStyle = '#1a3a1a'; ctx.fillRect(cx - 35, cy - 25, 70, 50);
+    ctx.strokeStyle = '#d4a03c'; ctx.strokeRect(cx - 25, cy - 15, 50, 30);
+    ctx.fillStyle = '#ff8800'; ctx.font = '8px Orbitron';
+    ctx.fillText('PCB', cx, cy + 3);
+  } else {
+    ctx.beginPath(); ctx.moveTo(cx, cy - 40); ctx.lineTo(cx, cy + 40); ctx.stroke();
+    ctx.fillStyle = '#ff8800'; ctx.beginPath(); ctx.arc(cx, cy - 40, 4, 0, Math.PI * 2); ctx.fill();
+  }
+  const ant = FOX_ANTENNA_DATA[antName];
+  ctx.fillStyle = '#888'; ctx.font = '9px Tajawal';
+  ctx.fillText(`Size: ${ant.size} | Gain: ${ant.gain} dBi`, cx, H - 30);
+  ctx.fillText(`Hide Score: ${ant.hide}/10 ${''.padStart(ant.hide, '\u2605').padEnd(10, '\u2606')}`, cx, H - 15);
+  for (let ring = 1; ring <= 3; ring++) {
+    ctx.strokeStyle = `rgba(255,136,0,${0.15 / ring})`;
+    ctx.lineWidth = 0.5; ctx.setLineDash([2, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, 60 + ring * 25, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function drawCoverageMap(ant, range, terrain) {
+  const cv = $('canvasA'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, cx = W / 2, cy = H / 2;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#ff8800'; ctx.textAlign = 'center';
+  ctx.fillText(`Coverage Map \u2014 ${terrain} terrain`, W / 2, 15);
+  const maxR = Math.min(cx, cy) - 20;
+  const scale = maxR / (range * 1.3);
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 0.5;
+  for (let r = maxR / 4; r <= maxR; r += maxR / 4) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#555'; ctx.font = '7px Orbitron'; ctx.textAlign = 'left';
+    ctx.fillText(`${Math.round(r / scale)}m`, cx + r + 3, cy - 3);
+  }
+  for (let a = 0; a < 360; a += 2) {
+    const rad = a * Math.PI / 180;
+    const variation = 0.7 + 0.3 * Math.sin(a * 0.1) * Math.cos(a * 0.07 + 1);
+    const r = range * variation * scale;
+    const alpha = Math.max(0.05, 1 - (r / maxR));
+    ctx.fillStyle = `rgba(255,136,0,${alpha * 0.3})`;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, Math.min(r, maxR), rad, rad + 3 * Math.PI / 180);
+    ctx.closePath(); ctx.fill();
+  }
+  ctx.fillStyle = '#ff8800'; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = '7px Orbitron'; ctx.fillText('TX', cx, cy - 8);
+  const cv2 = $('canvasB'), ctx2 = cv2.getContext('2d');
+  const W2 = cv2.width, H2 = cv2.height, pad = 30;
+  ctx2.fillStyle = '#0a0a0a'; ctx2.fillRect(0, 0, W2, H2);
+  ctx2.font = '10px Orbitron'; ctx2.fillStyle = '#ff8800'; ctx2.textAlign = 'center';
+  ctx2.fillText('Signal Strength vs Distance', W2 / 2, 15);
+  ctx2.strokeStyle = '#ff8800'; ctx2.lineWidth = 2;
+  ctx2.beginPath();
+  for (let i = 0; i <= 50; i++) {
+    const d = (i / 50) * range * 1.5;
+    const sig = foxPower * Math.pow(10, ant.gain / 10) / Math.pow(Math.max(d, 1) * 4 * Math.PI * FOX_BANDS[foxBand].freq / 300, 2) * 1e9;
+    const dbm = 10 * Math.log10(Math.max(sig, 1e-15));
+    const x = pad + (i / 50) * (W2 - pad * 2);
+    const y = pad + (1 - (dbm + 120) / 100) * (H2 - pad * 2);
+    i === 0 ? ctx2.moveTo(x, Math.min(y, H2 - pad)) : ctx2.lineTo(x, Math.min(y, H2 - pad));
+  }
+  ctx2.stroke();
+  ctx2.strokeStyle = '#ff444466'; ctx2.lineWidth = 1; ctx2.setLineDash([3, 3]);
+  const sensY = pad + (1 - (-100 + 120) / 100) * (H2 - pad * 2);
+  ctx2.beginPath(); ctx2.moveTo(pad, sensY); ctx2.lineTo(W2 - pad, sensY); ctx2.stroke();
+  ctx2.setLineDash([]); ctx2.fillStyle = '#ff4444'; ctx2.font = '7px Tajawal'; ctx2.textAlign = 'left';
+  ctx2.fillText('Rx Sensitivity (-100 dBm)', pad + 5, sensY - 4);
+}
+
+function showBuildInstructions(antName, band, ant) {
+  const instructions = {
+    'Quarter-Wave Wire': 'Cut a wire to quarter wavelength. Attach to BNC connector. Use counterpoise wire of same length. Drape over tree branch.',
+    'Loaded Whip': 'Wind loading coil (20 turns on 2cm form). Attach to whip element. Mount on ground plane or car roof.',
+    'Tiny Loop': 'Form 30cm loop from coax shield. Add tuning capacitor. Shield gap at feed point. Very narrow bandwidth.',
+    'Rubber Duck': 'Use standard HT rubber duck antenna. Mount radio horizontally in waterproof container. Simple but limited range.',
+    'Slim Jim': 'Build from 300-ohm twin-lead or copper pipe. Total length ~1.5 wavelengths. Feed at 1/4 point from bottom.',
+    'Tape Measure Yagi': 'Use steel tape measure elements on PVC boom. 3 elements: reflector, driven, director. Fold for transport.',
+    'Stubby Whip': 'Helically wound short whip. Very compact, ideal for hiding in small objects. Trade range for concealment.',
+    'Helical': 'Wind wire on cylinder (diameter ~1/3 wavelength). Ground plane at base. Circular polarization, good for satellite.',
+    'PCB Patch': 'Etch patch element on PCB. Ground plane on back. Feed via probe or microstrip. Very flat and concealable.'
+  };
+  $('sectionCContent').innerHTML = `<p><strong>Build: ${antName}</strong></p>
+    <p>${instructions[antName] || 'Follow standard construction guidelines for this antenna type.'}</p>
+    <p style="margin-top:6px"><strong>Parts:</strong> Wire/element, connector (BNC/SMA), coax pigtail, enclosure</p>
+    <p><strong>TX Module:</strong> ${foxPower}W on ${band.freq} MHz with CW/FM keyer</p>
+    <p style="opacity:.7;margin-top:4px">Hide score: ${ant.hide}/10 | Estimated range: ${ant.range}m at full power in open field</p>`;
+}
+
+initFoxApp();

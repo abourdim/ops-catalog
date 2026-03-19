@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lockpick Trainer — Workshop DIY</title>
-  <meta name="description" content="Lock picking technique practice and scoring"/>
+  <title>pi-lockpick-trainer — Workshop DIY</title>
+  <meta name="description" content="Lockpick training simulator — learn lock mechanisms"/>
   <meta name="author" content="Workshop-DIY — abourdim"/>
-  <meta property="og:title" content="Lockpick Trainer — Workshop DIY"/>
-  <meta property="og:description" content="Lock picking technique practice and scoring"/>
+  <meta property="og:title" content="pi-lockpick-trainer — Workshop DIY"/>
+  <meta property="og:description" content="Lockpick training simulator — learn lock mechanisms"/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="icon-512.png"/>
   <link rel="icon" href="favicon.ico" sizes="any"/>
@@ -16,13 +16,26 @@
   <meta name="theme-color" content="#08091a"/>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .lock-display{text-align:center;padding:1.2rem;border-radius:12px;background:rgba(0,0,0,.25);margin-bottom:1rem}
+    .lock-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;opacity:.7;margin-bottom:.3rem}
+    .lock-value{font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:700}
+    .tension-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.1);margin:8px 0;overflow:hidden}
+    .tension-bar .fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#0f8,#fc0,#f44);transition:width .1s}
+    .form-row{display:flex;gap:.6rem;margin-bottom:.6rem;flex-wrap:wrap}
+    .form-row label{font-size:.8rem;opacity:.8;display:block;margin-bottom:.2rem}
+    .form-row .field{flex:1;min-width:120px}
+    .form-row input,.form-row select{width:100%;padding:.45rem .6rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:inherit;font-family:inherit;font-size:.85rem}
+    .btn-row{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+    .result-hex{font-family:'Orbitron',monospace;font-size:.72rem;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.8rem;line-height:1.6;color:#0f0;min-height:3rem;margin-top:.8rem}
+  </style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Lockpick Trainer</div>
-      <div class="splash-sub" data-i18n="subtitle">🔓 Lock picking technique practice and scoring</div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">🔓 lockpick trainer — learn lock mechanisms</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -33,7 +46,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Lockpick Trainer</h1><div class="subtitle" data-i18n="subtitle">🔓 Lock picking technique practice and scoring</div></div>
+          <div><h1 data-i18n="title">pi-lockpick-trainer</h1><div class="subtitle" data-i18n="subtitle">🔓 lockpick trainer — learn lock mechanisms</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -44,54 +57,83 @@
           <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
         </div>
       </div>
+
       <div class="card" id="mainCard">
         <div class="card-header"><div>
-          <div class="card-title"><span class="icon">🔓</span> <span data-i18n="mainSection">Lockpick Trainer</span></div>
-          <div class="card-subtitle"><span data-i18n="mainDesc">Lock picking technique practice and scoring</span> <span class="version-tag">v1.2</span></div>
+          <div class="card-title"><span class="icon">🔓</span> <span data-i18n="mainSection">Lockpick Training Simulator</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Learn pin tumbler lock mechanisms through simulation</span> <span class="version-tag">v1.0</span></div>
         </div></div>
-        <div class="control-section">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
-            <div class="stat-box"><div class="stat-label" data-i18n="lpStat1">Status</div><div class="stat-val" id="lpS1">STANDBY</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="lpStat2">Signal</div><div class="stat-val" id="lpS2">--</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="lpStat3">Events</div><div class="stat-val" id="lpS3">0</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="lpStat4">Uptime</div><div class="stat-val" id="lpS4">00:00</div></div>
+
+        <div class="lock-display" id="lockStatus">
+          <div class="lock-label" data-i18n="lockLabel">LOCK STATUS</div>
+          <div class="lock-value" id="lockValue" style="color:#f44">LOCKED</div>
+        </div>
+
+        <canvas id="ftCanvas" width="400" height="200" style="width:100%;border-radius:8px;background:#0a0a1a"></canvas>
+
+        <div>
+          <div class="lock-label" style="margin-top:8px" data-i18n="tensionLabel">TENSION WRENCH</div>
+          <div class="tension-bar"><div class="fill" id="tensionFill" style="width:0%"></div></div>
+        </div>
+
+        <div class="control-section" style="margin-top:1rem">
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="diffLabel">Difficulty</label>
+              <select id="diffSelect">
+                <option value="3" data-i18n-opt="diff3">3 Pins (Easy)</option>
+                <option value="5" selected data-i18n-opt="diff5">5 Pins (Medium)</option>
+                <option value="7" data-i18n-opt="diff7">7 Pins (Hard)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label data-i18n="typeLabel">Lock Type</label>
+              <select id="typeSelect">
+                <option value="pin" data-i18n-opt="typePin">Pin Tumbler</option>
+                <option value="wafer" data-i18n-opt="typeWafer">Wafer</option>
+                <option value="disc" data-i18n-opt="typeDisc">Disc Detainer</option>
+              </select>
+            </div>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-sm primary" onclick="lpActivate()"><span class="btn-icon">🔓</span> <span data-i18n="lpActivate">Activate</span></button>
-            <button class="btn-sm" onclick="lpAction1()"><span class="btn-icon">▶️</span> <span data-i18n="lpAct1">Run Scan</span></button>
-            <button class="btn-sm fire-btn" onclick="lpEmergency()"><span class="btn-icon">🔥</span> <span data-i18n="lpEmerg">Emergency</span></button>
+          <div class="btn-row">
+            <button id="pickBtn" class="primary fire-btn" style="flex:2;padding:.7rem 1.2rem;font-size:1rem" data-i18n="pickBtn">Pick Pin</button>
+            <button id="resetLockBtn" style="flex:1;padding:.7rem 1.2rem;font-size:1rem" data-i18n="resetBtn">Reset Lock</button>
           </div>
-          <div class="progress-wrap" style="margin-top:10px"><div class="progress-bar" id="lpBar" style="width:0%"></div></div>
-          <canvas id="lpCanvas" width="400" height="120" style="width:100%;margin-top:10px;border-radius:8px;background:#0a0a1a"></canvas>
+        </div>
+
+        <div>
+          <div style="font-size:.75rem;opacity:.7;margin-bottom:.3rem" data-i18n="feedbackLabel">PICK FEEDBACK</div>
+          <div class="result-hex" id="feedbackDisplay">--</div>
         </div>
       </div>
-      <details class="collapsible"><summary><span class="icon">🔓</span> <span data-i18n="sectionA">Pick Practice</span></summary>
+
+      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionA">Pin Analysis</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">🔓</span> <span data-i18n="lpSecA">Pick Practice</span></h3>
-          <div id="lpSecAContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <canvas id="pinAnalysisCanvas" width="400" height="160" style="width:100%;border-radius:8px;background:#0a0a1a"></canvas>
+          <div id="ftSecAContent" style="min-height:40px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="lpSecAAction()"><span data-i18n="lpSecABtn">Execute</span></button>
-            <button class="btn-sm" onclick="lpSecAReset()"><span data-i18n="lpSecARst">Reset</span></button>
+            <button class="btn-sm primary" onclick="ftSecAAction()"><span data-i18n="ftSecABtn">Analyze</span></button>
+            <button class="btn-sm" onclick="ftSecAReset()"><span data-i18n="ftSecARst">Reset</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionB">Score Board</span></summary>
+
+      <details class="collapsible"><summary><span class="icon">🧪</span> <span data-i18n="sectionB">Practice Log</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📊</span> <span data-i18n="lpSecB">Score Board</span></h3>
-          <div id="lpSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div id="ftSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="lpSecBAction()"><span data-i18n="lpSecBBtn">Execute</span></button>
-            <button class="btn-sm" onclick="lpSecBReset()"><span data-i18n="lpSecBRst">Reset</span></button>
+            <button class="btn-sm primary" onclick="ftSecBAction()"><span data-i18n="ftSecBBtn">Log Attempt</span></button>
+            <button class="btn-sm" onclick="ftSecBReset()"><span data-i18n="ftSecBRst">Reset</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionC">Technique Guide</span></summary>
+
+      <details class="collapsible"><summary><span class="icon">📋</span> <span data-i18n="sectionC">Skill Report</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📚</span> <span data-i18n="lpSecC">Technique Guide</span></h3>
-          <div id="lpSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div id="ftSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="lpSecCAction()"><span data-i18n="lpSecCBtn">Execute</span></button>
-            <button class="btn-sm" onclick="lpSecCReset()"><span data-i18n="lpSecCRst">Reset</span></button>
+            <button class="btn-sm primary" onclick="ftSecCAction()"><span data-i18n="ftSecCBtn">Generate</span></button>
+            <button class="btn-sm" onclick="ftSecCReset()"><span data-i18n="ftSecCRst">Reset</span></button>
           </div>
         </div></div>
       </details>
@@ -107,24 +149,24 @@
     <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
     <div class="sidebar-body">
       <div class="help-content active" id="helpFaq">
-        <details class="help-item"><summary data-i18n="faq_q1">What is Lockpick Trainer?</summary><p data-i18n="faq_a1">Lock picking technique practice and scoring</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">How do I change the theme?</summary><p data-i18n="faq_a2">Open Settings and pick a theme.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">How do I change the language?</summary><p data-i18n="faq_a3">Open Settings and pick your language. Arabic enables RTL.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q1">What is this simulator?</summary><p data-i18n="faq_a1">A lockpick training simulator that teaches pin tumbler lock mechanisms through interactive practice.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">How does pin picking work?</summary><p data-i18n="faq_a2">Apply tension with wrench, then push each pin to the shear line. Pins set in a specific order based on binding.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">What lock types are available?</summary><p data-i18n="faq_a3">Pin tumbler, wafer, and disc detainer locks with varying difficulty levels from 3 to 7 pins.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.</p></details>
       </div>
       <div class="help-content" id="helpHowto">
-        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Explore the main dashboard.</p></div>
-        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Open sections for more controls.</p></div>
-        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Check the Activity Log.</p></div>
-        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Settings to customize.</p></div>
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Choose difficulty and lock type.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Pick Pin to attempt picking the current binding pin.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Watch the canvas for pin positions and tension feedback.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Set all pins to unlock. Reset to try again with a new lock.</p></div>
       </div>
       <div class="help-content" id="helpWiki">
-        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">EN/FR/AR with RTL.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">All data local.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_pin_title">🔓 Pin Tumbler Locks</h3><p data-i18n="wiki_pin">Pin tumbler locks use spring-loaded pin stacks. The correct key pushes each pin pair to the shear line.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_pick_title">🔧 Lock Picking</h3><p data-i18n="wiki_pick">Lock picking exploits manufacturing tolerances. Tension creates binding order, letting pins be set one by one.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_types_title">🔐 Lock Types</h3><p data-i18n="wiki_types">Pin tumbler, wafer, disc detainer, and tubular locks each use different mechanisms requiring unique techniques.</p></div>
       </div>
     </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <div class="sidebar-overlay" id="settingsOverlay"></div>
   <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
@@ -137,14 +179,14 @@
       <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
       <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
     </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <aside class="sidebar" id="logPanel" aria-label="Activity Log">
     <div class="resize-handle" id="logResizeHandle"></div>
     <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
     <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
     <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
-    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
   <script src="script.js"></script>

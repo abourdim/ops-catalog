@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Blue Team Sentinel', subtitle: '🛡️ Defensive monitoring & countermeasures',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Blue Team Sentinel', mainDesc: 'Monitor, detect anomalies, deploy countermeasures',
+    sectionA: 'Threat Monitor', sectionB: 'Anomaly Detector', sectionC: 'Countermeasures',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🛡️ Blue team sentinel ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Sentinelle Blue Team', subtitle: '🛡️ Surveillance défensive et contre-mesures',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🛡️ Sentinelle Blue Team prête !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'حارس الفريق الأزرق', subtitle: '🛡️ مراقبة دفاعية وإجراءات مضادة',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🛡️ حارس الفريق الأزرق جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,99 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initBlueTeam();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ BLUE TEAM SENTINEL SIMULATION ═══════ */
+let btState = { active: false, threats: [], anomalies: 0, blocked: 0, uptime: 0, uptimeTimer: null, animFrame: null };
+const BT_ATTACKS = ['Port Scan','SQL Injection','XSS Attempt','Brute Force','DDoS','Phishing','Malware','Data Exfil','Privilege Escalation','Zero-Day'];
+
+function initBlueTeam() { setStatus(false); drawBtCanvas(); }
+
+function btActivate() {
+  if (btState.active) { btState.active = false; setStatus(false); clearInterval(btState.uptimeTimer); if (btState.animFrame) cancelAnimationFrame(btState.animFrame); log('🛡️ Sentinel offline', 'info'); return; }
+  btState.active = true; btState.uptime = 0; setStatus(true); log('🛡️ Blue Team Sentinel online!', 'success');
+  btState.uptimeTimer = setInterval(() => {
+    btState.uptime++;
+    const s4 = $('btS4'); if (s4) s4.textContent = String(Math.floor(btState.uptime/60)).padStart(2,'0')+':'+String(btState.uptime%60).padStart(2,'0');
+    if (Math.random() < 0.1) btDetectAnomaly();
+  }, 1000);
+  animateBt();
+}
+
+function animateBt() { if (!btState.active) return; drawBtCanvas(); btState.animFrame = requestAnimationFrame(animateBt); }
+
+function btDetectAnomaly() {
+  btState.anomalies++;
+  const attack = BT_ATTACKS[Math.floor(Math.random() * BT_ATTACKS.length)];
+  const ip = `${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`;
+  const severity = ['LOW','MED','HIGH','CRITICAL'][Math.floor(Math.random()*4)];
+  btState.threats.push({ attack, ip, severity, time: new Date().toLocaleTimeString(), blocked: false });
+  const s2 = $('btS2'); if (s2) s2.textContent = btState.anomalies;
+  log(`🚨 ${severity}: ${attack} from ${ip}`, severity === 'CRITICAL' ? 'error' : 'info');
+  if (severity === 'CRITICAL') playSound('error');
+}
+
+function btAction1() {
+  if (!btState.active) { log('Activate sentinel first!', 'error'); return; }
+  log('🔍 Running threat scan...', 'info');
+  showToast('Scanning...', 2000);
+  setTimeout(() => { for (let i = 0; i < 3; i++) btDetectAnomaly(); log('✅ Scan complete', 'success'); }, 2000);
+}
+
+function btEmergency() {
+  btState.threats.forEach(t => t.blocked = true);
+  btState.blocked = btState.threats.length;
+  const s3 = $('btS3'); if (s3) s3.textContent = btState.blocked;
+  log('🔒 LOCKDOWN: All connections blocked!', 'error'); playSound('error');
+}
+
+function btSecAAction() {
+  const el = $('btSecAContent');
+  if (el) el.innerHTML = btState.threats.slice(-8).map(t => `[${t.time}] ${t.severity} ${t.attack} - ${t.ip} ${t.blocked ? '🔒BLOCKED' : '⚠️ACTIVE'}`).join('<br>') || 'No threats detected.';
+}
+function btSecAReset() { const el = $('btSecAContent'); if (el) el.innerHTML = ''; }
+function btSecBAction() {
+  btDetectAnomaly(); btDetectAnomaly();
+  log('🔬 Deep anomaly analysis triggered', 'info');
+}
+function btSecBReset() { btState.anomalies = 0; const s2 = $('btS2'); if (s2) s2.textContent = '0'; log('🔄 Anomaly counter reset', 'info'); }
+function btSecCAction() {
+  const unblocked = btState.threats.filter(t => !t.blocked);
+  unblocked.forEach(t => t.blocked = true);
+  btState.blocked += unblocked.length;
+  const s3 = $('btS3'); if (s3) s3.textContent = btState.blocked;
+  log(`🛡️ ${unblocked.length} threats neutralized`, 'success'); playSound('success');
+}
+function btSecCReset() { btState.threats.forEach(t => t.blocked = false); btState.blocked = 0; const s3 = $('btS3'); if (s3) s3.textContent = '0'; }
+
+function drawBtCanvas() {
+  const canvas = $('btCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const t = Date.now() / 1000;
+  // Network traffic visualization
+  ctx.strokeStyle = accent; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const noise = btState.active ? (Math.sin(x*0.1+t*3)*0.3 + Math.sin(x*0.03+t)*0.2 + (Math.random()-0.5)*0.1) : 0;
+    const y = h/2 + noise * h * 0.4;
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  // Threat indicators
+  btState.threats.slice(-5).forEach((th, i) => {
+    const x = w - 20 - i * 30;
+    ctx.fillStyle = th.blocked ? '#4caf50' : (th.severity === 'CRITICAL' ? '#f44336' : '#ff9800');
+    ctx.beginPath(); ctx.arc(x, 15, 5, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron, monospace';
+  ctx.fillText(`THREATS: ${btState.anomalies} | BLOCKED: ${btState.blocked}`, 5, 15);
+}

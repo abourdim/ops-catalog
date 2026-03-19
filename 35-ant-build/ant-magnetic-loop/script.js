@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Magnetic Loop Tuner', subtitle: '🔄 Design and tune small magnetic loop antennas',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Loop Tuner', mainDesc: 'Set frequency and loop diameter to calculate capacitor and SWR',
+    sectionA: 'Capacitor & Impedance', sectionB: 'SWR vs Frequency', sectionC: 'Loop Design Notes',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Magnetic Loop Tuner?', faq_a1: 'Design small magnetic loop antennas. Calculate tuning capacitor, radiation resistance, efficiency and bandwidth for any frequency.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -100,16 +100,16 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Accordeur Boucle Magnétique', subtitle: '🔄 Concevoir et accorder des antennes boucle magnétique',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Accordeur Boucle', mainDesc: 'Réglez la fréquence et le diamètre pour calculer le condensateur et le TOS',
+    sectionA: 'Condensateur & Impédance', sectionB: 'TOS vs Fréquence', sectionC: 'Notes de conception',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que l\'Accordeur Boucle ?', faq_a1: 'Concevez des antennes boucle magnétique. Calculez le condensateur, la résistance de rayonnement et le rendement.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -137,16 +137,16 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'موالف الحلقة المغناطيسية', subtitle: '🔄 تصميم وضبط هوائيات الحلقة المغناطيسية الصغيرة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'موالف الحلقة', mainDesc: 'اضبط التردد والقطر لحساب المكثف ونسبة الموجة الثابتة',
+    sectionA: 'المكثف والمقاومة', sectionB: 'TOS مقابل التردد', sectionC: 'ملاحظات التصميم',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو موالف الحلقة المغناطيسية؟', faq_a1: 'صمم هوائيات الحلقة المغناطيسية. احسب المكثف ومقاومة الإشعاع والكفاءة وعرض النطاق.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -1449,3 +1449,218 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ MAGNETIC LOOP ANTENNA TUNER SIMULATION ═══════ */
+
+(function() {
+  const C = 299792458;
+
+  function waitForDOM(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  waitForDOM(function() {
+    /* ── Main Controls ── */
+    const mc = document.getElementById('mainControls');
+    if (!mc) return;
+    mc.innerHTML = `
+      <div class="control-section">
+        <div class="grid-2">
+          <div><label>Frequency (MHz)</label><input type="number" id="mlFreq" value="14.1" min="1" max="150" step="0.1"></div>
+          <div><label>Loop Diameter (m)</label><input type="number" id="mlDiam" value="1.0" min="0.1" max="5" step="0.1"></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Conductor Diameter (mm)</label><input type="number" id="mlCond" value="22" min="1" max="100" step="1"></div>
+          <div><label>Conductor</label><select id="mlMat"><option value="copper">Copper</option><option value="aluminum">Aluminum</option></select></div>
+        </div>
+        <div style="margin-top:10px;"><button class="primary" id="mlCalcBtn" style="width:100%">🔄 Calculate Loop</button></div>
+      </div>`;
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const canvasA = document.getElementById('canvasA');
+    const ctxA = canvasA ? canvasA.getContext('2d') : null;
+    const canvasB = document.getElementById('canvasB');
+    const ctxB = canvasB ? canvasB.getContext('2d') : null;
+    const resultBox = document.getElementById('resultBox');
+    const secC = document.getElementById('sectionCContent');
+
+    function calcLoop() {
+      const freq = parseFloat(document.getElementById('mlFreq').value) || 14.1;
+      const diam = parseFloat(document.getElementById('mlDiam').value) || 1.0;
+      const condDiam = (parseFloat(document.getElementById('mlCond').value) || 22) / 1000;
+      const mat = document.getElementById('mlMat').value;
+      const lambda = C / (freq * 1e6);
+      const circumference = Math.PI * diam;
+      const area = Math.PI * (diam / 2) * (diam / 2);
+      const L = 1.257e-6 * (diam / 2) * (Math.log(8 * (diam / 2) / (condDiam / 2)) - 2);
+      const capPF = 1e12 / (Math.pow(2 * Math.PI * freq * 1e6, 2) * L);
+      const Rrad = 31171 * Math.pow(area / (lambda * lambda), 2);
+      const sigma = mat === 'copper' ? 5.8e7 : 3.5e7;
+      const Rloss = circumference * Math.sqrt(Math.PI * freq * 1e6 * 4e-7 * Math.PI / sigma) / (Math.PI * condDiam);
+      const eff = Rrad / (Rrad + Rloss) * 100;
+      const Q = 2 * Math.PI * freq * 1e6 * L / (Rrad + Rloss);
+      const bw = freq * 1e3 / Q;
+      const voltPeak = Math.sqrt(100 * Q * 2 * Math.PI * freq * 1e6 * L);
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div class="result-row"><span class="result-label">Tuning Capacitor</span><span class="result-value">${capPF.toFixed(1)} pF</span></div>
+          <div class="result-row"><span class="result-label">Inductance</span><span class="result-value">${(L * 1e6).toFixed(3)} uH</span></div>
+          <div class="result-row"><span class="result-label">Radiation Resistance</span><span class="result-value">${Rrad.toFixed(4)} Ohm</span></div>
+          <div class="result-row"><span class="result-label">Loss Resistance</span><span class="result-value">${Rloss.toFixed(4)} Ohm</span></div>
+          <div class="result-row"><span class="result-label">Efficiency</span><span class="result-value">${eff.toFixed(1)}%</span></div>
+          <div class="result-row"><span class="result-label">Q Factor</span><span class="result-value">${Q.toFixed(0)}</span></div>
+          <div class="result-row"><span class="result-label">Bandwidth (-3dB)</span><span class="result-value">${bw.toFixed(1)} kHz</span></div>
+          <div class="result-row"><span class="result-label">Peak Voltage (100W)</span><span class="result-value">${voltPeak.toFixed(0)} V</span></div>`;
+      }
+
+      drawLoop(ctx, canvas, diam, condDiam, freq, lambda, eff);
+      drawImpedance(ctxA, canvasA, freq, L, Rrad, Rloss, capPF);
+      drawSWR(ctxB, canvasB, freq, L, Rrad, Rloss);
+      fillNotes(secC, freq, diam, capPF, eff, bw, voltPeak);
+      if (typeof log === 'function') log(`Loop: ${diam}m @ ${freq} MHz => C=${capPF.toFixed(1)}pF, Eff=${eff.toFixed(1)}%`, 'success');
+    }
+
+    function drawLoop(ctx, cvs, diam, condD, freq, lambda, eff) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2 + 10;
+      const r = Math.min(W, H) * 0.32;
+      const hue = Math.max(0, Math.min(120, eff * 1.2));
+      ctx.strokeStyle = `hsl(${hue}, 80%, 55%)`;
+      ctx.lineWidth = Math.max(2, condD * 200);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.fillStyle = '#d4a03c';
+      ctx.fillRect(cx - 15, cy - r - 20, 30, 16);
+      ctx.fillStyle = '#000';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('CAP', cx, cy - r - 10);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '11px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${freq} MHz  D=${diam}m`, cx, 18);
+      ctx.fillText(`Eff: ${eff.toFixed(1)}%`, cx, H - 10);
+      for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * 2 * Math.PI - Math.PI / 2;
+        const arrowR = r + 15 + 10 * Math.sin(Date.now() / 300 + i);
+        const ax = cx + arrowR * Math.cos(angle);
+        const ay = cy + arrowR * Math.sin(angle);
+        ctx.fillStyle = `hsla(${hue}, 80%, 55%, 0.5)`;
+        ctx.beginPath();
+        ctx.arc(ax, ay, 3, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+    }
+
+    function drawImpedance(ctx, cvs, freq, L, Rrad, Rloss, capPF) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      ctx.strokeStyle = '#2a2d45';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const y = pad + (gH / 5) * i;
+        ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+      }
+      const steps = 100;
+      const fMin = freq * 0.8, fMax = freq * 1.2;
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      let maxZ = 0;
+      const zVals = [];
+      for (let i = 0; i <= steps; i++) {
+        const f = fMin + (fMax - fMin) * (i / steps);
+        const w = 2 * Math.PI * f * 1e6;
+        const XL = w * L;
+        const XC = 1 / (w * capPF * 1e-12);
+        const Z = Math.sqrt(Math.pow(Rrad + Rloss, 2) + Math.pow(XL - XC, 2));
+        zVals.push(Z);
+        if (Z > maxZ) maxZ = Z;
+      }
+      for (let i = 0; i <= steps; i++) {
+        const x = pad + (gW / steps) * i;
+        const y = pad + gH - (zVals[i] / maxZ) * gH;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`Impedance vs Freq (${fMin.toFixed(1)}-${fMax.toFixed(1)} MHz)`, W / 2, 14);
+      ctx.fillText(`${fMin.toFixed(1)}`, pad, H - 5);
+      ctx.fillText(`${fMax.toFixed(1)}`, W - pad, H - 5);
+    }
+
+    function drawSWR(ctx, cvs, freq, L, Rrad, Rloss) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      const steps = 200;
+      const fMin = freq * 0.9, fMax = freq * 1.1;
+      const capPF = 1e12 / (Math.pow(2 * Math.PI * freq * 1e6, 2) * L);
+      ctx.strokeStyle = '#33ff33';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++) {
+        const f = fMin + (fMax - fMin) * (i / steps);
+        const w = 2 * Math.PI * f * 1e6;
+        const XL = w * L;
+        const XC = 1 / (w * capPF * 1e-12);
+        const Z = Math.sqrt(Math.pow(Rrad + Rloss, 2) + Math.pow(XL - XC, 2));
+        const gamma = Math.abs((Z - 50) / (Z + 50));
+        const swr = (1 + gamma) / (1 - gamma + 0.001);
+        const clampedSWR = Math.min(swr, 10);
+        const x = pad + (gW / steps) * i;
+        const y = pad + gH - (1 - (clampedSWR - 1) / 9) * gH;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.strokeStyle = '#ff4444';
+      ctx.setLineDash([4, 4]);
+      const swr2y = pad + gH - (1 - (2 - 1) / 9) * gH;
+      ctx.beginPath(); ctx.moveTo(pad, swr2y); ctx.lineTo(W - pad, swr2y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#ff4444';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.fillText('SWR 2:1', pad + 5, swr2y - 4);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`SWR vs Frequency`, W / 2, 14);
+      ctx.fillText(`${fMin.toFixed(2)}`, pad, H - 5);
+      ctx.fillText(`${fMax.toFixed(2)} MHz`, W - pad, H - 5);
+    }
+
+    function fillNotes(el, freq, diam, capPF, eff, bw, voltPeak) {
+      if (!el) return;
+      el.innerHTML = `
+        <p><strong>Magnetic Loop Design Notes:</strong></p>
+        <p>A ${diam}m diameter loop at ${freq} MHz requires a tuning capacitor of approximately ${capPF.toFixed(1)} pF.</p>
+        <p>Efficiency is ${eff.toFixed(1)}% with a -3dB bandwidth of ${bw.toFixed(1)} kHz. The narrow bandwidth means you must retune for even small frequency changes.</p>
+        <p>Peak voltage at 100W is approximately ${voltPeak.toFixed(0)}V, so use a high-voltage variable capacitor or vacuum capacitor.</p>
+        <p>Use the largest conductor diameter practical. Copper tubing 22mm or larger is recommended for HF.</p>
+        <p>Keep the loop circular for best efficiency. Mount at least 0.3m from metal surfaces.</p>`;
+    }
+
+    document.getElementById('mlCalcBtn').addEventListener('click', calcLoop);
+    calcLoop();
+  });
+})();

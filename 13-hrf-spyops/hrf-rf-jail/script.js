@@ -63,115 +63,104 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'RF Jail', subtitle: 'RF Jail — Virtual Faraday Cage',
+    disconnected: 'Open', connected: 'Shielded',
+    mainSection: 'RF Jail', mainDesc: 'Virtual Faraday cage — monitor and block frequencies',
+    sectionA: 'Blocked Signals', sectionB: 'Faraday Cage Science',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is RF Jail?', faq_a1: 'A virtual Faraday cage simulator. Block and monitor RF frequencies.',
+    faq_q2: 'How do I block frequencies?', faq_a2: 'Click Block Frequency then click on the spectrum, or click directly on the canvas.',
+    faq_q3: 'What is shielding level?', faq_a3: 'The attenuation in dB. Higher = more signals blocked.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Click Activate Cage to enable the Faraday cage.',
+    howto_2: 'Click on the spectrum to add blocked frequency ranges.',
+    howto_3: 'Adjust shielding level with the slider.',
+    howto_4: 'Monitor leakage in the status panels.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Log', wiki_log: 'Timestamped log.', wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 RF Jail ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    activateCage: 'Activate Cage', deactivateCage: 'Deactivate', blockFreq: 'Block Frequency',
+    clearBlocks: 'Clear Blocks', shielding: 'Shielding:', cageStatus: 'Cage Status',
+    blockedBands: 'Blocked Bands', leakage: 'Leakage Monitor', inactive: 'INACTIVE',
+    active: 'ACTIVE', jailHint: 'Click on the spectrum to add frequency blocks.',
+    cageOn: 'Faraday cage activated', cageOff: 'Faraday cage deactivated',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Prison RF', subtitle: 'Prison RF — Cage de Faraday Virtuelle',
+    disconnected: 'Ouvert', connected: 'Blindé',
+    mainSection: 'Prison RF', mainDesc: 'Cage de Faraday virtuelle — bloquer les fréquences',
+    sectionA: 'Signaux Bloqués', sectionB: 'Science de la Cage de Faraday',
+    activityLog: 'Journal', eventsMsg: 'Événements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que Prison RF?', faq_a1: 'Un simulateur de cage de Faraday.',
+    faq_q2: 'Comment bloquer?', faq_a2: 'Cliquez sur le spectre pour ajouter des blocs.',
+    faq_q3: 'Niveau de blindage?', faq_a3: 'L\'atténuation en dB.',
+    faq_q4: 'Données privées?', faq_a4: 'Oui.',
+    howto_1: 'Activez la cage.', howto_2: 'Cliquez sur le spectre.',
+    howto_3: 'Ajustez le blindage.', howto_4: 'Surveillez les fuites.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal.', wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Prison RF prête!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    activateCage: 'Activer', deactivateCage: 'Désactiver', blockFreq: 'Bloquer',
+    clearBlocks: 'Effacer Blocs', shielding: 'Blindage:', cageStatus: 'État Cage',
+    blockedBands: 'Bandes Bloquées', leakage: 'Fuites', inactive: 'INACTIF', active: 'ACTIF',
+    jailHint: 'Cliquez sur le spectre pour bloquer.', cageOn: 'Cage activée', cageOff: 'Cage désactivée',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'سجن RF', subtitle: 'سجن RF — قفص فاراداي افتراضي',
+    disconnected: 'مفتوح', connected: 'محمي',
+    mainSection: 'سجن RF', mainDesc: 'قفص فاراداي افتراضي — حظر الترددات',
+    sectionA: 'الإشارات المحظورة', sectionB: 'علم قفص فاراداي',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو سجن RF؟', faq_a1: 'محاكي لقفص فاراداي الافتراضي.',
+    faq_q2: 'كيف أحظر الترددات؟', faq_a2: 'انقر على الطيف لإضافة حظر.',
+    faq_q3: 'ما هو مستوى الحماية؟', faq_a3: 'التخميد بالديسيبل.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
+    howto_1: 'فعّل القفص.', howto_2: 'انقر على الطيف.',
+    howto_3: 'اضبط مستوى الحماية.', howto_4: 'راقب التسريبات.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 سجن RF جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    activateCage: 'تفعيل القفص', deactivateCage: 'إلغاء', blockFreq: 'حظر تردد',
+    clearBlocks: 'مسح الحظر', shielding: 'الحماية:', cageStatus: 'حالة القفص',
+    blockedBands: 'النطاقات المحظورة', leakage: 'مراقبة التسريب', inactive: 'غير نشط', active: 'نشط',
+    jailHint: 'انقر على الطيف لحظر الترددات.', cageOn: 'تم تفعيل القفص', cageOff: 'تم إلغاء القفص',
   }
 };
 
@@ -1444,6 +1433,168 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initRFJail();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: RF JAIL — Virtual Faraday Cage
+   ═══════════════════════════════════════════════════════════════ */
+
+let jailCanvas, jailCtx, jW=780, jH=300;
+let cageActive = false, shieldLevel = 80, blockedRanges = [], frame = 0;
+let ambientSignals = [];
+
+function genAmbientSignals() {
+  ambientSignals = [];
+  const names = ['WiFi AP','Cell Tower','Bluetooth','FM Radio','ISM Device','Radar','GPS','IoT Sensor'];
+  for (let i=0; i<8+Math.floor(Math.random()*6); i++) {
+    ambientSignals.push({ freq: 50+Math.random()*950, power: -30-Math.random()*40, width: 5+Math.random()*20, name: names[i%names.length] });
+  }
+}
+
+function isBlocked(freq) {
+  return blockedRanges.some(r => freq >= r.start && freq <= r.end);
+}
+
+function drawJailSpectrum() {
+  if (!jailCtx) return;
+  frame++;
+  jailCtx.fillStyle = '#0a0a1a';
+  jailCtx.fillRect(0,0,jW,jH);
+
+  // Grid
+  jailCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+  for (let x=0; x<jW; x+=40) { jailCtx.beginPath(); jailCtx.moveTo(x,0); jailCtx.lineTo(x,jH); jailCtx.stroke(); }
+
+  // Blocked zones
+  blockedRanges.forEach(r => {
+    const x1 = (r.start/1000)*jW, x2 = (r.end/1000)*jW;
+    jailCtx.fillStyle = cageActive ? 'rgba(239,68,68,0.15)' : 'rgba(239,68,68,0.05)';
+    jailCtx.fillRect(x1, 0, x2-x1, jH);
+    jailCtx.strokeStyle = 'rgba(239,68,68,0.4)';
+    jailCtx.setLineDash([4,4]);
+    jailCtx.strokeRect(x1, 0, x2-x1, jH);
+    jailCtx.setLineDash([]);
+  });
+
+  // Signals
+  jailCtx.beginPath();
+  jailCtx.strokeStyle = '#22c55e';
+  jailCtx.lineWidth = 1.5;
+  for (let x=0; x<jW; x++) {
+    const freq = (x/jW)*1000;
+    let power = -90 + (Math.random()-0.5)*4;
+    ambientSignals.forEach(s => {
+      const d = Math.abs(freq-s.freq);
+      if (d < s.width*2) {
+        let p = s.power * Math.exp(-(d*d)/(2*s.width*s.width/4));
+        if (cageActive && isBlocked(freq)) p -= shieldLevel;
+        power = Math.max(power, p);
+      }
+    });
+    if (cageActive && isBlocked(freq)) power = Math.min(power, -90+5);
+    const y = jH * (1-(power+100)/80);
+    x===0 ? jailCtx.moveTo(x,y) : jailCtx.lineTo(x,y);
+  }
+  jailCtx.stroke();
+
+  // Signal labels
+  ambientSignals.forEach(s => {
+    const x = (s.freq/1000)*jW;
+    const blocked = cageActive && isBlocked(s.freq);
+    const effectivePower = blocked ? Math.min(s.power - shieldLevel, -90) : s.power;
+    const y = jH * (1-(effectivePower+100)/80);
+    if (!blocked || effectivePower > -85) {
+      jailCtx.fillStyle = blocked ? 'rgba(239,68,68,0.5)' : 'rgba(34,197,94,0.6)';
+      jailCtx.font = '8px monospace';
+      jailCtx.textAlign = 'center';
+      jailCtx.fillText(s.name, x, Math.max(y-5, 12));
+    }
+  });
+
+  // Labels
+  jailCtx.fillStyle = 'rgba(255,255,255,0.4)';
+  jailCtx.font = '10px monospace';
+  jailCtx.textAlign = 'left'; jailCtx.fillText('0 MHz', 4, jH-4);
+  jailCtx.textAlign = 'right'; jailCtx.fillText('1000 MHz', jW-4, jH-4);
+  jailCtx.textAlign = 'center';
+  jailCtx.fillText(cageActive ? 'FARADAY CAGE ACTIVE' : 'CAGE INACTIVE', jW/2, 14);
+}
+
+function updateJailUI() {
+  const s = LANG[currentLang];
+  const cageFill = $('cageFill');
+  const cageText = $('cageText');
+  if (cageActive) {
+    if (cageFill) { cageFill.style.width = shieldLevel+'%'; cageFill.style.background = '#22c55e'; }
+    if (cageText) { cageText.textContent = s.active; cageText.style.color = '#22c55e'; }
+  } else {
+    if (cageFill) { cageFill.style.width = '0%'; }
+    if (cageText) { cageText.textContent = s.inactive; cageText.style.color = '#ef4444'; }
+  }
+  const blockListEl = $('blockList');
+  if (blockListEl) {
+    blockListEl.innerHTML = blockedRanges.map((r,i) => `<div style="color:#ef4444;">${r.start.toFixed(0)}-${r.end.toFixed(0)} MHz</div>`).join('') || '<div style="color:var(--text-muted);">No blocks</div>';
+  }
+  const leakEl = $('leakStats');
+  if (leakEl) {
+    const totalBlocked = ambientSignals.filter(s => cageActive && isBlocked(s.freq)).length;
+    const leaking = ambientSignals.filter(s => !cageActive || !isBlocked(s.freq)).length;
+    leakEl.innerHTML = `Signals: <strong>${ambientSignals.length}</strong><br>Blocked: <strong style="color:#22c55e;">${totalBlocked}</strong><br>Leaking: <strong style="color:${leaking?'#ef4444':'#22c55e'};">${leaking}</strong><br>Shield: <strong>${shieldLevel} dB</strong>`;
+  }
+}
+
+function buildFaradayDatabase() {
+  const el = $('faradayDatabase');
+  if (!el) return;
+  const info = [
+    { name:'Mesh Size', desc:'Openings must be smaller than wavelength to block signals' },
+    { name:'Material', desc:'Copper, aluminum, and steel provide different shielding effectiveness' },
+    { name:'Grounding', desc:'Proper grounding is essential for effective shielding' },
+    { name:'Seams & Gaps', desc:'Any gaps or seams will leak RF energy' },
+    { name:'Frequency vs Size', desc:'Lower frequencies need thicker/tighter cages to block' },
+    { name:'Applications', desc:'SCIF rooms, evidence bags, phone pouches, MRI rooms' },
+  ];
+  let html = '<div style="display:grid;grid-template-columns:auto 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Concept</strong><strong style="font-size:.7rem;">Description</strong>';
+  info.forEach(t => { html += `<span style="color:var(--accent);">${t.name}</span><span style="color:var(--text-muted);">${t.desc}</span>`; });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function jailLoop() { drawJailSpectrum(); updateJailUI(); requestAnimationFrame(jailLoop); }
+
+function initRFJail() {
+  jailCanvas = $('jailCanvas');
+  if (jailCanvas) {
+    jailCtx = jailCanvas.getContext('2d'); jW = jailCanvas.width; jH = jailCanvas.height;
+    jailCanvas.addEventListener('click', e => {
+      const rect = jailCanvas.getBoundingClientRect();
+      const freq = ((e.clientX-rect.left)/rect.width)*1000;
+      blockedRanges.push({ start: Math.max(0,freq-25), end: Math.min(1000,freq+25) });
+      log(`Blocked ${Math.max(0,freq-25).toFixed(0)}-${Math.min(1000,freq+25).toFixed(0)} MHz`, 'info');
+      playSound('click');
+    });
+  }
+  const cBtn = $('cageBtn');
+  if (cBtn) cBtn.onclick = () => {
+    cageActive = !cageActive;
+    const s = LANG[currentLang];
+    cBtn.innerHTML = cageActive ? `<span class="btn-icon">&#x1F513;</span> <span>${s.deactivateCage}</span>` : `<span class="btn-icon">&#x1F512;</span> <span>${s.activateCage}</span>`;
+    setStatus(cageActive);
+    log(cageActive ? s.cageOn : s.cageOff, cageActive ? 'success' : 'info');
+    if (cageActive) playSound('success');
+  };
+  const addBtn = $('addBlockBtn');
+  if (addBtn) addBtn.onclick = () => log('Click on the spectrum to add a block', 'info');
+  const clearBtn = $('clearBlocksBtn');
+  if (clearBtn) clearBtn.onclick = () => { blockedRanges = []; log('All blocks cleared', 'info'); };
+  const shieldSlider = $('shieldLevel');
+  const shieldLbl = $('shieldLabel');
+  if (shieldSlider) shieldSlider.addEventListener('input', () => { shieldLevel = parseInt(shieldSlider.value); if (shieldLbl) shieldLbl.textContent = shieldLevel+' dB'; });
+  genAmbientSignals();
+  buildFaradayDatabase();
+  jailLoop();
 }
 
 document.readyState === 'loading'

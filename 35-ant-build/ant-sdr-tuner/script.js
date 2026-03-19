@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Antenna Tuner', subtitle: '📡 Use SDR to measure and tune antennas',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'SDR Tuner', mainDesc: 'Simulate SDR-based antenna measurement and tuning',
+    sectionA: 'Impedance Plot', sectionB: 'Waterfall Display', sectionC: 'SDR Tuning Guide',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is SDR Antenna Tuner?', faq_a1: 'Simulate SDR-based antenna measurements: SWR sweep, impedance, spectrum and waterfall display for tuning.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -100,16 +100,16 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Accordeur SDR', subtitle: '📡 Mesurer et accorder les antennes avec SDR',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Accordeur SDR', mainDesc: 'Simuler la mesure et l\'accord d\'antennes par SDR',
+    sectionA: 'Graphe d\'impédance', sectionB: 'Affichage cascade', sectionC: 'Guide d\'accord SDR',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que l\'Accordeur SDR ?', faq_a1: 'Simulez les mesures SDR : balayage TOS, impédance, spectre et cascade pour l\'accord d\'antennes.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -137,16 +137,16 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'موالف SDR', subtitle: '📡 قياس وضبط الهوائيات باستخدام SDR',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'موالف SDR', mainDesc: 'محاكاة قياس وضبط الهوائيات بالراديو المعرف برمجيًا',
+    sectionA: 'مخطط المعاوقة', sectionB: 'عرض الشلال', sectionC: 'دليل ضبط SDR',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو موالف SDR؟', faq_a1: 'محاكاة قياسات SDR: مسح TOS، المعاوقة، الطيف والشلال لضبط الهوائيات.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -1449,3 +1449,192 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR ANTENNA TUNER SIMULATION ═══════ */
+
+(function() {
+  const C = 299792458;
+
+  function waitForDOM(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  waitForDOM(function() {
+    const mc = document.getElementById('mainControls');
+    if (!mc) return;
+    mc.innerHTML = `
+      <div class="control-section">
+        <div class="grid-2">
+          <div><label>Center Freq (MHz)</label><input type="number" id="sdrFreq" value="14.2" min="0.1" max="3000" step="0.1"></div>
+          <div><label>Span (MHz)</label><input type="number" id="sdrSpan" value="2" min="0.01" max="100" step="0.1"></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Antenna Resonance (MHz)</label><input type="number" id="sdrRes" value="14.15" min="0.1" max="3000" step="0.01"></div>
+          <div><label>Antenna Q</label><input type="number" id="sdrQ" value="50" min="5" max="500" step="1"></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Noise Floor (dB)</label><input type="range" id="sdrNoise" value="-90" min="-120" max="-40" step="1"><span id="sdrNoiseVal">-90 dB</span></div>
+          <div><button class="primary" id="sdrSweepBtn" style="width:100%;margin-top:14px;">📡 Run SDR Sweep</button></div>
+        </div>
+      </div>`;
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const canvasA = document.getElementById('canvasA');
+    const ctxA = canvasA ? canvasA.getContext('2d') : null;
+    const canvasB = document.getElementById('canvasB');
+    const ctxB = canvasB ? canvasB.getContext('2d') : null;
+    const resultBox = document.getElementById('resultBox');
+    const secC = document.getElementById('sectionCContent');
+
+    const noiseSlider = document.getElementById('sdrNoise');
+    const noiseVal = document.getElementById('sdrNoiseVal');
+    if (noiseSlider && noiseVal) noiseSlider.addEventListener('input', () => { noiseVal.textContent = noiseSlider.value + ' dB'; });
+
+    let waterfallData = [];
+
+    function calcSDR() {
+      const freq = parseFloat(document.getElementById('sdrFreq').value) || 14.2;
+      const span = parseFloat(document.getElementById('sdrSpan').value) || 2;
+      const res = parseFloat(document.getElementById('sdrRes').value) || 14.15;
+      const Q = parseFloat(document.getElementById('sdrQ').value) || 50;
+      const noise = parseFloat(document.getElementById('sdrNoise').value) || -90;
+      const fMin = freq - span / 2, fMax = freq + span / 2;
+      const bw = res / Q;
+      const steps = 400;
+      const spectrum = [];
+      const swrData = [];
+      for (let i = 0; i <= steps; i++) {
+        const f = fMin + (fMax - fMin) * (i / steps);
+        const df = f - res;
+        const returnLoss = -20 * Math.exp(-Math.pow(df / (bw / 2), 2));
+        const power = noise + 30 * Math.exp(-Math.pow(df / (bw / 2), 2)) + (Math.random() - 0.5) * 3;
+        spectrum.push({ f, power, rl: returnLoss });
+        const gamma = Math.pow(10, returnLoss / 20);
+        const swr = (1 + gamma) / (1 - gamma + 0.001);
+        swrData.push({ f, swr: Math.min(swr, 10) });
+      }
+      const minSWR = swrData.reduce((m, d) => d.swr < m.swr ? d : m, swrData[0]);
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div class="result-row"><span class="result-label">Antenna Resonance</span><span class="result-value">${res} MHz</span></div>
+          <div class="result-row"><span class="result-label">Bandwidth (-3dB)</span><span class="result-value">${(bw * 1000).toFixed(0)} kHz</span></div>
+          <div class="result-row"><span class="result-label">Min SWR</span><span class="result-value">${minSWR.swr.toFixed(2)} @ ${minSWR.f.toFixed(3)} MHz</span></div>
+          <div class="result-row"><span class="result-label">Noise Floor</span><span class="result-value">${noise} dBm</span></div>
+          <div class="result-row"><span class="result-label">Sweep Range</span><span class="result-value">${fMin.toFixed(2)} - ${fMax.toFixed(2)} MHz</span></div>`;
+      }
+
+      drawSpectrum(ctx, canvas, spectrum, fMin, fMax, noise);
+      drawImpedance(ctxA, canvasA, swrData, fMin, fMax);
+      updateWaterfall(ctxB, canvasB, spectrum, noise);
+      fillNotes(secC, freq, res, bw, minSWR.swr, Q);
+      if (typeof log === 'function') log(`SDR Sweep: ${fMin.toFixed(2)}-${fMax.toFixed(2)} MHz, minSWR=${minSWR.swr.toFixed(2)}`, 'success');
+    }
+
+    function drawSpectrum(ctx, cvs, data, fMin, fMax, noise) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      ctx.strokeStyle = '#1a1a3a';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const y = pad + (gH / 5) * i;
+        ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+      }
+      const minP = noise - 10, maxP = noise + 40;
+      ctx.strokeStyle = '#33ff33';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      data.forEach((d, i) => {
+        const x = pad + (i / (data.length - 1)) * gW;
+        const y = pad + gH - ((d.power - minP) / (maxP - minP)) * gH;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(51,255,51,0.1)';
+      ctx.lineTo(W - pad, pad + gH);
+      ctx.lineTo(pad, pad + gH);
+      ctx.fill();
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('SDR Spectrum Analyzer', W / 2, 14);
+      ctx.fillText(`${fMin.toFixed(2)} MHz`, pad, H - 5);
+      ctx.fillText(`${fMax.toFixed(2)} MHz`, W - pad, H - 5);
+    }
+
+    function drawImpedance(ctx, cvs, data, fMin, fMax) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      data.forEach((d, i) => {
+        const x = pad + (i / (data.length - 1)) * gW;
+        const y = pad + gH - ((10 - d.swr) / 9) * gH;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.strokeStyle = '#ff4444';
+      ctx.setLineDash([4, 4]);
+      const swr2y = pad + gH - ((10 - 2) / 9) * gH;
+      ctx.beginPath(); ctx.moveTo(pad, swr2y); ctx.lineTo(W - pad, swr2y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#ff4444';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.fillText('SWR 2:1', pad + 5, swr2y - 4);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('SWR Sweep', W / 2, 14);
+    }
+
+    function updateWaterfall(ctx, cvs, data, noise) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      const row = new ImageData(W, 1);
+      const minP = noise - 10, maxP = noise + 40;
+      for (let i = 0; i < W; i++) {
+        const di = Math.floor((i / W) * data.length);
+        const d = data[Math.min(di, data.length - 1)];
+        const norm = Math.max(0, Math.min(1, (d.power - minP) / (maxP - minP)));
+        const r = Math.floor(norm * 255);
+        const g = Math.floor(norm * 100);
+        const b = Math.floor((1 - norm) * 200);
+        const idx = i * 4;
+        row.data[idx] = r; row.data[idx + 1] = g; row.data[idx + 2] = b; row.data[idx + 3] = 255;
+      }
+      waterfallData.push(row);
+      if (waterfallData.length > H) waterfallData.shift();
+      ctx.clearRect(0, 0, W, H);
+      waterfallData.forEach((r, y) => ctx.putImageData(r, 0, H - waterfallData.length + y));
+    }
+
+    function fillNotes(el, freq, res, bw, swr, Q) {
+      if (!el) return;
+      el.innerHTML = `
+        <p><strong>SDR Tuning Guide:</strong></p>
+        <p>Center frequency: ${freq} MHz. Antenna resonates at ${res} MHz with Q=${Q}.</p>
+        <p>Bandwidth: ${(bw * 1000).toFixed(0)} kHz. Minimum SWR: ${swr.toFixed(2)}:1.</p>
+        <p>SDR-based measurement uses the RTL-SDR or similar as a poor-man's VNA.</p>
+        <p>Connect antenna through a directional coupler or return loss bridge.</p>
+        <p>Sweep the frequency range and look for the SWR dip at resonance.</p>
+        <p>Adjust antenna length or matching network to move resonance to desired frequency.</p>`;
+    }
+
+    document.getElementById('sdrSweepBtn').addEventListener('click', calcSDR);
+    calcSDR();
+  });
+})();

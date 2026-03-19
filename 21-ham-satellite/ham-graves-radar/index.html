@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>GRAVES Radar — Workshop DIY</title>
+  <meta name="description" content="GRAVES Radar — Monitor meteor scatter using GRAVES radar reflections." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="GRAVES Radar — Workshop DIY" />
+  <meta property="og:description" content="Monitor meteor scatter using GRAVES radar reflections." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -21,6 +21,14 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .meteor-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+    .meteor-stat{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:8px;padding:10px;text-align:center}
+    .meteor-stat .stat-val{font-family:'Orbitron',monospace;font-size:1.3rem;color:var(--accent)}
+    .meteor-stat .stat-lbl{font-size:.72rem;color:var(--text-muted);margin-top:2px}
+    .ping-log{font-family:monospace;font-size:.72rem;background:#000;color:#0f0;padding:8px;border-radius:8px;max-height:120px;overflow-y:auto;margin-top:8px;line-height:1.5}
+    @media(max-width:600px){.meteor-stats{grid-template-columns:1fr 1fr}}
+  </style>
 </head>
 
 <body>
@@ -72,22 +80,64 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">☄️</span> <span data-i18n="mainSection">GRAVES Radar</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Monitor meteor scatter using GRAVES radar</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Theory ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card">
+          <h3 data-i18n="theoryTitle">GRAVES Radar & Meteor Scatter</h3>
+          <p data-i18n="theoryDesc">GRAVES is a French space surveillance radar at 143.050 MHz. Meteor trails reflect its signal, producing Doppler-shifted pings. By monitoring frequency offset and ping duration, we can estimate meteor velocity and trail size.</p>
+          <div class="control-section">
+            <table style="width:100%;font-size:.85rem;border-collapse:collapse">
+              <tr style="border-bottom:1px solid var(--border,rgba(255,255,255,.1))"><th style="text-align:left;padding:4px" data-i18n="paramCol">Parameter</th><th style="text-align:left;padding:4px" data-i18n="valueCol">Value</th></tr>
+              <tr><td style="padding:4px">TX Frequency</td><td>143.050 MHz</td></tr>
+              <tr><td style="padding:4px">Location</td><td>Dijon, France</td></tr>
+              <tr><td style="padding:4px">Doppler Range</td><td>-2 kHz to +2 kHz</td></tr>
+              <tr><td style="padding:4px">Typical Ping</td><td>0.1 - 3 seconds</td></tr>
+            </table>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Controls ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <label class="sidebar-label" data-i18n="sensitivity">Sensitivity</label>
+            <input type="range" id="sensitivityRange" min="1" max="10" value="5" style="width:100%">
+            <label class="sidebar-label" style="margin-top:8px" data-i18n="noiseFloor">Noise Floor</label>
+            <input type="range" id="noiseRange" min="1" max="10" value="3" style="width:100%">
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button id="startBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">&#9654;</span> <span data-i18n="start">Start</span></button>
+              <button id="stopBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#9724;</span> <span data-i18n="stop">Stop</span></button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Waterfall ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">📡</span> <span data-i18n="sectionC">Waterfall Display</span></summary>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-family:var(--font-h);font-size:1.1rem;color:var(--accent)" data-i18n="gravesFreq">143.050 MHz GRAVES</span>
+            <span id="dopplerDisplay" style="font-family:'Orbitron',monospace;color:var(--accent2)">+0 Hz</span>
+          </div>
+          <canvas id="waterfallCanvas" width="800" height="250" style="width:100%;height:180px;border-radius:8px;background:#000;display:block"></canvas>
+          <canvas id="spectrumCanvas" width="800" height="100" style="width:100%;height:70px;border-radius:8px;background:#000;display:block;margin-top:4px"></canvas>
+          <div class="meteor-stats">
+            <div class="meteor-stat"><div class="stat-val" id="meteorCount">0</div><div class="stat-lbl" data-i18n="meteorsDetected">Meteors</div></div>
+            <div class="meteor-stat"><div class="stat-val" id="peakDoppler">0</div><div class="stat-lbl" data-i18n="peakHz">Peak Hz</div></div>
+            <div class="meteor-stat"><div class="stat-val" id="avgDuration">0.0</div><div class="stat-lbl" data-i18n="avgDur">Avg (s)</div></div>
+          </div>
+          <div class="ping-log" id="pingLog">Listening for pings...</div>
+        </div>
       </details>
 
     </div>

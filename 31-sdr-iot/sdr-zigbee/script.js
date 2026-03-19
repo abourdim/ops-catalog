@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Zigbee Sniffer', subtitle: '🐝 Zigbee Sniffer — IoT Protocol Decoder',
+    disconnected: 'Disconnected', connected: 'Sniffing',
+    mainSection: 'Zigbee Sniffer', mainDesc: 'Decode Zigbee IoT device communications',
+    sectionA: 'Network Analysis', sectionB: 'Zigbee Theory',
+    started: '▶ Sniffing Zigbee packets', stopped: '⏹ Sniffing stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🐝 Zigbee Sniffer ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -1332,6 +1333,16 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ ZIGBEE SIMULATION ═══════ */
+let _zb_run=false,_zb_fr=null,_zb_cnt=0,_zb_nodes=new Set(),_zb_hist=[];
+function _zb_gen(){const s=new Float32Array(256);for(let i=0;i<256;i++)s[i]=-105+(Math.random()-.5)*5;const filter=$('filterSelect')?$('filterSelect').value:'all';if(Math.random()<0.18){_zb_cnt++;_zb_nodes.add('0x'+Math.floor(Math.random()*0xFFFF).toString(16).padStart(4,'0'));const ch=parseInt($('channelSelect')?$('channelSelect').value:11);const center=Math.floor((ch-11)/15*256);for(let i=-8;i<9;i++)if(center+i>=0&&center+i<256)s[center+i]+=22*(1-Math.abs(i)/9)+Math.random()*3;}return s;}
+function _zb_draw1(spec){const c=$('zigbeeCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+110)/45*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('Zigbee 2.4 GHz',4,12);}
+function _zb_draw2(){const c=$('networkCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const cx=w/2,cy=h/2;ctx.fillStyle='#ff0';ctx.beginPath();ctx.arc(cx,cy,8,0,Math.PI*2);ctx.fill();ctx.fillStyle='#aaa';ctx.font='8px monospace';ctx.fillText('Coord',cx-12,cy-12);const nodes=[..._zb_nodes].slice(-12);nodes.forEach((n,i)=>{const a=i/nodes.length*Math.PI*2;const r=30+Math.random()*30;const x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;ctx.fillStyle='#4af';ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#234';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle='#666';ctx.font='7px monospace';ctx.fillText(n,x+6,y+3);});}
+function _zb_stats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('pktCountVal',_zb_cnt);el('panIdVal','0x'+Math.floor(Math.random()*0xFFFF).toString(16).toUpperCase());el('nodeCountVal',_zb_nodes.size);el('channelActVal',(Math.random()*30+5).toFixed(1)+' %');}
+function _zb_loop(){if(!_zb_run)return;const spec=_zb_gen();_zb_draw1(spec);_zb_draw2();_zb_stats();_zb_fr=requestAnimationFrame(_zb_loop);}
+function startZb(){if(_zb_run)return;_zb_run=true;_zb_cnt=0;_zb_nodes.clear();setStatus(true);log(LANG[currentLang].started,'success');_zb_loop();}
+function stopZb(){_zb_run=false;if(_zb_fr)cancelAnimationFrame(_zb_fr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1453,9 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startZb;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopZb;
 
   log(LANG[currentLang].ready, 'success');
 }

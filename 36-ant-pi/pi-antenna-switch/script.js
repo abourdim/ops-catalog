@@ -63,23 +63,30 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Pi Antenna Switch', subtitle: '📡 switch · 🔌 connect · 🎛️ control',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Relay Matrix Controller', mainDesc: 'Switch antennas remotely via GPIO relays',
+    sectionA: 'Signal Monitor', sectionB: 'GPIO Pin Map', sectionC: 'Wiring Guide',
+    numAntennas: 'Antennas:', connectBtn: 'Connect Pi', autoScan: 'Auto-Scan',
+    signalStrength: 'Signal Strength', activeAnt: 'Active Antenna', bestSignal: 'Best Signal',
+    scanning: 'Scanning...', scanComplete: 'Scan complete', switchedTo: 'Switched to',
+    antenna: 'Antenna', noConnection: 'Not connected', piConnected: 'Pi connected',
+    wireInfo1: 'Connect relay modules to Raspberry Pi GPIO pins. Each relay controls one antenna port through a coaxial switch.',
+    wireInfo2: 'Use GPIO pins 17, 18, 27, 22, 23, 24, 25, and 4 for up to 8 antenna ports. The relay board requires 5V power from the Pi.',
+    wireInfo3: 'For best RF performance, keep coaxial cables short and use proper connectors (N-type or SO-239). Ground all unused ports with 50-ohm terminators.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is Pi Antenna Switch?', faq_a1: 'A remote antenna switching controller using Raspberry Pi GPIO relays.',
+    faq_q2: 'How many antennas?', faq_a2: 'Supports 2 to 8 antenna ports. Select the count and click to switch.',
+    faq_q3: 'How does auto-scan work?', faq_a3: 'Auto-scan cycles through all antennas measuring signal strength to find the best one.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    howto_1: 'Select the number of antennas and click Connect Pi.',
+    howto_2: 'Click an antenna button to switch to it.',
+    howto_3: 'Use Auto-Scan to find the best antenna.',
+    howto_4: 'Monitor signal strength in the Signal Monitor section.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -100,23 +107,30 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Commutateur Antenne Pi', subtitle: '📡 commuter · 🔌 connecter · 🎛️ contrôler',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Contrôleur de relais', mainDesc: 'Commuter les antennes à distance via relais GPIO',
+    sectionA: 'Moniteur de signal', sectionB: 'Carte des broches GPIO', sectionC: 'Guide de câblage',
+    numAntennas: 'Antennes :', connectBtn: 'Connecter Pi', autoScan: 'Scan auto',
+    signalStrength: 'Force du signal', activeAnt: 'Antenne active', bestSignal: 'Meilleur signal',
+    scanning: 'Scan en cours...', scanComplete: 'Scan terminé', switchedTo: 'Commuté vers',
+    antenna: 'Antenne', noConnection: 'Non connecté', piConnected: 'Pi connecté',
+    wireInfo1: 'Connectez les modules relais aux broches GPIO du Raspberry Pi. Chaque relais contrôle un port antenne via un commutateur coaxial.',
+    wireInfo2: 'Utilisez les broches GPIO 17, 18, 27, 22, 23, 24, 25 et 4 pour jusqu\'à 8 ports antenne. La carte relais nécessite l\'alimentation 5V du Pi.',
+    wireInfo3: 'Pour de meilleures performances RF, gardez les câbles coaxiaux courts et utilisez les bons connecteurs (type N ou SO-239).',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
+    faq_q1: 'Qu\'est-ce que le commutateur antenne Pi ?', faq_a1: 'Un contrôleur de commutation d\'antenne à distance via relais GPIO du Raspberry Pi.',
+    faq_q2: 'Combien d\'antennes ?', faq_a2: 'Supporte 2 à 8 ports antenne. Sélectionnez le nombre et cliquez pour commuter.',
+    faq_q3: 'Comment fonctionne le scan auto ?', faq_a3: 'Le scan auto parcourt toutes les antennes en mesurant la force du signal pour trouver la meilleure.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
+    howto_1: 'Sélectionnez le nombre d\'antennes et cliquez Connecter Pi.',
+    howto_2: 'Cliquez sur une antenne pour commuter.',
+    howto_3: 'Utilisez Scan auto pour trouver la meilleure antenne.',
+    howto_4: 'Surveillez la force du signal dans le moniteur.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
     wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
     wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
@@ -137,23 +151,30 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مفتاح هوائي Pi', subtitle: '📡 تبديل · 🔌 اتصال · 🎛️ تحكم',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'متحكم مصفوفة التتابع', mainDesc: 'تبديل الهوائيات عن بعد عبر مرحلات GPIO',
+    sectionA: 'مراقب الإشارة', sectionB: 'خريطة دبابيس GPIO', sectionC: 'دليل التوصيل',
+    numAntennas: 'الهوائيات:', connectBtn: 'اتصال بـ Pi', autoScan: 'مسح تلقائي',
+    signalStrength: 'قوة الإشارة', activeAnt: 'الهوائي النشط', bestSignal: 'أفضل إشارة',
+    scanning: 'جارٍ المسح...', scanComplete: 'اكتمل المسح', switchedTo: 'تم التبديل إلى',
+    antenna: 'هوائي', noConnection: 'غير متصل', piConnected: 'تم الاتصال بـ Pi',
+    wireInfo1: 'قم بتوصيل وحدات التتابع بدبابيس GPIO في Raspberry Pi. كل مرحل يتحكم في منفذ هوائي واحد عبر مفتاح محوري.',
+    wireInfo2: 'استخدم دبابيس GPIO 17 و18 و27 و22 و23 و24 و25 و4 لما يصل إلى 8 منافذ هوائي. لوحة التتابع تحتاج طاقة 5 فولت من Pi.',
+    wireInfo3: 'للحصول على أفضل أداء RF، حافظ على الكابلات المحورية قصيرة واستخدم الموصلات المناسبة (نوع N أو SO-239).',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
+    faq_q1: 'ما هو مفتاح هوائي Pi؟', faq_a1: 'متحكم تبديل هوائي عن بعد باستخدام مرحلات GPIO في Raspberry Pi.',
+    faq_q2: 'كم عدد الهوائيات؟', faq_a2: 'يدعم 2 إلى 8 منافذ هوائي. حدد العدد وانقر للتبديل.',
+    faq_q3: 'كيف يعمل المسح التلقائي؟', faq_a3: 'المسح التلقائي يمر على جميع الهوائيات ويقيس قوة الإشارة لإيجاد الأفضل.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
+    howto_1: 'حدد عدد الهوائيات وانقر اتصال بـ Pi.',
+    howto_2: 'انقر على زر هوائي للتبديل إليه.',
+    howto_3: 'استخدم المسح التلقائي لإيجاد أفضل هوائي.',
+    howto_4: 'راقب قوة الإشارة في قسم مراقب الإشارة.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
     wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
     wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
@@ -1446,6 +1467,273 @@ function init() {
   log(LANG[currentLang].ready, 'success');
 }
 
+/* ═══════ ANTENNA SWITCH SIMULATION ═══════ */
+
+let piConnected = false;
+let activeAntenna = 0;
+let antCount = 4;
+let signalHistory = [];
+let signalAnimId = null;
+let autoScanning = false;
+const GPIO_PINS = [17, 18, 27, 22, 23, 24, 25, 4];
+const ANT_COLORS = ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#feca57','#ff9ff3','#54a0ff','#5f27cd'];
+
+function getAntSignal(idx) {
+  return 30 + Math.sin(Date.now()/2000 + idx*1.5)*15 + Math.random()*10 + (idx === activeAntenna ? 12 : 0);
+}
+
+function buildAntGrid() {
+  const grid = $('antGrid');
+  if (!grid) return;
+  antCount = parseInt($('antCount')?.value || 4);
+  grid.innerHTML = '';
+  grid.style.gridTemplateColumns = `repeat(${Math.min(antCount,4)},1fr)`;
+  const s = LANG[currentLang];
+  for (let i = 0; i < antCount; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'ant-btn' + (i === activeAntenna ? ' active' : '');
+    btn.innerHTML = `<div style="font-size:1.5rem">📡</div><div style="font-size:.75rem;margin-top:4px">${s.antenna || 'Antenna'} ${i+1}</div><div style="font-size:.6rem;opacity:.6">GPIO ${GPIO_PINS[i]}</div>`;
+    btn.onclick = () => switchAntenna(i);
+    grid.appendChild(btn);
+  }
+}
+
+function switchAntenna(idx) {
+  if (!piConnected) { log(LANG[currentLang].noConnection || 'Not connected', 'error'); return; }
+  activeAntenna = idx;
+  const s = LANG[currentLang];
+  log(`📡 ${s.switchedTo || 'Switched to'} ${s.antenna || 'Antenna'} ${idx+1} (GPIO ${GPIO_PINS[idx]})`, 'success');
+  buildAntGrid();
+  updateResultBox();
+  drawMainCanvas();
+  playSound('click');
+}
+
+function updateResultBox() {
+  const box = $('resultBox');
+  if (!box) return;
+  const s = LANG[currentLang];
+  const sig = getAntSignal(activeAntenna);
+  box.style.display = 'block';
+  box.innerHTML = `
+    <div class="result-row"><span class="result-label">${s.activeAnt || 'Active Antenna'}</span><span class="result-value">#${activeAntenna+1}</span></div>
+    <div class="result-row"><span class="result-label">GPIO</span><span class="result-value">${GPIO_PINS[activeAntenna]}</span></div>
+    <div class="result-row"><span class="result-label">${s.signalStrength || 'Signal'}</span><span class="result-value">${sig.toFixed(1)} dB</span></div>
+    <div class="result-row"><span class="result-label">Status</span><span class="result-value" style="color:var(--success)">ON</span></div>
+  `;
+}
+
+function drawMainCanvas() {
+  const c = $('mainCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Draw Pi board
+  const bx=W/2-80, by=20, bw=160, bh=80;
+  ctx.fillStyle='#1a5e1a'; ctx.strokeStyle='#2d8a2d'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,8); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.font='bold 11px Orbitron,monospace'; ctx.textAlign='center';
+  ctx.fillText('Raspberry Pi',W/2,by+30);
+  ctx.font='9px Orbitron,monospace'; ctx.fillStyle='#aaa';
+  ctx.fillText('GPIO Controller',W/2,by+50);
+
+  // Draw GPIO pins
+  for (let i=0;i<antCount;i++){
+    const px=bx+10+i*(bw-20)/(antCount-1||1);
+    ctx.fillStyle=i===activeAntenna?'#33ff33':'#555';
+    ctx.beginPath(); ctx.arc(px,by+bh,4,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#888'; ctx.font='7px monospace'; ctx.textAlign='center';
+    ctx.fillText(GPIO_PINS[i],px,by+bh+12);
+  }
+
+  // Draw relay lines and antennas
+  const antY = H-60;
+  for (let i=0;i<antCount;i++){
+    const ax=40+i*((W-80)/(antCount-1||1));
+    const px=bx+10+i*(bw-20)/(antCount-1||1);
+    const isActive=i===activeAntenna;
+
+    // Wire from Pi to relay
+    ctx.strokeStyle=isActive?'#33ff33':'#333'; ctx.lineWidth=isActive?2:1;
+    ctx.setLineDash(isActive?[]:[4,4]);
+    ctx.beginPath(); ctx.moveTo(px,by+bh+4); ctx.lineTo(ax,antY-30); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Relay box
+    ctx.fillStyle=isActive?'rgba(51,255,51,.15)':'rgba(100,100,100,.1)';
+    ctx.strokeStyle=isActive?'#33ff33':'#555'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.roundRect(ax-18,antY-30,36,20,4); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=isActive?'#33ff33':'#666'; ctx.font='7px monospace'; ctx.textAlign='center';
+    ctx.fillText(isActive?'ON':'OFF',ax,antY-17);
+
+    // Antenna icon
+    ctx.strokeStyle=ANT_COLORS[i]; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(ax,antY-10); ctx.lineTo(ax,antY+10); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ax-12,antY-5); ctx.lineTo(ax,antY+15); ctx.lineTo(ax+12,antY-5); ctx.stroke();
+
+    // Signal glow for active
+    if (isActive) {
+      for (let r=1;r<=3;r++){
+        ctx.strokeStyle=`rgba(51,255,51,${.3-r*.08})`;
+        ctx.beginPath(); ctx.arc(ax,antY+5,12+r*8,Math.PI*1.2,Math.PI*1.8); ctx.stroke();
+      }
+    }
+
+    // Label
+    ctx.fillStyle=ANT_COLORS[i]; ctx.font='bold 10px Tajawal,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(`ANT ${i+1}`,ax,H-10);
+  }
+}
+
+function drawSignalCanvas() {
+  const c = $('canvasA');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Push new signal data
+  const now = {};
+  for (let i=0;i<antCount;i++) now[i] = getAntSignal(i);
+  signalHistory.push(now);
+  if (signalHistory.length>100) signalHistory.shift();
+
+  // Draw grid
+  ctx.strokeStyle='rgba(255,255,255,.06)'; ctx.lineWidth=1;
+  for (let y=0;y<H;y+=30){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+  // Draw signal lines per antenna
+  for (let i=0;i<antCount;i++){
+    ctx.strokeStyle=ANT_COLORS[i]; ctx.lineWidth=i===activeAntenna?2.5:1;
+    ctx.globalAlpha=i===activeAntenna?1:.4;
+    ctx.beginPath();
+    signalHistory.forEach((d,idx)=>{
+      const x=idx*(W/100);
+      const y=H-(d[i]||0)/80*H;
+      idx===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+
+  // SNR display
+  const snr = now[activeAntenna]||0;
+  const snrEl = $('snrDisplay');
+  if (snrEl) snrEl.textContent = `SNR: ${snr.toFixed(1)} dB`;
+}
+
+function drawGPIOCanvas() {
+  const c = $('canvasB');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Draw Pi board outline
+  ctx.fillStyle='#1a5e1a'; ctx.strokeStyle='#2d8a2d'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.roundRect(W/2-120,20,240,H-40,10); ctx.fill(); ctx.stroke();
+
+  // GPIO header (2x20 pins)
+  const startX=W/2-60, startY=40, gapX=15, gapY=12;
+  for (let row=0;row<2;row++){
+    for (let col=0;col<20;col++){
+      const px=startX+col*gapX;
+      const py=startY+row*gapY*3;
+      const pinNum=row*20+col+1;
+      const isUsed=GPIO_PINS.slice(0,antCount).includes(pinNum)||GPIO_PINS.slice(0,antCount).some((g,i)=>g===GPIO_PINS[col%antCount]);
+
+      // Check if this GPIO is one of ours
+      const gpioIdx=GPIO_PINS.indexOf(pinNum);
+      const isOurs=gpioIdx>=0&&gpioIdx<antCount;
+      const isActivePin=isOurs&&gpioIdx===activeAntenna;
+
+      ctx.fillStyle=isActivePin?'#33ff33':isOurs?ANT_COLORS[gpioIdx]:'#555';
+      ctx.beginPath(); ctx.arc(px,py,4,0,Math.PI*2); ctx.fill();
+
+      if (isOurs) {
+        ctx.fillStyle=isActivePin?'#33ff33':'#888';
+        ctx.font='7px monospace'; ctx.textAlign='center';
+        ctx.fillText(`${pinNum}`,px,py+(row===0?-8:14));
+      }
+    }
+  }
+
+  // Legend
+  ctx.font='10px Tajawal,sans-serif'; ctx.textAlign='left';
+  for (let i=0;i<antCount;i++){
+    const lx=20, ly=H-80+i*14;
+    ctx.fillStyle=ANT_COLORS[i];
+    ctx.beginPath(); ctx.arc(lx,ly,4,0,Math.PI*2); ctx.fill();
+    ctx.fillText(`GPIO ${GPIO_PINS[i]} → ANT ${i+1}`,lx+12,ly+4);
+  }
+}
+
+function startSignalAnimation() {
+  function frame() {
+    drawSignalCanvas();
+    if (piConnected) drawMainCanvas();
+    signalAnimId = requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function togglePiConnect() {
+  piConnected = !piConnected;
+  const s = LANG[currentLang];
+  setStatus(piConnected);
+  if (piConnected) {
+    log(`🟢 ${s.piConnected || 'Pi connected'}`, 'success');
+    buildAntGrid();
+    drawMainCanvas();
+    drawGPIOCanvas();
+    startSignalAnimation();
+  } else {
+    log(`🔴 ${s.noConnection || 'Disconnected'}`, 'info');
+    if (signalAnimId) cancelAnimationFrame(signalAnimId);
+  }
+  updateResultBox();
+}
+
+async function autoScan() {
+  if (!piConnected || autoScanning) return;
+  autoScanning = true;
+  const s = LANG[currentLang];
+  log(`🔍 ${s.scanning || 'Scanning...'}`, 'info');
+  showToast(s.scanning || 'Scanning...', 0);
+
+  let bestIdx=0, bestSig=-999;
+  for (let i=0;i<antCount;i++){
+    switchAntenna(i);
+    await new Promise(r=>setTimeout(r,600));
+    const sig=getAntSignal(i);
+    if (sig>bestSig){ bestSig=sig; bestIdx=i; }
+    log(`📡 ANT ${i+1}: ${sig.toFixed(1)} dB`, 'rx');
+  }
+  switchAntenna(bestIdx);
+  log(`✅ ${s.scanComplete || 'Scan complete'}: ${s.bestSignal || 'Best'} = ANT ${bestIdx+1} (${bestSig.toFixed(1)} dB)`, 'success');
+  hideToast();
+  autoScanning = false;
+}
+
+function initAntennaSwitch() {
+  const antSel = $('antCount');
+  if (antSel) antSel.addEventListener('change', () => { antCount = parseInt(antSel.value); buildAntGrid(); drawGPIOCanvas(); drawMainCanvas(); });
+
+  const connBtn = $('connectBtn');
+  if (connBtn) connBtn.onclick = togglePiConnect;
+
+  const scanBtn = $('autoScanBtn');
+  if (scanBtn) scanBtn.onclick = autoScan;
+
+  buildAntGrid();
+  drawMainCanvas();
+  drawGPIOCanvas();
+}
+
+/* ═══════ INIT (original + simulation) ═══════ */
+
 document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
-  : init();
+  ? document.addEventListener('DOMContentLoaded', () => { init(); initAntennaSwitch(); })
+  : (function(){ init(); initAntennaSwitch(); })();

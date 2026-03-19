@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Industrial IoT Scanner', subtitle: '🏭 Industrial IoT Scanner — SCADA/ICS',
+    disconnected: 'Disconnected', connected: 'Scanning',
+    mainSection: 'Industrial Scanner', mainDesc: 'Monitor SCADA and ICS wireless frequencies',
+    sectionA: 'Detected Devices', sectionB: 'Industrial RF Theory',
+    started: '▶ Scanning industrial frequencies', stopped: '⏹ Scan stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🏭 Industrial Scanner ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +101,11 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Scanner IoT Industriel', subtitle: '🏭 Scanner IoT Industriel — SCADA/ICS',
+    disconnected: 'Déconnecté', connected: 'Balayage',
+    mainSection: 'Scanner Industriel', mainDesc: 'Surveiller les fréquences SCADA/ICS',
+    sectionA: 'Appareils Détectés', sectionB: 'Théorie RF Industrielle',
+    started: '▶ Balayage industriel', stopped: '⏹ Balayage arrêté',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +127,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🏭 Scanner industriel prêt!',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +139,11 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'ماسح IoT الصناعي', subtitle: '🏭 ماسح IoT الصناعي — SCADA/ICS',
+    disconnected: 'غير متصل', connected: 'مسح',
+    mainSection: 'الماسح الصناعي', mainDesc: 'مراقبة ترددات SCADA/ICS',
+    sectionA: 'الأجهزة المكتشفة', sectionB: 'نظرية RF الصناعية',
+    started: '▶ مسح الترددات الصناعية', stopped: '⏹ توقف المسح',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +165,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🏭 الماسح الصناعي جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1332,6 +1335,16 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ INDUSTRIAL IoT SIMULATION ═══════ */
+let _iot_run=false,_iot_fr=null,_iot_cnt=0,_iot_hist=[];
+function _iot_gen(){const s=new Float32Array(256);for(let i=0;i<256;i++)s[i]=-100+(Math.random()-.5)*8;if(Math.random()<0.2){_iot_cnt++;const pk=Math.floor(Math.random()*256);for(let i=-5;i<6;i++)if(pk+i>=0&&pk+i<256)s[pk+i]+=30*(1-Math.abs(i)/6);}return s;}
+function _iot_draw1(spec){const c=$('industrialCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+110)/50*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('Industrial Spectrum',4,12);}
+function _iot_draw2(){const c=$('deviceCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='rgba(10,10,26,0.3)';ctx.fillRect(0,0,w,h);if(_iot_hist.length<2)return;ctx.strokeStyle='#4af';ctx.lineWidth=1.5;ctx.beginPath();const show=Math.min(200,_iot_hist.length);for(let i=0;i<show;i++){const v=_iot_hist[_iot_hist.length-show+i],x=i/show*w,y=h-v/20*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
+function _iot_stats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('devCountVal',_iot_cnt);el('activeProtoVal',$('protoSelect')?$('protoSelect').value:'--');el('dataRateVal',(Math.random()*250).toFixed(0)+' kbps');el('signalStrVal',(-60-Math.random()*40).toFixed(0)+' dBm');}
+function _iot_loop(){if(!_iot_run)return;const spec=_iot_gen();_iot_hist.push(_iot_cnt);if(_iot_hist.length>500)_iot_hist.shift();_iot_draw1(spec);_iot_draw2();_iot_stats();_iot_fr=requestAnimationFrame(_iot_loop);}
+function startIot(){if(_iot_run)return;_iot_run=true;_iot_cnt=0;_iot_hist=[];setStatus(true);log(LANG[currentLang].started,'success');_iot_loop();}
+function stopIot(){_iot_run=false;if(_iot_fr)cancelAnimationFrame(_iot_fr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1455,10 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startIot;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopIot;
+  const fS=$('freqSlider');if(fS)fS.oninput=function(){$('freqVal').textContent=this.value+' MHz';};
 
   log(LANG[currentLang].ready, 'success');
 }

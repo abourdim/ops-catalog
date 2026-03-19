@@ -170,6 +170,12 @@
     .meter { height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:4px 0; }
     .meter-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .3s; }
     .compass { position:relative; width:200px; height:200px; margin:0 auto; }
+    .fractal-badge { display:inline-block; background:#7c4dff; color:#fff; padding:2px 8px; border-radius:10px; font-size:.7rem; font-weight:700; }
+    .iter-indicator { display:flex; gap:4px; align-items:center; }
+    .iter-dot { width:10px; height:10px; border-radius:50%; border:1px solid var(--border); }
+    .iter-dot.active { background:#b388ff; border-color:#7c4dff; }
+    .fractal-canvas-wrap { position:relative; overflow:hidden; border-radius:var(--radius); }
+    .band-tag { display:inline-block; background:var(--surface); border:1px solid #b388ff44; color:#b388ff; padding:1px 6px; border-radius:6px; font-size:.6rem; margin:2px; }
   </style>
 </head>
 <body>
@@ -188,7 +194,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Fractal Antenna Lab</h1><div class="subtitle" data-i18n="subtitle">🌀 Koch, Sierpinski, Minkowski fractal design</div></div>
+          <div><h1 data-i18n="title">Fractal Antenna Lab</h1><div class="subtitle" data-i18n="subtitle">\u{1F52C} Fractal antenna laboratory. Explore fractal geometry for antennas</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -204,8 +210,8 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🌀</span> <span data-i18n="mainSection">Fractal Generator</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Design fractal antennas with iteration control</span> <span class="version-tag">v1.0</span></div>
+            <div class="card-title"><span class="icon">\u{1F52C}</span> <span data-i18n="mainSection">Fractal Designer</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Generate and analyze fractal antenna geometries</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
         <div id="mainControls"></div>
@@ -227,7 +233,7 @@
 
       <!-- SECTION C -->
       <details class="collapsible">
-        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Fractal Theory</span></summary>
+        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Iteration Analysis</span></summary>
         <div class="card"><div id="sectionCContent" style="font-size:.78rem; line-height:1.6;"></div></div>
       </details>
     </div>

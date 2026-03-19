@@ -63,23 +63,23 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Oscilloscope', subtitle: '📟 SDR as oscilloscope — Time-domain signal analysis',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Oscilloscope', mainDesc: 'Real-time time-domain signal visualization',
+    sectionA: 'Signal Measurements', sectionB: 'Oscilloscope Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
+    faq_q1: 'What is the SDR Oscilloscope?', faq_a1: 'A time-domain signal viewer that displays waveforms like a real oscilloscope.',
+    faq_q2: 'What waveforms are available?', faq_a2: 'Sine, square, triangle, sawtooth, noise and AM/FM modulated signals.',
+    faq_q3: 'Can I adjust timebase?', faq_a3: 'Yes, use the ms/div control to change the horizontal scale.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Select a waveform type from the dropdown.',
+    howto_2: 'Adjust frequency and amplitude.',
+    howto_3: 'Click Start to begin real-time display.',
+    howto_4: 'Use timebase and trigger controls to stabilize the trace.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
     wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📟 SDR Oscilloscope ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Oscilloscope SDR', subtitle: '📟 SDR comme oscilloscope — Analyse temporelle du signal',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Oscilloscope', mainDesc: 'Visualisation temps réel du signal en domaine temporel',
+    sectionA: 'Mesures Signal', sectionB: 'Théorie Oscilloscope',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📟 Oscilloscope SDR prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'راسم الذبذبات SDR', subtitle: '📟 SDR كراسم ذبذبات — تحليل الإشارة الزمنية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'راسم الذبذبات', mainDesc: 'عرض الإشارة الزمنية في الوقت الحقيقي',
+    sectionA: 'قياسات الإشارة', sectionB: 'نظرية راسم الذبذبات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📟 راسم الذبذبات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,126 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR OSCILLOSCOPE SIMULATION ═══════ */
+
+let scopeRunning = false, scopeAnim = null, scopePhase = 0;
+
+function generateWaveform(type, freq, amp, phase, N, sampleRate) {
+  const buf = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    const t = i / sampleRate + phase;
+    switch (type) {
+      case 'sine': buf[i] = amp * Math.sin(2 * Math.PI * freq * t); break;
+      case 'square': buf[i] = amp * Math.sign(Math.sin(2 * Math.PI * freq * t)); break;
+      case 'triangle': buf[i] = amp * (2 / Math.PI) * Math.asin(Math.sin(2 * Math.PI * freq * t)); break;
+      case 'sawtooth': buf[i] = amp * 2 * (freq * t - Math.floor(0.5 + freq * t)); break;
+      case 'noise': buf[i] = amp * (Math.random() * 2 - 1); break;
+      case 'am': buf[i] = amp * (1 + 0.5 * Math.sin(2 * Math.PI * freq * 0.1 * t)) * Math.sin(2 * Math.PI * freq * t); break;
+      case 'fm': buf[i] = amp * Math.sin(2 * Math.PI * freq * t + 3 * Math.sin(2 * Math.PI * freq * 0.1 * t)); break;
+      default: buf[i] = amp * Math.sin(2 * Math.PI * freq * t);
+    }
+    buf[i] += 0.02 * (Math.random() - 0.5); // noise
+  }
+  return buf;
+}
+
+function drawOscilloscope() {
+  const c = $('scopeCanvas'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const type = $('waveSelect').value;
+  const freq = parseFloat($('freqInput').value);
+  const amp = parseFloat($('ampSlider').value);
+  const timebase = parseFloat($('timebaseSlider').value);
+  const trigger = parseFloat($('triggerSlider').value);
+  const sampleRate = 44100;
+  const N = Math.floor(sampleRate * timebase / 1000);
+
+  const data = generateWaveform(type, freq, amp, scopePhase, N, sampleRate);
+  scopePhase += timebase / 1000;
+
+  ctx.fillStyle = '#001a00'; ctx.fillRect(0, 0, w, h);
+
+  // Grid (oscilloscope style)
+  ctx.strokeStyle = '#0a3a0a'; ctx.lineWidth = 0.5;
+  const divX = 10, divY = 8;
+  for (let i = 0; i <= divX; i++) { const x = (i / divX) * w; ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+  for (let i = 0; i <= divY; i++) { const y = (i / divY) * h; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+
+  // Center lines brighter
+  ctx.strokeStyle = '#1a5a1a'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2, h); ctx.stroke();
+
+  // Trigger line
+  ctx.strokeStyle = '#ff0'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+  const trigY = h / 2 - (trigger * h / 2);
+  ctx.beginPath(); ctx.moveTo(0, trigY); ctx.lineTo(w, trigY); ctx.stroke(); ctx.setLineDash([]);
+
+  // Waveform with phosphor glow
+  ctx.shadowColor = '#0f0'; ctx.shadowBlur = 4;
+  ctx.strokeStyle = '#0f0'; ctx.lineWidth = 2; ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const x = (i / N) * w;
+    const y = h / 2 - (data[i] * h / 2);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Labels
+  ctx.fillStyle = '#0f0'; ctx.font = '10px monospace';
+  ctx.fillText(timebase.toFixed(1) + ' ms/div', w - 80, h - 6);
+  ctx.fillText(type.toUpperCase(), 4, 14);
+  ctx.fillText(freq + ' Hz', 4, 28);
+
+  // Measurements
+  let vMax = -Infinity, vMin = Infinity, sum = 0;
+  for (let i = 0; i < N; i++) { vMax = Math.max(vMax, data[i]); vMin = Math.min(vMin, data[i]); sum += data[i] * data[i]; }
+  const vpp = vMax - vMin;
+  const vrms = Math.sqrt(sum / N);
+  $('vppVal').textContent = vpp.toFixed(3) + ' V';
+  $('vrmsVal').textContent = vrms.toFixed(3) + ' V';
+  $('freqVal').textContent = freq + ' Hz';
+}
+
+function scopeTick() {
+  if (!scopeRunning) return;
+  drawOscilloscope();
+  scopeAnim = requestAnimationFrame(scopeTick);
+}
+
+function startScope() {
+  if (scopeRunning) return;
+  scopeRunning = true; scopePhase = 0;
+  log(LANG[currentLang].scopeStarted || 'Oscilloscope started', 'info');
+  setStatus(true);
+  $('startBtn').textContent = '⏹ Stop';
+  $('startBtn').onclick = stopScope;
+  scopeTick();
+}
+
+function stopScope() {
+  scopeRunning = false;
+  if (scopeAnim) cancelAnimationFrame(scopeAnim);
+  log(LANG[currentLang].scopeStopped || 'Oscilloscope stopped', 'success');
+  $('startBtn').textContent = LANG[currentLang].startBtn || '▶ Start';
+  $('startBtn').onclick = startScope;
+}
+
+function resetScope() {
+  stopScope();
+  const c = $('scopeCanvas'); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height);
+  $('vppVal').textContent = '--'; $('vrmsVal').textContent = '--'; $('freqVal').textContent = '--';
+  setStatus(false); log(LANG[currentLang].resetDone || 'Reset', 'info');
+}
+
+function initOscilloscope() {
+  const sb = $('startBtn'); if (sb) sb.onclick = startScope;
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetScope;
+  const ts = $('timebaseSlider'); if (ts) ts.oninput = function () { $('timebaseVal').textContent = this.value + ' ms/div'; };
+  const as = $('ampSlider'); if (as) as.oninput = function () { $('ampVal').textContent = this.value + ' V'; };
+  const trs = $('triggerSlider'); if (trs) trs.oninput = function () { $('triggerVal').textContent = (this.value * 100).toFixed(0) + '%'; };
+}
+
+document.addEventListener('DOMContentLoaded', initOscilloscope);

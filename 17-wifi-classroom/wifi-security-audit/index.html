@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>WiFi Security Audit — Workshop DIY</title>
+  <meta name="description" content="WiFi security audit. Checklist, scanner, vulnerability assessment" />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="WiFi Security Audit — Workshop DIY" />
+  <meta property="og:description" content="WiFi security audit. Checklist, scanner, vulnerability assessment" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -28,8 +28,8 @@
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-title">WiFi Security Audit</div>
+      <div class="splash-sub" data-i18n="subtitle">Checklist, scanner, vulnerability assessment</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">WiFi Security Audit</h1>
+            <div class="subtitle" data-i18n="subtitle">Checklist, scanner, vulnerability assessment</div>
           </div>
         </div>
 
@@ -72,22 +72,66 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🛡️</span> <span data-i18n="mainSection">Security Audit Dashboard</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">WiFi security checklist & vulnerability scanner</span> <span class="version-tag">v1.0</span></div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button id="startBtn" class="primary"><span class="btn-icon">▶</span> <span data-i18n="start">Start Audit</span></button>
+            <button id="stopBtn" disabled><span class="btn-icon">⏹</span> <span data-i18n="stop">Stop Audit</span></button>
           </div>
         </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:10px 0">
+          <div style="text-align:center;min-width:70px"><div style="font-family:var(--font-h);font-size:1.5rem;color:var(--accent)" id="overallScore">0%</div><div style="font-size:.6rem;color:var(--text-muted);text-transform:uppercase" data-i18n="overall">Overall Score</div></div>
+          <div style="text-align:center;min-width:50px"><div style="font-family:var(--font-h);font-size:1.1rem;color:#ef4444" id="critCount">0</div><div style="font-size:.6rem;color:#ef4444" data-i18n="critical">Critical</div></div>
+          <div style="text-align:center;min-width:50px"><div style="font-family:var(--font-h);font-size:1.1rem;color:#f97316" id="highCount">0</div><div style="font-size:.6rem;color:#f97316" data-i18n="high">High</div></div>
+          <div style="text-align:center;min-width:50px"><div style="font-family:var(--font-h);font-size:1.1rem;color:#fbbf24" id="medCount">0</div><div style="font-size:.6rem;color:#fbbf24" data-i18n="medium">Medium</div></div>
+          <div style="text-align:center;min-width:50px"><div style="font-family:var(--font-h);font-size:1.1rem;color:#22c55e" id="lowCount">0</div><div style="font-size:.6rem;color:#22c55e" data-i18n="low">Low</div></div>
+        </div>
+        <canvas id="auditCanvas" style="width:100%;height:140px;border-radius:10px;background:rgba(0,0,0,.15)"></canvas>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- ═══════════════════ SECTION A — Scanner ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🔎</span> <span data-i18n="sectionA">Vulnerability Scanner</span></summary>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div id="row_encryption" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="encryption">Encryption</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_encryption">...</span></div>
+            <div id="row_authMethod" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="authMethod">Authentication</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_authMethod">...</span></div>
+            <div id="row_firmware" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="firmware">Firmware</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_firmware">...</span></div>
+            <div id="row_openPorts" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="openPorts">Open Ports</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_openPorts">...</span></div>
+            <div id="row_defaultCreds" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="defaultCreds">Default Credentials</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_defaultCreds">...</span></div>
+            <div id="row_hiddenSSID" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="hiddenSSID">Hidden SSID</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_hiddenSSID">...</span></div>
+            <div id="row_guestNetwork" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="guestNetwork">Guest Network</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_guestNetwork">...</span></div>
+            <div id="row_macFiltering" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="macFiltering">MAC Filtering</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_macFiltering">...</span></div>
+            <div id="row_wps" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="wps">WPS Disabled</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_wps">...</span></div>
+            <div id="row_logging" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.1);font-size:.78rem;opacity:.5"><span data-i18n="logging">Logging Enabled</span><span style="margin-inline-start:auto;font-size:.7rem" id="status_logging">...</span></div>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Checklist ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">✅</span> <span data-i18n="sectionB">Audit Checklist</span></summary>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:6px;padding:4px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_encryption" /> <span data-i18n="encryption">Encryption</span> — WPA3 or WPA2-AES</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_authMethod" /> <span data-i18n="authMethod">Authentication</span> — Enterprise or SAE</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_firmware" /> <span data-i18n="firmware">Firmware</span> — Latest version installed</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_openPorts" /> <span data-i18n="openPorts">Open Ports</span> — Only necessary ports</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_defaultCreds" /> <span data-i18n="defaultCreds">Default Credentials</span> — Changed from factory</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_hiddenSSID" /> <span data-i18n="hiddenSSID">Hidden SSID</span> — Broadcast disabled</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_guestNetwork" /> <span data-i18n="guestNetwork">Guest Network</span> — Isolated from main</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_macFiltering" /> <span data-i18n="macFiltering">MAC Filtering</span> — Whitelist enabled</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_wps" /> <span data-i18n="wps">WPS Disabled</span> — WPS turned off</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem"><input type="checkbox" id="check_logging" /> <span data-i18n="logging">Logging Enabled</span> — Access logging on</label>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🎓</span> <span data-i18n="sectionC">How It Works</span></summary>
+        <div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">A WiFi security audit checks your network configuration against best practices. It verifies encryption strength, authentication methods, firmware updates, port exposure, and more. This simulation runs a virtual audit and scores your network security posture.</p></div></div>
       </details>
 
     </div>

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>CubeSat Telemetry — Workshop DIY</title>
+  <meta name="description" content="CubeSat Telemetry Decoder — Decode CubeSat telemetry data frames in real time." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="CubeSat Telemetry — Workshop DIY" />
+  <meta property="og:description" content="Decode CubeSat telemetry data frames in real time." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -21,6 +21,20 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .sim-gauge{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:10px;padding:12px;text-align:center}
+    .sim-gauge .gauge-label{font-size:.75rem;color:var(--text-muted);margin-bottom:4px}
+    .sim-gauge .gauge-value{font-family:'Orbitron',monospace;font-size:1.4rem;color:var(--accent)}
+    .sim-gauge .gauge-unit{font-size:.7rem;color:var(--text-muted)}
+    .sim-gauge canvas{display:block;margin:6px auto 0}
+    .hex-frame{font-family:monospace;font-size:.72rem;background:#000;color:#0f0;padding:10px;border-radius:8px;max-height:160px;overflow-y:auto;line-height:1.5;word-break:break-all;margin-top:8px}
+    .tlm-bar{display:flex;align-items:center;gap:8px;margin:4px 0}
+    .tlm-bar .bar-label{font-size:.78rem;color:var(--text-muted);width:70px;flex-shrink:0}
+    .tlm-bar .bar-track{flex:1;height:10px;background:rgba(255,255,255,.08);border-radius:5px;overflow:hidden}
+    .tlm-bar .bar-fill{height:100%;border-radius:5px;transition:width .4s}
+    @media(max-width:600px){.sim-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 
 <body>
@@ -72,22 +86,75 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🛰️</span> <span data-i18n="mainSection">CubeSat Telemetry</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Decode CubeSat telemetry data frames</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Theory ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card">
+          <h3 data-i18n="theoryTitle">CubeSat Telemetry Basics</h3>
+          <p data-i18n="theoryDesc">CubeSats transmit health data via UHF/VHF beacons. Telemetry frames encode battery voltage, solar panel current, temperature sensors, and attitude data in AX.25 or custom binary protocols.</p>
+          <div class="control-section">
+            <table style="width:100%;font-size:.85rem;border-collapse:collapse">
+              <tr style="border-bottom:1px solid var(--border,rgba(255,255,255,.1))"><th style="text-align:left;padding:4px" data-i18n="paramCol">Parameter</th><th style="text-align:left;padding:4px" data-i18n="rangeCol">Range</th><th style="text-align:left;padding:4px" data-i18n="unitCol">Unit</th></tr>
+              <tr><td style="padding:4px">Battery V</td><td>3.0 - 4.2</td><td>V</td></tr>
+              <tr><td style="padding:4px">Solar I</td><td>0 - 500</td><td>mA</td></tr>
+              <tr><td style="padding:4px">Temp CPU</td><td>-20 - 60</td><td>C</td></tr>
+              <tr><td style="padding:4px">RSSI</td><td>-120 - -60</td><td>dBm</td></tr>
+              <tr><td style="padding:4px">Packets RX</td><td>0 - 999</td><td>count</td></tr>
+            </table>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Controls ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <label class="sidebar-label" data-i18n="selectSat">Select Satellite</label>
+            <select id="satSelect" class="sidebar-select">
+              <option value="amsat1">AMSAT-1 (435.100 MHz)</option>
+              <option value="cube2" selected>CubeBel-1 (436.990 MHz)</option>
+              <option value="funcube">FUNcube-1 (145.935 MHz)</option>
+              <option value="unisat">UniSat-7 (437.325 MHz)</option>
+            </select>
+            <label class="sidebar-label" style="margin-top:8px" data-i18n="frameRate">Frame Rate</label>
+            <input type="range" id="frameRateRange" min="1" max="10" value="4" style="width:100%">
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button id="startBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">&#9654;</span> <span data-i18n="start">Start</span></button>
+              <button id="stopBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#9724;</span> <span data-i18n="stop">Stop</span></button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Telemetry Display ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">📡</span> <span data-i18n="sectionC">Telemetry Display</span></summary>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span id="satLabel" style="font-family:var(--font-h);font-size:1.1rem;color:var(--accent)">CubeBel-1 — 436.990 MHz</span>
+            <span id="pktCount" style="font-family:'Orbitron',monospace;color:var(--accent2)">PKT: 0</span>
+          </div>
+          <div class="sim-grid">
+            <div class="sim-gauge"><div class="gauge-label" data-i18n="battV">Battery</div><canvas id="gaugeVolt" width="100" height="100"></canvas><div class="gauge-value" id="valVolt">0.00</div><div class="gauge-unit">V</div></div>
+            <div class="sim-gauge"><div class="gauge-label" data-i18n="solarI">Solar</div><canvas id="gaugeSolar" width="100" height="100"></canvas><div class="gauge-value" id="valSolar">0</div><div class="gauge-unit">mA</div></div>
+            <div class="sim-gauge"><div class="gauge-label" data-i18n="cpuTemp">CPU Temp</div><canvas id="gaugeTemp" width="100" height="100"></canvas><div class="gauge-value" id="valTemp">0</div><div class="gauge-unit">°C</div></div>
+            <div class="sim-gauge"><div class="gauge-label" data-i18n="rssiLabel">RSSI</div><canvas id="gaugeRssi" width="100" height="100"></canvas><div class="gauge-value" id="valRssi">-100</div><div class="gauge-unit">dBm</div></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="tlm-bar"><span class="bar-label" data-i18n="battV">Battery</span><div class="bar-track"><div class="bar-fill" id="barVolt" style="width:0%;background:var(--accent)"></div></div></div>
+            <div class="tlm-bar"><span class="bar-label" data-i18n="solarI">Solar</span><div class="bar-track"><div class="bar-fill" id="barSolar" style="width:0%;background:#51cf66"></div></div></div>
+            <div class="tlm-bar"><span class="bar-label" data-i18n="cpuTemp">CPU Temp</span><div class="bar-track"><div class="bar-fill" id="barTemp" style="width:0%;background:#ff6b6b"></div></div></div>
+            <div class="tlm-bar"><span class="bar-label" data-i18n="rssiLabel">RSSI</span><div class="bar-track"><div class="bar-fill" id="barRssi" style="width:0%;background:#339af0"></div></div></div>
+          </div>
+          <div class="hex-frame" id="hexFrame">Waiting for telemetry...</div>
+        </div>
       </details>
 
     </div>

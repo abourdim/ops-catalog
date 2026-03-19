@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SKYWARN Station', subtitle: '🌪️ Weather spotter station via ham radio',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'SKYWARN Station', mainDesc: 'SKYWARN weather spotter station via ham radio',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Station SKYWARN', subtitle: '🌪️ Station de veille météo par radio amateur',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Station SKYWARN', mainDesc: 'Station de veille météo SKYWARN par radio amateur',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محطة SKYWARN', subtitle: '🌪️ محطة رصد جوي عبر الراديو الهواة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محطة SKYWARN', mainDesc: 'محطة رصد جوي SKYWARN عبر الراديو الهواة',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,91 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Activate Net',stop:'Close Net',simStarted:'SKYWARN net activated',simStopped:'SKYWARN net closed',theoryTitle:'SKYWARN Theory',theoryDesc:'SKYWARN is a NWS (National Weather Service) program where trained volunteer weather spotters report severe weather observations via ham radio. Spotters relay real-time data about tornadoes, hail, flooding, and damaging winds to the local NWS office through organized radio nets on VHF/UHF repeaters.',reports:'Reports',alerts:'Alerts',spotters:'Spotters',severity:'Severity'});
+Object.assign(LANG.fr, {start:'Activer le réseau',stop:'Fermer',simStarted:'Réseau SKYWARN activé',simStopped:'Réseau SKYWARN fermé',theoryTitle:'Théorie SKYWARN',theoryDesc:'SKYWARN est un programme NWS où des observateurs météo bénévoles formés signalent les phénomènes météo violents par radio amateur. Les observateurs relaient en temps réel les données sur tornades, grêle, inondations et vents destructeurs au bureau NWS local via des réseaux radio organisés sur répéteurs VHF/UHF.',reports:'Rapports',alerts:'Alertes',spotters:'Observateurs',severity:'Sévérité'});
+Object.assign(LANG.ar, {start:'تفعيل الشبكة',stop:'إغلاق',simStarted:'شبكة SKYWARN مفعلة',simStopped:'شبكة SKYWARN مغلقة',theoryTitle:'نظرية SKYWARN',theoryDesc:'SKYWARN هو برنامج خدمة الطقس الوطنية حيث يقوم متطوعون مدربون برصد الطقس القاسي والإبلاغ عنه عبر الراديو الهواة. ينقل الراصدون بيانات فورية عن الأعاصير والبَرَد والفيضانات والرياح المدمرة إلى مكتب الطقس المحلي عبر شبكات راديو منظمة.',reports:'تقارير',alerts:'تنبيهات',spotters:'راصدون',severity:'الشدة'});
+setLanguage(currentLang);
+
+
+/* ═══════ SKYWARN SIM ═══════ */
+let simRunning=false,simTimer=null,reportCount=0,alertCount=0;
+const swC=$('skywarnCanvas'),swCtx=swC?swC.getContext('2d'):null;
+const WEATHER_TYPES=[
+  {type:'Tornado',icon:'\u{1F32A}',severity:5,color:'#ef4444'},
+  {type:'Hail',icon:'\u{1F9CA}',severity:3,color:'#60a5fa'},
+  {type:'High Wind',icon:'\u{1F4A8}',severity:3,color:'#f59e0b'},
+  {type:'Flooding',icon:'\u{1F30A}',severity:4,color:'#3b82f6'},
+  {type:'Lightning',icon:'\u{26A1}',severity:2,color:'#fbbf24'},
+  {type:'Heavy Rain',icon:'\u{1F327}',severity:2,color:'#6366f1'},
+  {type:'Funnel Cloud',icon:'\u{1F300}',severity:4,color:'#f97316'}
+];
+const SPOTTER_CALLS=['W1SKY','K3WX','N4STM','W5WND','K6RN','W7HDR','N8FLD'];
+let weatherEvents=[],activeAlerts=[];
+
+function drawSkywarn(){
+  if(!swCtx)return;const W=swC.width,H=swC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  swCtx.fillStyle='#0a1628';swCtx.fillRect(0,0,W,H);
+  const now=Date.now();
+  // Radar-like display
+  const cx=W*0.4,cy=H/2,maxR=Math.min(cx-20,cy-20);
+  // Range rings
+  for(let i=1;i<=4;i++){swCtx.beginPath();swCtx.arc(cx,cy,maxR*i/4,0,Math.PI*2);swCtx.strokeStyle='rgba(255,255,255,0.08)';swCtx.lineWidth=1;swCtx.stroke();}
+  // Crosshairs
+  swCtx.strokeStyle='rgba(255,255,255,0.08)';swCtx.beginPath();swCtx.moveTo(cx-maxR,cy);swCtx.lineTo(cx+maxR,cy);swCtx.stroke();
+  swCtx.beginPath();swCtx.moveTo(cx,cy-maxR);swCtx.lineTo(cx,cy+maxR);swCtx.stroke();
+  // Sweep line
+  const sweepAngle=(now%5000)/5000*Math.PI*2;
+  swCtx.strokeStyle='rgba(34,197,94,0.3)';swCtx.lineWidth=2;
+  swCtx.beginPath();swCtx.moveTo(cx,cy);swCtx.lineTo(cx+Math.cos(sweepAngle)*maxR,cy+Math.sin(sweepAngle)*maxR);swCtx.stroke();
+  // Weather events on radar
+  weatherEvents.forEach(e=>{const age=(now-e.ts)/30000;if(age>1)return;
+    swCtx.globalAlpha=1-age*0.7;swCtx.beginPath();swCtx.arc(e.rx,e.ry,5+e.severity*2,0,Math.PI*2);
+    swCtx.fillStyle=e.color;swCtx.fill();swCtx.globalAlpha=1;
+    swCtx.font='12px sans-serif';swCtx.fillText(e.icon,e.rx-6,e.ry-8);
+  });
+  // Alert panel (right side)
+  const ax=W*0.65;
+  swCtx.fillStyle='rgba(255,255,255,0.6)';swCtx.font='bold 10px monospace';swCtx.fillText('ACTIVE ALERTS',ax,16);
+  activeAlerts.slice(-6).forEach((a,i)=>{
+    swCtx.fillStyle=a.color;swCtx.font='9px monospace';
+    swCtx.fillText(a.icon+' '+a.type+' - '+a.spotter,ax,32+i*18);
+    swCtx.fillStyle='rgba(255,255,255,0.3)';swCtx.fillText(a.time,ax,42+i*18);
+  });
+  // Stats bar
+  swCtx.fillStyle=acc;swCtx.font='bold 11px monospace';
+  swCtx.fillText('Reports: '+reportCount+' | Alerts: '+alertCount,10,H-8);
+}
+
+function skywarnStep(){
+  const wt=WEATHER_TYPES[Math.floor(Math.random()*WEATHER_TYPES.length)];
+  const spotter=SPOTTER_CALLS[Math.floor(Math.random()*SPOTTER_CALLS.length)];
+  const W=swC?swC.width:400,H=swC?swC.height:300;
+  const cx=W*0.4,cy=H/2,maxR=Math.min(cx-20,cy-20);
+  const angle=Math.random()*Math.PI*2,dist=Math.random()*maxR;
+  reportCount++;
+  if(wt.severity>=4)alertCount++;
+  const evt={...wt,spotter,rx:cx+Math.cos(angle)*dist,ry:cy+Math.sin(angle)*dist,ts:Date.now(),time:new Date().toLocaleTimeString()};
+  weatherEvents.push(evt);if(weatherEvents.length>50)weatherEvents.shift();
+  activeAlerts.push(evt);if(activeAlerts.length>20)activeAlerts.shift();
+  const rd=$('reportDisp');if(rd)rd.textContent=reportCount;
+  const ad=$('alertDisp');if(ad)ad.textContent=alertCount;
+  log(spotter+' reports: '+wt.icon+' '+wt.type+' (severity '+wt.severity+'/5)',wt.severity>=4?'error':'rx');
+  drawSkywarn();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);reportCount=0;alertCount=0;weatherEvents=[];activeAlerts=[];
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(skywarnStep,2500);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_skywarn(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  drawSkywarn();
+}
+init_skywarn();

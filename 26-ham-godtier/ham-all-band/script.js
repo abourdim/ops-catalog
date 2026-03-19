@@ -1449,3 +1449,71 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"All-Band Transceiver","subtitle":"📻 All-band all-mode transceiver simulator","sectionA":"Theory","sectionB":"Controls","sectionC":"Transceiver","mainSection":"All-Band Transceiver","mainDesc":"Full all-band all-mode transceiver simulator","start":"TX","stop":"RX","simStarted":"Transmitting...","simStopped":"Receiving","theoryTitle":"All-Band Transceiver Theory","theoryDesc":"A transceiver combines transmitter and receiver. Switch bands, modes, adjust power, and monitor the waterfall display.","band":"Band","modeSelect":"Mode","power":"Power (W)","vfo":"VFO","rit":"RIT","xit":"XIT","agc":"AGC","nb":"NB","att":"ATT","split":"SPLIT","smeter":"S-Meter","txPower":"TX Power","frequency":"Frequency"});
+Object.assign(LANG.fr, {"title":"Transceiver Toutes Bandes","subtitle":"📻 Simulateur transceiver toutes bandes tous modes","sectionA":"Theorie","sectionB":"Controles","sectionC":"Transceiver","mainSection":"Transceiver Toutes Bandes","mainDesc":"Simulateur complet toutes bandes tous modes","start":"TX","stop":"RX","simStarted":"En emission...","simStopped":"En reception","theoryTitle":"Theorie Transceiver","theoryDesc":"Un transceiver combine emetteur et recepteur. Changez de bande, mode, ajustez la puissance et surveillez la cascade.","band":"Bande","modeSelect":"Mode","power":"Puissance (W)","vfo":"VFO","rit":"RIT","xit":"XIT","agc":"AGC","nb":"NB","att":"ATT","split":"SPLIT","smeter":"S-Metre","txPower":"Puissance TX","frequency":"Frequence"});
+Object.assign(LANG.ar, {"title":"جهاز إرسال واستقبال شامل","subtitle":"📻 محاكي إرسال واستقبال لجميع النطاقات والأوضاع","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"جهاز الإرسال والاستقبال","mainSection":"جهاز إرسال واستقبال شامل","mainDesc":"محاكي كامل لجميع النطاقات والأوضاع","start":"إرسال","stop":"استقبال","simStarted":"جاري الإرسال...","simStopped":"وضع الاستقبال","theoryTitle":"نظرية الإرسال والاستقبال","theoryDesc":"يجمع جهاز الإرسال والاستقبال بين المرسل والمستقبل. غيّر النطاقات والأوضاع واضبط القدرة وراقب شلال الإشارات.","band":"النطاق","modeSelect":"الوضع","power":"القدرة (واط)","vfo":"VFO","rit":"RIT","xit":"XIT","agc":"AGC","nb":"NB","att":"ATT","split":"SPLIT","smeter":"مقياس S","txPower":"قدرة الإرسال","frequency":"التردد"});
+setLanguage(currentLang);
+
+
+/* ═══════ ALL-BAND TRANSCEIVER SIM ═══════ */
+let simRunning=false,simTimer=null,txMode=false;
+const wfCanvas=$('wfCanvas'),wfCtx=wfCanvas?wfCanvas.getContext('2d'):null;
+const bandFreqs={'160m':1800,'80m':3500,'40m':7000,'20m':14000,'15m':21000,'10m':28000,'6m':50000,'2m':144000,'70cm':430000};
+let currentFreq=14200,sLevel=0,wfLine=0;
+
+function updateDisplay(){
+  const freqEl=$('freqDisplay');if(freqEl){
+    const mhz=(currentFreq/1000).toFixed(3);
+    freqEl.textContent=mhz+' MHz';
+  }
+  sLevel=Math.floor(Math.random()*9)+1;
+  const se=$('sMeterBar');if(se)se.style.width=(sLevel/9*100)+'%';
+  const sv=$('sMeterVal');if(sv)sv.textContent='S'+sLevel;
+  // Waterfall
+  if(wfCtx){
+    const W=wfCanvas.width,H=wfCanvas.height;
+    const imgData=wfCtx.getImageData(0,0,W,H-1);
+    wfCtx.putImageData(imgData,0,1);
+    for(let x=0;x<W;x++){
+      const noise=Math.random()*40;
+      const sig=(Math.abs(x-W/2)<20)?100+Math.random()*155:noise;
+      const hasSignal=Math.random()<0.05;
+      const r=hasSignal?0:Math.min(255,sig*2);
+      const g=hasSignal?Math.min(255,sig*3):Math.min(255,sig);
+      const b=Math.min(255,sig*2.5);
+      wfCtx.fillStyle='rgb('+Math.floor(r)+','+Math.floor(g)+','+Math.floor(b)+')';
+      wfCtx.fillRect(x,0,1,1);
+    }
+  }
+}
+
+function setFreqFromBand(){
+  const bs=$('bandSelect');if(!bs)return;
+  const base=bandFreqs[bs.value]||14000;
+  currentFreq=base+Math.floor(Math.random()*200);
+  updateDisplay();
+}
+
+function tuneFreq(delta){currentFreq+=delta;updateDisplay();}
+
+function startSim(){if(txMode)return;txMode=true;setStatus(true);
+  log(LANG[currentLang].simStarted||'TX','success');
+  simTimer=setInterval(updateDisplay,200);}
+function stopSim(){txMode=false;setStatus(false);
+  if(simTimer){clearInterval(simTimer);simTimer=null;}
+  log(LANG[currentLang].simStopped||'RX','info');}
+function init_allband(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('bandSelect'))$('bandSelect').onchange=setFreqFromBand;
+  if($('tuneUpBtn'))$('tuneUpBtn').onclick=()=>tuneFreq(1);
+  if($('tuneDownBtn'))$('tuneDownBtn').onclick=()=>tuneFreq(-1);
+  if($('tuneFastUp'))$('tuneFastUp').onclick=()=>tuneFreq(10);
+  if($('tuneFastDown'))$('tuneFastDown').onclick=()=>tuneFreq(-10);
+  setFreqFromBand();
+  setInterval(updateDisplay,500);
+}
+init_allband();

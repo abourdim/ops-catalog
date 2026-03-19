@@ -1449,3 +1449,97 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"Band Condition Game","subtitle":"🎮 Gamified band conditions — predict propagation, score points","sectionA":"Theory","sectionB":"Controls","sectionC":"Game","mainSection":"Band Condition Game","mainDesc":"Predict propagation conditions and score points","start":"New Round","stop":"End Game","simStarted":"New round started!","simStopped":"Game ended","theoryTitle":"Band Propagation Theory","theoryDesc":"HF propagation depends on solar flux, time of day, and ionospheric conditions. Predict which bands will be open!","score":"Score","round":"Round","predict":"Predict","open":"OPEN","closed":"CLOSED","correct":"Correct!","wrong":"Wrong!","streak":"Streak","timeLeft":"Time Left","yourPrediction":"Your Prediction","actualResult":"Actual Result"});
+Object.assign(LANG.fr, {"title":"Jeu Conditions de Bande","subtitle":"🎮 Conditions de bande gamifiees — predis la propagation, marque des points","sectionA":"Theorie","sectionB":"Controles","sectionC":"Jeu","mainSection":"Jeu Conditions de Bande","mainDesc":"Predis les conditions de propagation et marque des points","start":"Nouvelle Manche","stop":"Fin du Jeu","simStarted":"Nouvelle manche!","simStopped":"Jeu termine","theoryTitle":"Theorie de Propagation","theoryDesc":"La propagation HF depend du flux solaire, de l'heure et des conditions ionospheriques. Predis quelles bandes seront ouvertes!","score":"Score","round":"Manche","predict":"Predire","open":"OUVERT","closed":"FERME","correct":"Correct!","wrong":"Faux!","streak":"Serie","timeLeft":"Temps Restant","yourPrediction":"Ta Prediction","actualResult":"Resultat Reel"});
+Object.assign(LANG.ar, {"title":"لعبة حالة النطاقات","subtitle":"🎮 حالات النطاقات بأسلوب اللعب — توقع الانتشار واحصد النقاط","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"اللعبة","mainSection":"لعبة حالة النطاقات","mainDesc":"توقع ظروف الانتشار واحصد النقاط","start":"جولة جديدة","stop":"إنهاء اللعبة","simStarted":"بدأت جولة جديدة!","simStopped":"انتهت اللعبة","theoryTitle":"نظرية انتشار النطاقات","theoryDesc":"يعتمد انتشار HF على التدفق الشمسي والوقت والظروف الأيونوسفيرية. توقع أي النطاقات ستكون مفتوحة!","score":"النتيجة","round":"الجولة","predict":"توقع","open":"مفتوح","closed":"مغلق","correct":"صحيح!","wrong":"خطأ!","streak":"سلسلة","timeLeft":"الوقت المتبقي","yourPrediction":"توقعك","actualResult":"النتيجة الفعلية"});
+setLanguage(currentLang);
+
+
+/* ═══════ BAND CONDITION GAME SIM ═══════ */
+let simRunning=false,simTimer=null,gameScore=0,gameRound=0,gameStreak=0,roundTimer=null;
+const bands=['160m','80m','40m','20m','15m','10m','6m'];
+let currentBand='',currentSFI=0,currentTime=0,playerPrediction=null,roundTimeLeft=15;
+
+function generateRound(){
+  gameRound++;
+  currentSFI=50+Math.floor(Math.random()*150);
+  currentTime=Math.floor(Math.random()*24);
+  currentBand=bands[Math.floor(Math.random()*bands.length)];
+  roundTimeLeft=15;
+  playerPrediction=null;
+  const re=$('roundEl');if(re)re.textContent=gameRound;
+  const sfe=$('sfiDisplay');if(sfe)sfe.textContent=currentSFI;
+  const te=$('timeDisplay');if(te)te.textContent=currentTime+':00 UTC';
+  const be=$('bandDisplay');if(be)be.textContent=currentBand;
+  const tl=$('timerEl');if(tl)tl.textContent=roundTimeLeft+'s';
+  const fb=$('feedbackEl');if(fb)fb.textContent='';
+  const pb=$('predictOpen'),pc=$('predictClosed');
+  if(pb){pb.disabled=false;pb.style.opacity='1';}
+  if(pc){pc.disabled=false;pc.style.opacity='1';}
+  if(roundTimer)clearInterval(roundTimer);
+  roundTimer=setInterval(()=>{
+    roundTimeLeft--;
+    const tl2=$('timerEl');if(tl2)tl2.textContent=roundTimeLeft+'s';
+    if(roundTimeLeft<=0){clearInterval(roundTimer);resolveRound();}
+  },1000);
+  log('Round '+gameRound+': '+currentBand+' SFI='+currentSFI+' '+currentTime+':00 UTC','info');
+}
+
+function makePrediction(open){
+  playerPrediction=open;
+  const pb=$('predictOpen'),pc=$('predictClosed');
+  if(pb)pb.style.opacity=open?'1':'0.4';
+  if(pc)pc.style.opacity=open?'0.4':'1';
+}
+
+function resolveRound(){
+  if(roundTimer)clearInterval(roundTimer);
+  const bandIdx=bands.indexOf(currentBand);
+  const isActuallyOpen=(currentSFI>100&&bandIdx>=3)||(currentSFI>70&&bandIdx>=1&&bandIdx<=4&&currentTime>=8&&currentTime<=20)||(bandIdx<=2&&currentTime>=18||currentTime<=6);
+  const fb=$('feedbackEl');
+  if(playerPrediction===null){
+    if(fb)fb.textContent='Timeout! It was '+(isActuallyOpen?'OPEN':'CLOSED');
+    fb.style.color='#fbbf24';gameStreak=0;
+  }else if(playerPrediction===isActuallyOpen){
+    gameScore+=10+gameStreak*5;gameStreak++;
+    if(fb){fb.textContent=(LANG[currentLang].correct||'Correct!')+' +'+(10+(gameStreak-1)*5);fb.style.color='#4ade80';}
+    log('Correct! +points','success');
+  }else{
+    gameStreak=0;
+    if(fb){fb.textContent=(LANG[currentLang].wrong||'Wrong!')+' It was '+(isActuallyOpen?'OPEN':'CLOSED');fb.style.color='#f87171';}
+    log('Wrong answer','error');
+  }
+  const se=$('scoreEl');if(se)se.textContent=gameScore;
+  const ste=$('streakEl');if(ste)ste.textContent=gameStreak;
+  const pb=$('predictOpen'),pc=$('predictClosed');
+  if(pb)pb.disabled=true;if(pc)pc.disabled=true;
+  if(simRunning)setTimeout(generateRound,3000);
+}
+
+function drawScoreGraph(){
+  const c=$('gameCanvas'),ctx=c?c.getContext('2d'):null;if(!ctx)return;
+  const W=c.width,H=c.height;
+  ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,W,H);
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  ctx.fillStyle=accent;
+  const barW=W/Math.max(gameRound,1);
+  ctx.fillRect((gameRound-1)*barW,H-Math.min(gameScore,H),barW-2,Math.min(gameScore,H));
+}
+
+function startSim(){if(simRunning)return;simRunning=true;gameScore=0;gameRound=0;gameStreak=0;setStatus(true);
+  const se=$('scoreEl');if(se)se.textContent='0';
+  const ste=$('streakEl');if(ste)ste.textContent='0';
+  const c=$('gameCanvas'),ctx=c?c.getContext('2d'):null;if(ctx)ctx.clearRect(0,0,c.width,c.height);
+  log(LANG[currentLang].simStarted||'Started','success');generateRound();}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);if(roundTimer)clearInterval(roundTimer);setStatus(false);
+  log(LANG[currentLang].simStopped+' Score: '+gameScore,'info');}
+function init_band_game(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('predictOpen'))$('predictOpen').onclick=()=>{makePrediction(true);};
+  if($('predictClosed'))$('predictClosed').onclick=()=>{makePrediction(false);};
+}
+init_band_game();

@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Antenna Shootout', subtitle: '⚔️ Compare antennas head-to-head. Side-by-side metrics',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Head-to-Head Arena', mainDesc: 'Select two antennas and compare their performance metrics',
+    sectionA: 'Pattern Overlay', sectionB: 'Metrics Comparison', sectionC: 'Verdict & Notes',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Antenna Shootout?', faq_a1: 'Compare two antennas side-by-side on gain, SWR, bandwidth, radiation pattern, and more.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Select Antenna A and Antenna B from the dropdowns.',
+    howto_2: 'Set the comparison frequency and click Compare.',
+    howto_3: 'View overlaid radiation patterns and bar chart metrics.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
+    working: 'Comparing…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⚔️ Shootout arena ready — pick your contenders!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +100,32 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Duel d\'Antennes', subtitle: '⚔️ Comparez les antennes face-à-face. Métriques côte à côte',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Arène de Duel', mainDesc: 'Sélectionnez deux antennes et comparez leurs performances',
+    sectionA: 'Superposition des Diagrammes', sectionB: 'Comparaison des Métriques', sectionC: 'Verdict & Notes',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Duel d\'Antennes ?', faq_a1: 'Comparez deux antennes côte à côte sur le gain, le SWR, la bande passante et plus.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
+    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Sélectionne l\'Antenne A et l\'Antenne B.',
+    howto_2: 'Définis la fréquence et clique sur Comparer.',
+    howto_3: 'Consulte les diagrammes superposés et les barres de métriques.',
+    howto_4: 'Utilise Paramètres (⚙️) pour le thème et la langue.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Données locales.',
+    working: 'Comparaison en cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '⚔️ Arène prête — choisissez vos concurrents !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +137,32 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مبارزة الهوائيات', subtitle: '⚔️ قارن الهوائيات وجهاً لوجه. مقاييس جنباً إلى جنب',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'حلبة المبارزة', mainDesc: 'اختر هوائيين وقارن أداءهما',
+    sectionA: 'تراكب الأنماط', sectionB: 'مقارنة المقاييس', sectionC: 'الحكم والملاحظات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
+    faq_q1: 'ما هي مبارزة الهوائيات؟', faq_a1: 'قارن هوائيين جنباً إلى جنب من حيث الكسب والـSWR وعرض النطاق ونمط الإشعاع.',
+    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا.',
+    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اختر الهوائي أ والهوائي ب من القوائم.',
+    howto_2: 'حدد تردد المقارنة وانقر على قارن.',
+    howto_3: 'اعرض أنماط الإشعاع المتراكبة وأعمدة المقاييس.',
+    howto_4: 'استخدم الإعدادات (⚙️) للمظهر واللغة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'بيانات محلية فقط.',
+    working: 'جارٍ المقارنة…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '⚔️ الحلبة جاهزة — اختر المتنافسين!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,158 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ ANTENNA SHOOTOUT — SIMULATION ═══════ */
+
+const SHOOTOUT_ANTENNAS = [
+  { name: 'Dipole', gain: 2.15, swr: 1.5, bw: 200, fb: 0, weight: 0.2, cost: 10, beamwidth: 78 },
+  { name: '3-El Yagi', gain: 7.5, swr: 1.3, bw: 300, fb: 15, weight: 2.5, cost: 80, beamwidth: 55 },
+  { name: '5-El Yagi', gain: 10.2, swr: 1.2, bw: 250, fb: 22, weight: 5.0, cost: 150, beamwidth: 38 },
+  { name: 'Quad Loop', gain: 3.3, swr: 1.4, bw: 150, fb: 12, weight: 1.5, cost: 40, beamwidth: 70 },
+  { name: 'Vertical', gain: 2.5, swr: 1.8, bw: 500, fb: 0, weight: 3.0, cost: 60, beamwidth: 360 },
+  { name: 'J-Pole', gain: 3.0, swr: 1.3, bw: 400, fb: 0, weight: 0.8, cost: 25, beamwidth: 360 },
+  { name: 'Collinear', gain: 6.0, swr: 1.5, bw: 350, fb: 0, weight: 1.2, cost: 45, beamwidth: 360 },
+  { name: 'Log-Periodic', gain: 7.0, swr: 1.6, bw: 2000, fb: 14, weight: 4.0, cost: 200, beamwidth: 60 }
+];
+
+let antA = 0, antB = 1;
+
+function initShootoutApp() {
+  const mc = $('mainControls');
+  const opts = SHOOTOUT_ANTENNAS.map((a,i) => `<option value="${i}">${a.name}</option>`).join('');
+  mc.innerHTML = `
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label style="color:#33ff33">Antenna A</label><select id="antASelect">${opts}</select></div>
+      <div><label style="color:#ff6644">Antenna B</label><select id="antBSelect">${opts.replace('value="1"', 'value="1" selected')}</select></div>
+    </div>
+    <div><label>Comparison Frequency (MHz)</label><input type="number" id="shootFreq" value="145" min="1" max="3000" /></div>
+    <button class="primary" id="compareBtn" style="width:100%;margin-top:8px">\u2694\uFE0F Compare Head-to-Head</button>`;
+  $('antASelect').value = '0'; $('antBSelect').value = '1';
+  $('antASelect').addEventListener('change', e => { antA = +e.target.value; });
+  $('antBSelect').addEventListener('change', e => { antB = +e.target.value; });
+  $('compareBtn').addEventListener('click', runShootout);
+  drawShootoutIdle();
+}
+
+function runShootout() {
+  playSound('click');
+  const a = SHOOTOUT_ANTENNAS[antA], b = SHOOTOUT_ANTENNAS[antB];
+  const freq = +$('shootFreq').value;
+  log(`Shootout: ${a.name} vs ${b.name} at ${freq} MHz`, 'tx');
+  drawPatternOverlay(a, b);
+  drawMetricsComparison(a, b);
+  showVerdict(a, b, freq);
+  playSound('success');
+}
+
+function drawShootoutIdle() {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '16px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('\u2694\uFE0F ANTENNA SHOOTOUT', W / 2, H / 2 - 10);
+  ctx.font = '10px Tajawal'; ctx.fillStyle = '#888';
+  ctx.fillText('Select two antennas and compare their performance', W / 2, H / 2 + 15);
+}
+
+function getPattern(ant, angleDeg) {
+  const bw = ant.beamwidth * Math.PI / 180;
+  if (ant.beamwidth >= 360) return 0.7 + 0.3 * Math.sin(angleDeg * Math.PI / 180 * 0.5);
+  const off = Math.abs(((angleDeg + 180) % 360) - 180) * Math.PI / 180;
+  return Math.max(0.05, Math.pow(Math.cos(Math.min(off / (bw / 2), Math.PI / 2)), 2));
+}
+
+function drawPatternOverlay(a, b) {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, cx = W / 2, cy = H / 2, R = Math.min(cx, cy) - 30;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#222'; ctx.lineWidth = 0.5;
+  for (let r = R / 4; r <= R; r += R / 4) { ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke(); }
+  for (let ang = 0; ang < 360; ang += 30) { const rad = ang * Math.PI / 180; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + R * Math.cos(rad), cy + R * Math.sin(rad)); ctx.stroke(); }
+  [{ ant: a, color: '#33ff33' }, { ant: b, color: '#ff6644' }].forEach(({ ant, color }) => {
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let ang = 0; ang <= 360; ang++) {
+      const rad = ang * Math.PI / 180;
+      const p = getPattern(ant, ang);
+      const px = cx + R * p * Math.cos(rad), py = cy + R * p * Math.sin(rad);
+      ang === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.stroke();
+  });
+  ctx.font = '10px Orbitron'; ctx.textAlign = 'left';
+  ctx.fillStyle = '#33ff33'; ctx.fillText(`A: ${a.name}`, 10, 15);
+  ctx.fillStyle = '#ff6644'; ctx.fillText(`B: ${b.name}`, 10, 30);
+  ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('Radiation Pattern Overlay', W / 2, H - 8);
+}
+
+function drawMetricsComparison(a, b) {
+  const cv = $('canvasA'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, pad = 40;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  const metrics = [
+    { label: 'Gain (dBi)', va: a.gain, vb: b.gain, max: 15 },
+    { label: 'F/B (dB)', va: a.fb, vb: b.fb, max: 30 },
+    { label: 'BW (kHz)', va: a.bw, vb: b.bw, max: 2500 },
+    { label: 'SWR', va: 3 - a.swr, vb: 3 - b.swr, max: 2 },
+    { label: 'Weight (kg)', va: 6 - a.weight, vb: 6 - b.weight, max: 6 },
+    { label: 'Cost ($)', va: 250 - a.cost, vb: 250 - b.cost, max: 250 }
+  ];
+  const barH = (H - pad * 2) / metrics.length;
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('Side-by-Side Metrics', W / 2, 15);
+  metrics.forEach((m, i) => {
+    const y = pad + i * barH;
+    const midX = W / 2;
+    const maxW = (W - pad * 2) / 2 - 40;
+    ctx.fillStyle = '#888'; ctx.font = '8px Tajawal'; ctx.textAlign = 'center';
+    ctx.fillText(m.label, midX, y + 12);
+    const wa = (m.va / m.max) * maxW, wb = (m.vb / m.max) * maxW;
+    ctx.fillStyle = '#33ff3388'; ctx.fillRect(midX - 40 - wa, y + 16, wa, barH - 22);
+    ctx.fillStyle = '#ff664488'; ctx.fillRect(midX + 40, y + 16, wb, barH - 22);
+  });
+}
+
+function showVerdict(a, b, freq) {
+  let scoreA = 0, scoreB = 0;
+  if (a.gain > b.gain) scoreA++; else scoreB++;
+  if (a.swr < b.swr) scoreA++; else scoreB++;
+  if (a.fb > b.fb) scoreA++; else scoreB++;
+  if (a.bw > b.bw) scoreA++; else scoreB++;
+  if (a.weight < b.weight) scoreA++; else scoreB++;
+  if (a.cost < b.cost) scoreA++; else scoreB++;
+  const winner = scoreA > scoreB ? a.name : scoreB > scoreA ? b.name : 'TIE';
+  const rb = $('resultBox');
+  rb.style.display = 'block';
+  rb.innerHTML = `
+    <div class="result-row"><span class="result-label">Winner</span><span class="result-value">${winner}</span></div>
+    <div class="result-row"><span class="result-label">${a.name} Score</span><span class="result-value" style="color:#33ff33">${scoreA}/6</span></div>
+    <div class="result-row"><span class="result-label">${b.name} Score</span><span class="result-value" style="color:#ff6644">${scoreB}/6</span></div>
+    <div class="result-row"><span class="result-label">Frequency</span><span class="result-value">${freq} MHz</span></div>`;
+  log(`Verdict: ${winner} wins ${Math.max(scoreA, scoreB)}-${Math.min(scoreA, scoreB)}`, 'success');
+  const cv = $('canvasB'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.font = '14px Orbitron'; ctx.textAlign = 'center';
+  ctx.fillStyle = '#d4a03c'; ctx.fillText('SCORECARD', W / 2, 25);
+  const cats = ['Gain', 'SWR', 'F/B', 'Bandwidth', 'Weight', 'Cost'];
+  const aWins = [a.gain > b.gain, a.swr < b.swr, a.fb > b.fb, a.bw > b.bw, a.weight < b.weight, a.cost < b.cost];
+  cats.forEach((c, i) => {
+    const y = 45 + i * 25;
+    ctx.fillStyle = '#888'; ctx.font = '9px Tajawal'; ctx.textAlign = 'center';
+    ctx.fillText(c, W / 2, y + 5);
+    ctx.fillStyle = aWins[i] ? '#33ff33' : '#444'; ctx.fillRect(W / 2 - 100, y - 5, 60, 15);
+    ctx.fillStyle = !aWins[i] ? '#ff6644' : '#444'; ctx.fillRect(W / 2 + 40, y - 5, 60, 15);
+    ctx.fillStyle = '#fff'; ctx.font = '8px Orbitron';
+    ctx.textAlign = 'center';
+    ctx.fillText(aWins[i] ? 'WIN' : '', W / 2 - 70, y + 5);
+    ctx.fillText(!aWins[i] ? 'WIN' : '', W / 2 + 70, y + 5);
+  });
+  $('sectionCContent').innerHTML = `<p><strong>Verdict: ${winner}</strong></p>
+    <p>${a.name}: Gain ${a.gain} dBi, SWR ${a.swr}:1, F/B ${a.fb} dB, BW ${a.bw} kHz</p>
+    <p>${b.name}: Gain ${b.gain} dBi, SWR ${b.swr}:1, F/B ${b.fb} dB, BW ${b.bw} kHz</p>
+    <p style="margin-top:6px;opacity:.7">Score based on 6 categories: gain, SWR, front-to-back, bandwidth, weight, cost.</p>`;
+}
+
+initShootoutApp();

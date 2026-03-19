@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Bug Sweeper — Workshop DIY</title>
+  <meta name="description" content="RF bug detector — scan frequencies to find hidden listening devices — Workshop-DIY educational web app." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Bug Sweeper — Workshop DIY" />
+  <meta property="og:description" content="RF bug detector. Scan frequencies to find hidden listening devices." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -72,22 +72,68 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">&#x1F50D;</span> <span data-i18n="mainSection">Bug Sweeper</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Scan frequencies to find hidden listening devices</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Spectrum Analyzer Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="spectrumCanvas" width="780" height="300" style="width:100%;display:block;background:#0a0a1a;cursor:crosshair;"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="scanBtn" class="primary"><span class="btn-icon">&#x1F4E1;</span> <span data-i18n="startScan">Start Scan</span></button>
+          <button id="sweepBtn"><span class="btn-icon">&#x1F9F9;</span> <span data-i18n="fullSweep">Full Sweep</span></button>
+          <div style="flex:1;"></div>
+          <label style="font-size:.8rem;color:var(--text-muted);" data-i18n="freqRange">Frequency Range:</label>
+          <select id="bandSelect" style="padding:4px 8px;border-radius:6px;background:var(--card-bg);color:var(--text);border:1px solid var(--border);font-size:.8rem;">
+            <option value="wifi">WiFi 2.4 GHz</option>
+            <option value="wifi5">WiFi 5 GHz</option>
+            <option value="bluetooth">Bluetooth</option>
+            <option value="gsm">GSM 900 MHz</option>
+            <option value="ism">ISM 433 MHz</option>
+            <option value="uhf">UHF 300-3000 MHz</option>
+          </select>
+        </div>
+
+        <!-- Signal Indicators -->
+        <div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F534; <span data-i18n="threatLevel">Threat Level</span></div>
+            <div id="threatMeter" style="height:24px;border-radius:12px;background:rgba(0,0,0,.3);margin:8px 0;overflow:hidden;">
+              <div id="threatFill" style="height:100%;width:0%;border-radius:12px;transition:width .3s,background .3s;background:#22c55e;"></div>
+            </div>
+            <div id="threatText" style="font-family:var(--font-h);font-size:1rem;text-align:center;color:#22c55e;" data-i18n="clear_status">CLEAR</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4CA; <span data-i18n="peakSignal">Peak Signal</span></div>
+            <div id="peakFreq" style="font-family:var(--font-h);font-size:1.4rem;text-align:center;color:var(--accent);margin:8px 0;">--- MHz</div>
+            <div id="peakPower" style="font-family:var(--font-h);font-size:.85rem;text-align:center;color:var(--text-muted);">--- dBm</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4CB; <span data-i18n="scanStatus">Scan Status</span></div>
+            <div id="scanInfo" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- SECTION A — Detected Bugs -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F41B;</span> <span data-i18n="sectionA">Detected Bugs</span></summary>
+        <div class="card">
+          <div id="bugList" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="bugHint">Suspicious signals will appear here during scanning.</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- SECTION B — RF Bug Types Database -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">RF Bug Types</span></summary>
+        <div class="card">
+          <div id="bugDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
       </details>
 
     </div>

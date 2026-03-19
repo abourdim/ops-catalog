@@ -170,6 +170,13 @@
     .meter { height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:4px 0; }
     .meter-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .3s; }
     .compass { position:relative; width:200px; height:200px; margin:0 auto; }
+    .tombstone { background:var(--surface); border:2px solid var(--error); border-radius:var(--radius); padding:12px; margin:6px 0; position:relative; overflow:hidden; }
+    .tombstone::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--error), transparent); }
+    .tombstone .fail-icon { font-size:1.5rem; float:left; margin-right:8px; }
+    .tombstone .fail-name { font-family:'Orbitron',monospace; color:var(--error); font-size:.85rem; }
+    .tombstone .fail-reason { font-size:.72rem; opacity:.7; margin-top:4px; }
+    .fail-badge { display:inline-block; background:var(--error); color:#fff; padding:1px 6px; border-radius:8px; font-size:.6rem; font-weight:700; }
+    .swr-bad { color:var(--error); font-family:'Orbitron',monospace; font-weight:700; }
   </style>
 </head>
 <body>
@@ -177,7 +184,7 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🪦 Antenna Graveyard</div>
+      <div class="splash-sub" data-i18n="subtitle">\u{1FAA6} Failed antenna designs museum</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -188,7 +195,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Antenna Graveyard</h1><div class="subtitle" data-i18n="subtitle">🪦 Document failed and retired experiments</div></div>
+          <div><h1 data-i18n="title">Antenna Graveyard</h1><div class="subtitle" data-i18n="subtitle">\u{1FAA6} Failed antenna designs museum. Learn from mistakes</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -204,8 +211,8 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🪦</span> <span data-i18n="mainSection">Experiment Archive</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Record antenna experiments with photos, notes, and lessons</span> <span class="version-tag">v1.0</span></div>
+            <div class="card-title"><span class="icon">\u{1FAA6}</span> <span data-i18n="mainSection">Failure Museum</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Browse and document failed antenna experiments</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
         <div id="mainControls"></div>
@@ -215,13 +222,13 @@
 
       <!-- SECTION A -->
       <details class="collapsible">
-        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Experiment List</span></summary>
+        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Failed Designs Gallery</span></summary>
         <div class="card"><div id="sectionAContent"></div><canvas id="canvasA" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION B -->
       <details class="collapsible">
-        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Statistics</span></summary>
+        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Failure Analysis</span></summary>
         <div class="card"><div id="sectionBContent"></div><canvas id="canvasB" width="400" height="200"></canvas></div>
       </details>
 

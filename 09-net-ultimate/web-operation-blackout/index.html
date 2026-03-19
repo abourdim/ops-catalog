@@ -28,8 +28,8 @@
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-title">Operation Blackout</div>
+      <div class="splash-sub" data-i18n="subtitle">⚡ Detect · 🔧 Respond · 🔄 Restore services</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">Operation Blackout</h1>
+            <div class="subtitle" data-i18n="subtitle">⚡ Detect · 🔧 Respond · 🔄 Restore services</div>
           </div>
         </div>
 
@@ -68,26 +68,100 @@
         </div>
       </div>
 
-      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+      <!-- ═══════════════════ MAIN CARD — Incident Dashboard ═══════════════════ -->
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">⚡</span> <span data-i18n="mainSection">Incident Dashboard</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Monitor and respond to network outage scenarios</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Service Status Grid -->
+        <div class="control-section" style="margin-bottom:10px">
+          <div class="section-header">
+            <div class="section-title"><span class="icon">🖥️</span> <span data-i18n="servicesTitle">Service Status</span></div>
+          </div>
+          <div id="serviceGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px"></div>
+        </div>
+
+        <!-- Scenario Controls -->
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <button id="triggerOutageBtn" class="primary" style="flex:1;min-width:120px"><span class="btn-icon">⚡</span> <span data-i18n="triggerOutage">Trigger Outage</span></button>
+          <button id="restoreAllBtn" style="flex:1;min-width:100px"><span class="btn-icon">🔄</span> <span data-i18n="restoreAll">Restore All</span></button>
+          <button id="autoScenarioBtn" style="flex:1;min-width:100px"><span class="btn-icon">🎲</span> <span data-i18n="randomScenario">Random Scenario</span></button>
+        </div>
+
+        <!-- Outage Timeline Canvas -->
+        <div class="control-section" style="margin-bottom:10px">
+          <div class="section-header">
+            <div class="section-title"><span class="icon">📈</span> <span data-i18n="timelineTitle">Outage Timeline</span></div>
+          </div>
+          <canvas id="outageCanvas" width="700" height="180" style="width:100%;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3)"></canvas>
+        </div>
+
+        <!-- Overall Health -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <div style="flex:1;min-width:100px;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="uptime">Uptime</div>
+            <div id="uptimeDisplay" style="font-size:1.5rem;font-weight:bold;color:#4CAF50">100%</div>
+          </div>
+          <div style="flex:1;min-width:100px;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="mttr">MTTR</div>
+            <div id="mttrDisplay" style="font-size:1.5rem;font-weight:bold;color:#FF9800">0s</div>
+          </div>
+          <div style="flex:1;min-width:100px;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="incidents">Incidents</div>
+            <div id="incidentCount" style="font-size:1.5rem;font-weight:bold;color:#f44336">0</div>
+          </div>
+          <div style="flex:1;min-width:100px;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);text-align:center">
+            <div style="font-size:.7rem;opacity:.5" data-i18n="severity">Severity</div>
+            <div id="severityDisplay" style="font-size:1.2rem;font-weight:bold;color:#4CAF50">Normal</div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Incident Response ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🔧</span> <span data-i18n="sectionA">Incident Response</span></summary>
+        <div class="card">
+          <div class="control-section" style="margin-bottom:10px">
+            <div class="section-header">
+              <div class="section-title"><span class="icon">📋</span> <span data-i18n="incidentLog">Incident Log</span></div>
+            </div>
+            <div id="incidentTimeline" style="max-height:250px;overflow-y:auto;padding:8px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);font-family:monospace;font-size:.75rem"></div>
+          </div>
+
+          <!-- Response Actions -->
+          <div class="control-section">
+            <div class="section-header">
+              <div class="section-title"><span class="icon">🛠️</span> <span data-i18n="responseActions">Response Actions</span></div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <button class="response-btn btn-sm" data-action="restart"><span class="btn-icon">🔄</span> Restart Service</button>
+              <button class="response-btn btn-sm" data-action="failover"><span class="btn-icon">🔀</span> Failover</button>
+              <button class="response-btn btn-sm" data-action="rollback"><span class="btn-icon">⏪</span> Rollback</button>
+              <button class="response-btn btn-sm" data-action="scale"><span class="btn-icon">📈</span> Scale Up</button>
+              <button class="response-btn btn-sm" data-action="isolate"><span class="btn-icon">🔒</span> Isolate</button>
+              <button class="response-btn btn-sm" data-action="dns"><span class="btn-icon">🌐</span> DNS Redirect</button>
+            </div>
+            <div id="responseResult" style="margin-top:8px;padding:8px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.2);font-size:.8rem;min-height:40px"></div>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Network Topology ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🗺️</span> <span data-i18n="sectionB">Infrastructure Map</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <div class="section-header">
+              <div class="section-title"><span class="icon">🌐</span> <span data-i18n="infraTitle">Infrastructure Topology</span></div>
+              <div class="section-subtitle hint" data-i18n="infraHint">Click on a node to view details or trigger actions</div>
+            </div>
+            <canvas id="infraCanvas" width="700" height="400" style="width:100%;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3)"></canvas>
+          </div>
+        </div>
       </details>
 
     </div>

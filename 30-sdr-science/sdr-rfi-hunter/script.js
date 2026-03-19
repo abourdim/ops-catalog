@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR RFI Hunter', subtitle: '🔍 RFI Hunter — Locate Interference',
+    disconnected: 'Disconnected', connected: 'Hunting',
+    mainSection: 'RFI Hunter', mainDesc: 'Identify and locate radio frequency interference sources',
+    sectionA: 'RFI Analysis', sectionB: 'RFI Theory',
+    started: '▶ Hunting RFI sources', stopped: '⏹ Hunt stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔍 RFI Hunter ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +101,11 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Chasseur RFI SDR', subtitle: '🔍 Chasseur RFI — Localiser les Interférences',
+    disconnected: 'Déconnecté', connected: 'Chasse',
+    mainSection: 'Chasseur RFI', mainDesc: 'Identifier et localiser les sources d\'interférences',
+    sectionA: 'Analyse RFI', sectionB: 'Théorie RFI',
+    started: '▶ Chasse aux RFI', stopped: '⏹ Chasse arrêtée',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +127,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔍 Chasseur RFI prêt!',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +139,11 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'صياد التداخل SDR', subtitle: '🔍 صياد التداخل — تحديد مصادر التداخل',
+    disconnected: 'غير متصل', connected: 'بحث',
+    mainSection: 'صياد التداخل', mainDesc: 'تحديد وتوطين مصادر التداخل الراديوي',
+    sectionA: 'تحليل التداخل', sectionB: 'نظرية التداخل',
+    started: '▶ البحث عن التداخل', stopped: '⏹ توقف البحث',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +165,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔍 صياد التداخل جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1332,6 +1335,17 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ RFI HUNTER SIMULATION ═══════ */
+let rRunning=false,rFrame=null,rfiSrc=[];
+const RFI_TYPES=['Power Line','SMPS','LED Driver','Motor','USB Hub','HDMI Cable','Solar Inverter','Plasma TV'];
+function genRFI(range){const bins=256,s=new Float32Array(bins);const fMin=range==='hf'?1:range==='vhf'?30:300,fMax=range==='hf'?30:range==='vhf'?300:1000;for(let i=0;i<bins;i++)s[i]=-110+(Math.random()-.5)*4;if(Math.random()<0.15){const src={freq:fMin+Math.random()*(fMax-fMin),type:RFI_TYPES[Math.floor(Math.random()*8)],level:-40-Math.random()*30};rfiSrc.push(src);if(rfiSrc.length>20)rfiSrc.shift();const bin=Math.floor((src.freq-fMin)/(fMax-fMin)*bins);for(let h=0;h<5;h++){const hb=(bin*(h+1))%bins;s[hb]+=40-h*8;}}for(const src of rfiSrc){const bin=Math.floor((src.freq-fMin)/(fMax-fMin)*bins);if(bin>=0&&bin<bins)s[bin]=Math.max(s[bin],src.level+Math.random()*3);}return{spec:s,fMin,fMax};}
+function drawRFI(spec,fMin,fMax){const c=$('rfiCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#d44';ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+120)/80*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();rfiSrc.forEach(src=>{const x=(src.freq-fMin)/(fMax-fMin)*w;ctx.fillStyle='#f84';ctx.beginPath();ctx.arc(x,30,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='8px monospace';ctx.fillText(src.type,x-20,22);});ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('RFI '+fMin+'-'+fMax+' MHz',4,h-4);}
+function drawRFIMap(){const c=$('rfiMapCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='rgba(10,10,26,0.2)';ctx.fillRect(0,0,w,h);const cx=w/2,cy=h/2;ctx.strokeStyle='#223';for(let r=20;r<h/2;r+=20){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();}rfiSrc.slice(-8).forEach((src,i)=>{const a=i/8*Math.PI*2,d=20+Math.random()*40,x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d;ctx.fillStyle='#f44';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#aaa';ctx.font='8px monospace';ctx.fillText(src.type,x+8,y+3);});}
+function updateRFIStats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('rfiCountVal',rfiSrc.length);if(rfiSrc.length>0){const s=rfiSrc[rfiSrc.length-1];el('strongestVal',s.freq.toFixed(1)+' MHz');el('rfiTypeVal',s.type);el('rfiLevelVal',s.level.toFixed(0)+' dBm');}}
+function rfiLoop(){if(!rRunning)return;const range=$('rangeSelect')?$('rangeSelect').value:'hf';const{spec,fMin,fMax}=genRFI(range);drawRFI(spec,fMin,fMax);drawRFIMap();updateRFIStats();rFrame=requestAnimationFrame(rfiLoop);}
+function startRFI(){if(rRunning)return;rRunning=true;rfiSrc=[];setStatus(true);log(LANG[currentLang].started,'success');rfiLoop();}
+function stopRFI(){rRunning=false;if(rFrame)cancelAnimationFrame(rFrame);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1456,10 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startRFI;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopRFI;
+  const sSlider=$('sensSlider');if(sSlider)sSlider.oninput=function(){$('sensVal').textContent=this.value+' dB';};
 
   log(LANG[currentLang].ready, 'success');
 }

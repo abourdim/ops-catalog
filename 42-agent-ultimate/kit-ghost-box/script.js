@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Ghost Box', subtitle: '👻 Sweep frequencies, capture patterns',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Ghost Box', mainDesc: 'Sweep frequencies, capture electromagnetic patterns',
+    sectionA: 'Frequency Sweeper', sectionB: 'Pattern Capture', sectionC: 'EVP Analyzer',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '👻 Ghost box ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Boîte Fantôme', subtitle: '👻 Balayage de fréquences et capture de motifs',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '👻 Boîte fantôme prête !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'صندوق الأشباح', subtitle: '👻 مسح الترددات والتقاط الأنماط',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '👻 صندوق الأشباح جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,89 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initGhostBox();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ GHOST BOX SIMULATION ═══════ */
+let gbState = { active: false, freq: 88.0, sweeping: false, patterns: [], uptime: 0, uptimeTimer: null, animFrame: null };
+
+function initGhostBox() { setStatus(false); drawGbCanvas(); }
+
+function gbActivate() {
+  if (gbState.active) { gbState.active = false; setStatus(false); clearInterval(gbState.uptimeTimer); if (gbState.animFrame) cancelAnimationFrame(gbState.animFrame); log('👻 Ghost box off', 'info'); return; }
+  gbState.active = true; gbState.uptime = 0; setStatus(true); log('👻 Ghost box activated!', 'success');
+  gbState.uptimeTimer = setInterval(() => { gbState.uptime++; const s4 = $('gbS4'); if (s4) s4.textContent = String(Math.floor(gbState.uptime/60)).padStart(2,'0')+':'+String(gbState.uptime%60).padStart(2,'0'); }, 1000);
+  animateGb();
+}
+
+function animateGb() {
+  if (!gbState.active) return;
+  if (gbState.sweeping) { gbState.freq = 88 + ((gbState.freq - 88 + 0.3) % (108 - 88)); }
+  const s2 = $('gbS2'); if (s2) s2.textContent = gbState.freq.toFixed(1) + ' MHz';
+  drawGbCanvas();
+  gbState.animFrame = requestAnimationFrame(animateGb);
+}
+
+function gbAction1() {
+  if (!gbState.active) { log('Activate first!', 'error'); return; }
+  gbState.sweeping = !gbState.sweeping;
+  log(gbState.sweeping ? '📻 Sweeping frequencies...' : '📻 Sweep paused', 'info');
+  const s1 = $('gbS1'); if (s1) s1.textContent = gbState.sweeping ? 'SWEEPING' : 'ACTIVE';
+  if (gbState.sweeping) {
+    setTimeout(() => {
+      if (Math.random() > 0.5) {
+        const pattern = ['Alpha','Beta','Gamma','Delta','Echo'][Math.floor(Math.random()*5)];
+        gbState.patterns.push({ pattern, freq: gbState.freq.toFixed(1), time: new Date().toLocaleTimeString() });
+        const s3 = $('gbS3'); if (s3) s3.textContent = gbState.patterns.length;
+        log(`👻 Pattern captured: ${pattern} @ ${gbState.freq.toFixed(1)} MHz`, 'success');
+        playSound('success');
+      }
+    }, 3000);
+  }
+}
+
+function gbEmergency() { gbState.active = false; gbState.sweeping = false; setStatus(false); clearInterval(gbState.uptimeTimer); if (gbState.animFrame) cancelAnimationFrame(gbState.animFrame); log('🚨 Emergency shutdown!', 'error'); playSound('error'); }
+
+function gbSecAAction() { gbAction1(); }
+function gbSecAReset() { gbState.freq = 88.0; gbState.sweeping = false; log('🔄 Frequency reset', 'info'); }
+function gbSecBAction() {
+  const el = $('gbSecBContent');
+  if (el) el.innerHTML = gbState.patterns.map(p => `[${p.time}] Pattern: ${p.pattern} @ ${p.freq} MHz`).join('<br>') || 'No patterns captured.';
+}
+function gbSecBReset() { gbState.patterns = []; const s3 = $('gbS3'); if (s3) s3.textContent = '0'; log('🧹 Patterns cleared', 'info'); }
+function gbSecCAction() {
+  if (gbState.patterns.length === 0) { log('No patterns to analyze!', 'error'); return; }
+  const last = gbState.patterns[gbState.patterns.length - 1];
+  log(`🔬 EVP Analysis: Pattern ${last.pattern} shows ${['coherent','random','periodic','anomalous'][Math.floor(Math.random()*4)]} structure`, 'success');
+}
+function gbSecCReset() { log('🔄 Analyzer reset', 'info'); }
+
+function drawGbCanvas() {
+  const canvas = $('gbCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (!gbState.active) return;
+  const t = Date.now() / 1000;
+  // Waveform
+  ctx.strokeStyle = accent; ctx.lineWidth = 2; ctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const noise = gbState.sweeping ? (Math.sin(x*0.1+t*5)*Math.sin(x*0.03+gbState.freq)*0.6 + (Math.random()-0.5)*0.3) : Math.sin(x*0.05+t*2)*0.2;
+    const y = h/2 + noise * h * 0.4;
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  // Frequency bar
+  ctx.fillStyle = accent; ctx.globalAlpha = 0.3;
+  const freqPos = ((gbState.freq - 88) / 20) * w;
+  ctx.fillRect(freqPos - 2, 0, 4, h); ctx.globalAlpha = 1;
+  ctx.fillStyle = '#fff'; ctx.font = '10px Orbitron, monospace';
+  ctx.fillText(`${gbState.freq.toFixed(1)} MHz`, 5, 15);
+}

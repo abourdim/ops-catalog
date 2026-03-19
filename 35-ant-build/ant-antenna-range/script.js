@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Antenna Test Range', subtitle: '📡 Virtual antenna test range. Measure patterns in simulation',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Test Range', mainDesc: 'Set up virtual range parameters and measure antenna patterns',
+    sectionA: 'Radiation Pattern', sectionB: 'Gain & Directivity', sectionC: 'Range Configuration',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Antenna Test Range?', faq_a1: 'A virtual antenna test range simulator. Measure radiation patterns, gain, and directivity without physical equipment.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Select an antenna type and set the test frequency.',
+    howto_2: 'Click Measure to run the virtual range test.',
+    howto_3: 'View 2D/3D radiation patterns and gain charts.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark and 2 light Islamic themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual: English, Français, العربية with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays in your browser.',
+    working: 'Measuring…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Test range ready — begin measurement!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,32 +100,32 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Champ de Test', subtitle: '📡 Champ de test virtuel. Mesurez les diagrammes en simulation',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Champ de Test', mainDesc: 'Configurez les paramètres et mesurez les diagrammes',
+    sectionA: 'Diagramme de Rayonnement', sectionB: 'Gain & Directivité', sectionC: 'Configuration du Champ',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Champ de Test ?', faq_a1: 'Un simulateur de champ de test virtuel pour mesurer les diagrammes de rayonnement sans équipement physique.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Sélectionne un type d\'antenne et la fréquence de test.',
+    howto_2: 'Clique sur Mesurer pour lancer le test virtuel.',
+    howto_3: 'Consulte les diagrammes de rayonnement 2D/3D.',
     howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Données locales uniquement.',
+    working: 'Mesure en cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Champ de test prêt — lancez la mesure !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,32 +137,32 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'ميدان اختبار الهوائيات', subtitle: '📡 ميدان اختبار افتراضي. قِس الأنماط بالمحاكاة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'ميدان الاختبار', mainDesc: 'اضبط معاملات الميدان الافتراضي وقِس أنماط الهوائي',
+    sectionA: 'نمط الإشعاع', sectionB: 'الكسب والتوجيه', sectionC: 'إعدادات الميدان',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
+    faq_q1: 'ما هو ميدان اختبار الهوائيات؟', faq_a1: 'محاكي ميدان اختبار افتراضي. قِس أنماط الإشعاع والكسب والتوجيه بدون معدات فعلية.',
+    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا.',
+    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل RTL تلقائيًا.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'اختر نوع الهوائي واضبط تردد الاختبار.',
+    howto_2: 'انقر على قياس لتشغيل اختبار الميدان الافتراضي.',
+    howto_3: 'اعرض أنماط الإشعاع ثنائية وثلاثية الأبعاد.',
     howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات تبقى في متصفحك.',
+    working: 'جارٍ القياس…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 ميدان الاختبار جاهز — ابدأ القياس!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,203 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ ANTENNA TEST RANGE — SIMULATION ═══════ */
+
+const RANGE_ANTENNAS = [
+  { name: 'Half-Wave Dipole', gain: 2.15, bw3db: 78, type: 'dipole', beamwidth: 78 },
+  { name: '3-Element Yagi', gain: 7.5, bw3db: 55, type: 'yagi', beamwidth: 55 },
+  { name: '5-Element Yagi', gain: 10.2, bw3db: 38, type: 'yagi', beamwidth: 38 },
+  { name: 'Ground Plane', gain: 2.5, bw3db: 360, type: 'vertical', beamwidth: 360 },
+  { name: 'Quad Loop', gain: 3.3, bw3db: 70, type: 'quad', beamwidth: 70 },
+  { name: 'Collinear 2x', gain: 5.0, bw3db: 360, type: 'collinear', beamwidth: 360 },
+  { name: 'Helix (RHCP)', gain: 12.0, bw3db: 30, type: 'helix', beamwidth: 30 },
+  { name: 'Patch Antenna', gain: 8.5, bw3db: 65, type: 'patch', beamwidth: 65 }
+];
+
+let rangeAntIdx = 0, rangeFreq = 145, rangeAngle = 0, rangeAnimId = null;
+
+function initRangeApp() {
+  const mc = $('mainControls');
+  mc.innerHTML = `
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Antenna Under Test</label>
+        <select id="rangeAntSelect">${RANGE_ANTENNAS.map((a,i) => `<option value="${i}">${a.name} (${a.gain} dBi)</option>`).join('')}</select>
+      </div>
+      <div><label>Test Frequency (MHz)</label><input type="number" id="rangeFreqInput" value="145" min="1" max="3000" step="0.1" /></div>
+    </div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Rotation Speed</label><input type="range" id="rangeSpeed" min="1" max="10" value="3" /></div>
+      <div><label>Range Distance (m)</label><input type="number" id="rangeDist" value="100" min="10" max="10000" /></div>
+    </div>
+    <button class="primary" id="measureBtn" style="width:100%">\u{1F4E1} Start Measurement</button>`;
+  $('measureBtn').addEventListener('click', runRangeMeasurement);
+  $('rangeAntSelect').addEventListener('change', e => { rangeAntIdx = +e.target.value; });
+  $('rangeFreqInput').addEventListener('change', e => { rangeFreq = +e.target.value; });
+  drawRangeIdle();
+}
+
+function runRangeMeasurement() {
+  playSound('click');
+  const ant = RANGE_ANTENNAS[rangeAntIdx];
+  rangeFreq = +($('rangeFreqInput').value);
+  log(`Measuring: ${ant.name} at ${rangeFreq} MHz`, 'tx');
+  if (rangeAnimId) cancelAnimationFrame(rangeAnimId);
+  rangeAngle = 0;
+  animateRange(ant);
+}
+
+function animateRange(ant) {
+  const speed = +($('rangeSpeed').value);
+  rangeAngle += speed * 0.5;
+  if (rangeAngle >= 360) {
+    rangeAngle = 360;
+    drawRangePattern(ant, rangeAngle);
+    drawGainChart(ant);
+    showRangeResults(ant);
+    log(`Measurement complete: Peak ${ant.gain} dBi, Beamwidth ${ant.beamwidth}\u00B0`, 'success');
+    playSound('success');
+    return;
+  }
+  drawRangePattern(ant, rangeAngle);
+  rangeAnimId = requestAnimationFrame(() => animateRange(ant));
+}
+
+function drawRangeIdle() {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#1a3a1a'; ctx.lineWidth = 0.5;
+  for (let i = 0; i < W; i += 20) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke(); }
+  for (let i = 0; i < H; i += 20) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke(); }
+  ctx.font = '14px Orbitron'; ctx.fillStyle = '#33ff33'; ctx.textAlign = 'center';
+  ctx.fillText('VIRTUAL TEST RANGE', W / 2, H / 2 - 10);
+  ctx.font = '10px Tajawal'; ctx.fillStyle = '#888';
+  ctx.fillText('Select antenna and click Measure to begin turntable sweep', W / 2, H / 2 + 15);
+}
+
+function drawRangePattern(ant, maxAngle) {
+  const cv = $('mainCanvas'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, cx = W / 2, cy = H / 2, R = Math.min(cx, cy) - 30;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#1a3a1a'; ctx.lineWidth = 0.5;
+  for (let r = R / 5; r <= R; r += R / 5) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+  }
+  for (let a = 0; a < 360; a += 30) {
+    const rad = a * Math.PI / 180;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(rad), cy + R * Math.sin(rad)); ctx.stroke();
+  }
+  ctx.font = '8px Orbitron'; ctx.fillStyle = '#555'; ctx.textAlign = 'center';
+  for (let a = 0; a < 360; a += 30) {
+    const rad = a * Math.PI / 180;
+    ctx.fillText(`${a}\u00B0`, cx + (R + 14) * Math.cos(rad), cy + (R + 14) * Math.sin(rad) + 3);
+  }
+  const bw = ant.beamwidth * Math.PI / 180;
+  ctx.strokeStyle = '#33ff33'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let a = 0; a <= maxAngle; a++) {
+    const rad = a * Math.PI / 180;
+    let pattern;
+    if (ant.beamwidth >= 360) {
+      pattern = 0.7 + 0.3 * Math.sin(rad * 0.5);
+    } else {
+      const off = Math.abs(((a + 180) % 360) - 180) * Math.PI / 180;
+      pattern = Math.max(0.05, Math.pow(Math.cos(Math.min(off / (bw / 2), Math.PI / 2)), 2));
+    }
+    const px = cx + R * pattern * Math.cos(rad);
+    const py = cy + R * pattern * Math.sin(rad);
+    a === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  ctx.fillStyle = '#33ff3322';
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  for (let a = 0; a <= maxAngle; a++) {
+    const rad = a * Math.PI / 180;
+    let pattern;
+    if (ant.beamwidth >= 360) { pattern = 0.7 + 0.3 * Math.sin(rad * 0.5); }
+    else { const off = Math.abs(((a + 180) % 360) - 180) * Math.PI / 180; pattern = Math.max(0.05, Math.pow(Math.cos(Math.min(off / (bw / 2), Math.PI / 2)), 2)); }
+    ctx.lineTo(cx + R * pattern * Math.cos(rad), cy + R * pattern * Math.sin(rad));
+  }
+  ctx.closePath(); ctx.fill();
+  const sweepRad = maxAngle * Math.PI / 180;
+  ctx.strokeStyle = '#d4a03c'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(cx, cy);
+  ctx.lineTo(cx + R * 1.05 * Math.cos(sweepRad), cy + R * 1.05 * Math.sin(sweepRad)); ctx.stroke();
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'left';
+  ctx.fillText(`${ant.name} | ${rangeFreq} MHz | ${Math.floor(maxAngle)}\u00B0`, 10, 15);
+}
+
+function drawGainChart(ant) {
+  const cv = $('canvasA'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, pad = 40, gW = W - pad * 2, gH = H - pad * 2;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 5; i++) {
+    const y = pad + gH - (i / 5) * gH;
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+    ctx.font = '8px Orbitron'; ctx.fillStyle = '#666'; ctx.textAlign = 'right';
+    ctx.fillText((-10 + i * 5).toFixed(0) + ' dBi', pad - 4, y + 3);
+  }
+  const bw = ant.beamwidth * Math.PI / 180;
+  ctx.strokeStyle = '#33ff33'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i <= gW; i++) {
+    const angle = (i / gW) * 360;
+    let pattern;
+    if (ant.beamwidth >= 360) { pattern = 0.7 + 0.3 * Math.sin(angle * Math.PI / 180 * 0.5); }
+    else { const off = Math.abs(((angle + 180) % 360) - 180) * Math.PI / 180; pattern = Math.max(0.05, Math.pow(Math.cos(Math.min(off / (bw / 2), Math.PI / 2)), 2)); }
+    const dbi = ant.gain * pattern - 10 * (1 - pattern);
+    const y = pad + gH - ((dbi + 10) / 25) * gH;
+    i === 0 ? ctx.moveTo(pad + i, y) : ctx.lineTo(pad + i, y);
+  }
+  ctx.stroke();
+  ctx.font = '8px Orbitron'; ctx.fillStyle = '#888'; ctx.textAlign = 'center';
+  for (let a = 0; a <= 360; a += 60) {
+    const x = pad + (a / 360) * gW;
+    ctx.fillText(`${a}\u00B0`, x, H - pad + 15);
+  }
+  ctx.fillStyle = '#d4a03c'; ctx.font = '10px Orbitron';
+  ctx.fillText(`Gain vs Angle \u2014 ${ant.name}`, W / 2, 15);
+}
+
+function showRangeResults(ant) {
+  const dist = +($('rangeDist').value);
+  const fsl = 20 * Math.log10(dist) + 20 * Math.log10(rangeFreq) + 32.44;
+  const rb = $('resultBox');
+  rb.style.display = 'block';
+  rb.innerHTML = `
+    <div class="result-row"><span class="result-label">Antenna</span><span class="result-value">${ant.name}</span></div>
+    <div class="result-row"><span class="result-label">Peak Gain</span><span class="result-value">${ant.gain} dBi</span></div>
+    <div class="result-row"><span class="result-label">3dB Beamwidth</span><span class="result-value">${ant.beamwidth}\u00B0</span></div>
+    <div class="result-row"><span class="result-label">Test Freq</span><span class="result-value">${rangeFreq} MHz</span></div>
+    <div class="result-row"><span class="result-label">Range Dist</span><span class="result-value">${dist} m</span></div>
+    <div class="result-row"><span class="result-label">Free Space Loss</span><span class="result-value">${fsl.toFixed(1)} dB</span></div>`;
+  const cv = $('canvasB'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, pad = 40, gW = W - pad * 2, gH = H - pad * 2;
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, W, H);
+  const metrics = RANGE_ANTENNAS.map(a => a.gain);
+  const maxG = Math.max(...metrics);
+  ctx.font = '10px Orbitron'; ctx.fillStyle = '#d4a03c'; ctx.textAlign = 'center';
+  ctx.fillText('Gain Comparison (dBi)', W / 2, 15);
+  RANGE_ANTENNAS.forEach((a, i) => {
+    const bw = gW / RANGE_ANTENNAS.length;
+    const x = pad + i * bw;
+    const h = (a.gain / maxG) * gH * 0.8;
+    ctx.fillStyle = i === rangeAntIdx ? '#33ff33' : '#335533';
+    ctx.fillRect(x + 4, pad + gH - h, bw - 8, h);
+    ctx.fillStyle = '#aaa'; ctx.font = '7px Tajawal'; ctx.textAlign = 'center';
+    ctx.save(); ctx.translate(x + bw / 2, H - 5); ctx.rotate(-0.4);
+    ctx.fillText(a.name.substring(0, 10), 0, 0); ctx.restore();
+    ctx.fillStyle = '#fff'; ctx.font = '8px Orbitron';
+    ctx.fillText(a.gain.toFixed(1), x + bw / 2, pad + gH - h - 5);
+  });
+  $('sectionCContent').innerHTML = `<p><strong>Range Configuration</strong></p>
+    <p>Distance: ${dist}m | Frequency: ${rangeFreq} MHz | FSL: ${fsl.toFixed(1)} dB</p>
+    <p>Antenna: ${ant.name} | Type: ${ant.type} | Beamwidth: ${ant.beamwidth}\u00B0</p>
+    <p style="margin-top:6px;opacity:.7">Far-field measurement conditions assumed. Pattern measured in 1\u00B0 increments over full 360\u00B0 azimuth sweep.</p>`;
+}
+
+initRangeApp();

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>SKYWARN Station — Workshop DIY</title>
+  <meta name="description" content="SKYWARN weather spotter station via ham radio." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="SKYWARN Station — Workshop DIY" />
+  <meta property="og:description" content="SKYWARN weather spotter station via ham radio." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -29,7 +29,7 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-sub" data-i18n="subtitle">🌪️ Weather spotter station via ham radio</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">SKYWARN Station</h1>
+            <div class="subtitle" data-i18n="subtitle">🌪️ Weather spotter station via ham radio</div>
           </div>
         </div>
 
@@ -68,26 +68,37 @@
         </div>
       </div>
 
-      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
       <div class="card" id="mainCard">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
-          </div>
-        </div>
+        <div class="card-header"><div>
+            <div class="card-title"><span class="icon">🌪️</span> <span data-i18n="mainSection">SKYWARN Station</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">SKYWARN weather spotter station via ham radio</span> <span class="version-tag">v1.0</span></div>
+        </div></div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card"><h3 data-i18n="theoryTitle">SKYWARN Theory</h3><p data-i18n="theoryDesc">SKYWARN is a NWS program where trained spotters report severe weather via ham radio nets on VHF/UHF repeaters.</p></div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card"><div class="control-section">
+          <div style="display:flex;gap:8px">
+            <button id="startBtn" class="btn-sm primary" style="flex:1"><span data-i18n="start">Activate Net</span></button>
+            <button id="stopBtn" class="btn-sm" style="flex:1"><span data-i18n="stop">Close Net</span></button>
+          </div>
+        </div></div>
+      </details>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">🌩️</span> <span data-i18n="sectionC">Simulation</span></summary>
+        <div class="card">
+          <canvas id="skywarnCanvas" width="900" height="450" style="width:100%;height:320px;background:#0a1628;border-radius:8px;display:block"></canvas>
+          <div style="display:flex;justify-content:space-around;margin-top:6px;font-size:.82rem">
+            <span>Reports: <strong id="reportDisp" style="color:var(--accent)">0</strong></span>
+            <span>Alerts: <strong id="alertDisp" style="color:#ef4444">0</strong></span>
+          </div>
+        </div>
       </details>
 
     </div>

@@ -1449,3 +1449,64 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"Meteor-M2 Decoder",subtitle:"🌍 Decode Meteor-M2 weather satellite images",mainSection:"Meteor-M2 Decoder",mainDesc:"Decode Meteor-M2 weather satellite images",sectionA:"Theory",sectionB:"Controls",sectionC:"Satellite Image",theoryTitle:"Meteor-M2 Satellite",theoryDesc:"Meteor-M2 is a Russian polar-orbiting weather satellite transmitting LRPT images at 137.100 MHz with 3-channel color imagery.",channelLabel:"Channel",decodeSpeed:"Decode Speed",start:"Start",stop:"Stop",snrLabel:"SNR (dB)",linesLabel:"Lines",qualLabel:"Quality",simStarted:"Decoding started",simStopped:"Decoding stopped",lineDecoded:"Line decoded"});
+Object.assign(LANG.fr, {title:"Decodeur Meteor-M2",subtitle:"🌍 Decoder les images du satellite meteo Meteor-M2",mainSection:"Decodeur Meteor-M2",mainDesc:"Decoder les images du satellite meteo Meteor-M2",sectionA:"Theorie",sectionB:"Controles",sectionC:"Image Satellite",theoryTitle:"Satellite Meteor-M2",theoryDesc:"Meteor-M2 est un satellite meteo russe en orbite polaire transmettant des images LRPT a 137.100 MHz.",channelLabel:"Canal",decodeSpeed:"Vitesse de decodage",start:"Demarrer",stop:"Arreter",snrLabel:"RSB (dB)",linesLabel:"Lignes",qualLabel:"Qualite",simStarted:"Decodage demarre",simStopped:"Decodage arrete",lineDecoded:"Ligne decodee"});
+Object.assign(LANG.ar, {title:"مفكك Meteor-M2",subtitle:"🌍 فك ترميز صور قمر الطقس Meteor-M2",mainSection:"مفكك Meteor-M2",mainDesc:"فك ترميز صور قمر الطقس",sectionA:"النظرية",sectionB:"التحكم",sectionC:"صورة القمر",theoryTitle:"قمر Meteor-M2",theoryDesc:"Meteor-M2 هو قمر صناعي روسي للطقس يرسل صور LRPT على 137.100 ميغاهرتز.",channelLabel:"القناة",decodeSpeed:"سرعة الفك",start:"بدء",stop:"ايقاف",snrLabel:"SNR (dB)",linesLabel:"الخطوط",qualLabel:"الجودة",simStarted:"بدا الفك",simStopped:"توقف الفك",lineDecoded:"تم فك خط"});
+setLanguage(currentLang);
+
+
+/* ═══════ METEOR-M2 SIM ═══════ */
+let m2Running=false,m2Anim=null,m2Line=0,m2Channel='vis';
+const imgC=$('imageCanvas'),imgX=imgC?imgC.getContext('2d'):null;
+
+function getPixelColor(x,y,ch){
+  // Simulate weather satellite imagery with clouds, ocean, land
+  const nx=x/800,ny=y/400;
+  const land=Math.sin(nx*12)*Math.cos(ny*8)*0.3+0.5;
+  const cloud=Math.sin(nx*20+ny*15+m2Line*0.05)*0.5+0.5;
+  const noise=Math.random()*20;
+  if(ch==='vis'){const v=Math.min(255,(land*80+cloud*150+noise)|0);return [v,v,v];}
+  if(ch==='ir1'){const v=Math.min(255,(cloud*200+noise)|0);return [0,v,v*0.5|0];}
+  if(ch==='ir2'){const t=Math.min(255,((1-cloud)*200+land*50+noise)|0);return [t,t*0.3|0,0];}
+  // RGB composite
+  const r=Math.min(255,(land*100+cloud*50+noise)|0);
+  const g=Math.min(255,(land*60+cloud*150+noise)|0);
+  const b=Math.min(255,(30+cloud*100+noise)|0);
+  return [r,g,b];
+}
+
+function decodeLine(){
+  if(!imgX||!m2Running)return;
+  const W=imgC.width,y=m2Line%imgC.height;
+  if(y===0&&m2Line>0){imgX.clearRect(0,0,W,imgC.height);}
+  const id=imgX.createImageData(W,1);
+  for(let x=0;x<W;x++){
+    const [r,g,b]=getPixelColor(x,y,m2Channel);
+    id.data[x*4]=r;id.data[x*4+1]=g;id.data[x*4+2]=b;id.data[x*4+3]=255;
+  }
+  imgX.putImageData(id,0,y);
+  m2Line++;
+  const lc=$('lineCount');if(lc)lc.textContent='Line: '+m2Line;
+  const lv=$('linesVal');if(lv)lv.textContent=m2Line;
+  const pf=$('progFill');if(pf)pf.style.width=((y/imgC.height)*100)+'%';
+  const snr=8+Math.random()*12;
+  const sv=$('snrVal');if(sv)sv.textContent=snr.toFixed(1);
+  const qual=70+Math.random()*25;
+  const qv=$('qualVal');if(qv)qv.textContent=qual.toFixed(0)+'%';
+  if(m2Line%50===0)log((LANG[currentLang].lineDecoded||'Line decoded')+' '+m2Line,'rx');
+  const speed=$('speedRange')?parseInt($('speedRange').value):5;
+  if(m2Running)m2Anim=setTimeout(decodeLine,200/speed);
+}
+
+function startM2(){if(m2Running)return;m2Running=true;log(LANG[currentLang].simStarted,'success');setStatus(true);decodeLine();}
+function stopM2(){m2Running=false;if(m2Anim)clearTimeout(m2Anim);log(LANG[currentLang].simStopped,'info');setStatus(false);}
+
+(function initMeteor(){
+  const sb=$('startBtn'),eb=$('stopBtn');
+  if(sb)sb.onclick=startM2;if(eb)eb.onclick=stopM2;
+  const ch=$('channelSelect');
+  if(ch)ch.addEventListener('change',()=>{m2Channel=ch.value;});
+})();

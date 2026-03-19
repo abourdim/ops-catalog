@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Solar Flare Monitor', subtitle: '☀️ Solar Flare Monitor — Detect Solar Bursts',
+    disconnected: 'Disconnected', connected: 'Monitoring',
+    mainSection: 'Solar Flare Monitor', mainDesc: 'Detect and classify solar radio bursts',
+    sectionA: 'Flare Statistics', sectionB: 'Solar Radio Science',
+    started: '▶ Monitoring solar activity', stopped: '⏹ Monitor stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '☀️ Solar Monitor ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +101,11 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Moniteur Éruptions Solaires', subtitle: '☀️ Moniteur d\'Éruptions Solaires',
+    disconnected: 'Déconnecté', connected: 'Surveillance',
+    mainSection: 'Moniteur Solaire', mainDesc: 'Détecter les sursauts radio solaires',
+    sectionA: 'Statistiques Éruptions', sectionB: 'Science Radio Solaire',
+    started: '▶ Surveillance solaire', stopped: '⏹ Surveillance arrêtée',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +127,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '☀️ Moniteur solaire prêt!',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +139,11 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'مراقب التوهجات الشمسية', subtitle: '☀️ مراقب التوهجات الشمسية',
+    disconnected: 'غير متصل', connected: 'مراقبة',
+    mainSection: 'مراقب التوهجات', mainDesc: 'رصد الانفجارات الراديوية الشمسية',
+    sectionA: 'إحصائيات التوهجات', sectionB: 'علوم الراديو الشمسي',
+    started: '▶ مراقبة النشاط الشمسي', stopped: '⏹ توقف المراقب',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +165,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '☀️ المراقب الشمسي جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1332,6 +1335,17 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ SOLAR FLARE SIMULATION ═══════ */
+let sfRun=false,sfFr=null,sfBC=0,sfHist=[];
+const BTYPES=['Type I','Type II','Type III','Type IV','Quiet'];
+function genSolar(freq,gain){const bins=256,s=new Float32Array(bins);for(let i=0;i<bins;i++)s[i]=-90+(Math.random()-.5)*6+(50-gain)*0.3;let bt='Quiet';if(Math.random()<0.08){sfBC++;bt=BTYPES[Math.floor(Math.random()*4)];const c=Math.floor(bins*0.3+Math.random()*bins*0.4),bw=bt==='Type III'?5:15;for(let i=0;i<bins;i++){const d=Math.abs(i-c);if(d<bw)s[i]+=25*(1-d/bw);}}return{spec:s,flux:70+Math.random()*30,bt};}
+function drawSolar(spec){const c=$('solarCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#fa0';ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+110)/60*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#fa0';ctx.font='10px Orbitron,monospace';ctx.fillText('Solar Radio Spectrum',4,12);}
+function drawFlux(){const c=$('fluxCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='rgba(10,10,26,0.3)';ctx.fillRect(0,0,w,h);if(sfHist.length<2)return;ctx.strokeStyle='#ff4';ctx.lineWidth=1.5;ctx.beginPath();const show=Math.min(300,sfHist.length);for(let i=0;i<show;i++){const v=sfHist[sfHist.length-show+i],x=i/show*w,y=h-(v-50)/100*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
+function updateSolarStats(flux,bt){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};sfHist.push(flux);if(sfHist.length>500)sfHist.shift();el('solarFluxVal',flux.toFixed(0)+' SFU');el('burstTypeVal',bt);el('burstCountVal',sfBC);if(bt!=='Quiet')el('burstPeakVal',(-60+Math.random()*20).toFixed(0)+' dBm');}
+function solarLoop(){if(!sfRun)return;const freq=parseInt($('freqSlider').value),gain=parseInt($('gainSlider').value);const{spec,flux,bt}=genSolar(freq,gain);drawSolar(spec);drawFlux();updateSolarStats(flux,bt);sfFr=requestAnimationFrame(solarLoop);}
+function startSolar(){if(sfRun)return;sfRun=true;sfBC=0;sfHist=[];setStatus(true);log(LANG[currentLang].started,'success');solarLoop();}
+function stopSolar(){sfRun=false;if(sfFr)cancelAnimationFrame(sfFr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1456,11 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startSolar;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopSolar;
+  const fS=$('freqSlider');if(fS)fS.oninput=function(){$('freqVal').textContent=this.value+' MHz';};
+  const gS=$('gainSlider');if(gS)gS.oninput=function(){$('gainVal').textContent=this.value+' dB';};
 
   log(LANG[currentLang].ready, 'success');
 }

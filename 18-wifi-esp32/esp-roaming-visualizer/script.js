@@ -63,27 +63,37 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'WiFi Roaming Visualizer', subtitle: '📱 roam · 📡 handoff · 📊 visualize',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'WiFi Roaming — Client Handoff', mainDesc: 'Visualize how clients roam between APs based on signal strength',
+    sectionA: 'Roaming Canvas', sectionB: 'Signal Graph', sectionC: 'Challenge',
+    handoffs: 'Handoffs', currentAP: 'Current AP', rssi: 'RSSI dBm',
+    startRoam: 'Start Roaming', stopRoam: 'Stop',
+    canvasHint: 'Client moves between AP coverage zones',
+    signalHint: 'RSSI values from each AP as client moves',
+    challenge1: 'What triggers a WiFi client to roam?', challenge2: 'Difference between 802.11r and 802.11k?', challenge3: 'Why do devices stick to weak APs?',
+    revealBtn: 'Reveal',
+    challengeReveal1: 'Signal drops below -70 dBm threshold. Client scans for stronger AP.',
+    challengeReveal2: '802.11r speeds handoff via pre-auth. 802.11k provides neighbor AP reports.',
+    challengeReveal3: 'Sticky client behavior. 802.11v lets APs suggest roaming.',
+    roamStarted: 'Roaming simulation active', roamStopped: 'Roaming stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is WiFi roaming?', faq_a1: 'When a device moves between APs and seamlessly switches connection.',
+    faq_q2: 'What is RSSI?', faq_a2: 'Received Signal Strength Indicator in dBm. -30 is excellent, -80 is poor.',
+    faq_q3: 'What is a handoff?', faq_a3: 'Transferring a client from one AP to another while maintaining the connection.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Click Start Roaming to begin the simulation.',
+    howto_2: 'Watch the client move between AP coverage zones.',
+    howto_3: 'Open Roaming Canvas to see visual handoff.',
+    howto_4: 'Check Signal Graph for RSSI values over time.',
+    wiki_roam_title: '📱 Roaming', wiki_roam: 'Client switches between APs based on signal strength.',
+    wiki_rssi_title: '📊 RSSI', wiki_rssi: 'Received Signal Strength Indicator. Drives roaming decisions.',
+    wiki_bss_title: '🔄 BSS Transition', wiki_bss: '802.11v allows APs to suggest roaming to clients.',
+    wiki_fast_title: '⚡ Fast Roaming', wiki_fast: '802.11r pre-authenticates, reducing handoff to under 50ms.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
@@ -100,7 +110,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Visualiseur Roaming WiFi', subtitle: '📱 itinerance · 📡 transfert · 📊 visualiser',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -137,7 +147,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'متصور التجوال WiFi', subtitle: '📱 تجول · 📡 تسليم · 📊 تصور',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -1443,9 +1453,109 @@ function init() {
   initAR();
   initAIChat();
 
+  // App-specific init
+  initApp();
+
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ ROAMING VISUALIZER SIMULATION ═══════ */
+
+const APS = [
+  {id:'AP1', x:0.2, y:0.5, range:120, ch:1, color:'#4a90d9'},
+  {id:'AP2', x:0.5, y:0.3, range:110, ch:6, color:'#34c759'},
+  {id:'AP3', x:0.8, y:0.5, range:130, ch:11, color:'#ff9500'}
+];
+
+let roamRunning = false, roamTimer = null;
+let roamCanvas, roamCtx, sigCanvas, sigCtx;
+let clientPos = {x:0.1, y:0.5}, clientDir = {dx:0.008, dy:0.002};
+let currentAPIdx = 0, handoffsCnt = 0;
+let rssiHistory = {AP1:[], AP2:[], AP3:[]};
+
+function revealChallenge(idx) { const el = $('answer'+idx); if(el) el.classList.toggle('visible'); playSound('click'); }
+
+function calcRSSI(ax,ay,cx,cy,range) {
+  const d = Math.hypot((ax-cx)*400,(ay-cy)*320);
+  return Math.max(-95, Math.min(-20, -30 - (d/range)*50 + (Math.random()*6-3)));
+}
+
+function initRoamCanvas() {
+  roamCanvas = $('roamCanvas'); if(!roamCanvas) return;
+  roamCtx = roamCanvas.getContext('2d');
+  roamCanvas.width = roamCanvas.offsetWidth||400; roamCanvas.height = 320;
+  function draw() {
+    const W=roamCanvas.width, H=roamCanvas.height;
+    roamCtx.fillStyle='#0a0a1a'; roamCtx.fillRect(0,0,W,H);
+    APS.forEach((ap,i)=>{
+      const px=ap.x*W, py=ap.y*H;
+      roamCtx.globalAlpha=0.1; roamCtx.beginPath(); roamCtx.arc(px,py,ap.range,0,Math.PI*2); roamCtx.fillStyle=ap.color; roamCtx.fill();
+      roamCtx.globalAlpha=i===currentAPIdx?0.8:0.4; roamCtx.beginPath(); roamCtx.arc(px,py,16,0,Math.PI*2); roamCtx.fillStyle=ap.color; roamCtx.fill();
+      roamCtx.strokeStyle=i===currentAPIdx?'#fff':'rgba(255,255,255,0.3)'; roamCtx.lineWidth=i===currentAPIdx?3:1; roamCtx.stroke();
+      roamCtx.globalAlpha=1; roamCtx.fillStyle='#fff'; roamCtx.font='9px Orbitron,monospace'; roamCtx.textAlign='center'; roamCtx.fillText(ap.id+' (ch'+ap.ch+')',px,py+28);
+    });
+    const cx=clientPos.x*W, cy=clientPos.y*H;
+    roamCtx.beginPath(); roamCtx.arc(cx,cy,8,0,Math.PI*2); roamCtx.fillStyle='#ff4444'; roamCtx.fill(); roamCtx.strokeStyle='#fff'; roamCtx.lineWidth=2; roamCtx.stroke();
+    roamCtx.fillStyle='#fff'; roamCtx.font='8px Orbitron,monospace'; roamCtx.fillText('CLIENT',cx,cy-14);
+    const curAP=APS[currentAPIdx];
+    roamCtx.setLineDash([4,4]); roamCtx.beginPath(); roamCtx.moveTo(cx,cy); roamCtx.lineTo(curAP.x*W,curAP.y*H);
+    roamCtx.strokeStyle=curAP.color; roamCtx.lineWidth=2; roamCtx.stroke(); roamCtx.setLineDash([]);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+function initSignalCanvas() {
+  sigCanvas = $('signalCanvas'); if(!sigCanvas) return;
+  sigCtx = sigCanvas.getContext('2d');
+  sigCanvas.width = sigCanvas.offsetWidth||400; sigCanvas.height = 200;
+  function draw() {
+    const W=sigCanvas.width, H=sigCanvas.height;
+    sigCtx.fillStyle='#0a0a1a'; sigCtx.fillRect(0,0,W,H);
+    sigCtx.fillStyle='#666'; sigCtx.font='8px Orbitron,monospace'; sigCtx.textAlign='right';
+    [-30,-50,-70,-90].forEach(v=>{const y=10+((v+30)/-70)*(H-30); sigCtx.fillText(v+'',30,y+3); sigCtx.strokeStyle='rgba(255,255,255,0.05)'; sigCtx.beginPath(); sigCtx.moveTo(35,y); sigCtx.lineTo(W,y); sigCtx.stroke();});
+    APS.forEach(ap=>{const data=rssiHistory[ap.id]; if(data.length<2)return; sigCtx.beginPath(); sigCtx.strokeStyle=ap.color; sigCtx.lineWidth=2;
+      data.forEach((v,i)=>{const x=35+(i/Math.max(data.length-1,1))*(W-45),y=10+((v+30)/-70)*(H-30); if(i===0)sigCtx.moveTo(x,y);else sigCtx.lineTo(x,y);}); sigCtx.stroke();});
+    const thY=10+((-70+30)/-70)*(H-30); sigCtx.setLineDash([4,4]); sigCtx.strokeStyle='#ff4444'; sigCtx.lineWidth=1; sigCtx.beginPath(); sigCtx.moveTo(35,thY); sigCtx.lineTo(W,thY); sigCtx.stroke(); sigCtx.setLineDash([]);
+    sigCtx.fillStyle='#ff4444'; sigCtx.textAlign='left'; sigCtx.fillText('Roam threshold',40,thY-4);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+function doRoamTick() {
+  if(!roamRunning) return;
+  clientPos.x+=clientDir.dx; clientPos.y+=clientDir.dy+(Math.random()-0.5)*0.005;
+  if(clientPos.x>0.95||clientPos.x<0.05) clientDir.dx*=-1;
+  if(clientPos.y>0.85||clientPos.y<0.15) clientDir.dy*=-1;
+  clientPos.x=Math.max(0.05,Math.min(0.95,clientPos.x)); clientPos.y=Math.max(0.15,Math.min(0.85,clientPos.y));
+  let bestAP=currentAPIdx, bestRSSI=-100;
+  APS.forEach((ap,i)=>{const r=calcRSSI(ap.x,ap.y,clientPos.x,clientPos.y,ap.range); rssiHistory[ap.id].push(Math.round(r)); if(rssiHistory[ap.id].length>80)rssiHistory[ap.id].shift(); if(r>bestRSSI){bestRSSI=r;bestAP=i;}});
+  const curRSSI=rssiHistory[APS[currentAPIdx].id], currentSig=curRSSI[curRSSI.length-1];
+  if(bestAP!==currentAPIdx&&currentSig<-70){
+    const oldAP=APS[currentAPIdx].id, newAP=APS[bestAP].id;
+    currentAPIdx=bestAP; handoffsCnt++;
+    log('🔄 Handoff: '+oldAP+' → '+newAP+' (RSSI: '+Math.round(bestRSSI)+' dBm)','success');
+    playSound('success');
+    const logEl=$('roamLog'); if(logEl){const div=document.createElement('div');div.className='roam-entry';div.innerHTML='<span class="r-time">'+new Date().toLocaleTimeString()+'</span><span class="r-ap">'+oldAP+' → '+newAP+'</span><span class="r-rssi">'+Math.round(bestRSSI)+' dBm</span>';logEl.appendChild(div);logEl.scrollTop=logEl.scrollHeight;}
+  }
+  const hc=$('handoffCount'),ca=$('currentAP'),rv=$('rssiVal');
+  if(hc)hc.textContent=handoffsCnt; if(ca)ca.textContent=APS[currentAPIdx].id; if(rv)rv.textContent=Math.round(currentSig);
+  roamTimer=setTimeout(doRoamTick,200);
+}
+
+function startRoam(){roamRunning=true;setStatus(true);log(LANG[currentLang].roamStarted,'success');showToast(LANG[currentLang].roamStarted,2000);doRoamTick();}
+function stopRoam(){roamRunning=false;if(roamTimer){clearTimeout(roamTimer);roamTimer=null;}setStatus(false);log(LANG[currentLang].roamStopped,'info');}
+function clearRoamLog(){const el=$('roamLog');if(el)el.innerHTML='';handoffsCnt=0;rssiHistory={AP1:[],AP2:[],AP3:[]};clientPos={x:0.1,y:0.5};const hc=$('handoffCount'),ca=$('currentAP'),rv=$('rssiVal');if(hc)hc.textContent='0';if(ca)ca.textContent='—';if(rv)rv.textContent='—';}
+
+function initApp(){
+  initRoamCanvas(); initSignalCanvas();
+  const startBtn=$('startBtn'),stopBtn=$('stopBtn'),clearBtn=$('clearBtn');
+  if(startBtn) startBtn.onclick=startRoam;
+  if(stopBtn) stopBtn.onclick=stopRoam;
+  if(clearBtn) clearBtn.onclick=clearRoamLog;
+}

@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Signal Intercept Station — Workshop DIY</title>
-  <meta name="description" content="All-band RF signal monitoring"/>
+  <title>pi-signal-intercept — Workshop DIY</title>
+  <meta name="description" content="Signal intercept station — capture and analyze transmissions"/>
   <meta name="author" content="Workshop-DIY — abourdim"/>
-  <meta property="og:title" content="Signal Intercept Station — Workshop DIY"/>
-  <meta property="og:description" content="All-band RF signal monitoring"/>
+  <meta property="og:title" content="pi-signal-intercept — Workshop DIY"/>
+  <meta property="og:description" content="Signal intercept station — capture and analyze transmissions"/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="icon-512.png"/>
   <link rel="icon" href="favicon.ico" sizes="any"/>
@@ -16,13 +16,24 @@
   <meta name="theme-color" content="#08091a"/>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .sig-panel{text-align:center;padding:1.2rem;border-radius:12px;background:rgba(0,0,0,.25);margin-bottom:1rem}
+    .sig-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;opacity:.7;margin-bottom:.3rem}
+    .sig-value{font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:700}
+    .form-row{display:flex;gap:.6rem;margin-bottom:.6rem;flex-wrap:wrap}
+    .form-row label{font-size:.8rem;opacity:.8;display:block;margin-bottom:.2rem}
+    .form-row .field{flex:1;min-width:120px}
+    .form-row input,.form-row select{width:100%;padding:.45rem .6rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:inherit;font-family:inherit;font-size:.85rem}
+    .btn-row{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+    .result-hex{font-family:'Orbitron',monospace;font-size:.72rem;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.8rem;word-break:break-all;line-height:1.6;color:#0f0;min-height:3rem;margin-top:.8rem}
+  </style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Signal Intercept Station</div>
-      <div class="splash-sub" data-i18n="subtitle">📡 All-band RF signal monitoring</div>
+      <div class="splash-title">Workshop DIY</div>
+      <div class="splash-sub" data-i18n="subtitle">📡 signal intercept — capture transmissions</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -33,7 +44,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Signal Intercept Station</h1><div class="subtitle" data-i18n="subtitle">📡 All-band RF signal monitoring</div></div>
+          <div><h1 data-i18n="title">pi-signal-intercept</h1><div class="subtitle" data-i18n="subtitle">📡 signal intercept — capture transmissions</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -44,54 +55,79 @@
           <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div>
         </div>
       </div>
+
       <div class="card" id="mainCard">
         <div class="card-header"><div>
           <div class="card-title"><span class="icon">📡</span> <span data-i18n="mainSection">Signal Intercept Station</span></div>
-          <div class="card-subtitle"><span data-i18n="mainDesc">All-band RF signal monitoring</span> <span class="version-tag">v1.2</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Capture and analyze radio transmissions in real-time</span> <span class="version-tag">v1.0</span></div>
         </div></div>
-        <div class="control-section">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
-            <div class="stat-box"><div class="stat-label" data-i18n="siStat1">Status</div><div class="stat-val" id="siS1">STANDBY</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="siStat2">Signal</div><div class="stat-val" id="siS2">--</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="siStat3">Events</div><div class="stat-val" id="siS3">0</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="siStat4">Uptime</div><div class="stat-val" id="siS4">00:00</div></div>
+
+        <div class="sig-panel" id="sigStatus">
+          <div class="sig-label" data-i18n="sigLabel">INTERCEPT STATUS</div>
+          <div class="sig-value" id="sigValue" style="color:#888">IDLE</div>
+        </div>
+
+        <canvas id="ftCanvas" width="400" height="180" style="width:100%;border-radius:8px;background:#0a0a1a"></canvas>
+
+        <div class="control-section" style="margin-top:1rem">
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="bandLabel">Frequency Band</label>
+              <select id="bandSelect">
+                <option value="vhf">VHF (30-300 MHz)</option>
+                <option value="uhf" selected>UHF (300-3000 MHz)</option>
+                <option value="shf">SHF (3-30 GHz)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label data-i18n="modLabel">Modulation</label>
+              <select id="modSelect">
+                <option value="am">AM</option>
+                <option value="fm" selected>FM</option>
+                <option value="ssb">SSB</option>
+                <option value="digital">Digital</option>
+              </select>
+            </div>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-sm primary" onclick="siActivate()"><span class="btn-icon">📡</span> <span data-i18n="siActivate">Activate</span></button>
-            <button class="btn-sm" onclick="siAction1()"><span class="btn-icon">▶️</span> <span data-i18n="siAct1">Run Scan</span></button>
-            <button class="btn-sm fire-btn" onclick="siEmergency()"><span class="btn-icon">🔥</span> <span data-i18n="siEmerg">Emergency</span></button>
+          <div class="btn-row">
+            <button id="scanBtn" class="primary fire-btn" style="flex:2;padding:.7rem 1.2rem;font-size:1rem" data-i18n="scanBtn">Start Scan</button>
+            <button id="stopScanBtn" style="flex:1;padding:.7rem 1.2rem;font-size:1rem" data-i18n="stopBtn">Stop</button>
           </div>
-          <div class="progress-wrap" style="margin-top:10px"><div class="progress-bar" id="siBar" style="width:0%"></div></div>
-          <canvas id="siCanvas" width="400" height="120" style="width:100%;margin-top:10px;border-radius:8px;background:#0a0a1a"></canvas>
+        </div>
+
+        <div>
+          <div style="font-size:.75rem;opacity:.7;margin-bottom:.3rem" data-i18n="captureLabel">CAPTURED SIGNAL DATA</div>
+          <div class="result-hex" id="captureDisplay">--</div>
         </div>
       </div>
-      <details class="collapsible"><summary><span class="icon">📡</span> <span data-i18n="sectionA">Band Scanner</span></summary>
+
+      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionA">Waterfall Display</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📡</span> <span data-i18n="siSecA">Band Scanner</span></h3>
-          <div id="siSecAContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <canvas id="waterfallCanvas" width="400" height="160" style="width:100%;border-radius:8px;background:#0a0a1a"></canvas>
+          <div id="ftSecAContent" style="min-height:40px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="siSecAAction()"><span data-i18n="siSecABtn">Execute</span></button>
-            <button class="btn-sm" onclick="siSecAReset()"><span data-i18n="siSecARst">Reset</span></button>
+            <button class="btn-sm primary" onclick="ftSecAAction()"><span data-i18n="ftSecABtn">Capture</span></button>
+            <button class="btn-sm" onclick="ftSecAReset()"><span data-i18n="ftSecARst">Reset</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionB">Waterfall</span></summary>
+
+      <details class="collapsible"><summary><span class="icon">🧪</span> <span data-i18n="sectionB">Signal Decoder</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📊</span> <span data-i18n="siSecB">Waterfall</span></h3>
-          <div id="siSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div id="ftSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="siSecBAction()"><span data-i18n="siSecBBtn">Execute</span></button>
-            <button class="btn-sm" onclick="siSecBReset()"><span data-i18n="siSecBRst">Reset</span></button>
+            <button class="btn-sm primary" onclick="ftSecBAction()"><span data-i18n="ftSecBBtn">Decode</span></button>
+            <button class="btn-sm" onclick="ftSecBReset()"><span data-i18n="ftSecBRst">Reset</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">🔍</span> <span data-i18n="sectionC">Signal ID</span></summary>
+
+      <details class="collapsible"><summary><span class="icon">📋</span> <span data-i18n="sectionC">Intel Report</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">🔍</span> <span data-i18n="siSecC">Signal ID</span></h3>
-          <div id="siSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <div id="ftSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="siSecCAction()"><span data-i18n="siSecCBtn">Execute</span></button>
-            <button class="btn-sm" onclick="siSecCReset()"><span data-i18n="siSecCRst">Reset</span></button>
+            <button class="btn-sm primary" onclick="ftSecCAction()"><span data-i18n="ftSecCBtn">Generate</span></button>
+            <button class="btn-sm" onclick="ftSecCReset()"><span data-i18n="ftSecCRst">Reset</span></button>
           </div>
         </div></div>
       </details>
@@ -107,24 +143,24 @@
     <div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div>
     <div class="sidebar-body">
       <div class="help-content active" id="helpFaq">
-        <details class="help-item"><summary data-i18n="faq_q1">What is Signal Intercept Station?</summary><p data-i18n="faq_a1">All-band RF signal monitoring</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">How do I change the theme?</summary><p data-i18n="faq_a2">Open Settings and pick a theme.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">How do I change the language?</summary><p data-i18n="faq_a3">Open Settings and pick your language. Arabic enables RTL.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q1">What is signal interception?</summary><p data-i18n="faq_a1">Signal interception is the capture and analysis of radio transmissions across frequency bands for intelligence gathering.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q2">What frequency bands can I scan?</summary><p data-i18n="faq_a2">VHF (30-300 MHz), UHF (300-3000 MHz), and SHF (3-30 GHz) bands with AM, FM, SSB, and digital modulation.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q3">How does the waterfall display work?</summary><p data-i18n="faq_a3">The waterfall shows signal intensity over time and frequency. Bright colors indicate strong signals.</p></details>
+        <details class="help-item"><summary data-i18n="faq_q4">Is my data private?</summary><p data-i18n="faq_a4">Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.</p></details>
       </div>
       <div class="help-content" id="helpHowto">
-        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Explore the main dashboard.</p></div>
-        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Open sections for more controls.</p></div>
-        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Check the Activity Log.</p></div>
-        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Use Settings to customize.</p></div>
+        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select frequency band and modulation type.</p></div>
+        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Click Start Scan to begin intercepting signals.</p></div>
+        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Watch the waterfall display and spectrum analyzer.</p></div>
+        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Decode captured signals and generate intelligence reports.</p></div>
       </div>
       <div class="help-content" id="helpWiki">
-        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">EN/FR/AR with RTL.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">All data local.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_sigint_title">📡 SIGINT</h3><p data-i18n="wiki_sigint">Signals Intelligence (SIGINT) involves intercepting electronic signals for reconnaissance and analysis.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_sdr_title">📻 SDR</h3><p data-i18n="wiki_sdr">Software Defined Radio (SDR) uses software to process radio signals, replacing traditional hardware components.</p></div>
+        <div class="wiki-entry"><h3 data-i18n="wiki_mod_title">🔊 Modulation</h3><p data-i18n="wiki_mod">Modulation encodes data onto carrier waves using AM, FM, SSB, or digital techniques like PSK and QAM.</p></div>
       </div>
     </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <div class="sidebar-overlay" id="settingsOverlay"></div>
   <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
@@ -137,14 +173,14 @@
       <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🫁</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
       <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
     </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <aside class="sidebar" id="logPanel" aria-label="Activity Log">
     <div class="resize-handle" id="logResizeHandle"></div>
     <div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div>
     <div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div>
     <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
-    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.2</strong></span></div>
+    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
   </aside>
   <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
   <script src="script.js"></script>

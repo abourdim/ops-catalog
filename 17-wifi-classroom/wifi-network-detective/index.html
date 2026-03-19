@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>WiFi Network Detective — Workshop DIY</title>
+  <meta name="description" content="Investigate network crimes. Analyze logs, find intruders" />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="WiFi Network Detective — Workshop DIY" />
+  <meta property="og:description" content="Investigate network crimes. Analyze logs, find intruders" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -28,8 +28,8 @@
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-title">Network Detective</div>
+      <div class="splash-sub" data-i18n="subtitle">Investigate network crimes, find intruders</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">WiFi Network Detective</h1>
+            <div class="subtitle" data-i18n="subtitle">Investigate network crimes, find intruders</div>
           </div>
         </div>
 
@@ -72,22 +72,50 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🔍</span> <span data-i18n="mainSection">Network Crime Scene</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Analyze logs and find the intruder</span> <span class="version-tag">v1.0</span></div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button id="startBtn" class="primary"><span class="btn-icon">▶</span> <span data-i18n="start">Start Case</span></button>
+            <button id="stopBtn" disabled><span class="btn-icon">⏹</span> <span data-i18n="stop">Close Case</span></button>
           </div>
         </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:10px 0">
+          <div style="text-align:center;min-width:80px"><div style="font-family:var(--font-h);font-size:1.3rem;color:var(--accent)" id="packetCount">0</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase" data-i18n="packets">Packets</div></div>
+          <div style="text-align:center;min-width:80px"><div style="font-family:var(--font-h);font-size:1.3rem;color:#ef4444" id="suspiciousCount">0</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase" data-i18n="suspicious">Suspicious</div></div>
+        </div>
+        <canvas id="trafficCanvas" style="width:100%;height:150px;border-radius:10px;background:rgba(0,0,0,.2)"></canvas>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- ═══════════════════ SECTION A — Traffic Log ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">📋</span> <span data-i18n="sectionA">Traffic Log Analysis</span></summary>
+        <div class="card">
+          <div style="display:flex;gap:6px;padding:4px 6px;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:2px solid var(--border)">
+            <span style="min-width:100px" data-i18n="srcIP">Source IP</span><span style="min-width:100px" data-i18n="dstIP">Dest IP</span><span style="min-width:40px" data-i18n="protocol">Protocol</span><span style="min-width:50px">Port</span><span style="min-width:50px" data-i18n="size">Size</span><span>Flag</span>
+          </div>
+          <div id="packetTable" style="max-height:200px;overflow-y:auto"></div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Suspects ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">👤</span> <span data-i18n="sectionB">Suspect Profiles</span></summary>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(0,0,0,.15);font-size:.78rem"><span>💻 Device-A (Laptop) — 192.168.1.42</span><button id="accuse_0" style="margin-inline-start:auto;padding:4px 10px;border-radius:6px;background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);cursor:pointer;font-size:.7rem" data-i18n="accuse">Accuse</button></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(0,0,0,.15);font-size:.78rem"><span>📱 Device-B (Phone) — 192.168.1.87</span><button id="accuse_1" style="margin-inline-start:auto;padding:4px 10px;border-radius:6px;background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);cursor:pointer;font-size:.7rem" data-i18n="accuse">Accuse</button></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(0,0,0,.15);font-size:.78rem"><span>📷 Device-C (IoT Cam) — 192.168.1.105</span><button id="accuse_2" style="margin-inline-start:auto;padding:4px 10px;border-radius:6px;background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);cursor:pointer;font-size:.7rem" data-i18n="accuse">Accuse</button></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(0,0,0,.15);font-size:.78rem"><span>🖨 Device-D (Printer) — 192.168.1.200</span><button id="accuse_3" style="margin-inline-start:auto;padding:4px 10px;border-radius:6px;background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);cursor:pointer;font-size:.7rem" data-i18n="accuse">Accuse</button></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(0,0,0,.15);font-size:.78rem"><span>📟 Device-E (Tablet) — 192.168.1.15</span><button id="accuse_4" style="margin-inline-start:auto;padding:4px 10px;border-radius:6px;background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);cursor:pointer;font-size:.7rem" data-i18n="accuse">Accuse</button></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — How It Works ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎓</span> <span data-i18n="sectionC">How It Works</span></summary>
+        <div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">Someone has infiltrated the network. Analyze packet logs, identify suspicious patterns like unusual ports, high data volumes, or rogue MAC addresses. Build your case and accuse the right suspect. Watch out for false leads!</p></div></div>
       </details>
 
     </div>

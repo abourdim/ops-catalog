@@ -63,115 +63,84 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Frequency Forensics', subtitle: 'Analyze WiFi channels with HackRF. Detect interference',
+    disconnected: 'Idle', connected: 'Analyzing',
+    mainSection: 'Frequency Analysis', mainDesc: 'HackRF WiFi channel analyzer simulation',
+    sectionA: 'Channel Data', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
+    clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    faq_q1: 'What is frequency forensics?', faq_a1: 'Analyzing WiFi channels to detect interference and unauthorized transmissions.',
+    faq_q2: 'Is this real?', faq_a2: 'No, simulation for educational purposes.',
+    faq_q3: 'What is HackRF?', faq_a3: 'An open-source SDR platform for signal analysis.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Click Analyze to start scanning.', howto_2: 'Watch the spectrum visualization.',
+    howto_3: 'Check channel data below.', howto_4: 'Customize in Settings.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays local.',
+    working: 'Working…', t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📊 Frequency Forensics ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
-    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...', splashHint: 'tap to skip',
+    newVersion: 'UPDATE', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    start: 'Analyze', stop: 'Stop', channels: 'Channels', power: 'Power', interference: 'Interference', bandwidth: 'BW',
+    simStarted: 'Analysis started', simStopped: 'Analysis stopped', channelScanned: 'Channel scanned',
+    howItWorksText: 'WiFi frequency forensics uses SDR to analyze 2.4GHz and 5GHz bands. By measuring signal power across channels, we identify interference and congestion. This simulation visualizes a spectrum analyzer.',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Forensique Frequence WiFi', subtitle: 'Analyser les canaux WiFi avec HackRF',
+    disconnected: 'Inactif', connected: 'Analyse',
+    mainSection: 'Analyse de Frequence', mainDesc: 'Analyseur de canaux WiFi HackRF',
+    sectionA: 'Donnees des Canaux', sectionB: 'Comment ca marche',
+    activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    faq_q1: 'Forensique de frequence?', faq_a1: 'Analyser les canaux WiFi pour detecter les interferences.',
+    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation.', faq_q3: 'HackRF?', faq_a3: 'Plateforme SDR open-source.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui, tout local.',
+    howto_1: 'Cliquez Analyser.', howto_2: 'Observez le spectre.', howto_3: 'Consultez les donnees.', howto_4: 'Personnalisez.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.', wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local.',
+    working: 'En cours…', t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '📊 Forensique prete!', logCleared: 'Efface', copied: 'Copie!', copyFail: 'Echec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
+    whisperMode: 'Murmure', breathingGuide: 'Respiration', dhikrTap: 'Tap', musicMode: 'Musique',
+    chatPlaceholder: 'Parle...', splashHint: 'appuyer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
+    start: 'Analyser', stop: 'Arreter', channels: 'Canaux', power: 'Puissance', interference: 'Interference', bandwidth: 'BP',
+    simStarted: 'Analyse demarree', simStopped: 'Analyse arretee', channelScanned: 'Canal analyse',
+    howItWorksText: 'La forensique utilise la SDR pour analyser les bandes 2.4GHz et 5GHz.',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'تحليل ترددات WiFi', subtitle: 'تحليل قنوات WiFi باستخدام HackRF',
+    disconnected: 'خامل', connected: 'تحليل',
+    mainSection: 'تحليل الترددات', mainDesc: 'محاكاة محلل قنوات WiFi HackRF',
+    sectionA: 'بيانات القنوات', sectionB: 'كيف يعمل',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
+    settings: '⚙️ الإعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    faq_q1: 'ما هو تحليل الترددات؟', faq_a1: 'تحليل قنوات WiFi لكشف التداخل.',
+    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة فقط.', faq_q3: 'ما هو HackRF؟', faq_a3: 'منصة SDR مفتوحة المصدر.',
+    faq_q4: 'خصوصية؟', faq_a4: 'نعم، كل شيء محلي.',
+    howto_1: 'انقر تحليل.', howto_2: 'شاهد الطيف.', howto_3: 'تابع البيانات.', howto_4: 'خصص الإعدادات.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي.',
+    wiki_log_title: '📜 سجل', wiki_log: 'مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '📊 تحليل الترددات جاهز!', logCleared: 'تم المسح', copied: 'تم النسخ!', copyFail: 'فشل',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات', whisperMode: 'همس', breathingGuide: 'تنفس',
+    dhikrTap: 'اضغط', musicMode: 'موسيقى', chatPlaceholder: 'تحدث...', splashHint: 'انقر للتخطي',
+    newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    start: 'تحليل', stop: 'إيقاف', channels: 'قنوات', power: 'طاقة', interference: 'تداخل', bandwidth: 'عرض',
+    simStarted: 'بدأ التحليل', simStopped: 'توقف التحليل', channelScanned: 'تم مسح القناة',
+    howItWorksText: 'تحليل ترددات WiFi يستخدم SDR لتحليل نطاقات 2.4GHz و 5GHz.',
   }
 };
 
@@ -1449,3 +1418,48 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Frequency Forensics ═══════ */
+let simRunning=false,simInterval=null;
+let fCanvas,fCtx,channelData=[],scanCount=0;
+const CHANNELS_24=[1,2,3,4,5,6,7,8,9,10,11,12,13];
+const CHANNELS_5=[36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,149,153,157,161,165];
+
+function initFCanvas(){fCanvas=$('freqCanvas');if(!fCanvas)return;fCtx=fCanvas.getContext('2d');fCanvas.width=fCanvas.offsetWidth*2;fCanvas.height=fCanvas.offsetHeight*2;fCtx.scale(2,2);}
+
+function drawSpectrum(){
+  if(!fCtx)return;const w=fCanvas.offsetWidth,h=fCanvas.offsetHeight;
+  fCtx.fillStyle='rgba(10,10,26,0.15)';fCtx.fillRect(0,0,w,h);
+  fCtx.strokeStyle='rgba(255,255,255,0.1)';fCtx.lineWidth=0.5;
+  fCtx.beginPath();fCtx.moveTo(0,h-20);fCtx.lineTo(w,h-20);fCtx.stroke();
+  const allCh=[...CHANNELS_24,...CHANNELS_5];const barW=w/(allCh.length+2);
+  allCh.forEach((ch,i)=>{
+    const cd=channelData.find(c=>c.ch===ch);const power=cd?cd.power:-90;
+    const barH=Math.max(5,((power+100)/60)*(h-30));const x=(i+1)*barW;
+    const intf=cd?cd.interference:false;
+    const color=intf?'#ef4444':power>-50?'#f59e0b':power>-70?'#22c55e':'#3b82f6';
+    fCtx.fillStyle=color;fCtx.globalAlpha=0.7;fCtx.fillRect(x,h-20-barH,barW*0.7,barH);fCtx.globalAlpha=1;
+    const noise=Math.random()*8;fCtx.fillStyle='#fff';fCtx.globalAlpha=0.3;fCtx.fillRect(x,h-20-barH-noise,barW*0.7,3);fCtx.globalAlpha=1;
+    if(i%4===0){fCtx.fillStyle='rgba(255,255,255,0.4)';fCtx.font='7px monospace';fCtx.fillText(ch,x,h-8);}
+  });
+}
+
+function simTick(){
+  scanCount++;const allCh=[...CHANNELS_24,...CHANNELS_5];
+  channelData=allCh.map(ch=>({ch,power:-90+Math.random()*60,interference:Math.random()<0.08,bw:ch<20?'20MHz':'40MHz'}));
+  const hot=channelData.filter(c=>c.power>-50);const intf=channelData.filter(c=>c.interference);
+  $('chVal').textContent=channelData.length;
+  $('pwrVal').textContent=(hot.length?hot[0].power.toFixed(0):'---')+' dBm';
+  $('intVal').textContent=intf.length>0?intf.length+' found':'None';
+  $('intVal').style.color=intf.length>0?'#ef4444':'#22c55e';
+  $('bwVal').textContent=scanCount;
+  const list=$('channelList');if(list){const d=document.createElement('div');d.className='packet-item';
+    const topCh=channelData.sort((a,b)=>b.power-a.power)[0];
+    d.innerHTML='<span class="pkt-type">Ch '+topCh.ch+'</span><span class="pkt-data">'+topCh.power.toFixed(1)+' dBm | '+topCh.bw+(topCh.interference?' | INTF':'')+'</span><span class="pkt-size">#'+scanCount+'</span>';
+    list.insertBefore(d,list.firstChild);if(list.children.length>80)list.removeChild(list.lastChild);}
+  log(LANG[currentLang].channelScanned+': Ch'+channelData[0].ch+' '+channelData[0].power.toFixed(1)+'dBm','tx');
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);$('startBtn').disabled=true;$('stopBtn').disabled=false;channelData=[];scanCount=0;initFCanvas();log(LANG[currentLang].simStarted,'success');simInterval=setInterval(simTick,900);(function loop(){if(!simRunning)return;drawSpectrum();requestAnimationFrame(loop)})();}
+function stopSim(){simRunning=false;if(simInterval)clearInterval(simInterval);setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;log(LANG[currentLang].simStopped,'info');}
+document.addEventListener('DOMContentLoaded',()=>{const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;});

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>RF Cloak — Workshop DIY</title>
+  <meta name="description" content="Make devices invisible to RF detection — signal masking and frequency hopping — Workshop-DIY." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="RF Cloak — Workshop DIY" />
+  <meta property="og:description" content="Make devices invisible to RF detection. Signal masking and frequency hopping." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -72,22 +72,66 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">&#x1F576;</span> <span data-i18n="mainSection">RF Cloak</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Signal masking and frequency hopping simulation</span> <span class="version-tag">v1.2</span></div>
+          </div>
+        </div>
+
+        <!-- Spectrum Canvas -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
+          <canvas id="cloakCanvas" width="780" height="300" style="width:100%;display:block;background:#0a0a1a;"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button id="cloakBtn" class="primary"><span class="btn-icon">&#x1F576;</span> <span data-i18n="activateCloak">Activate Cloak</span></button>
+          <select id="cloakMode" style="padding:4px 8px;border-radius:6px;background:var(--card-bg);color:var(--text);border:1px solid var(--border);font-size:.8rem;">
+            <option value="noise">Noise Masking</option>
+            <option value="hop">Frequency Hopping</option>
+            <option value="spread">Spread Spectrum</option>
+            <option value="mirror">Signal Mirroring</option>
+          </select>
+          <div style="flex:1;"></div>
+          <label style="font-size:.8rem;color:var(--text-muted);" data-i18n="hopRate">Hop Rate:</label>
+          <input id="hopRate" type="range" min="1" max="50" value="10" style="width:100px;" />
+          <span id="hopLabel" style="font-size:.8rem;color:var(--accent);">10 Hz</span>
+        </div>
+
+        <!-- Status Panels -->
+        <div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;">
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F6E1; <span data-i18n="visibility">Visibility</span></div>
+            <div id="visMeter" style="height:24px;border-radius:12px;background:rgba(0,0,0,.3);margin:8px 0;overflow:hidden;">
+              <div id="visFill" style="height:100%;width:80%;border-radius:12px;transition:width .3s;background:#ef4444;"></div>
+            </div>
+            <div id="visText" style="font-family:var(--font-h);font-size:1rem;text-align:center;color:#ef4444;" data-i18n="visible">VISIBLE</div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4CA; <span data-i18n="cloakStats">Cloak Stats</span></div>
+            <div id="cloakStats" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div>
+          </div>
+          <div class="control-section" style="flex:1;min-width:180px;">
+            <div class="section-title">&#x1F4F6; <span data-i18n="hopPattern">Hop Pattern</span></div>
+            <canvas id="hopCanvas" width="200" height="80" style="width:100%;display:block;border-radius:6px;"></canvas>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- SECTION A — Cloak Log -->
+      <details class="collapsible" open>
+        <summary><span class="icon">&#x1F4DD;</span> <span data-i18n="sectionA">Cloak Events</span></summary>
+        <div class="card">
+          <div id="cloakLog" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;"></div>
+          <div class="hint" data-i18n="cloakHint">Activate the cloak to see masking in action.</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- SECTION B — Evasion Techniques -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">Evasion Techniques</span></summary>
+        <div class="card">
+          <div id="evasionDatabase" style="font-size:.78rem;line-height:1.5;"></div>
+        </div>
       </details>
 
     </div>

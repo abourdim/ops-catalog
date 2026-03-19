@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Smart Meter Reader', subtitle: '⚡ Smart Meter Reader — Utility Decoder',
+    disconnected: 'Disconnected', connected: 'Reading',
+    mainSection: 'Smart Meter Reader', mainDesc: 'Decode utility smart meter transmissions',
+    sectionA: 'Meter Readings', sectionB: 'Smart Meter Theory',
+    started: '▶ Reading meter data', stopped: '⏹ Reading stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⚡ Smart Meter Reader ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -1332,6 +1333,16 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ SMART METER SIMULATION ═══════ */
+let _sm_run=false,_sm_fr=null,_sm_cnt=0,_sm_reading=4523.7,_sm_hist=[];
+function _sm_gen(){const s=new Float32Array(256);for(let i=0;i<256;i++)s[i]=-108+(Math.random()-.5)*5;if(Math.random()<0.1){_sm_cnt++;_sm_reading+=0.01+Math.random()*0.05;const pk=128+Math.floor((Math.random()-.5)*20);for(let i=-4;i<5;i++)if(pk+i>=0&&pk+i<256)s[pk+i]+=28*(1-Math.abs(i)/5);}return s;}
+function _sm_draw1(spec){const c=$('meterCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<256;i++){const x=i/256*w,y=h-(spec[i]+115)/45*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('Meter RF Spectrum',4,12);}
+function _sm_draw2(){const c=$('usageCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='rgba(10,10,26,0.3)';ctx.fillRect(0,0,w,h);const rate=500+Math.random()*2000;_sm_hist.push(rate);if(_sm_hist.length>300)_sm_hist.shift();ctx.strokeStyle='#ff0';ctx.lineWidth=1.5;ctx.beginPath();const show=Math.min(200,_sm_hist.length);for(let i=0;i<show;i++){const v=_sm_hist[_sm_hist.length-show+i],x=i/show*w,y=h-v/3000*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#aaa';ctx.font='10px monospace';ctx.fillText('Power Consumption (W)',4,12);}
+function _sm_stats(){const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('meterIdVal','MTR-'+Math.floor(Math.random()*99999).toString().padStart(5,'0'));el('readingVal',_sm_reading.toFixed(1)+' kWh');el('consumeVal',(_sm_hist.length?_sm_hist[_sm_hist.length-1]:0).toFixed(0)+' W');el('pktRecvVal',_sm_cnt);}
+function _sm_loop(){if(!_sm_run)return;const spec=_sm_gen();_sm_draw1(spec);_sm_draw2();_sm_stats();_sm_fr=requestAnimationFrame(_sm_loop);}
+function startSm(){if(_sm_run)return;_sm_run=true;_sm_cnt=0;_sm_hist=[];setStatus(true);log(LANG[currentLang].started,'success');_sm_loop();}
+function stopSm(){_sm_run=false;if(_sm_fr)cancelAnimationFrame(_sm_fr);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1453,10 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startSm;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopSm;
+  const tS=$('tuneSlider');if(tS)tS.oninput=function(){$('tuneVal').textContent=this.value+' kHz';};
 
   log(LANG[currentLang].ready, 'success');
 }

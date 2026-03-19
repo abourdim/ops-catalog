@@ -1449,3 +1449,87 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {title:"CubeSat Telemetry",subtitle:"🛰️ Decode CubeSat telemetry data frames",mainSection:"CubeSat Telemetry",mainDesc:"Decode CubeSat telemetry data frames",sectionA:"Theory",sectionB:"Controls",sectionC:"Telemetry Display",theoryTitle:"CubeSat Telemetry Basics",theoryDesc:"CubeSats transmit health data via UHF/VHF beacons. Telemetry frames encode battery voltage, solar panel current, temperature sensors, and attitude data in AX.25 or custom binary protocols.",selectSat:"Select Satellite",frameRate:"Frame Rate",start:"Start",stop:"Stop",paramCol:"Parameter",rangeCol:"Range",unitCol:"Unit",battV:"Battery",solarI:"Solar",cpuTemp:"CPU Temp",rssiLabel:"RSSI",simStarted:"Decoding started",simStopped:"Decoding stopped",satChanged:"Satellite changed to",pktReceived:"Packet received"});
+Object.assign(LANG.fr, {title:"Telemetrie CubeSat",subtitle:"🛰️ Decoder les trames de telemetrie CubeSat",mainSection:"Telemetrie CubeSat",mainDesc:"Decoder les trames de telemetrie CubeSat",sectionA:"Theorie",sectionB:"Controles",sectionC:"Affichage Telemetrie",theoryTitle:"Bases de la Telemetrie CubeSat",theoryDesc:"Les CubeSats transmettent des donnees de sante via des balises UHF/VHF. Les trames encodent tension batterie, courant solaire, temperature et attitude.",selectSat:"Choisir le Satellite",frameRate:"Cadence",start:"Demarrer",stop:"Arreter",paramCol:"Parametre",rangeCol:"Plage",unitCol:"Unite",battV:"Batterie",solarI:"Solaire",cpuTemp:"Temp CPU",rssiLabel:"RSSI",simStarted:"Decodage demarre",simStopped:"Decodage arrete",satChanged:"Satellite change a",pktReceived:"Paquet recu"});
+Object.assign(LANG.ar, {title:"تلمتري الاقمار الصناعية",subtitle:"🛰️ فك ترميز بيانات التلمتري",mainSection:"تلمتري CubeSat",mainDesc:"فك ترميز اطارات بيانات التلمتري",sectionA:"النظرية",sectionB:"التحكم",sectionC:"عرض التلمتري",theoryTitle:"اساسيات تلمتري CubeSat",theoryDesc:"تبث الاقمار الصغيرة بيانات الصحة عبر اشارات UHF/VHF. تتضمن الاطارات جهد البطارية وتيار الالواح الشمسية ودرجة الحرارة.",selectSat:"اختيار القمر",frameRate:"معدل الاطارات",start:"بدء",stop:"ايقاف",paramCol:"المعامل",rangeCol:"النطاق",unitCol:"الوحدة",battV:"البطارية",solarI:"الشمسي",cpuTemp:"حرارة المعالج",rssiLabel:"RSSI",simStarted:"بدا الفك",simStopped:"توقف الفك",satChanged:"تغير القمر الى",pktReceived:"تم استقبال حزمة"});
+setLanguage(currentLang);
+
+
+/* ═══════ CUBESAT TELEMETRY SIM ═══════ */
+const SATS={amsat1:{label:'AMSAT-1',freq:'435.100 MHz'},cube2:{label:'CubeBel-1',freq:'436.990 MHz'},funcube:{label:'FUNcube-1',freq:'145.935 MHz'},unisat:{label:'UniSat-7',freq:'437.325 MHz'}};
+let tlmRunning=false,tlmTimer=null,pktNum=0,currentSat='cube2';
+
+function drawGauge(canvasId,value,min,max,color){
+  const c=$(canvasId);if(!c)return;const ctx=c.getContext('2d');
+  const W=c.width,H=c.height,cx=W/2,cy=H/2,r=Math.min(W,H)/2-6;
+  ctx.clearRect(0,0,W,H);
+  ctx.beginPath();ctx.arc(cx,cy,r,0.75*Math.PI,0.25*Math.PI);
+  ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=8;ctx.lineCap='round';ctx.stroke();
+  const pct=Math.max(0,Math.min(1,(value-min)/(max-min)));
+  const startA=0.75*Math.PI,endA=startA+pct*1.5*Math.PI;
+  ctx.beginPath();ctx.arc(cx,cy,r,startA,endA);
+  ctx.strokeStyle=color;ctx.lineWidth=8;ctx.lineCap='round';ctx.stroke();
+}
+
+function randHex(len){let s='';for(let i=0;i<len;i++)s+='0123456789ABCDEF'[Math.random()*16|0];return s}
+
+function genTelemetry(){
+  const volt=3.0+Math.random()*1.2;
+  const solar=Math.random()*500|0;
+  const temp=-20+Math.random()*80|0;
+  const rssi=-120+Math.random()*60|0;
+  pktNum++;
+
+  const vE=$(  'valVolt');if(vE)vE.textContent=volt.toFixed(2);
+  const sE=$('valSolar');if(sE)sE.textContent=solar;
+  const tE=$('valTemp');if(tE)tE.textContent=temp;
+  const rE=$('valRssi');if(rE)rE.textContent=rssi;
+  const pE=$('pktCount');if(pE)pE.textContent='PKT: '+pktNum;
+
+  drawGauge('gaugeVolt',volt,3.0,4.2,'#d4a03c');
+  drawGauge('gaugeSolar',solar,0,500,'#51cf66');
+  drawGauge('gaugeTemp',temp,-20,60,'#ff6b6b');
+  drawGauge('gaugeRssi',rssi,-120,-60,'#339af0');
+
+  const bV=$('barVolt');if(bV)bV.style.width=((volt-3)/1.2*100)+'%';
+  const bS=$('barSolar');if(bS)bS.style.width=(solar/500*100)+'%';
+  const bT=$('barTemp');if(bT)bT.style.width=((temp+20)/80*100)+'%';
+  const bR=$('barRssi');if(bR)bR.style.width=((rssi+120)/60*100)+'%';
+
+  const hex=$('hexFrame');
+  if(hex){
+    const frame='['+new Date().toISOString().substr(11,8)+'] AX25> '+randHex(4)+' '+randHex(8)+' V:'+volt.toFixed(1)+' I:'+solar+' T:'+temp+' RSSI:'+rssi+' CRC:'+randHex(4);
+    hex.textContent=frame+'\n'+hex.textContent.split('\n').slice(0,20).join('\n');
+  }
+  log(LANG[currentLang].pktReceived+' #'+pktNum,'rx');
+}
+
+function startTlm(){
+  if(tlmRunning)return;tlmRunning=true;
+  const rate=$('frameRateRange');const ms=1000/(rate?parseInt(rate.value):4);
+  tlmTimer=setInterval(genTelemetry,ms);
+  log(LANG[currentLang].simStarted,'success');setStatus(true);
+}
+function stopTlm(){
+  tlmRunning=false;if(tlmTimer)clearInterval(tlmTimer);
+  log(LANG[currentLang].simStopped,'info');setStatus(false);
+}
+
+function updateSatLabel(){
+  const s=SATS[currentSat];const lbl=$('satLabel');
+  if(lbl)lbl.textContent=s.label+' — '+s.freq;
+}
+
+(function initCubeSat(){
+  const sel=$('satSelect');
+  if(sel)sel.addEventListener('change',()=>{currentSat=sel.value;updateSatLabel();log((LANG[currentLang].satChanged||'Satellite changed to')+' '+SATS[currentSat].label,'info');});
+  const startB=$('startBtn'),stopB=$('stopBtn');
+  if(startB)startB.onclick=startTlm;
+  if(stopB)stopB.onclick=stopTlm;
+  const rate=$('frameRateRange');
+  if(rate)rate.addEventListener('input',()=>{if(tlmRunning){clearInterval(tlmTimer);tlmTimer=setInterval(genTelemetry,1000/parseInt(rate.value));}});
+  updateSatLabel();
+})();

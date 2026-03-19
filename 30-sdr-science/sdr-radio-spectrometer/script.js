@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Radio Spectrometer', subtitle: '📊 Radio Spectrometer — Spectral Analysis',
+    disconnected: 'Disconnected', connected: 'Scanning',
+    mainSection: 'Radio Spectrometer', mainDesc: 'Measure spectral characteristics of radio sources',
+    sectionA: 'Measurements', sectionB: 'Spectrometry Theory',
+    started: '▶ Scanning spectrum', stopped: '⏹ Scan stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📊 Spectrometer ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +101,11 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Spectromètre Radio SDR', subtitle: '📊 Spectromètre Radio — Analyse Spectrale',
+    disconnected: 'Déconnecté', connected: 'Balayage',
+    mainSection: 'Spectromètre Radio', mainDesc: 'Mesurer les caractéristiques spectrales',
+    sectionA: 'Mesures', sectionB: 'Théorie Spectrométrie',
+    started: '▶ Balayage en cours', stopped: '⏹ Balayage arrêté',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +127,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📊 Spectromètre prêt!',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +139,11 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'مطياف راديو SDR', subtitle: '📊 مطياف راديو — تحليل طيفي',
+    disconnected: 'غير متصل', connected: 'مسح',
+    mainSection: 'مطياف الراديو', mainDesc: 'قياس الخصائص الطيفية',
+    sectionA: 'القياسات', sectionB: 'نظرية القياس الطيفي',
+    started: '▶ مسح الطيف', stopped: '⏹ توقف المسح',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +165,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📊 المطياف جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1332,6 +1335,17 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ SPECTROMETER SIMULATION ═══════ */
+let sRunning=false,sFrame=null,peakHold=false,wfRows=[];
+const SBINS=256;let peakD=new Float32Array(SBINS).fill(-120);
+function genSpec(center,span,avg){const s=new Float32Array(SBINS);for(let i=0;i<SBINS;i++){s[i]=-100+(Math.random()-.5)*6/avg;const f=center-span/2+i/SBINS*span;if(Math.abs(f-center)<span*0.05)s[i]+=20+Math.random()*5;if(Math.abs(f-center-span*0.3)<span*0.02)s[i]+=10;}return s;}
+function drawSpec(spec){const c=$('spectrumCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<SBINS;i++){const x=i/SBINS*w,y=h-(spec[i]+120)/50*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();if(peakHold){ctx.strokeStyle='#f44';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<SBINS;i++){peakD[i]=Math.max(peakD[i],spec[i]);const x=i/SBINS*w,y=h-(peakD[i]+120)/50*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('Spectrum Analyzer',4,12);}
+function drawWF(spec){const c=$('waterfallCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;wfRows.push(spec);if(wfRows.length>h)wfRows.shift();ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);for(let r=0;r<wfRows.length;r++){for(let i=0;i<SBINS;i++){const v=Math.max(0,Math.min(1,(wfRows[r][i]+120)/50));ctx.fillStyle=`rgb(${Math.floor(v*255)},${Math.floor(v*100)},${Math.floor((1-v)*150)})`;ctx.fillRect(i/SBINS*w,h-wfRows.length+r,w/SBINS+1,1);}}}
+function updateSpecStats(spec,center,span){let pk=-999,pi=0,sum=0;for(let i=0;i<SBINS;i++){sum+=spec[i];if(spec[i]>pk){pk=spec[i];pi=i;}}const nf=sum/SBINS;const el=(id,v)=>{const e=$(id);if(e)e.textContent=v;};el('peakFreqVal',(center-span/2+pi/SBINS*span).toFixed(2)+' MHz');el('peakPwrVal',pk.toFixed(1)+' dBm');el('nfVal',nf.toFixed(1)+' dBm');let bw=0;for(let i=0;i<SBINS;i++)if(spec[i]>pk-3)bw++;el('bwVal',(bw/SBINS*span*1000).toFixed(0)+' kHz');}
+function specLoop(){if(!sRunning)return;const c=parseInt($('freqSlider').value),sp=parseInt($('spanSlider').value),av=parseInt($('avgSlider').value);const spec=genSpec(c,sp,av);drawSpec(spec);drawWF(spec);updateSpecStats(spec,c,sp);sFrame=requestAnimationFrame(specLoop);}
+function startSpec(){if(sRunning)return;sRunning=true;wfRows=[];peakD.fill(-120);setStatus(true);log(LANG[currentLang].started,'success');specLoop();}
+function stopSpec(){sRunning=false;if(sFrame)cancelAnimationFrame(sFrame);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1456,13 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startSpec;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopSpec;
+  const pkBtn=$('peakBtn');if(pkBtn)pkBtn.onclick=function(){peakHold=!peakHold;peakD.fill(-120);};
+  const fS=$('freqSlider');if(fS)fS.oninput=function(){$('freqVal').textContent=this.value+' MHz';};
+  const sS=$('spanSlider');if(sS)sS.oninput=function(){$('spanVal').textContent=this.value+' MHz';};
+  const aS=$('avgSlider');if(aS)aS.oninput=function(){$('avgVal').textContent=this.value;};
 
   log(LANG[currentLang].ready, 'success');
 }

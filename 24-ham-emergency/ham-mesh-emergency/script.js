@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Emergency Mesh Network', subtitle: '🆘 Emergency mesh network for disasters',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Mesh Network', mainDesc: 'Emergency mesh network for disaster communications',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Réseau Mesh Urgence', subtitle: '🆘 Réseau mesh d\'urgence pour catastrophes',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Réseau Mesh', mainDesc: 'Réseau mesh d\'urgence pour communications en cas de catastrophe',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'شبكة طوارئ شبكية', subtitle: '🆘 شبكة شبكية للطوارئ في الكوارث',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'الشبكة الشبكية', mainDesc: 'شبكة شبكية للاتصالات في حالات الكوارث',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,90 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Deploy Mesh',stop:'Shutdown',simStarted:'Mesh network deployed',simStopped:'Mesh network shutdown',theoryTitle:'Emergency Mesh Theory',theoryDesc:'A ham radio mesh network uses AREDN (Amateur Radio Emergency Data Network) or similar technology to create self-healing, decentralized communication networks. Each node acts as both a client and a router, forwarding data packets across multiple hops to maintain connectivity even when individual nodes fail.',nodes:'Nodes',messages:'Messages',hops:'Avg Hops',uptime:'Uptime'});
+Object.assign(LANG.fr, {start:'Déployer Mesh',stop:'Arrêter',simStarted:'Réseau mesh déployé',simStopped:'Réseau mesh arrêté',theoryTitle:'Théorie Mesh d\'Urgence',theoryDesc:'Un réseau mesh radioamateur utilise AREDN ou une technologie similaire pour créer des réseaux de communication décentralisés et auto-réparables. Chaque nœud agit comme client et routeur, transférant les paquets sur plusieurs sauts pour maintenir la connectivité même si des nœuds tombent en panne.',nodes:'Nœuds',messages:'Messages',hops:'Sauts moy.',uptime:'Disponibilité'});
+Object.assign(LANG.ar, {start:'نشر الشبكة',stop:'إيقاف',simStarted:'تم نشر الشبكة الشبكية',simStopped:'تم إيقاف الشبكة الشبكية',theoryTitle:'نظرية شبكة الطوارئ',theoryDesc:'تستخدم شبكة الراديو الشبكية تقنية AREDN أو ما شابهها لإنشاء شبكات اتصال لامركزية ذاتية الإصلاح. كل عقدة تعمل كعميل وموجه في نفس الوقت وتنقل حزم البيانات عبر قفزات متعددة للحفاظ على الاتصال حتى عند فشل العقد الفردية.',nodes:'العقد',messages:'الرسائل',hops:'متوسط القفزات',uptime:'وقت التشغيل'});
+setLanguage(currentLang);
+
+
+/* ═══════ MESH NETWORK SIM ═══════ */
+let simRunning=false,simTimer=null,msgCount=0,meshUptime=0;
+const mC=$('meshCanvas'),mCtx=mC?mC.getContext('2d'):null;
+let meshNodes=[],meshLinks=[],meshPackets=[];
+
+function initMesh(){
+  if(!mC)return;const W=mC.width,H=mC.height;
+  meshNodes=[];meshLinks=[];
+  const names=['HQ','Hospital','Shelter-A','Shelter-B','Fire-Stn','Police','School','Church','Park','Tower'];
+  const statuses=['online','online','online','online','online','online','degraded','online','offline','online'];
+  for(let i=0;i<10;i++){const a=i*Math.PI*2/10;const r=80+Math.random()*80;
+    meshNodes.push({x:W/2+Math.cos(a)*r+(Math.random()-0.5)*40,y:H/2+Math.sin(a)*r+(Math.random()-0.5)*40,name:names[i],status:statuses[i]});}
+  // Create links between nearby nodes
+  for(let i=0;i<meshNodes.length;i++){for(let j=i+1;j<meshNodes.length;j++){
+    const dx=meshNodes[i].x-meshNodes[j].x,dy=meshNodes[i].y-meshNodes[j].y;
+    if(Math.sqrt(dx*dx+dy*dy)<180&&Math.random()>0.3)meshLinks.push({a:i,b:j,strength:0.5+Math.random()*0.5});}}
+}
+
+function drawMesh(){
+  if(!mCtx)return;const W=mC.width,H=mC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  mCtx.fillStyle='#0a1628';mCtx.fillRect(0,0,W,H);
+  const now=Date.now();
+  // Draw links
+  meshLinks.forEach(l=>{const a=meshNodes[l.a],b=meshNodes[l.b];
+    mCtx.strokeStyle='rgba(255,255,255,'+(0.05+l.strength*0.15)+')';mCtx.lineWidth=1+l.strength;
+    mCtx.beginPath();mCtx.moveTo(a.x,a.y);mCtx.lineTo(b.x,b.y);mCtx.stroke();});
+  // Draw packets in transit
+  meshPackets.forEach(p=>{if(now-p.ts>1500)return;
+    const prog=(now-p.ts)/1500;const a=meshNodes[p.from],b=meshNodes[p.to];
+    const x=a.x+(b.x-a.x)*prog,y=a.y+(b.y-a.y)*prog;
+    mCtx.beginPath();mCtx.arc(x,y,3,0,Math.PI*2);mCtx.fillStyle=acc2;mCtx.globalAlpha=1-prog;mCtx.fill();mCtx.globalAlpha=1;});
+  // Draw nodes
+  meshNodes.forEach(n=>{
+    const color=n.status==='online'?'#22c55e':n.status==='degraded'?acc:'#ef4444';
+    mCtx.beginPath();mCtx.arc(n.x,n.y,8,0,Math.PI*2);mCtx.fillStyle=color;mCtx.fill();
+    mCtx.strokeStyle='rgba(255,255,255,0.3)';mCtx.lineWidth=1;mCtx.stroke();
+    mCtx.fillStyle='rgba(255,255,255,0.7)';mCtx.font='8px monospace';mCtx.fillText(n.name,n.x+10,n.y+3);
+  });
+  // Stats
+  const online=meshNodes.filter(n=>n.status==='online').length;
+  mCtx.fillStyle='rgba(255,255,255,0.5)';mCtx.font='10px monospace';
+  mCtx.fillText('Nodes: '+online+'/'+meshNodes.length+' online | Msgs: '+msgCount,10,H-8);
+}
+
+function meshStep(){
+  meshUptime+=5;
+  // Random status changes
+  if(Math.random()<0.1){const n=meshNodes[Math.floor(Math.random()*meshNodes.length)];
+    n.status=Math.random()>0.2?'online':Math.random()>0.5?'degraded':'offline';}
+  // Send a message
+  const onlineNodes=meshNodes.map((n,i)=>({n,i})).filter(x=>x.n.status!=='offline');
+  if(onlineNodes.length>=2){
+    const src=onlineNodes[Math.floor(Math.random()*onlineNodes.length)];
+    let dst=src;while(dst.i===src.i)dst=onlineNodes[Math.floor(Math.random()*onlineNodes.length)];
+    msgCount++;meshPackets.push({from:src.i,to:dst.i,ts:Date.now()});
+    if(meshPackets.length>50)meshPackets.shift();
+    const hops=1+Math.floor(Math.random()*4);
+    log('MSG #'+msgCount+': '+src.n.name+'\u2192'+dst.n.name+' ('+hops+' hops)','rx');
+    const nd=$('nodeDisp');if(nd)nd.textContent=onlineNodes.length+'/'+meshNodes.length;
+    const md=$('msgDisp');if(md)md.textContent=msgCount;
+  }
+  drawMesh();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);msgCount=0;meshUptime=0;meshPackets=[];initMesh();
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(meshStep,2000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_mesh(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  initMesh();drawMesh();
+}
+init_mesh();

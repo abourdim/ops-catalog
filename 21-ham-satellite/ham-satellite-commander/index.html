@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>Satellite Commander — Workshop DIY</title>
+  <meta name="description" content="Satellite Commander — Full satellite ground station dashboard." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="Satellite Commander — Workshop DIY" />
+  <meta property="og:description" content="Full satellite ground station dashboard." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -21,6 +21,22 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .cmd-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+    .cmd-panel{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:10px;padding:12px}
+    .cmd-panel h4{font-size:.85rem;color:var(--accent);margin:0 0 8px;font-family:var(--font-h)}
+    .cmd-val{font-family:'Orbitron',monospace;font-size:1rem;color:var(--text)}
+    .cmd-label{font-size:.7rem;color:var(--text-muted)}
+    .sat-list{max-height:150px;overflow-y:auto;font-family:monospace;font-size:.75rem;background:rgba(0,0,0,.3);border-radius:8px;padding:8px;margin:6px 0}
+    .sat-entry{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+    .sat-entry:last-child{border-bottom:none}
+    .rot-display{display:flex;gap:10px;align-items:center;justify-content:center;margin:8px 0}
+    .rot-gauge{text-align:center}
+    .rot-gauge canvas{display:block;margin:0 auto}
+    .rot-gauge .rv{font-family:'Orbitron',monospace;font-size:.9rem;color:var(--accent)}
+    .cmd-log{font-family:monospace;font-size:.72rem;background:#000;color:#0f0;padding:8px;border-radius:8px;max-height:120px;overflow-y:auto;margin-top:6px;line-height:1.4}
+    @media(max-width:600px){.cmd-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 
 <body>
@@ -72,22 +88,79 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🎯</span> <span data-i18n="mainSection">Satellite Commander</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Full satellite ground station dashboard</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
+      <!-- ═══════════════════ SECTION A — Tracking ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📡</span> <span data-i18n="sectionA">Satellite Tracking</span></summary>
+        <div class="card">
+          <div class="control-section">
+            <label class="sidebar-label" data-i18n="selectSat">Select Satellite</label>
+            <select id="satSelect" class="sidebar-select">
+              <option value="iss">ISS (ZARYA) — 437.800 MHz</option>
+              <option value="noaa18" selected>NOAA-18 — 137.912 MHz</option>
+              <option value="ao91">AO-91 — 145.960 MHz</option>
+              <option value="so50">SO-50 — 436.795 MHz</option>
+              <option value="meteor">Meteor-M2 — 137.100 MHz</option>
+            </select>
+          </div>
+          <canvas id="trackCanvas" width="800" height="350" style="width:100%;height:auto;border-radius:8px;background:#000;display:block;margin-top:8px"></canvas>
+          <div class="sat-list" id="satList">Loading satellite database...</div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Rotator & Radio ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Rotator & Radio</span></summary>
+        <div class="card">
+          <div class="rot-display">
+            <div class="rot-gauge"><canvas id="azGauge" width="120" height="120"></canvas><div class="rv" id="azVal">0</div><div class="cmd-label" data-i18n="azLabel">Azimuth</div></div>
+            <div class="rot-gauge"><canvas id="elGauge" width="120" height="120"></canvas><div class="rv" id="elVal">0</div><div class="cmd-label" data-i18n="elLabel">Elevation</div></div>
+          </div>
+          <div class="cmd-grid">
+            <div class="cmd-panel">
+              <h4 data-i18n="uplinkLabel">Uplink</h4>
+              <div class="cmd-val" id="uplinkFreq">145.990 MHz</div>
+              <div class="cmd-label" data-i18n="dopplerCorr">Doppler Corrected</div>
+            </div>
+            <div class="cmd-panel">
+              <h4 data-i18n="downlinkLabel">Downlink</h4>
+              <div class="cmd-val" id="downlinkFreq">437.800 MHz</div>
+              <div class="cmd-label" data-i18n="dopplerCorr">Doppler Corrected</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button id="trackBtn" class="btn-sm primary" style="flex:1"><span class="btn-icon">🎯</span> <span data-i18n="autoTrack">Auto Track</span></button>
+            <button id="stopBtn" class="btn-sm" style="flex:1"><span class="btn-icon">&#9724;</span> <span data-i18n="stop">Stop</span></button>
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — Dashboard ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🎯</span> <span data-i18n="sectionC">Ground Station</span></summary>
+        <div class="card">
+          <div class="cmd-grid">
+            <div class="cmd-panel">
+              <h4 data-i18n="passInfo">Pass Info</h4>
+              <div><span class="cmd-label" data-i18n="aosLabel">AOS: </span><span class="cmd-val" id="aosTime">--:--</span></div>
+              <div><span class="cmd-label" data-i18n="losLabel">LOS: </span><span class="cmd-val" id="losTime">--:--</span></div>
+              <div><span class="cmd-label" data-i18n="maxElLabel">Max El: </span><span class="cmd-val" id="maxElVal">0 deg</span></div>
+            </div>
+            <div class="cmd-panel">
+              <h4 data-i18n="stationStatus">Station Status</h4>
+              <div><span class="cmd-label" data-i18n="rotatorLabel">Rotator: </span><span class="cmd-val" id="rotStatus">IDLE</span></div>
+              <div><span class="cmd-label" data-i18n="radioLabel">Radio: </span><span class="cmd-val" id="radioStatus">STANDBY</span></div>
+              <div><span class="cmd-label" data-i18n="tncLabel">TNC: </span><span class="cmd-val" id="tncStatus">READY</span></div>
+            </div>
+          </div>
+          <canvas id="specCanvas" width="800" height="100" style="width:100%;height:70px;border-radius:8px;background:#000;display:block;margin-top:8px"></canvas>
+          <div class="cmd-log" id="cmdLog">Ground station initialized. Awaiting commands...</div>
+        </div>
       </details>
 
     </div>

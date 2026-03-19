@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Agent Onboarding', subtitle: '🎓 Agent training & certification',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Agent Onboarding', mainDesc: 'Learn all tools, complete certification training',
+    sectionA: 'Training Modules', sectionB: 'Skill Assessment', sectionC: 'Certification',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Agent Onboarding?', faq_a1: 'A training platform to learn all agent tools and complete certification.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🎓 Agent onboarding system ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Formation Agent', subtitle: '🎓 Formation et certification des agents',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🎓 Système de formation prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'تدريب العميل', subtitle: '🎓 التدريب والشهادة',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🎓 نظام التدريب جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,105 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initOnboarding();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ AGENT ONBOARDING SIMULATION ═══════ */
+const OB_MODULES = [
+  { id: 'comm', name: 'Secure Communications', icon: '📡', lessons: 5 },
+  { id: 'crypto', name: 'Cryptography Basics', icon: '🔐', lessons: 4 },
+  { id: 'surveil', name: 'Surveillance Techniques', icon: '👁️', lessons: 6 },
+  { id: 'evasion', name: 'Counter-Surveillance', icon: '🏃', lessons: 4 },
+  { id: 'tradecraft', name: 'Field Tradecraft', icon: '🎭', lessons: 7 },
+  { id: 'tech', name: 'Technical Equipment', icon: '🔧', lessons: 5 },
+];
+let obState = { active: false, currentModule: null, progress: {}, score: 0, uptime: 0, uptimeTimer: null, animFrame: null };
+
+function initOnboarding() {
+  setStatus(false);
+  OB_MODULES.forEach(m => obState.progress[m.id] = 0);
+  drawObCanvas();
+}
+
+function obActivate() {
+  if (obState.active) { obState.active = false; setStatus(false); clearInterval(obState.uptimeTimer); log('🎓 Training paused', 'info'); return; }
+  obState.active = true; obState.uptime = 0; setStatus(true);
+  log('🎓 Training session started!', 'success');
+  obState.uptimeTimer = setInterval(() => { obState.uptime++; const s4 = $('obS4'); if (s4) s4.textContent = String(Math.floor(obState.uptime/60)).padStart(2,'0')+':'+String(obState.uptime%60).padStart(2,'0'); }, 1000);
+  animateOb();
+}
+
+function animateOb() {
+  if (!obState.active) return;
+  drawObCanvas();
+  obState.animFrame = requestAnimationFrame(animateOb);
+}
+
+function obAction1() {
+  if (!obState.active) { log('Start training first!', 'error'); return; }
+  const mod = OB_MODULES[Math.floor(Math.random() * OB_MODULES.length)];
+  obState.currentModule = mod;
+  obState.progress[mod.id] = Math.min(mod.lessons, obState.progress[mod.id] + 1);
+  const pct = Math.round((obState.progress[mod.id] / mod.lessons) * 100);
+  obState.score += 10;
+  const s1 = $('obS1'); if (s1) s1.textContent = 'TRAINING';
+  const s2 = $('obS2'); if (s2) s2.textContent = obState.score + ' pts';
+  const s3 = $('obS3'); if (s3) s3.textContent = Object.values(obState.progress).filter(v => v > 0).length + '/' + OB_MODULES.length;
+  const bar = $('obBar'); if (bar) bar.style.width = pct + '%';
+  log(`${mod.icon} ${mod.name}: Lesson ${obState.progress[mod.id]}/${mod.lessons} (${pct}%)`, 'success');
+  playSound('success');
+}
+
+function obEmergency() {
+  obState.active = false; setStatus(false); clearInterval(obState.uptimeTimer);
+  log('🚨 Training aborted!', 'error'); playSound('error');
+}
+
+function obSecAAction() {
+  const el = $('obSecAContent');
+  if (el) el.innerHTML = OB_MODULES.map(m => {
+    const pct = Math.round((obState.progress[m.id] / m.lessons) * 100);
+    return `${m.icon} ${m.name}: ${'█'.repeat(Math.round(pct/10))}${'░'.repeat(10-Math.round(pct/10))} ${pct}%`;
+  }).join('<br>');
+}
+function obSecAReset() { OB_MODULES.forEach(m => obState.progress[m.id] = 0); obState.score = 0; log('🔄 Progress reset', 'info'); }
+function obSecBAction() {
+  if (!obState.active) { log('Start training first!', 'error'); return; }
+  const score = Math.round(60 + Math.random() * 40);
+  log(`📝 Skill assessment: ${score}% ${score >= 80 ? '- PASS' : '- NEEDS IMPROVEMENT'}`, score >= 80 ? 'success' : 'error');
+}
+function obSecBReset() { log('🔄 Assessment reset', 'info'); }
+function obSecCAction() {
+  const total = OB_MODULES.reduce((a, m) => a + obState.progress[m.id], 0);
+  const max = OB_MODULES.reduce((a, m) => a + m.lessons, 0);
+  const pct = Math.round((total / max) * 100);
+  if (pct >= 80) { log('🏆 CERTIFICATION ACHIEVED! Agent Level ' + Math.ceil(pct/20), 'success'); playSound('success'); }
+  else log(`📋 Progress: ${pct}% — Need 80% to certify`, 'info');
+}
+function obSecCReset() { log('🔄 Certification reset', 'info'); }
+
+function drawObCanvas() {
+  const canvas = $('obCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const barW = w / OB_MODULES.length - 4;
+  OB_MODULES.forEach((m, i) => {
+    const pct = obState.progress[m.id] / m.lessons;
+    const x = i * (barW + 4) + 2;
+    ctx.fillStyle = 'rgba(255,255,255,0.1)'; ctx.fillRect(x, 10, barW, h - 20);
+    ctx.fillStyle = pct >= 1 ? '#4caf50' : accent;
+    ctx.fillRect(x, h - 10 - (h - 20) * pct, barW, (h - 20) * pct);
+    ctx.fillStyle = '#fff'; ctx.font = '9px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(m.icon, x + barW/2, h - 2);
+  });
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron, monospace'; ctx.textAlign = 'left';
+  ctx.fillText(`SCORE: ${obState.score}`, 5, h - 2);
+}

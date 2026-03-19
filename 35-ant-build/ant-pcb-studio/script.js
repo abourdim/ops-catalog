@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'PCB Antenna Studio', subtitle: '🖨️ Design printed circuit board antennas',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'PCB Antenna Designer', mainDesc: 'Select antenna type and frequency for PCB trace layout',
+    sectionA: 'Trace Geometry', sectionB: 'Return Loss (S11)', sectionC: 'PCB Design Tips',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is PCB Antenna Studio?', faq_a1: 'Design PCB antennas: microstrip patch, inverted-F (IFA), and meander line. Get trace dimensions and S11 return loss.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -100,16 +100,16 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Studio Antenne PCB', subtitle: '🖨️ Concevoir des antennes sur circuit imprimé',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Concepteur Antenne PCB', mainDesc: 'Sélectionnez le type et la fréquence pour le tracé PCB',
+    sectionA: 'Géométrie des pistes', sectionB: 'Perte de retour (S11)', sectionC: 'Conseils PCB',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que le Studio Antenne PCB ?', faq_a1: 'Concevez des antennes PCB : patch microruban, IFA inversé-F et méandre. Obtenez les dimensions et le S11.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -137,16 +137,16 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'استوديو هوائي PCB', subtitle: '🖨️ تصميم هوائيات الدوائر المطبوعة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مصمم هوائي PCB', mainDesc: 'اختر النوع والتردد لتخطيط مسارات PCB',
+    sectionA: 'هندسة المسارات', sectionB: 'خسارة الإرجاع (S11)', sectionC: 'نصائح PCB',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو استوديو هوائي PCB؟', faq_a1: 'صمم هوائيات PCB: رقعة شريطية دقيقة، IFA معكوس-F وخط متعرج. احصل على أبعاد المسارات وخسارة الإرجاع.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -1449,3 +1449,205 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ PCB ANTENNA DESIGN STUDIO SIMULATION ═══════ */
+
+(function() {
+  const C = 299792458;
+
+  function waitForDOM(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  waitForDOM(function() {
+    const mc = document.getElementById('mainControls');
+    if (!mc) return;
+    mc.innerHTML = `
+      <div class="control-section">
+        <div class="grid-2">
+          <div><label>Frequency (GHz)</label><input type="number" id="pcbFreq" value="2.45" min="0.1" max="30" step="0.01"></div>
+          <div><label>Antenna Type</label><select id="pcbType"><option value="patch">Microstrip Patch</option><option value="ifa">Inverted-F (IFA)</option><option value="meander">Meander Line</option></select></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Substrate Er</label><input type="number" id="pcbEr" value="4.4" min="1" max="12" step="0.1"></div>
+          <div><label>Substrate Height (mm)</label><input type="number" id="pcbH" value="1.6" min="0.1" max="10" step="0.1"></div>
+        </div>
+        <div style="margin-top:10px;"><button class="primary" id="pcbCalcBtn" style="width:100%">🖨️ Design PCB Antenna</button></div>
+      </div>`;
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const canvasA = document.getElementById('canvasA');
+    const ctxA = canvasA ? canvasA.getContext('2d') : null;
+    const canvasB = document.getElementById('canvasB');
+    const ctxB = canvasB ? canvasB.getContext('2d') : null;
+    const resultBox = document.getElementById('resultBox');
+    const secC = document.getElementById('sectionCContent');
+
+    function calcPCB() {
+      const freq = parseFloat(document.getElementById('pcbFreq').value) || 2.45;
+      const type = document.getElementById('pcbType').value;
+      const er = parseFloat(document.getElementById('pcbEr').value) || 4.4;
+      const h = (parseFloat(document.getElementById('pcbH').value) || 1.6) / 1000;
+      const f = freq * 1e9;
+      const lambda0 = C / f;
+      const lambdaEff = lambda0 / Math.sqrt((er + 1) / 2);
+      let W, L, desc;
+
+      if (type === 'patch') {
+        W = C / (2 * f) * Math.sqrt(2 / (er + 1));
+        const erEff = (er + 1) / 2 + (er - 1) / 2 * Math.pow(1 + 12 * h / W, -0.5);
+        const dL = 0.412 * h * ((erEff + 0.3) * (W / h + 0.264)) / ((erEff - 0.258) * (W / h + 0.8));
+        L = C / (2 * f * Math.sqrt(erEff)) - 2 * dL;
+        desc = 'Microstrip Patch';
+      } else if (type === 'ifa') {
+        L = lambdaEff / 4;
+        W = lambdaEff / 8;
+        desc = 'Inverted-F Antenna';
+      } else {
+        L = lambdaEff / 4;
+        W = lambdaEff / 16;
+        desc = 'Meander Line';
+      }
+
+      const gain = type === 'patch' ? 6 + 10 * Math.log10(W / lambda0) : type === 'ifa' ? 2.1 : 1.5;
+      const bw = (type === 'patch') ? (3.77 * (er - 1) / (er * er) * (W / L) * (h / lambda0) * 100) : (type === 'ifa' ? 8 : 5);
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div class="result-row"><span class="result-label">Type</span><span class="result-value">${desc}</span></div>
+          <div class="result-row"><span class="result-label">Length (L)</span><span class="result-value">${(L * 1000).toFixed(2)} mm</span></div>
+          <div class="result-row"><span class="result-label">Width (W)</span><span class="result-value">${(W * 1000).toFixed(2)} mm</span></div>
+          <div class="result-row"><span class="result-label">Estimated Gain</span><span class="result-value">${gain.toFixed(1)} dBi</span></div>
+          <div class="result-row"><span class="result-label">Bandwidth</span><span class="result-value">${bw.toFixed(1)}%</span></div>
+          <div class="result-row"><span class="result-label">Lambda Eff</span><span class="result-value">${(lambdaEff * 1000).toFixed(1)} mm</span></div>`;
+      }
+
+      drawPCB(ctx, canvas, type, W * 1000, L * 1000, freq);
+      drawTrace(ctxA, canvasA, type, W * 1000, L * 1000);
+      drawS11(ctxB, canvasB, freq, bw);
+      fillNotes(secC, type, freq, er, h * 1000, L * 1000, W * 1000);
+      if (typeof log === 'function') log(`PCB ${desc}: ${(L*1000).toFixed(1)}x${(W*1000).toFixed(1)}mm @ ${freq} GHz`, 'success');
+    }
+
+    function drawPCB(ctx, cvs, type, W, L, freq) {
+      if (!ctx || !cvs) return;
+      const cW = cvs.width, cH = cvs.height;
+      ctx.clearRect(0, 0, cW, cH);
+      ctx.fillStyle = '#0a3a0a';
+      ctx.fillRect(0, 0, cW, cH);
+      ctx.fillStyle = '#1a5a1a';
+      ctx.fillRect(20, 20, cW - 40, cH - 40);
+      const cx = cW / 2, cy = cH / 2;
+      const scale = Math.min((cW - 80) / Math.max(W, 10), (cH - 80) / Math.max(L, 10));
+      const sw = W * scale, sl = L * scale;
+      ctx.fillStyle = '#d4a03c';
+      if (type === 'patch') {
+        ctx.fillRect(cx - sw / 2, cy - sl / 2, sw, sl);
+        ctx.fillStyle = '#c0c0c0';
+        ctx.fillRect(cx - 2, cy + sl / 2, 4, 20);
+      } else if (type === 'ifa') {
+        ctx.fillRect(cx - sw / 2, cy - sl / 2, 3, sl);
+        ctx.fillRect(cx - sw / 2, cy - sl / 2, sw, 3);
+        ctx.fillRect(cx + sw / 2 - 3, cy - sl / 2, 3, sl);
+        ctx.fillStyle = '#c0c0c0';
+        ctx.fillRect(cx - sw / 4, cy + sl / 2 - 3, 3, 20);
+      } else {
+        for (let i = 0; i < 6; i++) {
+          const y = cy - sl / 2 + (sl / 6) * i;
+          const x1 = (i % 2 === 0) ? cx - sw / 2 : cx + sw / 2 - sw * 0.8;
+          ctx.fillRect(x1, y, sw * 0.8, 3);
+          if (i < 5) {
+            const xv = (i % 2 === 0) ? cx + sw / 2 - sw * 0.2 : cx - sw / 2;
+            ctx.fillRect(xv, y, 3, sl / 6);
+          }
+        }
+      }
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${type.toUpperCase()} @ ${freq} GHz`, cx, 14);
+      ctx.fillText(`${W.toFixed(1)} x ${L.toFixed(1)} mm`, cx, cH - 6);
+    }
+
+    function drawTrace(ctx, cvs, type, W, L) {
+      if (!ctx || !cvs) return;
+      const cW = cvs.width, cH = cvs.height;
+      ctx.clearRect(0, 0, cW, cH);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, cW, cH);
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 2;
+      const pad = 40;
+      ctx.strokeRect(pad, pad, cW - 2 * pad, cH - 2 * pad);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`W = ${W.toFixed(2)} mm`, cW / 2, pad - 8);
+      ctx.textAlign = 'left';
+      ctx.save();
+      ctx.translate(pad - 8, cH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = 'center';
+      ctx.fillText(`L = ${L.toFixed(2)} mm`, 0, 0);
+      ctx.restore();
+      ctx.fillStyle = '#d4a03c55';
+      ctx.fillRect(pad + 2, pad + 2, cW - 2 * pad - 4, cH - 2 * pad - 4);
+    }
+
+    function drawS11(ctx, cvs, freq, bw) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      const steps = 200;
+      const fMin = freq * 0.7, fMax = freq * 1.3;
+      ctx.strokeStyle = '#33ff33';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++) {
+        const f = fMin + (fMax - fMin) * (i / steps);
+        const df = (f - freq) / freq;
+        const s11 = -25 * Math.exp(-Math.pow(df / (bw / 200), 2));
+        const y = pad + (-s11 / 30) * gH;
+        const x = pad + (i / steps) * gW;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.strokeStyle = '#ff4444';
+      ctx.setLineDash([4, 4]);
+      const y10 = pad + (10 / 30) * gH;
+      ctx.beginPath(); ctx.moveTo(pad, y10); ctx.lineTo(W - pad, y10); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#ff4444';
+      ctx.font = '9px Orbitron, monospace';
+      ctx.fillText('-10 dB', pad + 5, y10 - 4);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Return Loss (S11)', W / 2, 14);
+      ctx.fillText(`${fMin.toFixed(2)}`, pad, H - 5);
+      ctx.fillText(`${fMax.toFixed(2)} GHz`, W - pad, H - 5);
+    }
+
+    function fillNotes(el, type, freq, er, h, L, W) {
+      if (!el) return;
+      el.innerHTML = `
+        <p><strong>PCB Antenna Design Notes:</strong></p>
+        <p>Substrate: Er=${er}, thickness=${h}mm. Operating frequency: ${freq} GHz.</p>
+        <p>Antenna dimensions: ${L.toFixed(2)} x ${W.toFixed(2)} mm (${type}).</p>
+        <p>For microstrip patch: ensure ground plane extends at least lambda/4 beyond patch edges.</p>
+        <p>For IFA: the feed point and ground short position strongly affect impedance matching.</p>
+        <p>For meander: more turns reduce size but decrease efficiency and bandwidth.</p>
+        <p>Use FR-4 (Er=4.4) for prototyping, Rogers (Er=3.5) for production quality.</p>`;
+    }
+
+    document.getElementById('pcbCalcBtn').addEventListener('click', calcPCB);
+    calcPCB();
+  });
+})();

@@ -63,32 +63,33 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Frequency Hunter — RF Scanner', subtitle: '📻 Scan frequencies and hunt hidden transmitters',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Frequency Hunter', mainDesc: 'Spectrum analyzer & hidden transmitter hunt',
+    sectionA: 'Direction Finder', sectionB: 'Signal Analysis', sectionC: 'Hunt Scoreboard',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is Frequency Hunter?', faq_a1: 'An ESP32 RF scanner simulator. Scan radio frequencies, visualize the spectrum, and hunt for hidden transmitters in a hot/cold game.',
+    faq_q2: 'How does the spectrum analyzer work?', faq_a2: 'The canvas displays signal strength vs frequency. Peaks indicate active transmitters. Use the frequency slider to tune.',
+    faq_q3: 'What bands can I scan?', faq_a3: 'ISM 433/868/915 MHz, WiFi 2.4GHz, and FM Radio. Each band has different signal characteristics.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Click "Start Hunt" to begin searching for hidden transmitters.',
+    howto_2: 'Use the frequency slider to tune across the spectrum.',
+    howto_3: 'Watch the signal strength bar — HOT means you are close!',
+    howto_4: 'Open "Direction Finder" for compass-based transmitter hunting.',
+    howto_5: 'Check "Signal Analysis" for waterfall displays and signal details.',
+    wiki_rf_title: '📻 Radio Frequencies', wiki_rf: 'Radio waves carry information on specific frequencies measured in Hz. Different bands serve different purposes.',
+    wiki_spectrum_title: '📊 Spectrum Analysis', wiki_spectrum: 'A spectrum analyzer shows signal power vs frequency. Peaks indicate transmitters. Noise floor is the baseline.',
+    wiki_ism_title: '📡 ISM Bands', wiki_ism: 'Industrial, Scientific, and Medical bands (433/868/915 MHz) are license-free. IoT devices, garage openers, and remote controls use these.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'This simulator runs 100% in your browser. No real RF signals are transmitted or received.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📻 Frequency Hunter ready — start scanning!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +101,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Chasseur de Fréquences — Scanner RF', subtitle: '📻 Scannez les fréquences et chassez les émetteurs cachés',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Chasseur de Fréquences', mainDesc: 'Analyseur de spectre et chasse aux émetteurs cachés',
+    sectionA: 'Détecteur de Direction', sectionB: 'Analyse de Signal', sectionC: 'Tableau des Scores',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +126,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📻 Chasseur de Fréquences prêt — commencez le scan !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +138,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'صائد الترددات — ماسح RF', subtitle: '📻 امسح الترددات وطارد المرسلات المخفية',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'صائد الترددات', mainDesc: 'محلل طيف وصيد المرسلات المخفية',
+    sectionA: 'محدد الاتجاه', sectionB: 'تحليل الإشارة', sectionC: 'لوحة النتائج',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +163,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📻 صائد الترددات جاهز — ابدأ المسح!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1450,316 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════════════════════════════════════════════════════════
+   FREQUENCY HUNTER — RF Scanner Simulation
+   ═══════════════════════════════════════════════════════════ */
+
+(function FreqHunterSim() {
+  const specCanvas = $('spectrumCanvas');
+  if (!specCanvas) return;
+  const sctx = specCanvas.getContext('2d');
+  const compassCanvas = $('compassCanvas');
+  const cctx = compassCanvas ? compassCanvas.getContext('2d') : null;
+  const wfCanvas = $('waterfallCanvas');
+  const wctx = wfCanvas ? wfCanvas.getContext('2d') : null;
+
+  let currentFreq = 450;
+  let freqMin = 400, freqMax = 500;
+  let hunting = false, scanning = false;
+  let signals = [];
+  let hiddenTx = null;
+  let huntsWon = 0, bestTime = Infinity, totalSignals = 0;
+  let huntStart = 0;
+  let wfData = [];
+  let animId = null;
+
+  const BANDS = {
+    ism433: {min:430,max:440,label:'ISM 433 MHz'},
+    ism868: {min:863,max:870,label:'ISM 868 MHz'},
+    ism915: {min:902,max:928,label:'ISM 915 MHz'},
+    wifi24: {min:2400,max:2500,label:'WiFi 2.4 GHz'},
+    fm: {min:87,max:108,label:'FM Radio'},
+  };
+
+  // Expose setBand globally for inline onclick
+  window.setBand = function(band) {
+    const b = BANDS[band];
+    if (!b) return;
+    freqMin = b.min; freqMax = b.max;
+    currentFreq = (b.min + b.max) / 2;
+    const slider = $('freqSlider');
+    if (slider) { slider.min = b.min; slider.max = b.max; slider.value = currentFreq; }
+    updateFreqDisplay();
+    signals = [];
+    generateSignals();
+    log(`📻 Band: ${b.label} (${b.min}-${b.max} MHz)`, 'info');
+    const fmin = $('freqMinLabel'), fmax = $('freqMaxLabel');
+    if (fmin) fmin.textContent = b.min + ' MHz';
+    if (fmax) fmax.textContent = b.max + ' MHz';
+  };
+
+  function generateSignals() {
+    const count = 3 + Math.floor(Math.random() * 5);
+    for (let i = 0; i < count; i++) {
+      signals.push({
+        freq: freqMin + Math.random() * (freqMax - freqMin),
+        power: -80 + Math.random() * 60,
+        bandwidth: 0.5 + Math.random() * 5,
+        type: ['FM','AM','Digital','Spread Spectrum','Pulsed'][Math.floor(Math.random()*5)],
+        mod: ['GFSK','BPSK','4FSK','OOK','LoRa'][Math.floor(Math.random()*5)],
+      });
+    }
+    totalSignals += count;
+    const sc = $('signalCount');
+    if (sc) sc.innerHTML = `${signals.length} <span>signals found</span>`;
+  }
+
+  function startHunt() {
+    if (hunting) return;
+    hunting = true;
+    huntStart = Date.now();
+    hiddenTx = {
+      freq: freqMin + Math.random() * (freqMax - freqMin),
+      power: -20 - Math.random() * 30,
+    };
+    log('🎯 Hunt started! Find the hidden transmitter.', 'info');
+    log(`Hint: somewhere between ${freqMin} and ${freqMax} MHz`, 'info');
+    playSound('click');
+  }
+
+  function updateFreqDisplay() {
+    const fd = $('freqDisplay');
+    if (fd) fd.textContent = currentFreq.toFixed(1) + ' MHz';
+  }
+
+  function getRSSI() {
+    if (!hiddenTx) return -100;
+    const dist = Math.abs(currentFreq - hiddenTx.freq);
+    const maxDist = (freqMax - freqMin);
+    return hiddenTx.power - (dist / maxDist) * 80;
+  }
+
+  function updateRSSIBar() {
+    const rssi = getRSSI();
+    const indicator = $('rssiIndicator');
+    if (indicator) {
+      const pct = Math.max(0, Math.min(100, (rssi + 100) / 80 * 100));
+      indicator.style.left = pct + '%';
+    }
+    // Check for found
+    if (hunting && hiddenTx && Math.abs(currentFreq - hiddenTx.freq) < 1) {
+      const elapsed = ((Date.now() - huntStart) / 1000).toFixed(1);
+      hunting = false;
+      huntsWon++;
+      if (parseFloat(elapsed) < bestTime) bestTime = parseFloat(elapsed);
+      log(`🏆 Transmitter found at ${hiddenTx.freq.toFixed(1)} MHz in ${elapsed}s!`, 'success');
+      playSound('success');
+      updateHuntStats();
+      const hl = $('huntLog');
+      if (hl) {
+        const d = document.createElement('div');
+        d.textContent = `[${new Date().toLocaleTimeString()}] Found at ${hiddenTx.freq.toFixed(1)} MHz — ${elapsed}s`;
+        hl.prepend(d);
+      }
+      hiddenTx = null;
+    }
+  }
+
+  function updateHuntStats() {
+    const hw = $('statHuntsWon'), bt = $('statBestTime'), ts = $('statSignals');
+    if (hw) hw.textContent = huntsWon;
+    if (bt) bt.textContent = bestTime === Infinity ? '--' : bestTime + 's';
+    if (ts) ts.textContent = totalSignals;
+  }
+
+  // Spectrum drawing
+  function drawSpectrum() {
+    const W = specCanvas.width, H = specCanvas.height;
+    sctx.fillStyle = 'rgba(10,10,26,0.3)';
+    sctx.fillRect(0, 0, W, H);
+
+    // Grid
+    sctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    sctx.lineWidth = 1;
+    for (let i = 0; i < 10; i++) {
+      const x = i * W / 10;
+      sctx.beginPath(); sctx.moveTo(x, 0); sctx.lineTo(x, H); sctx.stroke();
+    }
+    for (let i = 0; i < 5; i++) {
+      const y = i * H / 5;
+      sctx.beginPath(); sctx.moveTo(0, y); sctx.lineTo(W, y); sctx.stroke();
+    }
+
+    // Noise floor
+    sctx.beginPath();
+    sctx.strokeStyle = 'rgba(34,197,94,0.6)';
+    sctx.lineWidth = 1.5;
+    const t = Date.now() / 500;
+    for (let x = 0; x < W; x++) {
+      let y = H * 0.85 + Math.random() * 8 - 4;
+      // Add signal peaks
+      signals.forEach(s => {
+        const sx = ((s.freq - freqMin) / (freqMax - freqMin)) * W;
+        const dist = Math.abs(x - sx);
+        const bw = s.bandwidth * W / (freqMax - freqMin);
+        if (dist < bw * 3) {
+          const peak = Math.exp(-(dist * dist) / (2 * bw * bw));
+          y -= peak * (s.power + 100) * H / 100 * 0.6;
+        }
+      });
+      // Hidden transmitter
+      if (hiddenTx) {
+        const sx = ((hiddenTx.freq - freqMin) / (freqMax - freqMin)) * W;
+        const dist = Math.abs(x - sx);
+        if (dist < 15) {
+          const peak = Math.exp(-(dist * dist) / 50);
+          y -= peak * (hiddenTx.power + 100) * H / 100 * 0.5;
+        }
+      }
+      x === 0 ? sctx.moveTo(x, y) : sctx.lineTo(x, y);
+    }
+    sctx.stroke();
+
+    // Tuning line
+    const tx = ((currentFreq - freqMin) / (freqMax - freqMin)) * W;
+    sctx.beginPath();
+    sctx.moveTo(tx, 0); sctx.lineTo(tx, H);
+    sctx.strokeStyle = 'rgba(239,68,68,0.7)';
+    sctx.lineWidth = 2;
+    sctx.stroke();
+
+    // Waterfall
+    if (wctx && wfCanvas) {
+      const wW = wfCanvas.width, wH = wfCanvas.height;
+      const imageData = wctx.getImageData(0, 0, wW, wH);
+      wctx.putImageData(imageData, 0, 1);
+      for (let x = 0; x < wW; x++) {
+        let v = Math.random() * 30;
+        signals.forEach(s => {
+          const sx = ((s.freq - freqMin) / (freqMax - freqMin)) * wW;
+          const dist = Math.abs(x - sx);
+          const bw = s.bandwidth * wW / (freqMax - freqMin);
+          if (dist < bw * 3) v += Math.exp(-(dist * dist) / (2 * bw * bw)) * (s.power + 100);
+        });
+        const r = Math.min(255, v * 3);
+        const g = Math.min(255, v * 1.5);
+        const b = Math.min(255, v);
+        wctx.fillStyle = `rgb(${r},${g},${b})`;
+        wctx.fillRect(x, 0, 1, 1);
+      }
+    }
+
+    // Compass
+    if (cctx && compassCanvas && hiddenTx) {
+      const cW = compassCanvas.width, cH = compassCanvas.height;
+      const cx = cW/2, cy = cH/2, R = Math.min(cW,cH)/2 - 15;
+      cctx.clearRect(0, 0, cW, cH);
+      // Ring
+      cctx.beginPath();
+      cctx.arc(cx, cy, R, 0, Math.PI*2);
+      cctx.strokeStyle = 'rgba(212,160,60,0.3)';
+      cctx.lineWidth = 2;
+      cctx.stroke();
+      // Cardinals
+      cctx.fillStyle = 'rgba(255,255,255,0.7)';
+      cctx.font = '14px Orbitron, monospace';
+      cctx.textAlign = 'center';
+      cctx.fillText('N', cx, cy - R + 15);
+      cctx.fillText('S', cx, cy + R - 5);
+      cctx.fillText('E', cx + R - 10, cy + 5);
+      cctx.fillText('W', cx - R + 10, cy + 5);
+      // Direction arrow
+      const angle = ((hiddenTx.freq - currentFreq) / (freqMax - freqMin)) * Math.PI * 2 + Date.now() / 3000;
+      const headingDeg = ((angle * 180 / Math.PI) % 360 + 360) % 360;
+      cctx.save();
+      cctx.translate(cx, cy);
+      cctx.rotate(angle);
+      cctx.beginPath();
+      cctx.moveTo(0, -R + 25);
+      cctx.lineTo(-8, 20);
+      cctx.lineTo(8, 20);
+      cctx.closePath();
+      cctx.fillStyle = 'rgba(239,68,68,0.8)';
+      cctx.fill();
+      cctx.restore();
+      const hd = $('headingDisplay'); if (hd) hd.textContent = Math.round(headingDeg);
+      const dirs = ['N','NE','E','SE','S','SW','W','NW'];
+      const hdir = $('headingDir'); if (hdir) hdir.textContent = dirs[Math.round(headingDeg/45)%8];
+      const dd = $('distDisplay'); if (dd) dd.textContent = Math.abs(currentFreq - hiddenTx.freq).toFixed(1);
+    }
+
+    updateRSSIBar();
+    animId = requestAnimationFrame(drawSpectrum);
+  }
+
+  // Slider
+  const slider = $('freqSlider');
+  if (slider) {
+    slider.addEventListener('input', () => {
+      currentFreq = parseFloat(slider.value);
+      updateFreqDisplay();
+    });
+  }
+
+  // Buttons
+  const huntBtn = $('startHuntBtn'); if (huntBtn) huntBtn.onclick = startHunt;
+  const scanBtn = $('scanBtn'); if (scanBtn) scanBtn.onclick = () => {
+    signals = []; generateSignals();
+    log('📡 Frequency scan complete — signals detected', 'success');
+  };
+  const resetBtn = $('resetBtn'); if (resetBtn) resetBtn.onclick = () => {
+    signals = []; hunting = false; hiddenTx = null;
+    log('🔄 Scanner reset', 'info');
+  };
+  const captBtn = $('captureBtn'); if (captBtn) captBtn.onclick = () => {
+    log(`📸 Signal captured at ${currentFreq.toFixed(1)} MHz`, 'success');
+  };
+  const analyzeBtn = $('analyzeBtn'); if (analyzeBtn) analyzeBtn.onclick = () => {
+    const nearest = signals.reduce((a, b) => Math.abs(b.freq - currentFreq) < Math.abs(a.freq - currentFreq) ? b : a, signals[0] || {});
+    if (nearest && nearest.freq) {
+      const pf = $('detPeakFreq'); if (pf) pf.textContent = nearest.freq.toFixed(1) + ' MHz';
+      const pr = $('detPeakRSSI'); if (pr) pr.textContent = nearest.power.toFixed(0) + ' dBm';
+      const bw = $('detBandwidth'); if (bw) bw.textContent = nearest.bandwidth.toFixed(1) + ' MHz';
+      const md = $('detModulation'); if (md) md.textContent = nearest.mod;
+      const st = $('detSignalType'); if (st) st.textContent = nearest.type;
+      const sb = $('detStability'); if (sb) sb.textContent = (80 + Math.random()*20).toFixed(0) + '%';
+      log(`🔬 Signal analyzed: ${nearest.freq.toFixed(1)} MHz, ${nearest.type}, ${nearest.mod}`, 'info');
+    }
+  };
+  const markBtn = $('markDirBtn'); if (markBtn) markBtn.onclick = () => {
+    const dh = $('dirHistory');
+    if (dh) {
+      const d = document.createElement('div');
+      d.textContent = `[${new Date().toLocaleTimeString()}] ${currentFreq.toFixed(1)} MHz → RSSI: ${getRSSI().toFixed(0)} dBm`;
+      dh.prepend(d);
+    }
+    log('📌 Direction marked', 'info');
+  };
+  const nhBtn = $('newHuntBtn'); if (nhBtn) nhBtn.onclick = startHunt;
+  const csBtn = $('clearStatsBtn'); if (csBtn) csBtn.onclick = () => {
+    huntsWon = 0; bestTime = Infinity; totalSignals = 0;
+    updateHuntStats();
+    const hl = $('huntLog'); if (hl) hl.innerHTML = '';
+    log('🧹 Stats cleared', 'info');
+  };
+
+  // Update signals list
+  function updateSignalsList() {
+    const list = $('signalsList');
+    if (!list || signals.length === 0) return;
+    list.innerHTML = '';
+    signals.forEach(s => {
+      const d = document.createElement('div');
+      d.style.cssText = 'display:flex;gap:8px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.05);';
+      d.innerHTML = `<span style="color:var(--accent)">${s.freq.toFixed(1)} MHz</span><span style="opacity:0.6">${s.power.toFixed(0)} dBm</span><span style="opacity:0.5">${s.type}</span>`;
+      list.appendChild(d);
+    });
+  }
+
+  generateSignals();
+  updateSignalsList();
+  updateFreqDisplay();
+  setStatus(true);
+  drawSpectrum();
+})();

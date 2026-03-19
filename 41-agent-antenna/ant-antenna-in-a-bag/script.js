@@ -63,115 +63,102 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Antenna in a Bag', subtitle: '🎒 Portable antenna kit simulator',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Antenna in a Bag', mainDesc: 'Quick-deploy portable antenna kit simulator',
+    sectionA: 'Kit Builder', sectionB: 'Band Selection', sectionC: 'Link Budget',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is Antenna in a Bag?', faq_a1: 'A portable, rapidly deployable antenna kit simulator for field operations. Select components, pick a frequency band, and deploy.',
+    faq_q2: 'How does deployment work?', faq_a2: 'Click Deploy Kit to simulate unpacking and setting up the antenna. The canvas shows the antenna visualization.',
+    faq_q3: 'What are the frequency bands?', faq_a3: 'HF (3-30 MHz), VHF (30-300 MHz), UHF (300 MHz-3 GHz), and SHF (3-30 GHz) for different mission profiles.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    howto_1: 'Select antenna components in Kit Builder.', howto_2: 'Choose a frequency band for your mission.',
+    howto_3: 'Click Deploy Kit to set up the antenna.', howto_4: 'Use Auto-Tune to optimize signal strength.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'EN/FR/AR with RTL.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data local.',
+    working: 'Working…', t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🎒 Antenna kit ready!', logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    abStat1: 'Kit Status', abStat2: 'Signal', abStat3: 'Band', abStat4: 'Deploy Time',
+    abDeploy: 'Deploy Kit', abTune: 'Auto-Tune', abPack: 'Pack Up',
+    abSecA: 'Select Components', abSecB: 'Frequency Bands', abSecC: 'Link Budget Calculator',
+    abBuild: 'Build Kit', abReset: 'Reset',
+    deployed: '📡 Antenna deployed!', packed: '📦 Kit packed up', tuning: '🔧 Auto-tuning...',
+    tuned: '✅ Signal optimized!', kitBuilt: '🎒 Kit assembled',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Antenne de Poche', subtitle: '🎒 Kit antenne portable',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Antenne de Poche', mainDesc: 'Simulateur de kit antenne déployable',
+    sectionA: 'Constructeur', sectionB: 'Bandes', sectionC: 'Bilan de Liaison',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    faq_q1: 'Qu\'est-ce que Antenne de Poche ?', faq_a1: 'Un simulateur de kit antenne portable pour les opérations terrain.',
+    faq_q2: 'Comment déployer ?', faq_a2: 'Cliquez sur Déployer pour simuler l\'installation de l\'antenne.',
+    faq_q3: 'Quelles sont les bandes ?', faq_a3: 'HF, VHF, UHF et SHF pour différents profils de mission.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
+    howto_1: 'Sélectionnez les composants.', howto_2: 'Choisissez une bande de fréquence.',
+    howto_3: 'Déployez le kit antenne.', howto_4: 'Utilisez l\'auto-réglage.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'EN/FR/AR avec RTL.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Tout est local.',
+    working: 'En cours…', t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🎒 Kit antenne prêt !', logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    abStat1: 'Statut Kit', abStat2: 'Signal', abStat3: 'Bande', abStat4: 'Temps',
+    abDeploy: 'Déployer', abTune: 'Auto-Réglage', abPack: 'Ranger',
+    deployed: '📡 Antenne déployée !', packed: '📦 Kit rangé', tuning: '🔧 Réglage...',
+    tuned: '✅ Signal optimisé !', kitBuilt: '🎒 Kit assemblé',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'هوائي في حقيبة', subtitle: '🎒 محاكي هوائي محمول',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'هوائي في حقيبة', mainDesc: 'محاكي نشر هوائي سريع للعمليات الميدانية',
+    sectionA: 'بناء العدة', sectionB: 'النطاقات', sectionC: 'ميزانية الوصلة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    faq_q1: 'ما هو هوائي في حقيبة؟', faq_a1: 'محاكي لعدة هوائي محمولة قابلة للنشر السريع.',
+    faq_q2: 'كيف يعمل النشر؟', faq_a2: 'انقر على نشر لمحاكاة تركيب الهوائي.',
+    faq_q3: 'ما هي نطاقات التردد؟', faq_a3: 'HF، VHF، UHF و SHF لمهام مختلفة.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
+    howto_1: 'اختر المكونات.', howto_2: 'حدد نطاق التردد.',
+    howto_3: 'انشر عدة الهوائي.', howto_4: 'استخدم الضبط التلقائي.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'EN/FR/AR مع RTL.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات محلية.',
+    working: 'جارٍ…', t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🎒 عدة الهوائي جاهزة!', logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    abStat1: 'حالة العدة', abStat2: 'الإشارة', abStat3: 'النطاق', abStat4: 'وقت النشر',
+    abDeploy: 'نشر', abTune: 'ضبط تلقائي', abPack: 'حزم',
+    deployed: '📡 تم نشر الهوائي!', packed: '📦 تم حزم العدة', tuning: '🔧 جارٍ الضبط...',
+    tuned: '✅ تم تحسين الإشارة!', kitBuilt: '🎒 تم تجميع العدة',
   }
 };
 
@@ -1330,6 +1317,126 @@ function trapFocus(e) {
   }
 }
 
+/* ═══════ ANTENNA-IN-A-BAG SIMULATION ═══════ */
+
+let abDeployed = false, abSignal = 0, abBand = null, abCanvas, abCtx, abAnimId;
+const AB_BANDS = [
+  { id: 'HF', label: 'HF 3-30 MHz', freq: 14, gain: 6, color: '#4caf50' },
+  { id: 'VHF', label: 'VHF 30-300 MHz', freq: 145, gain: 8, color: '#2196f3' },
+  { id: 'UHF', label: 'UHF 300M-3G', freq: 440, gain: 10, color: '#ff9800' },
+  { id: 'SHF', label: 'SHF 3-30 GHz', freq: 5800, gain: 14, color: '#e91e63' },
+];
+const AB_PARTS = [
+  { icon: '📡', name: 'Dish' }, { icon: '🔌', name: 'Feedline' }, { icon: '🔋', name: 'Battery' },
+  { icon: '📻', name: 'Transceiver' }, { icon: '🧲', name: 'Balun' }, { icon: '🗼', name: 'Mast' },
+];
+let abSelectedParts = new Set();
+
+function initAntennaKit() {
+  abCanvas = $('abCanvas');
+  if (abCanvas) { abCtx = abCanvas.getContext('2d'); abCanvas.width = abCanvas.offsetWidth; abCanvas.height = 200; }
+  // Kit grid
+  const grid = $('kitGrid');
+  if (grid) {
+    AB_PARTS.forEach((p, i) => {
+      const d = document.createElement('div'); d.className = 'kit-item'; d.dataset.idx = i;
+      d.innerHTML = `<span class="kit-icon">${p.icon}</span><span class="kit-name">${p.name}</span>`;
+      d.onclick = () => { d.classList.toggle('selected'); if (abSelectedParts.has(i)) abSelectedParts.delete(i); else abSelectedParts.add(i); playSound('click'); };
+      grid.appendChild(d);
+    });
+  }
+  // Band buttons
+  const bs = $('bandSelect');
+  if (bs) AB_BANDS.forEach(b => {
+    const btn = document.createElement('button'); btn.className = 'band-btn'; btn.textContent = b.label; btn.dataset.id = b.id;
+    btn.onclick = () => { document.querySelectorAll('.band-btn').forEach(x => x.classList.remove('active')); btn.classList.add('active'); abBand = b; $('abS3').textContent = b.id; updateBandInfo(); playSound('click'); };
+    bs.appendChild(btn);
+  });
+  // Link budget sliders
+  const txP = $('txPower'), txD = $('txDist');
+  if (txP) txP.oninput = () => { $('txPowVal').textContent = txP.value; calcLinkBudget(); };
+  if (txD) txD.oninput = () => { $('txDistVal').textContent = txD.value; calcLinkBudget(); };
+  window.addEventListener('resize', () => { if (abCanvas) { abCanvas.width = abCanvas.offsetWidth; } });
+  abAnimate();
+}
+
+function updateBandInfo() {
+  const el = $('bandInfo'); if (!el || !abBand) return;
+  el.innerHTML = `Band: ${abBand.id} | Freq: ${abBand.freq} MHz | Gain: ${abBand.gain} dBi\nOptimal for ${abBand.freq < 50 ? 'long-range HF comms' : abBand.freq < 500 ? 'tactical field ops' : 'high-bandwidth data link'}`;
+}
+
+function calcLinkBudget() {
+  const txP = parseFloat($('txPower')?.value || 20), dist = parseFloat($('txDist')?.value || 5);
+  const freq = abBand ? abBand.freq : 145, gain = abBand ? abBand.gain : 8;
+  const fspl = 20 * Math.log10(dist) + 20 * Math.log10(freq) + 32.44;
+  const rxPow = txP + gain + gain - fspl;
+  const el = $('linkResult'); if (!el) return;
+  el.innerHTML = `TX Power: ${txP} dBm\nAntenna Gain: ${gain} dBi (x2)\nFree-Space Path Loss: ${fspl.toFixed(1)} dB\nDistance: ${dist} km | Freq: ${freq} MHz\n━━━━━━━━━━━━━━━━━━\nReceived Power: ${rxPow.toFixed(1)} dBm\nLink Margin: ${(rxPow + 120).toFixed(1)} dB\nStatus: ${rxPow > -90 ? '✅ STRONG' : rxPow > -110 ? '⚠️ MARGINAL' : '❌ WEAK'}`;
+}
+
+function abDeploy() {
+  if (abDeployed) return;
+  abDeployed = true; setStatus(true); $('abS1').textContent = 'DEPLOYING';
+  log(LANG[currentLang].deployed || '📡 Antenna deployed!', 'success'); playSound('success');
+  let progress = 0;
+  const iv = setInterval(() => {
+    progress += 5; $('sigFill').style.width = progress + '%';
+    if (progress >= 100) { clearInterval(iv); $('abS1').textContent = 'DEPLOYED'; abSignal = 60 + Math.random() * 30; $('abS2').textContent = abSignal.toFixed(0) + '%'; }
+  }, 100);
+}
+
+function abTune() {
+  if (!abDeployed) return;
+  log(LANG[currentLang].tuning || '🔧 Auto-tuning...', 'info');
+  $('abS1').textContent = 'TUNING';
+  setTimeout(() => { abSignal = 85 + Math.random() * 15; $('abS2').textContent = abSignal.toFixed(0) + '%'; $('sigFill').style.width = abSignal + '%'; $('abS1').textContent = 'OPTIMAL'; log(LANG[currentLang].tuned || '✅ Signal optimized!', 'success'); playSound('success'); }, 1500);
+}
+
+function abPack() {
+  abDeployed = false; abSignal = 0; setStatus(false);
+  $('abS1').textContent = 'PACKED'; $('abS2').textContent = '--'; $('sigFill').style.width = '0%';
+  log(LANG[currentLang].packed || '📦 Kit packed up', 'info'); playSound('click');
+}
+
+function abBuildKit() {
+  if (abSelectedParts.size < 3) { log('⚠️ Select at least 3 components', 'error'); playSound('error'); return; }
+  log((LANG[currentLang].kitBuilt || '🎒 Kit assembled') + ` (${abSelectedParts.size} parts)`, 'success'); playSound('success');
+}
+function abResetKit() { abSelectedParts.clear(); document.querySelectorAll('.kit-item').forEach(x => x.classList.remove('selected')); }
+
+function abAnimate() {
+  if (!abCtx || !abCanvas) { abAnimId = requestAnimationFrame(abAnimate); return; }
+  const w = abCanvas.width, h = abCanvas.height; abCtx.fillStyle = 'rgba(10,10,26,0.3)'; abCtx.fillRect(0, 0, w, h);
+  const t = Date.now() / 1000;
+  // Draw ground
+  abCtx.strokeStyle = '#333'; abCtx.beginPath(); abCtx.moveTo(0, h * 0.8); abCtx.lineTo(w, h * 0.8); abCtx.stroke();
+  if (abDeployed) {
+    const cx = w / 2, by = h * 0.8;
+    // Mast
+    abCtx.strokeStyle = '#888'; abCtx.lineWidth = 3; abCtx.beginPath(); abCtx.moveTo(cx, by); abCtx.lineTo(cx, h * 0.15); abCtx.stroke();
+    // Antenna elements
+    const col = abBand ? abBand.color : '#4caf50';
+    abCtx.strokeStyle = col; abCtx.lineWidth = 2;
+    for (let i = -2; i <= 2; i++) { abCtx.beginPath(); abCtx.moveTo(cx, h * 0.2); abCtx.lineTo(cx + i * 30, h * 0.35); abCtx.stroke(); }
+    // Signal waves
+    abCtx.strokeStyle = col; abCtx.lineWidth = 1; abCtx.globalAlpha = 0.4;
+    for (let r = 1; r <= 4; r++) {
+      const radius = 20 + r * 18 + Math.sin(t * 3 + r) * 5;
+      abCtx.beginPath(); abCtx.arc(cx, h * 0.2, radius, -Math.PI * 0.7, -Math.PI * 0.3); abCtx.stroke();
+    }
+    abCtx.globalAlpha = 1;
+    // Signal strength text
+    abCtx.fillStyle = col; abCtx.font = '12px Orbitron, monospace'; abCtx.fillText(`${abSignal.toFixed(0)}% RSSI`, 10, 20);
+  } else {
+    // Bag icon
+    abCtx.fillStyle = '#555'; abCtx.font = '40px sans-serif'; abCtx.textAlign = 'center'; abCtx.fillText('🎒', w / 2, h / 2);
+    abCtx.fillStyle = '#666'; abCtx.font = '12px Orbitron, monospace'; abCtx.textAlign = 'center'; abCtx.fillText('KIT PACKED', w / 2, h / 2 + 30);
+    abCtx.textAlign = 'start';
+  }
+  abCtx.lineWidth = 1;
+  abAnimId = requestAnimationFrame(abAnimate);
+}
+
 /* ═══════ INIT ═══════ */
 
 function init() {
@@ -1442,6 +1549,9 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  // Antenna Kit simulation
+  initAntennaKit();
 
   log(LANG[currentLang].ready, 'success');
 }

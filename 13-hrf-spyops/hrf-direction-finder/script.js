@@ -63,115 +63,106 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Direction Finder', subtitle: 'Direction Finder — Signal Triangulation',
+    disconnected: 'Idle', connected: 'Tracking',
+    mainSection: 'Direction Finder', mainDesc: 'Triangulate signal sources on the map',
+    sectionA: 'Located Signals', sectionB: 'DF Techniques',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
+    clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Direction Finder?', faq_a1: 'A triangulation simulator. Place receivers to locate hidden transmitters.',
+    faq_q2: 'How do I triangulate?', faq_a2: 'Place 2-3 receivers on the map, then click Triangulate.',
+    faq_q3: 'Why do I need multiple receivers?', faq_a3: 'Each receiver measures bearing to the target. Two bearings give a fix, three improve accuracy.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Click Add Receiver to place receivers.', howto_2: 'Click on the map to position each receiver.',
+    howto_3: 'Click Triangulate to compute the target location.', howto_4: 'Compare estimated vs actual position.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Direction Finder ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    addReceiver: 'Add Receiver', newTarget: 'New Target', triangulate: 'Triangulate', resetMap: 'Reset',
+    receivers: 'Receivers', targetInfo: 'Target Info', bearings: 'Bearings',
+    locateHint: 'Place receivers on the map, then triangulate to find the target.',
+    located: 'Target located!', needMore: 'Need at least 2 receivers', placingReceiver: 'Click map to place receiver',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Radio-Goniomètre', subtitle: 'Radio-Goniomètre — Triangulation RF',
+    disconnected: 'En attente', connected: 'Pistage',
+    mainSection: 'Radio-Goniomètre', mainDesc: 'Trianguler les sources sur la carte',
+    sectionA: 'Signaux Localisés', sectionB: 'Techniques de Goniométrie',
+    activityLog: 'Journal', eventsMsg: 'Événements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le Goniomètre?', faq_a1: 'Un simulateur de triangulation RF.',
+    faq_q2: 'Comment trianguler?', faq_a2: 'Placez 2-3 récepteurs et cliquez Trianguler.',
+    faq_q3: 'Pourquoi plusieurs récepteurs?', faq_a3: 'Chaque récepteur mesure un relèvement.',
+    faq_q4: 'Données privées?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Cliquez Ajouter Récepteur.', howto_2: 'Cliquez sur la carte pour placer.',
+    howto_3: 'Cliquez Trianguler.', howto_4: 'Comparez la position estimée.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Goniomètre prêt!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    addReceiver: 'Ajouter Récepteur', newTarget: 'Nouvelle Cible', triangulate: 'Trianguler', resetMap: 'Réinitialiser',
+    receivers: 'Récepteurs', targetInfo: 'Info Cible', bearings: 'Relèvements',
+    locateHint: 'Placez des récepteurs puis triangulez.',
+    located: 'Cible localisée!', needMore: 'Il faut au moins 2 récepteurs', placingReceiver: 'Cliquez pour placer',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'محدد الاتجاه', subtitle: 'محدد الاتجاه — تثليث الإشارات',
+    disconnected: 'خامل', connected: 'تتبع',
+    mainSection: 'محدد الاتجاه', mainDesc: 'تثليث مصادر الإشارات على الخريطة',
+    sectionA: 'الإشارات المحددة', sectionB: 'تقنيات تحديد الاتجاه',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو محدد الاتجاه؟', faq_a1: 'محاكي لتثليث الإشارات اللاسلكية.',
+    faq_q2: 'كيف أحدد الموقع؟', faq_a2: 'ضع 2-3 مستقبلات وانقر تثليث.',
+    faq_q3: 'لماذا عدة مستقبلات؟', faq_a3: 'كل مستقبل يقيس اتجاه الهدف.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
+    howto_1: 'انقر إضافة مستقبل.', howto_2: 'انقر على الخريطة.',
+    howto_3: 'انقر تثليث.', howto_4: 'قارن الموقع المقدر بالفعلي.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولاً.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 محدد الاتجاه جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    addReceiver: 'إضافة مستقبل', newTarget: 'هدف جديد', triangulate: 'تثليث', resetMap: 'إعادة تعيين',
+    receivers: 'المستقبلات', targetInfo: 'معلومات الهدف', bearings: 'الاتجاهات',
+    locateHint: 'ضع مستقبلات على الخريطة ثم ثلّث لإيجاد الهدف.',
+    located: 'تم تحديد الهدف!', needMore: 'تحتاج مستقبلين على الأقل', placingReceiver: 'انقر لوضع المستقبل',
   }
 };
 
@@ -1444,6 +1435,247 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initDirectionFinder();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: DIRECTION FINDER — Signal Triangulation
+   ═══════════════════════════════════════════════════════════════ */
+
+let mapCanvas, mapCtx, mapW=780, mapH=450;
+let receivers = [], target = null, estimatedPos = null;
+let placingReceiver = false, animFrame = 0, locatedHistory = [];
+
+function randomTarget() {
+  return { x: 80+Math.random()*(mapW-160), y: 80+Math.random()*(mapH-160), freq: (400+Math.random()*2100).toFixed(0)+' MHz', power: (-30-Math.random()*30).toFixed(0)+' dBm' };
+}
+
+function drawDFMap() {
+  if (!mapCtx) return;
+  animFrame++;
+  mapCtx.fillStyle = '#0a1a0a';
+  mapCtx.fillRect(0,0,mapW,mapH);
+
+  // Grid
+  mapCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+  for (let x=0; x<mapW; x+=50) { mapCtx.beginPath(); mapCtx.moveTo(x,0); mapCtx.lineTo(x,mapH); mapCtx.stroke(); }
+  for (let y=0; y<mapH; y+=50) { mapCtx.beginPath(); mapCtx.moveTo(0,y); mapCtx.lineTo(mapW,y); mapCtx.stroke(); }
+
+  // Bearing lines from receivers
+  if (target) {
+    receivers.forEach((rx, i) => {
+      const angle = Math.atan2(target.y - rx.y, target.x - rx.x);
+      const noise = (Math.random()-0.5)*0.08;
+      const lineAngle = angle + noise;
+      const len = Math.max(mapW, mapH) * 1.5;
+      mapCtx.beginPath();
+      mapCtx.moveTo(rx.x, rx.y);
+      mapCtx.lineTo(rx.x + Math.cos(lineAngle)*len, rx.y + Math.sin(lineAngle)*len);
+      mapCtx.strokeStyle = `hsla(${i*120}, 70%, 50%, 0.4)`;
+      mapCtx.lineWidth = 1.5;
+      mapCtx.setLineDash([8,4]);
+      mapCtx.stroke();
+      mapCtx.setLineDash([]);
+    });
+  }
+
+  // Estimated position
+  if (estimatedPos) {
+    const pulse = Math.sin(animFrame*0.1)*5;
+    mapCtx.beginPath();
+    mapCtx.arc(estimatedPos.x, estimatedPos.y, 15+pulse, 0, Math.PI*2);
+    mapCtx.strokeStyle = 'rgba(234,179,8,0.6)';
+    mapCtx.lineWidth = 2;
+    mapCtx.stroke();
+    mapCtx.beginPath();
+    mapCtx.arc(estimatedPos.x, estimatedPos.y, 5, 0, Math.PI*2);
+    mapCtx.fillStyle = '#eab308';
+    mapCtx.fill();
+    mapCtx.fillStyle = '#eab308';
+    mapCtx.font = '10px monospace';
+    mapCtx.textAlign = 'center';
+    mapCtx.fillText('ESTIMATED', estimatedPos.x, estimatedPos.y-20);
+  }
+
+  // Target (hidden unless located)
+  if (target && estimatedPos) {
+    mapCtx.beginPath();
+    mapCtx.arc(target.x, target.y, 6, 0, Math.PI*2);
+    mapCtx.fillStyle = '#ef4444';
+    mapCtx.fill();
+    mapCtx.strokeStyle = '#fff';
+    mapCtx.lineWidth = 1.5;
+    mapCtx.stroke();
+    mapCtx.fillStyle = '#ef4444';
+    mapCtx.font = '10px monospace';
+    mapCtx.textAlign = 'center';
+    mapCtx.fillText('TARGET', target.x, target.y-12);
+    // Antenna
+    mapCtx.beginPath(); mapCtx.moveTo(target.x, target.y-6); mapCtx.lineTo(target.x, target.y-20); mapCtx.stroke();
+    // Signal rings
+    for (let r=1; r<=3; r++) {
+      mapCtx.beginPath();
+      mapCtx.arc(target.x, target.y, r*20+(animFrame%20), 0, Math.PI*2);
+      mapCtx.strokeStyle = `rgba(239,68,68,${0.3-r*0.08})`;
+      mapCtx.lineWidth = 1;
+      mapCtx.stroke();
+    }
+  }
+
+  // Receivers
+  receivers.forEach((rx, i) => {
+    mapCtx.beginPath();
+    mapCtx.arc(rx.x, rx.y, 8, 0, Math.PI*2);
+    mapCtx.fillStyle = `hsl(${i*120}, 70%, 40%)`;
+    mapCtx.fill();
+    mapCtx.strokeStyle = '#fff';
+    mapCtx.lineWidth = 1.5;
+    mapCtx.stroke();
+    mapCtx.fillStyle = '#fff';
+    mapCtx.font = 'bold 10px monospace';
+    mapCtx.textAlign = 'center';
+    mapCtx.fillText(`R${i+1}`, rx.x, rx.y+4);
+  });
+
+  // Placing indicator
+  if (placingReceiver) {
+    mapCtx.fillStyle = 'rgba(59,130,246,0.3)';
+    mapCtx.font = '14px monospace';
+    mapCtx.textAlign = 'center';
+    mapCtx.fillText(LANG[currentLang].placingReceiver, mapW/2, 20);
+  }
+}
+
+function triangulate() {
+  if (receivers.length < 2) {
+    log(LANG[currentLang].needMore, 'error');
+    playSound('error');
+    return;
+  }
+  if (!target) return;
+
+  // Compute intersection of bearing lines (with noise)
+  let sumX=0, sumY=0, count=0;
+  for (let i=0; i<receivers.length; i++) {
+    for (let j=i+1; j<receivers.length; j++) {
+      const a1 = Math.atan2(target.y-receivers[i].y, target.x-receivers[i].x) + (Math.random()-0.5)*0.12;
+      const a2 = Math.atan2(target.y-receivers[j].y, target.x-receivers[j].x) + (Math.random()-0.5)*0.12;
+      const x1=receivers[i].x, y1=receivers[i].y;
+      const x2=receivers[j].x, y2=receivers[j].y;
+      const d = Math.cos(a1)*Math.sin(a2) - Math.sin(a1)*Math.cos(a2);
+      if (Math.abs(d) > 0.01) {
+        const t = ((x2-x1)*Math.sin(a2) - (y2-y1)*Math.cos(a2)) / d;
+        sumX += x1 + t*Math.cos(a1);
+        sumY += y1 + t*Math.sin(a1);
+        count++;
+      }
+    }
+  }
+  if (count > 0) {
+    estimatedPos = { x: sumX/count, y: sumY/count };
+    const error = Math.hypot(estimatedPos.x-target.x, estimatedPos.y-target.y);
+    const accLabel = $('accuracyLabel');
+    if (accLabel) accLabel.textContent = `Accuracy: ${error.toFixed(0)}px error`;
+    setStatus(true);
+    log(`${LANG[currentLang].located} Error: ${error.toFixed(1)}px`, 'success');
+    playSound('success');
+    locatedHistory.push({ target: {...target}, estimated: {...estimatedPos}, error: error.toFixed(1), receivers: receivers.length, time: new Date() });
+    updateLocatedList();
+  }
+}
+
+function updateReceiverList() {
+  const el = $('receiverList');
+  if (!el) return;
+  el.innerHTML = receivers.map((rx,i) => `<div style="color:hsl(${i*120},70%,50%);">R${i+1}: (${rx.x.toFixed(0)}, ${rx.y.toFixed(0)})</div>`).join('');
+}
+
+function updateTargetInfo() {
+  const el = $('targetInfo');
+  if (!el) return;
+  if (!target) { el.innerHTML = 'No target'; return; }
+  el.innerHTML = `Freq: <strong>${target.freq}</strong><br>Power: <strong>${target.power}</strong><br>Position: <strong>Hidden</strong>`;
+}
+
+function updateBearingInfo() {
+  const el = $('bearingInfo');
+  if (!el || !target) return;
+  el.innerHTML = receivers.map((rx,i) => {
+    const angle = Math.atan2(target.y-rx.y, target.x-rx.x)*180/Math.PI;
+    const dist = Math.hypot(target.x-rx.x, target.y-rx.y);
+    return `<div>R${i+1}: ${((angle+360)%360).toFixed(1)}° / ${dist.toFixed(0)}px</div>`;
+  }).join('');
+}
+
+function updateLocatedList() {
+  const el = $('locatedList');
+  if (!el) return;
+  el.innerHTML = '';
+  locatedHistory.slice(-8).reverse().forEach(loc => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.2);border:1px solid var(--border);';
+    row.innerHTML = `<span style="color:#22c55e;">&#x2713;</span><span style="flex:1;font-size:.78rem;">${loc.target.freq}</span><span style="font-size:.7rem;color:var(--text-muted);">Error: ${loc.error}px / ${loc.receivers} RX</span>`;
+    el.appendChild(row);
+  });
+}
+
+function buildDFDatabase() {
+  const el = $('dfDatabase');
+  if (!el) return;
+  const techniques = [
+    { name:'Rotating Antenna', desc:'Rotate directional antenna to find peak signal direction' },
+    { name:'Adcock Array', desc:'Four vertical antennas in a square for bearing measurement' },
+    { name:'Watson-Watt', desc:'Two crossed loops provide instantaneous bearing' },
+    { name:'Doppler DF', desc:'Rotating virtual antenna using switched elements' },
+    { name:'TDOA', desc:'Time Difference of Arrival with synchronized receivers' },
+    { name:'Triangulation', desc:'Cross bearings from multiple locations to fix position' },
+  ];
+  let html = '<div style="display:grid;grid-template-columns:auto 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Technique</strong><strong style="font-size:.7rem;">Description</strong>';
+  techniques.forEach(t => { html += `<span style="color:var(--accent);">${t.name}</span><span style="color:var(--text-muted);">${t.desc}</span>`; });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function dfLoop() {
+  drawDFMap();
+  updateBearingInfo();
+  requestAnimationFrame(dfLoop);
+}
+
+function initDirectionFinder() {
+  mapCanvas = $('mapCanvas');
+  if (mapCanvas) {
+    mapCtx = mapCanvas.getContext('2d');
+    mapW = mapCanvas.width; mapH = mapCanvas.height;
+    mapCanvas.addEventListener('click', e => {
+      if (!placingReceiver) return;
+      const rect = mapCanvas.getBoundingClientRect();
+      const sx = mapW/rect.width, sy = mapH/rect.height;
+      receivers.push({ x: (e.clientX-rect.left)*sx, y: (e.clientY-rect.top)*sy });
+      placingReceiver = false;
+      updateReceiverList();
+      log(`Receiver R${receivers.length} placed`, 'info');
+      playSound('click');
+    });
+  }
+
+  const addBtn = $('addReceiverBtn');
+  if (addBtn) addBtn.onclick = () => { placingReceiver = true; log(LANG[currentLang].placingReceiver, 'info'); };
+
+  const newBtn = $('newTargetBtn');
+  if (newBtn) newBtn.onclick = () => { target = randomTarget(); estimatedPos = null; updateTargetInfo(); log('New target generated', 'info'); };
+
+  const triBtn = $('triangulateBtn');
+  if (triBtn) triBtn.onclick = triangulate;
+
+  const resetBtn = $('resetBtn');
+  if (resetBtn) resetBtn.onclick = () => { receivers=[]; target=randomTarget(); estimatedPos=null; placingReceiver=false; updateReceiverList(); updateTargetInfo(); setStatus(false); log('Map reset', 'info'); };
+
+  target = randomTarget();
+  updateTargetInfo();
+  buildDFDatabase();
+  dfLoop();
 }
 
 document.readyState === 'loading'

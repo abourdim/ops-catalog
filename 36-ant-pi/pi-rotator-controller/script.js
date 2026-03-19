@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-rotator-controller', subtitle: '🔄 aim · 📡 track · 🎯 lock',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Antenna Rotator Controller', mainDesc: 'Control azimuth and elevation rotators from your Raspberry Pi',
+    sectionA: 'How It Works', sectionB: 'Rotator Control',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is this app?', faq_a1: 'A Raspberry Pi antenna rotator controller. Set azimuth/elevation to aim antennas at satellites or stations.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔄 Rotator controller ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -1449,3 +1449,151 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ ROTATOR CONTROLLER SIMULATION ═══════ */
+(function(){
+  let azTarget=0,elTarget=45,azCurrent=0,elCurrent=45,tracking=false,animId=null;
+  const presets=[
+    {name:'ISS Pass',az:180,el:60},{name:'Moon',az:225,el:35},
+    {name:'NOAA-19',az:90,el:70},{name:'Astra 19.2E',az:160,el:30},
+    {name:'Park (Home)',az:0,el:90}
+  ];
+
+  function initRotator(){
+    const card=document.querySelector('.main-card');
+    if(!card)return;
+    card.innerHTML=`
+      <h3 data-i18n="mainSection" style="margin:0 0 6px">Antenna Rotator Controller</h3>
+      <p data-i18n="mainDesc" style="color:var(--text2);font-size:.8rem;margin:0 0 12px">Control azimuth and elevation rotators from your Raspberry Pi</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <canvas id="compassCanvas" width="260" height="260" style="border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.3)"></canvas>
+        <canvas id="elevCanvas" width="140" height="260" style="border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.3)"></canvas>
+        <div style="flex:1;min-width:180px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+            <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:8px;text-align:center">
+              <div style="font-size:.65rem;color:var(--text2)">AZ Current</div>
+              <div id="azVal" style="font-size:1.4rem;font-weight:700;color:var(--accent)">0°</div>
+            </div>
+            <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:8px;text-align:center">
+              <div style="font-size:.65rem;color:var(--text2)">EL Current</div>
+              <div id="elVal" style="font-size:1.4rem;font-weight:700;color:var(--accent)">45°</div>
+            </div>
+            <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:8px;text-align:center">
+              <div style="font-size:.65rem;color:var(--text2)">AZ Target</div>
+              <div id="azTgt" style="font-size:1.1rem;font-weight:600;color:#33ff33">0°</div>
+            </div>
+            <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:8px;text-align:center">
+              <div style="font-size:.65rem;color:var(--text2)">EL Target</div>
+              <div id="elTgt" style="font-size:1.1rem;font-weight:600;color:#33ff33">45°</div>
+            </div>
+          </div>
+          <label style="font-size:.7rem;color:var(--text2)">Azimuth: <span id="azSliderVal">0</span>°</label>
+          <input type="range" id="azSlider" min="0" max="359" value="0" style="width:100%">
+          <label style="font-size:.7rem;color:var(--text2)">Elevation: <span id="elSliderVal">45</span>°</label>
+          <input type="range" id="elSlider" min="0" max="90" value="45" style="width:100%">
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px">
+            <button id="gotoBtn" class="btn" style="flex:1">GO TO</button>
+            <button id="stopBtn" class="btn" style="flex:1">STOP</button>
+          </div>
+          <div style="margin-top:8px;font-size:.7rem;color:var(--text2)">Presets:</div>
+          <div id="presetBtns" style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px"></div>
+        </div>
+      </div>`;
+
+    const azSlider=$('azSlider'),elSlider=$('elSlider');
+    azSlider.oninput=()=>{azTarget=+azSlider.value;$('azSliderVal').textContent=azTarget;$('azTgt').textContent=azTarget+'°';};
+    elSlider.oninput=()=>{elTarget=+elSlider.value;$('elSliderVal').textContent=elTarget;$('elTgt').textContent=elTarget+'°';};
+
+    $('gotoBtn').onclick=()=>{tracking=true;log('🎯 Moving to AZ:'+azTarget+'° EL:'+elTarget+'°','info');playSound('click');};
+    $('stopBtn').onclick=()=>{tracking=false;log('🛑 Rotator stopped','error');playSound('error');};
+
+    const box=$('presetBtns');
+    presets.forEach(p=>{
+      const b=document.createElement('button');
+      b.className='btn';b.style.cssText='font-size:.65rem;padding:4px 8px';
+      b.textContent=p.name;
+      b.onclick=()=>{azTarget=p.az;elTarget=p.el;azSlider.value=p.az;elSlider.value=p.el;
+        $('azSliderVal').textContent=p.az;$('elSliderVal').textContent=p.el;
+        $('azTgt').textContent=p.az+'°';$('elTgt').textContent=p.el+'°';
+        tracking=true;log('📡 Preset: '+p.name+' AZ:'+p.az+'° EL:'+p.el+'°','success');playSound('success');};
+      box.appendChild(b);
+    });
+
+    drawLoop();
+  }
+
+  function drawLoop(){
+    const cc=$('compassCanvas'),ec=$('elevCanvas');
+    if(!cc||!ec){animId=requestAnimationFrame(drawLoop);return;}
+    const ctx=cc.getContext('2d'),ectx=ec.getContext('2d');
+
+    // Move rotator
+    if(tracking){
+      let daz=azTarget-azCurrent;
+      if(daz>180)daz-=360;if(daz<-180)daz+=360;
+      azCurrent+=daz*0.02;if(azCurrent<0)azCurrent+=360;if(azCurrent>=360)azCurrent-=360;
+      elCurrent+=(elTarget-elCurrent)*0.02;
+      if(Math.abs(daz)<0.5&&Math.abs(elTarget-elCurrent)<0.5){
+        azCurrent=azTarget;elCurrent=elTarget;tracking=false;
+        log('✅ On target AZ:'+Math.round(azCurrent)+'° EL:'+Math.round(elCurrent)+'°','success');
+        playSound('success');setStatus(true);
+      }
+    }
+    $('azVal').textContent=Math.round(azCurrent)+'°';
+    $('elVal').textContent=Math.round(elCurrent)+'°';
+
+    // Compass
+    const w=cc.width,h=cc.height,cx=w/2,cy=h/2,r=w/2-20;
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle='#444';ctx.lineWidth=1;
+    for(let i=0;i<360;i+=30){const a=(i-90)*Math.PI/180;
+      ctx.beginPath();ctx.moveTo(cx+r*0.85*Math.cos(a),cy+r*0.85*Math.sin(a));
+      ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#666';ctx.stroke();
+    ['N','E','S','W'].forEach((d,i)=>{
+      const a=(i*90-90)*Math.PI/180;ctx.fillStyle='#aaa';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(d,cx+(r+12)*Math.cos(a),cy+(r+12)*Math.sin(a));
+    });
+
+    // Target line (green)
+    const ta=(azTarget-90)*Math.PI/180;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*0.7*Math.cos(ta),cy+r*0.7*Math.sin(ta));
+    ctx.strokeStyle='#33ff33';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+
+    // Current needle (accent)
+    const ca=(azCurrent-90)*Math.PI/180;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*0.8*Math.cos(ca),cy+r*0.8*Math.sin(ca));
+    ctx.strokeStyle='#d4a03c';ctx.lineWidth=3;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx+r*0.8*Math.cos(ca),cy+r*0.8*Math.sin(ca),4,0,Math.PI*2);
+    ctx.fillStyle='#d4a03c';ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+
+    // Elevation gauge
+    const ew=ec.width,eh=ec.height,emx=ew/2,emy=eh-30,er=eh-50;
+    ectx.clearRect(0,0,ew,eh);
+    ectx.beginPath();ectx.arc(emx,emy,er,Math.PI,-0);ectx.strokeStyle='#666';ectx.lineWidth=1;ectx.stroke();
+    for(let i=0;i<=90;i+=15){const a=Math.PI+i*Math.PI/180;
+      ectx.beginPath();ectx.moveTo(emx+er*0.85*Math.cos(a),emy+er*0.85*Math.sin(a));
+      ectx.lineTo(emx+er*Math.cos(a),emy+er*Math.sin(a));ectx.strokeStyle='#444';ectx.stroke();
+      ectx.fillStyle='#888';ectx.font='9px sans-serif';ectx.textAlign='center';
+      ectx.fillText(i+'°',emx+(er+12)*Math.cos(a),emy+(er+12)*Math.sin(a));
+    }
+    // Target
+    const eta=Math.PI+elTarget*Math.PI/180;
+    ectx.beginPath();ectx.moveTo(emx,emy);ectx.lineTo(emx+er*0.7*Math.cos(eta),emy+er*0.7*Math.sin(eta));
+    ectx.strokeStyle='#33ff33';ectx.lineWidth=2;ectx.setLineDash([4,4]);ectx.stroke();ectx.setLineDash([]);
+    // Current
+    const eca=Math.PI+elCurrent*Math.PI/180;
+    ectx.beginPath();ectx.moveTo(emx,emy);ectx.lineTo(emx+er*0.8*Math.cos(eca),emy+er*0.8*Math.sin(eca));
+    ectx.strokeStyle='#d4a03c';ectx.lineWidth=3;ectx.stroke();
+    ectx.beginPath();ectx.arc(emx,emy,4,0,Math.PI*2);ectx.fillStyle='#fff';ectx.fill();
+    ectx.fillStyle='#aaa';ectx.font='bold 11px sans-serif';ectx.textAlign='center';
+    ectx.fillText('ELEVATION',emx,eh-8);
+
+    animId=requestAnimationFrame(drawLoop);
+  }
+
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>setTimeout(initRotator,100));}
+  else{setTimeout(initRotator,100);}
+})();

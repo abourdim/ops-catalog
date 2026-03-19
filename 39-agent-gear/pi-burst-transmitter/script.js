@@ -63,32 +63,42 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-burst-transmitter', subtitle: 'Burst Transmitter — Compress & Send Data Bursts',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Burst Transmitter — Quick Data Bursts', mainDesc: 'Compress, encrypt, and transmit data in millisecond bursts',
+    sectionA: 'Message Preparation', sectionB: 'Encryption Layer', sectionC: 'Transmission Log',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is a burst transmitter?', faq_a1: 'A device that compresses and encrypts data then transmits it in an ultra-short radio burst to evade detection.',
+    faq_q2: 'Why use burst transmission?', faq_a2: 'Shorter transmissions are harder to detect, locate, and intercept by direction-finding equipment.',
+    faq_q3: 'How is data compressed?', faq_a3: 'LZ-based compression before encryption reduces transmission time significantly.',
+    faq_q4: 'Is the transmission secure?', faq_a4: 'Data is AES-256 encrypted. Even if intercepted it appears as random noise.',
+    howto_1: 'Arm the transmitter to prepare the radio hardware.',
+    howto_2: 'Enter your data payload and click Compress.',
+    howto_3: 'Click FIRE BURST to transmit the compressed encrypted data.',
+    howto_4: 'Check the transmission log to verify delivery.',
+    wiki_burst_title: '⚡ Burst Transmission', wiki_burst: 'Ultra-short radio transmissions (10-500ms) to avoid signal detection.',
+    wiki_compress_title: '📦 Data Compression', wiki_compress: 'Reducing data size minimizes exposure time on air.',
+    wiki_evasion_title: '🕵 Signal Evasion', wiki_evasion: 'Frequency hopping, spread spectrum, burst TX, and low-power operation.',
+    wiki_sigint_title: '📡 SIGINT', wiki_sigint: 'Signals Intelligence — burst transmitters counter SIGINT.',
+    statStatus: 'Status', statCompress: 'Compression', statBursts: 'Bursts Sent', statDuration: 'Last Duration',
+    btnArm: 'Arm Transmitter', btnCompress: 'Compress', btnFire: 'FIRE BURST',
+    btnPrepEncode: 'Encode Payload', btnPrepClear: 'Clear',
+    btnEncrypt: 'Encrypt', btnEncReset: 'Reset',
+    btArmed: '⚡ Transmitter ARMED — ready to fire',
+    btDisarmed: '🔴 Transmitter disarmed',
+    btCompressed: '📦 Data compressed — ratio: ',
+    btFired: '⚡ BURST FIRED — ',
+    btEncoded: '📝 Payload encoded to binary',
+    btEncrypted: '🔐 AES-256 encryption applied',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⚡ Burst Transmitter ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +110,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-burst-transmitter', subtitle: 'Emetteur Rafale — Comprimer & Envoyer',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Emetteur Rafale — Transmissions Rapides', mainDesc: 'Comprimer, chiffrer et transmettre en millisecondes',
+    sectionA: 'Préparation Message', sectionB: 'Couche Chiffrement', sectionC: 'Journal Transmission',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +135,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '⚡ Emetteur Rafale prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +147,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مرسل الرشقات', subtitle: 'مرسل الرشقات — ضغط وإرسال رشقات بيانات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مرسل الرشقات — إرسال سريع', mainDesc: 'ضغط وتشفير وإرسال بيانات في رشقات ملي ثانية',
+    sectionA: 'تحضير الرسالة', sectionB: 'طبقة التشفير', sectionC: 'سجل الإرسال',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +172,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '⚡ مرسل الرشقات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1453,41 @@ function init() {
   initAR();
   initAIChat();
 
+  initBurstTx();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ BURST TRANSMITTER SIMULATION ═══════ */
+(function(){
+  let btArmed=false,btBursts=0;const btWave=[];
+
+  window.initBurstTx=function(){
+    const c=$('simCanvas');if(c){c.width=c.offsetWidth||480;c.height=140;for(let i=0;i<c.width;i++)btWave.push(0);requestAnimationFrame(btAnim);}
+    const ba=$('btnBtArm');if(ba)ba.onclick=()=>{btArmed=!btArmed;setStatus(btArmed);const st=$('btStatus');if(st)st.textContent=btArmed?'ARMED':'STANDBY';log(btArmed?LANG[currentLang].btArmed:LANG[currentLang].btDisarmed,btArmed?'success':'error');playSound('click');};
+    const bc=$('btnBtCompress');if(bc)bc.onclick=()=>{const inp=$('btMsgInput'),msg=inp?inp.value.trim():'';if(!msg)return;const r=((1-0.3-Math.random()*0.3)*100).toFixed(1);const comp=$('btCompress');if(comp)comp.textContent=r+'%';log(LANG[currentLang].btCompressed+r+'%','tx');const bar=$('btBar');if(bar)bar.style.width=r+'%';playSound('click');};
+    const bf=$('btnBtFire');if(bf)bf.onclick=()=>{if(!btArmed)return;const d=(50+Math.random()*200|0);btBursts++;const bs=$('btBursts');if(bs)bs.textContent=btBursts;const dur=$('btDuration');if(dur)dur.textContent=d+' ms';const m=$('burstMeter');if(m)m.textContent=d+' ms';log(LANG[currentLang].btFired+d+'ms','tx');playSound('error');for(let i=0;i<20;i++)btWave.push(0.8+Math.random()*0.2);const lc=$('txLogCanvas');if(lc){const ctx=lc.getContext('2d');lc.width=lc.offsetWidth||480;const w=lc.width,h=lc.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);ctx.fillStyle='#00ff41';ctx.font='11px Orbitron,monospace';ctx.fillText('TX #'+btBursts+' | '+d+'ms | '+new Date().toLocaleTimeString(),10,20);for(let x=0;x<w;x++){const v=Math.random()*0.5;ctx.fillStyle='rgba(0,255,65,'+(0.2+v*0.5)+')';ctx.fillRect(x,h-v*h*0.6,1,v*h*0.6);}}const li=$('txLogInfo');if(li)li.textContent='Last burst: #'+btBursts+' | '+d+'ms';};
+    const bpe=$('btnPrepEncode');if(bpe)bpe.onclick=()=>{const inp=$('btMsgInput'),info=$('prepInfo'),c2=$('prepCanvas');const msg=inp?inp.value.trim():'payload';let bin='';for(let i=0;i<Math.min(msg.length,30);i++)bin+=msg.charCodeAt(i).toString(2).padStart(8,'0')+' ';if(info)info.textContent='BIN: '+bin.trim();if(c2){const ctx=c2.getContext('2d');c2.width=c2.offsetWidth||480;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,c2.width,c2.height);ctx.fillStyle='#00ff41';ctx.font='10px monospace';ctx.fillText(bin.trim().substring(0,80),10,20);}log(LANG[currentLang].btEncoded,'tx');playSound('click');};
+    const bpc=$('btnPrepClear');if(bpc)bpc.onclick=()=>{const i=$('prepInfo');if(i)i.textContent='';};
+    const ben=$('btnEncrypt');if(ben)ben.onclick=()=>{const i=$('encInfo');if(i){i.textContent='[ENCRYPT] AES-256-GCM\n[KEY] '+Array.from({length:8},()=>Math.random().toString(16).substr(2,4)).join(':')+'\n[STATUS] Encrypted';}log(LANG[currentLang].btEncrypted,'success');playSound('click');};
+    const ber=$('btnEncReset');if(ber)ber.onclick=()=>{const i=$('encInfo');if(i)i.textContent='';};
+  };
+
+  function btAnim(){
+    const c=$('simCanvas');if(!c){requestAnimationFrame(btAnim);return;}
+    const ctx=c.getContext('2d'),w=c.width,h=c.height;
+    btWave.push(btArmed?Math.random()*0.15:Math.random()*0.03);
+    if(btWave.length>w)btWave.splice(0,btWave.length-w);
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(255,170,0,0.06)';ctx.lineWidth=1;
+    for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#ff9800';
+    ctx.strokeStyle=btArmed?accent:'rgba(100,100,100,0.3)';ctx.lineWidth=2;ctx.beginPath();
+    const st=Math.max(0,btWave.length-w);
+    for(let i=st;i<btWave.length;i++){const x=i-st,y=h/2-btWave[i]*h*0.45;i===st?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();requestAnimationFrame(btAnim);
+  }
+})();

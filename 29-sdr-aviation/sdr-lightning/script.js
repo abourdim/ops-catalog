@@ -1,7 +1,7 @@
 /**
- * Workshop DIY — Template v1.2
+ * SDR Lightning Detector — Workshop DIY v1.2
+ * Lightning detector via radio. Map lightning strikes
  * Themes · i18n · RTL · Log · Toast · Status · Panels · Sound
- * Easter eggs: Konami, Morse, Matrix rain, Debug, Shake report, Time-travel, Typewriter
  */
 
 const $ = id => document.getElementById(id);
@@ -63,115 +63,13 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
-    helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
-    help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
-    whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
-    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    title:'SDR Lightning Detector',subtitle:'⚡ Detect lightning via radio',disconnected:'Disconnected',connected:'Connected',mainSection:'Lightning Map',mainDesc:'Detect and map lightning strikes from radio sferics',sectionA:'Strike Log',sectionB:'Theory',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',theme:'Theme',settings:'⚙️ Settings',language:'Language',helpSettings:'❓ Help',settingsTab:'⚙️',help:'❓ Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is this?',faq_a1:'Detect and map lightning strikes from radio sferics',faq_q2:'How does it work?',faq_a2:'Uses SDR to decode radio signals.',faq_q3:'What frequency?',faq_a3:'See theory section.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'Click Start to begin.',howto_2:'Watch the visualization.',howto_3:'Check decoded data.',howto_4:'Use Settings to customize.',wiki_themes_title:'🎨 Themes',wiki_themes:'8 themes.',wiki_i18n_title:'🌐 Languages',wiki_i18n:'Trilingual with RTL.',wiki_log_title:'📜 Log',wiki_log:'Timestamped.',wiki_privacy_title:'🔒 Privacy',wiki_privacy:'Local-first.',working:'Working…',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',ready:'⚡ Lightning Detector ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',export:'Export',filterAll:'All',soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',chatPlaceholder:'Talk to the robot...',splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',startBtn:'▶ Start',stopBtn:'⏹ Stop',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
-    help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    title:'Détecteur de Foudre SDR',subtitle:'⚡ Détecter la foudre par radio',disconnected:'Déconnecté',connected:'Connecté',mainSection:'Carte Foudre',mainDesc:'Détecter les impacts de foudre',sectionA:'Journal des Impacts',sectionB:'Théorie',activityLog:'Journal',eventsMsg:'Événements',clear:'Effacer',copy:'Copier',theme:'Thème',settings:'⚙️ Paramètres',language:'Langue',helpSettings:'❓ Aide',settingsTab:'⚙️',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:"Qu'est-ce que c'est ?",faq_a1:'Détecter les impacts de foudre',faq_q2:'Comment ça marche ?',faq_a2:'Utilise le SDR pour décoder.',faq_q3:'Quelle fréquence ?',faq_a3:'Voir théorie.',faq_q4:'Données privées ?',faq_a4:'Oui. Tout est local.',howto_1:'Cliquez Démarrer.',howto_2:'Observez.',howto_3:'Vérifiez les données.',howto_4:'Personnalisez.',wiki_themes_title:'🎨 Thèmes',wiki_themes:'8 thèmes.',wiki_i18n_title:'🌐 Langues',wiki_i18n:'Trilingue.',wiki_log_title:'📜 Journal',wiki_log:'Horodaté.',wiki_privacy_title:'🔒 Confidentialité',wiki_privacy:'Local.',working:'En cours…',t_mosque:'Mosquée',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Médina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',ready:'⚡ Détecteur prêt !',logCleared:'Effacé',copied:'Copié!',copyFail:'Échec',export:'Exporter',filterAll:'Tout',soundEffects:'🔊 Sons',whisperMode:'Murmure',breathingGuide:'Respiration',dhikrTap:'Tap',musicMode:'Musique',chatPlaceholder:'Parle...',splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Français',themeChanged:'🎨 Thème →',startBtn:'▶ Démarrer',stopBtn:'⏹ Arrêter',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    title:'كاشف البرق SDR',subtitle:'⚡ كشف البرق عبر الراديو',disconnected:'غير متصل',connected:'متصل',mainSection:'خريطة البرق',mainDesc:'كشف ضربات البرق',sectionA:'سجل الضربات',sectionB:'النظرية',activityLog:'سجل النشاط',eventsMsg:'الأحداث',clear:'مسح',copy:'نسخ',theme:'المظهر',settings:'⚙️ الإعدادات',language:'اللغة',helpSettings:'❓ مساعدة',settingsTab:'⚙️',help:'❓ مساعدة',faq:'أسئلة',howto:'كيف',wiki:'ويكي',faq_q1:'ما هذا؟',faq_a1:'كشف ضربات البرق',faq_q2:'كيف يعمل؟',faq_a2:'يستخدم SDR.',faq_q3:'ما التردد؟',faq_a3:'انظر النظرية.',faq_q4:'بياناتي خاصة؟',faq_a4:'نعم. محلي.',howto_1:'انقر ابدأ.',howto_2:'شاهد.',howto_3:'تحقق.',howto_4:'خصص.',wiki_themes_title:'🎨 المظاهر',wiki_themes:'8 مظاهر.',wiki_i18n_title:'🌐 اللغات',wiki_i18n:'ثلاثي.',wiki_log_title:'📜 سجل',wiki_log:'مؤرخ.',wiki_privacy_title:'🔒 خصوصية',wiki_privacy:'محلي.',working:'جارٍ…',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',ready:'⚡ كاشف البرق جاهز!',logCleared:'تم المسح',copied:'تم!',copyFail:'فشل',export:'تصدير',filterAll:'الكل',soundEffects:'🔊 صوت',whisperMode:'همس',breathingGuide:'تنفس',dhikrTap:'اضغط',musicMode:'موسيقى',chatPlaceholder:'تحدث...',splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 العربية',themeChanged:'🎨 المظهر ←',startBtn:'▶ ابدأ',stopBtn:'⏹ إيقاف',
   }
 };
 
@@ -1449,3 +1347,10 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+(function(){var mc=$('lightningMap'),wc=$('lightningWaveform'),stB=$('lightStartBtn'),spB=$('lightStopBtn'),cE=$('strikeCount'),lg=$('strikeLog');if(!mc)return;var mCtx=mc.getContext('2d'),wCtx=wc?wc.getContext('2d'):null,run=false,anim=null,strikes=[],sNum=0;
+function dm(t){var W=mc.width,H=mc.height;mCtx.fillStyle='#0a0a2a';mCtx.fillRect(0,0,W,H);mCtx.strokeStyle='rgba(100,100,255,.1)';mCtx.lineWidth=1;for(var x=0;x<W;x+=40){mCtx.beginPath();mCtx.moveTo(x,0);mCtx.lineTo(x,H);mCtx.stroke();}for(var y=0;y<H;y+=40){mCtx.beginPath();mCtx.moveTo(0,y);mCtx.lineTo(W,y);mCtx.stroke();}mCtx.strokeStyle='rgba(80,200,80,.3)';mCtx.lineWidth=2;mCtx.beginPath();mCtx.ellipse(W*.3,H*.4,W*.2,H*.25,0,0,Math.PI*2);mCtx.stroke();mCtx.beginPath();mCtx.ellipse(W*.7,H*.5,W*.15,H*.2,-.3,0,Math.PI*2);mCtx.stroke();var now=Date.now();strikes=strikes.filter(function(s){return now-s.t<8e3;});strikes.forEach(function(s){var age=(now-s.t)/8e3,al=1-age;if(age<.1){mCtx.fillStyle='rgba(255,255,255,'+((.5*(1-age/.1)))+')';mCtx.beginPath();mCtx.arc(s.x,s.y,30*(1-age/.1),0,Math.PI*2);mCtx.fill();}mCtx.strokeStyle='rgba(255,255,100,'+al+')';mCtx.lineWidth=2;mCtx.beginPath();var bx=s.x,by=s.y-20;mCtx.moveTo(bx,by);for(var i=0;i<4;i++){bx+=Math.random()*10-5;by+=8;mCtx.lineTo(bx,by);}mCtx.stroke();mCtx.strokeStyle='rgba(255,200,50,'+(al*.5)+')';mCtx.beginPath();mCtx.arc(s.x,s.y,10+age*50,0,Math.PI*2);mCtx.stroke();});mCtx.fillStyle='#ffcc00';mCtx.font='11px Orbitron,monospace';mCtx.fillText('\u26a1 VLF Lightning  10 kHz  Strikes: '+sNum,8,16);}
+function dw(t){if(!wCtx)return;var W=wc.width,H=wc.height;wCtx.fillStyle='#0a0a1a';wCtx.fillRect(0,0,W,H);wCtx.strokeStyle='#ffcc00';wCtx.lineWidth=1.5;wCtx.beginPath();for(var x=0;x<W;x++){var y=H/2+(Math.random()-.5)*H*.05;strikes.forEach(function(s){var age=(Date.now()-s.t)/1e3;if(age<.5){var dx=Math.abs(x-s.wx);if(dx<30)y+=H*.4*Math.exp(-dx*.1)*Math.exp(-age*8)*Math.sin(age*80);}});x===0?wCtx.moveTo(x,y):wCtx.lineTo(x,y);}wCtx.stroke();}
+function addS(){var W=mc.width,H=mc.height,s={x:40+Math.random()*(W-80),y:40+Math.random()*(H-80),t:Date.now(),wx:wc?Math.random()*wc.width:0,kA:50+Math.random()*150|0};strikes.push(s);sNum++;if(cE)cE.textContent=sNum;if(lg){var d=document.createElement('div');d.style.cssText='padding:2px 6px;border-bottom:1px solid rgba(255,200,50,.1);font-size:11px;font-family:monospace';d.textContent=new Date().toLocaleTimeString()+' \u26a1 '+s.kA+'kA';lg.insertBefore(d,lg.firstChild);if(lg.children.length>30)lg.removeChild(lg.lastChild);}log('\u26a1 Strike: '+s.kA+'kA','rx');playSound('click');}
+var ls=0;function an(t){if(!run)return;dm(t);dw(t);if(t-ls>800+Math.random()*3e3){addS();ls=t;}anim=requestAnimationFrame(an);}
+if(stB)stB.onclick=function(){if(run)return;run=true;setStatus(true);log('Lightning detector started','success');anim=requestAnimationFrame(an);};if(spB)spB.onclick=function(){run=false;setStatus(false);if(anim)cancelAnimationFrame(anim);log('Lightning detector stopped','info');};dm(0);})();

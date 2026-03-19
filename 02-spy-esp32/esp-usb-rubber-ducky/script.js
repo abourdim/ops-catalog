@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'USB Rubber Ducky — Keystroke Injector', subtitle: '⌨️ Write and simulate USB keyboard payloads',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Payload Editor', mainDesc: 'Write DuckyScript payloads and simulate keystroke injection',
+    sectionA: 'USB HID Fundamentals', sectionB: 'DuckyScript Reference', sectionC: 'ESP32-S2 Setup Guide',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is USB Rubber Ducky?', faq_a1: 'A USB keystroke injection attack tool simulator. Write DuckyScript payloads and watch them execute in a virtual terminal.',
+    faq_q2: 'What is DuckyScript?', faq_a2: 'A simple scripting language for keystroke injection. Commands include STRING, DELAY, GUI, ENTER, and key combos.',
+    faq_q3: 'How does HID emulation work?', faq_a3: 'The ESP32-S2 has native USB support. It can present itself as a USB keyboard and type commands at machine speed.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No real USB payloads are executed.',
+    howto_1: 'Write DuckyScript in the editor or select a preset payload.',
+    howto_2: 'Click "Deploy" to simulate the payload execution in the virtual terminal.',
+    howto_3: 'Adjust the speed slider to control execution speed.',
+    howto_4: 'Read the USB HID theory section to understand how keystroke injection works.',
+    wiki_hid_title: '⌨️ USB HID', wiki_hid: 'Human Interface Device is a USB class for keyboards, mice, and gamepads. The ESP32-S2 can emulate any HID device.',
+    wiki_ducky_title: '🦆 DuckyScript', wiki_ducky: 'A simple scripting language: STRING types text, DELAY waits, GUI opens Windows menu, ENTER presses Enter.',
+    wiki_defense_title: '🛡️ Defense', wiki_defense: 'Protect against HID attacks: disable USB ports, whitelist devices, use USB firewalls, never plug in unknown USB devices.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'This simulator runs 100% in your browser. No real USB payloads are executed.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '⌨️ USB Rubber Ducky ready — write your payload!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'USB Rubber Ducky — Injecteur de Frappes', subtitle: '⌨️ Écrivez et simulez des payloads USB clavier',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Éditeur de Payload', mainDesc: 'Écrivez des payloads DuckyScript et simulez l\'injection de frappes',
+    sectionA: 'Fondamentaux USB HID', sectionB: 'Référence DuckyScript', sectionC: 'Guide ESP32-S2',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '⌨️ USB Rubber Ducky prêt — écrivez votre payload !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'USB Rubber Ducky — حاقن ضربات المفاتيح', subtitle: '⌨️ اكتب وحاكِ حمولات USB لوحة المفاتيح',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محرر الحمولة', mainDesc: 'اكتب حمولات DuckyScript وحاكِ حقن ضربات المفاتيح',
+    sectionA: 'أساسيات USB HID', sectionB: 'مرجع DuckyScript', sectionC: 'دليل إعداد ESP32-S2',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '⌨️ USB Rubber Ducky جاهز — اكتب حمولتك!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1449,254 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════════════════════════════════════════════════════════
+   USB RUBBER DUCKY — Keystroke Injector Simulation
+   ═══════════════════════════════════════════════════════════ */
+
+(function RubberDuckySim() {
+  const editor = $('payloadEditor');
+  const terminal = $('virtualTerminal');
+  if (!editor || !terminal) return;
+
+  const PRESETS = {
+    hello: `REM Hello World payload\nDELAY 1000\nGUI r\nDELAY 500\nSTRING notepad\nENTER\nDELAY 500\nSTRING Hello from USB Rubber Ducky!\nENTER`,
+    sysinfo: `REM System Info Grabber\nDELAY 1000\nGUI r\nDELAY 500\nSTRING cmd\nENTER\nDELAY 500\nSTRING whoami\nENTER\nDELAY 300\nSTRING ipconfig\nENTER\nDELAY 300\nSTRING systeminfo | findstr /B /C:"OS"\nENTER`,
+    rickroll: `REM Rick Roll\nDELAY 1000\nGUI r\nDELAY 500\nSTRING https://www.youtube.com/watch?v=dQw4w9WgXcQ\nENTER`,
+  };
+
+  let executing = false;
+  let stopRequested = false;
+  let speed = 5;
+  let cursorEl = $('terminalCursor');
+  let lineNumbers = $('lineNumbers');
+
+  // Line numbers
+  function updateLineNumbers() {
+    if (!lineNumbers) return;
+    const lines = editor.value.split('\n').length;
+    lineNumbers.textContent = Array.from({length: lines}, (_, i) => i + 1).join('\n');
+  }
+
+  editor.addEventListener('input', updateLineNumbers);
+  editor.addEventListener('scroll', () => {
+    if (lineNumbers) lineNumbers.scrollTop = editor.scrollTop;
+  });
+
+  // Presets
+  document.querySelectorAll('.payload-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const preset = btn.dataset.preset;
+      if (PRESETS[preset]) {
+        editor.value = PRESETS[preset];
+        updateLineNumbers();
+        log(`📋 Loaded preset: ${preset}`, 'info');
+        playSound('click');
+      }
+    });
+  });
+
+  // Speed slider
+  const speedSlider = $('speedSlider');
+  const speedLabel = $('speedLabel');
+  if (speedSlider) {
+    speedSlider.addEventListener('input', () => {
+      speed = parseInt(speedSlider.value);
+      if (speedLabel) speedLabel.textContent = speed + 'x';
+    });
+  }
+
+  // Terminal helpers
+  function termClear() {
+    terminal.innerHTML = '<div class="terminal-line"><span class="terminal-prompt">$</span><span class="terminal-cursor" id="terminalCursor">_</span></div>';
+    cursorEl = $('terminalCursor');
+  }
+
+  function termType(text) {
+    return new Promise(resolve => {
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      // Insert before cursor line
+      const cursorLine = cursorEl?.parentElement;
+      if (cursorLine) terminal.insertBefore(line, cursorLine);
+      else terminal.appendChild(line);
+
+      let i = 0;
+      const interval = setInterval(() => {
+        if (stopRequested) { clearInterval(interval); resolve(); return; }
+        if (i < text.length) {
+          line.textContent += text[i];
+          i++;
+        } else {
+          clearInterval(interval);
+          resolve();
+        }
+      }, Math.max(10, 100 / speed));
+    });
+  }
+
+  function termOutput(text) {
+    const line = document.createElement('div');
+    line.className = 'terminal-line';
+    line.style.color = 'rgba(255,255,255,0.6)';
+    line.textContent = text;
+    const cursorLine = cursorEl?.parentElement;
+    if (cursorLine) terminal.insertBefore(line, cursorLine);
+    else terminal.appendChild(line);
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+
+  function termPrompt() {
+    const line = document.createElement('div');
+    line.className = 'terminal-line';
+    line.innerHTML = '<span class="terminal-prompt">$</span><span class="terminal-cursor" id="terminalCursor">_</span>';
+    terminal.appendChild(line);
+    cursorEl = $('terminalCursor');
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+
+  // Simulated command responses
+  function fakeResponse(cmd) {
+    const c = cmd.trim().toLowerCase();
+    if (c === 'whoami') return 'admin\\user';
+    if (c === 'ipconfig') return 'IPv4 Address: 192.168.1.42\nSubnet Mask: 255.255.255.0\nDefault Gateway: 192.168.1.1';
+    if (c.startsWith('systeminfo')) return 'OS Name: Windows 10 Pro\nOS Version: 10.0.19045\nSystem Type: x64-based PC';
+    if (c === 'notepad') return '[Notepad opened]';
+    if (c.startsWith('http')) return '[Browser opening URL...]';
+    return '';
+  }
+
+  // Parse and execute DuckyScript
+  async function deploy() {
+    if (executing) return;
+    const code = editor.value.trim();
+    if (!code) { log('No payload to deploy', 'error'); return; }
+
+    executing = true;
+    stopRequested = false;
+    const deployBtn = $('deployBtn'); if (deployBtn) deployBtn.disabled = true;
+    const stopBtn = $('stopBtn'); if (stopBtn) stopBtn.disabled = false;
+    const progress = $('execProgress'); if (progress) progress.style.display = 'flex';
+    const fill = $('progressFill');
+    const ptext = $('progressText');
+
+    termClear();
+    log('▶️ Payload deploying...', 'tx');
+    setStatus(true);
+
+    const lines = code.split('\n');
+    let defaultDelay = 0;
+    let lastCmd = '';
+
+    for (let idx = 0; idx < lines.length; idx++) {
+      if (stopRequested) break;
+
+      const line = lines[idx].trim();
+      if (!line) continue;
+
+      // Update progress
+      const pct = Math.round(((idx + 1) / lines.length) * 100);
+      if (fill) fill.style.width = pct + '%';
+      if (ptext) ptext.textContent = pct + '%';
+
+      const parts = line.split(/\s+/);
+      const cmd = parts[0].toUpperCase();
+      const arg = line.substring(cmd.length).trim();
+
+      if (defaultDelay > 0 && cmd !== 'DEFAULTDELAY') {
+        await new Promise(r => setTimeout(r, defaultDelay / speed));
+      }
+
+      switch (cmd) {
+        case 'REM':
+          // Comment, skip
+          break;
+        case 'DELAY':
+          const ms = parseInt(arg) || 100;
+          await new Promise(r => setTimeout(r, ms / speed));
+          break;
+        case 'DEFAULTDELAY':
+          defaultDelay = parseInt(arg) || 0;
+          break;
+        case 'STRING':
+          await termType(arg);
+          lastCmd = line;
+          break;
+        case 'ENTER':
+          // Execute previous string as command
+          const prev = terminal.querySelector('.terminal-line:nth-last-child(2)');
+          if (prev) {
+            const resp = fakeResponse(prev.textContent);
+            if (resp) resp.split('\n').forEach(r => termOutput(r));
+          }
+          termPrompt();
+          lastCmd = line;
+          break;
+        case 'GUI':
+        case 'WINDOWS':
+          termOutput(`[WIN+${arg || ''}] pressed`);
+          lastCmd = line;
+          break;
+        case 'CTRL':
+          termOutput(`[CTRL+${arg || ''}] pressed`);
+          lastCmd = line;
+          break;
+        case 'ALT':
+          termOutput(`[ALT+${arg || ''}] pressed`);
+          lastCmd = line;
+          break;
+        case 'SHIFT':
+          termOutput(`[SHIFT+${arg || ''}] pressed`);
+          lastCmd = line;
+          break;
+        case 'TAB':
+          termOutput('[TAB] pressed');
+          lastCmd = line;
+          break;
+        case 'ESCAPE':
+          termOutput('[ESC] pressed');
+          lastCmd = line;
+          break;
+        case 'UPARROW':
+        case 'DOWNARROW':
+        case 'LEFTARROW':
+        case 'RIGHTARROW':
+          termOutput(`[${cmd}] pressed`);
+          lastCmd = line;
+          break;
+        case 'REPEAT':
+          const times = parseInt(arg) || 1;
+          // Just note it
+          termOutput(`[Repeating last command ${times}x]`);
+          break;
+        default:
+          termOutput(`[Unknown: ${line}]`);
+      }
+    }
+
+    executing = false;
+    if (deployBtn) deployBtn.disabled = false;
+    if (stopBtn) stopBtn.disabled = true;
+
+    if (stopRequested) {
+      log('⏹️ Payload execution stopped', 'error');
+    } else {
+      if (fill) fill.style.width = '100%';
+      if (ptext) ptext.textContent = '100%';
+      log('✅ Payload execution complete!', 'success');
+      playSound('success');
+    }
+  }
+
+  // Bindings
+  const deployBtn = $('deployBtn'); if (deployBtn) deployBtn.onclick = deploy;
+  const stopBtn = $('stopBtn'); if (stopBtn) stopBtn.onclick = () => { stopRequested = true; };
+  const clearEdBtn = $('clearEditorBtn'); if (clearEdBtn) clearEdBtn.onclick = () => { editor.value = ''; updateLineNumbers(); };
+  const copyBtn = $('copyPayloadBtn'); if (copyBtn) copyBtn.onclick = () => {
+    navigator.clipboard.writeText(editor.value).then(() => log('📋 Payload copied', 'success')).catch(() => {});
+  };
+  const clearTermBtn = $('clearTermBtn'); if (clearTermBtn) clearTermBtn.onclick = termClear;
+
+  updateLineNumbers();
+  setStatus(true);
+})();

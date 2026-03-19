@@ -63,10 +63,18 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Attack vs Defense', subtitle: 'Red team attacks, blue team defends',
+    disconnected: 'Standby', connected: 'Battle Active',
+    mainSection: 'Attack / Defense Arena', mainDesc: 'Real-time WiFi attack & defense simulation',
+    sectionA: 'Attack Vector Log', sectionB: 'Defense Status', sectionC: 'How It Works',
+    start: 'Start Battle', stop: 'Ceasefire',
+    redTeam: 'Red Team', blueTeam: 'Blue Team',
+    deauth: 'Deauth Flood', evilTwin: 'Evil Twin', krack: 'KRACK', arpSpoof: 'ARP Spoof', bruteForce: 'Brute Force',
+    wids: 'WIDS Alert', mfp: 'MFP Enabled', rateLimit: 'Rate Limiting', macFilter: 'MAC Filter', wpa3: 'WPA3 SAE',
+    attackBlocked: 'Attack blocked!', attackSuccess: 'Attack succeeded!',
+    defenseActive: 'Defense active', score: 'Score',
+    arenaReady: 'Attack/Defense arena ready!',
+    howItWorksText: 'WiFi networks face many attacks: deauthentication floods, evil twin APs, KRACK exploits, and ARP spoofing. Defenses include WPA3, MFP, WIDS, rate limiting, and MAC filtering. This simulation pits red team attacks against blue team defenses in real-time.',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +108,18 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Attaque vs Defense', subtitle: 'Equipe rouge attaque, equipe bleue defend',
+    disconnected: 'En attente', connected: 'Bataille active',
+    mainSection: 'Arene Attaque / Defense', mainDesc: 'Simulation attaque & defense WiFi en temps reel',
+    sectionA: 'Journal des Attaques', sectionB: 'Etat des Defenses', sectionC: 'Comment ca marche',
+    start: 'Lancer', stop: 'Cesser',
+    redTeam: 'Equipe Rouge', blueTeam: 'Equipe Bleue',
+    deauth: 'Flood Deauth', evilTwin: 'Evil Twin', krack: 'KRACK', arpSpoof: 'ARP Spoof', bruteForce: 'Force Brute',
+    wids: 'Alerte WIDS', mfp: 'MFP Active', rateLimit: 'Limite de debit', macFilter: 'Filtre MAC', wpa3: 'WPA3 SAE',
+    attackBlocked: 'Attaque bloquee!', attackSuccess: 'Attaque reussie!',
+    defenseActive: 'Defense active', score: 'Score',
+    arenaReady: 'Arene prete!',
+    howItWorksText: 'Les reseaux WiFi font face a de nombreuses attaques: floods de deauthentification, evil twin, exploits KRACK et ARP spoofing. Les defenses incluent WPA3, MFP, WIDS, limitation de debit et filtrage MAC.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +153,18 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'هجوم WiFi ضد الدفاع', subtitle: 'الفريق الأحمر يهاجم، الأزرق يدافع',
+    disconnected: 'استعداد', connected: 'المعركة نشطة',
+    mainSection: 'حلبة الهجوم / الدفاع', mainDesc: 'محاكاة هجوم ودفاع WiFi في الوقت الحقيقي',
+    sectionA: 'سجل الهجمات', sectionB: 'حالة الدفاع', sectionC: 'كيف يعمل',
+    start: 'ابدأ المعركة', stop: 'وقف إطلاق النار',
+    redTeam: 'الفريق الأحمر', blueTeam: 'الفريق الأزرق',
+    deauth: 'طوفان Deauth', evilTwin: 'التوأم الشرير', krack: 'KRACK', arpSpoof: 'تزوير ARP', bruteForce: 'القوة الغاشمة',
+    wids: 'تنبيه WIDS', mfp: 'MFP مفعل', rateLimit: 'تحديد المعدل', macFilter: 'فلتر MAC', wpa3: 'WPA3 SAE',
+    attackBlocked: 'تم صد الهجوم!', attackSuccess: 'نجح الهجوم!',
+    defenseActive: 'الدفاع نشط', score: 'النتيجة',
+    arenaReady: 'الحلبة جاهزة!',
+    howItWorksText: 'تواجه شبكات WiFi هجمات عديدة: طوفان إلغاء المصادقة، نقاط وصول مزيفة، ثغرات KRACK وتزوير ARP. تشمل الدفاعات WPA3 وMFP وWIDS وتحديد المعدل وفلترة MAC.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1444,8 +1468,195 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initAttackDefense();
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Attack vs Defense ═══════ */
+const ATTACKS = [
+  { id: 'deauth', name: 'deauth', severity: 3, desc: 'Flooding deauthentication frames' },
+  { id: 'evilTwin', name: 'evilTwin', severity: 4, desc: 'Rogue AP mimicking legitimate network' },
+  { id: 'krack', name: 'krack', severity: 5, desc: 'Key Reinstallation Attack on WPA2' },
+  { id: 'arpSpoof', name: 'arpSpoof', severity: 3, desc: 'ARP cache poisoning for MITM' },
+  { id: 'bruteForce', name: 'bruteForce', severity: 2, desc: 'Dictionary attack on WPA passphrase' }
+];
+
+const DEFENSES = [
+  { id: 'wids', name: 'wids', blocks: ['deauth', 'evilTwin'], effectiveness: 0.7 },
+  { id: 'mfp', name: 'mfp', blocks: ['deauth'], effectiveness: 0.9 },
+  { id: 'rateLimit', name: 'rateLimit', blocks: ['deauth', 'bruteForce'], effectiveness: 0.6 },
+  { id: 'macFilter', name: 'macFilter', blocks: ['evilTwin', 'arpSpoof'], effectiveness: 0.5 },
+  { id: 'wpa3', name: 'wpa3', blocks: ['krack', 'bruteForce'], effectiveness: 0.95 }
+];
+
+let battleRunning = false, battleInterval = null;
+let redScore = 0, blueScore = 0;
+let activeDefenses = new Set(['wids', 'mfp', 'wpa3']);
+let arenaCanvas, arenaCtx, particles = [];
+
+function initAttackDefense() {
+  arenaCanvas = $('arenaCanvas');
+  if (arenaCanvas) arenaCtx = arenaCanvas.getContext('2d');
+
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  if (startBtn) startBtn.onclick = startBattle;
+  if (stopBtn) stopBtn.onclick = stopBattle;
+
+  // Defense toggles
+  DEFENSES.forEach(d => {
+    const cb = $('def_' + d.id);
+    if (cb) {
+      cb.checked = activeDefenses.has(d.id);
+      cb.onchange = () => {
+        if (cb.checked) activeDefenses.add(d.id);
+        else activeDefenses.delete(d.id);
+        log(`${LANG[currentLang][d.name]}: ${cb.checked ? 'ON' : 'OFF'}`, 'info');
+        playSound('click');
+      };
+    }
+  });
+
+  drawArena();
+}
+
+function startBattle() {
+  if (battleRunning) return;
+  battleRunning = true;
+  redScore = 0; blueScore = 0;
+  setStatus(true);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = true;
+  if (p) p.disabled = false;
+  log(LANG[currentLang].arenaReady, 'success');
+  battleInterval = setInterval(simulateRound, 2000);
+  animateArena();
+}
+
+function stopBattle() {
+  battleRunning = false;
+  if (battleInterval) clearInterval(battleInterval);
+  setStatus(false);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = false;
+  if (p) p.disabled = true;
+  log(`Final: Red ${redScore} — Blue ${blueScore}`, 'info');
+}
+
+function simulateRound() {
+  const attack = ATTACKS[Math.floor(Math.random() * ATTACKS.length)];
+  const attackName = LANG[currentLang][attack.name] || attack.id;
+
+  // Check if any active defense blocks this attack
+  let blocked = false;
+  for (const d of DEFENSES) {
+    if (activeDefenses.has(d.id) && d.blocks.includes(attack.id)) {
+      if (Math.random() < d.effectiveness) {
+        blocked = true;
+        const defName = LANG[currentLang][d.name] || d.id;
+        blueScore++;
+        log(`${attackName} -> ${LANG[currentLang].attackBlocked} (${defName})`, 'success');
+        addParticle('blue');
+        break;
+      }
+    }
+  }
+
+  if (!blocked) {
+    redScore++;
+    log(`${attackName} -> ${LANG[currentLang].attackSuccess}`, 'error');
+    addParticle('red');
+  }
+
+  updateScoreboard();
+}
+
+function updateScoreboard() {
+  const rs = $('redScore'), bs = $('blueScore');
+  if (rs) rs.textContent = redScore;
+  if (bs) bs.textContent = blueScore;
+
+  // Attack log
+  const logEl = $('attackLog');
+  if (logEl) {
+    const total = redScore + blueScore;
+    const blockRate = total > 0 ? Math.round(blueScore / total * 100) : 0;
+    logEl.textContent = `${total} rounds | Block rate: ${blockRate}%`;
+  }
+}
+
+function addParticle(team) {
+  const x = team === 'red' ? 50 : arenaCanvas ? arenaCanvas.clientWidth - 50 : 250;
+  for (let i = 0; i < 6; i++) {
+    particles.push({
+      x, y: (arenaCanvas ? arenaCanvas.clientHeight / 2 : 100) + (Math.random() - 0.5) * 60,
+      vx: (team === 'red' ? 1 : -1) * (2 + Math.random() * 3),
+      vy: (Math.random() - 0.5) * 2,
+      life: 60,
+      color: team === 'red' ? '#ef4444' : '#3b82f6',
+      size: 3 + Math.random() * 4
+    });
+  }
+}
+
+function animateArena() {
+  if (!arenaCtx || !arenaCanvas) return;
+  const c = arenaCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  arenaCtx.scale(dpr, dpr);
+  const w = c.clientWidth, h = c.clientHeight;
+
+  function draw() {
+    if (!battleRunning && particles.length === 0) return;
+    arenaCtx.clearRect(0, 0, w, h);
+
+    // Center divider
+    arenaCtx.strokeStyle = 'rgba(255,255,255,0.2)';
+    arenaCtx.setLineDash([4, 4]);
+    arenaCtx.beginPath();
+    arenaCtx.moveTo(w / 2, 0);
+    arenaCtx.lineTo(w / 2, h);
+    arenaCtx.stroke();
+    arenaCtx.setLineDash([]);
+
+    // Team labels
+    arenaCtx.font = '12px Orbitron, monospace';
+    arenaCtx.fillStyle = '#ef4444';
+    arenaCtx.textAlign = 'center';
+    arenaCtx.fillText('RED', w * 0.25, 20);
+    arenaCtx.fillStyle = '#3b82f6';
+    arenaCtx.fillText('BLUE', w * 0.75, 20);
+
+    // Shield icons for active defenses
+    arenaCtx.font = '20px sans-serif';
+    let dy = 40;
+    activeDefenses.forEach(id => {
+      arenaCtx.fillText('🛡', w * 0.75, dy);
+      dy += 25;
+    });
+
+    // Particles
+    particles = particles.filter(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life--;
+      p.vy += 0.02;
+      const alpha = p.life / 60;
+      arenaCtx.globalAlpha = alpha;
+      arenaCtx.fillStyle = p.color;
+      arenaCtx.beginPath();
+      arenaCtx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
+      arenaCtx.fill();
+      return p.life > 0;
+    });
+    arenaCtx.globalAlpha = 1;
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+}

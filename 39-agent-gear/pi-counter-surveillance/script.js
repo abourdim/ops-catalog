@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-counter-surveillance', subtitle: 'Counter-Surveillance Toolkit — Detect Bugs & Trackers',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Counter-Surveillance — Bug Detector', mainDesc: 'Multi-band RF sweep, audio analysis, and GPS tracker detection',
+    sectionA: 'RF Scanner', sectionB: 'Audio Analysis', sectionC: 'Threat Map',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🔍 Counter-Surveillance Kit ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-counter-surveillance', subtitle: 'Kit Contre-Surveillance — Détection Mouchards',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Contre-Surveillance — Détecteur', mainDesc: 'Balayage RF multi-bande, analyse audio et détection GPS',
+    sectionA: 'Scanner RF', sectionB: 'Analyse Audio', sectionC: 'Carte des Menaces',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🔍 Kit Contre-Surveillance prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مكافحة المراقبة', subtitle: 'أدوات مكافحة المراقبة — كشف الأجهزة والمتعقبات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'مكافحة المراقبة — كاشف الأجهزة', mainDesc: 'مسح RF متعدد النطاقات وتحليل صوتي وكشف متعقبات GPS',
+    sectionA: 'ماسح RF', sectionB: 'تحليل صوتي', sectionC: 'خريطة التهديدات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🔍 أدوات مكافحة المراقبة جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1443,116 @@ function init() {
   initAR();
   initAIChat();
 
+  initCounterSurv();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ COUNTER-SURVEILLANCE SIMULATION ═══════ */
+(function(){
+  let csScanning=false,csThreats=0,csScanInterval=null;const csWave=[];
+
+  window.initCounterSurv=function(){
+    const c=$('simCanvas');if(c){c.width=c.offsetWidth||480;c.height=160;for(let i=0;i<c.width;i++)csWave.push(0);requestAnimationFrame(csAnim);}
+    const bs=$('btnCsScan');if(bs)bs.onclick=()=>{csFullSweep();playSound('click');};
+    const bq=$('btnCsQuick');if(bq)bq.onclick=()=>{csQuickScan();playSound('click');};
+    const bj=$('btnCsJam');if(bj)bj.onclick=()=>{csJam();playSound('error');};
+    const brs=$('btnRfSweep');if(brs)brs.onclick=()=>{csRfSweep();playSound('click');};
+    const brr=$('btnRfReset');if(brr)brr.onclick=()=>{const i=$('rfInfo');if(i)i.textContent='';};
+    const bas=$('btnAudioSweep');if(bas)bas.onclick=()=>{csAudioSweep();playSound('click');};
+    const bast=$('btnAudioStop');if(bast)bast.onclick=()=>{if(csScanInterval){clearInterval(csScanInterval);csScanInterval=null;}};
+  };
+
+  function csFullSweep(){
+    csScanning=true;setStatus(true);
+    const st=$('csStatus');if(st)st.textContent='SCANNING';
+    const tl=$('threatLevel');if(tl){tl.textContent='SCANNING...';tl.className='threat-level threat-med';}
+    log('🔍 Full spectrum sweep initiated...','tx');
+    let step=0,found=0;
+    csScanInterval=setInterval(()=>{
+      step++;const freq=(1+step*100).toFixed(0);
+      const band=$('csBand');if(band)band.textContent=freq+' MHz';
+      const pwr=$('csPower');if(pwr)pwr.textContent=(-80+Math.random()*60|0)+' dBm';
+      const bar=$('csBar');if(bar)bar.style.width=(step/30*100)+'%';
+      if(Math.random()>0.85){found++;const th=$('csThreats');if(th)th.textContent=found;log('⚠️ Suspicious signal at '+freq+' MHz!','error');csWave.push(0.9);}
+      if(step>=30){
+        clearInterval(csScanInterval);csScanInterval=null;csScanning=false;csThreats=found;
+        const tlf=$('threatLevel');
+        if(tlf){tlf.textContent=found>0?'THREATS: '+found:'CLEAR';tlf.className='threat-level '+(found>0?'threat-high':'threat-low');}
+        if(st)st.textContent='COMPLETE';
+        log(found>0?'🚨 '+found+' threats detected!':'✅ Area is CLEAR','success');
+        drawThreatMap(found);
+      }
+    },200);
+  }
+
+  function csQuickScan(){
+    log('🔍 Quick scan — common bug frequencies...','tx');
+    setTimeout(()=>{
+      const found=Math.random()>0.7?1:0;
+      const tl=$('threatLevel');if(tl){tl.textContent=found?'THREAT':'CLEAR';tl.className='threat-level '+(found?'threat-high':'threat-low');}
+      log(found?'⚠️ Possible bug detected on 433 MHz!':'✅ Quick scan clear','success');
+    },1500);
+  }
+
+  function csJam(){
+    log('📡 RF JAMMING ACTIVE — all wireless disrupted!','error');
+    const tl=$('threatLevel');if(tl){tl.textContent='JAMMING';tl.className='threat-level threat-high';}
+    for(let i=0;i<40;i++)csWave.push(0.7+Math.random()*0.3);
+    setTimeout(()=>{if(tl){tl.textContent='STANDBY';tl.className='threat-level threat-low';}log('📡 Jamming stopped','info');},5000);
+  }
+
+  function csRfSweep(){
+    const c=$('rfCanvas'),info=$('rfInfo');
+    if(c){const ctx=c.getContext('2d');c.width=c.offsetWidth||480;const w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);for(let x=0;x<w;x+=2){const v=Math.random()*0.3+(Math.random()>0.95?0.6:0);ctx.fillStyle=v>0.5?'#f44336':'rgba(0,255,65,0.4)';ctx.fillRect(x,h-v*h,1,v*h);}ctx.fillStyle='#fff';ctx.font='10px Orbitron,monospace';ctx.fillText('1 MHz',5,h-5);ctx.fillText('6 GHz',w-50,h-5);}
+    if(info)info.textContent='RF sweep: 1 MHz - 6 GHz | Peaks detected: '+(Math.random()*5|0);
+    log('📡 RF sweep complete','success');
+  }
+
+  function csAudioSweep(){
+    const c=$('audioCanvas'),info=$('audioInfo');
+    log('🔊 Audio analysis running...','tx');
+    csScanInterval=setInterval(()=>{
+      if(c){const ctx=c.getContext('2d');c.width=c.offsetWidth||480;const w=c.width,h=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);for(let x=0;x<w;x+=3){const v=Math.random()*0.4+(Math.sin(x*0.02+Date.now()*0.003)*0.2);ctx.fillStyle=v>0.4?'#ffaa00':'rgba(0,200,255,0.3)';ctx.fillRect(x,h/2-v*h*0.4,2,v*h*0.8);}}
+      if(info)info.textContent='Freq: '+(200+Math.random()*19800|0)+' Hz | Level: '+(Math.random()*-60|0)+' dB | '+(Math.random()>0.9?'[ANOMALY]':'[normal]');
+    },150);
+  }
+
+  function drawThreatMap(threats){
+    const c=$('mapCanvas'),info=$('mapInfo');
+    if(!c)return;const ctx=c.getContext('2d');c.width=c.offsetWidth||480;const w=c.width,h=c.height;
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+    // Room outline
+    ctx.strokeStyle='rgba(0,255,65,0.3)';ctx.lineWidth=2;ctx.strokeRect(40,20,w-80,h-40);
+    ctx.fillStyle='rgba(0,255,65,0.1)';ctx.fillRect(40,20,w-80,h-40);
+    // Threats
+    for(let i=0;i<threats;i++){
+      const x=60+Math.random()*(w-120),y=30+Math.random()*(h-60);
+      ctx.beginPath();ctx.arc(x,y,12,0,Math.PI*2);ctx.fillStyle='rgba(244,67,54,0.3)';ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fillStyle='#f44336';ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='9px monospace';ctx.fillText('BUG-'+(i+1),x+15,y+3);
+    }
+    if(!threats){ctx.fillStyle='#4caf50';ctx.font='16px Orbitron,monospace';ctx.fillText('AREA CLEAR',w/2-60,h/2);}
+    if(info)info.textContent=threats?threats+' threat(s) mapped — investigate marked locations':'No threats detected in scan area';
+  }
+
+  function csAnim(){
+    const c=$('simCanvas');if(!c){requestAnimationFrame(csAnim);return;}
+    const ctx=c.getContext('2d'),w=c.width,h=c.height;
+    csWave.push(csScanning?0.1+Math.random()*0.4:Math.random()*0.05);
+    if(csWave.length>w)csWave.splice(0,csWave.length-w);
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(255,0,0,0.06)';ctx.lineWidth=1;
+    for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#f44336';
+    ctx.strokeStyle=csScanning?accent:'rgba(100,100,100,0.3)';ctx.lineWidth=2;ctx.beginPath();
+    const st=Math.max(0,csWave.length-w);
+    for(let i=st;i<csWave.length;i++){const x=i-st,y=h/2-csWave[i]*h*0.4*Math.sin((i+Date.now()*0.01)*0.08);i===st?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
+    if(csScanning){const sl=(Date.now()*0.08)%w;ctx.strokeStyle='rgba(255,0,0,0.2)';ctx.beginPath();ctx.moveTo(sl,0);ctx.lineTo(sl,h);ctx.stroke();}
+    requestAnimationFrame(csAnim);
+  }
+})();

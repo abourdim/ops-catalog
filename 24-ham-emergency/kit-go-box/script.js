@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Go-Box Dashboard', subtitle: '🧰 Portable ham radio station checklist',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Go-Box Station', mainDesc: 'Portable ham radio station dashboard and checklist',
+    sectionA: 'Theory', sectionB: 'Checklist', sectionC: 'Station Status',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Tableau Go-Box', subtitle: '🧰 Station radio portable et checklist',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Station Go-Box', mainDesc: 'Tableau de bord et checklist station radio portable',
+    sectionA: 'Théorie', sectionB: 'Checklist', sectionC: 'État Station',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'لوحة Go-Box', subtitle: '🧰 لوحة محطة راديو محمولة وقائمة تحقق',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'محطة Go-Box', mainDesc: 'لوحة تحكم وقائمة تحقق لمحطة الراديو المحمولة',
+    sectionA: 'النظرية', sectionB: 'قائمة التحقق', sectionC: 'حالة المحطة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,107 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Power On',stop:'Power Off',simStarted:'Station powered on',simStopped:'Station powered off',theoryTitle:'Go-Box Theory',theoryDesc:'A Go-Box is a self-contained portable ham radio station built into a rugged case for rapid deployment during emergencies or field operations. It typically includes a transceiver, power supply/battery, antenna tuner, cables, and accessories. A well-organized go-box can be set up in minutes and operate independently on battery power for extended periods.',battery:'Battery',temp:'Temperature',power:'Power Draw',checkedItems:'Checked'});
+Object.assign(LANG.fr, {start:'Allumer',stop:'Éteindre',simStarted:'Station allumée',simStopped:'Station éteinte',theoryTitle:'Théorie Go-Box',theoryDesc:'Une Go-Box est une station radio amateur portable autonome construite dans une mallette robuste pour un déploiement rapide en cas d\'urgence. Elle comprend généralement un émetteur-récepteur, alimentation/batterie, accord d\'antenne, câbles et accessoires. Une go-box bien organisée peut être installée en minutes et fonctionner sur batterie pendant de longues périodes.',battery:'Batterie',temp:'Température',power:'Consommation',checkedItems:'Vérifiés'});
+Object.assign(LANG.ar, {start:'تشغيل',stop:'إيقاف',simStarted:'تم تشغيل المحطة',simStopped:'تم إيقاف المحطة',theoryTitle:'نظرية Go-Box',theoryDesc:'Go-Box هي محطة راديو هواة محمولة مستقلة مبنية في حقيبة متينة للنشر السريع أثناء حالات الطوارئ. تتضمن عادةً جهاز إرسال واستقبال ومصدر طاقة/بطارية وموالف هوائي وكابلات وملحقات. يمكن إعداد go-box منظمة في دقائق والعمل على البطارية لفترات طويلة.',battery:'البطارية',temp:'الحرارة',power:'استهلاك الطاقة',checkedItems:'محققة'});
+setLanguage(currentLang);
+
+
+/* ═══════ GO-BOX SIM ═══════ */
+let simRunning=false,simTimer=null;
+const gbC=$('goboxCanvas'),gbCtx=gbC?gbC.getContext('2d'):null;
+let batteryLevel=100,temperature=22,powerDraw=0,opTime=0;
+const CHECKLIST=[
+  {cat:'Radio',items:['HF Transceiver','VHF/UHF Handheld','Antenna Tuner','Headset/Mic','Programming Cable']},
+  {cat:'Power',items:['12V Battery','Solar Panel','Charger','Power Cables','Fuses & Connectors']},
+  {cat:'Antenna',items:['End-Fed Wire (40m)','VHF Mag-Mount','Coax Cable (50ft)','Antenna Mast','Guy Ropes & Stakes']},
+  {cat:'Support',items:['Logbook','Pen & Marker','Frequency List','Map & Compass','First Aid Kit','Water & Food','Flashlight','Multitool']}
+];
+let checkedState={};
+
+function initChecklist(){
+  const cl=$('checklistContainer');if(!cl)return;cl.innerHTML='';
+  CHECKLIST.forEach(cat=>{
+    const sec=document.createElement('div');sec.style.cssText='margin-bottom:8px';
+    const h=document.createElement('div');h.style.cssText='font-weight:bold;font-size:.8rem;color:var(--accent);margin-bottom:4px';h.textContent=cat.cat;sec.appendChild(h);
+    cat.items.forEach(item=>{
+      const row=document.createElement('label');row.style.cssText='display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text);cursor:pointer;padding:2px 0';
+      const cb=document.createElement('input');cb.type='checkbox';cb.style.cssText='accent-color:var(--accent);width:14px;height:14px';
+      cb.checked=!!checkedState[item];
+      cb.onchange=()=>{checkedState[item]=cb.checked;updateCheckCount();log((cb.checked?'\u2705':'\u274C')+' '+item,cb.checked?'success':'info');};
+      row.appendChild(cb);row.appendChild(document.createTextNode(item));sec.appendChild(row);
+    });
+    cl.appendChild(sec);
+  });
+  updateCheckCount();
+}
+
+function updateCheckCount(){
+  const total=CHECKLIST.reduce((s,c)=>s+c.items.length,0);
+  const checked=Object.values(checkedState).filter(v=>v).length;
+  const cd=$('checkDisp');if(cd)cd.textContent=checked+'/'+total;
+  const pct=Math.round(checked/total*100);
+  const pb=$('progressBar');if(pb)pb.style.width=pct+'%';
+}
+
+function drawGoBox(){
+  if(!gbCtx)return;const W=gbC.width,H=gbC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  gbCtx.fillStyle='#0a1628';gbCtx.fillRect(0,0,W,H);
+  // Battery gauge
+  const bx=30,by=30,bw=120,bh=50;
+  gbCtx.strokeStyle='rgba(255,255,255,0.3)';gbCtx.lineWidth=2;gbCtx.strokeRect(bx,by,bw,bh);
+  gbCtx.fillRect(bx+bw,by+15,8,20);
+  const bColor=batteryLevel>50?'#22c55e':batteryLevel>20?'#f59e0b':'#ef4444';
+  gbCtx.fillStyle=bColor;gbCtx.fillRect(bx+3,by+3,Math.max(0,(bw-6)*batteryLevel/100),bh-6);
+  gbCtx.fillStyle='rgba(255,255,255,0.8)';gbCtx.font='bold 14px monospace';gbCtx.fillText(Math.round(batteryLevel)+'%',bx+bw/2-18,by+bh/2+5);
+  gbCtx.fillStyle='rgba(255,255,255,0.5)';gbCtx.font='10px monospace';gbCtx.fillText('BATTERY',bx,by-8);
+  // Temperature gauge
+  const tx=200,ty=30;
+  gbCtx.fillStyle='rgba(255,255,255,0.5)';gbCtx.font='10px monospace';gbCtx.fillText('TEMP',tx,ty-8);
+  const tColor=temperature<35?'#22c55e':temperature<50?'#f59e0b':'#ef4444';
+  gbCtx.fillStyle=tColor;gbCtx.font='bold 20px monospace';gbCtx.fillText(temperature.toFixed(1)+'\u00B0C',tx,ty+30);
+  // Power draw
+  const px=340,py=30;
+  gbCtx.fillStyle='rgba(255,255,255,0.5)';gbCtx.font='10px monospace';gbCtx.fillText('POWER DRAW',px,py-8);
+  gbCtx.fillStyle=acc;gbCtx.font='bold 20px monospace';gbCtx.fillText(powerDraw.toFixed(1)+'W',px,py+30);
+  // Op time
+  const hrs=Math.floor(opTime/3600);const mins=Math.floor((opTime%3600)/60);
+  gbCtx.fillStyle='rgba(255,255,255,0.5)';gbCtx.font='10px monospace';gbCtx.fillText('OPERATING TIME',30,H-30);
+  gbCtx.fillStyle=acc2;gbCtx.font='bold 16px monospace';gbCtx.fillText(hrs+'h '+mins+'m',30,H-10);
+  // Estimated remaining
+  const remH=batteryLevel>0?batteryLevel/100*8:0;
+  gbCtx.fillStyle='rgba(255,255,255,0.5)';gbCtx.font='10px monospace';gbCtx.fillText('EST. REMAINING',250,H-30);
+  gbCtx.fillStyle=remH>2?'#22c55e':'#ef4444';gbCtx.font='bold 16px monospace';gbCtx.fillText(remH.toFixed(1)+'h',250,H-10);
+}
+
+function goboxStep(){
+  opTime+=30;
+  batteryLevel=Math.max(0,batteryLevel-0.1-Math.random()*0.2);
+  temperature=22+opTime/600+Math.random()*2-1;
+  powerDraw=15+Math.random()*25;
+  if(Math.random()<0.3&&simRunning)powerDraw+=20;// TX burst
+  const bd=$('battDisp');if(bd)bd.textContent=Math.round(batteryLevel)+'%';
+  const td=$('tempDisp');if(td)td.textContent=temperature.toFixed(1)+'\u00B0C';
+  const pd=$('powerDisp');if(pd)pd.textContent=powerDraw.toFixed(1)+'W';
+  if(batteryLevel<20&&batteryLevel>19)log('WARNING: Battery low! '+Math.round(batteryLevel)+'%','error');
+  if(Math.random()<0.2)log('Station: '+powerDraw.toFixed(1)+'W draw, Batt: '+Math.round(batteryLevel)+'%, Temp: '+temperature.toFixed(1)+'\u00B0C','rx');
+  drawGoBox();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);batteryLevel=100;temperature=22;opTime=0;
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(goboxStep,2000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped||'Stopped','info');}
+
+function init_gobox(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  initChecklist();drawGoBox();
+}
+init_gobox();

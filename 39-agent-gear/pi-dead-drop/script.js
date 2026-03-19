@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-dead-drop', subtitle: 'Pi Dead Drop — Secure File Exchange Point',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Dead Drop — Covert File Exchange', mainDesc: 'Hidden WiFi AP for anonymous encrypted file transfers',
+    sectionA: 'Drop Zone', sectionB: 'AP Security', sectionC: 'Network Monitor',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📦 Dead Drop ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-dead-drop', subtitle: 'Boite Morte Pi — Point d\'Echange Sécurisé',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Boite Morte — Echange Clandestin', mainDesc: 'Point d\'accès WiFi caché pour transferts chiffrés anonymes',
+    sectionA: 'Zone de Dépôt', sectionB: 'Sécurité AP', sectionC: 'Moniteur Réseau',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📦 Boite Morte prête !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'صندوق التبادل السري', subtitle: 'صندوق تبادل سري — نقطة تبادل ملفات آمنة',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'صندوق التبادل — تبادل ملفات سري', mainDesc: 'نقطة وصول WiFi مخفية لنقل ملفات مشفرة مجهولة',
+    sectionA: 'منطقة الإيداع', sectionB: 'أمان نقطة الوصول', sectionC: 'مراقب الشبكة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📦 صندوق التبادل السري جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1443,100 @@ function init() {
   initAR();
   initAIChat();
 
+  initDeadDrop();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ DEAD DROP SIMULATION ═══════ */
+(function(){
+  let ddActive=false,ddFiles=[],ddClients=0,ddStorage=0;const ddWave=[];
+
+  window.initDeadDrop=function(){
+    const c=$('simCanvas');if(c){c.width=c.offsetWidth||480;c.height=140;for(let i=0;i<c.width;i++)ddWave.push(0);requestAnimationFrame(ddAnim);}
+    const ba=$('btnDdActivate');if(ba)ba.onclick=()=>{ddToggle();playSound('click');};
+    const bd=$('btnDdDrop');if(bd)bd.onclick=()=>{ddDropFile();playSound('click');};
+    const bp=$('btnDdPickup');if(bp)bp.onclick=()=>{ddPickup();playSound('success');};
+    const bw=$('btnDdWipe');if(bw)bw.onclick=()=>{ddWipe();playSound('error');};
+    const br=$('btnDzRefresh');if(br)br.onclick=()=>{ddRefreshList();playSound('click');};
+    const bc=$('btnDzClear');if(bc)bc.onclick=()=>{ddFiles=[];ddStorage=0;ddRefreshList();ddUpdateStats();playSound('click');};
+    const bsa=$('btnSecAudit');if(bsa)bsa.onclick=()=>{ddSecAudit();playSound('click');};
+    const bsr=$('btnSecRotate');if(bsr)bsr.onclick=()=>{log('🔑 Encryption keys rotated — new AES-256 key active','success');playSound('click');};
+  };
+
+  function ddToggle(){
+    ddActive=!ddActive;setStatus(ddActive);
+    const ap=$('ddAP');if(ap)ap.textContent=ddActive?'ACTIVE':'DOWN';
+    const ds=$('dropStatus');if(ds){ds.textContent=ddActive?'ACTIVE':'IDLE';ds.className='drop-status '+(ddActive?'drop-active':'drop-idle');}
+    log(ddActive?'📡 Hidden AP activated — SSID hidden, WPA3':'🔴 AP deactivated',ddActive?'success':'error');
+    if(ddActive){setInterval(()=>{if(!ddActive)return;ddClients=Math.random()*3|0;const cl=$('ddClients');if(cl)cl.textContent=ddClients;},3000);}
+  }
+
+  function ddDropFile(){
+    if(!ddActive)return;
+    const names=['intel-report','sat-imagery','agent-list','dead-drop-coords','cipher-keys','mission-brief','exfil-plan','comms-log'];
+    const name=names[Math.random()*names.length|0]+'-'+Date.now().toString(36).slice(-4)+'.enc';
+    const size=(1+Math.random()*500|0);
+    ddFiles.push({name:name,size:size,time:new Date().toLocaleTimeString()});
+    ddStorage+=size;
+    ddUpdateStats();ddRefreshList();
+    log('📁 File dropped: '+name+' ('+size+' KB)','tx');
+    for(let i=0;i<5;i++)ddWave.push(0.6+Math.random()*0.3);
+  }
+
+  function ddPickup(){
+    if(!ddActive||!ddFiles.length)return;
+    const f=ddFiles.shift();
+    ddStorage=Math.max(0,ddStorage-f.size);
+    ddUpdateStats();ddRefreshList();
+    log('📥 File picked up: '+f.name,'rx');
+  }
+
+  function ddWipe(){
+    ddFiles=[];ddStorage=0;ddClients=0;ddActive=false;setStatus(false);
+    ddUpdateStats();ddRefreshList();
+    const ds=$('dropStatus');if(ds){ds.textContent='WIPED';ds.className='drop-status drop-alert';}
+    const ap=$('ddAP');if(ap)ap.textContent='WIPED';
+    log('🔥 EMERGENCY WIPE — all data destroyed, keys burned, logs purged','error');
+    for(let i=0;i<30;i++)ddWave.push(0.9);
+  }
+
+  function ddUpdateStats(){
+    const f=$('ddFiles');if(f)f.textContent=ddFiles.length;
+    const s=$('ddStorage');if(s)s.textContent=ddStorage+' KB';
+    const bar=$('ddBar');if(bar)bar.style.width=Math.min(100,ddStorage/500*100)+'%';
+  }
+
+  function ddRefreshList(){
+    const fl=$('fileList');if(!fl)return;
+    if(!ddFiles.length){fl.innerHTML='<span style="opacity:.5">No files in drop zone</span>';return;}
+    fl.innerHTML=ddFiles.map(f=>'<div>'+f.name+' ['+f.size+' KB] '+f.time+'</div>').join('');
+  }
+
+  function ddSecAudit(){
+    const info=$('secInfo');
+    if(info){let o='[AUDIT] Security check...\n';o+='[OK] WPA3 encryption: active\n';o+='[OK] SSID broadcast: hidden\n';o+='[OK] MAC filtering: enabled\n';o+='[OK] File encryption: AES-256-GCM\n';o+='[OK] Auto-wipe timer: 24h\n';o+='[OK] No unauthorized access detected';info.textContent=o;}
+    log('🔒 Security audit passed — all checks OK','success');
+  }
+
+  function ddAnim(){
+    const c=$('simCanvas');if(!c){requestAnimationFrame(ddAnim);return;}
+    const ctx=c.getContext('2d'),w=c.width,h=c.height;
+    ddWave.push(ddActive?0.05+Math.random()*0.15:Math.random()*0.02);
+    if(ddWave.length>w)ddWave.splice(0,ddWave.length-w);
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(100,200,255,0.05)';ctx.lineWidth=1;
+    for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#4caf50';
+    ctx.strokeStyle=ddActive?accent:'rgba(100,100,100,0.3)';ctx.lineWidth=2;ctx.beginPath();
+    const st=Math.max(0,ddWave.length-w);
+    for(let i=st;i<ddWave.length;i++){const x=i-st,y=h/2-ddWave[i]*h*0.4*Math.sin((i+Date.now()*0.005)*0.1);i===st?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
+    // Network monitor
+    const nc=$('netCanvas');if(nc&&ddActive){const nctx=nc.getContext('2d');nc.width=nc.offsetWidth||480;const nw=nc.width,nh=nc.height;nctx.fillStyle='#0a0a1a';nctx.fillRect(0,0,nw,nh);for(let x=0;x<nw;x+=4){const v=Math.random()*0.2;nctx.fillStyle='rgba(0,200,100,0.3)';nctx.fillRect(x,nh-v*nh,3,v*nh);}const ni=$('netInfo');if(ni)ni.textContent='AP: hidden | Clients: '+ddClients+' | TX: '+(Math.random()*100|0)+' KB/s | RX: '+(Math.random()*50|0)+' KB/s';}
+    requestAnimationFrame(ddAnim);
+  }
+})();

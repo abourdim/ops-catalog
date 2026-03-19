@@ -63,115 +63,109 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Covert Channel', subtitle: 'Covert Channel — RF Steganography',
+    disconnected: 'Idle', connected: 'Transmitting',
+    mainSection: 'Covert Channel', mainDesc: 'Embed hidden messages in RF signals',
+    sectionA: 'Transmission Log', sectionB: 'Steganography Techniques',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Covert Channel?', faq_a1: 'An RF steganography simulator. Hide messages inside normal-looking radio signals.',
+    faq_q2: 'How do I encode?', faq_a2: 'Type a message, select a method, and click Encode to embed it in the waveform.',
+    faq_q3: 'What methods are available?', faq_a3: 'Amplitude, Frequency Shift, Phase, and Spread Spectrum modulation.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
+    howto_1: 'Type a secret message in the input field.', howto_2: 'Select a steganography method.',
+    howto_3: 'Click Encode to hide the message in the waveform.', howto_4: 'Click Decode to extract hidden data.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual with RTL support.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log with filters.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first. All data in browser.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Covert Channel ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    encode: 'Encode', decode: 'Decode', method: 'Method:', carrier: 'Carrier:',
+    encodedData: 'Encoded Data', decodedMsg: 'Decoded Message', stats: 'Statistics',
+    txHint: 'Encoded and decoded messages will appear here.',
+    msgEncoded: 'Message encoded', msgDecoded: 'Message decoded', noData: 'No data to decode',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
+    title: 'Canal Secret', subtitle: 'Canal Secret — Stéganographie RF',
+    disconnected: 'En attente', connected: 'Transmission',
+    mainSection: 'Canal Secret', mainDesc: 'Cacher des messages dans les signaux RF',
+    sectionA: 'Journal de Transmission', sectionB: 'Techniques de Stéganographie',
+    activityLog: 'Journal', eventsMsg: 'Événements',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que Canal Secret?', faq_a1: 'Un simulateur de stéganographie RF.',
+    faq_q2: 'Comment encoder?', faq_a2: 'Tapez un message et cliquez Encoder.',
+    faq_q3: 'Quelles méthodes?', faq_a3: 'Amplitude, fréquence, phase et spectre étalé.',
+    faq_q4: 'Données privées?', faq_a4: 'Oui. Tout est local.',
+    howto_1: 'Tapez un message secret.', howto_2: 'Choisissez une méthode.',
+    howto_3: 'Cliquez Encoder pour cacher le message.', howto_4: 'Cliquez Décoder pour extraire.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté.',
+    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Canal Secret prêt!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    encode: 'Encoder', decode: 'Décoder', method: 'Méthode:', carrier: 'Porteuse:',
+    encodedData: 'Données Encodées', decodedMsg: 'Message Décodé', stats: 'Statistiques',
+    txHint: 'Les messages encodés et décodés apparaîtront ici.',
+    msgEncoded: 'Message encodé', msgDecoded: 'Message décodé', noData: 'Aucune donnée',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
+    title: 'قناة سرية', subtitle: 'قناة سرية — إخفاء البيانات في RF',
+    disconnected: 'خامل', connected: 'إرسال',
+    mainSection: 'قناة سرية', mainDesc: 'إخفاء رسائل في إشارات الراديو',
+    sectionA: 'سجل الإرسال', sectionB: 'تقنيات إخفاء البيانات',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هي القناة السرية؟', faq_a1: 'محاكي لإخفاء البيانات في إشارات الراديو.',
+    faq_q2: 'كيف أشفر؟', faq_a2: 'اكتب رسالة وانقر تشفير.',
+    faq_q3: 'ما الطرق المتاحة؟', faq_a3: 'السعة، التردد، الطور، والطيف المنتشر.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
+    howto_1: 'اكتب رسالة سرية.', howto_2: 'اختر طريقة الإخفاء.',
+    howto_3: 'انقر تشفير لإخفاء الرسالة.', howto_4: 'انقر فك التشفير للاستخراج.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولاً.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 القناة السرية جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    encode: 'تشفير', decode: 'فك التشفير', method: 'الطريقة:', carrier: 'الحامل:',
+    encodedData: 'البيانات المشفرة', decodedMsg: 'الرسالة المفكوكة', stats: 'الإحصائيات',
+    txHint: 'ستظهر الرسائل هنا.',
+    msgEncoded: 'تم تشفير الرسالة', msgDecoded: 'تم فك التشفير', noData: 'لا توجد بيانات',
   }
 };
 
@@ -1444,6 +1438,231 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initCovertChannel();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: COVERT CHANNEL — RF Steganography
+   ═══════════════════════════════════════════════════════════════ */
+
+let waveCanvas, waveCtx, waveW=780, waveH=250;
+let encodedBits = [], carrierFreq = 8, currentMethod = 'amplitude';
+let animFrame = 0, lastMessage = '', txHistory = [];
+
+function textToBits(text) {
+  const bits = [];
+  for (let i=0; i<text.length; i++) {
+    const c = text.charCodeAt(i);
+    for (let b=7; b>=0; b--) bits.push((c >> b) & 1);
+  }
+  return bits;
+}
+
+function bitsToText(bits) {
+  let text = '';
+  for (let i=0; i+7<bits.length; i+=8) {
+    let byte = 0;
+    for (let b=0; b<8; b++) byte = (byte << 1) | bits[i+b];
+    if (byte > 0 && byte < 128) text += String.fromCharCode(byte);
+  }
+  return text;
+}
+
+function drawWaveform() {
+  if (!waveCtx) return;
+  waveCtx.fillStyle = '#0a0a1a';
+  waveCtx.fillRect(0,0,waveW,waveH);
+  animFrame++;
+
+  // Grid
+  waveCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+  waveCtx.lineWidth = 1;
+  for (let x=0; x<waveW; x+=40) { waveCtx.beginPath(); waveCtx.moveTo(x,0); waveCtx.lineTo(x,waveH); waveCtx.stroke(); }
+  waveCtx.strokeStyle = 'rgba(255,255,255,0.08)';
+  waveCtx.beginPath(); waveCtx.moveTo(0,waveH/2); waveCtx.lineTo(waveW,waveH/2); waveCtx.stroke();
+
+  const midY = waveH / 2;
+  const amp = waveH * 0.35;
+
+  // Carrier wave (dim)
+  waveCtx.beginPath();
+  waveCtx.strokeStyle = 'rgba(59,130,246,0.3)';
+  waveCtx.lineWidth = 1;
+  for (let x=0; x<waveW; x++) {
+    const t = (x + animFrame * 0.5) / waveW;
+    const y = midY + Math.sin(t * Math.PI * 2 * carrierFreq) * amp * 0.4;
+    x === 0 ? waveCtx.moveTo(x,y) : waveCtx.lineTo(x,y);
+  }
+  waveCtx.stroke();
+
+  // Encoded signal
+  if (encodedBits.length > 0) {
+    waveCtx.beginPath();
+    waveCtx.strokeStyle = '#22c55e';
+    waveCtx.lineWidth = 2;
+    const bitsPerPixel = encodedBits.length / waveW;
+
+    for (let x=0; x<waveW; x++) {
+      const bitIdx = Math.floor(x * bitsPerPixel) % encodedBits.length;
+      const bit = encodedBits[bitIdx];
+      const t = (x + animFrame * 0.5) / waveW;
+      let y;
+
+      switch(currentMethod) {
+        case 'amplitude':
+          y = midY + Math.sin(t * Math.PI * 2 * carrierFreq) * amp * (bit ? 0.9 : 0.2);
+          break;
+        case 'frequency':
+          const freq = bit ? carrierFreq * 1.5 : carrierFreq;
+          y = midY + Math.sin(t * Math.PI * 2 * freq) * amp * 0.6;
+          break;
+        case 'phase':
+          y = midY + Math.sin(t * Math.PI * 2 * carrierFreq + (bit ? Math.PI : 0)) * amp * 0.6;
+          break;
+        case 'spread':
+          const noise = (Math.random() - 0.5) * (bit ? 0.8 : 0.1);
+          y = midY + Math.sin(t * Math.PI * 2 * carrierFreq) * amp * 0.5 + noise * amp * 0.5;
+          break;
+        default:
+          y = midY;
+      }
+      x === 0 ? waveCtx.moveTo(x,y) : waveCtx.lineTo(x,y);
+    }
+    waveCtx.stroke();
+
+    // Bit markers
+    const segW = waveW / Math.min(encodedBits.length, 64);
+    for (let i=0; i<Math.min(encodedBits.length, 64); i++) {
+      const x = i * segW + segW/2;
+      waveCtx.fillStyle = encodedBits[i] ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.3)';
+      waveCtx.fillRect(x - 1, waveH - 8, 3, 8);
+    }
+  }
+
+  // Labels
+  waveCtx.fillStyle = 'rgba(255,255,255,0.4)';
+  waveCtx.font = '10px monospace';
+  waveCtx.textAlign = 'left';
+  waveCtx.fillText(`Method: ${currentMethod.toUpperCase()}`, 6, 14);
+  waveCtx.fillText(`Carrier: ${carrierFreq} Hz`, 6, 26);
+  waveCtx.fillText(`Bits: ${encodedBits.length}`, 6, 38);
+}
+
+function encodeMessage() {
+  const input = $('msgInput');
+  if (!input || !input.value.trim()) return;
+  const msg = input.value.trim();
+  lastMessage = msg;
+  encodedBits = textToBits(msg);
+  setStatus(true);
+
+  $('encodedBits').textContent = encodedBits.join('');
+  $('decodedText').textContent = '---';
+
+  const s = LANG[currentLang];
+  log(`${s.msgEncoded}: "${msg}" (${encodedBits.length} bits, ${currentMethod})`, 'tx');
+  playSound('success');
+
+  txHistory.push({ type: 'encode', msg, method: currentMethod, bits: encodedBits.length, time: new Date() });
+  updateTxLog();
+  updateStats();
+  setTimeout(() => setStatus(false), 1500);
+}
+
+function decodeMessage() {
+  if (encodedBits.length === 0) {
+    log(LANG[currentLang].noData, 'error');
+    playSound('error');
+    return;
+  }
+  const decoded = bitsToText(encodedBits);
+  $('decodedText').textContent = decoded;
+  const s = LANG[currentLang];
+  log(`${s.msgDecoded}: "${decoded}"`, 'rx');
+  playSound('success');
+
+  txHistory.push({ type: 'decode', msg: decoded, method: currentMethod, bits: encodedBits.length, time: new Date() });
+  updateTxLog();
+}
+
+function updateTxLog() {
+  const el = $('txLog');
+  if (!el) return;
+  el.innerHTML = '';
+  txHistory.slice(-10).reverse().forEach(tx => {
+    const row = document.createElement('div');
+    const color = tx.type === 'encode' ? '#3b82f6' : '#22c55e';
+    const icon = tx.type === 'encode' ? '&#x1F512;' : '&#x1F513;';
+    row.style.cssText = `display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.2);border:1px solid var(--border);`;
+    row.innerHTML = `<span style="color:${color};font-size:1em;">${icon}</span><span style="flex:1;font-size:.78rem;">${tx.msg}</span><span style="font-size:.65rem;color:var(--text-muted);">${tx.method} / ${tx.bits}b</span>`;
+    el.appendChild(row);
+  });
+}
+
+function updateStats() {
+  const el = $('channelStats');
+  if (!el) return;
+  el.innerHTML = `Bits: <strong>${encodedBits.length}</strong><br>` +
+    `Bytes: <strong>${Math.ceil(encodedBits.length/8)}</strong><br>` +
+    `Method: <strong>${currentMethod}</strong><br>` +
+    `Carrier: <strong>${carrierFreq} Hz</strong><br>` +
+    `Messages: <strong>${txHistory.length}</strong>`;
+}
+
+function buildStegoDatabase() {
+  const el = $('stegoDatabase');
+  if (!el) return;
+  const techniques = [
+    { name:'Amplitude Keying', desc:'Vary signal amplitude to encode 0/1 bits — simple but detectable' },
+    { name:'Frequency Shift', desc:'Switch between two frequencies for binary data — more robust' },
+    { name:'Phase Modulation', desc:'Shift carrier phase by 180° — harder to detect visually' },
+    { name:'Spread Spectrum', desc:'Spread data across wide bandwidth — appears as noise' },
+    { name:'LSB Embedding', desc:'Hide bits in least-significant parts of normal signals' },
+    { name:'Timing Channels', desc:'Encode data in transmission timing rather than content' },
+  ];
+  let html = '<div style="display:grid;grid-template-columns:auto 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Technique</strong><strong style="font-size:.7rem;">Description</strong>';
+  techniques.forEach(t => {
+    html += `<span style="color:var(--accent);">${t.name}</span><span style="color:var(--text-muted);">${t.desc}</span>`;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function covertLoop() {
+  drawWaveform();
+  requestAnimationFrame(covertLoop);
+}
+
+function initCovertChannel() {
+  waveCanvas = $('waveCanvas');
+  if (waveCanvas) {
+    waveCtx = waveCanvas.getContext('2d');
+    waveW = waveCanvas.width;
+    waveH = waveCanvas.height;
+  }
+
+  const encBtn = $('encodeBtn');
+  if (encBtn) encBtn.onclick = encodeMessage;
+  const decBtn = $('decodeBtn');
+  if (decBtn) decBtn.onclick = decodeMessage;
+
+  const methodSel = $('methodSelect');
+  if (methodSel) methodSel.addEventListener('change', () => { currentMethod = methodSel.value; });
+
+  const carrierSlider = $('carrierFreq');
+  const carrierLabel = $('carrierLabel');
+  if (carrierSlider) carrierSlider.addEventListener('input', () => {
+    carrierFreq = parseInt(carrierSlider.value);
+    if (carrierLabel) carrierLabel.textContent = carrierFreq + ' Hz';
+  });
+
+  const msgInput = $('msgInput');
+  if (msgInput) msgInput.addEventListener('keydown', e => { if (e.key === 'Enter') encodeMessage(); });
+
+  buildStegoDatabase();
+  updateStats();
+  covertLoop();
 }
 
 document.readyState === 'loading'

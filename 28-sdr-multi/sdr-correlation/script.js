@@ -63,16 +63,23 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'SDR Correlation Detector', subtitle: '📡 Cross-correlate signals from multiple SDR receivers',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Correlation Analysis', mainDesc: 'Cross-correlate signals from multiple SDR receivers',
+    sectionA: 'Correlation Results', sectionB: 'Theory & Notes',
+    freqLabel: 'Signal Frequency (Hz)', delayLabel: 'Receiver Delay (samples)', noiseLabel: 'Noise Level',
+    corrBtn: '📡 Correlate', resetBtn: '↺ Reset',
+    corrTheory: 'Cross-correlation measures similarity between two signals at different time lags. The peak indicates the time delay between receivers.',
+    theory1: 'Cross-correlation R(τ) = ∫ x(t) · y(t+τ) dt',
+    theory2: 'Peak location reveals the time delay between signals',
+    theory3: 'Works even with noisy signals — averaging improves SNR',
+    theory4: 'Used in TDOA, radar, sonar, and radio astronomy',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is signal correlation?', faq_a1: 'A mathematical technique to measure similarity between two signals, useful for detecting weak signals in noise.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -88,7 +95,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Correlation Detector ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,16 +107,23 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Détecteur de Corrélation SDR', subtitle: '📡 Corrélation croisée de signaux multi-récepteurs',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Analyse de Corrélation', mainDesc: 'Corrélation croisée de signaux multi-récepteurs SDR',
+    sectionA: 'Résultats de Corrélation', sectionB: 'Théorie & Notes',
+    freqLabel: 'Fréquence du signal (Hz)', delayLabel: 'Délai récepteur (échantillons)', noiseLabel: 'Niveau de bruit',
+    corrBtn: '📡 Corréler', resetBtn: '↺ Réinitialiser',
+    corrTheory: 'La corrélation croisée mesure la similarité entre deux signaux à différents décalages temporels.',
+    theory1: 'Corrélation croisée R(τ) = ∫ x(t) · y(t+τ) dt',
+    theory2: 'La position du pic révèle le délai entre les signaux',
+    theory3: 'Fonctionne même avec du bruit — le moyennage améliore le RSB',
+    theory4: 'Utilisé en TDOA, radar, sonar et radioastronomie',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que la corrélation de signaux ?', faq_a1: 'Une technique mathématique pour mesurer la similarité entre deux signaux, utile pour détecter des signaux faibles.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -125,7 +139,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Détecteur de Corrélation prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,16 +151,23 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'كاشف الارتباط SDR', subtitle: '📡 ارتباط متقاطع للإشارات من عدة مستقبلات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'تحليل الارتباط', mainDesc: 'ارتباط متقاطع للإشارات من عدة مستقبلات SDR',
+    sectionA: 'نتائج الارتباط', sectionB: 'النظرية والملاحظات',
+    freqLabel: 'تردد الإشارة (هرتز)', delayLabel: 'تأخير المستقبل (عينات)', noiseLabel: 'مستوى الضوضاء',
+    corrBtn: '📡 ارتباط', resetBtn: '↺ إعادة',
+    corrTheory: 'الارتباط المتقاطع يقيس التشابه بين إشارتين عند تأخيرات زمنية مختلفة. القمة تشير إلى التأخير بين المستقبلات.',
+    theory1: 'الارتباط المتقاطع R(τ) = ∫ x(t) · y(t+τ) dt',
+    theory2: 'موقع القمة يكشف التأخير الزمني بين الإشارات',
+    theory3: 'يعمل حتى مع الإشارات المشوشة — المتوسط يحسن نسبة الإشارة للضوضاء',
+    theory4: 'يُستخدم في TDOA والرادار والسونار وعلم الفلك الراديوي',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو ارتباط الإشارات؟', faq_a1: 'تقنية رياضية لقياس التشابه بين إشارتين، مفيدة لكشف الإشارات الضعيفة في الضوضاء.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -162,7 +183,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 كاشف الارتباط جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1470,65 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ CORRELATION SIMULATION ═══════ */
+function generateSig(freq, N, delay, noiseAmt) {
+  const s = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    const t = (i - delay) / N;
+    s[i] = Math.sin(2 * Math.PI * freq * t) + noiseAmt * (Math.random() * 2 - 1);
+  }
+  return s;
+}
+function crossCorrelate(a, b) {
+  const N = a.length, out = new Float32Array(N);
+  for (let lag = 0; lag < N; lag++) {
+    let sum = 0;
+    for (let i = 0; i < N - lag; i++) sum += a[i] * b[i + lag];
+    out[lag] = sum / N;
+  }
+  return out;
+}
+function drawSignal(canvasId, sig, color, label) {
+  const c = $(canvasId); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  const mx = Math.max(...sig.map(Math.abs)) || 1;
+  ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let i = 0; i < sig.length; i++) {
+    const x = i / sig.length * w, y = h / 2 - (sig[i] / mx) * (h / 2 - 5);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.fillStyle = color; ctx.font = '11px Orbitron,monospace'; ctx.fillText(label, 4, 14);
+}
+function runCorrelation() {
+  const freq = +$('freqSlider').value;
+  const delay = +$('delaySlider').value;
+  const noise = +$('noiseSlider').value / 100;
+  const N = 512;
+  const sig1 = generateSig(freq, N, 0, noise);
+  const sig2 = generateSig(freq, N, delay, noise);
+  const corr = crossCorrelate(sig1, sig2);
+  drawSignal('sigCanvas1', sig1, '#4af', 'Receiver 1');
+  drawSignal('sigCanvas2', sig2, '#f84', 'Receiver 2');
+  drawSignal('corrCanvas', corr, '#4f4', 'Cross-Correlation (peak = delay)');
+  let peakIdx = 0, peakVal = -Infinity;
+  for (let i = 0; i < corr.length; i++) if (corr[i] > peakVal) { peakVal = corr[i]; peakIdx = i; }
+  log('📡 Correlation peak at lag=' + peakIdx + ' (actual delay=' + delay + ')', 'success');
+  setStatus(true);
+}
+function resetCorr() {
+  ['sigCanvas1','sigCanvas2','corrCanvas'].forEach(id => {
+    const c = $(id); if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height);
+  });
+  setStatus(false);
+}
+(function initCorrelation() {
+  const cb = $('corrBtn'); if (cb) cb.onclick = () => setTimeout(runCorrelation, 50);
+  const rb = $('resetBtn'); if (rb) rb.onclick = resetCorr;
+  const fs = $('freqSlider'); if (fs) fs.oninput = function() { $('freqVal').textContent = this.value; };
+  const ds = $('delaySlider'); if (ds) ds.oninput = function() { $('delayVal').textContent = this.value; };
+  const ns = $('noiseSlider'); if (ns) ns.oninput = function() { $('noiseVal').textContent = this.value; };
+  setTimeout(runCorrelation, 500);
+})();

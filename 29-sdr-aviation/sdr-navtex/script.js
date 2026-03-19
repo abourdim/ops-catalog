@@ -1,7 +1,7 @@
 /**
- * Workshop DIY — Template v1.2
+ * SDR NAVTEX Decoder — Workshop DIY v1.2
+ * Decode NAVTEX maritime safety messages
  * Themes · i18n · RTL · Log · Toast · Status · Panels · Sound
- * Easter eggs: Konami, Morse, Matrix rain, Debug, Shake report, Time-travel, Typewriter
  */
 
 const $ = id => document.getElementById(id);
@@ -63,115 +63,13 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
-    helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
-    help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
-    working: 'Working…',
-    t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
-    logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
-    whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
-    musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    title:'SDR NAVTEX Decoder',subtitle:'🌊 Decode NAVTEX maritime safety',disconnected:'Disconnected',connected:'Connected',mainSection:'NAVTEX Decoder',mainDesc:'Decode NAVTEX maritime safety messages',sectionA:'Messages',sectionB:'NAVTEX Protocol',activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',theme:'Theme',settings:'⚙️ Settings',language:'Language',helpSettings:'❓ Help',settingsTab:'⚙️',help:'❓ Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',faq_q1:'What is this?',faq_a1:'Decode NAVTEX maritime safety messages',faq_q2:'How does it work?',faq_a2:'Uses SDR to decode radio signals.',faq_q3:'What frequency?',faq_a3:'See theory section.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',howto_1:'Click Start to begin.',howto_2:'Watch the visualization.',howto_3:'Check decoded data.',howto_4:'Use Settings to customize.',wiki_themes_title:'🎨 Themes',wiki_themes:'8 themes.',wiki_i18n_title:'🌐 Languages',wiki_i18n:'Trilingual with RTL.',wiki_log_title:'📜 Log',wiki_log:'Timestamped.',wiki_privacy_title:'🔒 Privacy',wiki_privacy:'Local-first.',working:'Working…',t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',ready:'🌊 NAVTEX ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',export:'Export',filterAll:'All',soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',chatPlaceholder:'Talk to the robot...',splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',startBtn:'▶ Start',stopBtn:'⏹ Stop',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
-    help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
-    working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
-    whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    title:'Décodeur NAVTEX SDR',subtitle:'🌊 Décoder les messages NAVTEX',disconnected:'Déconnecté',connected:'Connecté',mainSection:'Décodeur NAVTEX',mainDesc:'Décoder les messages de sécurité maritime',sectionA:'Messages',sectionB:'Protocole NAVTEX',activityLog:'Journal',eventsMsg:'Événements',clear:'Effacer',copy:'Copier',theme:'Thème',settings:'⚙️ Paramètres',language:'Langue',helpSettings:'❓ Aide',settingsTab:'⚙️',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',faq_q1:"Qu'est-ce que c'est ?",faq_a1:'Décoder les messages de sécurité maritime',faq_q2:'Comment ça marche ?',faq_a2:'Utilise le SDR pour décoder.',faq_q3:'Quelle fréquence ?',faq_a3:'Voir théorie.',faq_q4:'Données privées ?',faq_a4:'Oui. Tout est local.',howto_1:'Cliquez Démarrer.',howto_2:'Observez.',howto_3:'Vérifiez les données.',howto_4:'Personnalisez.',wiki_themes_title:'🎨 Thèmes',wiki_themes:'8 thèmes.',wiki_i18n_title:'🌐 Langues',wiki_i18n:'Trilingue.',wiki_log_title:'📜 Journal',wiki_log:'Horodaté.',wiki_privacy_title:'🔒 Confidentialité',wiki_privacy:'Local.',working:'En cours…',t_mosque:'Mosquée',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Médina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',ready:'🌊 NAVTEX prêt !',logCleared:'Effacé',copied:'Copié!',copyFail:'Échec',export:'Exporter',filterAll:'Tout',soundEffects:'🔊 Sons',whisperMode:'Murmure',breathingGuide:'Respiration',dhikrTap:'Tap',musicMode:'Musique',chatPlaceholder:'Parle...',splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Français',themeChanged:'🎨 Thème →',startBtn:'▶ Démarrer',stopBtn:'⏹ Arrêter',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
-    help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
-    working: 'جارٍ…',
-    t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
-    whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
-    musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    title:'فك تشفير NAVTEX',subtitle:'🌊 فك رسائل NAVTEX',disconnected:'غير متصل',connected:'متصل',mainSection:'فك NAVTEX',mainDesc:'فك رسائل السلامة البحرية',sectionA:'الرسائل',sectionB:'بروتوكول NAVTEX',activityLog:'سجل النشاط',eventsMsg:'الأحداث',clear:'مسح',copy:'نسخ',theme:'المظهر',settings:'⚙️ الإعدادات',language:'اللغة',helpSettings:'❓ مساعدة',settingsTab:'⚙️',help:'❓ مساعدة',faq:'أسئلة',howto:'كيف',wiki:'ويكي',faq_q1:'ما هذا؟',faq_a1:'فك رسائل السلامة البحرية',faq_q2:'كيف يعمل؟',faq_a2:'يستخدم SDR.',faq_q3:'ما التردد؟',faq_a3:'انظر النظرية.',faq_q4:'بياناتي خاصة؟',faq_a4:'نعم. محلي.',howto_1:'انقر ابدأ.',howto_2:'شاهد.',howto_3:'تحقق.',howto_4:'خصص.',wiki_themes_title:'🎨 المظاهر',wiki_themes:'8 مظاهر.',wiki_i18n_title:'🌐 اللغات',wiki_i18n:'ثلاثي.',wiki_log_title:'📜 سجل',wiki_log:'مؤرخ.',wiki_privacy_title:'🔒 خصوصية',wiki_privacy:'محلي.',working:'جارٍ…',t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',ready:'🌊 NAVTEX جاهز!',logCleared:'تم المسح',copied:'تم!',copyFail:'فشل',export:'تصدير',filterAll:'الكل',soundEffects:'🔊 صوت',whisperMode:'همس',breathingGuide:'تنفس',dhikrTap:'اضغط',musicMode:'موسيقى',chatPlaceholder:'تحدث...',splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 العربية',themeChanged:'🎨 المظهر ←',startBtn:'▶ ابدأ',stopBtn:'⏹ إيقاف',
   }
 };
 
@@ -1449,3 +1347,11 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+(function(){var canvas=$('navtexWaveform'),ml=$('navtexMessages'),stB=$('navtexStartBtn'),spB=$('navtexStopBtn'),cE=$('navtexCount');if(!canvas)return;var ctx=canvas.getContext('2d'),run=false,anim=null,cnt=0,ph=0;
+var ST=['A-Niton','B-Cullercoats','E-Corsen','G-Tarifa','H-Kelibia','J-Algiers','K-Rabat','S-Casablanca','T-Istanbul'];var TP=['NAVIGATIONAL WARNING','WEATHER FORECAST','ICE REPORT','SAR INFORMATION','GALE WARNING','COAST GUARD'];
+function gm(){var st=ST[Math.random()*ST.length|0],tp=TP[Math.random()*TP.length|0],body='';if(tp.indexOf('WEATHER')>=0||tp.indexOf('GALE')>=0)body='WIND '+['NW','NE','SW','SE','N','S'][Math.random()*6|0]+' '+(10+Math.random()*40|0)+'KT SEA STATE '+(2+Math.random()*6|0);else if(tp.indexOf('NAV')>=0)body='UNLIT BUOY '+(33+Math.random()*5).toFixed(2)+'N '+(5+Math.random()*10).toFixed(2)+'W';else body='MSG '+Date.now().toString(36).toUpperCase()+' ALL STATIONS';return{st:st,tp:tp,body:body,tm:new Date().toLocaleTimeString(),id:String.fromCharCode(65+Math.random()*26|0)+(10+Math.random()*90|0)};}
+function dw(t){var W=canvas.width,H=canvas.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#4fc3f7';ctx.lineWidth=2;ctx.beginPath();for(var x=0;x<W;x++){var bit=Math.sin(x*.03+ph)>0?1:0;var y=H/2+Math.sin(x*(bit?.12:.06)+t*.002)*H*.35+(Math.random()-.5)*3;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle='#4fc3f7';ctx.font='11px Orbitron,monospace';ctx.fillText('518 kHz  NAVTEX  100 Baud SITOR-B',8,16);ph+=.05;}
+function addM(m){if(!ml)return;var d=document.createElement('div');d.style.cssText='padding:8px;margin:4px 0;border:1px solid rgba(79,195,247,.2);border-radius:6px;font-family:monospace;font-size:12px;background:rgba(79,195,247,.05);animation:fadeIn .3s';d.innerHTML='<div style="color:#4fc3f7;font-weight:bold;margin-bottom:4px">ZCZC '+m.id+' ['+m.st+'] '+m.tm+'</div><div style="color:#ffc107;margin-bottom:2px">'+m.tp+'</div><div>'+m.body+'</div><div style="color:#666;margin-top:4px">NNNN</div>';ml.insertBefore(d,ml.firstChild);if(ml.children.length>20)ml.removeChild(ml.lastChild);cnt++;if(cE)cE.textContent=cnt;}
+var lm=0;function an(t){if(!run)return;dw(t);if(t-lm>3e3+Math.random()*5e3){var m=gm();addM(m);log('\u{1F30A} NAVTEX: '+m.st+' '+m.tp,'rx');lm=t;}anim=requestAnimationFrame(an);}
+if(stB)stB.onclick=function(){if(run)return;run=true;setStatus(true);log('NAVTEX started','success');anim=requestAnimationFrame(an);};if(spB)spB.onclick=function(){run=false;setStatus(false);if(anim)cancelAnimationFrame(anim);log('NAVTEX stopped','info');};dw(0);})();

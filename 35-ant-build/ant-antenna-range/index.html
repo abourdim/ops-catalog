@@ -170,6 +170,11 @@
     .meter { height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:4px 0; }
     .meter-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .3s; }
     .compass { position:relative; width:200px; height:200px; margin:0 auto; }
+    .range-indicator { display:inline-block; width:12px; height:12px; border-radius:50%; background:var(--success); animation:rangePulse 1.5s ease-in-out infinite; margin-right:6px; vertical-align:middle; }
+    @keyframes rangePulse { 0%,100%{opacity:.4;transform:scale(.8)} 50%{opacity:1;transform:scale(1.2)} }
+    .sweep-bar { height:4px; background:var(--surface); border-radius:2px; overflow:hidden; margin:6px 0; }
+    .sweep-fill { height:100%; background:linear-gradient(90deg, var(--accent), var(--success)); border-radius:2px; transition:width .1s; }
+    .polar-grid { border:1px solid var(--border); border-radius:50%; }
   </style>
 </head>
 <body>
@@ -188,7 +193,7 @@
         <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">&#x2726;</span></div>
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
-          <div><h1 data-i18n="title">Antenna Range — Pattern Test</h1><div class="subtitle" data-i18n="subtitle">📡 Automated radiation pattern measurement</div></div>
+          <div><h1 data-i18n="title">Antenna Test Range</h1><div class="subtitle" data-i18n="subtitle">\u{1F4E1} Virtual antenna test range. Measure patterns in simulation</div></div>
         </div>
         <div class="header-right">
           <div class="header-buttons">
@@ -204,8 +209,8 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">📡</span> <span data-i18n="mainSection">Pattern Measurement</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Rotate antenna and measure field strength at each angle</span> <span class="version-tag">v1.0</span></div>
+            <div class="card-title"><span class="icon">\u{1F4E1}</span> <span data-i18n="mainSection">Test Range</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Set up virtual range parameters and measure antenna patterns</span> <span class="version-tag">v1.0</span></div>
           </div>
         </div>
         <div id="mainControls"></div>
@@ -215,19 +220,19 @@
 
       <!-- SECTION A -->
       <details class="collapsible">
-        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Measurement Data</span></summary>
+        <summary><span class="icon">&#128208;</span> <span data-i18n="sectionA">Radiation Pattern</span></summary>
         <div class="card"><div id="sectionAContent"></div><canvas id="canvasA" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION B -->
       <details class="collapsible">
-        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">3D Pattern View</span></summary>
+        <summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Gain & Directivity</span></summary>
         <div class="card"><div id="sectionBContent"></div><canvas id="canvasB" width="400" height="200"></canvas></div>
       </details>
 
       <!-- SECTION C -->
       <details class="collapsible">
-        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Measurement Log</span></summary>
+        <summary><span class="icon">&#128221;</span> <span data-i18n="sectionC">Range Configuration</span></summary>
         <div class="card"><div id="sectionCContent" style="font-size:.78rem; line-height:1.6;"></div></div>
       </details>
     </div>

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>WiFi Escape Room — Workshop DIY</title>
+  <meta name="description" content="WiFi-themed escape room. Solve network puzzles to escape" />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="WiFi Escape Room — Workshop DIY" />
+  <meta property="og:description" content="WiFi-themed escape room. Solve network puzzles to escape" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -28,8 +28,8 @@
   <div class="splash" id="splash" onclick="dismissSplash()">
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-title">WiFi Escape Room</div>
+      <div class="splash-sub" data-i18n="subtitle">Solve network puzzles to escape</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">WiFi Escape Room</h1>
+            <div class="subtitle" data-i18n="subtitle">Solve network puzzles to escape</div>
           </div>
         </div>
 
@@ -72,22 +72,59 @@
       <div class="card" id="mainCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
+            <div class="card-title"><span class="icon">🔐</span> <span data-i18n="mainSection">Escape Room</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">WiFi-themed puzzle challenge</span> <span class="version-tag">v1.0</span></div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button id="startBtn" class="primary"><span class="btn-icon">▶</span> <span data-i18n="start">Start Escape</span></button>
+            <button id="stopBtn" disabled><span class="btn-icon">⏹</span> <span data-i18n="stop">Give Up</span></button>
           </div>
         </div>
+        <div style="display:flex;gap:20px;justify-content:center;margin:12px 0;flex-wrap:wrap">
+          <div style="text-align:center;min-width:80px"><div style="font-family:var(--font-h);font-size:2rem;color:var(--accent)" id="timerDisplay">5:00</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase" data-i18n="timeLeft">Time Left</div></div>
+          <div style="text-align:center;min-width:80px"><div style="font-family:var(--font-h);font-size:2rem;color:var(--accent)" id="solvedCount">0/5</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase" data-i18n="puzzlesSolved">Puzzles Solved</div></div>
+        </div>
+        <div style="background:rgba(0,0,0,.2);border-radius:10px;padding:16px;margin:8px 0">
+          <div id="puzzleText" style="font-size:.9rem;line-height:1.6;margin-bottom:10px;min-height:40px;color:var(--text)">Press Start to begin the escape...</div>
+          <div style="display:flex;gap:6px">
+            <input type="text" id="answerInput" placeholder="Your answer..." style="flex:1;padding:8px 12px;border-radius:8px;background:rgba(0,0,0,.3);color:var(--text);border:1px solid var(--border);font-size:.85rem" />
+            <button id="submitAnswer" class="primary" style="padding:8px 16px" data-i18n="submit">Submit</button>
+            <button id="hintBtn" style="padding:8px 12px;border-radius:8px;background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3);cursor:pointer;font-size:.8rem" data-i18n="hint">Hint</button>
+          </div>
+        </div>
+        <canvas id="escapeCanvas" style="width:100%;height:120px;border-radius:10px;background:rgba(0,0,0,.15)"></canvas>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+      <!-- ═══════════════════ SECTION A — Puzzle Console ═══════════════════ -->
+      <details class="collapsible" open>
+        <summary><span class="icon">🧩</span> <span data-i18n="sectionA">Puzzle Console</span></summary>
+        <div class="card">
+          <div style="font-size:.78rem;line-height:1.8;color:var(--text-muted)">
+            <div><strong>#1:</strong> WiFi Channel Knowledge</div>
+            <div><strong>#2:</strong> Security Protocol Identification</div>
+            <div><strong>#3:</strong> MAC Address Analysis</div>
+            <div><strong>#4:</strong> Frequency Calculation</div>
+            <div><strong>#5:</strong> Network Terminology</div>
+          </div>
+        </div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
+      <!-- ═══════════════════ SECTION B — Clues ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🔍</span> <span data-i18n="sectionB">Network Clues</span></summary>
+        <div class="card"><div style="font-size:.78rem;line-height:1.8;color:var(--text-muted)">
+          <div>2.4 GHz band: 14 channels, 22 MHz wide each</div>
+          <div>Non-overlapping channels: 1, 6, 11</div>
+          <div>Channel 1 starts at 2412 MHz, +5 MHz per channel</div>
+          <div>WPA3 uses SAE (Simultaneous Authentication of Equals)</div>
+          <div>MAC OUI = first 3 bytes identifying the manufacturer</div>
+        </div></div>
+      </details>
+
+      <!-- ═══════════════════ SECTION C — How It Works ═══════════════════ -->
+      <details class="collapsible">
+        <summary><span class="icon">🎓</span> <span data-i18n="sectionC">How It Works</span></summary>
+        <div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">You are locked in a virtual room. Solve WiFi-themed puzzles before time runs out. Each puzzle tests your knowledge of channels, protocols, MAC addresses, frequencies, and network terminology. Get hints if stuck, but hurry — the clock is ticking!</p></div></div>
       </details>
 
     </div>

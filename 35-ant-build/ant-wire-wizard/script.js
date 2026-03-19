@@ -63,16 +63,16 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Wire Antenna Wizard', subtitle: '🧵 Calculate dipoles, verticals, loops and more',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Wire Antenna Calculator', mainDesc: 'Select wire antenna type and frequency for dimensions',
+    sectionA: 'Antenna Pattern', sectionB: 'SWR Curve', sectionC: 'Wire Antenna Tips',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is Wire Antenna Wizard?', faq_a1: 'Calculate dimensions for wire antennas: half-wave dipole, quarter-wave vertical, full-wave loop, end-fed, and G5RV.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
@@ -100,16 +100,16 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Assistant Antenne Filaire', subtitle: '🧵 Calculer dipôles, verticales, boucles',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Calculateur Antenne Filaire', mainDesc: 'Sélectionnez le type et la fréquence pour les dimensions',
+    sectionA: 'Diagramme de rayonnement', sectionB: 'Courbe TOS', sectionC: 'Conseils antennes filaires',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce que l\'Assistant Antenne Filaire ?', faq_a1: 'Calculez les dimensions des antennes filaires : dipôle demi-onde, verticale quart d\'onde, boucle, long fil et G5RV.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
     faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
@@ -137,16 +137,16 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'معالج الهوائي السلكي', subtitle: '🧵 حساب الثنائيات والعموديات والحلقات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'حاسبة الهوائي السلكي', mainDesc: 'اختر النوع والتردد لحساب الأبعاد',
+    sectionA: 'نمط الإشعاع', sectionB: 'منحنى TOS', sectionC: 'نصائح الهوائيات السلكية',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هو معالج الهوائي السلكي؟', faq_a1: 'احسب أبعاد الهوائيات السلكية: ثنائي نصف موجة، عمودي ربع موجة، حلقة، سلك طويل و G5RV.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
     faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
@@ -1449,3 +1449,224 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ WIRE ANTENNA WIZARD SIMULATION ═══════ */
+
+(function() {
+  const C = 299792458;
+
+  const TYPES = {
+    dipole: { name: 'Half-Wave Dipole', factor: 0.468, gain: 2.15, impedance: 73 },
+    vertical: { name: 'Quarter-Wave Vertical', factor: 0.234, gain: 0, impedance: 36 },
+    loop: { name: 'Full-Wave Loop', factor: 1.005, gain: 3.14, impedance: 100 },
+    endfed: { name: 'End-Fed Half-Wave', factor: 0.49, gain: 2.15, impedance: 2500 },
+    g5rv: { name: 'G5RV', factor: 0.5, gain: 2.15, impedance: 75 },
+  };
+
+  function waitForDOM(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  waitForDOM(function() {
+    const mc = document.getElementById('mainControls');
+    if (!mc) return;
+    const typeOpts = Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v.name}</option>`).join('');
+    mc.innerHTML = `
+      <div class="control-section">
+        <div class="grid-2">
+          <div><label>Frequency (MHz)</label><input type="number" id="wwFreq" value="14.1" min="0.5" max="500" step="0.1"></div>
+          <div><label>Antenna Type</label><select id="wwType">${typeOpts}</select></div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div><label>Wire Gauge (AWG)</label><select id="wwGauge"><option value="12">12 AWG (2.05mm)</option><option value="14" selected>14 AWG (1.63mm)</option><option value="16">16 AWG (1.29mm)</option><option value="18">18 AWG (1.02mm)</option></select></div>
+          <div><label>Height Above Ground (m)</label><input type="number" id="wwHeight" value="10" min="1" max="50" step="0.5"></div>
+        </div>
+        <div style="margin-top:10px;"><button class="primary" id="wwCalcBtn" style="width:100%">🧵 Calculate Wire Antenna</button></div>
+      </div>`;
+
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const canvasA = document.getElementById('canvasA');
+    const ctxA = canvasA ? canvasA.getContext('2d') : null;
+    const canvasB = document.getElementById('canvasB');
+    const ctxB = canvasB ? canvasB.getContext('2d') : null;
+    const resultBox = document.getElementById('resultBox');
+    const secC = document.getElementById('sectionCContent');
+
+    function calcWire() {
+      const freq = parseFloat(document.getElementById('wwFreq').value) || 14.1;
+      const type = document.getElementById('wwType').value;
+      const gauge = document.getElementById('wwGauge').value;
+      const height = parseFloat(document.getElementById('wwHeight').value) || 10;
+      const t = TYPES[type];
+      const lambda = C / (freq * 1e6);
+      const totalLength = t.factor * (C / (freq * 1e6));
+      const totalFt = totalLength * 3.28084;
+      const gaugeD = { '12': 2.05, '14': 1.63, '16': 1.29, '18': 1.02 }[gauge] || 1.63;
+      const legLength = type === 'dipole' ? totalLength / 2 : totalLength;
+      const bw = freq / (type === 'loop' ? 15 : type === 'endfed' ? 20 : 25);
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div class="result-row"><span class="result-label">Type</span><span class="result-value">${t.name}</span></div>
+          <div class="result-row"><span class="result-label">Total Length</span><span class="result-value">${totalLength.toFixed(2)} m (${totalFt.toFixed(1)} ft)</span></div>
+          ${type === 'dipole' ? `<div class="result-row"><span class="result-label">Each Leg</span><span class="result-value">${(legLength).toFixed(2)} m</span></div>` : ''}
+          <div class="result-row"><span class="result-label">Wavelength</span><span class="result-value">${lambda.toFixed(2)} m</span></div>
+          <div class="result-row"><span class="result-label">Feed Impedance</span><span class="result-value">${t.impedance} Ohm</span></div>
+          <div class="result-row"><span class="result-label">Gain</span><span class="result-value">${t.gain.toFixed(2)} dBi</span></div>
+          <div class="result-row"><span class="result-label">Approx Bandwidth</span><span class="result-value">${(bw * 1000).toFixed(0)} kHz</span></div>
+          <div class="result-row"><span class="result-label">Wire</span><span class="result-value">${gauge} AWG (${gaugeD} mm)</span></div>`;
+      }
+
+      drawWireAntenna(ctx, canvas, type, totalLength, height, freq);
+      drawPattern(ctxA, canvasA, type);
+      drawSWR(ctxB, canvasB, freq, t.impedance, bw);
+      fillNotes(secC, type, t, freq, totalLength, height, gaugeD);
+      if (typeof log === 'function') log(`${t.name}: ${totalLength.toFixed(2)}m @ ${freq} MHz`, 'success');
+    }
+
+    function drawWireAntenna(ctx, cvs, type, len, height, freq) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#1a3a1a';
+      ctx.fillRect(0, H - 30, W, 30);
+      ctx.strokeStyle = '#33ff33';
+      ctx.setLineDash([2, 4]);
+      ctx.beginPath(); ctx.moveTo(0, H - 30); ctx.lineTo(W, H - 30); ctx.stroke();
+      ctx.setLineDash([]);
+      const cx = W / 2;
+      const wireY = H - 30 - (height / 50) * (H - 60);
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 3;
+      if (type === 'dipole') {
+        const armLen = Math.min(W * 0.35, len * 5);
+        ctx.beginPath(); ctx.moveTo(cx - armLen, wireY); ctx.lineTo(cx + armLen, wireY); ctx.stroke();
+        ctx.fillStyle = '#ff4444';
+        ctx.beginPath(); ctx.arc(cx, wireY, 5, 0, 2 * Math.PI); ctx.fill();
+        ctx.strokeStyle = '#c0c0c0';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(cx, wireY); ctx.lineTo(cx, H - 30); ctx.stroke();
+      } else if (type === 'vertical') {
+        const vLen = Math.min(H * 0.5, len * 8);
+        ctx.beginPath(); ctx.moveTo(cx, H - 30); ctx.lineTo(cx, H - 30 - vLen); ctx.stroke();
+        ctx.fillStyle = '#ff4444';
+        ctx.beginPath(); ctx.arc(cx, H - 30, 5, 0, 2 * Math.PI); ctx.fill();
+        for (let i = 0; i < 4; i++) {
+          const a = (i / 4) * Math.PI;
+          ctx.strokeStyle = '#666';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(cx, H - 30); ctx.lineTo(cx + Math.cos(a) * 60, H - 18); ctx.stroke();
+        }
+      } else if (type === 'loop') {
+        const loopR = Math.min(W * 0.25, H * 0.3);
+        ctx.beginPath(); ctx.arc(cx, wireY, loopR, 0, 2 * Math.PI); ctx.stroke();
+        ctx.fillStyle = '#ff4444';
+        ctx.beginPath(); ctx.arc(cx, wireY + loopR, 5, 0, 2 * Math.PI); ctx.fill();
+      } else {
+        const armLen = Math.min(W * 0.4, len * 4);
+        ctx.beginPath(); ctx.moveTo(cx - armLen, wireY); ctx.lineTo(cx + armLen, wireY); ctx.stroke();
+        ctx.fillStyle = '#ff4444';
+        ctx.beginPath(); ctx.arc(cx + armLen, wireY, 5, 0, 2 * Math.PI); ctx.fill();
+      }
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${TYPES[type].name} @ ${freq} MHz`, cx, 14);
+      ctx.fillText(`Length: ${len.toFixed(2)}m, Height: ${height}m`, cx, H - 4);
+    }
+
+    function drawPattern(ctx, cvs, type) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2, r = Math.min(W, H) * 0.38;
+      ctx.strokeStyle = '#2a2d45';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 3; i++) {
+        ctx.beginPath(); ctx.arc(cx, cy, r * i / 3, 0, 2 * Math.PI); ctx.stroke();
+      }
+      ctx.strokeStyle = '#33ff33';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let a = 0; a <= 360; a++) {
+        const rad = a * Math.PI / 180;
+        let gain;
+        if (type === 'dipole') gain = Math.abs(Math.cos(Math.PI / 2 * Math.cos(rad)) / (Math.sin(rad) + 0.001));
+        else if (type === 'vertical') gain = Math.abs(Math.cos(rad));
+        else if (type === 'loop') gain = Math.abs(Math.sin(rad));
+        else gain = Math.abs(Math.cos(Math.PI / 2 * Math.cos(rad)) / (Math.sin(rad) + 0.001));
+        gain = Math.min(gain, 1.5);
+        const px = cx + r * (gain / 1.5) * Math.cos(rad);
+        const py = cy + r * (gain / 1.5) * Math.sin(rad);
+        if (a === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(51,255,51,0.1)';
+      ctx.fill();
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Radiation Pattern (azimuth)', cx, 12);
+    }
+
+    function drawSWR(ctx, cvs, freq, Z0, bw) {
+      if (!ctx || !cvs) return;
+      const W = cvs.width, H = cvs.height;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, W, H);
+      const pad = 40;
+      const gW = W - 2 * pad, gH = H - 2 * pad;
+      const steps = 200;
+      const fMin = freq * 0.85, fMax = freq * 1.15;
+      ctx.strokeStyle = '#d4a03c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++) {
+        const f = fMin + (fMax - fMin) * (i / steps);
+        const df = f - freq;
+        const Z = Z0 * (1 + Math.pow(df / bw, 2) * 4);
+        const gamma = Math.abs((Z - 50) / (Z + 50));
+        const swr = Math.min((1 + gamma) / (1 - gamma + 0.001), 10);
+        const x = pad + (i / steps) * gW;
+        const y = pad + gH - ((10 - swr) / 9) * gH;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.strokeStyle = '#ff4444';
+      ctx.setLineDash([4, 4]);
+      const swr2y = pad + gH - ((10 - 2) / 9) * gH;
+      ctx.beginPath(); ctx.moveTo(pad, swr2y); ctx.lineTo(W - pad, swr2y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '10px Orbitron, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('SWR vs Frequency', W / 2, 14);
+      ctx.fillText(`${fMin.toFixed(1)}`, pad, H - 5);
+      ctx.fillText(`${fMax.toFixed(1)} MHz`, W - pad, H - 5);
+    }
+
+    function fillNotes(el, type, t, freq, len, height, gaugeD) {
+      if (!el) return;
+      el.innerHTML = `
+        <p><strong>Wire Antenna Design Notes:</strong></p>
+        <p>${t.name} for ${freq} MHz: total wire length ${len.toFixed(2)}m.</p>
+        <p>Feed impedance: ~${t.impedance} Ohm. ${t.impedance !== 50 ? 'Use a matching transformer or tuner for 50 Ohm feedline.' : 'Direct 50 Ohm coax feed.'}</p>
+        <p>Height: ${height}m above ground. Higher is better for low-angle radiation on HF.</p>
+        <p>Use ${gaugeD}mm wire. Stranded copper is easier to work with; solid copper holds shape better.</p>
+        <p>For dipole: use an inverted-V configuration if you have a single support point.</p>
+        <p>Trim wire slightly long, then cut to tune. Each side affects resonance independently.</p>`;
+    }
+
+    document.getElementById('wwCalcBtn').addEventListener('click', calcWire);
+    calcWire();
+  });
+})();

@@ -63,115 +63,103 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Tracker Hunter', subtitle: 'Tracker Hunter — Find Hidden Trackers',
+    disconnected: 'Idle', connected: 'Scanning',
+    mainSection: 'Tracker Hunter', mainDesc: 'Find and disable GPS/Bluetooth trackers',
+    sectionA: 'Found Trackers', sectionB: 'Tracker Types',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
+    clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Tracker Hunter?', faq_a1: 'A scanner for finding hidden GPS and Bluetooth tracking devices.',
+    faq_q2: 'How do I scan?', faq_a2: 'Click Scan Trackers for a quick scan, or Deep Scan for thorough analysis.',
+    faq_q3: 'What is Neutralize?', faq_a3: 'Simulates disabling found trackers by jamming their frequencies.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Click Scan Trackers to find nearby devices.', howto_2: 'Check the radar display for blips.',
+    howto_3: 'Use Deep Scan for hidden trackers.', howto_4: 'Click Neutralize to disable found trackers.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Log', wiki_log: 'Timestamped log.', wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Tracker Hunter ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    scanTrackers: 'Scan Trackers', deepScan: 'Deep Scan', neutralize: 'Neutralize All',
+    threatMap: 'Threat Map', nearest: 'Nearest Tracker', signalAnalysis: 'Signal Analysis',
+    trackerHint: 'Scan to find hidden GPS and Bluetooth trackers nearby.',
+    noTrackers: 'No trackers found', trackersFound: 'trackers detected',
+    neutralized: 'All trackers neutralized', scanning: 'Scanning...',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Chasseur de Traqueurs', subtitle: 'Chasseur de Traqueurs — Trouver les Mouchards',
+    disconnected: 'En attente', connected: 'Balayage',
+    mainSection: 'Chasseur de Traqueurs', mainDesc: 'Trouver et neutraliser les traqueurs GPS/Bluetooth',
+    sectionA: 'Traqueurs Trouvés', sectionB: 'Types de Traqueurs',
+    activityLog: 'Journal', eventsMsg: 'Événements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le Chasseur?', faq_a1: 'Un scanner pour trouver les traqueurs GPS/BT.',
+    faq_q2: 'Comment scanner?', faq_a2: 'Cliquez Scanner pour un balayage rapide.',
+    faq_q3: 'Neutraliser?', faq_a3: 'Simule la neutralisation des traqueurs.',
+    faq_q4: 'Données privées?', faq_a4: 'Oui.',
+    howto_1: 'Cliquez Scanner.', howto_2: 'Observez le radar.',
+    howto_3: 'Utilisez Scan Profond.', howto_4: 'Neutralisez les traqueurs.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal.', wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Chasseur prêt!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    scanTrackers: 'Scanner', deepScan: 'Scan Profond', neutralize: 'Neutraliser',
+    threatMap: 'Carte Menaces', nearest: 'Traqueur Proche', signalAnalysis: 'Analyse Signal',
+    trackerHint: 'Scannez pour trouver les traqueurs GPS/BT.',
+    noTrackers: 'Aucun traqueur', trackersFound: 'traqueurs détectés',
+    neutralized: 'Tous neutralisés', scanning: 'Balayage...',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'صياد المتتبعات', subtitle: 'صياد المتتبعات — كشف أجهزة التتبع',
+    disconnected: 'خامل', connected: 'مسح',
+    mainSection: 'صياد المتتبعات', mainDesc: 'إيجاد وتعطيل متتبعات GPS/Bluetooth',
+    sectionA: 'المتتبعات المكتشفة', sectionB: 'أنواع المتتبعات',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو صياد المتتبعات؟', faq_a1: 'ماسح لإيجاد أجهزة التتبع المخفية.',
+    faq_q2: 'كيف أبدأ المسح؟', faq_a2: 'انقر مسح المتتبعات.',
+    faq_q3: 'ما هو التحييد؟', faq_a3: 'محاكاة تعطيل المتتبعات.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
+    howto_1: 'انقر مسح المتتبعات.', howto_2: 'راقب شاشة الرادار.',
+    howto_3: 'استخدم المسح العميق.', howto_4: 'انقر تحييد الكل.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 صياد المتتبعات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    scanTrackers: 'مسح المتتبعات', deepScan: 'مسح عميق', neutralize: 'تحييد الكل',
+    threatMap: 'خريطة التهديدات', nearest: 'أقرب متتبع', signalAnalysis: 'تحليل الإشارة',
+    trackerHint: 'امسح لإيجاد متتبعات GPS/BT المخفية.',
+    noTrackers: 'لم يتم اكتشاف متتبعات', trackersFound: 'متتبعات مكتشفة',
+    neutralized: 'تم تحييد الكل', scanning: 'جارٍ المسح...',
   }
 };
 
@@ -1444,6 +1432,236 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initTrackerHunter();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: TRACKER HUNTER — Find GPS/BT Trackers
+   ═══════════════════════════════════════════════════════════════ */
+
+let radarCanvas, radarCtx, rW=780, rH=400;
+let trackers=[], scanActive=false, sweepAngle=0, frame=0;
+
+const TRACKER_TYPES = [
+  { name:'AirTag', proto:'BLE', freq:'2.4 GHz', range:'10m', color:'#3b82f6' },
+  { name:'Tile Pro', proto:'BLE', freq:'2.4 GHz', range:'120m', color:'#8b5cf6' },
+  { name:'GPS Module', proto:'GPS/Cell', freq:'1.575 GHz', range:'Global', color:'#ef4444' },
+  { name:'OBD Tracker', proto:'GSM', freq:'900 MHz', range:'Global', color:'#f97316' },
+  { name:'SmartTag', proto:'BLE/UWB', freq:'2.4/6.5 GHz', range:'30m', color:'#06b6d4' },
+  { name:'Magnetic GPS', proto:'GPS/Cell', freq:'1.575 GHz', range:'Global', color:'#ec4899' },
+  { name:'BLE Beacon', proto:'BLE', freq:'2.402 GHz', range:'50m', color:'#22c55e' },
+];
+
+function generateTrackers(count) {
+  const cx=rW/2, cy=rH/2, maxR=Math.min(rW,rH)*0.42;
+  trackers = [];
+  for (let i=0; i<count; i++) {
+    const angle = Math.random()*Math.PI*2;
+    const dist = 30+Math.random()*(maxR-40);
+    const type = TRACKER_TYPES[Math.floor(Math.random()*TRACKER_TYPES.length)];
+    trackers.push({
+      x: cx + Math.cos(angle)*dist,
+      y: cy + Math.sin(angle)*dist,
+      type: type.name, proto: type.proto, freq: type.freq,
+      range: type.range, color: type.color,
+      rssi: -30 - Math.random()*50,
+      active: true, detected: false
+    });
+  }
+}
+
+function drawRadar() {
+  if (!radarCtx) return;
+  frame++;
+  const cx=rW/2, cy=rH/2, maxR=Math.min(rW,rH)*0.42;
+
+  radarCtx.fillStyle = '#0a0a0a';
+  radarCtx.fillRect(0,0,rW,rH);
+
+  // Radar rings
+  for (let r=1; r<=4; r++) {
+    radarCtx.beginPath();
+    radarCtx.arc(cx, cy, maxR*r/4, 0, Math.PI*2);
+    radarCtx.strokeStyle = 'rgba(34,197,94,0.12)';
+    radarCtx.lineWidth = 1;
+    radarCtx.stroke();
+    radarCtx.fillStyle = 'rgba(34,197,94,0.2)';
+    radarCtx.font = '8px monospace';
+    radarCtx.textAlign = 'left';
+    radarCtx.fillText((r*25)+'m', cx+maxR*r/4+4, cy-2);
+  }
+
+  // Cross lines
+  radarCtx.strokeStyle = 'rgba(34,197,94,0.08)';
+  radarCtx.beginPath(); radarCtx.moveTo(cx-maxR,cy); radarCtx.lineTo(cx+maxR,cy); radarCtx.stroke();
+  radarCtx.beginPath(); radarCtx.moveTo(cx,cy-maxR); radarCtx.lineTo(cx,cy+maxR); radarCtx.stroke();
+
+  // Sweep beam
+  if (scanActive) {
+    sweepAngle += 0.03;
+    const grad = radarCtx.createConicalGradient ? null : null;
+    radarCtx.beginPath();
+    radarCtx.moveTo(cx,cy);
+    radarCtx.arc(cx,cy,maxR, sweepAngle-0.3, sweepAngle);
+    radarCtx.closePath();
+    const g = radarCtx.createRadialGradient(cx,cy,0,cx,cy,maxR);
+    g.addColorStop(0, 'rgba(34,197,94,0.3)');
+    g.addColorStop(1, 'rgba(34,197,94,0.02)');
+    radarCtx.fillStyle = g;
+    radarCtx.fill();
+
+    // Sweep line
+    radarCtx.beginPath();
+    radarCtx.moveTo(cx,cy);
+    radarCtx.lineTo(cx+Math.cos(sweepAngle)*maxR, cy+Math.sin(sweepAngle)*maxR);
+    radarCtx.strokeStyle = 'rgba(34,197,94,0.6)';
+    radarCtx.lineWidth = 2;
+    radarCtx.stroke();
+  }
+
+  // Tracker blips
+  trackers.forEach(t => {
+    if (!t.detected) return;
+    const pulse = Math.sin(frame*0.08)*3;
+    radarCtx.beginPath();
+    radarCtx.arc(t.x, t.y, 5+pulse, 0, Math.PI*2);
+    radarCtx.fillStyle = t.active ? t.color : 'rgba(100,100,100,0.5)';
+    radarCtx.fill();
+    if (t.active) {
+      radarCtx.beginPath();
+      radarCtx.arc(t.x, t.y, 12+pulse, 0, Math.PI*2);
+      radarCtx.strokeStyle = t.color+'66';
+      radarCtx.lineWidth = 1;
+      radarCtx.stroke();
+    }
+    radarCtx.fillStyle = t.active ? '#fff' : '#666';
+    radarCtx.font = '8px monospace';
+    radarCtx.textAlign = 'center';
+    radarCtx.fillText(t.type, t.x, t.y-14);
+    radarCtx.fillText(t.rssi.toFixed(0)+' dBm', t.x, t.y+20);
+  });
+
+  // Center dot (you)
+  radarCtx.beginPath();
+  radarCtx.arc(cx,cy,4,0,Math.PI*2);
+  radarCtx.fillStyle = '#fff';
+  radarCtx.fill();
+}
+
+function scanTrackers() {
+  scanActive = true;
+  setStatus(true);
+  generateTrackers(3+Math.floor(Math.random()*4));
+  log(LANG[currentLang].scanning, 'info');
+
+  let revealed = 0;
+  const revealInterval = setInterval(() => {
+    if (revealed < trackers.length) {
+      trackers[revealed].detected = true;
+      log(`Detected: ${trackers[revealed].type} (${trackers[revealed].proto}) at ${trackers[revealed].rssi.toFixed(0)} dBm`, 'error');
+      playSound('error');
+      revealed++;
+      updateTrackerList();
+      updateTrackerUI();
+    } else {
+      clearInterval(revealInterval);
+      const s = LANG[currentLang];
+      log(`${trackers.length} ${s.trackersFound}`, 'success');
+    }
+  }, 800);
+}
+
+function deepScan() {
+  if (!scanActive) { scanTrackers(); return; }
+  const extras = 1+Math.floor(Math.random()*2);
+  const cx=rW/2, cy=rH/2, maxR=Math.min(rW,rH)*0.42;
+  for (let i=0; i<extras; i++) {
+    const angle = Math.random()*Math.PI*2;
+    const dist = maxR*0.6+Math.random()*(maxR*0.35);
+    const type = TRACKER_TYPES[Math.floor(Math.random()*TRACKER_TYPES.length)];
+    const t = { x:cx+Math.cos(angle)*dist, y:cy+Math.sin(angle)*dist, type:type.name, proto:type.proto, freq:type.freq, range:type.range, color:type.color, rssi:-60-Math.random()*25, active:true, detected:true };
+    trackers.push(t);
+    log(`Deep scan found: ${t.type} (${t.proto}) at ${t.rssi.toFixed(0)} dBm`, 'error');
+  }
+  playSound('error');
+  updateTrackerList();
+  updateTrackerUI();
+}
+
+function neutralizeAll() {
+  trackers.forEach(t => { t.active = false; });
+  log(LANG[currentLang].neutralized, 'success');
+  playSound('success');
+  updateTrackerList();
+  updateTrackerUI();
+}
+
+function updateTrackerUI() {
+  const countEl = $('trackerCount');
+  if (countEl) countEl.textContent = trackers.filter(t=>t.detected).length + ' trackers';
+
+  const threatEl = $('threatInfo');
+  if (threatEl) {
+    const active = trackers.filter(t=>t.active&&t.detected).length;
+    const total = trackers.filter(t=>t.detected).length;
+    threatEl.innerHTML = `Total: <strong>${total}</strong><br>Active: <strong style="color:${active?'#ef4444':'#22c55e'};">${active}</strong><br>Neutralized: <strong style="color:#22c55e;">${total-active}</strong>`;
+  }
+
+  const nearEl = $('nearestInfo');
+  if (nearEl && trackers.length>0) {
+    const cx=rW/2, cy=rH/2;
+    let nearest=null, minD=Infinity;
+    trackers.filter(t=>t.detected&&t.active).forEach(t=>{const d=Math.hypot(t.x-cx,t.y-cy);if(d<minD){minD=d;nearest=t;}});
+    if (nearest) nearEl.innerHTML = `<strong>${nearest.type}</strong><br>${nearest.proto}<br>${nearest.freq}<br>${nearest.rssi.toFixed(0)} dBm`;
+    else nearEl.innerHTML = 'All neutralized';
+  }
+
+  const sigEl = $('sigAnalysis');
+  if (sigEl) {
+    const protocols = {};
+    trackers.filter(t=>t.detected).forEach(t=>{protocols[t.proto]=(protocols[t.proto]||0)+1;});
+    sigEl.innerHTML = Object.entries(protocols).map(([k,v])=>`${k}: <strong>${v}</strong>`).join('<br>');
+  }
+}
+
+function updateTrackerList() {
+  const el = $('trackerList');
+  if (!el) return;
+  el.innerHTML = '';
+  trackers.filter(t=>t.detected).forEach(t => {
+    const row = document.createElement('div');
+    const statusColor = t.active ? '#ef4444' : '#22c55e';
+    const statusIcon = t.active ? '&#x26A0;' : '&#x2713;';
+    row.style.cssText = `display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.2);border:1px solid ${t.active?'rgba(239,68,68,.3)':'rgba(34,197,94,.3)'};`;
+    row.innerHTML = `<span style="color:${statusColor};">${statusIcon}</span><span style="flex:1;font-size:.78rem;"><strong>${t.type}</strong> (${t.proto})</span><span style="font-size:.7rem;color:var(--text-muted);">${t.freq} / ${t.rssi.toFixed(0)} dBm</span>`;
+    el.appendChild(row);
+  });
+}
+
+function buildTrackerDatabase() {
+  const el = $('trackerDatabase');
+  if (!el) return;
+  let html = '<div style="display:grid;grid-template-columns:auto auto auto 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Device</strong><strong style="font-size:.7rem;">Protocol</strong><strong style="font-size:.7rem;">Freq</strong><strong style="font-size:.7rem;">Range</strong>';
+  TRACKER_TYPES.forEach(t => {
+    html += `<span style="color:${t.color};">${t.name}</span><span style="color:var(--text-muted);">${t.proto}</span><span style="color:var(--accent);">${t.freq}</span><span style="color:var(--text-muted);">${t.range}</span>`;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function trackerLoop() { drawRadar(); requestAnimationFrame(trackerLoop); }
+
+function initTrackerHunter() {
+  radarCanvas = $('radarCanvas');
+  if (radarCanvas) { radarCtx = radarCanvas.getContext('2d'); rW = radarCanvas.width; rH = radarCanvas.height; }
+
+  const scanBtn = $('scanTrackersBtn'); if (scanBtn) scanBtn.onclick = scanTrackers;
+  const deepBtn = $('deepScanBtn'); if (deepBtn) deepBtn.onclick = deepScan;
+  const neutBtn = $('neutralizeBtn'); if (neutBtn) neutBtn.onclick = neutralizeAll;
+
+  buildTrackerDatabase();
+  trackerLoop();
 }
 
 document.readyState === 'loading'

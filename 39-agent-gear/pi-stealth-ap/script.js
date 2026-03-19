@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-stealth-ap', subtitle: '📶 stealth access point — hidden WiFi for covert ops',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Stealth Access Point', mainDesc: 'Hidden WiFi network for covert operations',
+    sectionA: 'Client Monitor', sectionB: 'Traffic Analysis', sectionC: 'Security Report',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,14 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📶 Stealth AP ready!',
+    apLabel: 'AP STATUS', apOff: 'OFFLINE', apOn: 'ACTIVE',
+    ssidLabel: 'Hidden SSID', chanLabel: 'Channel', encLabel: 'Encryption',
+    activateBtn: 'Activate AP', deactivateBtn: 'Deactivate', trafficLabel: 'NETWORK TRAFFIC',
+    apActivated: '📶 Stealth AP activated', apDeactivated: '🔴 AP deactivated',
+    clientConn: '📱 Client connected', clientDisc: '📱 Client disconnected',
+    ftSecABtn: 'Scan', ftSecARst: 'Reset', ftSecBBtn: 'Monitor', ftSecBRst: 'Reset',
+    ftSecCBtn: 'Generate', ftSecCRst: 'Reset',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +107,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-stealth-ap', subtitle: '📶 point d\'accès furtif — WiFi caché',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +132,9 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📶 Point d\'accès furtif prêt !',
+    apActivated: '📶 PA furtif activé', apDeactivated: '🔴 PA désactivé',
+    clientConn: '📱 Client connecté', clientDisc: '📱 Client déconnecté',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +146,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'pi-stealth-ap', subtitle: '📶 نقطة وصول خفية — واي فاي مخفي',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +171,9 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📶 نقطة الوصول الخفية جاهزة!',
+    apActivated: '📶 تم تفعيل نقطة الوصول', apDeactivated: '🔴 تم إلغاء التفعيل',
+    clientConn: '📱 عميل متصل', clientDisc: '📱 عميل انفصل',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1454,33 @@ function init() {
   initAR();
   initAIChat();
 
+  initStealthAP();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ STEALTH AP SIMULATION ═══════ */
+let sapActive=false,sapInterval=null,sapClients=[],sapTraffic=0;
+function sapDrawCanvas(){const c=$('ftCanvas');if(!c)return;const ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(0,255,100,0.06)';for(let y=0;y<H;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}for(let x=0;x<W;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+ctx.fillStyle='#0f8';ctx.font='10px Orbitron,monospace';ctx.fillText('NETWORK TOPOLOGY',10,14);
+if(sapActive){ctx.fillStyle='#f44';ctx.fillText('● ACTIVE',W-80,14);ctx.fillStyle='rgba(0,255,100,0.3)';ctx.beginPath();ctx.arc(W/2,H/2,20,0,Math.PI*2);ctx.fill();ctx.fillStyle='#0f8';ctx.font='8px monospace';ctx.fillText('AP',W/2-6,H/2+3);for(let r=1;r<=3;r++){ctx.strokeStyle='rgba(0,255,100,'+(0.3-r*0.08)+')';ctx.beginPath();ctx.arc(W/2,H/2,20+r*25,0,Math.PI*2);ctx.stroke();}
+sapClients.forEach((cl,i)=>{const a=(i/Math.max(sapClients.length,1))*Math.PI*2;const d=60+Math.random()*20;const cx=W/2+Math.cos(a)*d;const cy=H/2+Math.sin(a)*d;ctx.fillStyle='rgba(100,150,255,0.6)';ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(0,255,100,0.2)';ctx.beginPath();ctx.moveTo(W/2,H/2);ctx.lineTo(cx,cy);ctx.stroke();ctx.fillStyle='#aaf';ctx.font='7px monospace';ctx.fillText(cl.mac.slice(-5),cx-12,cy+14);});
+const bW=3;for(let i=0;i<30;i++){const h=Math.random()*40;ctx.fillStyle='rgba(0,255,100,0.4)';ctx.fillRect(W-100+i*bW,H-h-5,bW-1,h);}}else{ctx.fillStyle='#888';ctx.font='14px Orbitron,monospace';ctx.fillText('OFFLINE',W/2-30,H/2);}}
+
+function sapActivate(){if(sapActive)return;sapActive=true;const s=LANG[currentLang];const av=$('devValue');if(av){av.textContent='ACTIVE';av.style.color='#4f4';}setStatus(true);log(s.apActivated,'success');playSound('success');sapInterval=setInterval(()=>{sapDrawCanvas();sapTraffic+=Math.floor(Math.random()*1024);const td=$('telDisplay');if(td)td.textContent='['+new Date().toLocaleTimeString()+'] Clients:'+sapClients.length+' TX:'+(sapTraffic/1024).toFixed(1)+'KB';if(Math.random()<0.08&&sapClients.length<6){const mac=Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).toUpperCase().padStart(2,'0')).join(':');sapClients.push({mac,time:new Date().toLocaleTimeString()});log(s.clientConn+' '+mac,'rx');}if(Math.random()<0.03&&sapClients.length>0){const rm=sapClients.pop();log(s.clientDisc+' '+rm.mac,'info');}},200);}
+
+function sapDeactivate(){if(sapInterval){clearInterval(sapInterval);sapInterval=null;}sapActive=false;sapClients=[];sapTraffic=0;const s=LANG[currentLang];const av=$('devValue');if(av){av.textContent='OFFLINE';av.style.color='#888';}setStatus(false);log(s.apDeactivated,'error');playSound('error');sapDrawCanvas();}
+
+function ftSecAAction(){log('📡 Client scan: '+sapClients.length+' devices','success');playSound('success');const el=$('ftSecAContent');if(el)el.textContent=sapClients.map(c=>c.mac+' ('+c.time+')').join('\n')||'No clients';}
+function ftSecAReset(){const el=$('ftSecAContent');if(el)el.textContent='';}
+function ftSecBAction(){const el=$('ftSecBContent');if(el)el.innerHTML='TRAFFIC ANALYSIS<br>================<br>Total: '+(sapTraffic/1024).toFixed(1)+' KB<br>Clients: '+sapClients.length+'<br>Channel: '+(($('chanSelect')||{}).value||'6')+'<br>Encryption: '+(($('encSelect')||{}).value||'WPA3')+'<br>================';log('📊 Traffic analysis','success');}
+function ftSecBReset(){const el=$('ftSecBContent');if(el)el.textContent='';}
+function ftSecCAction(){const el=$('ftSecCContent');if(el)el.innerHTML='STEALTH AP REPORT<br>=================<br>Date: '+new Date().toLocaleString()+'<br>SSID: [HIDDEN]<br>Channel: '+(($('chanSelect')||{}).value||'6')+'<br>Encryption: '+(($('encSelect')||{}).value||'WPA3')+'<br>Clients: '+sapClients.length+'<br>Traffic: '+(sapTraffic/1024).toFixed(1)+' KB<br>Status: '+(sapActive?'ACTIVE':'OFFLINE')+'<br>=================';}
+function ftSecCReset(){const el=$('ftSecCContent');if(el)el.textContent='';}
+function ftActivate(){sapActivate();}
+function ftAction1(){ftSecAAction();}
+function ftEmergency(){sapDeactivate();}
+function initStealthAP(){const ab=$('deployBtn'),db=$('recallBtn');if(ab)ab.onclick=sapActivate;if(db)db.onclick=sapDeactivate;sapDrawCanvas();}

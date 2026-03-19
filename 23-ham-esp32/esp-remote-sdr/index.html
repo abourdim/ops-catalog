@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>my-project — Workshop DIY</title>
-  <meta name="description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <title>ESP32 Remote SDR — Workshop DIY</title>
+  <meta name="description" content="Control SDR remotely via ESP32 web interface." />
   <meta name="author" content="Workshop-DIY — abourdim" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="my-project — Workshop DIY" />
-  <meta property="og:description" content="A Workshop-DIY educational web app — explore, create, innovate." />
+  <meta property="og:title" content="ESP32 Remote SDR — Workshop DIY" />
+  <meta property="og:description" content="Control SDR remotely via ESP32 web interface." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png" />
 
@@ -29,7 +29,7 @@
     <div class="splash-inner">
       <div class="splash-logo" id="splashLogo"></div>
       <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+      <div class="splash-sub" data-i18n="subtitle">📻 Control SDR remotely via ESP32</div>
       <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
     </div>
   </div>
@@ -50,8 +50,8 @@
         <div class="title-block">
           <div class="logo-wrap" id="logoWrap"></div>
           <div>
-            <h1 data-i18n="title">my-project</h1>
-            <div class="subtitle" data-i18n="subtitle">🚀 explore · 🎨 create · 💡 innovate</div>
+            <h1 data-i18n="title">ESP32 Remote SDR</h1>
+            <div class="subtitle" data-i18n="subtitle">📻 Control SDR remotely via ESP32</div>
           </div>
         </div>
 
@@ -68,26 +68,40 @@
         </div>
       </div>
 
-      <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
       <div class="card" id="mainCard">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">🧩</span> <span data-i18n="mainSection">Main Section</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Describe your project here</span> <span class="version-tag">v1.2</span></div>
-          </div>
-        </div>
+        <div class="card-header"><div>
+            <div class="card-title"><span class="icon">📻</span> <span data-i18n="mainSection">Remote SDR</span></div>
+            <div class="card-subtitle"><span data-i18n="mainDesc">Control SDR receiver remotely via ESP32 web interface</span> <span class="version-tag">v1.0</span></div>
+        </div></div>
       </div>
 
-      <!-- ═══════════════════ SECTION A ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Section A</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+        <div class="card"><h3 data-i18n="theoryTitle">Remote SDR Theory</h3><p data-i18n="theoryDesc">A Software Defined Radio converts RF to digital for software-based processing. ESP32 provides remote web control.</p></div>
       </details>
 
-      <!-- ═══════════════════ SECTION B ═══════════════════ -->
       <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Section B</span></summary>
-        <div class="card"></div>
+        <summary><span class="icon">🎛️</span> <span data-i18n="sectionB">Controls</span></summary>
+        <div class="card"><div class="control-section">
+          <label class="sidebar-label">Frequency (MHz)</label>
+          <input type="range" id="freqRange" min="0.5" max="30" step="0.001" value="14.2" style="width:100%">
+          <span id="freqDisp" style="color:var(--accent)">14.200 MHz</span>
+          <label class="sidebar-label" style="margin-top:8px">Gain (dB)</label>
+          <input type="range" id="gainRange" min="0" max="60" value="30" style="width:100%">
+          <span id="gainDisp" style="color:var(--accent)">30 dB</span>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button id="startBtn" class="btn-sm primary" style="flex:1"><span data-i18n="start">Connect SDR</span></button>
+            <button id="stopBtn" class="btn-sm" style="flex:1"><span data-i18n="stop">Disconnect</span></button>
+          </div>
+        </div></div>
+      </details>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">📊</span> <span data-i18n="sectionC">Simulation</span></summary>
+        <div class="card">
+          <canvas id="waterfallCanvas" width="512" height="400" style="width:100%;height:300px;background:#000;border-radius:8px;display:block"></canvas>
+          <div style="margin-top:6px;font-size:.82rem;color:var(--accent)">Tuned: <strong id="freqReadout">--</strong></div>
+        </div>
       </details>
 
     </div>

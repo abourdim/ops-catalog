@@ -63,32 +63,32 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Movement Tracker', subtitle: 'Track device movement via WiFi signal strength',
+    disconnected: 'Idle', connected: 'Tracking',
+    mainSection: 'Movement Detection', mainDesc: 'RSSI-based device movement tracking simulation',
+    sectionA: 'Signal History', sectionB: 'How It Works',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
+    faq_q1: 'What is WiFi movement tracking?', faq_a1: 'Detecting device motion by monitoring WiFi signal strength (RSSI) fluctuations over time.',
+    faq_q2: 'Is this real tracking?', faq_a2: 'No, this is a simulation for educational purposes only.',
+    faq_q3: 'What is RSSI?', faq_a3: 'Received Signal Strength Indicator — measures how strong a WiFi signal is at a receiver.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    howto_1: 'Click Start to begin simulating movement detection.',
+    howto_2: 'Watch the RSSI heatmap update in real-time.',
+    howto_3: 'Observe position estimation on the grid canvas.',
+    howto_4: 'Check the signal history for movement patterns.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes with dark and light options.',
+    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual: English, Français, العربية with automatic RTL.',
+    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped log with filtering. Types: info, success, error, TX, RX.',
+    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'All data stays in your browser. No tracking, no analytics.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Movement Tracker ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -98,72 +98,82 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
+    start: 'Start', stop: 'Stop',
+    rssi: 'RSSI', devices: 'Devices', movement: 'Movement', zone: 'Zone',
+    simStarted: 'Movement tracking started', simStopped: 'Tracking stopped',
+    movDetected: 'Movement detected', noMov: 'Stationary',
+    howItWorksText: 'WiFi movement tracking uses RSSI (Received Signal Strength Indicator) to detect device motion. When a device moves, its signal strength changes relative to access points. By monitoring these fluctuations across multiple APs, we can estimate position and detect movement patterns. This simulation demonstrates the concept with virtual access points and a moving device.',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Traqueur de Mouvement WiFi', subtitle: 'Suivre le mouvement via la puissance du signal WiFi',
+    disconnected: 'Inactif', connected: 'Suivi actif',
+    mainSection: 'Detection de Mouvement', mainDesc: 'Simulation de suivi par RSSI',
+    sectionA: 'Historique du Signal', sectionB: 'Comment ca marche',
+    activityLog: 'Journal', eventsMsg: 'Evenements et messages',
+    clear: 'Effacer', copy: 'Copier', theme: 'Theme',
+    settings: '⚙️ Parametres', language: 'Langue',
+    helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que le suivi WiFi?', faq_a1: 'Detecter le mouvement en surveillant les fluctuations du signal WiFi (RSSI).',
+    faq_q2: 'Est-ce un vrai suivi?', faq_a2: 'Non, c\'est une simulation educative.',
+    faq_q3: 'Qu\'est-ce que le RSSI?', faq_a3: 'Indicateur de puissance du signal recu — mesure la force du signal WiFi.',
+    faq_q4: 'Donnees privees?', faq_a4: 'Oui. Tout reste local dans votre navigateur.',
+    howto_1: 'Cliquez Demarrer pour lancer la simulation.',
+    howto_2: 'Observez la carte thermique RSSI en temps reel.',
+    howto_3: 'Suivez l\'estimation de position sur la grille.',
+    howto_4: 'Consultez l\'historique du signal.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes integres.',
+    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue avec RTL automatique.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate et colore.',
+    wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Tout reste dans votre navigateur.',
     working: 'En cours…',
-    t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
+    t_mosque: 'Mosquee', t_zellige: 'Zellige', t_andalus: 'Andalous',
+    t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
+    ready: '📡 Traqueur pret!',
+    logCleared: 'Efface', copied: 'Copie!', copyFail: 'Echec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
-    musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
+    musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    langChanged: '🌐 Langue → Francais',
+    themeChanged: '🎨 Theme →',
+    start: 'Demarrer', stop: 'Arreter',
+    rssi: 'RSSI', devices: 'Appareils', movement: 'Mouvement', zone: 'Zone',
+    simStarted: 'Suivi demarre', simStopped: 'Suivi arrete',
+    movDetected: 'Mouvement detecte', noMov: 'Stationnaire',
+    howItWorksText: 'Le suivi de mouvement WiFi utilise le RSSI pour detecter le deplacement des appareils. Quand un appareil bouge, la puissance du signal change. Cette simulation montre le concept avec des points d\'acces virtuels.',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'متتبع حركة WiFi', subtitle: 'تتبع حركة الأجهزة عبر قوة إشارة WiFi',
+    disconnected: 'خامل', connected: 'تتبع نشط',
+    mainSection: 'كشف الحركة', mainDesc: 'محاكاة تتبع الحركة بناءً على RSSI',
+    sectionA: 'سجل الإشارة', sectionB: 'كيف يعمل',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو تتبع حركة WiFi؟', faq_a1: 'كشف حركة الجهاز من خلال مراقبة تقلبات قوة إشارة WiFi.',
+    faq_q2: 'هل هذا تتبع حقيقي؟', faq_a2: 'لا، هذه محاكاة تعليمية فقط.',
+    faq_q3: 'ما هو RSSI؟', faq_a3: 'مؤشر قوة الإشارة المستقبلة — يقيس قوة إشارة WiFi.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'انقر بدء لتشغيل محاكاة كشف الحركة.',
+    howto_2: 'شاهد خريطة RSSI الحرارية في الوقت الفعلي.',
+    howto_3: 'راقب تقدير الموقع على الشبكة.',
+    howto_4: 'تحقق من سجل الإشارة لأنماط الحركة.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة مع خيارات داكنة وفاتحة.',
+    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات مع RTL تلقائي.',
+    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرخ مع تصفية.',
+    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'كل البيانات تبقى في متصفحك.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
-    logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
+    ready: '📡 متتبع الحركة جاهز!',
+    logCleared: 'تم المسح', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
@@ -172,6 +182,11 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
+    start: 'بدء', stop: 'إيقاف',
+    rssi: 'RSSI', devices: 'أجهزة', movement: 'حركة', zone: 'منطقة',
+    simStarted: 'بدأ التتبع', simStopped: 'توقف التتبع',
+    movDetected: 'تم كشف حركة', noMov: 'ثابت',
+    howItWorksText: 'يستخدم تتبع حركة WiFi مؤشر RSSI لكشف حركة الأجهزة. عندما يتحرك الجهاز تتغير قوة إشارته. هذه المحاكاة توضح المفهوم بنقاط وصول افتراضية.',
   }
 };
 
@@ -1449,3 +1464,134 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Movement Tracker ═══════ */
+let simRunning = false, simInterval = null, simAnim = null;
+let trackCanvas, trackCtx;
+let devicePos = { x: 150, y: 110 }, deviceTarget = { x: 150, y: 110 };
+let accessPoints = [
+  { id: 'AP-1', x: 30, y: 30, color: '#22c55e' },
+  { id: 'AP-2', x: 270, y: 30, color: '#3b82f6' },
+  { id: 'AP-3', x: 150, y: 200, color: '#a855f7' },
+];
+let rssiHistory = [], moveCount = 0, scanCount = 0;
+const ZONES = ['Zone-A', 'Zone-B', 'Zone-C', 'Zone-D'];
+
+function calcRSSI(ap) {
+  const dx = devicePos.x - ap.x, dy = devicePos.y - ap.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  return Math.round(-30 - dist * 0.35 + (Math.random() - 0.5) * 6);
+}
+
+function getZone() {
+  const qx = devicePos.x < 150 ? 0 : 1, qy = devicePos.y < 110 ? 0 : 1;
+  return ZONES[qy * 2 + qx];
+}
+
+function initTrackCanvas() {
+  trackCanvas = $('trackCanvas');
+  if (!trackCanvas) return;
+  trackCtx = trackCanvas.getContext('2d');
+  trackCanvas.width = trackCanvas.offsetWidth * 2;
+  trackCanvas.height = trackCanvas.offsetHeight * 2;
+  trackCtx.scale(2, 2);
+}
+
+function drawTracker() {
+  if (!trackCtx) return;
+  const w = trackCanvas.offsetWidth, h = trackCanvas.offsetHeight;
+  trackCtx.fillStyle = 'rgba(10,10,26,0.12)';
+  trackCtx.fillRect(0, 0, w, h);
+  // Grid
+  trackCtx.strokeStyle = 'rgba(255,255,255,0.05)';
+  trackCtx.lineWidth = 0.5;
+  for (let x = 0; x < w; x += 30) { trackCtx.beginPath(); trackCtx.moveTo(x, 0); trackCtx.lineTo(x, h); trackCtx.stroke(); }
+  for (let y = 0; y < h; y += 30) { trackCtx.beginPath(); trackCtx.moveTo(0, y); trackCtx.lineTo(w, y); trackCtx.stroke(); }
+  // Access points with signal rings
+  accessPoints.forEach(ap => {
+    const rssi = calcRSSI(ap);
+    const radius = Math.max(10, -rssi * 0.8);
+    trackCtx.beginPath(); trackCtx.arc(ap.x, ap.y, radius, 0, Math.PI * 2);
+    trackCtx.strokeStyle = ap.color; trackCtx.globalAlpha = 0.15; trackCtx.lineWidth = 1; trackCtx.stroke();
+    trackCtx.globalAlpha = 1;
+    trackCtx.beginPath(); trackCtx.arc(ap.x, ap.y, 6, 0, Math.PI * 2);
+    trackCtx.fillStyle = ap.color; trackCtx.fill();
+    trackCtx.fillStyle = '#fff'; trackCtx.font = '9px monospace';
+    trackCtx.fillText(ap.id, ap.x - 10, ap.y - 10);
+  });
+  // Device (pulsing)
+  const pulse = 1 + Math.sin(Date.now() / 300) * 0.3;
+  trackCtx.beginPath(); trackCtx.arc(devicePos.x, devicePos.y, 5 * pulse, 0, Math.PI * 2);
+  trackCtx.fillStyle = '#ef4444'; trackCtx.globalAlpha = 0.7; trackCtx.fill(); trackCtx.globalAlpha = 1;
+  trackCtx.beginPath(); trackCtx.arc(devicePos.x, devicePos.y, 3, 0, Math.PI * 2);
+  trackCtx.fillStyle = '#fff'; trackCtx.fill();
+  // Lines from device to APs
+  accessPoints.forEach(ap => {
+    trackCtx.beginPath(); trackCtx.moveTo(devicePos.x, devicePos.y);
+    trackCtx.lineTo(ap.x, ap.y);
+    trackCtx.strokeStyle = ap.color; trackCtx.globalAlpha = 0.2; trackCtx.lineWidth = 1;
+    trackCtx.setLineDash([4, 4]); trackCtx.stroke(); trackCtx.setLineDash([]);
+    trackCtx.globalAlpha = 1;
+  });
+}
+
+function moveDevice() {
+  devicePos.x += (deviceTarget.x - devicePos.x) * 0.05;
+  devicePos.y += (deviceTarget.y - devicePos.y) * 0.05;
+  const dist = Math.sqrt((deviceTarget.x - devicePos.x) ** 2 + (deviceTarget.y - devicePos.y) ** 2);
+  if (dist < 5) {
+    deviceTarget.x = 30 + Math.random() * 240;
+    deviceTarget.y = 20 + Math.random() * 190;
+  }
+}
+
+function simTick() {
+  scanCount++;
+  const prevZone = getZone();
+  moveDevice();
+  const curZone = getZone();
+  const readings = accessPoints.map(ap => ({ id: ap.id, rssi: calcRSSI(ap) }));
+  rssiHistory.push({ time: Date.now(), readings, zone: curZone });
+  if (rssiHistory.length > 200) rssiHistory.shift();
+  // Update stats
+  $('rssiVal').textContent = readings[0].rssi + ' dBm';
+  $('deviceVal').textContent = scanCount;
+  const moved = Math.abs(devicePos.x - deviceTarget.x) > 10 || Math.abs(devicePos.y - deviceTarget.y) > 10;
+  if (moved) moveCount++;
+  $('movementVal').textContent = moved ? LANG[currentLang].movDetected : LANG[currentLang].noMov;
+  $('movementVal').style.color = moved ? '#ef4444' : '#22c55e';
+  $('zoneVal').textContent = curZone;
+  // Add to signal list
+  const list = $('signalList');
+  if (list) {
+    const d = document.createElement('div'); d.className = 'packet-item';
+    d.innerHTML = `<span class="pkt-type">${curZone}</span><span class="pkt-data">${readings.map(r => r.id + ':' + r.rssi).join(' ')}</span><span class="pkt-size">${moved ? '>>>' : '---'}</span>`;
+    list.insertBefore(d, list.firstChild);
+    if (list.children.length > 80) list.removeChild(list.lastChild);
+  }
+  if (prevZone !== curZone) log(`Zone change: ${prevZone} → ${curZone}`, 'success');
+  log(`Scan #${scanCount}: ${readings.map(r => r.rssi + 'dBm').join(', ')}`, 'tx');
+}
+
+function startSim() {
+  if (simRunning) return; simRunning = true; setStatus(true);
+  $('startBtn').disabled = true; $('stopBtn').disabled = false;
+  scanCount = 0; moveCount = 0; rssiHistory = [];
+  initTrackCanvas();
+  log(LANG[currentLang].simStarted, 'success');
+  simInterval = setInterval(simTick, 800);
+  (function loop() { if (!simRunning) return; moveDevice(); drawTracker(); requestAnimationFrame(loop); })();
+}
+
+function stopSim() {
+  simRunning = false; if (simInterval) clearInterval(simInterval);
+  setStatus(false); $('startBtn').disabled = false; $('stopBtn').disabled = true;
+  log(LANG[currentLang].simStopped, 'info');
+}
+
+/* Bind after DOM ready */
+document.addEventListener('DOMContentLoaded', () => {
+  const startBtn = $('startBtn'), stopBtn = $('stopBtn');
+  if (startBtn) startBtn.onclick = startSim;
+  if (stopBtn) stopBtn.onclick = stopSim;
+});

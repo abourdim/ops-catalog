@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'pi-surveillance-drone', subtitle: '🚁 surveillance drone — aerial reconnaissance',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Surveillance Drone Controller', mainDesc: 'Aerial reconnaissance with real-time telemetry',
+    sectionA: 'Aerial Camera', sectionB: 'Flight Path', sectionC: 'Recon Report',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,14 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🚁 Surveillance drone ready!',
+    droneLabel: 'DRONE STATUS', grounded: 'GROUNDED', flying: 'FLYING',
+    flightLabel: 'Flight Mode', altLabel: 'Altitude (m)',
+    launchBtn: 'Launch', landBtn: 'Land', hudLabel: 'HUD TELEMETRY',
+    launched: '🚁 Drone launched', landed: '🔴 Drone landed',
+    photoTaken: '📸 Aerial photo captured',
+    ftSecABtn: 'Photo', ftSecARst: 'Reset', ftSecBBtn: 'Waypoint', ftSecBRst: 'Reset',
+    ftSecCBtn: 'Generate', ftSecCRst: 'Reset',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +107,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'pi-surveillance-drone', subtitle: '🚁 drone de surveillance — reconnaissance aérienne',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +132,8 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🚁 Drone de surveillance prêt !',
+    launched: '🚁 Drone lancé', landed: '🔴 Drone atterri', photoTaken: '📸 Photo aérienne',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +145,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'pi-surveillance-drone', subtitle: '🚁 طائرة مراقبة — استطلاع جوي',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +170,8 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🚁 طائرة المراقبة جاهزة!',
+    launched: '🚁 تم إطلاق الطائرة', landed: '🔴 هبطت الطائرة', photoTaken: '📸 صورة جوية',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1443,9 +1452,43 @@ function init() {
   initAR();
   initAIChat();
 
+  initDrone();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ DRONE SIMULATION ═══════ */
+let drFlying=false,drInterval=null,drAlt=0,drSpeed=0,drHeading=0,drPhotos=0,drWaypoints=[];
+function drDrawHUD(){const c=$('ftCanvas');if(!c)return;const ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(0,255,100,0.06)';for(let y=0;y<H;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}for(let x=0;x<W;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+ctx.fillStyle='#0f8';ctx.font='10px Orbitron,monospace';ctx.fillText('DRONE HUD',10,14);
+if(drFlying){ctx.fillStyle='#f44';ctx.fillText('● FLYING',W-80,14);
+const cx=W/2,cy=H/2;ctx.strokeStyle='#0f8';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-60,cy);ctx.lineTo(cx-20,cy);ctx.moveTo(cx+20,cy);ctx.lineTo(cx+60,cy);ctx.moveTo(cx,cy-10);ctx.lineTo(cx,cy+10);ctx.stroke();
+for(let i=-2;i<=2;i++){if(i===0)continue;const py=cy+i*20;ctx.strokeStyle='rgba(0,255,100,0.3)';ctx.beginPath();ctx.moveTo(cx-30,py);ctx.lineTo(cx+30,py);ctx.stroke();}
+// Compass
+ctx.fillStyle='#0f8';ctx.font='9px Orbitron,monospace';const dirs=['N','NE','E','SE','S','SW','W','NW'];dirs.forEach((d,i)=>{const a=(i*45-drHeading)*Math.PI/180;const dx=cx+Math.sin(a)*70;if(dx>30&&dx<W-30)ctx.fillText(d,dx-4,20);});
+// Telemetry
+ctx.fillStyle='#0f8';ctx.font='11px Orbitron,monospace';
+ctx.fillText('ALT: '+drAlt.toFixed(0)+'m',10,H-30);ctx.fillText('SPD: '+drSpeed.toFixed(1)+'m/s',10,H-15);
+ctx.fillText('HDG: '+drHeading.toFixed(0)+'°',W/2-20,H-15);ctx.fillText('BAT: '+(85+Math.random()*10).toFixed(0)+'%',W-90,H-15);
+// Altitude bar
+const altPct=Math.min(drAlt/200,1);ctx.fillStyle='rgba(0,255,100,0.3)';ctx.fillRect(W-15,30,10,(H-50)*altPct);ctx.strokeStyle='#0f8';ctx.strokeRect(W-15,30,10,H-50);
+}else{ctx.fillStyle='#888';ctx.font='14px Orbitron,monospace';ctx.fillText('GROUNDED',W/2-40,H/2);}}
+
+function drLaunch(){if(drFlying)return;drFlying=true;const s=LANG[currentLang];const dv=$('devValue');if(dv){dv.textContent='FLYING';dv.style.color='#4f4';}setStatus(true);log(s.launched,'success');playSound('success');drAlt=0;drSpeed=0;drHeading=Math.random()*360;
+drInterval=setInterval(()=>{const tgt=parseFloat(($('altInput')||{value:50}).value)||50;drAlt=Math.min(tgt,drAlt+0.5+Math.random());drSpeed=3+Math.random()*5;drHeading=(drHeading+Math.random()*4-2+360)%360;drDrawHUD();const hud=$('telDisplay');if(hud)hud.textContent='['+new Date().toLocaleTimeString()+'] ALT:'+drAlt.toFixed(0)+'m SPD:'+drSpeed.toFixed(1)+'m/s HDG:'+drHeading.toFixed(0)+'°';},200);}
+
+function drLand(){if(drInterval){clearInterval(drInterval);drInterval=null;}drFlying=false;drAlt=0;drSpeed=0;const s=LANG[currentLang];const dv=$('devValue');if(dv){dv.textContent='GROUNDED';dv.style.color='#888';}setStatus(false);log(s.landed,'error');playSound('error');drDrawHUD();}
+
+function ftSecAAction(){drPhotos++;const c=$('sensorCanvas');if(c){const ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.fillStyle='#1a2a1a';ctx.fillRect(0,0,W,H);for(let i=0;i<20;i++){ctx.fillStyle='rgba(0,'+(80+Math.random()*100)+',0,0.3)';ctx.fillRect(Math.random()*W,Math.random()*H,20+Math.random()*40,20+Math.random()*40);}for(let i=0;i<5;i++){ctx.strokeStyle='rgba(200,200,200,0.2)';ctx.beginPath();ctx.moveTo(Math.random()*W,0);ctx.lineTo(Math.random()*W,H);ctx.stroke();}ctx.fillStyle='rgba(255,0,0,0.5)';ctx.beginPath();ctx.arc(W/2,H/2,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#0f8';ctx.font='10px Orbitron,monospace';ctx.fillText('AERIAL VIEW ALT:'+drAlt.toFixed(0)+'m',10,14);}log(LANG[currentLang].photoTaken+' #'+drPhotos,'success');playSound('success');const el=$('ftSecAContent');if(el)el.textContent='Photo #'+drPhotos+' ALT:'+drAlt.toFixed(0)+'m';}
+function ftSecAReset(){const c=$('sensorCanvas');if(c){const ctx=c.getContext('2d');ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,c.width,c.height);}const el=$('ftSecAContent');if(el)el.textContent='';}
+function ftSecBAction(){const wp={lat:(33+Math.random()*2).toFixed(4),lng:(-7+Math.random()*2).toFixed(4),alt:drAlt.toFixed(0)};drWaypoints.push(wp);const el=$('ftSecBContent');if(el)el.innerHTML=drWaypoints.map((w,i)=>'WP'+(i+1)+': '+w.lat+'N '+w.lng+'E '+w.alt+'m').join('<br>');log('📍 Waypoint added','success');}
+function ftSecBReset(){drWaypoints=[];const el=$('ftSecBContent');if(el)el.textContent='';}
+function ftSecCAction(){const el=$('ftSecCContent');if(el)el.innerHTML='RECON REPORT<br>============<br>Date: '+new Date().toLocaleString()+'<br>Mode: '+(($('flightSelect')||{}).value||'manual')+'<br>Alt: '+drAlt.toFixed(0)+'m<br>Photos: '+drPhotos+'<br>Waypoints: '+drWaypoints.length+'<br>Status: '+(drFlying?'FLYING':'GROUNDED')+'<br>============';}
+function ftSecCReset(){const el=$('ftSecCContent');if(el)el.textContent='';}
+function ftActivate(){drLaunch();}
+function ftAction1(){ftSecAAction();}
+function ftEmergency(){drLand();}
+function initDrone(){const lb=$('deployBtn'),ldb=$('recallBtn');if(lb)lb.onclick=drLaunch;if(ldb)ldb.onclick=drLand;drDrawHUD();}

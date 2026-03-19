@@ -63,22 +63,28 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Farm Manager', subtitle: '🖥️ SDR server farm manager — control multiple instances',
+    disconnected: 'Disconnected', connected: 'Online',
+    mainSection: 'Farm Dashboard', mainDesc: 'Control and monitor multiple SDR instances',
+    sectionA: 'Node Statistics', sectionB: 'Theory & Notes',
+    addNodeBtn: '➕ Add SDR Node', startAllBtn: '▶ Start All', stopAllBtn: '⏹ Stop All', resetBtn: '↺ Reset',
+    farmTheory: 'An SDR farm distributes radio reception across multiple hardware instances. Each node can tune to different frequencies, enabling wideband monitoring and parallel signal processing.',
+    theory1: 'SDR farms enable distributed spectrum monitoring',
+    theory2: 'Load balancing across nodes maximizes coverage',
+    theory3: 'Each node can independently tune frequency, gain, and sample rate',
+    theory4: 'Centralized control allows coordinated multi-frequency scanning',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
+    faq_q1: 'What is an SDR farm?', faq_a1: 'A collection of SDR receivers managed as a single system, enabling distributed spectrum monitoring and parallel signal processing.',
     faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
     faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
     faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
+    howto_1: 'Add SDR nodes to your farm using the Add button.',
+    howto_2: 'Start all nodes or control each individually.',
+    howto_3: 'Monitor CPU, bandwidth, and spectrum on each node.',
     howto_4: 'Use Settings (⚙️) to customize theme and language.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
     wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
@@ -88,7 +94,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🖥️ SDR Farm Manager ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,22 +106,28 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Gestionnaire Ferme SDR', subtitle: '🖥️ Gestionnaire de ferme SDR — contrôle multi-instances',
+    disconnected: 'Déconnecté', connected: 'En ligne',
+    mainSection: 'Tableau de Bord', mainDesc: 'Contrôler et surveiller plusieurs instances SDR',
+    sectionA: 'Statistiques des Nœuds', sectionB: 'Théorie & Notes',
+    addNodeBtn: '➕ Ajouter un nœud SDR', startAllBtn: '▶ Tout démarrer', stopAllBtn: '⏹ Tout arrêter', resetBtn: '↺ Réinitialiser',
+    farmTheory: 'Une ferme SDR distribue la réception radio sur plusieurs instances matérielles.',
+    theory1: 'Les fermes SDR permettent la surveillance distribuée du spectre',
+    theory2: 'L\'équilibrage de charge maximise la couverture',
+    theory3: 'Chaque nœud peut régler indépendamment fréquence, gain et débit',
+    theory4: 'Le contrôle centralisé permet un balayage multi-fréquences coordonné',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
+    faq_q1: 'Qu\'est-ce qu\'une ferme SDR ?', faq_a1: 'Un ensemble de récepteurs SDR gérés comme un système unique pour la surveillance distribuée du spectre.',
     faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
     faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
+    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
+    howto_1: 'Ajoute des nœuds SDR à ta ferme avec le bouton Ajouter.',
+    howto_2: 'Démarre tous les nœuds ou contrôle-les individuellement.',
+    howto_3: 'Surveille le CPU, la bande passante et le spectre de chaque nœud.',
     howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
     wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
@@ -125,7 +137,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🖥️ Gestionnaire Ferme SDR prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,22 +149,28 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'مدير مزرعة SDR', subtitle: '🖥️ مدير مزرعة خوادم SDR — تحكم بعدة مثيلات',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'لوحة المزرعة', mainDesc: 'التحكم ومراقبة عدة مثيلات SDR',
+    sectionA: 'إحصائيات العقد', sectionB: 'النظرية والملاحظات',
+    addNodeBtn: '➕ إضافة عقدة SDR', startAllBtn: '▶ تشغيل الكل', stopAllBtn: '⏹ إيقاف الكل', resetBtn: '↺ إعادة',
+    farmTheory: 'مزرعة SDR توزع استقبال الراديو عبر عدة مثيلات عتادية.',
+    theory1: 'مزارع SDR تتيح مراقبة موزعة للطيف',
+    theory2: 'توزيع الحمل يزيد التغطية',
+    theory3: 'كل عقدة تضبط التردد والكسب ومعدل العينات مستقلة',
+    theory4: 'التحكم المركزي يسمح بمسح متعدد الترددات',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
+    faq_q1: 'ما هي مزرعة SDR؟', faq_a1: 'مجموعة مستقبلات SDR تُدار كنظام واحد لمراقبة الطيف الموزعة.',
     faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
     faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
+    howto_1: 'أضف عقد SDR لمزرعتك بزر الإضافة.',
+    howto_2: 'شغّل كل العقد أو تحكم بكل واحدة.',
+    howto_3: 'راقب المعالج والنطاق الترددي والطيف لكل عقدة.',
     howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
     wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
@@ -162,7 +180,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🖥️ مدير مزرعة SDR جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1449,3 +1467,166 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ SDR FARM SIMULATION ═══════ */
+const SDR_TYPES = ['RTL-SDR v3', 'HackRF One', 'AirSpy Mini', 'RSP1A', 'PlutoSDR'];
+const NODE_COLORS = ['#4af','#f84','#4f4','#fc4','#a4f','#f4a','#4fa','#fa4'];
+let farmNodes = [];
+let farmRunning = false;
+let farmAnim = null;
+let nodeIdCounter = 0;
+
+function createNode() {
+  const id = ++nodeIdCounter;
+  const type = SDR_TYPES[Math.floor(Math.random() * SDR_TYPES.length)];
+  const color = NODE_COLORS[(id - 1) % NODE_COLORS.length];
+  const freq = (24 + Math.random() * 1742).toFixed(1);
+  return {
+    id, name: 'SDR-' + String(id).padStart(2, '0'), type, color,
+    freq: +freq, gain: 20 + Math.random() * 30, sampleRate: [1.024, 2.048, 2.4, 3.2][Math.floor(Math.random() * 4)],
+    status: 'online', cpu: 10 + Math.random() * 30, bw: Math.random() * 5,
+    specBuf: new Float32Array(100), temp: 35 + Math.random() * 15
+  };
+}
+
+function renderFarmGrid() {
+  const grid = $('farmGrid'); if (!grid) return;
+  grid.innerHTML = '';
+  farmNodes.forEach(n => {
+    const div = document.createElement('div');
+    div.className = 'sdr-node';
+    div.innerHTML = `
+      <div class="node-hdr">
+        <span class="node-name" style="color:${n.color}">${n.name}</span>
+        <span class="node-status ${n.status}">${n.status.toUpperCase()}</span>
+      </div>
+      <canvas id="nodeSpec${n.id}" width="200" height="60"></canvas>
+      <div class="node-stats">
+        ${n.type}<br>
+        📻 ${n.freq.toFixed(1)} MHz | 🎚 ${n.gain.toFixed(0)} dB<br>
+        ⚡ ${n.sampleRate} MS/s | 🌡 ${n.temp.toFixed(1)}°C<br>
+        CPU: ${n.cpu.toFixed(0)}% | BW: ${n.bw.toFixed(1)} MB/s
+      </div>
+      <div class="node-bar"><div class="node-bar-fill" style="width:${n.cpu}%;background:${n.cpu > 80 ? '#f44' : n.cpu > 50 ? '#fc4' : '#4f4'}"></div></div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function drawNodeSpectrum(node) {
+  const c = $('nodeSpec' + node.id); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  // Update spectrum buffer
+  for (let i = 0; i < node.specBuf.length; i++) {
+    node.specBuf[i] = node.specBuf[i] * 0.7 + (Math.random() * 0.6 - 0.3 +
+      (node.status === 'online' ? 0.3 * Math.sin(i * 0.3 + Date.now() * 0.002) : 0));
+  }
+  ctx.strokeStyle = node.color; ctx.lineWidth = 1.2; ctx.beginPath();
+  for (let i = 0; i < node.specBuf.length; i++) {
+    const x = i / node.specBuf.length * w;
+    const y = h / 2 - node.specBuf[i] * (h / 2 - 2);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+
+function drawFarmOverview() {
+  const c = $('farmOverview'); if (!c) return;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  // Draw combined spectrum
+  const binW = w / 100;
+  farmNodes.forEach(node => {
+    if (node.status !== 'online') return;
+    ctx.fillStyle = node.color; ctx.globalAlpha = 0.25;
+    const startBin = Math.floor((node.freq - 24) / 1766 * 100);
+    for (let i = 0; i < 10; i++) {
+      const bi = (startBin + i) % 100;
+      const val = Math.abs(node.specBuf[i * 10] || 0);
+      ctx.fillRect(bi * binW, h - val * h * 0.8, binW - 1, val * h * 0.8);
+    }
+    ctx.globalAlpha = 1;
+  });
+  // Freq axis
+  ctx.fillStyle = 'rgba(255,255,255,.3)'; ctx.font = '9px Orbitron,monospace';
+  for (let f = 0; f <= 1800; f += 200) {
+    const x = f / 1800 * w;
+    ctx.fillText(f + 'M', x, h - 2);
+  }
+  ctx.fillStyle = '#fff'; ctx.font = '11px Orbitron,monospace';
+  ctx.fillText('Farm Spectrum Overview', 4, 14);
+}
+
+function updateFarmSummary() {
+  const el = $('farmSummary'); if (!el) return;
+  const online = farmNodes.filter(n => n.status === 'online').length;
+  const avgCpu = farmNodes.length ? farmNodes.reduce((s, n) => s + n.cpu, 0) / farmNodes.length : 0;
+  const totalBw = farmNodes.reduce((s, n) => s + n.bw, 0);
+  el.innerHTML = `
+    <div class="farm-stat"><div class="val">${farmNodes.length}</div><div class="lbl">Total Nodes</div></div>
+    <div class="farm-stat"><div class="val" style="color:#4f4">${online}</div><div class="lbl">Online</div></div>
+    <div class="farm-stat"><div class="val">${avgCpu.toFixed(0)}%</div><div class="lbl">Avg CPU</div></div>
+    <div class="farm-stat"><div class="val">${totalBw.toFixed(1)}</div><div class="lbl">MB/s Total</div></div>
+  `;
+}
+
+function stepFarm() {
+  farmNodes.forEach(n => {
+    if (n.status === 'online') {
+      n.cpu = Math.max(5, Math.min(95, n.cpu + (Math.random() - 0.5) * 6));
+      n.bw = Math.max(0.1, n.bw + (Math.random() - 0.5) * 0.5);
+      n.temp = Math.max(30, Math.min(75, n.temp + (Math.random() - 0.5) * 0.5));
+      if (Math.random() < 0.002) { n.status = 'offline'; log('⚠️ ' + n.name + ' went offline!', 'error'); }
+    } else if (Math.random() < 0.01) {
+      n.status = 'online'; log('✅ ' + n.name + ' reconnected', 'success');
+    }
+    drawNodeSpectrum(n);
+  });
+  renderFarmGrid();
+  drawFarmOverview();
+  updateFarmSummary();
+  if (farmRunning) farmAnim = requestAnimationFrame(stepFarm);
+}
+
+function addNode() {
+  const n = createNode();
+  farmNodes.push(n);
+  log('➕ Added ' + n.name + ' (' + n.type + ') at ' + n.freq.toFixed(1) + ' MHz', 'success');
+  if (!farmRunning) { farmRunning = true; setStatus(true); stepFarm(); }
+  else { renderFarmGrid(); updateFarmSummary(); }
+}
+
+function startAllNodes() {
+  farmNodes.forEach(n => n.status = 'online');
+  if (!farmRunning) { farmRunning = true; setStatus(true); stepFarm(); }
+  log('▶ All nodes started', 'success');
+}
+
+function stopAllNodes() {
+  farmRunning = false;
+  if (farmAnim) cancelAnimationFrame(farmAnim);
+  farmNodes.forEach(n => n.status = 'offline');
+  renderFarmGrid(); updateFarmSummary();
+  setStatus(false);
+  log('⏹ All nodes stopped', 'info');
+}
+
+function resetFarm() {
+  stopAllNodes();
+  farmNodes = [];
+  nodeIdCounter = 0;
+  const grid = $('farmGrid'); if (grid) grid.innerHTML = '';
+  updateFarmSummary();
+  const c = $('farmOverview'); if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, c.width, c.height); }
+  log('↺ Farm reset', 'info');
+}
+
+(function initFarmSim() {
+  const ab = $('addNodeBtn'); if (ab) ab.onclick = addNode;
+  const sa = $('startAllBtn'); if (sa) sa.onclick = startAllNodes;
+  const so = $('stopAllBtn'); if (so) so.onclick = stopAllNodes;
+  const rb = $('resetFarmBtn'); if (rb) rb.onclick = resetFarm;
+  // Start with 4 nodes
+  setTimeout(() => { for (let i = 0; i < 4; i++) addNode(); }, 600);
+})();

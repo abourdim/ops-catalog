@@ -16,6 +16,20 @@
   <meta name="theme-color" content="#08091a"/>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .deploy-viz{width:100%;height:200px;border-radius:8px;border:1px solid var(--card-border,rgba(255,255,255,.1));background:rgba(0,0,0,.3);display:block}
+    .kit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin:10px 0}
+    .kit-item{background:rgba(0,0,0,.2);border:1px solid var(--card-border,rgba(255,255,255,.1));border-radius:8px;padding:10px;text-align:center;cursor:pointer;transition:all .3s}
+    .kit-item.selected{border-color:var(--accent);background:rgba(var(--accent-rgb,.2))}
+    .kit-item .kit-icon{font-size:2rem;display:block;margin-bottom:4px}
+    .kit-item .kit-name{font-size:.75rem;opacity:.8}
+    .deploy-timer{font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:700;text-align:center;color:var(--accent);padding:.5rem 0}
+    .band-select{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+    .band-btn{padding:4px 10px;border-radius:12px;border:1px solid var(--card-border,rgba(255,255,255,.1));background:rgba(0,0,0,.2);cursor:pointer;font-size:.8rem;transition:all .2s}
+    .band-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+    .signal-meter{height:20px;background:rgba(0,0,0,.3);border-radius:10px;overflow:hidden;margin:6px 0}
+    .signal-fill{height:100%;border-radius:10px;transition:width .3s;background:linear-gradient(90deg,#f44336,#ff9800,#4caf50)}
+  </style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">
@@ -47,52 +61,49 @@
       <div class="card" id="mainCard">
         <div class="card-header"><div>
           <div class="card-title"><span class="icon">🎒</span> <span data-i18n="mainSection">Antenna in a Bag</span></div>
-          <div class="card-subtitle"><span data-i18n="mainDesc">Rapidly deployable antenna kit</span> <span class="version-tag">v1.2</span></div>
+          <div class="card-subtitle"><span data-i18n="mainDesc">Quick-deploy portable antenna kit simulator</span> <span class="version-tag">v1.0</span></div>
         </div></div>
         <div class="control-section">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
-            <div class="stat-box"><div class="stat-label" data-i18n="abStat1">Status</div><div class="stat-val" id="abS1">STANDBY</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="abStat1">Kit Status</div><div class="stat-val" id="abS1">PACKED</div></div>
             <div class="stat-box"><div class="stat-label" data-i18n="abStat2">Signal</div><div class="stat-val" id="abS2">--</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="abStat3">Events</div><div class="stat-val" id="abS3">0</div></div>
-            <div class="stat-box"><div class="stat-label" data-i18n="abStat4">Uptime</div><div class="stat-val" id="abS4">00:00</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="abStat3">Band</div><div class="stat-val" id="abS3">--</div></div>
+            <div class="stat-box"><div class="stat-label" data-i18n="abStat4">Deploy Time</div><div class="stat-val" id="abS4">00:00</div></div>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-sm primary" onclick="abActivate()"><span class="btn-icon">🎒</span> <span data-i18n="abActivate">Activate</span></button>
-            <button class="btn-sm" onclick="abAction1()"><span class="btn-icon">▶️</span> <span data-i18n="abAct1">Run Scan</span></button>
-            <button class="btn-sm fire-btn" onclick="abEmergency()"><span class="btn-icon">🔥</span> <span data-i18n="abEmerg">Emergency</span></button>
+          <canvas id="abCanvas" class="deploy-viz" height="200"></canvas>
+          <div class="signal-meter"><div class="signal-fill" id="sigFill" style="width:0%"></div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <button class="btn-sm primary" onclick="abDeploy()"><span class="btn-icon">🎒</span> <span data-i18n="abDeploy">Deploy Kit</span></button>
+            <button class="btn-sm" onclick="abTune()"><span class="btn-icon">📡</span> <span data-i18n="abTune">Auto-Tune</span></button>
+            <button class="btn-sm fire-btn" onclick="abPack()"><span class="btn-icon">📦</span> <span data-i18n="abPack">Pack Up</span></button>
           </div>
-          <div class="progress-wrap" style="margin-top:10px"><div class="progress-bar" id="abBar" style="width:0%"></div></div>
-          <canvas id="abCanvas" width="400" height="120" style="width:100%;margin-top:10px;border-radius:8px;background:#0a0a1a"></canvas>
         </div>
       </div>
       <details class="collapsible"><summary><span class="icon">🎒</span> <span data-i18n="sectionA">Kit Builder</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">🎒</span> <span data-i18n="abSecA">Kit Builder</span></h3>
-          <div id="abSecAContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
+          <h3><span class="icon">🎒</span> <span data-i18n="abSecA">Select Components</span></h3>
+          <div class="kit-grid" id="kitGrid"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="abSecAAction()"><span data-i18n="abSecABtn">Execute</span></button>
-            <button class="btn-sm" onclick="abSecAReset()"><span data-i18n="abSecARst">Reset</span></button>
+            <button class="btn-sm primary" onclick="abBuildKit()"><span data-i18n="abBuild">Build Kit</span></button>
+            <button class="btn-sm" onclick="abResetKit()"><span data-i18n="abReset">Reset</span></button>
           </div>
         </div></div>
       </details>
-      <details class="collapsible"><summary><span class="icon">📡</span> <span data-i18n="sectionB">Deploy</span></summary>
+      <details class="collapsible"><summary><span class="icon">📡</span> <span data-i18n="sectionB">Band Selection</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📡</span> <span data-i18n="abSecB">Deploy</span></h3>
-          <div id="abSecBContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="abSecBAction()"><span data-i18n="abSecBBtn">Execute</span></button>
-            <button class="btn-sm" onclick="abSecBReset()"><span data-i18n="abSecBRst">Reset</span></button>
-          </div>
+          <h3><span class="icon">📡</span> <span data-i18n="abSecB">Frequency Bands</span></h3>
+          <div class="band-select" id="bandSelect"></div>
+          <div id="bandInfo" style="min-height:60px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
         </div></div>
       </details>
       <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionC">Link Budget</span></summary>
         <div class="card"><div class="control-section">
-          <h3><span class="icon">📊</span> <span data-i18n="abSecC">Link Budget</span></h3>
-          <div id="abSecCContent" style="min-height:80px;font-family:monospace;font-size:12px;color:var(--accent);padding:8px"></div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-sm primary" onclick="abSecCAction()"><span data-i18n="abSecCBtn">Execute</span></button>
-            <button class="btn-sm" onclick="abSecCReset()"><span data-i18n="abSecCRst">Reset</span></button>
+          <h3><span class="icon">📊</span> <span data-i18n="abSecC">Link Budget Calculator</span></h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
+            <div><label style="font-size:.8rem;opacity:.7" data-i18n="abTxPow">TX Power (dBm)</label><input type="range" id="txPower" min="0" max="30" value="20" style="width:100%;accent-color:var(--accent)"><span id="txPowVal" style="font-family:monospace">20</span></div>
+            <div><label style="font-size:.8rem;opacity:.7" data-i18n="abDist">Distance (km)</label><input type="range" id="txDist" min="1" max="50" value="5" style="width:100%;accent-color:var(--accent)"><span id="txDistVal" style="font-family:monospace">5</span></div>
           </div>
+          <div id="linkResult" style="font-family:monospace;font-size:12px;color:var(--accent);padding:8px;min-height:60px"></div>
         </div></div>
       </details>
     </div>

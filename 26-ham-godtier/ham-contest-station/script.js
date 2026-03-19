@@ -1449,3 +1449,89 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {"title":"Contest Station","subtitle":"🏆 Contest station simulator with logging and scoring","sectionA":"Theory","sectionB":"Controls","sectionC":"Contest","mainSection":"Contest Station","mainDesc":"Contest station simulator with logging and scoring","start":"Start Contest","stop":"End Contest","simStarted":"Contest started!","simStopped":"Contest ended","theoryTitle":"Contest Operating Theory","theoryDesc":"Ham radio contests test your ability to make contacts quickly. Log callsigns, exchange serial numbers, and maximize your score.","qsoCount":"QSOs","score":"Score","rate":"Rate/hr","multipliers":"Mults","callsign":"Callsign","exchange":"Exchange","logQso":"Log QSO","cq":"CQ!","dupe":"DUPE!","newMult":"New Mult!","band":"Band","elapsed":"Elapsed"});
+Object.assign(LANG.fr, {"title":"Station Contest","subtitle":"🏆 Simulateur de station contest avec log et score","sectionA":"Theorie","sectionB":"Controles","sectionC":"Contest","mainSection":"Station Contest","mainDesc":"Simulateur de station contest avec journalisation et score","start":"Demarrer Contest","stop":"Fin Contest","simStarted":"Contest demarre!","simStopped":"Contest termine","theoryTitle":"Theorie du Contest","theoryDesc":"Les contests radio testent votre capacite a faire des contacts rapidement. Enregistrez les indicatifs, echangez les numeros et maximisez votre score.","qsoCount":"QSOs","score":"Score","rate":"Rythme/h","multipliers":"Mults","callsign":"Indicatif","exchange":"Echange","logQso":"Logger QSO","cq":"CQ!","dupe":"DOUBLON!","newMult":"Nouveau Mult!","band":"Bande","elapsed":"Ecoule"});
+Object.assign(LANG.ar, {"title":"محطة المسابقات","subtitle":"🏆 محاكي محطة مسابقات مع التسجيل والتسجيل","sectionA":"النظرية","sectionB":"أدوات التحكم","sectionC":"المسابقة","mainSection":"محطة المسابقات","mainDesc":"محاكي محطة مسابقات مع التسجيل والنقاط","start":"بدء المسابقة","stop":"إنهاء المسابقة","simStarted":"بدأت المسابقة!","simStopped":"انتهت المسابقة","theoryTitle":"نظرية تشغيل المسابقات","theoryDesc":"تختبر مسابقات الراديو قدرتك على إجراء اتصالات بسرعة. سجل إشارات النداء وتبادل الأرقام التسلسلية وحقق أعلى نتيجة.","qsoCount":"الاتصالات","score":"النتيجة","rate":"المعدل/ساعة","multipliers":"المضاعفات","callsign":"إشارة النداء","exchange":"التبادل","logQso":"تسجيل QSO","cq":"CQ!","dupe":"مكرر!","newMult":"مضاعف جديد!","band":"النطاق","elapsed":"المنقضي"});
+setLanguage(currentLang);
+
+
+/* ═══════ CONTEST STATION SIM ═══════ */
+let simRunning=false,simTimer=null,contestQSOs=[],contestScore=0,contestMults=new Set(),contestStart=0,serialNum=1;
+const prefixes=['W1','K2','N3','WB4','KA5','W6','K7','N8','W9','W0','VE3','JA1','DL5','G3','F6','EA4','I2','OH3','SM5','UA3'];
+const zones=Array.from({length:40},(_,i)=>i+1);
+
+function generateCall(){
+  const p=prefixes[Math.floor(Math.random()*prefixes.length)];
+  const s=String.fromCharCode(65+Math.floor(Math.random()*26))+String.fromCharCode(65+Math.floor(Math.random()*26));
+  return p+s;
+}
+
+function updateContestDisplay(){
+  const qe=$('qsoCountEl');if(qe)qe.textContent=contestQSOs.length;
+  const se=$('scoreEl');if(se)se.textContent=contestScore;
+  const me=$('multsEl');if(me)me.textContent=contestMults.size;
+  const elapsed=contestStart?Math.floor((Date.now()-contestStart)/1000):0;
+  const rate=elapsed>0?Math.round(contestQSOs.length/(elapsed/3600)):0;
+  const re=$('rateEl');if(re)re.textContent=rate;
+  const te=$('elapsedEl');if(te){const m=Math.floor(elapsed/60);const s=elapsed%60;te.textContent=m+':'+(s<10?'0':'')+s;}
+  // Draw rate graph
+  const c=$('contestCanvas'),ctx=c?c.getContext('2d'):null;
+  if(ctx){
+    const W=c.width,H=c.height;
+    ctx.fillStyle='rgba(0,0,0,0.03)';ctx.fillRect(0,0,W,H);
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+    ctx.fillStyle=accent;
+    const barW=Math.max(2,W/Math.max(contestQSOs.length,1));
+    const x=(contestQSOs.length-1)*barW;
+    ctx.fillRect(x,H-Math.min(rate/2,H),barW-1,Math.min(rate/2,H));
+  }
+}
+
+function logQSO(){
+  if(!simRunning)return;
+  const callInput=$('callInput');
+  const call=callInput?callInput.value.toUpperCase().trim():'';
+  if(!call){log('Enter a callsign','error');return;}
+  const isDupe=contestQSOs.some(q=>q.call===call);
+  if(isDupe){log(call+' '+(LANG[currentLang].dupe||'DUPE!'),'error');return;}
+  const zone=zones[Math.floor(Math.random()*zones.length)];
+  const isNewMult=!contestMults.has(zone);
+  contestMults.add(zone);
+  contestQSOs.push({call,serial:serialNum,zone,time:new Date().toLocaleTimeString()});
+  contestScore=contestQSOs.length*(contestMults.size);
+  serialNum++;
+  if(callInput)callInput.value='';
+  log(call+' #'+serialNum+' Z'+zone+(isNewMult?' NEW MULT!':''),'success');
+  if(isNewMult)log(LANG[currentLang].newMult||'New Multiplier!','success');
+  updateContestDisplay();
+  // Add to log table
+  const tbl=$('qsoLog');
+  if(tbl){const r=document.createElement('div');r.style.cssText='font-size:.75rem;color:var(--text);padding:2px 0;border-bottom:1px solid var(--border)';
+    r.textContent=contestQSOs.length+'. '+call+' #'+serialNum+' Z'+zone;tbl.appendChild(r);tbl.scrollTop=tbl.scrollHeight;}
+}
+
+function autoCQ(){
+  if(!simRunning)return;
+  const call=generateCall();
+  const ci=$('callInput');if(ci)ci.value=call;
+  log('CQ CQ de '+call,'rx');
+}
+
+function startSim(){if(simRunning)return;simRunning=true;contestQSOs=[];contestScore=0;contestMults=new Set();serialNum=1;contestStart=Date.now();setStatus(true);
+  const tbl=$('qsoLog');if(tbl)tbl.innerHTML='';
+  const c=$('contestCanvas'),ctx=c?c.getContext('2d'):null;if(ctx)ctx.clearRect(0,0,c.width,c.height);
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(()=>{updateContestDisplay();if(Math.random()<0.3)autoCQ();},3000);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);setStatus(false);
+  log(LANG[currentLang].simStopped+' Final: '+contestQSOs.length+' QSOs, Score: '+contestScore,'info');}
+function init_contest(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  if($('logQsoBtn'))$('logQsoBtn').onclick=logQSO;
+  if($('cqBtn'))$('cqBtn').onclick=autoCQ;
+  const ci=$('callInput');if(ci)ci.addEventListener('keydown',e=>{if(e.key==='Enter')logQSO();});
+}
+init_contest();

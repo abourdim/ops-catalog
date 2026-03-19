@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Mobile Command', subtitle: '🚐 Mobile command vehicle dashboard',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Mobile Command', mainDesc: 'Drive-mapping RF, WiFi, BLE from mobile command vehicle',
+    sectionA: 'RF Scanner', sectionB: 'WiFi Mapper', sectionC: 'BLE Tracker',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +88,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '🚐 Mobile command vehicle online!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,7 +100,7 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Commande Mobile', subtitle: '🚐 Tableau de bord véhicule de commandement',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
     sectionA: 'Section A', sectionB: 'Section B',
@@ -125,7 +125,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '🚐 Véhicule de commandement en ligne !',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,7 +137,7 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'القيادة المتنقلة', subtitle: '🚐 لوحة تحكم مركبة القيادة',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
     sectionA: 'القسم أ', sectionB: 'القسم ب',
@@ -162,7 +162,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '🚐 مركبة القيادة جاهزة!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1442,10 +1442,105 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
-
+  initMobileCommand();
   log(LANG[currentLang].ready, 'success');
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ MOBILE COMMAND SIMULATION ═══════ */
+let mcState = { active: false, speed: 0, heading: 0, rfSignals: [], wifiNets: [], bleDevs: [], lat: 48.8566, lng: 2.3522, uptime: 0, uptimeTimer: null, animFrame: null };
+
+function initMobileCommand() { setStatus(false); drawMcCanvas(); }
+
+function mcActivate() {
+  if (mcState.active) { mcState.active = false; setStatus(false); clearInterval(mcState.uptimeTimer); if (mcState.animFrame) cancelAnimationFrame(mcState.animFrame); log('🚐 Vehicle systems offline', 'info'); return; }
+  mcState.active = true; mcState.uptime = 0; setStatus(true); log('🚐 Mobile command vehicle online!', 'success');
+  mcState.uptimeTimer = setInterval(() => {
+    mcState.uptime++;
+    mcState.speed = 20 + Math.random() * 40;
+    mcState.heading = (mcState.heading + (Math.random() - 0.5) * 10 + 360) % 360;
+    mcState.lat += (Math.random() - 0.5) * 0.001;
+    mcState.lng += (Math.random() - 0.5) * 0.001;
+    const s4 = $('mcS4'); if (s4) s4.textContent = String(Math.floor(mcState.uptime/60)).padStart(2,'0')+':'+String(mcState.uptime%60).padStart(2,'0');
+    const s2 = $('mcS2'); if (s2) s2.textContent = Math.round(mcState.speed) + ' km/h';
+    if (Math.random() < 0.15) mcScanRF();
+  }, 1000);
+  animateMc();
+}
+
+function animateMc() { if (!mcState.active) return; drawMcCanvas(); mcState.animFrame = requestAnimationFrame(animateMc); }
+
+function mcScanRF() {
+  const freq = (100 + Math.random() * 900).toFixed(1);
+  const pwr = (-30 - Math.random() * 70).toFixed(0);
+  mcState.rfSignals.push({ freq, pwr, lat: mcState.lat, lng: mcState.lng });
+  if (mcState.rfSignals.length > 50) mcState.rfSignals.shift();
+  const s3 = $('mcS3'); if (s3) s3.textContent = mcState.rfSignals.length;
+}
+
+function mcAction1() {
+  if (!mcState.active) { log('Start vehicle first!', 'error'); return; }
+  for (let i = 0; i < 5; i++) mcScanRF();
+  log(`📡 RF scan: ${mcState.rfSignals.length} signals in range`, 'success');
+  const bar = $('mcBar'); if (bar) { bar.style.width = '100%'; setTimeout(() => bar.style.width = '0%', 500); }
+}
+
+function mcEmergency() { mcState.active = false; setStatus(false); clearInterval(mcState.uptimeTimer); if (mcState.animFrame) cancelAnimationFrame(mcState.animFrame); log('🚨 Emergency stop!', 'error'); playSound('error'); }
+
+function mcSecAAction() {
+  const el = $('mcSecAContent');
+  if (el) el.innerHTML = mcState.rfSignals.slice(-10).map(s => `${s.freq} MHz @ ${s.pwr} dBm (${s.lat.toFixed(4)}, ${s.lng.toFixed(4)})`).join('<br>') || 'No RF signals.';
+}
+function mcSecAReset() { mcState.rfSignals = []; const s3 = $('mcS3'); if (s3) s3.textContent = '0'; }
+function mcSecBAction() {
+  const nets = Math.floor(3 + Math.random() * 10);
+  mcState.wifiNets = [];
+  for (let i = 0; i < nets; i++) mcState.wifiNets.push({ ssid: ['FreeWiFi','Hotel_5G','Corp_Secure','CafeNet','HIDDEN','Gov_Net','TelcoAP'][Math.floor(Math.random()*7)], ch: Math.floor(1+Math.random()*13), rssi: Math.floor(-40-Math.random()*50) });
+  const el = $('mcSecBContent');
+  if (el) el.innerHTML = mcState.wifiNets.map(n => `📶 ${n.ssid} (CH${n.ch}) ${n.rssi} dBm`).join('<br>');
+  log(`📶 WiFi scan: ${nets} networks found`, 'success');
+}
+function mcSecBReset() { mcState.wifiNets = []; const el = $('mcSecBContent'); if (el) el.innerHTML = ''; }
+function mcSecCAction() {
+  const devs = Math.floor(2 + Math.random() * 8);
+  mcState.bleDevs = [];
+  for (let i = 0; i < devs; i++) mcState.bleDevs.push({ name: ['Phone','Watch','Headset','Tracker','Beacon','Unknown'][Math.floor(Math.random()*6)], mac: Array.from({length:6},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(':'), rssi: Math.floor(-50-Math.random()*40) });
+  const el = $('mcSecCContent');
+  if (el) el.innerHTML = mcState.bleDevs.map(d => `📱 ${d.name} [${d.mac}] ${d.rssi} dBm`).join('<br>');
+  log(`📱 BLE scan: ${devs} devices found`, 'success');
+}
+function mcSecCReset() { mcState.bleDevs = []; const el = $('mcSecCContent'); if (el) el.innerHTML = ''; }
+
+function drawMcCanvas() {
+  const canvas = $('mcCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+  ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, w, h);
+  if (!mcState.active) return;
+  // Mini map with vehicle trail
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+  for (let y = 0; y < h; y += 30) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+  // RF signals as dots
+  mcState.rfSignals.slice(-20).forEach((s, i) => {
+    const x = (i / 20) * w;
+    const y = h/2 + (parseFloat(s.pwr) + 60) / 60 * h * 0.4;
+    ctx.fillStyle = parseFloat(s.pwr) > -50 ? '#f44336' : accent;
+    ctx.fillRect(x, y, 3, 3);
+  });
+  // Vehicle indicator
+  ctx.fillStyle = '#4caf50';
+  const vx = w/2, vy = h - 15;
+  ctx.beginPath();
+  const ha = mcState.heading * Math.PI / 180;
+  ctx.moveTo(vx + Math.sin(ha) * 8, vy - Math.cos(ha) * 8);
+  ctx.lineTo(vx - Math.sin(ha) * 5 - Math.cos(ha) * 5, vy + Math.cos(ha) * 5 - Math.sin(ha) * 5);
+  ctx.lineTo(vx - Math.sin(ha) * 5 + Math.cos(ha) * 5, vy + Math.cos(ha) * 5 + Math.sin(ha) * 5);
+  ctx.fill();
+  ctx.fillStyle = accent; ctx.font = '10px Orbitron'; ctx.fillText(`${Math.round(mcState.speed)} km/h | ${Math.round(mcState.heading)}\u00B0 | ${mcState.lat.toFixed(4)}, ${mcState.lng.toFixed(4)}`, 5, 15);
+}

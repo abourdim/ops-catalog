@@ -63,115 +63,101 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Signal Forge', subtitle: 'Signal Forge — RF Waveform Crafter',
+    disconnected: 'Idle', connected: 'Transmitting',
+    mainSection: 'Signal Forge', mainDesc: 'Craft custom RF signals and analyze waveforms',
+    sectionA: 'Signal Library', sectionB: 'Modulation Guide',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
-    clear: 'Clear', copy: 'Copy', theme: 'Theme',
-    settings: '⚙️ Settings', language: 'Language',
+    clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY educational web app. Explore, create, and innovate!',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings (⚙️) and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings (⚙️) and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    howto_1: 'Explore the main section to get started with the app.',
-    howto_2: 'Open collapsible sections to access more features.',
-    howto_3: 'Check the Activity Log for events and messages.',
-    howto_4: 'Use Settings (⚙️) to customize theme and language.',
-    wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
-    wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
-    wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
-    wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
+    faq_q1: 'What is Signal Forge?', faq_a1: 'A waveform crafter — build and modulate custom RF signals.',
+    faq_q2: 'How do I create signals?', faq_a2: 'Select waveform type, frequency, and modulation, then click Transmit.',
+    faq_q3: 'What modulations are available?', faq_a3: 'AM, FM, and PSK modulation schemes.',
+    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
+    howto_1: 'Select a waveform type (sine, square, etc.).', howto_2: 'Adjust frequency and amplitude.',
+    howto_3: 'Choose a modulation scheme.', howto_4: 'Click Transmit to send to the library.',
+    wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
+    wiki_log_title: '📜 Log', wiki_log: 'Timestamped log.', wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first.',
     working: 'Working…',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
-    t_riad: 'Riad', t_medina: 'Medina',
-    t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    t_riad: 'Riad', t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Signal Forge ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    export: 'Export', filterAll: 'All',
-    soundEffects: '🔊 Sound effects',
+    export: 'Export', filterAll: 'All', soundEffects: '🔊 Sound effects',
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
-    splashHint: 'tap to skip',
-    newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
+    splashHint: 'tap to skip', newVersion: 'UPDATE',
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
+    waveform: 'Waveform', modulation: 'Modulation', frequency: 'Frequency (Hz):',
+    amplitude: 'Amplitude:', sigInfo: 'Signal Info', transmit: 'Transmit',
+    addHarmonic: 'Add Harmonic', resetForge: 'Reset',
+    forgeHint: 'Craft signals and transmit them to the library.',
+    transmitted: 'Signal transmitted',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
-    activityLog: 'Journal', eventsMsg: 'Événements et messages',
-    clear: 'Effacer', copy: 'Copier', theme: 'Thème',
-    settings: '⚙️ Paramètres', language: 'Langue',
-    helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
+    title: 'Forge de Signaux', subtitle: 'Forge de Signaux — Artisan RF',
+    disconnected: 'En attente', connected: 'Transmission',
+    mainSection: 'Forge de Signaux', mainDesc: 'Créer des signaux RF personnalisés',
+    sectionA: 'Bibliothèque', sectionB: 'Guide de Modulation',
+    activityLog: 'Journal', eventsMsg: 'Événements',
+    clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
+    helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une appli éducative Workshop-DIY. Explore, crée et innove !',
-    faq_q2: 'Comment changer le thème ?', faq_a2: 'Ouvre Paramètres (⚙️) et choisis un thème.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvre Paramètres (⚙️) et choisis ta langue. L\'arabe active le RTL automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
-    howto_1: 'Explore la section principale pour démarrer.',
-    howto_2: 'Ouvre les sections dépliables pour plus de fonctionnalités.',
-    howto_3: 'Consulte le Journal pour les événements et messages.',
-    howto_4: 'Utilise Paramètres (⚙️) pour personnaliser thème et langue.',
-    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés : 6 sombres (Mosquée, Zellige, Andalous, Espace, Jungle, Robot) et 2 thèmes islamiques clairs (Riad, Médina).',
-    wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Support trilingue : English, Français, العربية. L\'arabe active automatiquement le mode droite-à-gauche.',
-    wiki_log_title: '📜 Journal', wiki_log: 'Journal horodaté et coloré. Effacer ou copier. Types : info, succès, erreur, TX, RX.',
-    wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local-first, privacy-first. Toutes les données restent dans ton navigateur. Pas de tracking, pas d\'analytics.',
+    faq_q1: 'Qu\'est-ce que la Forge?', faq_a1: 'Un créateur de formes d\'onde RF.',
+    faq_q2: 'Comment créer?', faq_a2: 'Choisissez type, fréquence et modulation.',
+    faq_q3: 'Quelles modulations?', faq_a3: 'AM, FM et PSK.',
+    faq_q4: 'Données privées?', faq_a4: 'Oui.',
+    howto_1: 'Choisissez un type d\'onde.', howto_2: 'Ajustez fréquence et amplitude.',
+    howto_3: 'Choisissez la modulation.', howto_4: 'Cliquez Transmettre.',
+    wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
+    wiki_log_title: '📜 Journal', wiki_log: 'Journal.', wiki_privacy_title: '🔒 Confidentialité', wiki_privacy: 'Local.',
     working: 'En cours…',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
-    t_riad: 'Riad', t_medina: 'Médina',
-    t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
-    logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
-    export: 'Exporter', filterAll: 'Tout',
-    soundEffects: '🔊 Effets sonores',
+    t_riad: 'Riad', t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
+    ready: '🚀 Forge prête!',
+    logCleared: 'Journal effacé', copied: 'Copié!', copyFail: 'Échec',
+    export: 'Exporter', filterAll: 'Tout', soundEffects: '🔊 Effets sonores',
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Réactif musique', chatPlaceholder: 'Parle au robot...',
-    splashHint: 'appuyer pour passer',
-    newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
+    splashHint: 'appuyer pour passer', newVersion: 'MAJ',
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
+    waveform: 'Forme d\'onde', modulation: 'Modulation', frequency: 'Fréquence (Hz):',
+    amplitude: 'Amplitude:', sigInfo: 'Info Signal', transmit: 'Transmettre',
+    addHarmonic: 'Harmonique', resetForge: 'Réinitialiser',
+    forgeHint: 'Créez des signaux et transmettez-les.', transmitted: 'Signal transmis',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
-    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
-    clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
-    settings: '⚙️ الإعدادات', language: 'اللغة',
-    helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
+    title: 'مصنع الإشارات', subtitle: 'مصنع الإشارات — صياغة RF',
+    disconnected: 'خامل', connected: 'إرسال',
+    mainSection: 'مصنع الإشارات', mainDesc: 'صياغة إشارات RF مخصصة',
+    sectionA: 'المكتبة', sectionB: 'دليل التعديل',
+    activityLog: 'سجل النشاط', eventsMsg: 'الأحداث',
+    clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
+    helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'تطبيق تعليمي من Workshop-DIY. استكشف، أبدع وابتكر!',
-    faq_q2: 'كيف أغيّر المظهر؟', faq_a2: 'افتح الإعدادات (⚙️) واختر مظهرًا من القائمة.',
-    faq_q3: 'كيف أغيّر اللغة؟', faq_a3: 'افتح الإعدادات (⚙️) واختر لغتك. العربية تفعّل الاتجاه من اليمين لليسار تلقائيًا.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
-    howto_1: 'استكشف القسم الرئيسي للبدء.',
-    howto_2: 'افتح الأقسام القابلة للطي للمزيد من الميزات.',
-    howto_3: 'تابع سجل النشاط للأحداث والرسائل.',
-    howto_4: 'استخدم الإعدادات (⚙️) لتخصيص المظهر واللغة.',
-    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة: 6 داكنة (مسجد، زليج، أندلس، فضاء، أدغال، روبوت) و2 مظهرين إسلاميين فاتحين (رياض، مدينة).',
-    wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'دعم ثلاثي اللغات: English، Français، العربية. العربية تفعّل تلقائيًا التخطيط من اليمين لليسار.',
-    wiki_log_title: '📜 سجل النشاط', wiki_log: 'سجل مؤرّخ وملوّن. امسح أو انسخ. الأنواع: معلومات، نجاح، خطأ، إرسال، استقبال.',
-    wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي أولًا، خصوصية أولًا. كل البيانات تبقى في متصفحك. بدون تتبع، بدون تحليلات.',
+    faq_q1: 'ما هو المصنع؟', faq_a1: 'أداة لصياغة أشكال الموجات RF.',
+    faq_q2: 'كيف أصنع إشارة؟', faq_a2: 'اختر النوع والتردد والتعديل.',
+    faq_q3: 'ما التعديلات المتاحة؟', faq_a3: 'AM وFM وPSK.',
+    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
+    howto_1: 'اختر نوع الموجة.', howto_2: 'اضبط التردد والسعة.',
+    howto_3: 'اختر نظام التعديل.', howto_4: 'انقر إرسال.',
+    wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
+    wiki_log_title: '📜 السجل', wiki_log: 'سجل مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
     working: 'جارٍ…',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
-    t_riad: 'رياض', t_medina: 'مدينة',
-    t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    t_riad: 'رياض', t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
+    ready: '🚀 مصنع الإشارات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
-    export: 'تصدير', filterAll: 'الكل',
-    soundEffects: '🔊 مؤثرات صوتية',
+    export: 'تصدير', filterAll: 'الكل', soundEffects: '🔊 مؤثرات صوتية',
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
-    splashHint: 'انقر للتخطي',
-    newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
+    splashHint: 'انقر للتخطي', newVersion: 'تحديث',
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
+    waveform: 'شكل الموجة', modulation: 'التعديل', frequency: 'التردد (Hz):',
+    amplitude: 'السعة:', sigInfo: 'معلومات الإشارة', transmit: 'إرسال',
+    addHarmonic: 'إضافة توافقي', resetForge: 'إعادة تعيين',
+    forgeHint: 'اصنع إشارات وأرسلها إلى المكتبة.', transmitted: 'تم إرسال الإشارة',
   }
 };
 
@@ -1444,6 +1430,191 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initSignalForge();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPECIFIC: SIGNAL FORGE — RF Waveform Crafter
+   ═══════════════════════════════════════════════════════════════ */
+
+let forgeCanvas, forgeCtx, fW=780, fH=250;
+let specCanvas2, specCtx2, sW=780, sH=120;
+let waveType='sine', modType='none', sigFreq=5, sigAmp=80;
+let harmonics=[], frame=0, sigLibrary=[];
+
+function genWave(x, freq, type) {
+  const t = x * freq * Math.PI * 2;
+  switch(type) {
+    case 'sine': return Math.sin(t);
+    case 'square': return Math.sign(Math.sin(t));
+    case 'triangle': return 2*Math.abs(2*(t/(2*Math.PI) - Math.floor(t/(2*Math.PI)+0.5)))-1;
+    case 'sawtooth': return 2*(t/(2*Math.PI) - Math.floor(t/(2*Math.PI)+0.5));
+    case 'noise': return (Math.random()-0.5)*2;
+    default: return Math.sin(t);
+  }
+}
+
+function drawForge() {
+  if (!forgeCtx) return;
+  frame++;
+  forgeCtx.fillStyle = '#0a0a1a';
+  forgeCtx.fillRect(0,0,fW,fH);
+
+  // Grid
+  forgeCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+  for (let x=0; x<fW; x+=40) { forgeCtx.beginPath(); forgeCtx.moveTo(x,0); forgeCtx.lineTo(x,fH); forgeCtx.stroke(); }
+  forgeCtx.strokeStyle = 'rgba(255,255,255,0.08)';
+  forgeCtx.beginPath(); forgeCtx.moveTo(0,fH/2); forgeCtx.lineTo(fW,fH/2); forgeCtx.stroke();
+
+  const midY = fH/2;
+  const amp = (fH*0.4)*(sigAmp/100);
+  const timeOffset = frame * 0.02;
+
+  // Main waveform
+  forgeCtx.beginPath();
+  forgeCtx.strokeStyle = '#3b82f6';
+  forgeCtx.lineWidth = 2;
+  for (let x=0; x<fW; x++) {
+    const t = (x/fW)*4 + timeOffset;
+    let val = genWave(t, sigFreq/5, waveType);
+
+    // Apply modulation
+    switch(modType) {
+      case 'am':
+        val *= (1 + 0.5*Math.sin(t*1.2));
+        break;
+      case 'fm':
+        val = genWave(t + 0.3*Math.sin(t*0.8), sigFreq/5, waveType);
+        break;
+      case 'psk':
+        const phase = Math.sin(t*0.5) > 0 ? 0 : Math.PI;
+        val = Math.sin(t*sigFreq/5*Math.PI*2 + phase);
+        break;
+    }
+
+    // Add harmonics
+    harmonics.forEach(h => { val += genWave(t, h.freq/5, h.type) * h.amp * 0.3; });
+
+    const y = midY - val*amp;
+    x===0 ? forgeCtx.moveTo(x,y) : forgeCtx.lineTo(x,y);
+  }
+  forgeCtx.stroke();
+
+  // Labels
+  forgeCtx.fillStyle = 'rgba(255,255,255,0.4)';
+  forgeCtx.font = '10px monospace';
+  forgeCtx.textAlign = 'left';
+  forgeCtx.fillText(`${waveType.toUpperCase()} @ ${sigFreq} Hz | Mod: ${modType.toUpperCase()} | Harmonics: ${harmonics.length}`, 6, 14);
+}
+
+function drawSpectrum2() {
+  if (!specCtx2) return;
+  specCtx2.fillStyle = '#0a0a1a';
+  specCtx2.fillRect(0,0,sW,sH);
+
+  // FFT-like visualization (simplified)
+  const numBins = 64;
+  const binW = sW/numBins;
+  for (let i=0; i<numBins; i++) {
+    let mag = Math.random()*5;
+    // Fundamental
+    const binFreq = (i/numBins)*100;
+    const dist = Math.abs(binFreq - sigFreq);
+    if (dist < 3) mag = (sigAmp/100)*sH*0.7 * Math.exp(-(dist*dist)/4);
+    // Harmonics
+    harmonics.forEach(h => {
+      const hd = Math.abs(binFreq - h.freq);
+      if (hd < 3) mag = Math.max(mag, h.amp*sH*0.5 * Math.exp(-(hd*hd)/4));
+    });
+    // Modulation sidebands
+    if (modType === 'am' || modType === 'fm') {
+      const sb1 = Math.abs(binFreq - (sigFreq-2));
+      const sb2 = Math.abs(binFreq - (sigFreq+2));
+      if (sb1 < 2) mag = Math.max(mag, sH*0.2);
+      if (sb2 < 2) mag = Math.max(mag, sH*0.2);
+    }
+    const h = Math.max(2, mag);
+    const hue = i < numBins*0.3 ? 120 : i < numBins*0.7 ? 60 : 0;
+    specCtx2.fillStyle = `hsla(${hue},70%,50%,0.7)`;
+    specCtx2.fillRect(i*binW+1, sH-h, binW-2, h);
+  }
+  specCtx2.fillStyle = 'rgba(255,255,255,0.3)';
+  specCtx2.font = '9px monospace';
+  specCtx2.textAlign = 'center';
+  specCtx2.fillText('Frequency Spectrum (0-100 Hz)', sW/2, 10);
+}
+
+function updateSigStats() {
+  const el = $('sigStats');
+  if (!el) return;
+  const period = (1000/sigFreq).toFixed(1);
+  el.innerHTML = `Type: <strong>${waveType}</strong><br>Freq: <strong>${sigFreq} Hz</strong><br>Period: <strong>${period} ms</strong><br>Amp: <strong>${sigAmp}%</strong><br>Mod: <strong>${modType}</strong><br>Harmonics: <strong>${harmonics.length}</strong>`;
+}
+
+function transmitSignal() {
+  const sig = { type: waveType, freq: sigFreq, amp: sigAmp, mod: modType, harmonics: harmonics.length, time: new Date() };
+  sigLibrary.push(sig);
+  setStatus(true);
+  log(`${LANG[currentLang].transmitted}: ${waveType} @ ${sigFreq}Hz (${modType})`, 'tx');
+  playSound('success');
+  updateSigLibrary();
+  setTimeout(() => setStatus(false), 1500);
+}
+
+function updateSigLibrary() {
+  const el = $('sigLibrary');
+  if (!el) return;
+  el.innerHTML = '';
+  sigLibrary.slice(-10).reverse().forEach(s => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.2);border:1px solid var(--border);';
+    row.innerHTML = `<span style="color:#3b82f6;">&#x1F4E1;</span><span style="flex:1;font-size:.78rem;">${s.type} @ ${s.freq}Hz</span><span style="font-size:.65rem;color:var(--text-muted);">${s.mod} | ${s.amp}% | H:${s.harmonics}</span>`;
+    el.appendChild(row);
+  });
+}
+
+function buildModDatabase() {
+  const el = $('modDatabase');
+  if (!el) return;
+  const mods = [
+    { name:'AM', desc:'Amplitude Modulation — varies signal strength to carry data' },
+    { name:'FM', desc:'Frequency Modulation — varies frequency for better noise immunity' },
+    { name:'PSK', desc:'Phase Shift Keying — shifts phase for digital data transmission' },
+    { name:'QAM', desc:'Quadrature AM — combines amplitude and phase for high data rates' },
+    { name:'OFDM', desc:'Orthogonal FDM — multiple subcarriers for broadband signals' },
+    { name:'Spread Spectrum', desc:'Spreads signal across bandwidth for security and resistance' },
+  ];
+  let html = '<div style="display:grid;grid-template-columns:auto 2fr;gap:4px 8px;">';
+  html += '<strong style="font-size:.7rem;">Scheme</strong><strong style="font-size:.7rem;">Description</strong>';
+  mods.forEach(t => { html += `<span style="color:var(--accent);">${t.name}</span><span style="color:var(--text-muted);">${t.desc}</span>`; });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function forgeLoop() { drawForge(); drawSpectrum2(); updateSigStats(); requestAnimationFrame(forgeLoop); }
+
+function initSignalForge() {
+  forgeCanvas = $('forgeCanvas');
+  if (forgeCanvas) { forgeCtx = forgeCanvas.getContext('2d'); fW = forgeCanvas.width; fH = forgeCanvas.height; }
+  specCanvas2 = $('specCanvas');
+  if (specCanvas2) { specCtx2 = specCanvas2.getContext('2d'); sW = specCanvas2.width; sH = specCanvas2.height; }
+
+  const wSel = $('waveType'); if (wSel) wSel.addEventListener('change', () => { waveType = wSel.value; });
+  const mSel = $('modType'); if (mSel) mSel.addEventListener('change', () => { modType = mSel.value; });
+  const fSlider = $('sigFreq'), fLabel = $('freqLabel');
+  if (fSlider) fSlider.addEventListener('input', () => { sigFreq = parseInt(fSlider.value); if (fLabel) fLabel.textContent = sigFreq+' Hz'; });
+  const aSlider = $('sigAmp'), aLabel = $('ampLabel');
+  if (aSlider) aSlider.addEventListener('input', () => { sigAmp = parseInt(aSlider.value); if (aLabel) aLabel.textContent = sigAmp+'%'; });
+
+  const txBtn = $('transmitBtn'); if (txBtn) txBtn.onclick = transmitSignal;
+  const hBtn = $('addHarmonicBtn'); if (hBtn) hBtn.onclick = () => {
+    harmonics.push({ freq: sigFreq*(2+harmonics.length), type: waveType, amp: 0.3+Math.random()*0.4 });
+    log(`Harmonic ${harmonics.length} added at ${harmonics[harmonics.length-1].freq} Hz`, 'info');
+  };
+  const rBtn = $('resetForgeBtn'); if (rBtn) rBtn.onclick = () => { harmonics = []; log('Signal reset', 'info'); };
+
+  buildModDatabase();
+  forgeLoop();
 }
 
 document.readyState === 'loading'

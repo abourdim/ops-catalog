@@ -63,10 +63,11 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'SDR Propagation Beacon', subtitle: '📡 Propagation Beacon Monitor',
+    disconnected: 'Disconnected', connected: 'Monitoring',
+    mainSection: 'Propagation Monitor', mainDesc: 'Track HF propagation beacons across bands',
+    sectionA: 'Beacon Status', sectionB: 'Propagation Science',
+    started: '▶ Monitoring beacons', stopped: '⏹ Monitor stopped',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -88,7 +89,7 @@ const LANG = {
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus',
     t_riad: 'Riad', t_medina: 'Medina',
     t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 App ready!',
+    ready: '📡 Beacon Monitor ready!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     export: 'Export', filterAll: 'All',
     soundEffects: '🔊 Sound effects',
@@ -100,10 +101,11 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Balise Propagation SDR', subtitle: '📡 Moniteur de Balises de Propagation',
+    disconnected: 'Déconnecté', connected: 'Surveillance',
+    mainSection: 'Moniteur de Propagation', mainDesc: 'Suivre les balises HF sur plusieurs bandes',
+    sectionA: 'État des Balises', sectionB: 'Science de la Propagation',
+    started: '▶ Surveillance des balises', stopped: '⏹ Moniteur arrêté',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -125,7 +127,7 @@ const LANG = {
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous',
     t_riad: 'Riad', t_medina: 'Médina',
     t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-    ready: '🚀 Application prête !',
+    ready: '📡 Moniteur de balises prêt!',
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     export: 'Exporter', filterAll: 'Tout',
     soundEffects: '🔊 Effets sonores',
@@ -137,10 +139,11 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'مراقب منارات الانتشار SDR', subtitle: '📡 مراقب منارات الانتشار',
+    disconnected: 'غير متصل', connected: 'مراقبة',
+    mainSection: 'مراقب الانتشار', mainDesc: 'تتبع منارات HF عبر النطاقات',
+    sectionA: 'حالة المنارات', sectionB: 'علوم الانتشار',
+    started: '▶ مراقبة المنارات', stopped: '⏹ توقف المراقب',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -162,7 +165,7 @@ const LANG = {
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس',
     t_riad: 'رياض', t_medina: 'مدينة',
     t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-    ready: '🚀 التطبيق جاهز!',
+    ready: '📡 مراقب المنارات جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     export: 'تصدير', filterAll: 'الكل',
     soundEffects: '🔊 مؤثرات صوتية',
@@ -1332,6 +1335,45 @@ function trapFocus(e) {
 
 /* ═══════ INIT ═══════ */
 
+/* ═══════ BEACON SIMULATION ═══════ */
+let bRunning=false,bFrame=null;
+const BEACONS=['4U1UN','VE8AT','W6WX','KH6RS','ZL6B','VK6RBP','JA2IGY','RR9O','VR2B','4S7B','ZS6DN','5Z4B','4X6TU','OH2B','CS3B','LU4AA','OA4B','YV5B'];
+let beaconHist=[];
+function drawBeaconViz(data){
+  const c=$('beaconCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,w,h);
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  data.forEach((b,i)=>{const x=20+(i%9)*(w-40)/9,y=b.heard?40+Math.random()*20:h/2+60;
+    ctx.fillStyle=b.heard?accent:'#333';ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=b.heard?'#fff':'#555';ctx.font='9px Orbitron,monospace';ctx.fillText(b.call,x-15,y+16);
+    if(b.heard){ctx.fillStyle='#4f8';ctx.font='8px monospace';ctx.fillText(b.sig.toFixed(0)+'dB',x-10,y-10);}});
+  ctx.fillStyle='#aaa';ctx.font='10px Orbitron,monospace';ctx.fillText('Beacon Network Map',4,12);
+}
+function drawPropHist(){
+  const c=$('propCanvas');if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='rgba(10,10,26,0.3)';ctx.fillRect(0,0,w,h);
+  if(beaconHist.length<2)return;
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.beginPath();
+  const show=Math.min(200,beaconHist.length);
+  for(let i=0;i<show;i++){const v=beaconHist[beaconHist.length-show+i];const x=i/show*w,y=h-(v/18)*h;
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
+  ctx.fillStyle='#aaa';ctx.font='10px monospace';ctx.fillText('Beacons Heard Over Time',4,12);
+}
+function updateBeaconTable(data){
+  const el=$('beaconTable');if(!el)return;
+  el.innerHTML=data.filter(b=>b.heard).map(b=>'<div>'+b.call+': '+b.sig.toFixed(0)+' dBm</div>').join('')||'<div>No beacons</div>';
+}
+function beaconLoop(){
+  if(!bRunning)return;
+  const data=BEACONS.map(b=>{const p=Math.random();return{call:b,sig:p>0.5?-60-Math.random()*30:-120,heard:p>0.5};});
+  const heard=data.filter(b=>b.heard).length;beaconHist.push(heard);if(beaconHist.length>500)beaconHist.shift();
+  drawBeaconViz(data);drawPropHist();updateBeaconTable(data);
+  bFrame=requestAnimationFrame(beaconLoop);
+}
+function startBeacon(){if(bRunning)return;bRunning=true;beaconHist=[];setStatus(true);log(LANG[currentLang].started,'success');beaconLoop();}
+function stopBeacon(){bRunning=false;if(bFrame)cancelAnimationFrame(bFrame);setStatus(false);log(LANG[currentLang].stopped,'info');}
+
 function init() {
   // Splash
   initSplash();
@@ -1442,6 +1484,10 @@ function init() {
   initLogoTracker();
   initAR();
   initAIChat();
+
+  const startB=$('startBtn');if(startB)startB.onclick=startBeacon;
+  const stopB=$('stopBtn');if(stopB)stopB.onclick=stopBeacon;
+  const tSlider=$('threshSlider');if(tSlider)tSlider.oninput=function(){$('threshVal').textContent=this.value+' dB';};
 
   log(LANG[currentLang].ready, 'success');
 }

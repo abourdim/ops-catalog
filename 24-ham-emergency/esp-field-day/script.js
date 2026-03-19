@@ -63,10 +63,10 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Field Day Simulator', subtitle: '🏕️ Field day station setup simulator',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Field Day', mainDesc: 'Amateur radio field day station setup simulator',
+    sectionA: 'Theory', sectionB: 'Controls', sectionC: 'Simulation',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +100,10 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
+    title: 'Simulateur Field Day', subtitle: '🏕️ Simulateur de station field day',
     disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Field Day', mainDesc: 'Simulateur de station radio amateur en plein air',
+    sectionA: 'Théorie', sectionB: 'Contrôles', sectionC: 'Simulation',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +137,10 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
+    title: 'محاكي يوم الميدان', subtitle: '🏕️ محاكي إعداد محطة يوم الميدان',
     disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    mainSection: 'يوم الميدان', mainDesc: 'محاكي إعداد محطة راديو الهواة في الميدان',
+    sectionA: 'النظرية', sectionB: 'أدوات التحكم', sectionC: 'المحاكاة',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1449,3 +1449,79 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+/* ═══════ APP-SPECIFIC i18n MERGE ═══════ */
+Object.assign(LANG.en, {start:'Start Field Day',stop:'Stop',simStarted:'Field Day started',simStopped:'Field Day ended',theoryTitle:'Field Day Theory',theoryDesc:'ARRL Field Day is an annual emergency preparedness exercise where amateur radio operators set up temporary stations in outdoor locations. Operators practice deploying antennas, running on emergency power, and making as many contacts as possible within 24 hours.',qso:'QSOs',score:'Score',band:'Band',mode:'Mode',category:'Category'});
+Object.assign(LANG.fr, {start:'Démarrer Field Day',stop:'Arrêter',simStarted:'Field Day démarré',simStopped:'Field Day terminé',theoryTitle:'Théorie Field Day',theoryDesc:'Le Field Day ARRL est un exercice annuel de préparation aux urgences où les radioamateurs installent des stations temporaires en plein air. Ils pratiquent le déploiement d\'antennes, le fonctionnement sur batterie et réalisent un maximum de contacts en 24h.',qso:'QSOs',score:'Score',band:'Bande',mode:'Mode',category:'Catégorie'});
+Object.assign(LANG.ar, {start:'بدء يوم الميدان',stop:'إيقاف',simStarted:'بدأ يوم الميدان',simStopped:'انتهى يوم الميدان',theoryTitle:'نظرية يوم الميدان',theoryDesc:'يوم الميدان هو تمرين سنوي للاستعداد للطوارئ حيث يقوم مشغلو الراديو الهواة بإعداد محطات مؤقتة في مواقع خارجية. يتدربون على نشر الهوائيات والعمل بالطاقة الاحتياطية وإجراء أكبر عدد من الاتصالات في 24 ساعة.',qso:'QSOs',score:'النتيجة',band:'النطاق',mode:'الوضع',category:'الفئة'});
+setLanguage(currentLang);
+
+
+/* ═══════ FIELD DAY SIM ═══════ */
+const CALLS=['W1AW','K3LR','N1MM','W5KFT','K6BJ','W7DG','VE3FN','N4AA','K8UR','W0AIH'];
+const FD_BANDS=['80m','40m','20m','15m','10m','6m','2m'];
+const FD_MODES=['CW','SSB','FT8','RTTY'];
+let simRunning=false,simTimer=null,qsoCount=0,score=0,fdTimer=0;
+const fdC=$('fdCanvas'),fdCtx=fdC?fdC.getContext('2d'):null;
+let bandQsos={},modeQsos={},rateHistory=[];
+
+function drawFieldDay(){
+  if(!fdCtx)return;const W=fdC.width,H=fdC.height;
+  const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+  const acc2=getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim()||'#0ea5e9';
+  fdCtx.fillStyle='#0a1628';fdCtx.fillRect(0,0,W,H);
+  // Band bars (left)
+  const barW=W*0.45,barH=H-30;
+  fdCtx.fillStyle='rgba(255,255,255,0.5)';fdCtx.font='bold 10px monospace';fdCtx.fillText('QSOs by Band',10,14);
+  const maxQ=Math.max(1,...Object.values(bandQsos));
+  FD_BANDS.forEach((b,i)=>{const y=24+i*(barH/FD_BANDS.length);const q=bandQsos[b]||0;
+    const w=(q/maxQ)*(barW-50);
+    fdCtx.fillStyle='rgba(255,255,255,0.2)';fdCtx.fillRect(40,y,barW-50,14);
+    fdCtx.fillStyle=acc;fdCtx.fillRect(40,y,w,14);
+    fdCtx.fillStyle='rgba(255,255,255,0.6)';fdCtx.font='9px monospace';fdCtx.fillText(b,4,y+11);fdCtx.fillText(q+'',42+w+4,y+11);
+  });
+  // Rate chart (right)
+  const rx=barW+30,rw=W-rx-10;
+  fdCtx.fillStyle='rgba(255,255,255,0.5)';fdCtx.font='bold 10px monospace';fdCtx.fillText('QSO Rate',rx,14);
+  if(rateHistory.length>1){const maxR=Math.max(1,...rateHistory);
+    fdCtx.strokeStyle=acc2;fdCtx.lineWidth=2;fdCtx.beginPath();
+    rateHistory.forEach((r,i)=>{const x=rx+i*rw/60;const y=24+(1-r/maxR)*(barH-10);i===0?fdCtx.moveTo(x,y):fdCtx.lineTo(x,y);});fdCtx.stroke();}
+  // Score
+  fdCtx.fillStyle=acc;fdCtx.font='bold 12px monospace';
+  fdCtx.fillText('QSOs: '+qsoCount+'  Score: '+score,10,H-6);
+  const hrs=Math.floor(fdTimer/3600);const mins=Math.floor((fdTimer%3600)/60);
+  fdCtx.fillStyle='rgba(255,255,255,0.5)';fdCtx.fillText(hrs+'h '+mins+'m',W-60,H-6);
+}
+
+let lastMinuteQsos=0,minuteTimer=0;
+function fdStep(){
+  const call=CALLS[Math.floor(Math.random()*CALLS.length)]+Math.floor(Math.random()*10);
+  const band=FD_BANDS[Math.floor(Math.random()*FD_BANDS.length)];
+  const mode=FD_MODES[Math.floor(Math.random()*FD_MODES.length)];
+  const exchange='2A '+['CT','CA','FL','TX','NY','OH','WA','VA'][Math.floor(Math.random()*8)];
+  qsoCount++;lastMinuteQsos++;
+  const pts=mode==='CW'||mode==='RTTY'?2:1;score+=pts;
+  bandQsos[band]=(bandQsos[band]||0)+1;
+  modeQsos[mode]=(modeQsos[mode]||0)+1;
+  fdTimer+=Math.floor(30+Math.random()*90);
+  minuteTimer++;
+  if(minuteTimer>=3){rateHistory.push(lastMinuteQsos);if(rateHistory.length>60)rateHistory.shift();lastMinuteQsos=0;minuteTimer=0;}
+  const qd=$('qsoDisp');if(qd)qd.textContent=qsoCount;
+  const sd=$('scoreDisp');if(sd)sd.textContent=score;
+  log('QSO #'+qsoCount+': '+call+' '+band+' '+mode+' '+exchange+' (+'+pts+')','rx');
+  drawFieldDay();
+}
+
+function startSim(){if(simRunning)return;simRunning=true;setStatus(true);qsoCount=0;score=0;fdTimer=0;bandQsos={};modeQsos={};rateHistory=[];
+  log(LANG[currentLang].simStarted||'Started','success');
+  simTimer=setInterval(fdStep,1500);}
+function stopSim(){simRunning=false;if(simTimer)clearInterval(simTimer);simTimer=null;setStatus(false);
+  log(LANG[currentLang].simStopped+' - Final: '+qsoCount+' QSOs, Score: '+score,'success');}
+
+function init_fd(){
+  if($('startBtn'))$('startBtn').onclick=startSim;
+  if($('stopBtn'))$('stopBtn').onclick=stopSim;
+  drawFieldDay();
+}
+init_fd();

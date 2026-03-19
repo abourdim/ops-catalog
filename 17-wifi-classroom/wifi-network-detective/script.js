@@ -63,10 +63,19 @@ function playSound(type) {
 
 const LANG = {
   en: {
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
-    disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'WiFi Network Detective', subtitle: 'Investigate network crimes, find intruders',
+    disconnected: 'Off Duty', connected: 'Investigating',
+    mainSection: 'Network Crime Scene', mainDesc: 'Analyze logs and find the intruder',
+    sectionA: 'Traffic Log Analysis', sectionB: 'Suspect Profiles', sectionC: 'How It Works',
+    start: 'Start Case', stop: 'Close Case',
+    packets: 'Packets', suspicious: 'Suspicious', normal: 'Normal',
+    intruderFound: 'Intruder identified!', falseLead: 'False lead — keep investigating!',
+    caseFile: 'Case File', evidence: 'Evidence', verdict: 'Verdict',
+    srcIP: 'Source IP', dstIP: 'Dest IP', protocol: 'Protocol', size: 'Size',
+    flagged: 'FLAGGED', clean: 'Clean',
+    detectiveReady: 'Network Detective ready! Analyze traffic to find the intruder.',
+    investigate: 'Investigate', accuse: 'Accuse',
+    howItWorksText: 'Someone has infiltrated the network. Analyze packet logs, identify suspicious patterns like unusual ports, high data volumes, or rogue MAC addresses. Build your case and accuse the right suspect. Watch out for false leads!',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -100,10 +109,19 @@ const LANG = {
     themeChanged: '🎨 Theme →',
   },
   fr: {
-    title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
-    disconnected: 'Déconnecté', connected: 'Connecté',
-    mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    title: 'Detective Reseau WiFi', subtitle: 'Enquetez sur les crimes reseau, trouvez les intrus',
+    disconnected: 'Repos', connected: 'Enquete',
+    mainSection: 'Scene de Crime Reseau', mainDesc: 'Analysez les logs et trouvez l\'intrus',
+    sectionA: 'Analyse du Trafic', sectionB: 'Profils des Suspects', sectionC: 'Comment ca marche',
+    start: 'Ouvrir l\'enquete', stop: 'Classer',
+    packets: 'Paquets', suspicious: 'Suspect', normal: 'Normal',
+    intruderFound: 'Intrus identifie!', falseLead: 'Fausse piste — continuez!',
+    caseFile: 'Dossier', evidence: 'Preuves', verdict: 'Verdict',
+    srcIP: 'IP Source', dstIP: 'IP Dest', protocol: 'Protocole', size: 'Taille',
+    flagged: 'SIGNALE', clean: 'Propre',
+    detectiveReady: 'Detective pret! Analysez le trafic pour trouver l\'intrus.',
+    investigate: 'Enqueter', accuse: 'Accuser',
+    howItWorksText: 'Quelqu\'un a infiltre le reseau. Analysez les logs de paquets, identifiez les motifs suspects. Construisez votre dossier et accusez le bon suspect.',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
@@ -137,10 +155,19 @@ const LANG = {
     themeChanged: '🎨 Thème →',
   },
   ar: {
-    title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
-    disconnected: 'غير متصل', connected: 'متصل',
-    mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',
-    sectionA: 'القسم أ', sectionB: 'القسم ب',
+    title: 'محقق شبكات WiFi', subtitle: 'تحقق في جرائم الشبكة، اعثر على المتسللين',
+    disconnected: 'خارج الخدمة', connected: 'تحقيق جارٍ',
+    mainSection: 'مسرح جريمة الشبكة', mainDesc: 'حلل السجلات واعثر على المتسلل',
+    sectionA: 'تحليل حركة المرور', sectionB: 'ملفات المشتبه بهم', sectionC: 'كيف يعمل',
+    start: 'ابدأ القضية', stop: 'أغلق القضية',
+    packets: 'حزم', suspicious: 'مشبوه', normal: 'عادي',
+    intruderFound: 'تم التعرف على المتسلل!', falseLead: 'خيط خاطئ — واصل التحقيق!',
+    caseFile: 'ملف القضية', evidence: 'أدلة', verdict: 'الحكم',
+    srcIP: 'IP المصدر', dstIP: 'IP الوجهة', protocol: 'البروتوكول', size: 'الحجم',
+    flagged: 'مُعلَّم', clean: 'نظيف',
+    detectiveReady: 'المحقق جاهز! حلل حركة المرور للعثور على المتسلل.',
+    investigate: 'تحقيق', accuse: 'اتهام',
+    howItWorksText: 'شخص ما تسلل إلى الشبكة. حلل سجلات الحزم، وحدد الأنماط المشبوهة مثل المنافذ غير العادية أو أحجام البيانات الكبيرة. ابنِ قضيتك واتهم المشتبه به الصحيح.',
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
@@ -1444,8 +1471,169 @@ function init() {
   initAIChat();
 
   log(LANG[currentLang].ready, 'success');
+  initDetective();
 }
 
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+/* ═══════ APP LOGIC — WiFi Network Detective ═══════ */
+const SUSPECTS = [
+  { name: 'Device-A (Laptop)', ip: '192.168.1.42', mac: 'AA:11:22:33:44:55', isIntruder: false },
+  { name: 'Device-B (Phone)', ip: '192.168.1.87', mac: 'BB:22:33:44:55:66', isIntruder: false },
+  { name: 'Device-C (IoT Cam)', ip: '192.168.1.105', mac: 'CC:33:44:55:66:77', isIntruder: true },
+  { name: 'Device-D (Printer)', ip: '192.168.1.200', mac: 'DD:44:55:66:77:88', isIntruder: false },
+  { name: 'Device-E (Tablet)', ip: '192.168.1.15', mac: 'EE:55:66:77:88:99', isIntruder: false }
+];
+
+const PROTOCOLS = ['TCP', 'UDP', 'HTTP', 'HTTPS', 'DNS', 'ARP', 'ICMP'];
+const EVIL_PORTS = [4444, 31337, 6667, 8443];
+const NORMAL_PORTS = [80, 443, 53, 22, 3389, 8080];
+
+let detectiveRunning = false, detectiveInterval = null, trafficCanvas, trafficCtx;
+let packetCount = 0, suspiciousCount = 0, packets = [];
+
+function initDetective() {
+  trafficCanvas = $('trafficCanvas');
+  if (trafficCanvas) trafficCtx = trafficCanvas.getContext('2d');
+
+  const startBtn = $('startBtn');
+  const stopBtn = $('stopBtn');
+  if (startBtn) startBtn.onclick = startDetective;
+  if (stopBtn) stopBtn.onclick = stopDetective;
+
+  // Accuse buttons
+  SUSPECTS.forEach((s, i) => {
+    const btn = $('accuse_' + i);
+    if (btn) btn.onclick = () => accuseSuspect(i);
+  });
+
+  drawTraffic();
+}
+
+function startDetective() {
+  if (detectiveRunning) return;
+  detectiveRunning = true;
+  packetCount = 0;
+  suspiciousCount = 0;
+  packets = [];
+  setStatus(true);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = true;
+  if (p) p.disabled = false;
+  log(LANG[currentLang].detectiveReady, 'success');
+  detectiveInterval = setInterval(generatePacket, 800);
+  animateTraffic();
+}
+
+function stopDetective() {
+  detectiveRunning = false;
+  if (detectiveInterval) clearInterval(detectiveInterval);
+  setStatus(false);
+  const s = $('startBtn'), p = $('stopBtn');
+  if (s) s.disabled = false;
+  if (p) p.disabled = true;
+}
+
+function randIP() { return `192.168.1.${Math.floor(Math.random() * 254) + 1}`; }
+
+function generatePacket() {
+  const suspect = SUSPECTS[Math.floor(Math.random() * SUSPECTS.length)];
+  const proto = PROTOCOLS[Math.floor(Math.random() * PROTOCOLS.length)];
+  const isEvil = suspect.isIntruder && Math.random() < 0.4;
+  const port = isEvil ? EVIL_PORTS[Math.floor(Math.random() * EVIL_PORTS.length)] : NORMAL_PORTS[Math.floor(Math.random() * NORMAL_PORTS.length)];
+  const size = isEvil ? 800 + Math.floor(Math.random() * 9200) : 64 + Math.floor(Math.random() * 1400);
+  const flagged = isEvil || (size > 5000 && Math.random() < 0.3);
+
+  const pkt = {
+    src: suspect.ip,
+    dst: isEvil ? '10.0.0.' + Math.floor(Math.random() * 255) : randIP(),
+    proto, port, size, flagged, time: Date.now(), suspectIdx: SUSPECTS.indexOf(suspect)
+  };
+  packets.push(pkt);
+  if (packets.length > 50) packets.shift();
+  packetCount++;
+  if (flagged) suspiciousCount++;
+
+  const pktEl = $('packetCount');
+  const susEl = $('suspiciousCount');
+  if (pktEl) pktEl.textContent = packetCount;
+  if (susEl) susEl.textContent = suspiciousCount;
+
+  // Update packet table
+  const tbody = $('packetTable');
+  if (tbody) {
+    const row = document.createElement('div');
+    row.style.cssText = `display:flex;gap:6px;padding:3px 6px;font-size:.7rem;font-family:monospace;border-bottom:1px solid var(--border);color:${flagged ? '#ef4444' : 'var(--text-muted)'}`;
+    row.innerHTML = `<span style="min-width:100px">${pkt.src}</span><span style="min-width:100px">${pkt.dst}</span><span style="min-width:40px">${pkt.proto}</span><span style="min-width:50px">:${pkt.port}</span><span style="min-width:50px">${pkt.size}B</span><span>${flagged ? '⚠' : '✓'}</span>`;
+    tbody.appendChild(row);
+    if (tbody.children.length > 20) tbody.removeChild(tbody.firstChild);
+    tbody.scrollTop = tbody.scrollHeight;
+  }
+
+  const label = flagged ? `⚠ ${pkt.src}→${pkt.dst} ${pkt.proto}:${pkt.port} ${pkt.size}B` : `${pkt.src}→${pkt.dst} ${pkt.proto} ${pkt.size}B`;
+  log(label, flagged ? 'error' : 'rx');
+}
+
+function accuseSuspect(idx) {
+  const suspect = SUSPECTS[idx];
+  if (suspect.isIntruder) {
+    log(`${LANG[currentLang].intruderFound} — ${suspect.name} (${suspect.ip})`, 'success');
+    stopDetective();
+  } else {
+    log(`${LANG[currentLang].falseLead} — ${suspect.name}`, 'error');
+  }
+}
+
+function drawTraffic() {
+  if (!trafficCtx || !trafficCanvas) return;
+  const c = trafficCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  trafficCtx.scale(dpr, dpr);
+  const w = c.clientWidth, h = c.clientHeight;
+  trafficCtx.clearRect(0, 0, w, h);
+
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#d4a03c';
+
+  // Draw traffic timeline
+  if (packets.length < 2) return;
+  const now = Date.now();
+
+  // Normal packets
+  trafficCtx.strokeStyle = 'rgba(34,197,94,0.5)';
+  trafficCtx.lineWidth = 1.5;
+  trafficCtx.beginPath();
+  let first = true;
+  packets.filter(p => !p.flagged).forEach(p => {
+    const x = w - (now - p.time) / 40000 * w;
+    const y = h - (p.size / 10000) * h * 0.8 - h * 0.1;
+    if (first) { trafficCtx.moveTo(x, y); first = false; }
+    else trafficCtx.lineTo(x, y);
+  });
+  trafficCtx.stroke();
+
+  // Suspicious packets as red dots
+  packets.filter(p => p.flagged).forEach(p => {
+    const x = w - (now - p.time) / 40000 * w;
+    const y = h - (p.size / 10000) * h * 0.8 - h * 0.1;
+    trafficCtx.fillStyle = '#ef4444';
+    trafficCtx.beginPath();
+    trafficCtx.arc(x, y, 4, 0, Math.PI * 2);
+    trafficCtx.fill();
+  });
+
+  // Labels
+  trafficCtx.fillStyle = accent;
+  trafficCtx.font = '10px Orbitron, monospace';
+  trafficCtx.textAlign = 'left';
+  trafficCtx.fillText('TRAFFIC MONITOR', 8, 14);
+}
+
+function animateTraffic() {
+  if (!detectiveRunning) return;
+  drawTraffic();
+  requestAnimationFrame(animateTraffic);
+}
