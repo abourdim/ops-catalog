@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="mosque-gold">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vishing Call Simulator — Workshop DIY</title>
+  <meta name="description" content="Vishing Call Simulator — Simulate voice phishing calls for training" />
+  <meta name="author" content="Workshop-DIY — abourdim" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#08091a" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+    .sim-panel{background:var(--panel);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:10px;padding:12px}
+    .sim-panel h4{font-size:.85rem;color:var(--accent);margin:0 0 8px;font-family:var(--font-h)}
+    .sim-val{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--text)}
+    .sim-label{font-size:.7rem;color:var(--text-muted)}
+    .ctrl-row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+    .ctrl-row select,.ctrl-row input{flex:1;min-width:100px;padding:6px 10px;border-radius:6px;border:1px solid var(--border,rgba(255,255,255,.2));background:var(--panel);color:var(--text);font-size:.85rem}
+    .mono-log{font-family:monospace;font-size:.72rem;background:#000;color:#0f0;padding:8px;border-radius:8px;max-height:120px;overflow-y:auto;margin-top:6px;line-height:1.4}
+    @media(max-width:600px){.sim-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Simulate voice phishing calls for training</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+  <div class="app">
+    <div class="deco-band top-band" aria-hidden="true"></div>
+    <div class="rows-container">
+      <div class="header">
+        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1649;&#1604;&#1604;&#1617;&#1614;&#1648;&#1607;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1600;&#1648;&#1606;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616; <span class="bism-ornament">&#x2726;</span></div>
+        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Vishing Call Simulator</h1><div class="subtitle" data-i18n="subtitle">Simulate voice phishing calls for training</div></div></div>
+        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#10067;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#9881;&#65039;</button><button id="logBtn" class="btn-icon-only" aria-label="Log">&#128220;</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+      </div>
+      <div class="card" id="mainCard"><div class="card-header"><div><div class="card-title"><span class="icon">📞</span> <span data-i18n="mainSection">Vishing Call Simulator</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Simulate voice phishing calls for training</span> <span class="version-tag">v1.0</span></div></div></div></div>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">📞</span> <span data-i18n="sectionA">Call Visualization</span></summary>
+        <div class="card">
+          <canvas id="simCanvas" width="800" height="250" style="width:100%;height:auto;border-radius:8px;background:#000;display:block"></canvas>
+          <div class="ctrl-row">
+            <button id="btn1" class="btn-sm primary" style="flex:1"><span data-i18n="btn1">Start Call</span></button>
+            <button id="btn2" class="btn-sm" style="flex:1"><span data-i18n="btn2">Analyze</span></button>
+          </div>
+          <div class="sim-grid">
+            <div class="sim-panel"><h4 data-i18n="metric1Label">Threat Level</h4><div class="sim-val" id="metric1Val">0</div><div class="sim-label" data-i18n="metric1Desc">Current assessment</div></div>
+            <div class="sim-panel"><h4 data-i18n="metric2Label">Confidence</h4><div class="sim-val" id="metric2Val">0%</div><div class="sim-label" data-i18n="metric2Desc">Analysis confidence</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">&#128202;</span> <span data-i18n="sectionB">Script Analysis</span></summary>
+        <div class="card"><canvas id="analysisCanvas" width="800" height="200" style="width:100%;height:auto;border-radius:8px;background:#000;display:block"></canvas></div>
+      </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">&#128203;</span> <span data-i18n="sectionC">Call Log</span></summary>
+        <div class="card"><div class="mono-log" id="intelLog">Vishing Call Simulator ready. Engine loaded...</div></div>
+      </details>
+    </div>
+    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+    <div class="deco-band bottom-band" aria-hidden="true"></div>
+  </div>
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+  <div class="sidebar-overlay" id="helpOverlay"></div>
+  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is vishing?</summary><p data-i18n="faq_a1">Voice phishing: using phone calls to trick victims into revealing information.</p></details><details class="help-item"><summary data-i18n="faq_q2">Is this a real attack tool?</summary><p data-i18n="faq_a2">No. This is purely an educational simulator for security awareness training.</p></details></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click the primary action button to start the simulation.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Observe the canvas visualization of the attack vector.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Use the secondary button to analyze results.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Review the intelligence log for detailed findings.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_t1">📞 Vishing Call Simulator</h3><p data-i18n="wiki_d1">Voice phishing: using phone calls to trick victims into revealing information.</p></div></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <div class="sidebar-overlay" id="settingsOverlay"></div>
+  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">&#1593;&#1585;&#1576;&#1610;</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">Sound effects</span></label></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#10005;</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#10003;</button><button class="log-filter" data-filter="error">&#10007;</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working...</div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
