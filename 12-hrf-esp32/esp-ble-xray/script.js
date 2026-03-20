@@ -23,6 +23,7 @@ const LANG = {
     faq_q1:'What is BLE X-Ray?', faq_a1:'A BLE frequency hopping visualizer for the 2.4 GHz band.',
     faq_q2:'Why 1600 hops/sec?', faq_a2:'BLE spec defines 1600 channel changes per second for connected devices.',
     faq_q3:'What are advertising channels?', faq_a3:'Channels 37, 38, 39 used for device discovery.',
+    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere. Your experiments stay on your device.',
     splashHint:'tap to skip', ready:'💙 BLE X-Ray ready!',
     langChanged:'Language → English', scanStarted:'Scan started', scanStopped:'Scan stopped',
   },
@@ -39,6 +40,7 @@ const LANG = {
     faq_q1:'Qu\'est-ce que BLE X-Ray?', faq_a1:'Un visualiseur de saut de frequence BLE sur la bande 2.4 GHz.',
     faq_q2:'Pourquoi 1600 sauts/sec?', faq_a2:'La spec BLE definit 1600 changements de canal par seconde.',
     faq_q3:'Quels sont les canaux de publicite?', faq_a3:'Canaux 37, 38, 39 pour la decouverte.',
+    faq_q4:'Mes données sont-elles privées ?', faq_a4:'Oui. Tout fonctionne localement dans ton navigateur. Aucune donnée n\'est envoyée nulle part.',
     splashHint:'appuyer pour passer', ready:'💙 BLE X-Ray pret!',
     langChanged:'Langue → Francais', scanStarted:'Scan demarre', scanStopped:'Scan arrete',
   },
@@ -55,6 +57,7 @@ const LANG = {
     faq_q1:'ما هو BLE X-Ray؟', faq_a1:'عارض قفز تردد BLE على نطاق 2.4 GHz.',
     faq_q2:'لماذا 1600 قفزة/ثانية؟', faq_a2:'تحدد مواصفات BLE 1600 تغيير قناة في الثانية.',
     faq_q3:'ما هي قنوات الإعلان؟', faq_a3:'القنوات 37، 38، 39 للاكتشاف.',
+    faq_q4:'هل بياناتي خاصة؟', faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك. لا يتم إرسال أي بيانات إلى أي مكان.',
     splashHint:'انقر للتخطي', ready:'💙 BLE X-Ray جاهز!',
     langChanged:'اللغة ← العربية', scanStarted:'بدأ المسح', scanStopped:'توقف المسح',
   }

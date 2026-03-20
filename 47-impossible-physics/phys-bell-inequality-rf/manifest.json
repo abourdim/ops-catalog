@@ -1,0 +1,12 @@
+{"name": "Bell Inequality RF — Workshop DIY",
+  "short_name": "Bell Inequality RF",
+  "description": "An interactive Bell Inequality RF simulation for educational exploration.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

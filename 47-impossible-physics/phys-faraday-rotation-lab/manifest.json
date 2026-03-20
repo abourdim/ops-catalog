@@ -1,0 +1,12 @@
+{"name": "Faraday Rotation Lab — Workshop DIY",
+  "short_name": "Faraday Rotation Lab",
+  "description": "An interactive Faraday Rotation Lab simulation for educational exploration.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

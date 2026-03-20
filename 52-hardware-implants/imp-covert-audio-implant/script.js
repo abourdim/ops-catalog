@@ -1,26 +1,230 @@
 /**
  * imp-covert-audio-implant — Workshop DIY
- * Supply chain hardware backdoor simulation
+ * Covert audio bug / listening device simulation for TSCM training
+ * Framework: Themes, i18n, RTL, Log, Toast, Status, Panels, Sound, Canvas
  */
 const $ = id => document.getElementById(id);
-const LOGO_SVG = '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="30" width="60" height="45" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><line x1="20" y1="45" x2="80" y2="45" stroke="currentColor" stroke-width="1.5"/><circle cx="70" cy="38" r="3" fill="currentColor"/><rect x="35" y="20" width="30" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50 75 L50 90" stroke="currentColor" stroke-width="2"/></svg>';
-const LIGHT_THEMES=['riad','medina'];let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
-function playSound(t){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const now=audioCtx.currentTime;if(t==='click'){o.frequency.value=800;g.gain.exponentialRampToValueAtTime(0.001,now+0.08);o.start(now);o.stop(now+0.08)}else if(t==='success'){o.frequency.value=523;g.gain.exponentialRampToValueAtTime(0.001,now+0.3);o.start(now);o.stop(now+0.3)}else if(t==='error'){o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,now+0.25);o.start(now);o.stop(now+0.25)}}
-const LANG={en:{title:'imp-covert-audio-implant',subtitle:'📦 intercept · modify · implant',disconnected:'Disconnected',connected:'Connected',ready:'📦 Supply Chain Backdoor sim ready!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',working:'Working…',langChanged:'🌐 English',themeChanged:'🎨 Theme →',splashHint:'tap to skip'},fr:{title:'imp-covert-audio-implant',subtitle:'📦 intercepter · modifier · implanter',disconnected:'Déconnecté',connected:'Connecté',ready:'📦 Simulation prête!',logCleared:'Journal effacé',copied:'Copié!',working:'En cours…',langChanged:'🌐 Français',themeChanged:'🎨 Thème →',splashHint:'appuyer pour passer'},ar:{title:'imp-covert-audio-implant',subtitle:'📦 اعتراض · تعديل · زرع',disconnected:'غير متصل',connected:'متصل',ready:'📦 جاهز!',logCleared:'تم المسح',copied:'تم النسخ!',working:'جارٍ…',langChanged:'🌐 العربية',themeChanged:'🎨 →',splashHint:'انقر للتخطي'}};
-let currentLang='en';function setLanguage(l){currentLang=l;const s=LANG[l];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k]});document.title=s.title+' — Workshop DIY';document.documentElement.dir=l==='ar'?'rtl':'ltr';document.documentElement.lang=l;const sel=$('langSelect');if(sel)sel.value=l;try{localStorage.setItem('wdiy-lang',l)}catch{}log(s.langChanged,'info')}
-function setTheme(n){document.documentElement.dataset.theme=n;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(n));const sel=$('themeSelect');if(sel)sel.value=n;try{localStorage.setItem('wdiy-theme',n)}catch{}log(LANG[currentLang].themeChanged+' '+n,'info')}
-let logContainer;function log(m,t='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className='log-line '+t;d.textContent='['+new Date().toLocaleTimeString()+'] '+m;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(t==='success')playSound('success');else if(t==='error')playSound('error')}
-function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared)}async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success')}catch{log(LANG[currentLang].copyFail,'error')}}function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'}));a.download='log-'+new Date().toISOString().slice(0,10)+'.txt';a.click()}
-let toastTimer=null;function showToast(m,ms){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=m;el.style.display='block'}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms)}function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none'}
+const LOGO_SVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="40" rx="12" ry="20" fill="none" stroke="currentColor" stroke-width="2"/><line x1="50" y1="60" x2="50" y2="75" stroke="currentColor" stroke-width="2"/><line x1="38" y1="75" x2="62" y2="75" stroke="currentColor" stroke-width="2"/><path d="M30 40 Q30 70 50 70 Q70 70 70 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="50" cy="40" r="5" fill="currentColor" opacity=".4"/></svg>`;
+const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.0';
+let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
+function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);gain.gain.value=0.08;const t=audioCtx.currentTime;if(type==='click'){osc.frequency.value=800;gain.gain.exponentialRampToValueAtTime(0.001,t+0.08);osc.start(t);osc.stop(t+0.08)}else if(type==='success'){osc.frequency.value=523;gain.gain.exponentialRampToValueAtTime(0.001,t+0.3);osc.start(t);osc.stop(t+0.3)}else if(type==='error'){osc.frequency.value=200;osc.type='square';gain.gain.exponentialRampToValueAtTime(0.001,t+0.25);osc.start(t);osc.stop(t+0.25)}}
+
+const LANG={
+  en:{title:'imp-covert-audio-implant',subtitle:'🎙️ listen · 📡 transmit · 🛡️ sweep',disconnected:'Disconnected',connected:'Connected',mainSection:'Covert Audio Implant — TSCM Training Lab',mainDesc:'Simulate hidden microphone implants and learn technical surveillance countermeasures',sectionA:'How It Works',sectionB:'Lab — Audio Waveform Analyzer',sectionC:'Challenge',listenBtn:'Activate Bug',analyzeBtn:'Analyze Audio',sweepBtn:'TSCM Sweep',howStep1:'Covert audio bugs use MEMS microphones smaller than a grain of rice, hidden in everyday objects.',howStep2:'Wireless bugs transmit audio via FM, GSM, WiFi, or burst transmission to avoid continuous RF emission.',howStep3:'Advanced bugs use spread-spectrum or frequency-hopping to evade standard RF sweep detection.',howStep4:'TSCM (Technical Surveillance Countermeasures) uses NLJD, spectrum analyzers, and thermal cameras.',ready:'🎙️ Covert Audio Implant ready — select bug type!',logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',working:'Working…',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',splashHint:'tap to skip',faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.'},
+  fr:{title:'imp-covert-audio-implant',subtitle:'🎙️ écouter · 📡 transmettre · 🛡️ balayer',disconnected:'Déconnecté',connected:'Connecté',mainSection:'Micro espion — Labo TSCM',mainDesc:'Simulez des implants audio cachés et les contre-mesures de surveillance',sectionA:'Comment ça marche',sectionB:'Labo — Analyseur audio',sectionC:'Défi',listenBtn:'Activer',analyzeBtn:'Analyser',sweepBtn:'Balayage',ready:'🎙️ Micro espion prêt !',logCleared:'Journal effacé',copied:'Copié !',working:'En cours…',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',splashHint:'appuyer pour passer',faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.'},
+  ar:{title:'imp-covert-audio-implant',subtitle:'🎙️ استماع · 📡 إرسال · 🛡️ مسح',disconnected:'غير متصل',connected:'متصل',mainSection:'جهاز تنصت مخفي — مختبر مكافحة المراقبة',mainDesc:'محاكاة أجهزة التنصت المخفية وتعلم إجراءات المكافحة',sectionA:'كيف يعمل',sectionB:'المختبر',sectionC:'التحدي',listenBtn:'تفعيل',analyzeBtn:'تحليل',sweepBtn:'مسح',ready:'🎙️ جهاز التنصت جاهز!',logCleared:'تم مسح السجل',copied:'تم النسخ!',working:'جارٍ…',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',splashHint:'انقر للتخطي',faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.'}
+};
+let currentLang='en';
+function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k]});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang)}catch{}log(s.langChanged,'info')}
+function setTheme(name){document.documentElement.dataset.theme=name;document.documentElement.classList.toggle('light-theme',LIGHT_THEMES.includes(name));const sel=$('themeSelect');if(sel)sel.value=name;try{localStorage.setItem('wdiy-theme',name)}catch{}log(`${LANG[currentLang].themeChanged} ${name}`,'info')}
+let logContainer;function log(msg,type='info'){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const d=document.createElement('div');d.className=`log-line ${type}`;d.textContent=`[${new Date().toLocaleTimeString()}] ${msg}`;logContainer.appendChild(d);logContainer.scrollTop=logContainer.scrollHeight;if(type==='success')playSound('success');else if(type==='error')playSound('error')}
+function clearLog(){if(!logContainer)logContainer=$('logContainer');if(logContainer)logContainer.innerHTML='';log(LANG[currentLang].logCleared)}
+async function copyLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;try{await navigator.clipboard.writeText(Array.from(logContainer.children).map(d=>d.textContent).join('\n'));log(LANG[currentLang].copied,'success')}catch{log(LANG[currentLang].copyFail,'error')}}
+function exportLog(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([Array.from(logContainer.children).map(d=>d.textContent).join('\n')],{type:'text/plain'}));a.download=`log-${new Date().toISOString().slice(0,10)}.txt`;a.click()}
+let toastTimer=null;function showToast(msg,ms=0){const el=$('toastIndicator'),t=$('toastMessage');if(el&&t){t.textContent=msg||LANG[currentLang].working;el.style.display='block'}if(toastTimer)clearTimeout(toastTimer);if(ms>0)toastTimer=setTimeout(hideToast,ms)}function hideToast(){const el=$('toastIndicator');if(el)el.style.display='none'}
 function setStatus(c){const p=$('statusPill'),t=$('statusText'),s=LANG[currentLang];if(t)t.textContent=c?s.connected:s.disconnected;if(p)p.classList.toggle('connected',c)}
 let splashTimer;function dismissSplash(){const s=$('splash');if(!s)return;s.classList.add('hidden');if(splashTimer)clearTimeout(splashTimer);setTimeout(()=>s.remove(),600)}function initSplash(){const s=$('splash');if(!s)return;const sl=$('splashLogo');if(sl)sl.innerHTML=LOGO_SVG;splashTimer=setTimeout(dismissSplash,2500)}
-let activeLogFilter='all';function initLogFilters(){document.querySelectorAll('.log-filter').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeLogFilter=b.dataset.filter;applyLogFilter()})})}function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(l=>{l.style.display=(activeLogFilter==='all'||l.classList.contains(activeLogFilter))?'':'none'})}
+let activeLogFilter='all';function initLogFilters(){document.querySelectorAll('.log-filter').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.log-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLogFilter=btn.dataset.filter;applyLogFilter()})})}function applyLogFilter(){if(!logContainer)logContainer=$('logContainer');if(!logContainer)return;Array.from(logContainer.children).forEach(line=>{line.style.display=(activeLogFilter==='all'||line.classList.contains(activeLogFilter))?'':'none'})}
 function initHijriDate(){const el=$('hijriDate');if(!el)return;try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date())}catch{}}
-function openPanel(p,o){const s=$(p),v=$(o);if(s)s.classList.add('open');if(v)v.classList.add('open')}function closePanel(p,o){const s=$(p),v=$(o);if(s)s.classList.remove('open');if(v)v.classList.remove('open')}function openHelp(){openPanel('helpPanel','helpOverlay')}function closeHelp(){closePanel('helpPanel','helpOverlay')}function openSettings(){openPanel('settingsPanel','settingsOverlay')}function closeSettings(){closePanel('settingsPanel','settingsOverlay')}function openLog(){const s=$('logPanel');if(s)s.classList.add('open');document.body.classList.add('log-open')}function closeLog(){const s=$('logPanel');if(s)s.classList.remove('open');document.body.classList.remove('log-open')}function toggleLog(){const s=$('logPanel');if(s&&s.classList.contains('open'))closeLog();else openLog()}
+function openPanel(pid,oid){const s=$(pid),o=$(oid);if(s)s.classList.add('open');if(o)o.classList.add('open')}function closePanel(pid,oid){const s=$(pid),o=$(oid);if(s)s.classList.remove('open');if(o)o.classList.remove('open')}
+function openHelp(){openPanel('helpPanel','helpOverlay')}function closeHelp(){closePanel('helpPanel','helpOverlay')}function openSettings(){openPanel('settingsPanel','settingsOverlay')}function closeSettings(){closePanel('settingsPanel','settingsOverlay')}
+function openLog(){const s=$('logPanel');if(s)s.classList.add('open');document.body.classList.add('log-open')}function closeLog(){const s=$('logPanel');if(s)s.classList.remove('open');document.body.classList.remove('log-open')}function toggleLog(){const s=$('logPanel');if(s&&s.classList.contains('open'))closeLog();else openLog()}
 function initHelpTabs(){document.querySelectorAll('.help-tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.help-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));tab.classList.add('active');const target=$('help'+tab.dataset.tab.charAt(0).toUpperCase()+tab.dataset.tab.slice(1));if(target)target.classList.add('active')})})}
-function revealChallenge(i){const el=$('answer'+i);if(el)el.classList.toggle('visible');playSound('click')}
-let particles=[];function initSimCanvas(){const canvas=$('simCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth||500;canvas.height=260;function draw(){ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,canvas.width,canvas.height);const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';ctx.strokeStyle='rgba(255,255,255,0.05)';for(let x=0;x<canvas.width;x+=30){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()}for(let y=0;y<canvas.height;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}ctx.strokeStyle=accent;ctx.lineWidth=2;ctx.strokeRect(canvas.width/2-40,canvas.height/2-30,80,60);ctx.fillStyle=accent;ctx.font='11px Orbitron';ctx.textAlign='center';ctx.fillText(($('modeSelect')||{value:'MODE'}).value.toUpperCase(),canvas.width/2,canvas.height/2+5);ctx.textAlign='left';ctx.setLineDash([4,6]);ctx.beginPath();ctx.moveTo(30,canvas.height/2);ctx.lineTo(canvas.width/2-40,canvas.height/2);ctx.stroke();ctx.beginPath();ctx.moveTo(canvas.width/2+40,canvas.height/2);ctx.lineTo(canvas.width-30,canvas.height/2);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.arc(30,canvas.height/2,8,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.arc(canvas.width-30,canvas.height/2,8,0,Math.PI*2);ctx.stroke();for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=Math.sin(p.x/20)*0.5;p.life-=0.012;if(p.life<=0||p.x>canvas.width+10){particles.splice(i,1);continue}ctx.globalAlpha=p.life;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fillStyle=p.color||accent;ctx.fill();ctx.globalAlpha=1}const val=parseInt(($('paramSlider')||{}).value||'50');ctx.fillStyle='rgba(51,255,51,0.12)';ctx.fillRect(20,canvas.height-22,(canvas.width-40)*(val/100),10);ctx.fillStyle='#33ff33';ctx.font='9px Orbitron';ctx.fillText('INTENSITY: '+val+'%',20,canvas.height-6);requestAnimationFrame(draw)}draw()}
-function spawnP(n,c){const cv=$('simCanvas');if(!cv)return;for(let i=0;i<n;i++)particles.push({x:30+Math.random()*40,y:cv.height/2-20+Math.random()*40,vx:1.5+Math.random()*3,life:0.5+Math.random()*0.5,color:c||null})}
-let simActive=false;function initAppSim(){const startBtn=$('startBtn'),analyzeBtn=$('analyzeBtn'),defendBtn=$('defendBtn'),paramSlider=$('paramSlider'),paramValue=$('paramValue'),scanBtn=$('scanBtn'),out=$('outputDisplay'),dl=$('dataLog'),dot=$('implantDot'),txt=$('implantStatusText');if(paramSlider&&paramValue)paramSlider.addEventListener('input',()=>{paramValue.textContent=paramSlider.value+'%'});if(startBtn)startBtn.addEventListener('click',()=>{simActive=!simActive;startBtn.textContent=simActive?'Stop':'Start';if(dot)dot.classList.toggle('active',simActive);if(txt)txt.textContent=simActive?'System: ACTIVE':'System: Standby';setStatus(simActive);log(simActive?'📦 Simulation started':'📦 Stopped',simActive?'success':'info');showToast(simActive?'Starting...':'Stopped',1500);if(simActive){let ct=0;const iv=setInterval(()=>{if(!simActive){clearInterval(iv);return}ct++;spawnP(5,'#33ff33');if(dl)dl.textContent='['+new Date().toLocaleTimeString()+'] Cycle '+ct;log('📦 Cycle '+ct,'tx');if(ct>=10){clearInterval(iv);simActive=false;startBtn.textContent='Start';if(dot)dot.classList.remove('active');if(txt)txt.textContent='System: Complete';log('📦 Complete','success')}},800)}});if(analyzeBtn)analyzeBtn.addEventListener('click',()=>{showToast('Analyzing...',2000);log('🔬 Analyzing...','info');spawnP(15,'#4488ff');setTimeout(()=>{const d=Math.random()>0.4;if(out)out.textContent=d?'⚠️ ANOMALY DETECTED\nFirmware: Modified\nComponents: Extra IC found\nAction: Quarantine':'✅ CLEAN\nFirmware: Verified\nComponents: Match BOM';log(d?'🚨 Anomaly!':'✅ Clean',d?'error':'success');hideToast()},1800)});if(defendBtn)defendBtn.addEventListener('click',()=>{showToast('Countermeasures...',2000);log('🛡️ Activating...','info');spawnP(20,'#33ff33');setTimeout(()=>{if(out)out.textContent='🛡️ DEFENSES ACTIVE\nTPM: Verified\nFirmware: Hashed\nPackaging: Tamper-evident';log('🛡️ Active','success');hideToast()},1500)});if(scanBtn)scanBtn.addEventListener('click',()=>{spawnP(25);log('📡 Scanning...','info');showToast('Scanning...',2000);setTimeout(()=>{log('📡 Done','success')},2000)})}
-function init(){initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;$('clearLogBtn')&&($('clearLogBtn').onclick=clearLog);$('copyLogBtn')&&($('copyLogBtn').onclick=copyLog);$('exportLogBtn')&&($('exportLogBtn').onclick=exportLog);initLogFilters();$('helpBtn')&&($('helpBtn').onclick=openHelp);$('helpCloseBtn')&&($('helpCloseBtn').onclick=closeHelp);$('helpOverlay')&&($('helpOverlay').onclick=closeHelp);initHelpTabs();$('settingsBtn')&&($('settingsBtn').onclick=openSettings);$('settingsCloseBtn')&&($('settingsCloseBtn').onclick=closeSettings);$('settingsOverlay')&&($('settingsOverlay').onclick=closeSettings);$('logBtn')&&($('logBtn').onclick=toggleLog);$('logCloseBtn')&&($('logCloseBtn').onclick=closeLog);const snd=$('soundToggle');if(snd){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true'}catch{}snd.checked=soundEnabled;snd.addEventListener('change',()=>{soundEnabled=snd.checked;try{localStorage.setItem('wdiy-sound',soundEnabled)}catch{}})}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog()}});const ls=$('langSelect');if(ls)ls.addEventListener('change',()=>setLanguage(ls.value));const ts=$('themeSelect');if(ts)ts.addEventListener('change',()=>setTheme(ts.value));try{const sl=localStorage.getItem('wdiy-lang'),st=localStorage.getItem('wdiy-theme');if(st)setTheme(st);if(sl)setLanguage(sl)}catch{}initHijriDate();initSimCanvas();initAppSim();log(LANG[currentLang].ready,'success')}
+function revealChallenge(idx){const el=$('answer'+idx);if(el)el.classList.toggle('visible');playSound('click')}
+let matrixRunning=false,matrixAnim=null;function toggleMatrix(){const canvas=$('matrixCanvas');if(!canvas)return;if(matrixRunning){matrixRunning=false;cancelAnimationFrame(matrixAnim);canvas.classList.remove('active');return}matrixRunning=true;canvas.classList.add('active');const ctx=canvas.getContext('2d');canvas.width=innerWidth;canvas.height=innerHeight;const cols=Math.floor(canvas.width/16),drops=Array(cols).fill(1);const chars='بسمالرحنيوكلتعدفقثصضطظغشزخجذ01';(function draw(){if(!matrixRunning)return;ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#33ff33';ctx.font='14px Amiri';for(let i=0;i<drops.length;i++){ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*16,drops[i]*16);if(drops[i]*16>canvas.height&&Math.random()>0.975)drops[i]=0;drops[i]++}matrixAnim=requestAnimationFrame(draw)})()}
+
+/* ═══════ APP-SPECIFIC: COVERT AUDIO IMPLANT ═══════ */
+let bugActive=false;let audioParticles=[];let waveTime=0;let audioSamples=[];
+
+function initSimCanvas(){
+  const canvas=$('simCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth||500;canvas.height=260;
+  // Generate initial waveform buffer
+  for(let i=0;i<200;i++)audioSamples.push(0);
+
+  function draw(){
+    ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,canvas.width,canvas.height);
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#d4a03c';
+    waveTime+=0.03;
+
+    // Grid
+    ctx.strokeStyle='rgba(255,255,255,0.03)';ctx.lineWidth=0.5;
+    for(let x=0;x<canvas.width;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()}
+    for(let y=0;y<canvas.height;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}
+
+    // Microphone icon (left)
+    const micX=60,micY=canvas.height/2-20;
+    ctx.strokeStyle=bugActive?'#ff3333':accent;ctx.lineWidth=2;
+    ctx.beginPath();ctx.ellipse(micX,micY,10,18,0,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle=bugActive?'#ff3333':'#333';ctx.beginPath();ctx.ellipse(micX,micY,10,18,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=bugActive?'#ff6666':accent;ctx.beginPath();ctx.arc(micX,micY,4,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=accent;ctx.font='7px Orbitron';ctx.fillText('BUG',micX-8,micY+30);
+
+    // Sound waves entering mic (when active)
+    if(bugActive){
+      for(let w=0;w<3;w++){
+        const phase=(waveTime*3+w*1.2)%4;const r=phase/4*25;const alpha=1-phase/4;
+        ctx.strokeStyle=`rgba(255,51,51,${alpha*0.4})`;ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(micX-15,micY,8+r,1.2,5.1);ctx.stroke();
+      }
+    }
+
+    // Audio waveform display (center)
+    if(bugActive){
+      // Update waveform
+      audioSamples.shift();
+      audioSamples.push(Math.sin(waveTime*5)*20+Math.sin(waveTime*13)*10+Math.sin(waveTime*31)*5+(Math.random()-0.5)*15);
+    }
+
+    const wfY=canvas.height/2-20;
+    ctx.strokeStyle=bugActive?'#33ff33':'#333';ctx.lineWidth=1.5;
+    ctx.beginPath();
+    const wfStartX=110,wfEndX=canvas.width-100;
+    const wfW=wfEndX-wfStartX;
+    for(let i=0;i<audioSamples.length;i++){
+      const x=wfStartX+i/audioSamples.length*wfW;
+      const y=wfY+audioSamples[i];
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    // Center line
+    ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.5;
+    ctx.beginPath();ctx.moveTo(wfStartX,wfY);ctx.lineTo(wfEndX,wfY);ctx.stroke();
+
+    // Transmitter (right)
+    const txX=canvas.width-60,txY=canvas.height/2-20;
+    ctx.fillStyle='#111';ctx.strokeStyle=bugActive?'#ff6600':accent;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.roundRect(txX-18,txY-15,36,30,3);ctx.fill();ctx.stroke();
+    ctx.fillStyle=bugActive?'#ff6600':accent;ctx.font='7px Orbitron';ctx.fillText('TX',txX-5,txY+3);
+
+    // TX antenna waves
+    if(bugActive){
+      for(let w=0;w<3;w++){
+        const phase=(waveTime*3+w*1.2)%4;const r=phase/4*30;const alpha=1-phase/4;
+        ctx.strokeStyle=`rgba(255,102,0,${alpha*0.4})`;ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(txX+18,txY,8+r,-0.8,0.8);ctx.stroke();
+      }
+    }
+
+    // Data flow mic -> waveform -> TX
+    if(bugActive){
+      ctx.strokeStyle='rgba(255,51,51,0.2)';ctx.lineWidth=1;ctx.setLineDash([3,5]);
+      ctx.beginPath();ctx.moveTo(micX+10,micY);ctx.lineTo(wfStartX,wfY);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(wfEndX,wfY);ctx.lineTo(txX-18,txY);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Spectrum analyzer (bottom)
+    const specY=canvas.height-70;
+    ctx.fillStyle='rgba(51,255,51,0.05)';ctx.fillRect(wfStartX,specY,wfW,40);
+    ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.strokeRect(wfStartX,specY,wfW,40);
+    // Spectrum bars
+    for(let i=0;i<40;i++){
+      const h=bugActive?(Math.sin(waveTime*2+i*0.3)*12+Math.random()*8+5):2;
+      ctx.fillStyle=bugActive?(h>20?'#ff3333':'#33ff33'):'#222';
+      ctx.fillRect(wfStartX+i*(wfW/40)+1,specY+40-h,wfW/40-2,h);
+    }
+    ctx.fillStyle=accent;ctx.font='7px Orbitron';ctx.fillText('SPECTRUM',wfStartX,specY-3);
+
+    // Particles
+    for(let i=audioParticles.length-1;i>=0;i--){
+      const p=audioParticles[i];p.x+=p.vx;p.y+=p.vy;p.life-=0.015;
+      if(p.life<=0){audioParticles.splice(i,1);continue}
+      ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size||2,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+    }
+
+    // Status bar
+    const gain=parseInt(($('gainSlider')||{}).value||'50');
+    ctx.fillStyle=bugActive?'rgba(255,51,51,0.15)':'rgba(51,255,51,0.1)';
+    ctx.fillRect(50,canvas.height-18,canvas.width-100,8);
+    ctx.fillStyle=bugActive?'#ff3333':'#33ff33';ctx.font='8px Orbitron';
+    ctx.fillText(`GAIN: ${gain}dB | ${($('bugTypeSelect')||{}).value||'fm'} | ${bugActive?'LIVE':'OFF'}`,50,canvas.height-6);
+
+    requestAnimationFrame(draw);
+  }draw();
+}
+
+function spawnAudioParticles(count,color){
+  const canvas=$('simCanvas');if(!canvas)return;
+  for(let i=0;i<count;i++){
+    audioParticles.push({x:60+Math.random()*30,y:canvas.height/2-30+Math.random()*20,vx:2+Math.random()*3,vy:(Math.random()-0.5)*2,life:0.4+Math.random()*0.4,color:color||'#ff3333',size:2+Math.random()*2});
+  }
+}
+
+function initAudioSim(){
+  const listenBtn=$('listenBtn'),analyzeBtn=$('analyzeBtn'),sweepBtn=$('sweepBtn');
+  const gainSlider=$('gainSlider'),gainValue=$('gainValue');
+  const outputDisplay=$('outputDisplay'),dataLog=$('dataLog');
+  const implantDot=$('implantDot'),implantStatusText=$('implantStatusText');
+
+  if(gainSlider&&gainValue)gainSlider.addEventListener('input',()=>{gainValue.textContent=gainSlider.value+'dB'});
+
+  let listenIv=null;
+  if(listenBtn)listenBtn.addEventListener('click',()=>{
+    bugActive=!bugActive;
+    listenBtn.textContent=bugActive?'Deactivate':(LANG[currentLang].listenBtn||'Activate Bug');
+    if(implantDot)implantDot.classList.toggle('active',bugActive);
+    if(implantStatusText)implantStatusText.textContent=bugActive?'Bug: TRANSMITTING':'Bug: Dormant';
+    setStatus(bugActive);
+    if(bugActive){
+      const type=($('bugTypeSelect')||{}).value||'fm';
+      log(`🎙️ Audio bug activated — ${type.toUpperCase()} transmission started`,'success');
+      showToast('Bug active — capturing audio...',1500);
+      spawnAudioParticles(15,'#ff3333');
+      listenIv=setInterval(()=>{
+        if(!bugActive){clearInterval(listenIv);return}
+        const db=(40+Math.random()*40).toFixed(0);
+        spawnAudioParticles(3,'#ff3333');
+        if(dataLog)dataLog.textContent+=`\n[${new Date().toLocaleTimeString()}] Audio level: ${db}dB — ${db>60?'SPEECH DETECTED':'ambient noise'}`;
+        log(`🎙️ Audio capture: ${db}dB`,db>60?'rx':'info');
+      },2500);
+    }else{
+      if(listenIv)clearInterval(listenIv);
+      log('⬛ Audio bug deactivated','info');audioSamples.fill(0);
+    }
+  });
+
+  if(analyzeBtn)analyzeBtn.addEventListener('click',()=>{
+    showToast('Analyzing captured audio...',2500);log('🔬 Audio analysis running...','info');
+    spawnAudioParticles(20,'#4488ff');
+    setTimeout(()=>{
+      const hasVoice=bugActive||Math.random()>0.3;
+      if(outputDisplay)outputDisplay.textContent=(hasVoice?['AUDIO ANALYSIS','══════════════════','Duration: '+Math.floor(Math.random()*60+10)+' seconds','Speakers detected: '+(1+Math.floor(Math.random()*3)),'Language: English (confidence 87%)','SNR: '+(15+Math.floor(Math.random()*20))+'dB','','Keywords detected:','  "meeting" (3x), "budget" (2x)','  "deadline" (1x), "project" (4x)','','Classification: BUSINESS CONVERSATION']:['NO AUDIO DATA','══════════════════','Activate the bug first to capture audio.']).join('\n');
+      log(hasVoice?'🔬 Audio analysis complete — speech detected':'No audio data available',hasVoice?'success':'error');hideToast();
+    },2000);
+  });
+
+  if(sweepBtn)sweepBtn.addEventListener('click',()=>{
+    showToast('TSCM sweep in progress...',3000);log('🛡️ Technical Surveillance Countermeasures sweep...','info');
+    spawnAudioParticles(25,'#33ff33');
+    let step=0;
+    const methods=['RF spectrum scan (1-6 GHz)','Non-linear junction detection','Thermal imaging scan','Acoustic noise generator check','Physical inspection'];
+    const iv=setInterval(()=>{
+      if(step<methods.length){log(`🔍 ${methods[step]}...`,'info');step++}
+      else{
+        clearInterval(iv);const found=bugActive;
+        if(outputDisplay)outputDisplay.textContent=(found?['⚠️ LISTENING DEVICE DETECTED','══════════════════','Type: '+($('bugTypeSelect')||{}).value+' transmitter','Frequency: '+(400+Math.floor(Math.random()*5000))+' MHz','Signal: -'+(20+Math.floor(Math.random()*40))+' dBm','Location: Wall outlet / power strip area','','COUNTERMEASURES:','• Activate white noise generator','• Remove device physically','• Sweep for secondary bugs','• Check phone lines and power circuits']:['✅ NO BUGS DETECTED','══════════════════','RF: Clean across all bands','NLJD: No semiconductor junctions found','Thermal: No unexpected heat signatures','Physical: No suspicious devices found','','Environment appears clean.']).join('\n');
+        log(found?'🚨 Listening device detected!':'✅ TSCM sweep clean',found?'error':'success');hideToast();
+      }
+    },500);
+  });
+
+  const scanBtn=$('scanSpecBtn');
+  if(scanBtn)scanBtn.addEventListener('click',()=>{spawnAudioParticles(30,'#d4a03c');log('📡 Full spectrum sweep...','info');showToast('Scanning spectrum...',3000);let step=0;const bands=['VHF (30-300 MHz)','UHF (300-3000 MHz)','SHF (3-30 GHz)','GSM (900/1800 MHz)','WiFi (2.4/5 GHz)'];const iv=setInterval(()=>{if(step<bands.length){if(dataLog)dataLog.textContent+=`\n[SWEEP] ${bands[step]}...`;step++}else{clearInterval(iv);log('📡 Spectrum sweep complete','success')}},500)});
+}
+
+function init(){
+  initSplash();const lw=$('logoWrap');if(lw)lw.innerHTML=LOGO_SVG;
+  $('clearLogBtn')&&($('clearLogBtn').onclick=clearLog);$('copyLogBtn')&&($('copyLogBtn').onclick=copyLog);$('exportLogBtn')&&($('exportLogBtn').onclick=exportLog);initLogFilters();
+  $('helpBtn')&&($('helpBtn').onclick=openHelp);$('helpCloseBtn')&&($('helpCloseBtn').onclick=closeHelp);$('helpOverlay')&&($('helpOverlay').onclick=closeHelp);initHelpTabs();
+  $('settingsBtn')&&($('settingsBtn').onclick=openSettings);$('settingsCloseBtn')&&($('settingsCloseBtn').onclick=closeSettings);$('settingsOverlay')&&($('settingsOverlay').onclick=closeSettings);
+  $('logBtn')&&($('logBtn').onclick=toggleLog);$('logCloseBtn')&&($('logCloseBtn').onclick=closeLog);
+  const soundTgl=$('soundToggle');if(soundTgl){try{soundEnabled=localStorage.getItem('wdiy-sound')==='true'}catch{}soundTgl.checked=soundEnabled;soundTgl.addEventListener('change',()=>{soundEnabled=soundTgl.checked;try{localStorage.setItem('wdiy-sound',soundEnabled)}catch{}})}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHelp();closeSettings();closeLog()}});
+  const langSel=$('langSelect');if(langSel)langSel.addEventListener('change',()=>setLanguage(langSel.value));
+  const themeSel=$('themeSelect');if(themeSel)themeSel.addEventListener('change',()=>setTheme(themeSel.value));
+  try{const sl=localStorage.getItem('wdiy-lang'),st=localStorage.getItem('wdiy-theme');if(st)setTheme(st);if(sl)setLanguage(sl)}catch{}
+  initHijriDate();initSimCanvas();initAudioSim();
+  log(LANG[currentLang].ready,'success');
+}
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();

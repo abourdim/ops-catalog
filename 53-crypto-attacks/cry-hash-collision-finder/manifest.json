@@ -1,0 +1,12 @@
+{"name": "Hash Collision Finder — Workshop DIY",
+  "short_name": "Hash Collision Finder",
+  "description": "An interactive Hash Collision Finder simulation for educational exploration.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08091a",
+  "theme_color": "#08091a",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
