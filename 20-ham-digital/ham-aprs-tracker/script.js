@@ -113,10 +113,10 @@ const LANG_BASE = {
 const LANG = {
   en: {
     ...LANG_BASE.en,
-    title: 'my-project', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
+    title: 'Ham Aprs Tracker', subtitle: '🚀 explore · 🎨 create · 💡 innovate',
     disconnected: 'Disconnected', connected: 'Connected',
-    mainSection: 'Main Section', mainDesc: 'Describe your project here',
-    sectionA: 'Section A', sectionB: 'Section B',
+    mainSection: 'Aprs Tracker', mainDesc: 'Describe your project here',
+    sectionA: 'Radio Operations', sectionB: 'Band Theory',
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
@@ -149,7 +149,7 @@ const LANG = {
     title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    sectionA: 'Opérations radio', sectionB: 'Théorie des bandes',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',

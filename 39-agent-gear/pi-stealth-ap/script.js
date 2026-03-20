@@ -156,7 +156,7 @@ const LANG = {
     title: 'pi-stealth-ap', subtitle: '📶 point d\'accès furtif — WiFi caché',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    sectionA: 'Field Operations', sectionB: 'Tradecraft Theory',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',

@@ -164,7 +164,7 @@ const LANG = {
     title: 'Canari WiFi ESP', subtitle: '🐤 surveiller · 🔔 alerter · 🛡️ proteger',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    sectionA: 'WiFi Analysis', sectionB: 'Network Theory',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',

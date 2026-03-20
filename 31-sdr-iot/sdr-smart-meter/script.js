@@ -150,7 +150,7 @@ const LANG = {
     title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
-    sectionA: 'Section A', sectionB: 'Section B',
+    sectionA: 'Signal Processing', sectionB: 'DSP Theory',
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',

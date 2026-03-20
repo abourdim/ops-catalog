@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>my-project — Workshop DIY</title>
+  <title>Ham Satellite Commander — Workshop DIY</title>
   <meta name="description" content="Satellite Commander — Full satellite ground station dashboard."/>
   <meta name="author" content="Workshop-DIY — abourdim"/>
-  <meta property="og:title" content="my-project — Workshop DIY"/>
+  <meta property="og:title" content="Ham Satellite Commander — Workshop DIY"/>
   <meta property="og:type" content="website"/>
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#08091a"/>
@@ -69,12 +69,12 @@
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle"></div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
   <div class="app"><div class="deco-band top-band" aria-hidden="true"></div><div class="rows-container">
     <div class="header"><div class="bismillah" aria-hidden="true"><span class="bism-ornament">✦</span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="bism-ornament">✦</span></div>
-      <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">my-project</h1><div class="subtitle" data-i18n="subtitle"></div></div></div>
+      <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Ham Satellite Commander</h1><div class="subtitle" data-i18n="subtitle"></div></div></div>
       <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only">❓</button><button id="settingsBtn" class="btn-icon-only">⚙️</button><button id="logBtn" class="btn-icon-only">📜</button></div>
         <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Idle</span></div></div>
     </div>
     <div class="card" id="mainCard">
-      <div class="card-header"><div><div class="card-title"><span class="icon">📻</span> <span data-i18n="mainSection">Main Section</span></div><div class="card-subtitle"><span data-i18n="mainDesc"></span> <span class="version-tag">v1.0</span></div></div></div>
+      <div class="card-header"><div><div class="card-title"><span class="icon">📻</span> <span data-i18n="mainSection">Satellite Commander</span></div><div class="card-subtitle"><span data-i18n="mainDesc"></span> <span class="version-tag">v1.0</span></div></div></div>
       <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
         <canvas id="simCanvas" width="780" height="260" style="width:100%;display:block;background:#0a0a1a;cursor:crosshair;"></canvas>
       </div>
@@ -178,8 +178,8 @@
         </div>
       </details>
 
-      <details class="collapsible" open><summary><span class="icon">📻</span> <span data-i18n="sectionA">Section A</span></summary><div class="card"><div id="sectionAContent" style="font-size:.8rem;line-height:1.5;color:var(--text-muted);padding:4px;"><div class="step-grid"><div class="step-card"><div class="step-num">1</div><h4 class="step-title" data-i18n="step1Title">Setup</h4><p class="step-desc" data-i18n="step1Desc">Configure the initial parameters</p></div><div class="step-card"><div class="step-num">2</div><h4 class="step-title" data-i18n="step2Title">Execute</h4><p class="step-desc" data-i18n="step2Desc">Run the simulation</p></div><div class="step-card"><div class="step-num">3</div><h4 class="step-title" data-i18n="step3Title">Analyze</h4><p class="step-desc" data-i18n="step3Desc">Review the results</p></div><div class="step-card"><div class="step-num">4</div><h4 class="step-title" data-i18n="step4Title">Iterate</h4><p class="step-desc" data-i18n="step4Desc">Refine and repeat</p></div></div></div></div></details>
-    <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionB">Section B</span></summary><div class="card"><div id="sectionBContent" style="font-size:.78rem;line-height:1.5;"></div></div></details>
+      <details class="collapsible" open><summary><span class="icon">📻</span> <span data-i18n="sectionA">Satellite Tracking</span></summary><div class="card"><div id="sectionAContent" style="font-size:.8rem;line-height:1.5;color:var(--text-muted);padding:4px;"><div class="step-grid"><div class="step-card"><div class="step-num">1</div><h4 class="step-title" data-i18n="step1Title">Setup</h4><p class="step-desc" data-i18n="step1Desc">Configure the initial parameters</p></div><div class="step-card"><div class="step-num">2</div><h4 class="step-title" data-i18n="step2Title">Execute</h4><p class="step-desc" data-i18n="step2Desc">Run the simulation</p></div><div class="step-card"><div class="step-num">3</div><h4 class="step-title" data-i18n="step3Title">Analyze</h4><p class="step-desc" data-i18n="step3Desc">Review the results</p></div><div class="step-card"><div class="step-num">4</div><h4 class="step-title" data-i18n="step4Title">Iterate</h4><p class="step-desc" data-i18n="step4Desc">Refine and repeat</p></div></div></div></div></details>
+    <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionB">Rotator & Radio</span></summary><div class="card"><div id="sectionBContent" style="font-size:.78rem;line-height:1.5;"></div></div></details>
 
       <details class="collapsible">
         <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
