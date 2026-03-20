@@ -6,10 +6,11 @@ Use this prompt in a new Claude Code conversation to execute the improvement pla
 
 ## Context
 
-You are working on a 293-app educational web catalog at `/home/abdelhak/Desktop/00_amaloun/05_more_apps/`. Read `plan.md` (in the `ops-catalog/` directory) for the full improvement plan with 12 phases.
+You are working on a 488-app educational web catalog at `/home/abdelhak/Desktop/00_amaloun/05_more_apps/`. Read `plan.md` (in the `ops-catalog/` directory) for the full improvement plan with 12 phases.
 
 ## Current State
-- 293 apps across 42 categories (01-spy-microbit through 42-agent-ultimate)
+- 488 apps across 55 categories (01-spy-microbit through 55-escape-evasion)
+- Categories 01-42 also exist in `05_more_apps/` parent dir; categories 43-55 are ops-catalog only (43-bio-radio, 44-acoustic-warfare, 45-time-manipulation, 46-swarm-intelligence, 47-impossible-physics, 48-dark-arts, 49-ai-radio, 50-civilization-hacks, 51-social-engineering, 52-hardware-implants, 53-crypto-attacks, 54-rf-warfare, 55-escape-evasion)
 - Each app has 7 files: index.html, script.js, style.css, manifest.json, README.md, CHANGES.md, docs/HOWTO.md
 - All style.css files are identical (1,205 lines, 8 themes, RTL support)
 - Template at: `tools/web_app_template/`
@@ -20,7 +21,7 @@ You are working on a 293-app educational web catalog at `/home/abdelhak/Desktop/
 
 ### TOP PRIORITY — Educational Content (Phases 1-5)
 
-**Phase 1: `add_how_it_works.py`** — Add 4-step "How It Works" cards to 272 apps missing them. Reference: bit-agent-id. CSS classes already exist. Generate app-specific steps + trilingual i18n (EN/FR/AR).
+**Phase 1: `add_how_it_works.py`** — Add 4-step "How It Works" cards to 470 apps missing them. Reference: bit-agent-id. CSS classes already exist. Generate app-specific steps + trilingual i18n (EN/FR/AR).
 
 **Phase 2: `gen_code.py`** — Add `code/` folder to each app with real hardware source code: MicroPython + MakeCode JS (micro:bit), Arduino .ino (ESP32), Python (SDR/WiFi/RPi), GNURadio .grc (SDR/Ham). Also add a "Device Code" tab in index.html with copy/download.
 
@@ -57,7 +58,7 @@ You are working on a 293-app educational web catalog at `/home/abdelhak/Desktop/
 - Each app must remain standalone (copy one dir = working app)
 - style.css stays identical across all apps (shared template)
 - All text must have i18n in EN, FR, AR with RTL support for Arabic
-- All batch operations via Python scripts (can't manually edit 293 apps)
+- All batch operations via Python scripts (can't manually edit 488 apps)
 - Kid-friendly tone: ages 10-16, analogies, short sentences, emojis OK, no unexplained jargon
 
 ## How to Execute
