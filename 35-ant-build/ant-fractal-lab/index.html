@@ -176,7 +176,15 @@
     .iter-dot.active { background:#b388ff; border-color:#7c4dff; }
     .fractal-canvas-wrap { position:relative; overflow:hidden; border-radius:var(--radius); }
     .band-tag { display:inline-block; background:var(--surface); border:1px solid #b388ff44; color:#b388ff; padding:1px 6px; border-radius:6px; font-size:.6rem; margin:2px; }
-  </style>
+  
+    /* Step cards */
+    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+    .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+    .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
+    .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
+    .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">

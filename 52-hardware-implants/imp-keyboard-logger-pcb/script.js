@@ -50,7 +50,7 @@ const LANG = {
     working: 'Working…', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     settings: '⚙️ Settings', language: 'Language', theme: 'Theme',
     splashHint: 'tap to skip',
-  ,faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.'},
+  ,faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.',step1Title:'Design Implant',step1Desc:'A hardware keylogger is a small PCB placed between a keyboard and computer.',step2Title:'Build & Program',step2Desc:'It intercepts USB data lines and stores keystrokes in onboard flash memory.',step3Title:'Deploy',step3Desc:'Some variants transmit captured data wirelessly via RF or WiFi modules.',step4Title:'Monitor & Extract',step4Desc:'Detection involves visual inspection, USB traffic analysis, and firmware verification.'},
   fr: {
     title: 'imp-keyboard-logger-pcb', subtitle: '⌨️ concevoir · 🔍 détecter · 🛡️ défendre',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -63,7 +63,7 @@ const LANG = {
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     working: 'En cours…', langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
     settings: '⚙️ Paramètres', language: 'Langue', theme: 'Thème', splashHint: 'appuyer pour passer',
-  ,faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.'},
+  ,faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.',step1Title:'Concevoir l\'implant',step1Desc:'A hardware keylogger is a small PCB placed between a keyboard and computer.',step2Title:'Construire et programmer',step2Desc:'It intercepts USB data lines and stores keystrokes in onboard flash memory.',step3Title:'Déployer',step3Desc:'Some variants transmit captured data wirelessly via RF or WiFi modules.',step4Title:'Surveiller et extraire',step4Desc:'Detection involves visual inspection, USB traffic analysis, and firmware verification.'},
   ar: {
     title: 'imp-keyboard-logger-pcb', subtitle: '⌨️ تصميم · 🔍 كشف · 🛡️ دفاع',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -75,7 +75,7 @@ const LANG = {
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', working: 'جارٍ…',
     langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
     settings: '⚙️ الإعدادات', language: 'اللغة', theme: 'المظهر', splashHint: 'انقر للتخطي',
-  ,faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.'}
+  ,faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.',step1Title:'تصميم الزرع',step1Desc:'A hardware keylogger is a small PCB placed between a keyboard and computer.',step2Title:'بناء وبرمجة',step2Desc:'It intercepts USB data lines and stores keystrokes in onboard flash memory.',step3Title:'نشر',step3Desc:'Some variants transmit captured data wirelessly via RF or WiFi modules.',step4Title:'مراقبة واستخراج',step4Desc:'Detection involves visual inspection, USB traffic analysis, and firmware verification.'}
 };
 let currentLang = 'en';
 function setLanguage(lang) {

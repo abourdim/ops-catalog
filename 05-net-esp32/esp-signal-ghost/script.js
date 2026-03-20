@@ -49,7 +49,7 @@ const LANG={
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
     splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  },
+  ,step1Title:'Scan',step1Desc:'ESP32 generates random MAC addresses at high speed.',step2Title:'Capture',step2Desc:'Each MAC sends probe requests, making the network see a new device.',step3Title:'Analyze',step3Desc:'Network equipment fills its tables with ghost entries, causing confusion.',step4Title:'Report',step4Desc:'The chaos meter shows how much the network is disrupted.'},
   fr:{
     title:'esp-signal-ghost',subtitle:'👻 usurper · 🔄 cycler · 🌊 inonder',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -83,7 +83,7 @@ const LANG={
     ready:'👻 Signal Ghost prêt — inondez le réseau !',logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
     splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  },
+  ,step1Title:'Scanner',step1Desc:'L\'ESP32 génère des adresses MAC aléatoires à grande vitesse.',step2Title:'Capturer',step2Desc:'Chaque MAC envoie des requêtes probe, le réseau voit un nouvel appareil.',step3Title:'Analyser',step3Desc:'L\'équipement réseau remplit ses tables avec des entrées fantômes.',step4Title:'Rapporter',step4Desc:'Le compteur de chaos montre la perturbation du réseau.'},
   ar:{
     title:'esp-signal-ghost',subtitle:'👻 تزييف · 🔄 دوران · 🌊 إغراق',
     disconnected:'غير متصل',connected:'متصل',
@@ -117,7 +117,7 @@ const LANG={
     ready:'👻 Signal Ghost جاهز — أغرق الشبكة!',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
     splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  }
+  ,step1Title:'مسح',step1Desc:'ESP32 يولّد عناوين MAC عشوائية بسرعة عالية.',step2Title:'التقاط',step2Desc:'كل MAC يرسل طلبات probe، الشبكة ترى جهازاً جديداً.',step3Title:'تحليل',step3Desc:'معدات الشبكة تملأ جداولها بإدخالات شبحية.',step4Title:'تقرير',step4Desc:'عداد الفوضى يوضح مدى تعطل الشبكة.'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */

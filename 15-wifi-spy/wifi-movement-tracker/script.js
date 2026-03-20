@@ -103,7 +103,7 @@ const LANG = {
     simStarted: 'Movement tracking started', simStopped: 'Tracking stopped',
     movDetected: 'Movement detected', noMov: 'Stationary',
     howItWorksText: 'WiFi movement tracking uses RSSI (Received Signal Strength Indicator) to detect device motion. When a device moves, its signal strength changes relative to access points. By monitoring these fluctuations across multiple APs, we can estimate position and detect movement patterns. This simulation demonstrates the concept with virtual access points and a moving device.',
-  },
+  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.'},
   fr: {
     title: 'Traqueur de Mouvement WiFi', subtitle: 'Suivre le mouvement via la puissance du signal WiFi',
     disconnected: 'Inactif', connected: 'Suivi actif',
@@ -145,7 +145,7 @@ const LANG = {
     simStarted: 'Suivi demarre', simStopped: 'Suivi arrete',
     movDetected: 'Mouvement detecte', noMov: 'Stationnaire',
     howItWorksText: 'Le suivi de mouvement WiFi utilise le RSSI pour detecter le deplacement des appareils. Quand un appareil bouge, la puissance du signal change. Cette simulation montre le concept avec des points d\'acces virtuels.',
-  },
+  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.'},
   ar: {
     title: 'متتبع حركة WiFi', subtitle: 'تتبع حركة الأجهزة عبر قوة إشارة WiFi',
     disconnected: 'خامل', connected: 'تتبع نشط',
@@ -187,7 +187,7 @@ const LANG = {
     simStarted: 'بدأ التتبع', simStopped: 'توقف التتبع',
     movDetected: 'تم كشف حركة', noMov: 'ثابت',
     howItWorksText: 'يستخدم تتبع حركة WiFi مؤشر RSSI لكشف حركة الأجهزة. عندما يتحرك الجهاز تتغير قوة إشارته. هذه المحاكاة توضح المفهوم بنقاط وصول افتراضية.',
-  }
+  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.'}
 };
 
 let currentLang = 'en';

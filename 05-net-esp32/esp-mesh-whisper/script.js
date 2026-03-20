@@ -81,7 +81,7 @@ const LANG = {
     soundEffects: '🔊 Sound effects', whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap', musicMode: 'Music reactive',
     chatPlaceholder: 'Talk to the robot...', splashHint: 'tap to skip', newVersion: 'UPDATE',
     langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
-  },
+  ,step1Title:'Scan',step1Desc:'ESP32 nodes form a mesh network, each connecting to nearby neighbors.',step2Title:'Capture',step2Desc:'Messages use BFS routing to find the shortest path between nodes.',step3Title:'Analyze',step3Desc:'When a node dies, the mesh detects the failure and reroutes traffic.',step4Title:'Report',step4Desc:'Self-healing rebuilds links automatically when nodes come back online.'},
   fr: {
     title: 'esp-mesh-whisper', subtitle: '🕸️ maillage · 🔄 guérir · 💬 murmurer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -127,7 +127,7 @@ const LANG = {
     soundEffects: '🔊 Effets sonores', whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap', musicMode: 'Réactif musique',
     chatPlaceholder: 'Parle au robot...', splashHint: 'appuyer pour passer', newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
-  },
+  ,step1Title:'Scanner',step1Desc:'Les noeuds ESP32 forment un maillage réseau, chacun se connectant aux voisins proches.',step2Title:'Capturer',step2Desc:'Les messages utilisent le routage BFS pour trouver le chemin le plus court.',step3Title:'Analyser',step3Desc:'Quand un noeud meurt, le maillage détecte la panne et reroute le trafic.',step4Title:'Rapporter',step4Desc:'L\'auto-guérison reconstruit les liens quand les noeuds reviennent en ligne.'},
   ar: {
     title: 'esp-mesh-whisper', subtitle: '🕸️ شبكة · 🔄 شفاء · 💬 همس',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -173,7 +173,7 @@ const LANG = {
     soundEffects: '🔊 مؤثرات صوتية', whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط', musicMode: 'تفاعل موسيقي',
     chatPlaceholder: 'تحدث مع الروبوت...', splashHint: 'انقر للتخطي', newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
-  }
+  ,step1Title:'مسح',step1Desc:'عقد ESP32 تشكل شبكة متداخلة، كل عقدة تتصل بالجيران القريبين.',step2Title:'التقاط',step2Desc:'الرسائل تستخدم توجيه BFS لإيجاد أقصر مسار بين العقد.',step3Title:'تحليل',step3Desc:'عندما تموت عقدة، الشبكة تكتشف العطل وتعيد توجيه حركة المرور.',step4Title:'تقرير',step4Desc:'الإصلاح الذاتي يعيد بناء الروابط تلقائياً عندما تعود العقد.'}
 };
 
 let currentLang = 'en';

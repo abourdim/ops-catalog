@@ -48,7 +48,7 @@ const LANG={
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
     splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  },
+  ,step1Title:'Scan',step1Desc:'ESP32 scans WiFi, BLE, and ESP-NOW protocols simultaneously.',step2Title:'Capture',step2Desc:'Each device is plotted based on RSSI (signal strength = distance).',step3Title:'Analyze',step3Desc:'Different protocols shown as different colored circles.',step4Title:'Report',step4Desc:'The device list shows details: name, MAC, RSSI, protocol.'},
   fr:{
     title:'esp-network-cartographer',subtitle:'🗺️ scanner · 📡 cartographier · 🌐 découvrir',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -73,7 +73,7 @@ const LANG={
     ready:'🗺️ Cartographe prêt — lancez le scan !',logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
     splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  },
+  ,step1Title:'Scanner',step1Desc:'L\'ESP32 scanne WiFi, BLE et ESP-NOW simultanément.',step2Title:'Capturer',step2Desc:'Chaque appareil est placé selon son RSSI.',step3Title:'Analyser',step3Desc:'Les protocoles ont des couleurs différentes.',step4Title:'Rapporter',step4Desc:'La liste montre nom, MAC, RSSI, protocole.'},
   ar:{
     title:'esp-network-cartographer',subtitle:'🗺️ مسح · 📡 خريطة · 🌐 اكتشاف',
     disconnected:'غير متصل',connected:'متصل',
@@ -98,7 +98,7 @@ const LANG={
     ready:'🗺️ رسام خرائط الشبكة جاهز — ابدأ المسح!',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
     splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  }
+  ,step1Title:'مسح',step1Desc:'ESP32 يمسح WiFi وBLE وESP-NOW في آن واحد.',step2Title:'التقاط',step2Desc:'كل جهاز يُوضع حسب RSSI.',step3Title:'تحليل',step3Desc:'البروتوكولات المختلفة بألوان مختلفة.',step4Title:'تقرير',step4Desc:'قائمة الأجهزة تعرض التفاصيل.'}
 };
 
 /* ═══════ FRAMEWORK (compact) ═══════ */

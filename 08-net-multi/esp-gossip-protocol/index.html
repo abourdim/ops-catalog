@@ -26,7 +26,15 @@
     .step-list li::before{counter-increment:step;content:counter(step);width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.72rem;}
     .challenge-list{list-style:none;padding:0;margin:0;}.challenge-list li{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:.8rem;color:var(--text);line-height:1.5;}.challenge-list .ch-icon{font-size:1.1rem;flex-shrink:0;}
     .lab-tip{font-size:.78rem;color:var(--text-muted);margin-bottom:8px;line-height:1.5;}
-  </style>
+  
+    /* Step cards */
+    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+    .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+    .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
+    .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
+    .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">💬 gossip · 🦠 epidemic · 📊 convergence</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>

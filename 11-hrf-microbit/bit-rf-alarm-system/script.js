@@ -140,7 +140,7 @@ const LANG = {
     msgAlertTriggered: '🚨 ALERT triggered — wrong code!',
     msgCodeUsed: 'Code: ',
     msgRollingCode: 'Rolling code: ',
-  },
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
   fr: {
     title: 'bit-rf-alarm-system', subtitle: '🚨 Construire · 📡 Brouiller · 🔐 Securiser',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -216,7 +216,7 @@ const LANG = {
     msgAlertTriggered: '🚨 ALERTE declenchee — mauvais code !',
     msgCodeUsed: 'Code : ',
     msgRollingCode: 'Code tournant : ',
-  },
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
   ar: {
     title: 'نظام إنذار RF', subtitle: '🚨 بناء · 📡 تشويش · 🔐 تأمين',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -292,7 +292,7 @@ const LANG = {
     msgAlertTriggered: '🚨 إنذار — رمز خاطئ!',
     msgCodeUsed: 'الرمز: ',
     msgRollingCode: 'رمز متدحرج: ',
-  }
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
 };
 
 let currentLang = 'en';

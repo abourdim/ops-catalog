@@ -29,7 +29,7 @@ const LANG={
     wiki_constant:'Constant-time: result=0; for(i=0;i<len;i++) result|=a[i]^b[i]; return result===0; — always same time.',
     wiki_real:'Real-world: OpenSSL CVE-2014-0160 (Heartbleed) and HMAC verification timing leaks in web frameworks.',
     mathExplain:'Timing Attack Model:\nNaive compare(secret, guess):\n  for i in 0..len:\n    if secret[i] != guess[i]: return false  // early exit!\n  return true\n\nAttacker measures: T(guess) ~ k * matching_prefix_length\n\nFor position i, try all chars c:\n  guess[i] = c\n  measure T(guess)\n  secret[i] = argmax_c T(guess)\n\nComplexity: O(n * |alphabet|) instead of O(|alphabet|^n)\nFor 8-char secret with 62 chars: 496 vs 2.18 * 10^14 attempts'
-  },
+  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.'},
   fr:{
     title:'Attaque Oracle Temporel',subtitle:'Exploitez les differences de temps pour reveler les secrets octet par octet',
     mainSection:'Oracle Temporel',mainDesc:'Observez comment la comparaison naive octet par octet fuit des informations temporelles',
@@ -53,7 +53,7 @@ const LANG={
     wiki_constant:'Temps constant: verifie toujours tous les octets, meme temps.',
     wiki_real:'Monde reel: vulnerabilites HMAC dans les frameworks web.',
     mathExplain:'Modele d\'Attaque Temporelle:\nComparaison naive retourne au premier echec.\nAttaquant mesure le temps proportionnel au prefixe correct.\nComplexite: O(n * |alphabet|) au lieu de O(|alphabet|^n)'
-  },
+  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.'},
   ar:{
     title:'هجوم اوراكل التوقيت',subtitle:'استغل فروقات التوقيت لكشف الاسرار بايت تلو بايت',
     mainSection:'اوراكل التوقيت',mainDesc:'شاهد كيف تسرب المقارنة البسيطة بايت تلو بايت معلومات التوقيت',
@@ -77,7 +77,7 @@ const LANG={
     wiki_constant:'وقت ثابت: تفحص جميع البايتات دائما.',
     wiki_real:'واقعي: ثغرات HMAC في اطر العمل الويب.',
     mathExplain:'نموذج هجوم التوقيت:\nالمقارنة البسيطة تعود عند اول فشل.\nالمهاجم يقيس الوقت المتناسب مع طول البادئة الصحيحة.\nالتعقيد: O(n * |الابجدية|) بدلا من O(|الابجدية|^n)'
-  }
+  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.'}
 };
 let currentLang='en';
 

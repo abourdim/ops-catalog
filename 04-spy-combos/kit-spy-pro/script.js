@@ -107,7 +107,7 @@ const LANG = {
     devicesConnected: '🔗 All devices connected!', missionStarted: '🎯 Mission started:',
     missionComplete: '🏆 Mission complete!', messageSent: '📤 Message sent (encrypted)',
     messageReceived: '📥 Incoming encrypted message',
-  },
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
   fr: {
     title: 'Spy Kit Pro', subtitle: '🎯 portable · 📡 terrain · 🖥️ QG',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -146,7 +146,7 @@ const LANG = {
     devicesConnected: '🔗 Tous les appareils connectés !', missionStarted: '🎯 Mission démarrée :',
     missionComplete: '🏆 Mission terminée !', messageSent: '📤 Message envoyé (chiffré)',
     messageReceived: '📥 Message chiffré entrant',
-  },
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
   ar: {
     title: 'طقم التجسس برو', subtitle: '🎯 قابل للارتداء · 📡 ميداني · 🖥️ مقر',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -185,7 +185,7 @@ const LANG = {
     devicesConnected: '🔗 تم توصيل جميع الأجهزة!', missionStarted: '🎯 بدأت المهمة:',
     missionComplete: '🏆 اكتملت المهمة!', messageSent: '📤 تم إرسال الرسالة (مشفرة)',
     messageReceived: '📥 رسالة مشفرة واردة',
-  }
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
 };
 
 let currentLang = 'en';

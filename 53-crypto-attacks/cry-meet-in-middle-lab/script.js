@@ -29,7 +29,7 @@ const LANG={
     wiki_2des:'2DES: C = E_K2(E_K1(P)). Double encryption with two independent keys K1, K2.',
     wiki_3des:'3DES: C = E_K3(D_K2(E_K1(P))). Encrypt-decrypt-encrypt with three keys resists MITM.',
     mathExplain:'Meet-in-the-Middle Attack:\n\nDouble encryption: C = E_K2(E_K1(P))\n\nAttack given known (P, C):\n1. Forward table: For all K1, compute M = E_K1(P), store (M -> K1)\n2. Backward: For all K2, compute M\' = D_K2(C)\n3. If M\' exists in forward table -> found K1, K2\n\nComplexity:\n- Brute force 2DES: O(2^(2n)) time\n- MITM: O(2^n) time + O(2^n) space\n- Effective security: n+1 bits, not 2n bits\n\nExample (n=56 for DES):\n- Expected: 2^112 work\n- Actual: 2^57 work + 2^56 memory'
-  },
+  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.'},
   fr:{
     title:'Labo Attaque par le Milieu',subtitle:'Cassez le double chiffrement 2DES par compromis temps-memoire',
     mainSection:'Attaque par le Milieu',mainDesc:'Montrez pourquoi 2DES avec cle 2n bits n\'a que n+1 bits de securite',
@@ -53,7 +53,7 @@ const LANG={
     wiki_2des:'2DES: C = E_K2(E_K1(P)). Double chiffrement a deux cles.',
     wiki_3des:'3DES: C = E_K3(D_K2(E_K1(P))). Resiste a MITM.',
     mathExplain:'Attaque par le Milieu:\n\nDouble chiffrement: C = E_K2(E_K1(P))\n\n1. Table avant: Pour tout K1, M = E_K1(P)\n2. Arriere: Pour tout K2, M\' = D_K2(C)\n3. Si M\' dans la table -> K1, K2 trouves\n\nComplexite: O(2^n) temps + O(2^n) memoire'
-  },
+  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.'},
   ar:{
     title:'مختبر هجوم اللقاء في المنتصف',subtitle:'اكسر التشفير المزدوج 2DES بمقايضة الوقت والذاكرة',
     mainSection:'هجوم اللقاء في المنتصف',mainDesc:'اظهر لماذا 2DES بمفتاح 2n بت لديه فقط n+1 بت من الامان',
@@ -77,7 +77,7 @@ const LANG={
     wiki_2des:'2DES: C = E_K2(E_K1(P)). تشفير مزدوج بمفتاحين.',
     wiki_3des:'3DES: C = E_K3(D_K2(E_K1(P))). يقاوم MITM.',
     mathExplain:'هجوم اللقاء في المنتصف:\n\nالتشفير المزدوج: C = E_K2(E_K1(P))\n\n1. جدول امامي: لكل K1 احسب M = E_K1(P)\n2. خلفي: لكل K2 احسب M\' = D_K2(C)\n3. اذا M\' في الجدول -> تم ايجاد K1 و K2\n\nالتعقيد: O(2^n) وقت + O(2^n) ذاكرة'
-  }
+  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.'}
 };
 let currentLang='en';
 

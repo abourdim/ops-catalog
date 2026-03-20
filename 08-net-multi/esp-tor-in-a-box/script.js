@@ -52,7 +52,7 @@ plainRevealed:'Exit relay revealed plaintext!',encrypting:'Encrypting 3 layers..
 noMsg:'Please type a message',guardRelay:'Guard Relay',middleRelay:'Middle Relay',exitRelay:'Exit Relay',
 sender:'Sender',receiver:'Receiver',
 layerLabel:'Layer {n}',plainLabel:'Plaintext',fullEncLabel:'Fully Encrypted',
-},
+,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
 fr:{
 title:'Tor in a Box',subtitle:'🧅 oignon · 🔐 couches · 🛡️ confidentialité',
 disconnected:'Déconnecté',connected:'Connecté',
@@ -93,7 +93,7 @@ plainRevealed:'Le relais de sortie a révélé le texte clair !',encrypting:'Chi
 noMsg:'Veuillez taper un message',guardRelay:'Relais Garde',middleRelay:'Relais Milieu',exitRelay:'Relais Sortie',
 sender:'Expéditeur',receiver:'Destinataire',
 layerLabel:'Couche {n}',plainLabel:'Texte clair',fullEncLabel:'Entièrement chiffré',
-},
+,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
 ar:{
 title:'Tor in a Box',subtitle:'🧅 بصلة · 🔐 طبقات · 🛡️ خصوصية',
 disconnected:'غير متصل',connected:'متصل',
@@ -134,7 +134,7 @@ plainRevealed:'عقدة المخرج كشفت النص الأصلي!',encrypting
 noMsg:'الرجاء كتابة رسالة',guardRelay:'عقدة الحارس',middleRelay:'عقدة الوسط',exitRelay:'عقدة المخرج',
 sender:'المرسل',receiver:'المستقبل',
 layerLabel:'الطبقة {n}',plainLabel:'نص عادي',fullEncLabel:'مشفر بالكامل',
-}};
+,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}};
 
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.dataset.i18nPlaceholder;if(s[k]!=null)el.placeholder=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}

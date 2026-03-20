@@ -101,7 +101,7 @@ const LANG = {
     simStarted: 'Visualization started', simStopped: 'Visualization stopped',
     frameCapture: 'Frame captured', beaconFrame: 'Beacon', dataFrame: 'Data', ackFrame: 'ACK', rtsFrame: 'RTS', ctsFrame: 'CTS', probeFrame: 'Probe',
     howItWorksText: '802.11 frames have multiple layers: PHY preamble (red) for synchronization, MAC header (orange) with addresses and control fields, LLC (green) for protocol identification, Data payload (blue), and FCS checksum (purple) for error detection.',
-  },
+  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.'},
   fr: {
     title: 'Arc-en-ciel Protocole WiFi', subtitle: 'Visualiser les couches du protocole WiFi en couleurs',
     disconnected: 'Inactif', connected: 'Visualisation',
@@ -129,7 +129,7 @@ const LANG = {
     simStarted: 'Visualisation demarree', simStopped: 'Visualisation arretee',
     frameCapture: 'Trame capturee', beaconFrame: 'Balise', dataFrame: 'Donnees', ackFrame: 'ACK', rtsFrame: 'RTS', ctsFrame: 'CTS', probeFrame: 'Sonde',
     howItWorksText: 'Les trames 802.11 ont plusieurs couches: preambule PHY (rouge), en-tete MAC (orange), LLC (vert), charge utile (bleu), et FCS (violet).',
-  },
+  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.'},
   ar: {
     title: 'قوس قزح بروتوكول WiFi', subtitle: 'تصور طبقات بروتوكول WiFi بالألوان. شاهد كيف تعمل إطارات 802.11',
     disconnected: 'خامل', connected: 'تصور',
@@ -156,7 +156,7 @@ const LANG = {
     simStarted: 'بدأ التصور', simStopped: 'توقف التصور',
     frameCapture: 'تم التقاط إطار', beaconFrame: 'إشارة', dataFrame: 'بيانات', ackFrame: 'ACK', rtsFrame: 'RTS', ctsFrame: 'CTS', probeFrame: 'فحص',
     howItWorksText: 'إطارات 802.11 لها طبقات متعددة: تمهيد PHY (أحمر)، رأس MAC (برتقالي)، LLC (أخضر)، حمولة البيانات (أزرق)، وفحص FCS (بنفسجي).',
-  }
+  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.'}
 };
 
 let currentLang = 'en';

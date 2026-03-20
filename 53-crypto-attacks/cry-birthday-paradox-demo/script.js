@@ -28,7 +28,7 @@ const LANG={
     wiki_attack:'Birthday Attack: Generate 2^(n/2) random messages, hash each, store in table. Find two messages with same hash.',
     wiki_defense:'Defense: Use hash with enough bits. SHA-256 has 128-bit collision resistance. MD5/SHA-1 are broken.',
     mathExplain:'Birthday Paradox Mathematics:\n\nP(no collision after k items from N buckets):\nP = product(1 - i/N, i=0..k-1)\n  ~ exp(-k*(k-1)/(2N))\n\nP(collision) ~ 1 - exp(-k^2/(2N))\n\nFor 50% probability: k ~ sqrt(2*N*ln2) ~ 1.177*sqrt(N)\n\nHash function implications:\n- n-bit hash: N = 2^n buckets\n- Birthday bound: k ~ 2^(n/2)\n\nExamples:\n- MD5 (128 bits): ~2^64 hashes for collision\n- SHA-1 (160 bits): ~2^80 hashes\n- SHA-256 (256 bits): ~2^128 hashes'
-  },
+  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.'},
   fr:{
     title:'Demo Paradoxe des Anniversaires',subtitle:'Comment le paradoxe des anniversaires facilite les collisions de hachage',
     mainSection:'Chercheur de Collisions',mainDesc:'Generez des hachages aleatoires et trouvez des collisions',
@@ -51,7 +51,7 @@ const LANG={
     wiki_attack:'Attaque: Generer 2^(n/2) messages, hasher, trouver doublon.',
     wiki_defense:'Defense: Utiliser un hachage avec assez de bits. SHA-256 a 128 bits de resistance.',
     mathExplain:'Mathematiques du Paradoxe des Anniversaires:\n\nP(pas de collision) ~ exp(-k^2/(2N))\nPour 50%: k ~ 1.177*sqrt(N)\n\nHachage n bits: collision apres ~2^(n/2) hachages'
-  },
+  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.'},
   ar:{
     title:'عرض مفارقة عيد الميلاد',subtitle:'كيف تجعل مفارقة عيد الميلاد تصادمات الهاش اسهل مما يتوقع',
     mainSection:'باحث تصادمات عيد الميلاد',mainDesc:'ولد هاشات عشوائية واعثر على تصادمات باستخدام حد عيد الميلاد',
@@ -74,7 +74,7 @@ const LANG={
     wiki_attack:'الهجوم: ولد 2^(n/2) رسالة واحسب الهاش واعثر على تكرار.',
     wiki_defense:'الدفاع: استخدم هاش بعدد كاف من البتات.',
     mathExplain:'رياضيات مفارقة عيد الميلاد:\n\nP(بدون تصادم) ~ exp(-k^2/(2N))\nلاحتمال 50%: k ~ 1.177*sqrt(N)\n\nهاش n بت: تصادم بعد ~2^(n/2) هاش'
-  }
+  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.'}
 };
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k]});document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('cry-bday-lang',lang)}catch{};log(s.langChanged,'info');buildHelp();buildRef();buildMath()}

@@ -101,7 +101,7 @@ const LANG = {
     simStarted: 'Scan started', simStopped: 'Scan stopped', networkFound: 'Network detected',
     hiddenFound: 'HIDDEN network revealed', probeReq: 'Probe request sent',
     howItWorksText: 'Hidden networks broadcast beacons with empty SSIDs. By capturing probe responses and correlating MAC addresses, we can reveal these networks. Passive mode listens for beacons; Active mode sends directed probe requests.',
-  },
+  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.'},
   fr: {
     title: 'Detecteur Reseaux WiFi Caches', subtitle: 'Reveler les reseaux WiFi caches',
     disconnected: 'Inactif', connected: 'Analyse',
@@ -129,7 +129,7 @@ const LANG = {
     simStarted: 'Scan demarre', simStopped: 'Scan arrete', networkFound: 'Reseau detecte',
     hiddenFound: 'Reseau CACHE revele', probeReq: 'Sonde envoyee',
     howItWorksText: 'Les reseaux caches diffusent des balises avec des SSID vides. En capturant les reponses aux sondes, on peut les reveler.',
-  },
+  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.'},
   ar: {
     title: 'كاشف شبكات WiFi المخفية', subtitle: 'كشف شبكات WiFi المخفية. فحص نشط ومراقبة سلبية',
     disconnected: 'خامل', connected: 'فحص',
@@ -156,7 +156,7 @@ const LANG = {
     simStarted: 'بدأ الفحص', simStopped: 'توقف الفحص', networkFound: 'تم اكتشاف شبكة',
     hiddenFound: 'تم كشف شبكة مخفية', probeReq: 'تم إرسال طلب فحص',
     howItWorksText: 'الشبكات المخفية تبث إشارات بدون SSID. بالتقاط استجابات الفحص وربط عناوين MAC يمكننا كشفها.',
-  }
+  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.'}
 };
 
 let currentLang = 'en';

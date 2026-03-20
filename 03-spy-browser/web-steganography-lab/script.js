@@ -127,7 +127,7 @@ const LANG = {
     noImage: '\u26A0\uFE0F Load an image first', noMessage: '\u26A0\uFE0F Enter a message first',
     msgTooLong: '\u26A0\uFE0F Message too long for this image', noHiddenMsg: '\u26A0\uFE0F No hidden message found',
     downloadOk: '\uD83D\uDCBE Stego image downloaded',
-  },
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
   fr: {
     title: 'Labo St\u00E9ganographie \u2014 Messages Cach\u00E9s', subtitle: 'Cachez des secrets dans les images avec le codage LSB',
     disconnected: 'Inactif', connected: 'Pr\u00EAt',
@@ -193,7 +193,7 @@ const LANG = {
     noImage: '\u26A0\uFE0F Chargez d\'abord une image', noMessage: '\u26A0\uFE0F Entrez d\'abord un message',
     msgTooLong: '\u26A0\uFE0F Message trop long pour cette image', noHiddenMsg: '\u26A0\uFE0F Aucun message cach\u00E9 trouv\u00E9',
     downloadOk: '\uD83D\uDCBE Image stego t\u00E9l\u00E9charg\u00E9e',
-  },
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
   ar: {
     title: '\u0645\u062E\u062A\u0628\u0631 \u0627\u0644\u0625\u062E\u0641\u0627\u0621 \u2014 \u0631\u0633\u0627\u0626\u0644 \u0645\u062E\u0641\u064A\u0629', subtitle: '\u0623\u062E\u0641\u0650 \u0623\u0633\u0631\u0627\u0631\u064B\u0627 \u062F\u0627\u062E\u0644 \u0627\u0644\u0635\u0648\u0631 \u0628\u062A\u0631\u0645\u064A\u0632 LSB',
     disconnected: '\u062E\u0627\u0645\u0644', connected: '\u062C\u0627\u0647\u0632',
@@ -259,7 +259,7 @@ const LANG = {
     noImage: '\u26A0\uFE0F \u062D\u0645\u0651\u0644 \u0635\u0648\u0631\u0629 \u0623\u0648\u0644\u0627\u064B', noMessage: '\u26A0\uFE0F \u0623\u062F\u062E\u0644 \u0631\u0633\u0627\u0644\u0629 \u0623\u0648\u0644\u0627\u064B',
     msgTooLong: '\u26A0\uFE0F \u0627\u0644\u0631\u0633\u0627\u0644\u0629 \u0637\u0648\u064A\u0644\u0629 \u062C\u062F\u064B\u0627 \u0644\u0647\u0630\u0647 \u0627\u0644\u0635\u0648\u0631\u0629', noHiddenMsg: '\u26A0\uFE0F \u0644\u0645 \u064A\u062A\u0645 \u0627\u0644\u0639\u062B\u0648\u0631 \u0639\u0644\u0649 \u0631\u0633\u0627\u0644\u0629 \u0645\u062E\u0641\u064A\u0629',
     downloadOk: '\uD83D\uDCBE \u062A\u0645 \u062A\u0646\u0632\u064A\u0644 \u0627\u0644\u0635\u0648\u0631\u0629',
-  }
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
 };
 
 let currentLang = 'en';

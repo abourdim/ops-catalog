@@ -123,7 +123,7 @@ const LANG = {
     labSimDone: '🧪 Lab simulation complete', labResetDone: '🔄 Lab reset to defaults',
     timerStarted: '⏱️ Timer started — click again to stop', timerStopped: '⏱️ Pass timed:',
     north: 'N', south: 'S', east: 'E', west: 'W',
-  },
+  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.'},
   fr: {
     title: 'bit-satellite-alarm', subtitle: '🛰️ suivre · 🔔 alerter · 🌌 explorer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -184,7 +184,7 @@ const LANG = {
     labSimDone: '🧪 Simulation labo terminée', labResetDone: '🔄 Labo réinitialisé',
     timerStarted: '⏱️ Chrono démarré — cliquez à nouveau pour arrêter', timerStopped: '⏱️ Passage chronométré :',
     north: 'N', south: 'S', east: 'E', west: 'O',
-  },
+  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.'},
   ar: {
     title: 'bit-satellite-alarm', subtitle: '🛰️ تتبّع · 🔔 تنبيه · 🌌 استكشاف',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -245,7 +245,7 @@ const LANG = {
     labSimDone: '🧪 انتهت محاكاة المختبر', labResetDone: '🔄 تم إعادة تعيين المختبر',
     timerStarted: '⏱️ بدأ المؤقت — انقر مرة أخرى للإيقاف', timerStopped: '⏱️ مدة المرور:',
     north: 'ش', south: 'ج', east: 'شر', west: 'غ',
-  }
+  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.'}
 };
 
 let currentLang = 'en';

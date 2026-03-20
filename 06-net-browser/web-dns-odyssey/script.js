@@ -41,7 +41,7 @@ const LANG={
     step7:'Resolver queries authoritative server',step8:'Authoritative returns IP address',step9:'Resolver caches and returns to browser',
     browser:'Browser',resolver:'Resolver',rootSrv:'Root (.)',tldSrv:'TLD',authSrv:'Auth NS',
     cached:'CACHED',ttl:'TTL',ip:'IP',noCache:'Not in cache',
-  },
+  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
   fr:{
     title:'DNS Odyssee',subtitle:'Suivez la resolution DNS recursive etape par etape',
     disconnected:'Deconnecte',connected:'Connecte',
@@ -72,7 +72,7 @@ const LANG={
     step7:'Le resolveur interroge le serveur autoritaire',step8:'Le serveur autoritaire retourne l\'adresse IP',step9:'Le resolveur met en cache et retourne au navigateur',
     browser:'Navigateur',resolver:'Resolveur',rootSrv:'Racine (.)',tldSrv:'TLD',authSrv:'NS Auth',
     cached:'EN CACHE',ttl:'TTL',ip:'IP',noCache:'Pas en cache',
-  },
+  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
   ar:{
     title:'رحلة DNS',subtitle:'شاهد حل DNS التكراري خطوة بخطوة',
     disconnected:'غير متصل',connected:'متصل',
@@ -103,7 +103,7 @@ const LANG={
     step7:'المحلل يستعلم الخادم المعتمد',step8:'الخادم المعتمد يعيد عنوان IP',step9:'المحلل يخزن ويعيد للمتصفح',
     browser:'المتصفح',resolver:'المحلل',rootSrv:'الجذر (.)',tldSrv:'TLD',authSrv:'NS المعتمد',
     cached:'مخزن',ttl:'TTL',ip:'IP',noCache:'غير مخزن',
-  }
+  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}
 };
 
 let currentLang='en';

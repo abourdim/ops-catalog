@@ -97,7 +97,7 @@ const LANG = {
     activated: '📎 Covert antenna activated!', deactivated: '📎 Antenna deactivated',
     scanning: '🔍 Scanning environment...', scanDone: '✅ Scan complete!',
     emergency: '🚨 Emergency shutdown!', disguiseApplied: '🎭 Disguise applied!',
-  },
+  ,step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.'},
   fr: {
     title: 'Antenne Secrète', subtitle: '📎 Conception d\'antennes déguisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -130,7 +130,7 @@ const LANG = {
     activated: '📎 Antenne secrète activée !', deactivated: '📎 Antenne désactivée',
     scanning: '🔍 Scan en cours...', scanDone: '✅ Scan terminé !',
     emergency: '🚨 Arrêt d\'urgence !', disguiseApplied: '🎭 Déguisement appliqué !',
-  },
+  ,step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.'},
   ar: {
     title: 'هوائي سري', subtitle: '📎 تصميم هوائيات مخفية',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -163,7 +163,7 @@ const LANG = {
     activated: '📎 تم تفعيل الهوائي السري!', deactivated: '📎 تم إيقاف الهوائي',
     scanning: '🔍 جارٍ المسح...', scanDone: '✅ اكتمل المسح!',
     emergency: '🚨 إيقاف طارئ!', disguiseApplied: '🎭 تم تطبيق التمويه!',
-  }
+  ,step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.'}
 };
 
 let currentLang = 'en';

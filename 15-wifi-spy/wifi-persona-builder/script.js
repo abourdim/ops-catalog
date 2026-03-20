@@ -103,7 +103,7 @@ const LANG = {
     simStarted: 'Persona generation started', simStopped: 'Generation stopped',
     personaCreated: 'New persona created',
     howItWorksText: 'WiFi devices send probe requests to discover networks. Each device has a unique MAC address and probing pattern. This tool simulates creating fake device personas with realistic probe behaviors, useful for understanding WiFi fingerprinting and privacy implications.',
-  },
+  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.'},
   fr: {
     title: 'Constructeur de Persona WiFi', subtitle: 'Creer des personas WiFi avec des motifs de sonde',
     disconnected: 'Inactif', connected: 'Generation',
@@ -145,7 +145,7 @@ const LANG = {
     simStarted: 'Generation demarree', simStopped: 'Generation arretee',
     personaCreated: 'Nouvelle persona creee',
     howItWorksText: 'Les appareils WiFi envoient des requetes de sonde pour decouvrir les reseaux. Chaque appareil a une adresse MAC unique et un motif de sonde. Cet outil simule la creation de fausses personas.',
-  },
+  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.'},
   ar: {
     title: 'بناء شخصيات WiFi', subtitle: 'إنشاء شخصيات WiFi وهمية مع أنماط المسح',
     disconnected: 'خامل', connected: 'توليد',
@@ -187,7 +187,7 @@ const LANG = {
     simStarted: 'بدأ التوليد', simStopped: 'توقف التوليد',
     personaCreated: 'تم إنشاء شخصية جديدة',
     howItWorksText: 'أجهزة WiFi ترسل طلبات مسح لاكتشاف الشبكات. كل جهاز له عنوان MAC فريد ونمط مسح. هذه الأداة تحاكي إنشاء شخصيات وهمية لفهم بصمات WiFi.',
-  }
+  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.'}
 };
 
 let currentLang = 'en';

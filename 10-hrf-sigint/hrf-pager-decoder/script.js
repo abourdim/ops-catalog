@@ -70,7 +70,7 @@ const LANG = {
     pocsagInfo: 'POCSAG (Post Office Code Standardisation Advisory Group) is a paging protocol used worldwide. Messages are transmitted unencrypted at 512, 1200, or 2400 baud on VHF/UHF frequencies. Each pager has a unique address (RIC). Messages can be numeric-only or alphanumeric. With an RTL-SDR and software like multimon-ng, anyone can decode these signals.',
     decoderStarted: '📡 POCSAG decoder started on', decoderStopped: '🔴 Decoder stopped',
     newMessage: 'MSG', freqChanged: '📻 Frequency →',
-  },
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
   fr: {
     title: 'Decodeur Pager', subtitle: '📟 Decodez les messages pager en temps reel',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -107,7 +107,7 @@ const LANG = {
     pocsagInfo: 'POCSAG est un protocole de radiomessagerie mondial. Les messages sont transmis non chiffres a 512, 1200 ou 2400 baud sur VHF/UHF.',
     decoderStarted: '📡 Decodeur POCSAG demarre sur', decoderStopped: '🔴 Decodeur arrete',
     newMessage: 'MSG', freqChanged: '📻 Frequence →',
-  },
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
   ar: {
     title: 'فك تشفير البيجر', subtitle: '📟 فك تشفير رسائل البيجر في الوقت الحقيقي',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -144,7 +144,7 @@ const LANG = {
     pocsagInfo: 'POCSAG بروتوكول استدعاء عالمي. الرسائل تبث بدون تشفير على ترددات VHF/UHF.',
     decoderStarted: '📡 بدا فك تشفير POCSAG على', decoderStopped: '🔴 توقف فك التشفير',
     newMessage: 'رسالة', freqChanged: '📻 التردد →',
-  }
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
 };
 
 let currentLang = 'en';

@@ -132,7 +132,7 @@ const LANG = {
     challenge5: 'Create an alert system that logs motion events with location info.',
     realWorldTitle: 'Real-World Applications',
     realWorldDesc: 'Wildlife cameras, bank security, hospital monitoring \u2014 understanding these systems helps students build responsible IoT devices.',
-  },
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
   fr: {
     title: 'Shadow Cam \u2014 Surveillance Chiffr\u00e9e', subtitle: 'Capture d\u00e9clench\u00e9e par mouvement avec chiffrement et auto-suppression',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -203,7 +203,7 @@ const LANG = {
     challenge5: 'Cr\u00e9er un syst\u00e8me d\'alerte qui journalise les \u00e9v\u00e9nements de mouvement.',
     realWorldTitle: 'Applications r\u00e9elles',
     realWorldDesc: 'Cam\u00e9ras de faune, s\u00e9curit\u00e9 bancaire, surveillance hospitali\u00e8re \u2014 comprendre ces syst\u00e8mes aide les \u00e9tudiants.',
-  },
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
   ar: {
     title: '\u0643\u0627\u0645\u064A\u0631\u0627 \u0627\u0644\u0638\u0644 \u2014 \u0645\u0631\u0627\u0642\u0628\u0629 \u0645\u0634\u0641\u0631\u0629', subtitle: '\u0627\u0644\u062A\u0642\u0627\u0637 \u0628\u0627\u0644\u062D\u0631\u0643\u0629 \u0645\u0639 \u0627\u0644\u062A\u0634\u0641\u064A\u0631 \u0648\u0627\u0644\u062D\u0630\u0641 \u0627\u0644\u062A\u0644\u0642\u0627\u0626\u064A',
     disconnected: '\u063A\u064A\u0631 \u0645\u062A\u0635\u0644', connected: '\u0645\u062A\u0635\u0644',
@@ -274,7 +274,7 @@ const LANG = {
     challenge5: '\u0623\u0646\u0634\u0626 \u0646\u0638\u0627\u0645 \u062A\u0646\u0628\u064A\u0647 \u064A\u0633\u062C\u0644 \u0623\u062D\u062F\u0627\u062B \u0627\u0644\u062D\u0631\u0643\u0629.',
     realWorldTitle: '\u062A\u0637\u0628\u064A\u0642\u0627\u062A \u0648\u0627\u0642\u0639\u064A\u0629',
     realWorldDesc: '\u0643\u0627\u0645\u064A\u0631\u0627\u062A \u0627\u0644\u062D\u064A\u0627\u0629 \u0627\u0644\u0628\u0631\u064A\u0629\u060C \u0623\u0645\u0646 \u0627\u0644\u0628\u0646\u0648\u0643\u060C \u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u0645\u0633\u062A\u0634\u0641\u064A\u0627\u062A \u2014 \u0641\u0647\u0645 \u0647\u0630\u0647 \u0627\u0644\u0623\u0646\u0638\u0645\u0629 \u064A\u0633\u0627\u0639\u062F \u0627\u0644\u0637\u0644\u0627\u0628.',
-  }
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
 };
 
 let currentLang = 'en';

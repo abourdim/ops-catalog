@@ -35,7 +35,7 @@ const LANG = {
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     working: 'Working…', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     splashHint: 'tap to skip',
-  ,faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.'},
+  ,faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.',step1Title:'Design Implant',step1Desc:'Choose the hardware components and design the covert device.',step2Title:'Build & Program',step2Desc:'Assemble the implant and flash it with the custom firmware.',step3Title:'Deploy',step3Desc:'Install the implant in the target environment undetected.',step4Title:'Monitor & Extract',step4Desc:'Receive data from the implant and extract captured intelligence.'},
   fr: {
     title: 'imp-evil-maid-toolkit', subtitle: '🔓 accéder · 💾 extraire · 🛡️ durcir',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -43,7 +43,7 @@ const LANG = {
     ready: '🔓 Evil Maid Toolkit prêt !',
     logCleared: 'Journal effacé', copied: 'Copié !', working: 'En cours…',
     langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →', splashHint: 'appuyer pour passer',
-  ,faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.'},
+  ,faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.',step1Title:'Concevoir l\'implant',step1Desc:'Choisis les composants et conçois le dispositif caché.',step2Title:'Construire et programmer',step2Desc:'Assemble l\'implant et charge le firmware personnalisé.',step3Title:'Déployer',step3Desc:'Installe l\'implant dans l\'environnement cible sans être détecté.',step4Title:'Surveiller et extraire',step4Desc:'Reçois les données de l\'implant et extrais le renseignement.'},
   ar: {
     title: 'imp-evil-maid-toolkit', subtitle: '🔓 وصول · 💾 استخراج · 🛡️ تقوية',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -51,7 +51,7 @@ const LANG = {
     ready: '🔓 جاهز!',
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', working: 'جارٍ…',
     langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←', splashHint: 'انقر للتخطي',
-  ,faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.'}
+  ,faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.',step1Title:'تصميم الزرع',step1Desc:'اختر مكونات العتاد وصمم الجهاز السري.',step2Title:'بناء وبرمجة',step2Desc:'اجمع الزرع وحمّل البرنامج الثابت المخصص.',step3Title:'نشر',step3Desc:'ثبّت الزرع في البيئة المستهدفة دون اكتشاف.',step4Title:'مراقبة واستخراج',step4Desc:'استقبل البيانات من الزرع واستخرج الاستخبارات الملتقطة.'}
 };
 let currentLang = 'en';
 function setLanguage(lang) {

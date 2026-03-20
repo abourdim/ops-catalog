@@ -74,7 +74,7 @@ const LANG = {
     guideP3:'A waterfall display scrolls time downward. Each row is one sweep across your chosen frequency range.',
     // DB
     dbTitle:'Common Frequency Allocations',
-  },
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
   fr: {
     title:'Cascade RF', subtitle:'Cascade RF \u2014 Affichage Spectral',
     disconnected:'D\u00e9connect\u00e9', connected:'Connect\u00e9',
@@ -114,7 +114,7 @@ const LANG = {
     guideP2:'FM (88\u2013108 MHz), ISM (433 MHz), WiFi (2.4 & 5 GHz), Bluetooth (2.4 GHz).',
     guideP3:'La cascade d\u00e9file le temps vers le bas. Chaque ligne est un balayage.',
     dbTitle:'Allocations de Fr\u00e9quences',
-  },
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
   ar: {
     title:'\u0634\u0644\u0627\u0644 RF', subtitle:'\u0634\u0644\u0627\u0644 RF \u2014 \u0639\u0631\u0636 \u0627\u0644\u0637\u064A\u0641',
     disconnected:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644', connected:'\u0645\u062A\u0635\u0644',
@@ -154,7 +154,7 @@ const LANG = {
     guideP2:'FM (88-108 MHz)\u060C ISM (433 MHz)\u060C WiFi (2.4 & 5 GHz)\u060C Bluetooth.',
     guideP3:'\u0627\u0644\u0634\u0644\u0627\u0644 \u064A\u0645\u0631\u0631 \u0627\u0644\u0632\u0645\u0646 \u0644\u0644\u0623\u0633\u0641\u0644. \u0643\u0644 \u0633\u0637\u0631 \u0647\u0648 \u0645\u0633\u062D \u0648\u0627\u062D\u062F.',
     dbTitle:'\u062A\u062E\u0635\u064A\u0635\u0627\u062A \u0627\u0644\u062A\u0631\u062F\u062F\u0627\u062A',
-  }
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
 };
 
 let currentLang = 'en';

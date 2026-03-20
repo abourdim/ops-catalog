@@ -29,7 +29,7 @@ const LANG={
     wiki_monte:'Monte Carlo Pi: Use byte pairs as coordinates. Pi estimate = 4 * (inside circle / total). Should be near 3.14159.',
     wiki_serial:'Serial Correlation: Measures dependency between consecutive bytes. Near 0 = independent (good). Near +/-1 = correlated (bad).',
     mathExplain:'Entropy Tests:\n\n1. Shannon Entropy:\n   H = -sum(p_i * log2(p_i)) for i=0..255\n   Perfect random: H = 8.0 bits/byte\n\n2. Chi-Square Test:\n   X^2 = sum((O_i - E)^2 / E)\n   E = N/256 (expected count per byte)\n   df = 255, accept if p-value > 0.01\n\n3. Monte Carlo Pi Estimation:\n   Take pairs (x,y) as points in [0,255]^2\n   Circle: x^2 + y^2 <= 127.5^2\n   Pi ~ 4 * (inside/total)\n\n4. Serial Correlation:\n   r = (sum(x_i * x_{i+1}) - mean^2*N) / (sum(x_i^2) - mean^2*N)\n   Ideal: r = 0 (no correlation)'
-  },
+  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.'},
   fr:{
     title:'Analyseur d\'Entropie',subtitle:'Testez la qualite de l\'aleatoire avec chi-carre, Monte Carlo, entropie',
     mainSection:'Testeur d\'Aleatoire',mainDesc:'Analysez des sequences d\'octets avec plusieurs tests statistiques',
@@ -53,7 +53,7 @@ const LANG={
     wiki_monte:'Monte Carlo Pi: Paires comme coordonnees. Pi ~ 4 * (dans cercle / total).',
     wiki_serial:'Correlation Serie: Dependance entre octets consecutifs. Pres de 0 = bon.',
     mathExplain:'Tests d\'Entropie:\n\n1. Entropie de Shannon: H = -sum(p_i * log2(p_i))\n2. Test Chi-Carre: X^2 = sum((O_i-E)^2/E)\n3. Monte Carlo Pi: Pi ~ 4 * (dans cercle/total)\n4. Correlation Serie: r pres de 0 = pas de correlation'
-  },
+  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.'},
   ar:{
     title:'محلل الانتروبيا',subtitle:'اختبر جودة العشوائية بمربع كاي ومونتي كارلو والانتروبيا',
     mainSection:'اختبار العشوائية',mainDesc:'حلل تسلسلات البايت للعشوائية باستخدام اختبارات احصائية متعددة',
@@ -77,7 +77,7 @@ const LANG={
     wiki_monte:'مونتي كارلو باي: ازواج كاحداثيات. باي ~ 4 * (داخل الدائرة / الكل).',
     wiki_serial:'الارتباط التسلسلي: التبعية بين بايتات متتالية. قرب 0 = جيد.',
     mathExplain:'اختبارات الانتروبيا:\n\n1. انتروبيا شانون: H = -sum(p_i * log2(p_i))\n2. مربع كاي: X^2 = sum((O_i-E)^2/E)\n3. مونتي كارلو: باي ~ 4 * (داخل الدائرة/الكل)\n4. الارتباط التسلسلي: r قرب 0 = بدون ارتباط'
-  }
+  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.'}
 };
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k]});document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('cry-entropy-lang',lang)}catch{};log(s.langChanged,'info');buildHelp();buildRef();buildMath()}

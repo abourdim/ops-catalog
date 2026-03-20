@@ -119,7 +119,7 @@ const LANG = {
     tip3: '🔴 Suspicious devices often have randomized MACs (local bit set)',
     tip4: '🔴 Look for devices that appear only when you move to a new location',
     tip5: '🔴 WiFi cameras typically maintain a persistent connection to one SSID',
-  },
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
   fr: {
     title: 'Dead Zone — Détecteur', subtitle: '📵 Trouvez chaque appareil WiFi autour de vous',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -165,7 +165,7 @@ const LANG = {
     idle: 'INACTIF', scanning: 'EN COURS', scanState: 'État du Scan',
     lookupVendor: 'Rechercher',
     safe: 'SÛR', noSuspicious: 'Aucun appareil suspect détecté. Lancez un scan.',
-  },
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
   ar: {
     title: 'المنطقة الميتة — كاشف الأجهزة', subtitle: '📵 اعثر على كل جهاز WiFi حولك',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -211,7 +211,7 @@ const LANG = {
     idle: 'خامل', scanning: 'يفحص', scanState: 'حالة الفحص',
     lookupVendor: 'بحث',
     safe: 'آمن', noSuspicious: 'لم يتم الكشف عن أجهزة مشبوهة. ابدأ الفحص.',
-  }
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
 };
 
 let currentLang = 'en';

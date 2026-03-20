@@ -21,7 +21,15 @@
     .ctrl-row select,.ctrl-row input{flex:1;min-width:100px;padding:6px 10px;border-radius:6px;border:1px solid var(--border,rgba(255,255,255,.2));background:var(--panel);color:var(--text);font-size:.85rem}
     .mono-log{font-family:monospace;font-size:.72rem;background:#000;color:#0f0;padding:8px;border-radius:8px;max-height:120px;overflow-y:auto;margin-top:6px;line-height:1.4}
     @media(max-width:600px){.sim-grid{grid-template-columns:1fr}}
-  </style>
+  
+    /* Step cards */
+    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+    .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+    .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
+    .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
+    .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Design targeted website compromise strategies</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>

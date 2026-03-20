@@ -131,7 +131,7 @@ const LANG = {
     challenge2Desc: 'Set the noise to maximum and find threshold values that minimize false alarms while still catching real intrusions. What is the best balance between sensitivity and reliability?',
     challenge3Title: 'Challenge 3: Design a Silent Alarm',
     challenge3Desc: 'Modify the alarm so it does not make any sound or visible alert when triggered. Instead, it should silently log the intrusion and send a notification. Think about real-world security systems!',
-  },
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
   fr: {
     title: 'bit-stealth-alarm', subtitle: '🚨 detecter · 🔐 proteger · 💡 innover',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -200,7 +200,7 @@ const LANG = {
     challenge2Desc: 'Mettez le bruit au maximum et trouvez des seuils qui minimisent les fausses alarmes tout en detectant les vraies intrusions.',
     challenge3Title: 'Defi 3 : Concevoir une Alarme Silencieuse',
     challenge3Desc: 'Modifiez l\'alarme pour qu\'elle ne fasse aucun son ni alerte visible. Elle doit enregistrer silencieusement et envoyer une notification.',
-  },
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
   ar: {
     title: 'bit-stealth-alarm', subtitle: '🚨 اكتشف · 🔐 احمِ · 💡 ابتكر',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -269,7 +269,7 @@ const LANG = {
     challenge2Desc: 'اضبط الضوضاء على الحد الأقصى واعثر على قيم العتبات التي تقلل الإنذارات الكاذبة مع اكتشاف التسللات الحقيقية.',
     challenge3Title: 'التحدي 3: تصميم إنذار صامت',
     challenge3Desc: 'عدّل الإنذار بحيث لا يصدر أي صوت أو تنبيه مرئي عند الإطلاق. بدلاً من ذلك، يسجّل التسلل بصمت ويرسل إشعارًا.',
-  }
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
 };
 
 let currentLang = 'en';

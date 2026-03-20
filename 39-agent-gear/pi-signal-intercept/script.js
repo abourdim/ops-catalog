@@ -104,7 +104,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  },
+  ,step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.'},
   fr: {
     title: 'pi-signal-intercept', subtitle: '📡 interception de signal — capturer les transmissions',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -147,7 +147,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  },
+  ,step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.'},
   ar: {
     title: 'pi-signal-intercept', subtitle: '📡 اعتراض الإشارات — التقاط البث',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -190,7 +190,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  }
+  ,step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.'}
 };
 
 let currentLang = 'en';

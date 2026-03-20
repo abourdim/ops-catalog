@@ -68,7 +68,7 @@ const LANG = {
     rootCA:'Root CA',intermediateCA:'Intermediate CA',leafCert:'Leaf Certificate',
     issuer:'Issuer',subject:'Subject',validFrom:'Valid From',validTo:'Valid To',algorithm:'Algorithm',serial:'Serial',status:'Status',
     valid:'Valid',expired:'Expired',selfSigned:'Self-Signed',comparing:'Comparing all chains...',comparisonDone:'Comparison complete!',
-  },
+  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
   fr: {
     title: 'Inspecteur de Certificats', subtitle: 'Visualiser les chaines de certificats TLS',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -102,7 +102,7 @@ const LANG = {
     rootCA:'CA Racine',intermediateCA:'CA Intermediaire',leafCert:'Certificat Feuille',
     issuer:'Emetteur',subject:'Sujet',validFrom:'Valide Depuis',validTo:'Valide Jusqu\'a',algorithm:'Algorithme',serial:'Serie',status:'Statut',
     valid:'Valide',expired:'Expire',selfSigned:'Auto-signe',comparing:'Comparaison de toutes les chaines...',comparisonDone:'Comparaison terminee !',
-  },
+  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
   ar: {
     title: 'مفتش الشهادات', subtitle: 'تصور سلاسل شهادات TLS من الجذر الى الفرع',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -136,7 +136,7 @@ const LANG = {
     rootCA:'الجذر CA',intermediateCA:'CA الوسيط',leafCert:'شهادة الفرع',
     issuer:'المصدر',subject:'الموضوع',validFrom:'صالح من',validTo:'صالح حتى',algorithm:'الخوارزمية',serial:'الرقم التسلسلي',status:'الحالة',
     valid:'صالح',expired:'منتهي',selfSigned:'موقع ذاتيا',comparing:'جاري مقارنة جميع السلاسل...',comparisonDone:'اكتملت المقارنة!',
-  }
+  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}
 };
 
 let currentLang = 'en';

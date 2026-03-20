@@ -94,7 +94,7 @@ const LANG = {
     addHarmonic: 'Add Harmonic', resetForge: 'Reset',
     forgeHint: 'Craft signals and transmit them to the library.',
     transmitted: 'Signal transmitted',
-  },
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
   fr: {
     title: 'Forge de Signaux', subtitle: 'Forge de Signaux — Artisan RF',
     disconnected: 'En attente', connected: 'Transmission',
@@ -126,7 +126,7 @@ const LANG = {
     amplitude: 'Amplitude:', sigInfo: 'Info Signal', transmit: 'Transmettre',
     addHarmonic: 'Harmonique', resetForge: 'Réinitialiser',
     forgeHint: 'Créez des signaux et transmettez-les.', transmitted: 'Signal transmis',
-  },
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
   ar: {
     title: 'مصنع الإشارات', subtitle: 'مصنع الإشارات — صياغة RF',
     disconnected: 'خامل', connected: 'إرسال',
@@ -158,7 +158,7 @@ const LANG = {
     amplitude: 'السعة:', sigInfo: 'معلومات الإشارة', transmit: 'إرسال',
     addHarmonic: 'إضافة توافقي', resetForge: 'إعادة تعيين',
     forgeHint: 'اصنع إشارات وأرسلها إلى المكتبة.', transmitted: 'تم إرسال الإشارة',
-  }
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
 };
 
 let currentLang = 'en';

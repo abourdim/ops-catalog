@@ -130,7 +130,7 @@ const LANG = {
     transcribing: '📝 Transcribing intercepted audio...',
     alreadyListening: '🎤 Already listening',
     notListening: '⏹ Not currently listening',
-  },
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
   fr: {
     title: 'bit-micro-wire', subtitle: '🎙️ diffuser · 📡 transmettre · 📝 transcrire',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -199,7 +199,7 @@ const LANG = {
     transcribing: '📝 Transcription de l\'audio intercepté...',
     alreadyListening: '🎤 Déjà en écoute',
     notListening: '⏹ Pas en écoute actuellement',
-  },
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
   ar: {
     title: 'bit-micro-wire', subtitle: '🎙️ بث · 📡 نقل · 📝 تفريغ',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -268,7 +268,7 @@ const LANG = {
     transcribing: '📝 جارٍ تفريغ الصوت المعترض...',
     alreadyListening: '🎤 الاستماع جارٍ بالفعل',
     notListening: '⏹ لا يوجد استماع حاليًا',
-  }
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
 };
 
 let currentLang = 'en';

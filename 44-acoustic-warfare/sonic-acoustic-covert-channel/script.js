@@ -118,7 +118,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  },
+  ,step1Title:'Generate Sound',step1Desc:'Agent A writes a secret message and enters a shared key.',step2Title:'Propagate',step2Desc:'The message is encrypted using XOR cipher with the shared key.',step3Title:'Detect & Capture',step3Desc:'The encrypted message is "dropped" via BLE broadcast into the air.',step4Title:'Analyze & Decode',step4Desc:'Agent B scans, receives the drop, and decrypts with the same key.'},
   fr: {
     title: 'bit-dead-drop', subtitle: '📨 chiffrer · 📡 déposer · 🔓 déchiffrer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -175,7 +175,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  },
+  ,step1Title:'Générer le son',step1Desc:'L\'agent A écrit un message secret et entre une clé partagée.',step2Title:'Propager',step2Desc:'Le message est chiffré avec le chiffrement XOR et la clé partagée.',step3Title:'Détecter et capturer',step3Desc:'Le message chiffré est "déposé" par diffusion BLE dans les airs.',step4Title:'Analyser et décoder',step4Desc:'L\'agent B scanne, reçoit le drop et déchiffre avec la même clé.'},
   ar: {
     title: 'bit-dead-drop', subtitle: '📨 تشفير · 📡 إيداع · 🔓 فك تشفير',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -232,7 +232,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  }
+  ,step1Title:'توليد الصوت',step1Desc:'العميل أ يكتب رسالة سرية ويدخل مفتاحًا مشتركًا.',step2Title:'انتشار',step2Desc:'يتم تشفير الرسالة باستخدام شيفرة XOR مع المفتاح المشترك.',step3Title:'كشف والتقاط',step3Desc:'الرسالة المشفرة تُودَع عبر بث BLE في الهواء.',step4Title:'تحليل وفك تشفير',step4Desc:'العميل ب يمسح ويستقبل الإيداع ويفك تشفيره بنفس المفتاح.'}
 };
 
 let currentLang = 'en';

@@ -155,21 +155,27 @@
       <details class="collapsible">
         <summary><span class="icon">🔐</span> <span data-i18n="sectionA">How It Works</span></summary>
         <div class="card">
-          <div class="step-card">
-            <span class="step-num">1</span>
-            <span data-i18n="step1">Alice encrypts the message with Bob's shared key using XOR cipher.</span>
-          </div>
-          <div class="step-card">
-            <span class="step-num">2</span>
-            <span data-i18n="step2">The encrypted message is sent through one or more relay nodes.</span>
-          </div>
-          <div class="step-card">
-            <span class="step-num">3</span>
-            <span data-i18n="step3">The relay forwards the data but cannot read it — it only sees encrypted gibberish.</span>
-          </div>
-          <div class="step-card">
-            <span class="step-num">4</span>
-            <span data-i18n="step4">Bob receives the cipher text and decrypts it with the same shared key.</span>
+          <div class="step-grid">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <div class="step-title" data-i18n="step1Title">Scan</div>
+              <div class="step-desc" data-i18n="step1Desc">The network is scanned to discover active devices and services.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <div class="step-title" data-i18n="step2Title">Capture</div>
+              <div class="step-desc" data-i18n="step2Desc">Network packets are intercepted and captured for analysis.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <div class="step-title" data-i18n="step3Title">Analyze</div>
+              <div class="step-desc" data-i18n="step3Desc">Packet data is parsed to reveal protocols, addresses, and payloads.</div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">4</div>
+              <div class="step-title" data-i18n="step4Title">Report</div>
+              <div class="step-desc" data-i18n="step4Desc">Results are visualized as graphs, maps, or detailed reports.</div>
+            </div>
           </div>
         </div>
       </details>

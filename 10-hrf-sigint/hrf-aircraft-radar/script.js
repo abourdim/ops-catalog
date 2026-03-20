@@ -73,7 +73,7 @@ const LANG = {
     adsbInfo: 'ADS-B (Automatic Dependent Surveillance-Broadcast) is a surveillance technology where aircraft broadcast their GPS position, altitude, speed, and identification. Operating on 1090 MHz, these unencrypted signals can be received with an RTL-SDR dongle and a simple antenna. This app simulates the decoded output of an ADS-B receiver.',
     receiverStarted: '📡 ADS-B receiver started on 1090 MHz', receiverStopped: '🔴 Receiver stopped',
     newAircraft: 'New aircraft detected:', aircraftLost: 'Aircraft lost:',
-  },
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
   fr: {
     title: 'Radar Aérien', subtitle: '✈️ Tracez chaque avion avec altitude, vitesse, indicatif',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -111,7 +111,7 @@ const LANG = {
     adsbInfo: 'L\'ADS-B est une technologie de surveillance où les avions diffusent leur position GPS, altitude, vitesse et identification sur 1090 MHz.',
     receiverStarted: '📡 Récepteur ADS-B démarré sur 1090 MHz', receiverStopped: '🔴 Récepteur arrêté',
     newAircraft: 'Nouvel avion détecté :', aircraftLost: 'Avion perdu :',
-  },
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
   ar: {
     title: 'رادار الطائرات', subtitle: '✈️ تتبع كل طائرة بالارتفاع والسرعة والإشارة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -149,7 +149,7 @@ const LANG = {
     adsbInfo: 'ADS-B هي تقنية مراقبة حيث تبث الطائرات موقعها GPS وارتفاعها وسرعتها وهويتها على 1090 ميغاهرتز.',
     receiverStarted: '📡 بدأ مستقبل ADS-B على 1090 ميغاهرتز', receiverStopped: '🔴 توقف المستقبل',
     newAircraft: 'طائرة جديدة:', aircraftLost: 'فقدت طائرة:',
-  }
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
 };
 
 let currentLang = 'en';
