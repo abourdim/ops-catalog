@@ -38,6 +38,15 @@ canvas.proto-canvas{width:100%;height:300px;border-radius:10px;border:1px solid 
     .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
     .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
     .code-display.hidden { display: none; }
+
+    /* Demo player */
+    .demo-player { padding: 0.5rem; }
+    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 </style>
 </head>
 <body>
@@ -48,7 +57,26 @@ canvas.proto-canvas{width:100%;height:300px;border-radius:10px;border:1px solid 
       <div class="layer-legend" id="layerLegend"><div class="leg"><div class="dot" style="background:#ef4444"></div><span data-i18n="layerPHY">PHY</span></div><div class="leg"><div class="dot" style="background:#f59e0b"></div><span data-i18n="layerMAC">MAC Header</span></div><div class="leg"><div class="dot" style="background:#22c55e"></div><span data-i18n="layerLLC">LLC</span></div><div class="leg"><div class="dot" style="background:#3b82f6"></div><span data-i18n="layerData">Data</span></div><div class="leg"><div class="dot" style="background:#a855f7"></div><span data-i18n="layerFCS">FCS</span></div></div>
       <div class="sim-stats"><div class="stat"><div class="val" id="frmVal">0</div><div class="lbl" data-i18n="frames">Frames</div></div><div class="stat"><div class="val" id="typeVal">---</div><div class="lbl" data-i18n="frameType">Type</div></div><div class="stat"><div class="val" id="sizeVal">---</div><div class="lbl" data-i18n="frameSize">Size</div></div><div class="stat"><div class="val" id="rateVal">---</div><div class="lbl" data-i18n="dataRate">Rate</div></div></div>
       <canvas id="protoCanvas" class="proto-canvas"></canvas></div>
-    <details class="collapsible" open><summary><span class="icon">&#128225;</span> <span data-i18n="sectionA">Frame Inspector</span></summary><div class="card"><div class="frame-list" id="frameList"></div></div></details>
+    
+      <details class="collapsible">
+        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+        <div class="card">
+          <div class="demo-player">
+            <div class="demo-step-display">
+              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+            </div>
+            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+            <div class="demo-controls">
+              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible" open><summary><span class="icon">&#128225;</span> <span data-i18n="sectionA">Frame Inspector</span></summary><div class="card"><div class="frame-list" id="frameList"></div></div></details>
     <details class="collapsible"><summary><span class="icon">&#127891;</span> <span data-i18n="sectionB">How It Works</span></summary><div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">802.11 frames have multiple layers: PHY preamble (red), MAC header with addresses and control (orange), LLC for protocol identification (green), data payload (blue), and FCS checksum (purple). Each layer has a distinct purpose in wireless communication.</p></div></div></details>
 
       <details class="collapsible">

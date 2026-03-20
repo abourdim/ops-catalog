@@ -25,6 +25,15 @@
     .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
     .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
     .code-display.hidden { display: none; }
+
+    /* Demo player */
+    .demo-player { padding: 0.5rem; }
+    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 </style>
 </head>
 <body>
@@ -54,7 +63,26 @@
       </div>
     </div>
 
-    <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">Subnetting Basics</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;line-height:1.8;" data-i18n="subnetText">Subnetting divides a network into smaller sub-networks. A subnet mask like /24 means 256 addresses (254 usable). Routers connect different subnets, switches connect devices within a subnet, and firewalls filter traffic between them.</p></div></details>
+    
+      <details class="collapsible">
+        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+        <div class="card">
+          <div class="demo-player">
+            <div class="demo-step-display">
+              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+            </div>
+            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+            <div class="demo-controls">
+              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">Subnetting Basics</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;line-height:1.8;" data-i18n="subnetText">Subnetting divides a network into smaller sub-networks. A subnet mask like /24 means 256 addresses (254 usable). Routers connect different subnets, switches connect devices within a subnet, and firewalls filter traffic between them.</p></div></details>
     <details class="collapsible"><summary><span class="icon">🔢</span> <span data-i18n="sectionB">IP Address Classes</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;line-height:1.8;" data-i18n="ipClassText">Class A: 10.0.0.0/8 (large networks), Class B: 172.16.0.0/12 (medium), Class C: 192.168.0.0/16 (small/home). Private IPs are not routable on the internet and are used internally.</p></div></details>
     <details class="collapsible"><summary><span class="icon">💥</span> <span data-i18n="sectionC">Failure Simulation</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;" data-i18n="failText">Test network resilience by simulating link failures.</p><div style="margin-top:.5rem;"><button class="btn-sm fire-btn" id="failLinkBtn">💥 <span data-i18n="failLink">Fail Random Link</span></button><button class="btn-sm primary" id="restoreBtn" style="margin-left:.5rem;">🔧 <span data-i18n="restore">Restore All</span></button></div></div></details>
 

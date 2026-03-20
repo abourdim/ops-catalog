@@ -31,6 +31,15 @@
     .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
     .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
     .code-display.hidden { display: none; }
+
+    /* Demo player */
+    .demo-player { padding: 0.5rem; }
+    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 </style>
 </head>
 <body>
@@ -56,7 +65,26 @@
         <div class="control-section" style="flex:1;min-width:160px;"><div class="section-title">&#x1F4CF; <span data-i18n="distLabel">Distance</span></div><div id="distValue" style="font-family:'Orbitron',monospace;font-size:1.4rem;text-align:center;color:#22c55e;margin:8px 0;">--- m</div></div>
         <div class="control-section" style="flex:1;min-width:160px;"><div class="section-title">&#x1F4CB; <span data-i18n="mapLabel">Map Stats</span></div><div id="mapStats" style="font-size:.8rem;line-height:1.6;color:var(--text-muted);padding:4px;"></div></div></div>
     </div>
-    <details class="collapsible" open><summary><span class="icon">&#x1F4CB;</span> <span data-i18n="sectionA">Echo Log</span></summary><div class="card"><div id="echoLog" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;padding:.5rem;"></div><div class="hint" data-i18n="echoHint">Echo measurements appear here.</div></div></details>
+    
+      <details class="collapsible">
+        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+        <div class="card">
+          <div class="demo-player">
+            <div class="demo-step-display">
+              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+            </div>
+            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+            <div class="demo-controls">
+              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible" open><summary><span class="icon">&#x1F4CB;</span> <span data-i18n="sectionA">Echo Log</span></summary><div class="card"><div id="echoLog" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;padding:.5rem;"></div><div class="hint" data-i18n="echoHint">Echo measurements appear here.</div></div></details>
     <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionB">Sonar Science</span></summary><div class="card"><div id="sonarInfo" style="font-size:.78rem;line-height:1.5;padding:1rem;"></div></div></details>
     <details class="collapsible"><summary><span class="icon">&#x1F3C6;</span> <span data-i18n="sectionC">Challenge</span></summary><div class="card"><div style="padding:1rem">
       <div class="challenge-card"><p data-i18n="challenge1">Why does higher ping frequency give better spatial resolution?</p><button class="button" onclick="revealChallenge(0)" data-i18n="revealBtn">Reveal Answer</button><div class="challenge-answer" id="answer0" data-i18n="challengeReveal1">Higher frequencies have shorter wavelengths, allowing them to resolve smaller features. At 8kHz (wavelength ~4.3cm), you can detect objects much smaller than at 1kHz (wavelength ~34cm). However, higher frequencies attenuate faster.</div></div>

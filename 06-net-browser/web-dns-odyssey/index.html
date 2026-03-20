@@ -30,6 +30,15 @@
     .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
     .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
     .code-display.hidden { display: none; }
+
+    /* Demo player */
+    .demo-player { padding: 0.5rem; }
+    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 </style>
 </head>
 <body>
@@ -58,6 +67,25 @@
           </div>
         </div>
       </div>
+      
+      <details class="collapsible">
+        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+        <div class="card">
+          <div class="demo-player">
+            <div class="demo-step-display">
+              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+            </div>
+            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+            <div class="demo-controls">
+              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
       <details class="collapsible"><summary><span class="icon">&#128218;</span> <span data-i18n="sectionA">DNS Record Types</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;line-height:1.8;"><p data-i18n="dnsRefText">DNS uses different record types: A (IPv4 address), AAAA (IPv6), CNAME (alias), MX (mail server), NS (name server), TXT (text data), SOA (start of authority), and PTR (reverse lookup). Each record has a TTL that controls caching duration.</p></div></div></details>
       <details class="collapsible"><summary><span class="icon">&#128737;&#65039;</span> <span data-i18n="sectionB">DNS Security</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;line-height:1.8;"><p data-i18n="secText">DNSSEC adds cryptographic signatures to DNS records to prevent spoofing. DNS-over-HTTPS (DoH) and DNS-over-TLS (DoT) encrypt DNS queries to protect privacy.</p></div></div></details>
       <details class="collapsible"><summary><span class="icon">&#129514;</span> <span data-i18n="sectionC">Resolution History</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;"><p data-i18n="historyText">View previously resolved domains and their cached results.</p><div id="historyList" style="margin-top:.5rem;"></div></div></div></details>

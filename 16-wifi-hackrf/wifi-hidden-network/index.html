@@ -40,6 +40,15 @@ canvas.scan-canvas{width:100%;height:240px;border-radius:10px;border:1px solid v
     .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
     .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
     .code-display.hidden { display: none; }
+
+    /* Demo player */
+    .demo-player { padding: 0.5rem; }
+    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 </style>
 </head>
 <body>
@@ -50,7 +59,26 @@ canvas.scan-canvas{width:100%;height:240px;border-radius:10px;border:1px solid v
       <div class="mode-toggle"><button id="passiveMode" class="active" data-i18n="passive">Passive</button><button id="activeMode" data-i18n="active">Active Probe</button></div>
       <div class="sim-stats"><div class="stat"><div class="val" id="totalVal">0</div><div class="lbl" data-i18n="totalNets">Networks</div></div><div class="stat"><div class="val" id="hiddenVal">0</div><div class="lbl" data-i18n="hiddenNets">Hidden</div></div><div class="stat"><div class="val" id="probeVal">0</div><div class="lbl" data-i18n="probes">Probes</div></div><div class="stat"><div class="val" id="revealVal">0</div><div class="lbl" data-i18n="revealed">Revealed</div></div></div>
       <canvas id="scanCanvas" class="scan-canvas"></canvas></div>
-    <details class="collapsible" open><summary><span class="icon">&#128225;</span> <span data-i18n="sectionA">Detected Networks</span></summary><div class="card"><div class="net-list" id="netList"></div></div></details>
+    
+      <details class="collapsible">
+        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+        <div class="card">
+          <div class="demo-player">
+            <div class="demo-step-display">
+              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+            </div>
+            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+            <div class="demo-controls">
+              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible" open><summary><span class="icon">&#128225;</span> <span data-i18n="sectionA">Detected Networks</span></summary><div class="card"><div class="net-list" id="netList"></div></div></details>
     <details class="collapsible"><summary><span class="icon">&#127891;</span> <span data-i18n="sectionB">How It Works</span></summary><div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">Hidden networks broadcast beacons with empty SSIDs. By capturing probe responses and correlating MAC addresses, we can reveal these networks.</p></div></div></details>
 
       <details class="collapsible">

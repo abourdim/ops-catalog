@@ -113,7 +113,7 @@ const LANG = {
     interferenceNone: 'No interference — clear channel!',
     interferenceLow: 'Low interference',
     interferenceMed: 'Medium interference — consider changing channel',
-    interferenceHigh: 'High interference — WiFi overlap detected!',step1Title:'Configure RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capture Spectrum',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyze Signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classify & Report',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Rf Alarm System and Bit Rf Remote Control! Each teaches something different. 🚀'},
+    interferenceHigh: 'High interference — WiFi overlap detected!',step1Title:'Configure RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capture Spectrum',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyze Signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classify & Report',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Rf Alarm System and Bit Rf Remote Control! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next'},
   fr: {
     title: 'bit-frequency-duel', subtitle: '📊 visualiser · 📡 transmettre · 🔍 analyser',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -165,7 +165,7 @@ const LANG = {
     interferenceNone: 'Aucune interférence — canal libre !',
     interferenceLow: 'Interférence faible',
     interferenceMed: 'Interférence moyenne — envisagez de changer de canal',
-    interferenceHigh: 'Interférence forte — chevauchement WiFi détecté !',step1Title:'Configurer RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capturer le spectre',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyser le signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classifier et rapporter',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Rf Alarm System and Bit Rf Remote Control ! Chacune enseigne quelque chose de différent. 🚀'},
+    interferenceHigh: 'Interférence forte — chevauchement WiFi détecté !',step1Title:'Configurer RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capturer le spectre',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyser le signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classifier et rapporter',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Rf Alarm System and Bit Rf Remote Control ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv'},
   ar: {
     title: 'bit-frequency-duel', subtitle: '📊 تصوّر · 📡 أرسل · 🔍 حلّل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -217,7 +217,7 @@ const LANG = {
     interferenceNone: 'لا تداخل — قناة واضحة!',
     interferenceLow: 'تداخل منخفض',
     interferenceMed: 'تداخل متوسط — فكّر في تغيير القناة',
-    interferenceHigh: 'تداخل عالي — تراكب WiFi مكتشف!',step1Title:'تكوين RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'التقاط الطيف',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'تحليل الإشارة',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'تصنيف والتقرير',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Rf Alarm System and Bit Rf Remote Control! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
+    interferenceHigh: 'تداخل عالي — تراكب WiFi مكتشف!',step1Title:'تكوين RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'التقاط الطيف',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'تحليل الإشارة',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'تصنيف والتقرير',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Rf Alarm System and Bit Rf Remote Control! كل واحد يعلّم شيئاً مختلفاً. 🚀',demo_s1:'مرحباً! لنستكشف هذه المحاكاة معاً. انظر إلى القسم الرئيسي أعلاه. 🔬',demo_s2:'اضغط زر الإجراء الرئيسي للبدء. شاهد التصور يستجيب! ⚡',demo_s3:'غيّر إعداداً — جرب شريط تمرير أو قائمة منسدلة. هل ترى التغيير؟ 🔄',demo_s4:'تحقق من النتائج — الرسوم البيانية تُظهر ما يحدث. 📊',demo_s5:'رائع! 🎉 أنت تعرف الأساسيات. جرب المختبر للتعمق أكثر!',sectionDemo:'شاهد العرض',demoPlay:'تشغيل',demoPause:'إيقاف',demoPrev:'السابق',demoNext:'التالي'}
 };
 
 let currentLang = 'en';
@@ -1704,3 +1704,50 @@ document.addEventListener('click', function(e) {
     if (show) show.classList.remove('hidden');
   }
 });
+
+var DEMO_STEPS = [
+  {i18n:'demo_s1', text:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬', target:'#settingsCloseBtn', delay:3000},
+  {i18n:'demo_s2', text:'Click the primary action button to start. Watch the visualization respond in real time! ⚡', target:'#whisperBtn', delay:3000},
+  {i18n:'demo_s3', text:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄', target:'#breathingBtn', delay:3000},
+  {i18n:'demo_s4', text:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊', target:'#simCanvas', delay:3000},
+  {i18n:'demo_s5', text:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!', target:'#mainCard', delay:3000},
+];
+
+// ── Demo Engine ──
+var _demoStep = 0, _demoPlaying = false, _demoTimer = null;
+var _demoSteps = (typeof DEMO_STEPS !== 'undefined') ? DEMO_STEPS : [];
+
+function demoNav(dir) {
+  _demoStep = Math.max(0, Math.min(_demoSteps.length - 1, _demoStep + dir));
+  demoShow();
+}
+
+function demoToggle() {
+  _demoPlaying = !_demoPlaying;
+  var btn = document.getElementById('demoPlayBtn');
+  if (btn) btn.innerHTML = _demoPlaying ? '⏸ <span data-i18n="demoPause">Pause</span>' : '▶ <span data-i18n="demoPlay">Play</span>';
+  if (_demoPlaying) {
+    demoShow();
+    _demoTimer = setInterval(function() {
+      if (_demoStep < _demoSteps.length - 1) { _demoStep++; demoShow(); }
+      else { _demoPlaying = false; clearInterval(_demoTimer); var b = document.getElementById('demoPlayBtn'); if(b) b.innerHTML = '▶ <span data-i18n="demoPlay">Play</span>'; }
+    }, 3000);
+  } else {
+    clearInterval(_demoTimer);
+  }
+}
+
+function demoShow() {
+  var step = _demoSteps[_demoStep];
+  if (!step) return;
+  var numEl = document.getElementById('demoCurrentStep');
+  var narEl = document.getElementById('demoNarration');
+  var barEl = document.getElementById('demoProgressBar');
+  if (numEl) numEl.textContent = (_demoStep + 1) + '/' + _demoSteps.length;
+  if (narEl) { narEl.setAttribute('data-i18n', step.i18n); narEl.textContent = step.text; if (typeof applyLang === 'function') applyLang(); }
+  if (barEl) barEl.style.width = ((_demoStep + 1) / _demoSteps.length * 100) + '%';
+  // Remove old highlights
+  document.querySelectorAll('.demo-highlight').forEach(function(el) { el.classList.remove('demo-highlight'); });
+  // Add highlight
+  if (step.target) { var t = document.querySelector(step.target); if (t) { t.classList.add('demo-highlight'); t.scrollIntoView({behavior:'smooth', block:'center'}); } }
+}

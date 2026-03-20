@@ -5,6 +5,15 @@
     .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
     .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
     .code-display.hidden { display: none; }
+
+    /* Demo player */
+    .demo-player { padding: 0.5rem; }
+    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 </style></head><body>
 <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">See through walls with thermal RF</div><div class="splash-hint">tap to skip</div></div></div>
 <div class="app"><div class="deco-band top-band" aria-hidden="true"></div><div class="rows-container">
@@ -13,7 +22,26 @@
 <canvas id="thermalCanvas" width="760" height="340"></canvas>
 <div class="stats-row"><span class="stat-badge"><strong id="statHumans">0</strong> humans</span><span class="stat-badge"><strong id="statTemp">22.4</strong>&#xB0;C ambient</span><span class="stat-badge"><strong id="statDist">0</strong>m range</span><span class="stat-badge"><strong id="statConf">0</strong>% confidence</span></div>
 <div class="sim-controls"><button id="startBtn" class="primary">&#x1F321; Start Scan</button><button id="addPersonBtn">&#x1F6B6; Add Person</button><button id="moveBtn">&#x1F3C3; Move People</button><button id="wallBtn" class="fire-btn">&#x1F9F1; Toggle Wall</button></div></div>
-<details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> A — How It Works</summary><div class="card"><div class="step-grid"><div class="step-card"><span class="step-icon">&#x1F321;</span><span class="step-num">1</span><h4>IR + RF Sensing</h4><p>Humans emit ~10&#x00B5;m infrared. WiFi/radar signals reflect differently off warm bodies.</p></div><div class="step-card"><span class="step-icon">&#x1F9F1;</span><span class="step-num">2</span><h4>Wall Penetration</h4><p>WiFi (2.4GHz) penetrates drywall/wood. Signal attenuation reveals body positions.</p></div><div class="step-card"><span class="step-icon">&#x1F4CA;</span><span class="step-num">3</span><h4>Signal Processing</h4><p>Doppler shifts and signal strength changes mapped to thermal signatures.</p></div><div class="step-card"><span class="step-icon">&#x1F5FA;</span><span class="step-num">4</span><h4>Heatmap Generation</h4><p>Processed data rendered as thermal-style heatmap showing human positions.</p></div></div></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+        <div class="card">
+          <div class="demo-player">
+            <div class="demo-step-display">
+              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+            </div>
+            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+            <div class="demo-controls">
+              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> A — How It Works</summary><div class="card"><div class="step-grid"><div class="step-card"><span class="step-icon">&#x1F321;</span><span class="step-num">1</span><h4>IR + RF Sensing</h4><p>Humans emit ~10&#x00B5;m infrared. WiFi/radar signals reflect differently off warm bodies.</p></div><div class="step-card"><span class="step-icon">&#x1F9F1;</span><span class="step-num">2</span><h4>Wall Penetration</h4><p>WiFi (2.4GHz) penetrates drywall/wood. Signal attenuation reveals body positions.</p></div><div class="step-card"><span class="step-icon">&#x1F4CA;</span><span class="step-num">3</span><h4>Signal Processing</h4><p>Doppler shifts and signal strength changes mapped to thermal signatures.</p></div><div class="step-card"><span class="step-icon">&#x1F5FA;</span><span class="step-num">4</span><h4>Heatmap Generation</h4><p>Processed data rendered as thermal-style heatmap showing human positions.</p></div></div></div></details>
 <details class="collapsible"><summary><span class="icon">&#x1F3C6;</span> C — Challenges</summary><div class="card"><div class="challenge-list"><div class="challenge-item"><span class="ch-num">1</span><div><h4>Count Heads</h4><p>Detect exactly how many people are behind the wall.</p></div></div><div class="challenge-item"><span class="ch-num">2</span><div><h4>Track Movement</h4><p>Follow a person moving from one side to the other.</p></div></div><div class="challenge-item"><span class="ch-num">3</span><div><h4>Wall Effect</h4><p>Compare detection with and without wall. What is the signal loss?</p></div></div></div></div></details>
 
       <details class="collapsible">
