@@ -61,8 +61,58 @@ function playSound(type) {
 
 /* ═══════ i18n ═══════ */
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG = {
   en: {
+    ...LANG_BASE.en,
     title: 'SDR RFI Hunter', subtitle: '🔍 RFI Hunter — Locate Interference',
     disconnected: 'Disconnected', connected: 'Hunting',
     mainSection: 'RFI Hunter', mainDesc: 'Identify and locate radio frequency interference sources',
@@ -96,6 +146,7 @@ const LANG = {
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates software-defined radio! 🔬 You get to experiment with radio signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real digital signal processing! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need RTL-SDR. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Sdr Solar Flare and Sdr Jupiter Receiver! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'SDR Basics',learn1Desc:'How software turns radio waves into digital data',learn1Tag:'SDR',learn2Title:'DSP Fundamentals',learn2Desc:'How math filters and transforms radio signals',learn2Tag:'DSP',learn3Title:'Modulation',learn3Desc:'How information rides on radio carrier waves',learn3Tag:'Signals',learn4Title:'Spectrum Analysis',learn4Desc:'How to read the waterfall and frequency displays',learn4Tag:'Analysis',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},
   fr: {
+    ...LANG_BASE.fr,
     title: 'Chasseur RFI SDR', subtitle: '🔍 Chasseur RFI — Localiser les Interférences',
     disconnected: 'Déconnecté', connected: 'Chasse',
     mainSection: 'Chasseur RFI', mainDesc: 'Identifier et localiser les sources d\'interférences',
@@ -129,6 +180,7 @@ const LANG = {
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule software-defined radio ! 🔬 Tu peux expérimenter avec radio signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai digital signal processing ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut RTL-SDR. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Sdr Solar Flare and Sdr Jupiter Receiver ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv',learn1Title:'SDR Basics',learn1Desc:'How software turns radio waves into digital data',learn1Tag:'SDR',learn2Title:'DSP Fundamentals',learn2Desc:'How math filters and transforms radio signals',learn2Tag:'DSP',learn3Title:'Modulation',learn3Desc:'How information rides on radio carrier waves',learn3Tag:'Signals',learn4Title:'Spectrum Analysis',learn4Desc:'How to read the waterfall and frequency displays',learn4Tag:'Analysis',sectionLearn:'Ce que tu vas apprendre',learnLevelVal:'Avancé 🔴',learnLevel:'Niveau :',learnTimeVal:'30 min ⏱',learnTime:'Durée :',learnAgeVal:'14+ 🧒',learnAge:'Âge :'},
   ar: {
+    ...LANG_BASE.ar,
     title: 'صياد التداخل SDR', subtitle: '🔍 صياد التداخل — تحديد مصادر التداخل',
     disconnected: 'غير متصل', connected: 'بحث',
     mainSection: 'صياد التداخل', mainDesc: 'تحديد وتوطين مصادر التداخل الراديوي',

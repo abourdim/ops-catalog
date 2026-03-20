@@ -61,8 +61,58 @@ function playSound(type) {
 
 /* ═══════ i18n ═══════ */
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG = {
   en: {
+    ...LANG_BASE.en,
     title: 'Mesh vs Traditional', subtitle: '🔀 mesh · 📶 traditional · ⚡ compare',
     disconnected: 'Disconnected', connected: 'Connected',
     mainSection: 'Mesh vs Traditional WiFi', mainDesc: 'Compare mesh and traditional WiFi topologies side by side',
@@ -107,6 +157,7 @@ const LANG = {
     splashHint: 'tap to skip', newVersion: 'UPDATE',
     langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Esp Wifi Canary and Esp Captive Portal Atk! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'WiFi Signals',learn1Desc:'How wireless networks broadcast and receive data',learn1Tag:'WiFi',learn2Title:'WiFi Security',learn2Desc:'How encryption protects wireless connections',learn2Tag:'Security',learn3Title:'Channel Analysis',learn3Desc:'How WiFi channels share the radio spectrum',learn3Tag:'Spectrum',learn4Title:'WiFi Monitoring',learn4Desc:'How to detect rogue access points and attacks',learn4Tag:'Defense',sectionLearn:'What You Shall Learn',learnLevelVal:'Intermediate 🟡',learnLevel:'Level:',learnTimeVal:'20 min ⏱',learnTime:'Time:',learnAgeVal:'12+ 🧒',learnAge:'Ages:'},
   fr: {
+    ...LANG_BASE.fr,
     title: 'Mesh vs Traditionnel', subtitle: '🔀 mesh · 📶 traditionnel · ⚡ comparer',
     disconnected: 'Deconnecte', connected: 'Connecte',
     mainSection: 'WiFi Mesh vs Traditionnel', mainDesc: 'Comparer les topologies mesh et traditionnelle cote a cote',
@@ -146,6 +197,7 @@ const LANG = {
     splashHint: 'appuyer pour passer', newVersion: 'MAJ',
     langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Wifi Canary and Esp Captive Portal Atk ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv',learn1Title:'WiFi Signals',learn1Desc:'How wireless networks broadcast and receive data',learn1Tag:'WiFi',learn2Title:'WiFi Security',learn2Desc:'How encryption protects wireless connections',learn2Tag:'Security',learn3Title:'Channel Analysis',learn3Desc:'How WiFi channels share the radio spectrum',learn3Tag:'Spectrum',learn4Title:'WiFi Monitoring',learn4Desc:'How to detect rogue access points and attacks',learn4Tag:'Defense',sectionLearn:'Ce que tu vas apprendre',learnLevelVal:'Intermédiaire 🟡',learnLevel:'Niveau :',learnTimeVal:'20 min ⏱',learnTime:'Durée :',learnAgeVal:'12+ 🧒',learnAge:'Âge :'},
   ar: {
+    ...LANG_BASE.ar,
     title: 'Mesh مقابل تقليدي', subtitle: '🔀 شبكي · 📶 تقليدي · ⚡ قارن',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'WiFi شبكي مقابل تقليدي', mainDesc: 'مقارنة طوبولوجيا الشبكة الشبكية والتقليدية جنباً إلى جنب',

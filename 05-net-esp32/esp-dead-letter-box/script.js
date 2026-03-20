@@ -12,8 +12,58 @@ const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
 function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=0.08;const t=audioCtx.currentTime;switch(type){case'click':o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,t+0.08);o.start(t);o.stop(t+0.08);break;case'success':o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(0.001,t+0.3);o.start(t);o.stop(t+0.3);break;case'error':o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(0.001,t+0.25);o.start(t);o.stop(t+0.25);break;}}
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG={
   en:{
+    ...LANG_BASE.en,
     title:'esp-dead-letter-box',subtitle:'📦 scan · 🔐 decrypt · 📂 extract',
     disconnected:'Disconnected',connected:'Connected',
     mainSection:'Dead Letter Box — WiFi Dead Drops',mainDesc:'ESP32 hidden WiFi AP where agents find encrypted files',

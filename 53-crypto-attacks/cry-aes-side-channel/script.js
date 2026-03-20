@@ -5,8 +5,58 @@
 const $=id=>document.getElementById(id);
 const SBOX=[0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,0x04,0xc7,0x23,0xc3,0x18,0x96,0x05,0x9a,0x07,0x12,0x80,0xe2,0xeb,0x27,0xb2,0x75,0x09,0x83,0x2c,0x1a,0x1b,0x6e,0x5a,0xa0,0x52,0x3b,0xd6,0xb3,0x29,0xe3,0x2f,0x84,0x53,0xd1,0x00,0xed,0x20,0xfc,0xb1,0x5b,0x6a,0xcb,0xbe,0x39,0x4a,0x4c,0x58,0xcf,0xd0,0xef,0xaa,0xfb,0x43,0x4d,0x33,0x85,0x45,0xf9,0x02,0x7f,0x50,0x3c,0x9f,0xa8,0x51,0xa3,0x40,0x8f,0x92,0x9d,0x38,0xf5,0xbc,0xb6,0xda,0x21,0x10,0xff,0xf3,0xd2,0xcd,0x0c,0x13,0xec,0x5f,0x97,0x44,0x17,0xc4,0xa7,0x7e,0x3d,0x64,0x5d,0x19,0x73,0x60,0x81,0x4f,0xdc,0x22,0x2a,0x90,0x88,0x46,0xee,0xb8,0x14,0xde,0x5e,0x0b,0xdb,0xe0,0x32,0x3a,0x0a,0x49,0x06,0x24,0x5c,0xc2,0xd3,0xac,0x62,0x91,0x95,0xe4,0x79,0xe7,0xc8,0x37,0x6d,0x8d,0xd5,0x4e,0xa9,0x6c,0x56,0xf4,0xea,0x65,0x7a,0xae,0x08,0xba,0x78,0x25,0x2e,0x1c,0xa6,0xb4,0xc6,0xe8,0xdd,0x74,0x1f,0x4b,0xbd,0x8b,0x8a,0x70,0x3e,0xb5,0x66,0x48,0x03,0xf6,0x0e,0x61,0x35,0x57,0xb9,0x86,0xc1,0x1d,0x9e,0xe1,0xf8,0x98,0x11,0x69,0xd9,0x8e,0x94,0x9b,0x1e,0x87,0xe9,0xce,0x55,0x28,0xdf,0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16];
 function hammingWeight(v){let c=0;while(v){c+=v&1;v>>=1}return c}
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG={
-  en:{title:'AES Side Channel',subtitle:'Observe power/timing leaks during AES rounds',mainSection:'Side Channel Analysis',mainDesc:'Visualize simulated power traces from AES S-box',keyLabel:'AES Key (hex)',ptLabel:'Plaintext (hex)',tracesLabel:'Number of Traces',capture:'Capture Traces',analyze:'Analyze (CPA)',stop:'Stop',results:'Results',vizTitle:'Power Trace Visualization',vizHint:'Simulated power consumption during AES S-box lookups',sectionA:'Attack Reference',sectionB:'Math Deep Dive',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',activityLog:'Activity Log',ready:'Ready',splashHint:'tap to skip',langChanged:'Language -> English',themeChanged:'Theme ->',capturing:'Capturing traces...',analyzing:'Running CPA...',keyRecovered:'Key byte recovered!',howto_1:'Enter AES key and plaintext in hex.',howto_2:'Click Capture Traces to simulate encryption.',howto_3:'Click Analyze to run CPA attack.',howto_4:'Watch power traces correlate with key guesses.',
+  en:{
+    ...LANG_BASE.en,title:'AES Side Channel',subtitle:'Observe power/timing leaks during AES rounds',mainSection:'Side Channel Analysis',mainDesc:'Visualize simulated power traces from AES S-box',keyLabel:'AES Key (hex)',ptLabel:'Plaintext (hex)',tracesLabel:'Number of Traces',capture:'Capture Traces',analyze:'Analyze (CPA)',stop:'Stop',results:'Results',vizTitle:'Power Trace Visualization',vizHint:'Simulated power consumption during AES S-box lookups',sectionA:'Attack Reference',sectionB:'Math Deep Dive',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',activityLog:'Activity Log',ready:'Ready',splashHint:'tap to skip',langChanged:'Language -> English',themeChanged:'Theme ->',capturing:'Capturing traces...',analyzing:'Running CPA...',keyRecovered:'Key byte recovered!',howto_1:'Enter AES key and plaintext in hex.',howto_2:'Click Capture Traces to simulate encryption.',howto_3:'Click Analyze to run CPA attack.',howto_4:'Watch power traces correlate with key guesses.',
     wiki_sbox:'The S-box substitution is AES\'s main nonlinear operation. Its power consumption leaks information about processed data.',wiki_hamming:'Hamming weight model: power ~ number of 1-bits in processed value. HW(SBox[pt XOR key]) correlates with actual power.',wiki_cpa:'CPA computes Pearson correlation between hypothetical and measured power for each key guess. Highest correlation reveals the key.',
     mathExplain:'CPA Attack on AES:\n\nFor each key byte guess k (0..255):\n  For each trace i:\n    h[i] = HW(SBox[plaintext[i] XOR k])\n  correlation[k] = Pearson(h, measured_power)\n\nCorrect key byte has highest correlation.\n\nHamming Weight: HW(x) = number of 1-bits in x\nPearson: r = cov(X,Y) / (std(X) * std(Y))',step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates cryptographic attacks! 🔬 You get to experiment with breaking encryption in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real breaking encryption so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real mathematical attacks on ciphers! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Cry Entropy Analyzer and Cry Certificate Forgery Lab! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'Encryption',learn1Desc:'How mathematical algorithms protect secrets',learn1Tag:'Cryptography',learn2Title:'Attack Methods',learn2Desc:'How cryptanalysts break encryption schemes',learn2Tag:'Offensive',learn3Title:'Statistical Analysis',learn3Desc:'How patterns in data reveal encrypted content',learn3Tag:'Math',learn4Title:'Strong Crypto',learn4Desc:'How to choose unbreakable encryption methods',learn4Tag:'Defense',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},
   fr:{title:'Canal Auxiliaire AES',subtitle:'Observez les fuites de puissance/temps pendant AES',mainSection:'Analyse Canal Auxiliaire',mainDesc:'Visualisez les traces de puissance simulees',keyLabel:'Cle AES (hex)',ptLabel:'Texte clair (hex)',tracesLabel:'Nombre de traces',capture:'Capturer',analyze:'Analyser (CPA)',stop:'Arreter',results:'Resultats',vizTitle:'Visualisation Traces',vizHint:'Consommation electrique simulee pendant AES',sectionA:'Reference',sectionB:'Maths',settings:'Parametres',language:'Langue',theme:'Theme',soundEffects:'Sons',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',activityLog:'Journal',ready:'Pret',splashHint:'appuyer pour passer',langChanged:'Langue -> Francais',themeChanged:'Theme ->',capturing:'Capture en cours...',analyzing:'CPA en cours...',keyRecovered:'Octet de cle recupere!',howto_1:'Entrez cle et texte clair en hex.',howto_2:'Cliquez Capturer.',howto_3:'Cliquez Analyser.',howto_4:'Regardez les correlations.',

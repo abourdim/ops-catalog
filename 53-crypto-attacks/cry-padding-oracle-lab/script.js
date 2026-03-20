@@ -3,8 +3,58 @@
  * Themes, i18n (EN/FR/AR), RTL, Log, Toast, Canvas Sim
  */
 const $=id=>document.getElementById(id);
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG={
-  en:{title:'Padding Oracle Lab',subtitle:'Exploit CBC padding oracle to decrypt byte-by-byte',mainSection:'Padding Oracle Attack',mainDesc:'Simulate padding oracle on AES-CBC',ptLabel:'Secret Plaintext',ptHint:'This message will be encrypted; try to recover it',encrypt:'Encrypt',startAttack:'Start Attack',stop:'Stop',results:'Results',vizTitle:'Attack Visualization',vizHint:'Watch the oracle leak plaintext byte by byte',sectionA:'Attack Reference',sectionB:'Math Deep Dive',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',activityLog:'Activity Log',ready:'Ready',splashHint:'tap to skip',langChanged:'Language -> English',themeChanged:'Theme ->',encrypted:'Message encrypted',attacking:'Attacking...',decrypted:'Decrypted!',padValid:'Padding valid',padInvalid:'Padding invalid',
+  en:{
+    ...LANG_BASE.en,title:'Padding Oracle Lab',subtitle:'Exploit CBC padding oracle to decrypt byte-by-byte',mainSection:'Padding Oracle Attack',mainDesc:'Simulate padding oracle on AES-CBC',ptLabel:'Secret Plaintext',ptHint:'This message will be encrypted; try to recover it',encrypt:'Encrypt',startAttack:'Start Attack',stop:'Stop',results:'Results',vizTitle:'Attack Visualization',vizHint:'Watch the oracle leak plaintext byte by byte',sectionA:'Attack Reference',sectionB:'Math Deep Dive',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',activityLog:'Activity Log',ready:'Ready',splashHint:'tap to skip',langChanged:'Language -> English',themeChanged:'Theme ->',encrypted:'Message encrypted',attacking:'Attacking...',decrypted:'Decrypted!',padValid:'Padding valid',padInvalid:'Padding invalid',
     howto_1:'Enter a secret message.',howto_2:'Click Encrypt to create the ciphertext.',howto_3:'Click Start Attack to begin byte-by-byte decryption.',howto_4:'Watch the canvas as each byte is recovered.',
     wiki_cbc:'CBC mode XORs each plaintext block with the previous ciphertext block before encryption.',wiki_pkcs7:'PKCS#7 padding fills the last block: if 3 bytes remain, pad with 03 03 03.',wiki_oracle:'The oracle returns true/false for valid padding, leaking information about the decrypted intermediate value.',
     mathExplain:'Padding Oracle Attack:\n\nC = IV || C1 || C2 || ... || Cn\nD(Ck) = Ik (intermediate value)\nPk = Ck-1 XOR Ik\n\nAttacker modifies Ck-1 byte by byte:\nFor each guess g (0..255):\n  Set Ck-1[last] = g\n  If oracle says valid padding:\n    Ik[last] = g XOR 0x01\n    Pk[last] = original_Ck-1[last] XOR Ik[last]\n\nRepeat for all bytes, all blocks.',step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates cryptographic attacks! 🔬 You get to experiment with breaking encryption in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real breaking encryption so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real mathematical attacks on ciphers! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Cry Birthday Paradox Demo and Cry Entropy Analyzer! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'Encryption',learn1Desc:'How mathematical algorithms protect secrets',learn1Tag:'Cryptography',learn2Title:'Attack Methods',learn2Desc:'How cryptanalysts break encryption schemes',learn2Tag:'Offensive',learn3Title:'Statistical Analysis',learn3Desc:'How patterns in data reveal encrypted content',learn3Tag:'Math',learn4Title:'Strong Crypto',learn4Desc:'How to choose unbreakable encryption methods',learn4Tag:'Defense',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},

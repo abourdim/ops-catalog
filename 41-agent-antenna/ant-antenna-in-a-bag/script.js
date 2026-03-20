@@ -61,8 +61,58 @@ function playSound(type) {
 
 /* ═══════ i18n ═══════ */
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG = {
   en: {
+    ...LANG_BASE.en,
     title: 'Antenna in a Bag', subtitle: '🎒 Portable antenna kit simulator',
     disconnected: 'Disconnected', connected: 'Connected',
     mainSection: 'Antenna in a Bag', mainDesc: 'Quick-deploy portable antenna kit simulator',
@@ -92,6 +142,7 @@ const LANG = {
     deployed: '📡 Antenna deployed!', packed: '📦 Kit packed up', tuning: '🔧 Auto-tuning...',
     tuned: '✅ Signal optimized!', kitBuilt: '🎒 Kit assembled',step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates antennas! 🔬 You get to experiment with radio wave patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio wave patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real antenna design and physics! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Ant Covert Antenna and Ant Rf Perimeter! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'Antenna Design',learn1Desc:'How antenna dimensions determine frequency response',learn1Tag:'Physics',learn2Title:'SWR & Impedance',learn2Desc:'How to match antennas for maximum power transfer',learn2Tag:'RF',learn3Title:'Radiation Patterns',learn3Desc:'How antennas shape radio energy in 3D space',learn3Tag:'Patterns',learn4Title:'Build & Test',learn4Desc:'How to construct and measure real antennas',learn4Tag:'Hardware',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},
   fr: {
+    ...LANG_BASE.fr,
     title: 'Antenne de Poche', subtitle: '🎒 Kit antenne portable',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Antenne de Poche', mainDesc: 'Simulateur de kit antenne déployable',
@@ -119,6 +170,7 @@ const LANG = {
     deployed: '📡 Antenne déployée !', packed: '📦 Kit rangé', tuning: '🔧 Réglage...',
     tuned: '✅ Signal optimisé !', kitBuilt: '🎒 Kit assemblé',step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule antennas ! 🔬 Tu peux expérimenter avec radio wave patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio wave patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai antenna design and physics ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Ant Covert Antenna and Ant Rf Perimeter ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv',learn1Title:'Antenna Design',learn1Desc:'How antenna dimensions determine frequency response',learn1Tag:'Physics',learn2Title:'SWR & Impedance',learn2Desc:'How to match antennas for maximum power transfer',learn2Tag:'RF',learn3Title:'Radiation Patterns',learn3Desc:'How antennas shape radio energy in 3D space',learn3Tag:'Patterns',learn4Title:'Build & Test',learn4Desc:'How to construct and measure real antennas',learn4Tag:'Hardware',sectionLearn:'Ce que tu vas apprendre',learnLevelVal:'Avancé 🔴',learnLevel:'Niveau :',learnTimeVal:'30 min ⏱',learnTime:'Durée :',learnAgeVal:'14+ 🧒',learnAge:'Âge :'},
   ar: {
+    ...LANG_BASE.ar,
     title: 'هوائي في حقيبة', subtitle: '🎒 محاكي هوائي محمول',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'هوائي في حقيبة', mainDesc: 'محاكي نشر هوائي سريع للعمليات الميدانية',

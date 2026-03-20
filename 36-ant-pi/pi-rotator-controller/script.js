@@ -61,8 +61,58 @@ function playSound(type) {
 
 /* ═══════ i18n ═══════ */
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG = {
   en: {
+    ...LANG_BASE.en,
     title: 'pi-rotator-controller', subtitle: '🔄 aim · 📡 track · 🎯 lock',
     disconnected: 'Disconnected', connected: 'Connected',
     mainSection: 'Antenna Rotator Controller', mainDesc: 'Control azimuth and elevation rotators from your Raspberry Pi',
@@ -95,6 +145,7 @@ const LANG = {
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',step1Title:'Connect Hardware',step1Desc:'Wire up sensors, displays, or radio modules to the Raspberry Pi GPIO pins.',step2Title:'Configure Software',step2Desc:'Install libraries and configure the Python script for your hardware setup.',step3Title:'Monitor Data',step3Desc:'Read sensor data in real time and process it through your algorithms.',step4Title:'Control & Log',step4Desc:'Trigger actions based on data thresholds and log results for analysis.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates Raspberry Pi projects! 🔬 You get to experiment with sensors and GPIO in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sensors and GPIO so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real physical computing! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need Raspberry Pi. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Pi Nec Simulator and Pi Remote Station! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'GPIO Programming',learn1Desc:'How to control electronic pins with Python code',learn1Tag:'Electronics',learn2Title:'Sensor Integration',learn2Desc:'How to read temperature, light, and motion data',learn2Tag:'Sensors',learn3Title:'Python Scripting',learn3Desc:'How to automate hardware with Python programs',learn3Tag:'Programming',learn4Title:'Communication',learn4Desc:'How Raspberry Pi talks to radios and networks',learn4Tag:'Networking',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},
   fr: {
+    ...LANG_BASE.fr,
     title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Section Principale', mainDesc: 'Décrivez votre projet ici',
@@ -127,6 +178,7 @@ const LANG = {
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',step1Title:'Connecter le matériel',step1Desc:'Branche les capteurs ou modules radio aux broches GPIO du Raspberry Pi.',step2Title:'Configurer le logiciel',step2Desc:'Installe les bibliothèques et configure le script Python.',step3Title:'Surveiller les données',step3Desc:'Lis les données des capteurs en temps réel et traite-les.',step4Title:'Contrôler et enregistrer',step4Desc:'Déclenche des actions selon les seuils et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule Raspberry Pi projects ! 🔬 Tu peux expérimenter avec sensors and GPIO en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sensors and GPIO.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai physical computing ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut Raspberry Pi. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Pi Nec Simulator and Pi Remote Station ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv',learn1Title:'GPIO Programming',learn1Desc:'How to control electronic pins with Python code',learn1Tag:'Electronics',learn2Title:'Sensor Integration',learn2Desc:'How to read temperature, light, and motion data',learn2Tag:'Sensors',learn3Title:'Python Scripting',learn3Desc:'How to automate hardware with Python programs',learn3Tag:'Programming',learn4Title:'Communication',learn4Desc:'How Raspberry Pi talks to radios and networks',learn4Tag:'Networking',sectionLearn:'Ce que tu vas apprendre',learnLevelVal:'Avancé 🔴',learnLevel:'Niveau :',learnTimeVal:'30 min ⏱',learnTime:'Durée :',learnAgeVal:'14+ 🧒',learnAge:'Âge :'},
   ar: {
+    ...LANG_BASE.ar,
     title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'القسم الرئيسي', mainDesc: 'صِف مشروعك هنا',

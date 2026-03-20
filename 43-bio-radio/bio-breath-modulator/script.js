@@ -9,8 +9,58 @@ const LIGHT_THEMES=['riad','medina'];const APP_VERSION='1.0';
 let soundEnabled=false;const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx;
 function playSound(type){if(!soundEnabled)return;if(!audioCtx)audioCtx=new AudioCtx();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);g.gain.value=.08;const t=audioCtx.currentTime;switch(type){case'click':o.frequency.value=800;o.type='sine';g.gain.exponentialRampToValueAtTime(.001,t+.08);o.start(t);o.stop(t+.08);break;case'success':o.frequency.value=523;o.type='sine';g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.3);const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.connect(g2);g2.connect(audioCtx.destination);g2.gain.value=.08;o2.frequency.value=659;o2.type='sine';g2.gain.exponentialRampToValueAtTime(.001,t+.4);o2.start(t+.15);o2.stop(t+.4);break;case'error':o.frequency.value=200;o.type='square';g.gain.exponentialRampToValueAtTime(.001,t+.25);o.start(t);o.stop(t+.25);break;case'tx':o.frequency.value=1200;o.type='sawtooth';g.gain.value=.04;g.gain.exponentialRampToValueAtTime(.001,t+.15);o.start(t);o.stop(t+.15);break;case'breathe':o.frequency.value=180;o.type='sine';g.gain.value=.04;g.gain.exponentialRampToValueAtTime(.001,t+.6);o.start(t);o.stop(t+.6);break}}
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG={
-  en:{title:'Bio Breath Modulator',subtitle:'Breathing modulates RF carrier',disconnected:'Disconnected',connected:'Connected',
+  en:{
+    ...LANG_BASE.en,title:'Bio Breath Modulator',subtitle:'Breathing modulates RF carrier',disconnected:'Disconnected',connected:'Connected',
     mainSection:'Breath Modulator \u2014 RF Carrier Control',mainDesc:'Your breathing pattern modulates a radio frequency carrier signal',
     sectionA:'A \u2014 How It Works',sectionC:'C \u2014 Challenges',
     startBreath:'Start Breathing',stopBreath:'Stop',inhaleBtn:'Inhale',exhaleBtn:'Exhale',txBtn:'TX On',txOff:'TX Off',

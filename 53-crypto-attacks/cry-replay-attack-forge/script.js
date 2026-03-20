@@ -3,8 +3,58 @@
  * Simulate capture and replay of authentication tokens
  */
 const $=id=>document.getElementById(id);
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG={
-  en:{title:'Replay Attack Forge',subtitle:'Capture and replay authentication tokens',mainSection:'Replay Attack Lab',mainDesc:'Intercept and replay captured auth tokens',authenticate:'Authenticate (legit)',capture:'Capture Token',replay:'Replay Attack',useNonce:'Enable nonce protection',results:'Results',vizTitle:'Network Traffic',vizHint:'Watch packets flow between client, attacker, and server',sectionA:'Attack Reference',sectionB:'Defense Strategies',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',activityLog:'Activity Log',ready:'Ready',splashHint:'tap to skip',langChanged:'Language -> English',themeChanged:'Theme ->',authSuccess:'Authentication successful',captured:'Token captured by attacker!',replaySuccess:'Replay attack SUCCESS - unauthorized access!',replayBlocked:'Replay BLOCKED - nonce already used!',noToken:'No token captured yet',
+  en:{
+    ...LANG_BASE.en,title:'Replay Attack Forge',subtitle:'Capture and replay authentication tokens',mainSection:'Replay Attack Lab',mainDesc:'Intercept and replay captured auth tokens',authenticate:'Authenticate (legit)',capture:'Capture Token',replay:'Replay Attack',useNonce:'Enable nonce protection',results:'Results',vizTitle:'Network Traffic',vizHint:'Watch packets flow between client, attacker, and server',sectionA:'Attack Reference',sectionB:'Defense Strategies',settings:'Settings',language:'Language',theme:'Theme',soundEffects:'Sound effects',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',activityLog:'Activity Log',ready:'Ready',splashHint:'tap to skip',langChanged:'Language -> English',themeChanged:'Theme ->',authSuccess:'Authentication successful',captured:'Token captured by attacker!',replaySuccess:'Replay attack SUCCESS - unauthorized access!',replayBlocked:'Replay BLOCKED - nonce already used!',noToken:'No token captured yet',
     howto_1:'Click Authenticate to perform a legitimate login.',howto_2:'Click Capture to intercept the authentication token.',howto_3:'Click Replay to attempt unauthorized access.',howto_4:'Toggle nonce protection to see the defense.',
     wiki_replay:'Replay attack: re-sending a valid captured packet to impersonate the original sender.',wiki_nonce:'Nonce: a random value included in each message, making each request unique and non-replayable.',wiki_timestamp:'Timestamp-based defense: reject messages with timestamps outside an acceptable window.',
     mathExplain:'Defense Strategies:\n\n1. Nonce (Number Used Once)\n   Server generates random nonce per session\n   Client includes nonce in signed request\n   Server rejects duplicate nonces\n\n2. Timestamps\n   Request includes current timestamp\n   Server rejects if |now - timestamp| > threshold\n\n3. Sequence Numbers\n   Monotonically increasing counter\n   Server rejects if seq <= last_seen\n\n4. Challenge-Response\n   Server sends random challenge\n   Client responds with HMAC(secret, challenge)',step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates cryptographic attacks! 🔬 You get to experiment with breaking encryption in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real breaking encryption so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real mathematical attacks on ciphers! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Cry Elliptic Curve Attack and Cry Birthday Paradox Demo! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'Encryption',learn1Desc:'How mathematical algorithms protect secrets',learn1Tag:'Cryptography',learn2Title:'Attack Methods',learn2Desc:'How cryptanalysts break encryption schemes',learn2Tag:'Offensive',learn3Title:'Statistical Analysis',learn3Desc:'How patterns in data reveal encrypted content',learn3Tag:'Math',learn4Title:'Strong Crypto',learn4Desc:'How to choose unbreakable encryption methods',learn4Tag:'Defense',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},

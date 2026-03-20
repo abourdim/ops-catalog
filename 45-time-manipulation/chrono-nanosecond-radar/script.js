@@ -61,8 +61,58 @@ function playSound(type) {
 
 /* ═══════ i18n ═══════ */
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG = {
   en: {
+    ...LANG_BASE.en,
     title: 'Chrono Nanosecond Radar',
     subtitle: 'Nanosecond-precision timing radar',
     disconnected: 'Disconnected', connected: 'Scanning',
@@ -103,6 +153,7 @@ const LANG = {
     scanReset: 'Radar reset', targetDetected: 'Target detected!',
     targetLost: 'Target lost', sweepComplete: 'Sweep complete',step1Title:'Set Time Reference',step1Desc:'Establish a precise time base using atomic clocks or network synchronization.',step2Title:'Measure Interval',step2Desc:'Capture timing data with nanosecond precision across the system.',step3Title:'Detect Anomalies',step3Desc:'Compare timestamps to find drift, jitter, or deliberate manipulation.',step4Title:'Exploit or Defend',step4Desc:'Use timing information to attack vulnerable systems or strengthen defenses.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates time manipulation! 🔬 You get to experiment with timing and synchronization in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real timing and synchronization so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real temporal attacks and precision clocks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Chrono Chronos Beacon and Chrono Epoch Vault! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'Precision Timing',learn1Desc:'How atomic clocks measure time to nanoseconds',learn1Tag:'Physics',learn2Title:'Synchronization',learn2Desc:'How devices agree on the exact same time',learn2Tag:'Protocols',learn3Title:'Timing Attacks',learn3Desc:'How tiny time differences reveal secrets',learn3Tag:'Security',learn4Title:'Time Signals',learn4Desc:'How time is broadcast via radio to the world',learn4Tag:'Communication',sectionLearn:'What You Shall Learn',learnLevelVal:'Advanced 🔴',learnLevel:'Level:',learnTimeVal:'30 min ⏱',learnTime:'Time:',learnAgeVal:'14+ 🧒',learnAge:'Ages:'},
   fr: {
+    ...LANG_BASE.fr,
     title: 'Radar Nanoseconde Chrono',
     subtitle: 'Radar temporel precision nanoseconde',
     disconnected: 'Deconnecte', connected: 'En balayage',
@@ -143,6 +194,7 @@ const LANG = {
     scanReset: 'Radar reinitialise', targetDetected: 'Cible detectee!',
     targetLost: 'Cible perdue', sweepComplete: 'Balayage termine',step1Title:'Définir la référence',step1Desc:'Établis une base de temps précise via horloge atomique ou synchronisation.',step2Title:'Mesurer l\'intervalle',step2Desc:'Capture les données temporelles avec une précision nanoseconde.',step3Title:'Détecter les anomalies',step3Desc:'Compare les horodatages pour trouver la dérive ou la manipulation.',step4Title:'Exploiter ou défendre',step4Desc:'Utilise les informations temporelles pour attaquer ou renforcer les défenses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule time manipulation ! 🔬 Tu peux expérimenter avec timing and synchronization en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais timing and synchronization.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai temporal attacks and precision clocks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Chrono Chronos Beacon and Chrono Epoch Vault ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv',learn1Title:'Precision Timing',learn1Desc:'How atomic clocks measure time to nanoseconds',learn1Tag:'Physics',learn2Title:'Synchronization',learn2Desc:'How devices agree on the exact same time',learn2Tag:'Protocols',learn3Title:'Timing Attacks',learn3Desc:'How tiny time differences reveal secrets',learn3Tag:'Security',learn4Title:'Time Signals',learn4Desc:'How time is broadcast via radio to the world',learn4Tag:'Communication',sectionLearn:'Ce que tu vas apprendre',learnLevelVal:'Avancé 🔴',learnLevel:'Niveau :',learnTimeVal:'30 min ⏱',learnTime:'Durée :',learnAgeVal:'14+ 🧒',learnAge:'Âge :'},
   ar: {
+    ...LANG_BASE.ar,
     title: 'رادار النانوثانية كرونو',
     subtitle: 'رادار توقيت بدقة النانوثانية',
     disconnected: 'غير متصل', connected: 'يمسح',

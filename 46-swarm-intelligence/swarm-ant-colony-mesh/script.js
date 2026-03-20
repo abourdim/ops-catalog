@@ -61,8 +61,58 @@ function playSound(type) {
 
 /* ═══════ i18n ═══════ */
 
+// ── Shared i18n keys (template) ──
+const LANG_BASE = {
+  en: {
+    copied:'Copied!',
+    demoNext:'Next',
+    demoPause:'Pause',
+    demoPlay:'Play',
+    demoPrev:'Prev',
+    learnAge:'Ages:',
+    learnLevel:'Level:',
+    learnTime:'Time:',
+    logCleared:'Log cleared',
+    sectionCode:'Device Code',
+    sectionDemo:'Watch Demo',
+    sectionLearn:'What You Shall Learn',
+    splashHint:'tap to skip'
+  },
+  fr: {
+    copied:'Copié !',
+    demoNext:'Suiv',
+    demoPause:'Pause',
+    demoPlay:'Jouer',
+    demoPrev:'Préc',
+    learnAge:'Âge :',
+    learnLevel:'Niveau :',
+    learnTime:'Durée :',
+    logCleared:'Journal effacé',
+    sectionCode:'Code Appareil',
+    sectionDemo:'Voir la Démo',
+    sectionLearn:'Ce que tu vas apprendre',
+    splashHint:'appuyer pour passer'
+  },
+  ar: {
+    copied:'تم النسخ!',
+    demoNext:'التالي',
+    demoPause:'إيقاف',
+    demoPlay:'تشغيل',
+    demoPrev:'السابق',
+    learnAge:'العمر:',
+    learnLevel:'المستوى:',
+    learnTime:'المدة:',
+    logCleared:'تم مسح السجل',
+    sectionCode:'كود الجهاز',
+    sectionDemo:'شاهد العرض',
+    sectionLearn:'ماذا ستتعلم',
+    splashHint:'انقر للتخطي'
+  }
+};
+
 const LANG = {
   en: {
+    ...LANG_BASE.en,
     title: 'bit-dead-drop', subtitle: '📨 encrypt · 📡 drop · 🔓 decrypt',
     disconnected: 'Disconnected', connected: 'Connected',
     mainSection: 'Dead Drop — BLE Message Transfer', mainDesc: 'Encrypt and exchange secret messages via BLE simulation',
@@ -115,6 +165,7 @@ const LANG = {
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',step1Title:'Initialize Swarm',step1Desc:'Agent A writes a secret message and enters a shared key.',step2Title:'Set Rules',step2Desc:'The message is encrypted using XOR cipher with the shared key.',step3Title:'Simulate',step3Desc:'The encrypted message is "dropped" via BLE broadcast into the air.',step4Title:'Analyze Patterns',step4Desc:'Agent B scans, receives the drop, and decrypts with the same key.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates swarm intelligence! 🔬 You get to experiment with collective behavior in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real collective behavior so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real emergent algorithms and self-organization! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Swarm Consensus Blockchain and Swarm Quorum Sensing! Each teaches something different. 🚀',demo_s1:'Welcome! Let\'s explore this simulation together. Look at the main section above. 🔬',demo_s2:'Click the primary action button to start. Watch the visualization respond in real time! ⚡',demo_s3:'Now change a setting — try a slider or dropdown. See how the output changes? 🔄',demo_s4:'Check the results — the graphs and numbers show what\'s happening under the hood. 📊',demo_s5:'Awesome! 🎉 You\'ve got the basics. Try the Lab section below for deeper experiments!',sectionDemo:'Watch Demo',demoPlay:'Play',demoPause:'Pause',demoPrev:'Prev',demoNext:'Next',learn1Title:'Emergent Behavior',learn1Desc:'How simple rules create complex group patterns',learn1Tag:'AI',learn2Title:'Mesh Networks',learn2Desc:'How swarms communicate without a central leader',learn2Tag:'Networking',learn3Title:'Algorithms',learn3Desc:'How nature-inspired math solves hard problems',learn3Tag:'Computing',learn4Title:'Optimization',learn4Desc:'How swarms find the best solution together',learn4Tag:'Math',sectionLearn:'What You Shall Learn',learnLevelVal:'Intermediate 🟡',learnLevel:'Level:',learnTimeVal:'20 min ⏱',learnTime:'Time:',learnAgeVal:'12+ 🧒',learnAge:'Ages:'},
   fr: {
+    ...LANG_BASE.fr,
     title: 'bit-dead-drop', subtitle: '📨 chiffrer · 📡 déposer · 🔓 déchiffrer',
     disconnected: 'Déconnecté', connected: 'Connecté',
     mainSection: 'Dead Drop — Transfert BLE', mainDesc: 'Chiffrez et échangez des messages secrets via simulation BLE',
@@ -167,6 +218,7 @@ const LANG = {
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',step1Title:'Initialiser l\'essaim',step1Desc:'L\'agent A écrit un message secret et entre une clé partagée.',step2Title:'Définir les règles',step2Desc:'Le message est chiffré avec le chiffrement XOR et la clé partagée.',step3Title:'Simuler',step3Desc:'Le message chiffré est "déposé" par diffusion BLE dans les airs.',step4Title:'Analyser les motifs',step4Desc:'L\'agent B scanne, reçoit le drop et déchiffre avec la même clé.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule swarm intelligence ! 🔬 Tu peux expérimenter avec collective behavior en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais collective behavior.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai emergent algorithms and self-organization ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Swarm Consensus Blockchain and Swarm Quorum Sensing ! Chacune enseigne quelque chose de différent. 🚀',demo_s1:'Bienvenue ! Explorons cette simulation ensemble. Regarde la section principale. 🔬',demo_s2:'Clique sur le bouton d\'action pour démarrer. Regarde la visualisation réagir ! ⚡',demo_s3:'Change un réglage — essaie un curseur ou une liste. Tu vois le changement ? 🔄',demo_s4:'Vérifie les résultats — les graphiques montrent ce qui se passe. 📊',demo_s5:'Super ! 🎉 Tu connais les bases. Essaie le Labo pour aller plus loin !',sectionDemo:'Voir la Démo',demoPlay:'Jouer',demoPause:'Pause',demoPrev:'Préc',demoNext:'Suiv',learn1Title:'Emergent Behavior',learn1Desc:'How simple rules create complex group patterns',learn1Tag:'AI',learn2Title:'Mesh Networks',learn2Desc:'How swarms communicate without a central leader',learn2Tag:'Networking',learn3Title:'Algorithms',learn3Desc:'How nature-inspired math solves hard problems',learn3Tag:'Computing',learn4Title:'Optimization',learn4Desc:'How swarms find the best solution together',learn4Tag:'Math',sectionLearn:'Ce que tu vas apprendre',learnLevelVal:'Intermédiaire 🟡',learnLevel:'Niveau :',learnTimeVal:'20 min ⏱',learnTime:'Durée :',learnAgeVal:'12+ 🧒',learnAge:'Âge :'},
   ar: {
+    ...LANG_BASE.ar,
     title: 'bit-dead-drop', subtitle: '📨 تشفير · 📡 إيداع · 🔓 فك تشفير',
     disconnected: 'غير متصل', connected: 'متصل',
     mainSection: 'Dead Drop — نقل رسائل BLE', mainDesc: 'شفّر وتبادل رسائل سرية عبر محاكاة BLE',
