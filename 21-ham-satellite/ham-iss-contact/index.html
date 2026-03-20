@@ -33,7 +33,14 @@
     .challenge-list { list-style:none; padding:0; margin:.5rem 0; }
     .challenge-list li { background:rgba(0,0,0,.2); border:1px solid var(--border,#222); border-radius:8px; padding:.6rem .75rem; margin:.4rem 0; display:flex; align-items:center; gap:.5rem; }
     .challenge-list li .badge-num { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--accent,#d4a03c); color:var(--bg,#08091a); font-weight:700; font-size:.85rem; flex-shrink:0; }
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">
@@ -157,6 +164,19 @@
           </ol>
         </div>
       </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+            <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+            <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
+        </div>
+      </details>
+
     </div>
 
     <footer class="app-footer">

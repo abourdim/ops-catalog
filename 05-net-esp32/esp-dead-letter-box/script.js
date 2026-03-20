@@ -55,7 +55,7 @@ const LANG={
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
     splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'An ESP32 creates a hidden WiFi access point — invisible to normal scans.',step2Title:'Capture',step2Desc:'Agents who know the SSID connect and access the encrypted file vault.',step3Title:'Analyze',step3Desc:'Files are XOR-encrypted. Only agents with the key can decrypt them.',step4Title:'Report',step4Desc:'The dead drop is ephemeral — the ESP32 can be powered off and moved.'},
+  ,step1Title:'Scan',step1Desc:'An ESP32 creates a hidden WiFi access point — invisible to normal scans.',step2Title:'Capture',step2Desc:'Agents who know the SSID connect and access the encrypted file vault.',step3Title:'Analyze',step3Desc:'Files are XOR-encrypted. Only agents with the key can decrypt them.',step4Title:'Report',step4Desc:'The dead drop is ephemeral — the ESP32 can be powered off and moved.',sectionCode:'Device Code'},
   fr:{
     title:'esp-dead-letter-box',subtitle:'📦 scanner · 🔐 déchiffrer · 📂 extraire',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -98,7 +98,7 @@ const LANG={
     logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
     splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'Un ESP32 crée un point d\'accès WiFi caché — invisible aux scans normaux.',step2Title:'Capturer',step2Desc:'Les agents qui connaissent le SSID se connectent et accèdent au coffre-fort.',step3Title:'Analyser',step3Desc:'Les fichiers sont chiffrés en XOR. Seuls les agents avec la clé peuvent déchiffrer.',step4Title:'Rapporter',step4Desc:'Le drop est éphémère — l\'ESP32 peut être éteint et déplacé.'},
+  ,step1Title:'Scanner',step1Desc:'Un ESP32 crée un point d\'accès WiFi caché — invisible aux scans normaux.',step2Title:'Capturer',step2Desc:'Les agents qui connaissent le SSID se connectent et accèdent au coffre-fort.',step3Title:'Analyser',step3Desc:'Les fichiers sont chiffrés en XOR. Seuls les agents avec la clé peuvent déchiffrer.',step4Title:'Rapporter',step4Desc:'Le drop est éphémère — l\'ESP32 peut être éteint et déplacé.',sectionCode:'Code Appareil'},
   ar:{
     title:'esp-dead-letter-box',subtitle:'📦 مسح · 🔐 فك تشفير · 📂 استخراج',
     disconnected:'غير متصل',connected:'متصل',
@@ -141,7 +141,7 @@ const LANG={
     logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
     splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'ESP32 ينشئ نقطة وصول WiFi مخفية — غير مرئية للمسح العادي.',step2Title:'التقاط',step2Desc:'العملاء الذين يعرفون SSID يتصلون ويصلون لخزنة الملفات المشفرة.',step3Title:'تحليل',step3Desc:'الملفات مشفرة بـ XOR. فقط العملاء مع المفتاح يمكنهم فك التشفير.',step4Title:'تقرير',step4Desc:'نقطة الإيداع مؤقتة — يمكن إيقاف ESP32 ونقله.'}
+  ,step1Title:'مسح',step1Desc:'ESP32 ينشئ نقطة وصول WiFi مخفية — غير مرئية للمسح العادي.',step2Title:'التقاط',step2Desc:'العملاء الذين يعرفون SSID يتصلون ويصلون لخزنة الملفات المشفرة.',step3Title:'تحليل',step3Desc:'الملفات مشفرة بـ XOR. فقط العملاء مع المفتاح يمكنهم فك التشفير.',step4Title:'تقرير',step4Desc:'نقطة الإيداع مؤقتة — يمكن إيقاف ESP32 ونقله.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang='en';
@@ -552,3 +552,18 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

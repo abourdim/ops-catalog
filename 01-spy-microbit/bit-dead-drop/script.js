@@ -118,7 +118,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  ,step1Title:'Configure',step1Desc:'Agent A writes a secret message and enters a shared key.',step2Title:'Process',step2Desc:'The message is encrypted using XOR cipher with the shared key.',step3Title:'Transmit',step3Desc:'The encrypted message is "dropped" via BLE broadcast into the air.',step4Title:'Verify',step4Desc:'Agent B scans, receives the drop, and decrypts with the same key.'},
+  ,step1Title:'Configure',step1Desc:'Agent A writes a secret message and enters a shared key.',step2Title:'Process',step2Desc:'The message is encrypted using XOR cipher with the shared key.',step3Title:'Transmit',step3Desc:'The encrypted message is "dropped" via BLE broadcast into the air.',step4Title:'Verify',step4Desc:'Agent B scans, receives the drop, and decrypts with the same key.',sectionCode:'Device Code'},
   fr: {
     title: 'bit-dead-drop', subtitle: '📨 chiffrer · 📡 déposer · 🔓 déchiffrer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -175,7 +175,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  ,step1Title:'Configurer',step1Desc:'L\'agent A écrit un message secret et entre une clé partagée.',step2Title:'Traiter',step2Desc:'Le message est chiffré avec le chiffrement XOR et la clé partagée.',step3Title:'Transmettre',step3Desc:'Le message chiffré est "déposé" par diffusion BLE dans les airs.',step4Title:'Vérifier',step4Desc:'L\'agent B scanne, reçoit le drop et déchiffre avec la même clé.'},
+  ,step1Title:'Configurer',step1Desc:'L\'agent A écrit un message secret et entre une clé partagée.',step2Title:'Traiter',step2Desc:'Le message est chiffré avec le chiffrement XOR et la clé partagée.',step3Title:'Transmettre',step3Desc:'Le message chiffré est "déposé" par diffusion BLE dans les airs.',step4Title:'Vérifier',step4Desc:'L\'agent B scanne, reçoit le drop et déchiffre avec la même clé.',sectionCode:'Code Appareil'},
   ar: {
     title: 'bit-dead-drop', subtitle: '📨 تشفير · 📡 إيداع · 🔓 فك تشفير',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -232,7 +232,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تكوين',step1Desc:'العميل أ يكتب رسالة سرية ويدخل مفتاحًا مشتركًا.',step2Title:'معالجة',step2Desc:'يتم تشفير الرسالة باستخدام شيفرة XOR مع المفتاح المشترك.',step3Title:'إرسال',step3Desc:'الرسالة المشفرة تُودَع عبر بث BLE في الهواء.',step4Title:'تحقق',step4Desc:'العميل ب يمسح ويستقبل الإيداع ويفك تشفيره بنفس المفتاح.'}
+  ,step1Title:'تكوين',step1Desc:'العميل أ يكتب رسالة سرية ويدخل مفتاحًا مشتركًا.',step2Title:'معالجة',step2Desc:'يتم تشفير الرسالة باستخدام شيفرة XOR مع المفتاح المشترك.',step3Title:'إرسال',step3Desc:'الرسالة المشفرة تُودَع عبر بث BLE في الهواء.',step4Title:'تحقق',step4Desc:'العميل ب يمسح ويستقبل الإيداع ويفك تشفيره بنفس المفتاح.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1768,3 +1768,18 @@ if (document.readyState === 'loading') {
   // init() already called, run after a tick
   setTimeout(initDeadDrop, 50);
 }
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

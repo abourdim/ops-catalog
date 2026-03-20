@@ -28,6 +28,13 @@ canvas.freq-canvas{width:100%;height:220px;border-radius:10px;border:1px solid v
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -39,6 +46,19 @@ canvas.freq-canvas{width:100%;height:220px;border-radius:10px;border:1px solid v
       <canvas id="freqCanvas" class="freq-canvas"></canvas></div>
     <details class="collapsible" open><summary><span class="icon">&#128225;</span> <span data-i18n="sectionA">Channel Data</span></summary><div class="card"><div class="packet-list" id="channelList"></div></div></details>
     <details class="collapsible"><summary><span class="icon">&#127891;</span> <span data-i18n="sectionB">How It Works</span></summary><div class="card"><div class="control-section"><p style="font-size:.78rem;line-height:1.6;color:var(--text-muted)" data-i18n="howItWorksText">WiFi frequency forensics uses SDR to analyze 2.4GHz and 5GHz bands.</p></div></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+            <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+            <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
+        </div>
+      </details>
+
   </div><footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer><div class="deco-band bottom-band" aria-hidden="true"></div></div>
   <canvas id="matrixCanvas" class="matrix-canvas"></canvas><div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
   <div class="sidebar-overlay" id="helpOverlay"></div><aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#x2753; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"><details class="help-item"><summary data-i18n="faq_q1">What is frequency forensics?</summary><p data-i18n="faq_a1">Analyzing WiFi channels to detect interference.</p></details><details class="help-item"><summary data-i18n="faq_q2">Is this real?</summary><p data-i18n="faq_a2">No, simulation only.</p></details><details class="help-item"><summary data-i18n="faq_q3">What is HackRF?</summary><p data-i18n="faq_a3">Open-source SDR platform.</p></details><details class="help-item"><summary data-i18n="faq_q4">Privacy?</summary><p data-i18n="faq_a4">Yes, all local.</p></details></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Click Analyze.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Watch the spectrum.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Check channel data.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Customize in Settings.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">&#128274; Privacy</h3><p data-i18n="wiki_privacy">All data stays local.</p></div></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>

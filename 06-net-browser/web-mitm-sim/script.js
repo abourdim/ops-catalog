@@ -45,7 +45,7 @@ defense_hsts:'HSTS: Forces browsers to always use HTTPS.',
 defense_pin:'Certificate Pinning: Prevents fake certificates.',
 defense_mtls:'Mutual TLS: Both sides verify each other.',
 defense_vpn:'VPN: Encrypts all traffic through a tunnel.',
-,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
+,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
 fr:{title:'MITM Simulateur',subtitle:'\uD83D\uDD75\uFE0F Interceptez les messages entre Alice et Bob',
 disconnected:'D\u00e9connect\u00e9',connected:'Connect\u00e9',
 mainSection:'Jouez Eve',mainDesc:'Interceptez les messages entre Alice et Bob',
@@ -79,7 +79,7 @@ defense_hsts:'HSTS : Force le navigateur \u00e0 utiliser HTTPS.',
 defense_pin:'Certificate Pinning : Emp\u00eache les faux certificats.',
 defense_mtls:'TLS Mutuel : V\u00e9rification des deux c\u00f4t\u00e9s.',
 defense_vpn:'VPN : Chiffre tout le trafic via un tunnel.',
-,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
+,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
 ar:{title:'\u0645\u062D\u0627\u0643\u064A MITM',subtitle:'\uD83D\uDD75\uFE0F \u0627\u0639\u062A\u0631\u0636 \u0631\u0633\u0627\u0626\u0644 \u0623\u0644\u064A\u0633 \u0648\u0628\u0648\u0628',
 disconnected:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644',connected:'\u0645\u062A\u0635\u0644',
 mainSection:'\u0627\u0644\u0639\u0628 \u0643\u0625\u064A\u0641',mainDesc:'\u0627\u0639\u062A\u0631\u0636 \u0627\u0644\u0631\u0633\u0627\u0626\u0644 \u0628\u064A\u0646 \u0623\u0644\u064A\u0633 \u0648\u0628\u0648\u0628',
@@ -113,7 +113,7 @@ defense_hsts:'HSTS: \u064A\u062C\u0628\u0631 \u0627\u0644\u0645\u062A\u0635\u064
 defense_pin:'Certificate Pinning: \u064A\u0645\u0646\u0639 \u0627\u0644\u0634\u0647\u0627\u062F\u0627\u062A \u0627\u0644\u0645\u0632\u064A\u0641\u0629.',
 defense_mtls:'TLS \u0645\u062A\u0628\u0627\u062F\u0644: \u0627\u0644\u0637\u0631\u0641\u0627\u0646 \u064A\u062A\u062D\u0642\u0642\u0627\u0646.',
 defense_vpn:'VPN: \u064A\u0634\u0641\u0631 \u0643\u0644 \u0627\u0644\u062D\u0631\u0643\u0629 \u0639\u0628\u0631 \u0646\u0641\u0642.',
-,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}
+,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
 };
 let currentLang='en';
 function setLanguage(l){currentLang=l;const s=LANG[l];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.dataset.i18nPlaceholder;if(s[k]!=null)el.placeholder=s[k];});document.title=`${s.title} \u2014 Workshop DIY`;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.documentElement.lang=l;const sel=$('langSelect');if(sel)sel.value=l;try{localStorage.setItem('wdiy-lang',l);}catch{}log(s.langChanged,'info');}
@@ -486,3 +486,18 @@ function init(){
   log(LANG[currentLang].ready,'success');
 }
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

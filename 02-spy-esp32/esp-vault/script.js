@@ -154,7 +154,7 @@ const LANG = {
     alreadyVerified: 'Already verified',
     completeStep: 'Complete step',
     first: 'first',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Coffre-fort \u2014 Auth \u00e0 3 facteurs',
     subtitle: 'Empreinte + NFC + clavier pour d\u00e9verrouiller le coffre',
@@ -246,7 +246,7 @@ const LANG = {
     alreadyVerified: 'D\u00e9j\u00e0 v\u00e9rifi\u00e9',
     completeStep: 'Compl\u00e9tez l\'\u00e9tape',
     first: 'd\'abord',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0627\u0644\u062E\u0632\u0646\u0629 \u2014 \u0645\u0635\u0627\u062F\u0642\u0629 \u062B\u0644\u0627\u062B\u064A\u0629',
     subtitle: '\u0628\u0635\u0645\u0629 + NFC + \u0644\u0648\u062D\u0629 \u0645\u0641\u0627\u062A\u064A\u062D \u0644\u0641\u062A\u062D \u0627\u0644\u062E\u0632\u0646\u0629',
@@ -338,7 +338,7 @@ const LANG = {
     alreadyVerified: '\u062A\u0645 \u0627\u0644\u062A\u062D\u0642\u0642 \u0645\u0633\u0628\u0642\u064B\u0627',
     completeStep: '\u0623\u0643\u0645\u0644 \u0627\u0644\u062E\u0637\u0648\u0629',
     first: '\u0623\u0648\u0644\u0627\u064B',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1966,3 +1966,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

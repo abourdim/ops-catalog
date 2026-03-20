@@ -19,7 +19,7 @@ rmsLabel:'RMS:',peakLabel:'Peak-to-Peak:',crestLabel:'Crest Factor:',thd:'THD:',
 toneDesc:'Add up to 8 tones for a multi-tone test signal.',theoryIntro:'Test signals are essential for characterizing SDR receivers:',
 theory1:'Sine waves test frequency response and distortion',theory2:'Multi-tone reveals intermodulation products',theory3:'Noise tests noise figure and dynamic range',theory4:'Sweep maps frequency response across bands',theory5:'OFDM tests linearity with high PAPR signals',
 splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',genStarted:'▶ Generating',genStopped:'⏹ Stopped',audioPlaying:'🔊 Audio playing',audioStopped:'🔇 Audio stopped',toneAdded:'Tone added',
-t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.'},
+t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.',sectionCode:'Device Code'},
 fr:{title:'Generateur de Signaux SDR',subtitle:'🎛️ Generateur — Multi-ton, balayage, bruit, OFDM',disconnected:'Deconnecte',connected:'Connecte',mainSection:'Generateur de Signaux',mainDesc:'Creez des signaux test avec forme d\'onde et spectre',sectionA:'Proprietes du Signal',sectionB:'Constructeur de Tons',sectionC:'Theorie des Signaux',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',export:'Exporter',theme:'Theme',settings:'⚙️ Parametres',language:'Langue',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',
 faq_q1:'Qu\'est-ce que le Generateur?',faq_a1:'Cree des signaux test pour SDR.',faq_q2:'Peut-on ecouter les signaux?',faq_a2:'Oui! Cliquez Lecture Audio.',faq_q3:'Qu\'est-ce que l\'OFDM?',faq_a3:'Multiplexage par division de frequences orthogonales.',faq_q4:'Mes donnees sont privees?',faq_a4:'Oui. Tout est local.',
 howto_1:'Selectionnez un type de signal.',howto_2:'Ajustez frequence, amplitude, offset DC, bruit.',howto_3:'Cliquez Generer pour voir onde et spectre.',howto_4:'Utilisez le constructeur de tons.',
@@ -30,7 +30,7 @@ rmsLabel:'RMS:',peakLabel:'Crete-a-Crete:',crestLabel:'Facteur de Crete:',thd:'D
 toneDesc:'Ajoutez jusqu\'a 8 tons.',theoryIntro:'Les signaux test sont essentiels pour les recepteurs SDR:',
 theory1:'Les sinusoides testent la reponse et la distorsion',theory2:'Le multi-ton revele l\'intermodulation',theory3:'Le bruit teste le facteur de bruit',theory4:'Le balayage cartographie la reponse frequentielle',theory5:'L\'OFDM teste la linearite avec un fort PAPR',
 splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Francais',themeChanged:'🎨 Theme →',genStarted:'▶ Generation en cours',genStopped:'⏹ Arrete',audioPlaying:'🔊 Audio en lecture',audioStopped:'🔇 Audio arrete',toneAdded:'Ton ajoute',
-t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.'},
+t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.',sectionCode:'Code Appareil'},
 ar:{title:'مولد اشارات SDR',subtitle:'🎛️ مولد الاشارات — متعدد النغمات، مسح، ضوضاء، OFDM',disconnected:'غير متصل',connected:'متصل',mainSection:'مولد الاشارات',mainDesc:'انشئ اشارات اختبار مع شكل الموجة والطيف',sectionA:'خصائص الاشارة',sectionB:'بناء النغمات',sectionC:'نظرية الاشارات',activityLog:'سجل النشاط',eventsMsg:'الاحداث',clear:'مسح',copy:'نسخ',export:'تصدير',theme:'المظهر',settings:'⚙️ الاعدادات',language:'اللغة',help:'❓ مساعدة',faq:'اسئلة شائعة',howto:'كيفية الاستخدام',wiki:'ويكي',
 faq_q1:'ما هو مولد الاشارات؟',faq_a1:'ينشئ اشارات اختبار لتجارب SDR.',faq_q2:'هل يمكن سماع الاشارات؟',faq_a2:'نعم! اضغط تشغيل الصوت.',faq_q3:'ما هو OFDM؟',faq_a3:'تقسيم متعامد بالتردد — يستخدم في WiFi وLTE.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء محلي.',
 howto_1:'اختر نوع الاشارة.',howto_2:'اضبط التردد والسعة والازاحة والضوضاء.',howto_3:'اضغط توليد لرؤية الموجة والطيف.',howto_4:'استخدم بناء النغمات لاشارات مخصصة.',
@@ -41,7 +41,7 @@ rmsLabel:'RMS:',peakLabel:'قمة لقمة:',crestLabel:'عامل القمة:',t
 toneDesc:'اضف حتى 8 نغمات.',theoryIntro:'اشارات الاختبار ضرورية لتوصيف مستقبلات SDR:',
 theory1:'الجيبيات تختبر الاستجابة الترددية والتشوه',theory2:'متعدد النغمات يكشف منتجات التعديل البيني',theory3:'الضوضاء تختبر رقم الضوضاء والنطاق الديناميكي',theory4:'المسح يرسم خريطة الاستجابة الترددية',theory5:'OFDM يختبر الخطية مع اشارات PAPR عالية',
 splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',genStarted:'▶ يتم التوليد',genStopped:'⏹ متوقف',audioPlaying:'🔊 الصوت يعمل',audioStopped:'🔇 توقف الصوت',toneAdded:'تمت اضافة نغمة',
-t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',step1Title:'تكوين SDR',step1Desc:'اضبط التردد المركزي ومعدل العينات والكسب لمستقبل SDR.',step2Title:'التقاط الإشارة',step2Desc:'يتم التقاط عينات I/Q الخام من الطيف الراديوي في الوقت الفعلي.',step3Title:'معالجة وتصفية',step3Desc:'تطبق المعالجة الرقمية المرشحات و FFT وخوارزميات فك التعديل.',step4Title:'عرض النتائج',step4Desc:'يتم عرض الإشارة المعالجة كطيف أو شلال أو بيانات مفكوكة.'}
+t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',step1Title:'تكوين SDR',step1Desc:'اضبط التردد المركزي ومعدل العينات والكسب لمستقبل SDR.',step2Title:'التقاط الإشارة',step2Desc:'يتم التقاط عينات I/Q الخام من الطيف الراديوي في الوقت الفعلي.',step3Title:'معالجة وتصفية',step3Desc:'تطبق المعالجة الرقمية المرشحات و FFT وخوارزميات فك التعديل.',step4Title:'عرض النتائج',step4Desc:'يتم عرض الإشارة المعالجة كطيف أو شلال أو بيانات مفكوكة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang='en';
@@ -260,3 +260,18 @@ function tick(){
 }
 setTimeout(()=>{boot();tick();},600);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

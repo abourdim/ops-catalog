@@ -47,7 +47,7 @@ const LANG={
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
     splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'The generator creates fake network packets with realistic headers.',step2Title:'Capture',step2Desc:'Each packet type (TCP, UDP, ICMP, ARP) has its own header structure and color.',step3Title:'Analyze',step3Desc:'The matrix-style canvas shows packets flowing in real-time.',step4Title:'Report',step4Desc:'The hex inspector shows raw packet bytes like Wireshark.'},
+  ,step1Title:'Scan',step1Desc:'The generator creates fake network packets with realistic headers.',step2Title:'Capture',step2Desc:'Each packet type (TCP, UDP, ICMP, ARP) has its own header structure and color.',step3Title:'Analyze',step3Desc:'The matrix-style canvas shows packets flowing in real-time.',step4Title:'Report',step4Desc:'The hex inspector shows raw packet bytes like Wireshark.',sectionCode:'Device Code'},
   fr:{
     title:'esp-packet-storm',subtitle:'⚡ générer · 📊 analyser · 🌊 tempête',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -78,7 +78,7 @@ const LANG={
     logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
     splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'Le générateur crée de faux paquets réseau avec des en-têtes réalistes.',step2Title:'Capturer',step2Desc:'Chaque type (TCP, UDP, ICMP, ARP) a sa propre structure et couleur.',step3Title:'Analyser',step3Desc:'Le canvas montre les paquets en temps réel style Matrix.',step4Title:'Rapporter',step4Desc:'L\'inspecteur hex montre les octets bruts comme Wireshark.'},
+  ,step1Title:'Scanner',step1Desc:'Le générateur crée de faux paquets réseau avec des en-têtes réalistes.',step2Title:'Capturer',step2Desc:'Chaque type (TCP, UDP, ICMP, ARP) a sa propre structure et couleur.',step3Title:'Analyser',step3Desc:'Le canvas montre les paquets en temps réel style Matrix.',step4Title:'Rapporter',step4Desc:'L\'inspecteur hex montre les octets bruts comme Wireshark.',sectionCode:'Code Appareil'},
   ar:{
     title:'esp-packet-storm',subtitle:'⚡ توليد · 📊 تحليل · 🌊 عاصفة',
     disconnected:'غير متصل',connected:'متصل',
@@ -109,7 +109,7 @@ const LANG={
     logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
     splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'المولّد ينشئ حزم شبكة مزيفة بترويسات واقعية.',step2Title:'التقاط',step2Desc:'كل نوع حزمة (TCP, UDP, ICMP, ARP) له بنية ولون خاص.',step3Title:'تحليل',step3Desc:'اللوحة تعرض الحزم تتدفق بأسلوب ماتريكس.',step4Title:'تقرير',step4Desc:'المفتش السداسي يعرض بايتات الحزم الخام.'}
+  ,step1Title:'مسح',step1Desc:'المولّد ينشئ حزم شبكة مزيفة بترويسات واقعية.',step2Title:'التقاط',step2Desc:'كل نوع حزمة (TCP, UDP, ICMP, ARP) له بنية ولون خاص.',step3Title:'تحليل',step3Desc:'اللوحة تعرض الحزم تتدفق بأسلوب ماتريكس.',step4Title:'تقرير',step4Desc:'المفتش السداسي يعرض بايتات الحزم الخام.',sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK (same across all apps) ═══════ */
@@ -446,3 +446,18 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

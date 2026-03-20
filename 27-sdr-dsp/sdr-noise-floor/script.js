@@ -19,7 +19,7 @@ thermalNoise:'Thermal Noise (kTB):',noiseFloorCalc:'Noise Floor (kTB+NF):',mdsLa
 histDesc:'Histogram of noise samples — Gaussian distribution expected.',
 theoryIntro:'Understanding noise is critical for SDR receiver design:',theory1:'Thermal noise: P = kTB (k=1.38e-23, T=Kelvin, B=Hz)',theory2:'Noise Figure: receiver-added noise above thermal',theory3:'MDS: minimum detectable signal (NF + 3dB SNR)',theory4:'Averaging reduces noise by sqrt(N) — 3dB per doubling',theory5:'Dynamic range: noise floor to compression point',
 splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',noiseStarted:'▶ Noise analysis running',noiseStopped:'⏹ Stopped',
-t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.'},
+t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.',sectionCode:'Device Code'},
 fr:{title:'Plancher de Bruit SDR',subtitle:'📉 Plancher de Bruit — Sensibilite du recepteur',disconnected:'Deconnecte',connected:'Connecte',mainSection:'Analyseur de Bruit',mainDesc:'Bruit thermique, facteur de bruit, MDS, dynamique',sectionA:'Calculs de Bruit',sectionB:'Distribution du Bruit',sectionC:'Theorie du Bruit',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',export:'Exporter',theme:'Theme',settings:'⚙️ Parametres',language:'Langue',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',
 faq_q1:'Qu\'est-ce que le plancher de bruit?',faq_a1:'Le niveau minimal detectable, defini par bruit thermique + NF.',faq_q2:'Qu\'est-ce que le facteur de bruit?',faq_a2:'Le bruit ajoute par le recepteur au-dessus du thermique.',faq_q3:'Qu\'est-ce que le MDS?',faq_a3:'Signal Minimum Detectable au-dessus du plancher.',faq_q4:'Mes donnees sont privees?',faq_a4:'Oui. Tout est local.',
 howto_1:'Reglez temperature, bande passante et facteur de bruit.',howto_2:'Ajustez le niveau du signal test.',howto_3:'Augmentez le moyennage pour reduire le bruit.',howto_4:'Verifiez les calculs en Section A.',
@@ -30,7 +30,7 @@ thermalNoise:'Bruit Thermique (kTB):',noiseFloorCalc:'Plancher (kTB+NF):',mdsLab
 histDesc:'Histogramme des echantillons de bruit — distribution gaussienne attendue.',
 theoryIntro:'Comprendre le bruit est essentiel pour la conception SDR:',theory1:'Bruit thermique: P = kTB',theory2:'Facteur de bruit: bruit ajoute par le recepteur',theory3:'MDS: signal minimum detectable',theory4:'Le moyennage reduit le bruit de sqrt(N)',theory5:'Dynamique: du plancher au point de compression',
 splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Francais',themeChanged:'🎨 Theme →',noiseStarted:'▶ Analyse en cours',noiseStopped:'⏹ Arrete',
-t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.'},
+t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.',sectionCode:'Code Appareil'},
 ar:{title:'ارضية الضوضاء SDR',subtitle:'📉 ارضية الضوضاء — فهم حساسية المستقبل',disconnected:'غير متصل',connected:'متصل',mainSection:'محلل ارضية الضوضاء',mainDesc:'الضوضاء الحرارية، رقم الضوضاء، MDS، النطاق الديناميكي',sectionA:'حسابات الضوضاء',sectionB:'توزيع الضوضاء',sectionC:'نظرية الضوضاء',activityLog:'سجل النشاط',eventsMsg:'الاحداث',clear:'مسح',copy:'نسخ',export:'تصدير',theme:'المظهر',settings:'⚙️ الاعدادات',language:'اللغة',help:'❓ مساعدة',faq:'اسئلة شائعة',howto:'كيفية الاستخدام',wiki:'ويكي',
 faq_q1:'ما هي ارضية الضوضاء؟',faq_a1:'اقل مستوى اشارة يمكن للمستقبل كشفه.',faq_q2:'ما هو رقم الضوضاء؟',faq_a2:'الضوضاء الاضافية التي يضيفها المستقبل فوق الحرارية.',faq_q3:'ما هو MDS؟',faq_a3:'اقل اشارة قابلة للكشف فوق ارضية الضوضاء.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء محلي.',
 howto_1:'اضبط الحرارة وعرض النطاق ورقم الضوضاء.',howto_2:'اضبط مستوى اشارة الاختبار.',howto_3:'زد المتوسط لتقليل الضوضاء.',howto_4:'تحقق من القسم أ للحسابات.',
@@ -41,7 +41,7 @@ thermalNoise:'الضوضاء الحرارية (kTB):',noiseFloorCalc:'ارضية
 histDesc:'مدرج تكراري لعينات الضوضاء — توزيع غاوسي متوقع.',
 theoryIntro:'فهم الضوضاء اساسي لتصميم مستقبلات SDR:',theory1:'الضوضاء الحرارية: P = kTB',theory2:'رقم الضوضاء: الضوضاء المضافة بواسطة المستقبل',theory3:'MDS: اقل اشارة قابلة للكشف',theory4:'المتوسط يقلل الضوضاء بمقدار جذر N',theory5:'النطاق الديناميكي: من ارضية الضوضاء الى نقطة الانضغاط',
 splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',noiseStarted:'▶ تحليل الضوضاء يعمل',noiseStopped:'⏹ متوقف',
-t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',step1Title:'تكوين SDR',step1Desc:'اضبط التردد المركزي ومعدل العينات والكسب لمستقبل SDR.',step2Title:'التقاط الإشارة',step2Desc:'يتم التقاط عينات I/Q الخام من الطيف الراديوي في الوقت الفعلي.',step3Title:'معالجة وتصفية',step3Desc:'تطبق المعالجة الرقمية المرشحات و FFT وخوارزميات فك التعديل.',step4Title:'عرض النتائج',step4Desc:'يتم عرض الإشارة المعالجة كطيف أو شلال أو بيانات مفكوكة.'}
+t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',step1Title:'تكوين SDR',step1Desc:'اضبط التردد المركزي ومعدل العينات والكسب لمستقبل SDR.',step2Title:'التقاط الإشارة',step2Desc:'يتم التقاط عينات I/Q الخام من الطيف الراديوي في الوقت الفعلي.',step3Title:'معالجة وتصفية',step3Desc:'تطبق المعالجة الرقمية المرشحات و FFT وخوارزميات فك التعديل.',step4Title:'عرض النتائج',step4Desc:'يتم عرض الإشارة المعالجة كطيف أو شلال أو بيانات مفكوكة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang='en';
@@ -272,3 +272,18 @@ function tick(){
 }
 setTimeout(()=>{boot();tick();},600);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

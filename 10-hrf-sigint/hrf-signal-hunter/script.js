@@ -65,7 +65,7 @@ const LANG = {
     guideP2:'With two bearings you get a fix. Three bearings improve accuracy.',
     guideP3:'Signal strength follows the inverse-square law: power drops with distance squared.',
     dbTitle:'Direction Finding Techniques',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
   fr: {
     title:'Chasseur de Signal', subtitle:'Chasseur de Signal \u2014 Traque RF',
     disconnected:'En attente', connected:'Chasse en cours',
@@ -101,7 +101,7 @@ const LANG = {
     guideP2:'Deux relev\u00e9s donnent un fix. Trois am\u00e9liorent la pr\u00e9cision.',
     guideP3:'La puissance suit la loi de l\'inverse du carr\u00e9.',
     dbTitle:'Techniques de Radiogoniom\u00e9trie',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
   ar: {
     title:'\u0635\u064A\u0627\u062F \u0627\u0644\u0625\u0634\u0627\u0631\u0627\u062A', subtitle:'\u0635\u064A\u0627\u062F \u0627\u0644\u0625\u0634\u0627\u0631\u0627\u062A \u2014 \u0627\u0644\u0628\u062D\u062B \u0639\u0646 RF',
     disconnected:'\u062E\u0627\u0645\u0644', connected:'\u0627\u0644\u0635\u064A\u062F',
@@ -137,7 +137,7 @@ const LANG = {
     guideP2:'\u0642\u064A\u0627\u0633\u0627\u0646 \u064A\u0639\u0637\u064A\u0627\u0646 \u0645\u0648\u0642\u0639\u064B\u0627. \u062B\u0644\u0627\u062B\u0629 \u062A\u062D\u0633\u0646 \u0627\u0644\u062F\u0642\u0629.',
     guideP3:'\u0627\u0644\u0642\u0648\u0629 \u062A\u062A\u0628\u0639 \u0642\u0627\u0646\u0648\u0646 \u0627\u0644\u062A\u0631\u0628\u064A\u0639 \u0627\u0644\u0639\u0643\u0633\u064A.',
     dbTitle:'\u062A\u0642\u0646\u064A\u0627\u062A \u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0627\u062A\u062C\u0627\u0647',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -636,3 +636,18 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

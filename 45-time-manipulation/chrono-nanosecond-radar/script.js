@@ -106,7 +106,7 @@ const LANG = {
     scanStarted: 'Radar scan started', scanStopped: 'Radar scan stopped',
     scanReset: 'Radar reset', targetDetected: 'Target detected!',
     targetLost: 'Target lost', sweepComplete: 'Sweep complete',
-  ,step1Title:'Set Time Reference',step1Desc:'Establish a precise time base using atomic clocks or network synchronization.',step2Title:'Measure Interval',step2Desc:'Capture timing data with nanosecond precision across the system.',step3Title:'Detect Anomalies',step3Desc:'Compare timestamps to find drift, jitter, or deliberate manipulation.',step4Title:'Exploit or Defend',step4Desc:'Use timing information to attack vulnerable systems or strengthen defenses.'},
+  ,step1Title:'Set Time Reference',step1Desc:'Establish a precise time base using atomic clocks or network synchronization.',step2Title:'Measure Interval',step2Desc:'Capture timing data with nanosecond precision across the system.',step3Title:'Detect Anomalies',step3Desc:'Compare timestamps to find drift, jitter, or deliberate manipulation.',step4Title:'Exploit or Defend',step4Desc:'Use timing information to attack vulnerable systems or strengthen defenses.',sectionCode:'Device Code'},
   fr: {
     title: 'Radar Nanoseconde Chrono',
     subtitle: 'Radar temporel precision nanoseconde',
@@ -151,7 +151,7 @@ const LANG = {
     scanStarted: 'Balayage demarre', scanStopped: 'Balayage arrete',
     scanReset: 'Radar reinitialise', targetDetected: 'Cible detectee!',
     targetLost: 'Cible perdue', sweepComplete: 'Balayage termine',
-  ,step1Title:'Définir la référence',step1Desc:'Établis une base de temps précise via horloge atomique ou synchronisation.',step2Title:'Mesurer l\'intervalle',step2Desc:'Capture les données temporelles avec une précision nanoseconde.',step3Title:'Détecter les anomalies',step3Desc:'Compare les horodatages pour trouver la dérive ou la manipulation.',step4Title:'Exploiter ou défendre',step4Desc:'Utilise les informations temporelles pour attaquer ou renforcer les défenses.'},
+  ,step1Title:'Définir la référence',step1Desc:'Établis une base de temps précise via horloge atomique ou synchronisation.',step2Title:'Mesurer l\'intervalle',step2Desc:'Capture les données temporelles avec une précision nanoseconde.',step3Title:'Détecter les anomalies',step3Desc:'Compare les horodatages pour trouver la dérive ou la manipulation.',step4Title:'Exploiter ou défendre',step4Desc:'Utilise les informations temporelles pour attaquer ou renforcer les défenses.',sectionCode:'Code Appareil'},
   ar: {
     title: 'رادار النانوثانية كرونو',
     subtitle: 'رادار توقيت بدقة النانوثانية',
@@ -196,7 +196,7 @@ const LANG = {
     scanStarted: 'بدأ المسح', scanStopped: 'توقف المسح',
     scanReset: 'إعادة تعيين الرادار', targetDetected: 'تم اكتشاف هدف!',
     targetLost: 'فقد الهدف', sweepComplete: 'اكتمل المسح',
-  ,step1Title:'تعيين المرجع الزمني',step1Desc:'أنشئ قاعدة زمنية دقيقة باستخدام الساعات الذرية أو المزامنة.',step2Title:'قياس الفاصل',step2Desc:'التقط بيانات التوقيت بدقة نانوثانية عبر النظام.',step3Title:'كشف الشذوذ',step3Desc:'قارن الطوابع الزمنية للعثور على الانحراف أو التلاعب.',step4Title:'استغلال أو دفاع',step4Desc:'استخدم معلومات التوقيت لمهاجمة الأنظمة أو تعزيز الدفاعات.'}
+  ,step1Title:'تعيين المرجع الزمني',step1Desc:'أنشئ قاعدة زمنية دقيقة باستخدام الساعات الذرية أو المزامنة.',step2Title:'قياس الفاصل',step2Desc:'التقط بيانات التوقيت بدقة نانوثانية عبر النظام.',step3Title:'كشف الشذوذ',step3Desc:'قارن الطوابع الزمنية للعثور على الانحراف أو التلاعب.',step4Title:'استغلال أو دفاع',step4Desc:'استخدم معلومات التوقيت لمهاجمة الأنظمة أو تعزيز الدفاعات.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1538,3 +1538,18 @@ function generateColoredNoise(length, amplitude, alpha) {
   }
   return colored;
 }
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

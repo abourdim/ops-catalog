@@ -96,7 +96,7 @@ const LANG = {
     encodedData: 'Encoded Data', decodedMsg: 'Decoded Message', stats: 'Statistics',
     txHint: 'Encoded and decoded messages will appear here.',
     msgEncoded: 'Message encoded', msgDecoded: 'Message decoded', noData: 'No data to decode',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
   fr: {
     title: 'Canal Secret', subtitle: 'Canal Secret — Stéganographie RF',
     disconnected: 'En attente', connected: 'Transmission',
@@ -131,7 +131,7 @@ const LANG = {
     encodedData: 'Données Encodées', decodedMsg: 'Message Décodé', stats: 'Statistiques',
     txHint: 'Les messages encodés et décodés apparaîtront ici.',
     msgEncoded: 'Message encodé', msgDecoded: 'Message décodé', noData: 'Aucune donnée',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
   ar: {
     title: 'قناة سرية', subtitle: 'قناة سرية — إخفاء البيانات في RF',
     disconnected: 'خامل', connected: 'إرسال',
@@ -166,7 +166,7 @@ const LANG = {
     encodedData: 'البيانات المشفرة', decodedMsg: 'الرسالة المفكوكة', stats: 'الإحصائيات',
     txHint: 'ستظهر الرسائل هنا.',
     msgEncoded: 'تم تشفير الرسالة', msgDecoded: 'تم فك التشفير', noData: 'لا توجد بيانات',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1668,3 +1668,18 @@ function initCovertChannel() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

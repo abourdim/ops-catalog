@@ -122,7 +122,7 @@ const LANG = {
     riskHigh: 'HIGH', riskMedium: 'MEDIUM', riskLow: 'LOW', riskClean: 'CLEAN',
     challengeComplete: '🏆 Challenge complete!',
     batchComplete: '📦 Batch scrub complete — all images cleaned',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'EXIF Eraser', subtitle: '🧹 scanner · 🔍 révéler · 🛡️ protéger',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -182,7 +182,7 @@ const LANG = {
     riskHigh: 'ÉLEVÉ', riskMedium: 'MOYEN', riskLow: 'FAIBLE', riskClean: 'PROPRE',
     challengeComplete: '🏆 Défi terminé !',
     batchComplete: '📦 Nettoyage par lot terminé — toutes les images nettoyées',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: 'ممحاة EXIF', subtitle: '🧹 فحص · 🔍 كشف · 🛡️ حماية',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -242,7 +242,7 @@ const LANG = {
     riskHigh: 'عالي', riskMedium: 'متوسط', riskLow: 'منخفض', riskClean: 'نظيف',
     challengeComplete: '🏆 اكتمل التحدي!',
     batchComplete: '📦 اكتمل التنظيف الدفعي — تم تنظيف جميع الصور',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1974,3 +1974,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

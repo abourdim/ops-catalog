@@ -71,7 +71,7 @@ const LANG = {
     guideP2:'FM broadcast uses 87.5\u2013108 MHz with 75 kHz deviation and 200 kHz channel spacing.',
     guideP3:'Pirate radio stations broadcast without a license, historically on FM and AM bands.',
     histTitle:'Famous Pirate Radio Stations',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
   fr: {
     title:'Radio Pirate FM', subtitle:'Radio Pirate FM \u2014 Cabine DJ',
     disconnected:'Hors antenne', connected:'EN DIRECT',
@@ -112,7 +112,7 @@ const LANG = {
     guideP2:'La FM utilise 87.5\u2013108 MHz avec 75 kHz de d\u00e9viation.',
     guideP3:'Les radios pirates \u00e9mettent sans licence.',
     histTitle:'Stations Pirates C\u00e9l\u00e8bres',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
   ar: {
     title:'\u0631\u0627\u062F\u064A\u0648 \u0627\u0644\u0642\u0631\u0627\u0635\u0646\u0629 FM', subtitle:'\u0631\u0627\u062F\u064A\u0648 \u0627\u0644\u0642\u0631\u0627\u0635\u0646\u0629 FM \u2014 \u0643\u0627\u0628\u064A\u0646\u0629 DJ',
     disconnected:'\u062E\u0627\u0631\u062C \u0627\u0644\u0628\u062B', connected:'\u0639\u0644\u0649 \u0627\u0644\u0647\u0648\u0627\u0621',
@@ -152,7 +152,7 @@ const LANG = {
     guideP2:'FM \u064A\u0633\u062A\u062E\u062F\u0645 87.5-108 MHz.',
     guideP3:'\u0631\u0627\u062F\u064A\u0648 \u0627\u0644\u0642\u0631\u0627\u0635\u0646\u0629 \u064A\u0628\u062B \u0628\u062F\u0648\u0646 \u062A\u0631\u062E\u064A\u0635.',
     histTitle:'\u0645\u062D\u0637\u0627\u062A \u0642\u0631\u0627\u0635\u0646\u0629 \u0634\u0647\u064A\u0631\u0629',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -648,3 +648,18 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

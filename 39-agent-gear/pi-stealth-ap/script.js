@@ -105,7 +105,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  ,step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.'},
+  ,step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code'},
   fr: {
     title: 'pi-stealth-ap', subtitle: '📶 point d\'accès furtif — WiFi caché',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -144,7 +144,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  ,step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.'},
+  ,step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil'},
   ar: {
     title: 'pi-stealth-ap', subtitle: '📶 نقطة وصول خفية — واي فاي مخفي',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -183,7 +183,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.'}
+  ,step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1484,3 +1484,18 @@ function ftActivate(){sapActivate();}
 function ftAction1(){ftSecAAction();}
 function ftEmergency(){sapDeactivate();}
 function initStealthAP(){const ab=$('deployBtn'),db=$('recallBtn');if(ab)ab.onclick=sapActivate;if(db)db.onclick=sapDeactivate;sapDrawCanvas();}
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

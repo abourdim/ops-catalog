@@ -9,6 +9,13 @@
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
 </style></head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">✈️ Decode ACARS aircraft messages</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
@@ -17,6 +24,19 @@
     <div class="card" id="mainCard"><div class="card-header"><div><div class="card-title"><span class="icon">✈️</span> <span data-i18n="mainSection">ACARS Decoder</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Parse and display flight data</span> <span class="version-tag">v1.2</span></div></div></div><canvas id="acarsWaveform" width="800" height="180" style="width:100%;border-radius:8px;background:#0a0a1a;display:block"></canvas><div class="sim-controls"><button class="btn-sm primary" id="acarsStartBtn">▶ Start</button><button class="btn-sm" id="acarsStopBtn">⏹ Stop</button><div class="sim-stat">131.550 MHz</div><div class="sim-stat">Msgs: <span id="acarsCount">0</span></div></div></div>
     <details class="collapsible" open><summary><span class="icon">📡</span> <span data-i18n="sectionA">Decoded Messages</span></summary><div class="card"><div class="msg-scroll"><table class="data-table"><thead><tr><th>Time</th><th>Flight</th><th>Reg</th><th>Type</th><th>Content</th></tr></thead><tbody id="acarsMessages"></tbody></table></div></div></details>
     <details class="collapsible"><summary><span class="icon">📖</span> <span data-i18n="sectionB">ACARS Protocol</span></summary><div class="card"><p>ACARS uses AM on VHF 131.550 MHz with 2400 bps MSK modulation. Messages contain flight ID, registration, and operational data.</p></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+            <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+            <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
+        </div>
+      </details>
+
   </div><footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer><div class="deco-band bottom-band" aria-hidden="true"></div></div>
   <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
   <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>

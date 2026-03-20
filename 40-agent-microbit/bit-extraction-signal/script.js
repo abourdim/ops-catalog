@@ -124,7 +124,7 @@ const LANG = {
     challenge1: 'Encode a MAYDAY signal using the minimum number of bytes possible.',
     challenge2: 'Decode an unknown beacon frame: what agent, status, and location does it contain?',
     challenge3: 'Design a stealth extraction protocol that minimizes signal detectability.',
-  ,step1Title:'Gear Up',step1Desc:'Encode agent ID, status, and location into a compact binary frame.',step2Title:'Deploy',step2Desc:'The beacon transmits the frame on the emergency frequency.',step3Title:'Monitor',step3Desc:'The signal repeats every N seconds (faster for higher priority).',step4Title:'Extract',step4Desc:'The rescue team receives, decodes, and acknowledges the beacon.'},
+  ,step1Title:'Gear Up',step1Desc:'Encode agent ID, status, and location into a compact binary frame.',step2Title:'Deploy',step2Desc:'The beacon transmits the frame on the emergency frequency.',step3Title:'Monitor',step3Desc:'The signal repeats every N seconds (faster for higher priority).',step4Title:'Extract',step4Desc:'The rescue team receives, decodes, and acknowledges the beacon.',sectionCode:'Device Code'},
   fr: {
     title: 'bit-extraction-signal', subtitle: '🚁 signal d\'extraction — balise d\'urgence',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -186,7 +186,7 @@ const LANG = {
     challenge1: 'Encoder un signal MAYDAY en utilisant le minimum d\'octets possible.',
     challenge2: 'Décoder une trame de balise inconnue : quel agent, statut et position contient-elle ?',
     challenge3: 'Concevoir un protocole d\'extraction furtif minimisant la détectabilité du signal.',
-  ,step1Title:'S\'équiper',step1Desc:'Encode agent ID, status, and location into a compact binary frame.',step2Title:'Déployer',step2Desc:'The beacon transmits the frame on the emergency frequency.',step3Title:'Surveiller',step3Desc:'The signal repeats every N seconds (faster for higher priority).',step4Title:'Extraire',step4Desc:'The rescue team receives, decodes, and acknowledges the beacon.'},
+  ,step1Title:'S\'équiper',step1Desc:'Encode agent ID, status, and location into a compact binary frame.',step2Title:'Déployer',step2Desc:'The beacon transmits the frame on the emergency frequency.',step3Title:'Surveiller',step3Desc:'The signal repeats every N seconds (faster for higher priority).',step4Title:'Extraire',step4Desc:'The rescue team receives, decodes, and acknowledges the beacon.',sectionCode:'Code Appareil'},
   ar: {
     title: 'bit-extraction-signal', subtitle: '🚁 إشارة الاستخراج — منارة الطوارئ',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -248,7 +248,7 @@ const LANG = {
     challenge1: 'تشفير إشارة MAYDAY باستخدام أقل عدد ممكن من البايتات.',
     challenge2: 'فك تشفير إطار منارة مجهول: ما العميل والحالة والموقع الذي يحتويه؟',
     challenge3: 'تصميم بروتوكول استخراج خفي يقلل من قابلية كشف الإشارة.',
-  ,step1Title:'تجهيز',step1Desc:'Encode agent ID, status, and location into a compact binary frame.',step2Title:'نشر',step2Desc:'The beacon transmits the frame on the emergency frequency.',step3Title:'مراقبة',step3Desc:'The signal repeats every N seconds (faster for higher priority).',step4Title:'استخراج',step4Desc:'The rescue team receives, decodes, and acknowledges the beacon.'}
+  ,step1Title:'تجهيز',step1Desc:'Encode agent ID, status, and location into a compact binary frame.',step2Title:'نشر',step2Desc:'The beacon transmits the frame on the emergency frequency.',step3Title:'مراقبة',step3Desc:'The signal repeats every N seconds (faster for higher priority).',step4Title:'استخراج',step4Desc:'The rescue team receives, decodes, and acknowledges the beacon.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1729,3 +1729,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

@@ -96,7 +96,7 @@ const LANG = {
     visible: 'VISIBLE', hidden: 'HIDDEN', partial: 'PARTIAL',
     cloakHint: 'Activate the cloak to see masking in action.',
     cloakOn: 'Cloak activated', cloakOff: 'Cloak deactivated',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
   fr: {
     title: 'Camouflage RF', subtitle: 'Camouflage RF — Masquage de Signal',
     disconnected: 'Exposé', connected: 'Camouflé',
@@ -128,7 +128,7 @@ const LANG = {
     visibility: 'Visibilité', cloakStats: 'Stats', hopPattern: 'Motif de Saut',
     visible: 'VISIBLE', hidden: 'CACHÉ', partial: 'PARTIEL',
     cloakHint: 'Activez le camouflage pour voir le masquage.', cloakOn: 'Camouflage activé', cloakOff: 'Camouflage désactivé',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
   ar: {
     title: 'عباءة RF', subtitle: 'عباءة RF — إخفاء الإشارات',
     disconnected: 'مكشوف', connected: 'مخفي',
@@ -160,7 +160,7 @@ const LANG = {
     visibility: 'الرؤية', cloakStats: 'إحصائيات', hopPattern: 'نمط القفز',
     visible: 'مرئي', hidden: 'مخفي', partial: 'جزئي',
     cloakHint: 'فعّل الإخفاء لرؤية المحاكاة.', cloakOn: 'تم تفعيل الإخفاء', cloakOff: 'تم إلغاء الإخفاء',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1620,3 +1620,18 @@ function initRFCloak() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

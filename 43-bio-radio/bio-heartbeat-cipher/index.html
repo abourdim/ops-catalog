@@ -38,7 +38,14 @@
     .challenge-item .ch-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-weight:700;font-size:.72rem;flex-shrink:0}
     .challenge-item h4{font-size:.78rem;color:var(--text);margin-bottom:2px}
     .challenge-item p{font-size:.72rem;color:var(--text-muted);line-height:1.4}
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()">
@@ -128,6 +135,17 @@
           </div>
         </div>
       </details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
+
     </div>
 
     <footer class="app-footer">

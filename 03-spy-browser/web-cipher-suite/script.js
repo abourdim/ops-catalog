@@ -126,7 +126,7 @@ const LANG = {
     c_caesar: 'Caesar Shift', c_vigenere: 'Vigenere', c_rsa: 'RSA (simplified)', c_aes: 'AES (XOR-based)', c_otp: 'One-Time Pad', c_stego: 'Steganography',
     keyHintCaesar: 'Enter a number 1-25 for the shift amount',
     encrypted: 'Encrypted', decrypted: 'Decrypted',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
   fr: {
     title: 'Suite Crypto', subtitle: '🔐 Chiffrer · 🔓 Dechiffrer · 🎬 Visualiser',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -185,7 +185,7 @@ const LANG = {
     c_caesar: 'Cesar', c_vigenere: 'Vigenere', c_rsa: 'RSA (simplifie)', c_aes: 'AES (XOR)', c_otp: 'Masque Jetable', c_stego: 'Steganographie',
     keyHintCaesar: 'Entrez un nombre 1-25',
     encrypted: 'Chiffre', decrypted: 'Dechiffre',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
   ar: {
     title: 'جناح التشفير', subtitle: '🔐 تشفير · 🔓 فك التشفير · 🎬 تصور',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -244,7 +244,7 @@ const LANG = {
     c_caesar: 'شيفرة قيصر', c_vigenere: 'فيجينير', c_rsa: 'RSA (مبسط)', c_aes: 'AES (XOR)', c_otp: 'قناع لمرة واحدة', c_stego: 'اخفاء المعلومات',
     keyHintCaesar: 'أدخل رقم 1-25 لمقدار الازاحة',
     encrypted: 'تم التشفير', decrypted: 'تم فك التشفير',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -2059,3 +2059,18 @@ document.readyState === 'loading'
     setStatus(true);
   });
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

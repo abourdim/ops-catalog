@@ -137,7 +137,7 @@ const LANG = {
     bleSent: 'BLE packet sent:',
     encrypted: 'Encryption enabled',
     decrypted: 'Encryption disabled',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Bio Radio Gestuelle',
     subtitle: 'Gestes de la main modulent le BLE',
@@ -209,7 +209,7 @@ const LANG = {
     bleSent: 'Paquet BLE envoy\u00e9:',
     encrypted: 'Chiffrement activ\u00e9',
     decrypted: 'Chiffrement d\u00e9sactiv\u00e9',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0631\u0627\u062f\u064a\u0648 \u0627\u0644\u0625\u064a\u0645\u0627\u0621\u0627\u062a',
     subtitle: '\u0625\u064a\u0645\u0627\u0621\u0627\u062a \u0627\u0644\u064a\u062f \u062a\u0639\u062f\u0644 \u0625\u0634\u0627\u0631\u0627\u062a BLE',
@@ -282,7 +282,7 @@ const LANG = {
     bleSent: '\u062d\u0632\u0645\u0629 BLE \u0645\u0631\u0633\u0644\u0629:',
     encrypted: '\u0627\u0644\u062a\u0634\u0641\u064a\u0631 \u0645\u0641\u0639\u0644',
     decrypted: '\u0627\u0644\u062a\u0634\u0641\u064a\u0631 \u0645\u0639\u0637\u0644',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ LANGUAGE ═══════ */
@@ -1040,3 +1040,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

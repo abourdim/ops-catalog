@@ -55,7 +55,7 @@ const LANG = {
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
     gsrStarted: 'GSR measurement started', gsrStopped: 'GSR stopped', needData: 'Collect more GSR data (need 50+ samples)', keyGenerated: 'Key generated',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Bio Cl\u00e9 Galvanique', subtitle: 'Conductance cutan\u00e9e comme cl\u00e9 crypto',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -87,7 +87,7 @@ const LANG = {
     logCleared: 'Effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec',
     langChanged: '\ud83c\udf10 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
     gsrStarted: 'Mesure GSR d\u00e9marr\u00e9e', gsrStopped: 'GSR arr\u00eat\u00e9', needData: 'Collectez plus (50+ \u00e9chantillons)', keyGenerated: 'Cl\u00e9 g\u00e9n\u00e9r\u00e9e',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0645\u0641\u062a\u0627\u062d \u0627\u0644\u062c\u0644\u062f \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a', subtitle: '\u0645\u0648\u0635\u0644\u064a\u0629 \u0627\u0644\u062c\u0644\u062f \u0643\u0645\u0641\u062a\u0627\u062d \u062a\u0634\u0641\u064a\u0631',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -119,7 +119,7 @@ const LANG = {
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
     langChanged: '\ud83c\udf10 \u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
     gsrStarted: '\u0628\u062f\u0623 \u0642\u064a\u0627\u0633 GSR', gsrStopped: '\u062a\u0648\u0642\u0641 GSR', needData: '\u0627\u062c\u0645\u0639 \u0628\u064a\u0627\u0646\u0627\u062a \u0623\u0643\u062b\u0631 (50+)', keyGenerated: '\u062a\u0645 \u062a\u0648\u0644\u064a\u062f \u0627\u0644\u0645\u0641\u062a\u0627\u062d',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */
@@ -724,3 +724,18 @@ function initGSRApp() {
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootGSRViz);
   else setTimeout(bootGSRViz,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

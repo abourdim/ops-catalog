@@ -136,7 +136,7 @@ const LANG = {
     networkScan: '\uD83D\uDD0D Scanning networks...',
     scanComplete: '\uD83D\uDD0D Scan complete',
     reportExported: '\uD83D\uDCCA Security report exported',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.'},
+  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
   fr: {
     title: 'D\u00e9tecteur WiFi Jammer', subtitle: 'D\u00e9tectez les attaques de d\u00e9sauthentification WiFi',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Surveillance',
@@ -211,7 +211,7 @@ const LANG = {
     networkScan: '\uD83D\uDD0D Scan des r\u00e9seaux...',
     scanComplete: '\uD83D\uDD0D Scan termin\u00e9',
     reportExported: '\uD83D\uDCCA Rapport de s\u00e9curit\u00e9 export\u00e9',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.'},
+  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
   ar: {
     title: '\u0643\u0627\u0634\u0641 \u062A\u0634\u0648\u064A\u0634 WiFi', subtitle: '\u0627\u0643\u062A\u0634\u0641 \u0647\u062C\u0645\u0627\u062A \u0625\u0644\u063A\u0627\u0621 \u0627\u0644\u0645\u0635\u0627\u062F\u0642\u0629 \u0639\u0644\u0649 WiFi',
     disconnected: '\u063A\u064A\u0631 \u0645\u062A\u0635\u0644', connected: '\u0645\u0631\u0627\u0642\u0628\u0629',
@@ -286,7 +286,7 @@ const LANG = {
     networkScan: '\uD83D\uDD0D \u062C\u0627\u0631\u064D \u0645\u0633\u062D \u0627\u0644\u0634\u0628\u0643\u0627\u062A...',
     scanComplete: '\uD83D\uDD0D \u0627\u0643\u062A\u0645\u0644 \u0627\u0644\u0645\u0633\u062D',
     reportExported: '\uD83D\uDCCA \u062A\u0645 \u062A\u0635\u062F\u064A\u0631 \u0627\u0644\u062A\u0642\u0631\u064A\u0631',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.'}
+  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -2001,3 +2001,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

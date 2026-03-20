@@ -53,7 +53,7 @@ const LANG = {
     working:'Working...', splashHint:'tap to skip',
     langChanged:'🌐 Language → English', themeChanged:'🎨 Theme →',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Research Target',step1Desc:'A voice sample is recorded and converted to a spectrogram representation.',step2Title:'Build Pretext',step2Desc:'An AI model analyzes the voice\'s unique characteristics (timbre, pitch, cadence).',step3Title:'Execute Attack',step3Desc:'The model generates a synthetic clone that mimics the original voice patterns.',step4Title:'Analyze & Defend',step4Desc:'Detection algorithms analyze spectral anomalies to identify deepfake artifacts.'},
+  ,step1Title:'Research Target',step1Desc:'A voice sample is recorded and converted to a spectrogram representation.',step2Title:'Build Pretext',step2Desc:'An AI model analyzes the voice\'s unique characteristics (timbre, pitch, cadence).',step3Title:'Execute Attack',step3Desc:'The model generates a synthetic clone that mimics the original voice patterns.',step4Title:'Analyze & Defend',step4Desc:'Detection algorithms analyze spectral anomalies to identify deepfake artifacts.',sectionCode:'Device Code'},
   fr: {
     title:'Clonage Vocal Deepfake', subtitle:'Simuler les menaces de clonage vocal IA',
     disconnected:'Déconnecté', connected:'Connecté',
@@ -98,7 +98,7 @@ const LANG = {
     working:'En cours...', splashHint:'appuyer pour passer',
     langChanged:'🌐 Langue → Français', themeChanged:'🎨 Thème →',
     t_mosque:'Mosquée',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Médina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Rechercher la cible',step1Desc:'Un échantillon vocal est enregistré et converti en représentation spectrogramme.',step2Title:'Construire le prétexte',step2Desc:'Un modèle IA analyse les caractéristiques uniques de la voix (timbre, hauteur, cadence).',step3Title:'Exécuter l\'attaque',step3Desc:'Le modèle génère un clone synthétique imitant les patterns vocaux originaux.',step4Title:'Analyser et défendre',step4Desc:'Les algorithmes de détection analysent les anomalies spectrales pour identifier les artefacts deepfake.'},
+  ,step1Title:'Rechercher la cible',step1Desc:'Un échantillon vocal est enregistré et converti en représentation spectrogramme.',step2Title:'Construire le prétexte',step2Desc:'Un modèle IA analyse les caractéristiques uniques de la voix (timbre, hauteur, cadence).',step3Title:'Exécuter l\'attaque',step3Desc:'Le modèle génère un clone synthétique imitant les patterns vocaux originaux.',step4Title:'Analyser et défendre',step4Desc:'Les algorithmes de détection analysent les anomalies spectrales pour identifier les artefacts deepfake.',sectionCode:'Code Appareil'},
   ar: {
     title:'مُستنسخ الصوت المزيّف', subtitle:'محاكاة تهديدات استنساخ الصوت بالذكاء الاصطناعي',
     disconnected:'غير متصل', connected:'متصل',
@@ -143,7 +143,7 @@ const LANG = {
     working:'جارٍ...', splashHint:'انقر للتخطي',
     langChanged:'🌐 اللغة ← العربية', themeChanged:'🎨 المظهر ←',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'البحث عن الهدف',step1Desc:'يتم تسجيل عينة صوتية وتحويلها إلى تمثيل طيفي.',step2Title:'بناء الذريعة',step2Desc:'يحلل نموذج الذكاء الاصطناعي الخصائص الفريدة للصوت (الجرس، النبرة، الإيقاع).',step3Title:'تنفيذ الهجوم',step3Desc:'يولّد النموذج نسخة صناعية تحاكي أنماط الصوت الأصلية.',step4Title:'تحليل ودفاع',step4Desc:'تحلل خوارزميات الكشف الشذوذ الطيفي لتحديد آثار التزييف العميق.'}
+  ,step1Title:'البحث عن الهدف',step1Desc:'يتم تسجيل عينة صوتية وتحويلها إلى تمثيل طيفي.',step2Title:'بناء الذريعة',step2Desc:'يحلل نموذج الذكاء الاصطناعي الخصائص الفريدة للصوت (الجرس، النبرة، الإيقاع).',step3Title:'تنفيذ الهجوم',step3Desc:'يولّد النموذج نسخة صناعية تحاكي أنماط الصوت الأصلية.',step4Title:'تحليل ودفاع',step4Desc:'تحلل خوارزميات الكشف الشذوذ الطيفي لتحديد آثار التزييف العميق.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -588,3 +588,18 @@ function init(){
   log(T('ready'), 'success');
 }
 document.readyState==='loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

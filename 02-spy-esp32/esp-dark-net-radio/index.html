@@ -49,7 +49,14 @@
     .stat-badge { font-size:.7rem; padding:3px 10px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); background:rgba(0,0,0,.2); }
     .stat-badge strong { color:var(--accent); }
     .encrypt-output { font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.72rem; color:var(--accent); background:rgba(0,0,0,.3); padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-top:6px; word-break:break-all; min-height:32px; }
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 
 <body>
@@ -240,6 +247,16 @@
     </div>
 
     <!-- FOOTER -->
+    
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="arduino">Arduino C++</button>
+          </div>
+            <div class="code-display" id="code-arduino"><p>📄 <a href="code/arduino/main.ino" target="_blank">code/arduino/main.ino</a></p><button class="btn-sm" onclick="window.open('code/arduino/main.ino')">⬇ Download</button></div>
+        </div>
+      </details>
     <footer class="app-footer">
       <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
       <span class="hijri-date" id="hijriDate"></span>

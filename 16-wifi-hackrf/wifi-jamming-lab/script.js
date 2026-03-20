@@ -102,7 +102,7 @@ const LANG = {
     deauthSent: 'Deauth frame sent', noiseSent: 'Noise burst', beaconSpam: 'Fake beacon',
     clientDrop: 'Client disconnected', defenseUp: 'Defense strengthened',
     howItWorksText: 'WiFi jamming disrupts wireless communication. Deauth attacks send fake disconnection frames. Noise flooding overwhelms channels with random signals. Beacon spam creates fake APs. This simulator shows attack patterns and how defense mechanisms like 802.11w MFP adapt.',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.'},
+  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
   fr: {
     title: 'Labo Brouillage WiFi', subtitle: 'Simulateur de brouillage WiFi educatif',
     disconnected: 'Inactif', connected: 'Simulation',
@@ -131,7 +131,7 @@ const LANG = {
     deauthSent: 'Trame deauth envoyee', noiseSent: 'Salve de bruit', beaconSpam: 'Fausse balise',
     clientDrop: 'Client deconnecte', defenseUp: 'Defense renforcee',
     howItWorksText: 'Le brouillage WiFi perturbe les communications sans fil. Les attaques deauth envoient de faux trames. Le bruit inonde les canaux.',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.'},
+  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
   ar: {
     title: 'مختبر تشويش WiFi', subtitle: 'محاكي تشويش WiFi تعليمي. فهم هجمات DoS والدفاعات',
     disconnected: 'خامل', connected: 'محاكاة',
@@ -159,7 +159,7 @@ const LANG = {
     deauthSent: 'إطار deauth مرسل', noiseSent: 'دفعة ضوضاء', beaconSpam: 'إشارة مزيفة',
     clientDrop: 'عميل مفصول', defenseUp: 'تعزز الدفاع',
     howItWorksText: 'تشويش WiFi يعطل الاتصال اللاسلكي. هجمات Deauth ترسل إطارات فصل مزيفة. إغراق الضوضاء يطغى على القنوات.',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.'}
+  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1537,4 +1537,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;
   const btns=[{id:'atkDeauth',type:'deauth'},{id:'atkNoise',type:'noise'},{id:'atkBeacon',type:'beacon'}];
   btns.forEach(b=>{const el=$(b.id);if(el)el.onclick=()=>{attackType=b.type;btns.forEach(x=>{const e=$(x.id);if(e)e.classList.toggle('active',x.type===b.type);});}});
+});
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
 });

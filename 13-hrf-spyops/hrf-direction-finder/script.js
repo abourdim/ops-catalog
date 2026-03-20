@@ -95,7 +95,7 @@ const LANG = {
     receivers: 'Receivers', targetInfo: 'Target Info', bearings: 'Bearings',
     locateHint: 'Place receivers on the map, then triangulate to find the target.',
     located: 'Target located!', needMore: 'Need at least 2 receivers', placingReceiver: 'Click map to place receiver',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.'},
+  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
   fr: {
     title: 'Radio-Goniomètre', subtitle: 'Radio-Goniomètre — Triangulation RF',
     disconnected: 'En attente', connected: 'Pistage',
@@ -129,7 +129,7 @@ const LANG = {
     receivers: 'Récepteurs', targetInfo: 'Info Cible', bearings: 'Relèvements',
     locateHint: 'Placez des récepteurs puis triangulez.',
     located: 'Cible localisée!', needMore: 'Il faut au moins 2 récepteurs', placingReceiver: 'Cliquez pour placer',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.'},
+  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
   ar: {
     title: 'محدد الاتجاه', subtitle: 'محدد الاتجاه — تثليث الإشارات',
     disconnected: 'خامل', connected: 'تتبع',
@@ -163,7 +163,7 @@ const LANG = {
     receivers: 'المستقبلات', targetInfo: 'معلومات الهدف', bearings: 'الاتجاهات',
     locateHint: 'ضع مستقبلات على الخريطة ثم ثلّث لإيجاد الهدف.',
     located: 'تم تحديد الهدف!', needMore: 'تحتاج مستقبلين على الأقل', placingReceiver: 'انقر لوضع المستقبل',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.'}
+  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1681,3 +1681,18 @@ function initDirectionFinder() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

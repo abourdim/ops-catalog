@@ -92,7 +92,7 @@ const LANG = {
     start: 'Analyze', stop: 'Stop', channels: 'Channels', power: 'Power', interference: 'Interference', bandwidth: 'BW',
     simStarted: 'Analysis started', simStopped: 'Analysis stopped', channelScanned: 'Channel scanned',
     howItWorksText: 'WiFi frequency forensics uses SDR to analyze 2.4GHz and 5GHz bands. By measuring signal power across channels, we identify interference and congestion. This simulation visualizes a spectrum analyzer.',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.'},
+  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
   fr: {
     title: 'Forensique Frequence WiFi', subtitle: 'Analyser les canaux WiFi avec HackRF',
     disconnected: 'Inactif', connected: 'Analyse',
@@ -117,7 +117,7 @@ const LANG = {
     start: 'Analyser', stop: 'Arreter', channels: 'Canaux', power: 'Puissance', interference: 'Interference', bandwidth: 'BP',
     simStarted: 'Analyse demarree', simStopped: 'Analyse arretee', channelScanned: 'Canal analyse',
     howItWorksText: 'La forensique utilise la SDR pour analyser les bandes 2.4GHz et 5GHz.',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.'},
+  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
   ar: {
     title: 'تحليل ترددات WiFi', subtitle: 'تحليل قنوات WiFi باستخدام HackRF',
     disconnected: 'خامل', connected: 'تحليل',
@@ -141,7 +141,7 @@ const LANG = {
     start: 'تحليل', stop: 'إيقاف', channels: 'قنوات', power: 'طاقة', interference: 'تداخل', bandwidth: 'عرض',
     simStarted: 'بدأ التحليل', simStopped: 'توقف التحليل', channelScanned: 'تم مسح القناة',
     howItWorksText: 'تحليل ترددات WiFi يستخدم SDR لتحليل نطاقات 2.4GHz و 5GHz.',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.'}
+  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1463,3 +1463,18 @@ function simTick(){
 function startSim(){if(simRunning)return;simRunning=true;setStatus(true);$('startBtn').disabled=true;$('stopBtn').disabled=false;channelData=[];scanCount=0;initFCanvas();log(LANG[currentLang].simStarted,'success');simInterval=setInterval(simTick,900);(function loop(){if(!simRunning)return;drawSpectrum();requestAnimationFrame(loop)})();}
 function stopSim(){simRunning=false;if(simInterval)clearInterval(simInterval);setStatus(false);$('startBtn').disabled=false;$('stopBtn').disabled=true;log(LANG[currentLang].simStopped,'info');}
 document.addEventListener('DOMContentLoaded',()=>{const s=$('startBtn'),t=$('stopBtn');if(s)s.onclick=startSim;if(t)t.onclick=stopSim;});
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

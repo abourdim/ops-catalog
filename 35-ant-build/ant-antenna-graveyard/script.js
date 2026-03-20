@@ -98,7 +98,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  ,step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.'},
+  ,step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code'},
   fr: {
     title: 'Cimetière d\'Antennes', subtitle: '🪦 Musée des antennes ratées. Apprenez des erreurs',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -135,7 +135,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  ,step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.'},
+  ,step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil'},
   ar: {
     title: 'مقبرة الهوائيات', subtitle: '🪦 متحف تصاميم الهوائيات الفاشلة. تعلّم من الأخطاء',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -172,7 +172,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.'}
+  ,step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1641,3 +1641,18 @@ function showFailureReport(d) {
 }
 
 initGraveyardApp();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

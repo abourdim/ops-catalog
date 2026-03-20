@@ -44,7 +44,7 @@ const LANG = {
     ready: '\u2764 Bio Heartbeat Mesh ready \u2014 connect to sync!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
-  ,faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick from 8 themes.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.'},
+  ,faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick from 8 themes.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.',sectionCode:'Device Code'},
   fr: {
     title: 'Bio R\u00e9seau Cardiaque', subtitle: 'R\u00e9seau maill\u00e9 synchronis\u00e9 au c\u0153ur',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -77,7 +77,7 @@ const LANG = {
     ready: '\u2764 R\u00e9seau cardiaque pr\u00eat!',
     logCleared: 'Effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec',
     langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
-  ,faq_q3:'Puis-je changer le th\u00e8me?',faq_a3:'Oui! Ouvre les Param\u00e8tres et choisis parmi 8 th\u00e8mes.',faq_q4:'Mes donn\u00e9es sont-elles priv\u00e9es?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.'},
+  ,faq_q3:'Puis-je changer le th\u00e8me?',faq_a3:'Oui! Ouvre les Param\u00e8tres et choisis parmi 8 th\u00e8mes.',faq_q4:'Mes donn\u00e9es sont-elles priv\u00e9es?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.',sectionCode:'Code Appareil'},
   ar: {
     title: '\u0634\u0628\u0643\u0629 \u0646\u0628\u0636 \u0627\u0644\u0642\u0644\u0628', subtitle: '\u0634\u0628\u0643\u0629 \u0645\u062a\u0632\u0627\u0645\u0646\u0629 \u0645\u0639 \u0646\u0628\u0636 \u0627\u0644\u0642\u0644\u0628',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -110,7 +110,7 @@ const LANG = {
     ready: '\u2764 \u0634\u0628\u0643\u0629 \u0627\u0644\u0646\u0628\u0636 \u062c\u0627\u0647\u0632\u0629!',
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
     langChanged: '\ud83c\udf10 \u0627\u0644\u0644\u063a\u0629 \u2190 \u0627\u0644\u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
-  ,faq_q3:'\u0647\u0644 \u064a\u0645\u0643\u0646\u0646\u064a \u062a\u063a\u064a\u064a\u0631 \u0627\u0644\u0633\u0645\u0629\u061f',faq_a3:'\u0646\u0639\u0645! \u0627\u0641\u062a\u062d \u0627\u0644\u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0648\u0627\u062e\u062a\u0631.',faq_q4:'\u0647\u0644 \u0628\u064a\u0627\u0646\u0627\u062a\u064a \u062e\u0627\u0635\u0629\u061f',faq_a4:'\u0646\u0639\u0645. \u0643\u0644 \u0634\u064a\u0621 \u064a\u0639\u0645\u0644 \u0645\u062d\u0644\u064a\u0627\u064b.'}
+  ,faq_q3:'\u0647\u0644 \u064a\u0645\u0643\u0646\u0646\u064a \u062a\u063a\u064a\u064a\u0631 \u0627\u0644\u0633\u0645\u0629\u061f',faq_a3:'\u0646\u0639\u0645! \u0627\u0641\u062a\u062d \u0627\u0644\u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0648\u0627\u062e\u062a\u0631.',faq_q4:'\u0647\u0644 \u0628\u064a\u0627\u0646\u0627\u062a\u064a \u062e\u0627\u0635\u0629\u061f',faq_a4:'\u0646\u0639\u0645. \u0643\u0644 \u0634\u064a\u0621 \u064a\u0639\u0645\u0644 \u0645\u062d\u0644\u064a\u0627\u064b.',sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */
@@ -723,3 +723,18 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootMeshViz);
   else setTimeout(bootMeshViz,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

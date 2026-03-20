@@ -163,7 +163,7 @@ const LANG = {
     heartStarted: 'Heartbeat simulation started',
     heartStopped: 'Heartbeat stopped',
     beatDetected: 'Beat detected',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Bio Chiffre Cardiaque',
     subtitle: 'Votre battement chiffre les messages',
@@ -257,7 +257,7 @@ const LANG = {
     heartStarted: 'Simulation cardiaque d\u00e9marr\u00e9e',
     heartStopped: 'Pouls arr\u00eat\u00e9',
     beatDetected: 'Battement d\u00e9tect\u00e9',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0634\u0641\u0631\u0629 \u0646\u0628\u0636 \u0627\u0644\u0642\u0644\u0628',
     subtitle: '\u0646\u0628\u0636 \u0642\u0644\u0628\u0643 \u064a\u0634\u0641\u0631 \u0627\u0644\u0631\u0633\u0627\u0626\u0644',
@@ -351,7 +351,7 @@ const LANG = {
     heartStarted: '\u0628\u062f\u0623\u062a \u0645\u062d\u0627\u0643\u0627\u0629 \u0627\u0644\u0646\u0628\u0636',
     heartStopped: '\u062a\u0648\u0642\u0641 \u0627\u0644\u0646\u0628\u0636',
     beatDetected: '\u062a\u0645 \u0643\u0634\u0641 \u0646\u0628\u0636\u0629',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ LANGUAGE ═══════ */
@@ -1300,3 +1300,18 @@ function decryptMessage() {
   log(`${s.decrypted}: ${plain}`, 'rx');
   playSound('success');
 }
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

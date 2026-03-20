@@ -98,7 +98,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.'},
+  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code'},
   fr: {
     title: 'mon-projet', subtitle: '🚀 explorer · 🎨 créer · 💡 innover',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -135,7 +135,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.'},
+  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil'},
   ar: {
     title: 'مشروعي', subtitle: '🚀 استكشف · 🎨 أبدع · 💡 ابتكر',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -172,7 +172,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.'}
+  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1510,3 +1510,18 @@ function stopM2(){m2Running=false;if(m2Anim)clearTimeout(m2Anim);log(LANG[curren
   const ch=$('channelSelect');
   if(ch)ch.addEventListener('change',()=>{m2Channel=ch.value;});
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

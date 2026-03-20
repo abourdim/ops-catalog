@@ -57,7 +57,7 @@ const LANG = {
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
     eegStarted: 'EEG acquisition started', eegStopped: 'EEG stopped', modeRelax: 'Mode: Relaxation \u2014 boosting alpha', modeFocus: 'Mode: Focus \u2014 boosting beta', needEEG: 'Start EEG first',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Bio Radio C\u00e9r\u00e9brale', subtitle: 'EEG vers transmission radio',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -88,7 +88,7 @@ const LANG = {
     logCleared: 'Journal effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec copie',
     langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
     eegStarted: 'Acquisition EEG d\u00e9marr\u00e9e', eegStopped: 'EEG arr\u00eat\u00e9', modeRelax: 'Mode: Relaxation \u2014 boost alpha', modeFocus: 'Mode: Concentration \u2014 boost b\u00eata', needEEG: 'D\u00e9marrez l\'EEG d\'abord',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0631\u0627\u062f\u064a\u0648 \u0627\u0644\u0645\u0648\u062c\u0627\u062a \u0627\u0644\u062f\u0645\u0627\u063a\u064a\u0629', subtitle: 'EEG \u0625\u0644\u0649 \u0625\u0631\u0633\u0627\u0644 \u0631\u0627\u062f\u064a\u0648\u064a',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -119,7 +119,7 @@ const LANG = {
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
     langChanged: '\ud83c\udf10 \u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
     eegStarted: '\u0628\u062f\u0623 \u0627\u0644\u062a\u0642\u0627\u0637 EEG', eegStopped: '\u062a\u0648\u0642\u0641 EEG', modeRelax: '\u0627\u0633\u062a\u0631\u062e\u0627\u0621 \u2014 \u0628\u0648\u0633\u062a \u0623\u0644\u0641\u0627', modeFocus: '\u062a\u0631\u0643\u064a\u0632 \u2014 \u0628\u0648\u0633\u062a \u0628\u064a\u062a\u0627', needEEG: '\u0627\u0628\u062f\u0623 EEG \u0623\u0648\u0644\u0627\u064b',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK (same pattern as bio-body-antenna) ═══════ */
@@ -825,3 +825,18 @@ function initBrainwaveApp() {
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootBrainViz);
   else setTimeout(bootBrainViz,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

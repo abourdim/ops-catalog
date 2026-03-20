@@ -37,7 +37,7 @@ const LANG={
     ready:'\ud83e\udec1 Breath Modulator ready \u2014 breathe to transmit!',
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',langChanged:'\ud83c\udf10 English',themeChanged:'\ud83c\udfa8 Theme \u2192',
     breathStarted:'Breathing simulation started',breathStopped:'Stopped',
-  },
+  ,sectionCode:'Device Code'},
   fr:{title:'Bio Modulateur Respiratoire',subtitle:'La respiration module la porteuse RF',disconnected:'D\u00e9connect\u00e9',connected:'Connect\u00e9',
     mainSection:'Modulateur Respiratoire \u2014 Contr\u00f4le RF',mainDesc:'Votre respiration module un signal porteur radio',
     sectionA:'A \u2014 Fonctionnement',sectionC:'C \u2014 D\u00e9fis',
@@ -64,7 +64,7 @@ const LANG={
     t_mosque:'Mosqu\u00e9e',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'M\u00e9dina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',
     ready:'\ud83e\udec1 Modulateur pr\u00eat!',logCleared:'Effac\u00e9',copied:'Copi\u00e9!',copyFail:'\u00c9chec',langChanged:'\ud83c\udf10 Fran\u00e7ais',themeChanged:'\ud83c\udfa8 \u2192',
     breathStarted:'Simulation respiratoire d\u00e9marr\u00e9e',breathStopped:'Arr\u00eat\u00e9',
-  },
+  ,sectionCode:'Code Appareil'},
   ar:{title:'\u0645\u0639\u062f\u0644 \u0627\u0644\u062a\u0646\u0641\u0633',subtitle:'\u0627\u0644\u062a\u0646\u0641\u0633 \u064a\u0639\u062f\u0644 \u062d\u0627\u0645\u0644 RF',disconnected:'\u063a\u064a\u0631 \u0645\u062a\u0635\u0644',connected:'\u0645\u062a\u0635\u0644',
     mainSection:'\u0645\u0639\u062f\u0644 \u0627\u0644\u062a\u0646\u0641\u0633 \u2014 \u062a\u062d\u0643\u0645 RF',mainDesc:'\u0646\u0645\u0637 \u062a\u0646\u0641\u0633\u0643 \u064a\u0639\u062f\u0644 \u0625\u0634\u0627\u0631\u0629 \u0631\u0627\u062f\u064a\u0648',
     sectionA:'\u0623 \u2014 \u0643\u064a\u0641 \u064a\u0639\u0645\u0644',sectionC:'\u062c \u2014 \u062a\u062d\u062f\u064a\u0627\u062a',
@@ -91,7 +91,7 @@ const LANG={
     t_mosque:'\u0645\u0633\u062c\u062f',t_zellige:'\u0632\u0644\u064a\u062c',t_andalus:'\u0623\u0646\u062f\u0644\u0633',t_riad:'\u0631\u064a\u0627\u0636',t_medina:'\u0645\u062f\u064a\u0646\u0629',t_space:'\u0641\u0636\u0627\u0621',t_jungle:'\u0623\u062f\u063a\u0627\u0644',t_robot:'\u0631\u0648\u0628\u0648\u062a',
     ready:'\ud83e\udec1 \u0645\u0639\u062f\u0644 \u0627\u0644\u062a\u0646\u0641\u0633 \u062c\u0627\u0647\u0632!',logCleared:'\u0645\u0633\u062d',copied:'\u062a\u0645!',copyFail:'\u0641\u0634\u0644',langChanged:'\ud83c\udf10 \u0639\u0631\u0628\u064a',themeChanged:'\ud83c\udfa8 \u2190',
     breathStarted:'\u0628\u062f\u0623\u062a \u0627\u0644\u0645\u062d\u0627\u0643\u0627\u0629',breathStopped:'\u062a\u0648\u0642\u0641',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK (compact) ═══════ */
@@ -640,3 +640,18 @@ function initBreathApp(){
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootBreathViz);
   else setTimeout(bootBreathViz,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

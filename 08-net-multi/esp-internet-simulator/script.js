@@ -54,7 +54,7 @@ challenge3:'Explain why the response follows the reverse path through the same r
 dnsResolving:'DNS resolving',dnsResolved:'DNS resolved',routerForward:'Router forwarding packet',
 fwAllowed:'Firewall: ALLOWED',fwBlocked:'Firewall: BLOCKED',serverResponse:'Web server responding',
 responseReceived:'Response received by client',requestBlocked:'Request blocked by firewall',
-,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
+,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
 fr:{
 title:'Simulateur Internet',subtitle:'🌍 DNS · 🖥️ web · 🔀 routeur · 🛡️ pare-feu',
 disconnected:'Déconnecté',connected:'Connecté',
@@ -93,7 +93,7 @@ challenge3:'Expliquez pourquoi la réponse suit le chemin inverse par le même r
 dnsResolving:'Résolution DNS',dnsResolved:'DNS résolu',routerForward:'Routeur transmet le paquet',
 fwAllowed:'Pare-feu : AUTORISÉ',fwBlocked:'Pare-feu : BLOQUÉ',serverResponse:'Serveur web répond',
 responseReceived:'Réponse reçue par le client',requestBlocked:'Requête bloquée par le pare-feu',
-,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
+,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
 ar:{
 title:'محاكي الإنترنت',subtitle:'🌍 DNS · 🖥️ ويب · 🔀 موجّه · 🛡️ جدار ناري',
 disconnected:'غير متصل',connected:'متصل',
@@ -132,7 +132,7 @@ challenge3:'اشرح لماذا تتبع الاستجابة المسار الع�
 dnsResolving:'جارٍ حل DNS',dnsResolved:'تم حل DNS',routerForward:'الموجّه ينقل الحزمة',
 fwAllowed:'الجدار الناري: مسموح',fwBlocked:'الجدار الناري: محظور',serverResponse:'خادم الويب يستجيب',
 responseReceived:'استُلمت الاستجابة من العميل',requestBlocked:'تم حظر الطلب بواسطة الجدار الناري',
-,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}};
+,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}};
 
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
@@ -505,3 +505,18 @@ document.readyState==='loading'?document.addEventListener('DOMContentLoaded',ini
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

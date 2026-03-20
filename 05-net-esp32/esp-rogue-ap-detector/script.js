@@ -49,7 +49,7 @@ const LANG={
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
     splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'ESP32 scans all WiFi channels and records AP fingerprints (BSSID, SSID, channel, encryption).',step2Title:'Capture',step2Desc:'Fingerprints are stored in a known-good database for comparison.',step3Title:'Analyze',step3Desc:'On each scan, new APs are compared against the database for mismatches.',step4Title:'Report',step4Desc:'If an AP shares the SSID but has a different BSSID or channel, it is flagged as a rogue.'},
+  ,step1Title:'Scan',step1Desc:'ESP32 scans all WiFi channels and records AP fingerprints (BSSID, SSID, channel, encryption).',step2Title:'Capture',step2Desc:'Fingerprints are stored in a known-good database for comparison.',step3Title:'Analyze',step3Desc:'On each scan, new APs are compared against the database for mismatches.',step4Title:'Report',step4Desc:'If an AP shares the SSID but has a different BSSID or channel, it is flagged as a rogue.',sectionCode:'Device Code'},
   fr:{
     title:'esp-rogue-ap-detector',subtitle:'🔍 scanner · 🔬 empreinte · 🚨 détecter',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -87,7 +87,7 @@ const LANG={
     logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
     splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'L\'ESP32 scanne tous les canaux WiFi et enregistre les empreintes.',step2Title:'Capturer',step2Desc:'Les empreintes sont stockées dans une base de référence.',step3Title:'Analyser',step3Desc:'À chaque scan, les AP sont comparés à la base pour détecter les différences.',step4Title:'Rapporter',step4Desc:'Si un AP partage le SSID mais a un BSSID ou canal différent, il est marqué rogue.'},
+  ,step1Title:'Scanner',step1Desc:'L\'ESP32 scanne tous les canaux WiFi et enregistre les empreintes.',step2Title:'Capturer',step2Desc:'Les empreintes sont stockées dans une base de référence.',step3Title:'Analyser',step3Desc:'À chaque scan, les AP sont comparés à la base pour détecter les différences.',step4Title:'Rapporter',step4Desc:'Si un AP partage le SSID mais a un BSSID ou canal différent, il est marqué rogue.',sectionCode:'Code Appareil'},
   ar:{
     title:'esp-rogue-ap-detector',subtitle:'🔍 مسح · 🔬 بصمة · 🚨 كشف',
     disconnected:'غير متصل',connected:'متصل',
@@ -125,7 +125,7 @@ const LANG={
     logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
     splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'ESP32 يمسح كل قنوات WiFi ويسجل بصمات AP.',step2Title:'التقاط',step2Desc:'البصمات تُخزن في قاعدة بيانات مرجعية.',step3Title:'تحليل',step3Desc:'في كل مسح، تُقارن البصمات الجديدة بالقاعدة.',step4Title:'تقرير',step4Desc:'إذا شارك AP نفس SSID لكن بـ BSSID أو قناة مختلفة، يُعلّم كمزيف.'}
+  ,step1Title:'مسح',step1Desc:'ESP32 يمسح كل قنوات WiFi ويسجل بصمات AP.',step2Title:'التقاط',step2Desc:'البصمات تُخزن في قاعدة بيانات مرجعية.',step3Title:'تحليل',step3Desc:'في كل مسح، تُقارن البصمات الجديدة بالقاعدة.',step4Title:'تقرير',step4Desc:'إذا شارك AP نفس SSID لكن بـ BSSID أو قناة مختلفة، يُعلّم كمزيف.',sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */
@@ -427,3 +427,18 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,200);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

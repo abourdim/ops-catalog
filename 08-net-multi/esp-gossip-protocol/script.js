@@ -47,7 +47,7 @@ challenge1:'Achieve 100% convergence in the fewest rounds. What probability is n
 challenge2:'Set spread to 10% and observe rounds vs 90%.',
 challenge3:'With 25 nodes, predict rounds to convergence at 50%.',
 seeded:'Node {id} seeded with data',roundN:'Round {n}',spread:'→ gossips to',infected:'infected!',alreadyHas:'already has data',converged:'All nodes converged!',yes:'Yes',no:'No',
-,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
+,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
 fr:{
 title:'Protocole Gossip',subtitle:'💬 rumeur · 🦠 épidémie · 📊 convergence',
 disconnected:'Déconnecté',connected:'Connecté',
@@ -80,7 +80,7 @@ challenge1:'Convergence 100% en minimum de tours. Quelle probabilité ?',
 challenge2:'10% de propagation vs 90% : combien de tours ?',
 challenge3:'25 nœuds à 50% : prédisez les tours.',
 seeded:'Nœud {id} semé',roundN:'Tour {n}',spread:'→ parle à',infected:'infecté !',alreadyHas:'a déjà les données',converged:'Tous les nœuds ont convergé !',yes:'Oui',no:'Non',
-,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
+,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
 ar:{
 title:'بروتوكول الثرثرة',subtitle:'💬 ثرثرة · 🦠 وبائي · 📊 تقارب',
 disconnected:'غير متصل',connected:'متصل',
@@ -113,7 +113,7 @@ challenge1:'تقارب 100% بأقل جولات. ما الاحتمال المط�
 challenge2:'10% مقابل 90%: كم جولة؟',
 challenge3:'25 عقدة بنسبة 50%: توقع الجولات.',
 seeded:'العقدة {id} بُذرت',roundN:'الجولة {n}',spread:'→ يثرثر مع',infected:'أُصيب!',alreadyHas:'لديه البيانات بالفعل',converged:'جميع العقد تقاربت!',yes:'نعم',no:'لا',
-,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}};
+,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}};
 
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');updateStats();}
@@ -497,3 +497,18 @@ document.readyState==='loading'?document.addEventListener('DOMContentLoaded',ini
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,250);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

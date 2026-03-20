@@ -5,7 +5,14 @@
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head><body>
 <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">🔄 Sagnac Interferometer — Rotation detection</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
 <div class="app"><div class="deco-band top-band" aria-hidden="true"></div><div class="rows-container"><div class="header"><div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div><div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Sagnac Interferometer</h1><div class="subtitle" data-i18n="subtitle">🔄 Sagnac Interferometer — Rotation detection</div></div></div><div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only">❓</button><button id="settingsBtn" class="btn-icon-only">⚙️</button><button id="logBtn" class="btn-icon-only">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText">Offline</span></div></div></div>
@@ -15,6 +22,17 @@
 <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"><button class="btn-sm primary" id="startBtn">▶ Start</button><button class="btn-sm" id="stopBtn">⏹ Stop</button><button class="btn-sm" id="resetBtn">↺ Reset</button></div></div></div>
 <details class="collapsible"><summary><span class="icon">📊</span> Measurements</summary><div class="card"><div style="font-family:monospace;font-size:13px;line-height:1.8;"><div>Phase Shift: <strong id="phaseVal">-- rad</strong></div><div>Fringe Shift: <strong id="fringeVal">-- fringes</strong></div><div>Beat Frequency: <strong id="beatVal">-- Hz</strong></div><div>Sensitivity: <strong id="sensVal">-- rad/(°/s)</strong></div></div></div></details>
 <details class="collapsible"><summary><span class="icon">📖</span> Theory</summary><div class="card"><p>The Sagnac effect produces a phase difference between counter-propagating beams in a rotating frame, enabling gyroscope applications.</p></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
+
 </div><footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer><div class="deco-band bottom-band" aria-hidden="true"></div></div><canvas id="matrixCanvas" class="matrix-canvas"></canvas>
 <div class="sidebar-overlay" id="helpOverlay"></div><aside class="sidebar sidebar-left" id="helpPanel"><div class="sidebar-header"><span class="sidebar-title">❓</span><button id="helpCloseBtn" class="btn-icon-only">✕</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq">FAQ</button><button class="help-tab" data-tab="howto">How-To</button><button class="help-tab" data-tab="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"><details class="help-item"><summary>What is the Sagnac effect?</summary><p>Phase shift between counter-propagating beams due to rotation of the loop.</p></details></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p>Set rotation rate and loop area.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3>🎨</h3><p>8 themes.</p></div></div></div></aside>
 <div class="sidebar-overlay" id="settingsOverlay"></div><aside class="sidebar" id="settingsPanel"><div class="sidebar-header"><span class="sidebar-title">⚙️</span><button id="settingsCloseBtn" class="btn-icon-only">✕</button></div><div class="sidebar-body"><div class="sidebar-group"><label>Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">عربي</option></select></div><div class="sidebar-group"><label>Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span>Sound</span></label></div></div></aside>

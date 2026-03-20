@@ -19,7 +19,7 @@ arrayGain:'Array Gain:',beamWidth:'Beam Width (-3dB):',sllLabel:'Sidelobe Level:
 calDesc:'Simulate phase errors and apply calibration.',
 theoryIntro:'Coherent multi-SDR arrays combine signals for enhanced performance:',theory1:'Array gain = 10 log10(N) dB for N elements',theory2:'Beamforming focuses sensitivity directionally',theory3:'Phase-locked oscillators essential for coherence',theory4:'Element spacing affects grating lobes',theory5:'Calibration corrects phase/amplitude mismatches',
 splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',simStarted:'▶ Array simulation running',simStopped:'⏹ Stopped',errorsAdded:'Phase errors added',calibDone:'Calibration applied',
-t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.'},
+t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure SDR',step1Desc:'Set the center frequency, sample rate, and gain for the SDR receiver.',step2Title:'Capture Signal',step2Desc:'Raw I/Q samples are captured from the radio spectrum in real time.',step3Title:'Process & Filter',step3Desc:'Digital signal processing applies filters, FFT, and demodulation algorithms.',step4Title:'Visualize Output',step4Desc:'The processed signal is displayed as spectrum, waterfall, or decoded data.',sectionCode:'Device Code'},
 fr:{title:'Recepteur Coherent SDR',subtitle:'🔗 Recepteur Coherent — Multi-SDR verrouille en phase',disconnected:'Deconnecte',connected:'Connecte',mainSection:'Recepteur Coherent',mainDesc:'Combinaison phase-verrouillee et formation de faisceau',sectionA:'Performance du Reseau',sectionB:'Calibration de Phase',sectionC:'Theorie des Reseaux Coherents',activityLog:'Journal',eventsMsg:'Evenements',clear:'Effacer',copy:'Copier',export:'Exporter',theme:'Theme',settings:'⚙️ Parametres',language:'Langue',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',
 faq_q1:'Qu\'est-ce qu\'un recepteur coherent?',faq_a1:'Plusieurs SDR combines avec horloge synchronisee.',faq_q2:'Qu\'est-ce que la formation de faisceau?',faq_a2:'Orienter le diagramme d\'antenne par ajustement de phase.',faq_q3:'Pourquoi calibrer?',faq_a3:'Les erreurs de phase degradent le gain.',faq_q4:'Mes donnees sont privees?',faq_a4:'Oui. Tout est local.',
 howto_1:'Reglez le nombre d\'elements et l\'espacement.',howto_2:'Ajustez les angles de pointage et de signal.',howto_3:'Cliquez Demarrer pour le diagramme.',howto_4:'Essayez les erreurs de phase et calibration.',
@@ -30,7 +30,7 @@ arrayGain:'Gain Reseau:',beamWidth:'Ouverture (-3dB):',sllLabel:'Lobes Secondair
 calDesc:'Simulez des erreurs de phase et calibrez.',
 theoryIntro:'Les reseaux coherents multi-SDR combinent pour ameliorer:',theory1:'Gain = 10 log10(N) dB pour N elements',theory2:'Formation de faisceau oriente la sensibilite',theory3:'Oscillateurs verrouilles essentiels',theory4:'L\'espacement affecte les lobes de reseau',theory5:'La calibration corrige les desaccords',
 splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Francais',themeChanged:'🎨 Theme →',simStarted:'▶ Simulation en cours',simStopped:'⏹ Arrete',errorsAdded:'Erreurs ajoutees',calibDone:'Calibration appliquee',
-t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.'},
+t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer le SDR',step1Desc:'Règle la fréquence centrale, le taux d\'échantillonnage et le gain.',step2Title:'Capturer le signal',step2Desc:'Les échantillons I/Q bruts sont capturés du spectre en temps réel.',step3Title:'Traiter et filtrer',step3Desc:'Le traitement numérique applique filtres, FFT et algorithmes de démodulation.',step4Title:'Visualiser le résultat',step4Desc:'Le signal traité est affiché en spectre, cascade ou données décodées.',sectionCode:'Code Appareil'},
 ar:{title:'المستقبل المتماسك SDR',subtitle:'🔗 المستقبل المتماسك — متعدد SDR مقفل الطور',disconnected:'غير متصل',connected:'متصل',mainSection:'المستقبل المتماسك',mainDesc:'محاكاة الجمع المقفل الطور وتشكيل الحزمة',sectionA:'اداء المصفوفة',sectionB:'معايرة الطور',sectionC:'نظرية المصفوفات المتماسكة',activityLog:'سجل النشاط',eventsMsg:'الاحداث',clear:'مسح',copy:'نسخ',export:'تصدير',theme:'المظهر',settings:'⚙️ الاعدادات',language:'اللغة',help:'❓ مساعدة',faq:'اسئلة شائعة',howto:'كيفية الاستخدام',wiki:'ويكي',
 faq_q1:'ما هو المستقبل المتماسك؟',faq_a1:'عدة SDR مجمعة بساعات مقفلة الطور.',faq_q2:'ما هو تشكيل الحزمة؟',faq_a2:'توجيه نمط الهوائي بضبط الطور بين العناصر.',faq_q3:'لماذا المعايرة؟',faq_a3:'اخطاء الطور تقلل كسب المصفوفة.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء محلي.',
 howto_1:'اضبط عدد العناصر والتباعد.',howto_2:'اضبط زوايا التوجيه والاشارة.',howto_3:'اضغط ابدا لنمط الحزمة.',howto_4:'جرب اخطاء الطور والمعايرة.',
@@ -41,7 +41,7 @@ arrayGain:'كسب المصفوفة:',beamWidth:'عرض الحزمة:',sllLabel:'
 calDesc:'حاكِ اخطاء الطور وطبق المعايرة.',
 theoryIntro:'مصفوفات SDR المتماسكة تجمع الاشارات لاداء محسن:',theory1:'الكسب = 10 log10(N) ديسيبل لـ N عنصر',theory2:'تشكيل الحزمة يركز الحساسية اتجاهيا',theory3:'المذبذبات المقفلة ضرورية للتماسك',theory4:'التباعد يؤثر على فصوص الشبكة',theory5:'المعايرة تصحح عدم تطابق الطور والسعة',
 splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',simStarted:'▶ محاكاة المصفوفة تعمل',simStopped:'⏹ متوقف',errorsAdded:'تمت اضافة اخطاء الطور',calibDone:'تم تطبيق المعايرة',
-t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',step1Title:'تكوين SDR',step1Desc:'اضبط التردد المركزي ومعدل العينات والكسب لمستقبل SDR.',step2Title:'التقاط الإشارة',step2Desc:'يتم التقاط عينات I/Q الخام من الطيف الراديوي في الوقت الفعلي.',step3Title:'معالجة وتصفية',step3Desc:'تطبق المعالجة الرقمية المرشحات و FFT وخوارزميات فك التعديل.',step4Title:'عرض النتائج',step4Desc:'يتم عرض الإشارة المعالجة كطيف أو شلال أو بيانات مفكوكة.'}
+t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'اندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'ادغال',t_robot:'روبوت',step1Title:'تكوين SDR',step1Desc:'اضبط التردد المركزي ومعدل العينات والكسب لمستقبل SDR.',step2Title:'التقاط الإشارة',step2Desc:'يتم التقاط عينات I/Q الخام من الطيف الراديوي في الوقت الفعلي.',step3Title:'معالجة وتصفية',step3Desc:'تطبق المعالجة الرقمية المرشحات و FFT وخوارزميات فك التعديل.',step4Title:'عرض النتائج',step4Desc:'يتم عرض الإشارة المعالجة كطيف أو شلال أو بيانات مفكوكة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang='en';
@@ -314,3 +314,18 @@ function tick(){
 }
 setTimeout(()=>{boot();tick();},600);
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

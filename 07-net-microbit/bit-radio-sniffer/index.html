@@ -53,7 +53,14 @@
     .challenge-item .ch-status.completed { color: #4caf50; }
     .challenge-item .ch-status.pending { color: #ff9800; }
     .lab-controls { display: flex; gap: .5rem; flex-wrap: wrap; margin: .5rem 0; }
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 
 <body>
@@ -241,6 +248,18 @@
     </div>
 
     <!-- FOOTER -->
+    
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="micropython">MicroPython</button>
+            <button class="code-tab" data-codetarget="makecode">MakeCode JS</button>
+          </div>
+            <div class="code-display" id="code-micropython"><p>📄 <a href="code/micropython/main.py" target="_blank">code/micropython/main.py</a></p><button class="btn-sm" onclick="window.open('code/micropython/main.py')">⬇ Download</button></div>
+            <div class="code-display hidden" id="code-makecode"><p>📄 <a href="code/makecode/main.js" target="_blank">code/makecode/main.js</a></p><button class="btn-sm" onclick="window.open('code/makecode/main.js')">⬇ Download</button></div>
+        </div>
+      </details>
     <footer class="app-footer">
       <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
       <span class="hijri-date" id="hijriDate"></span>

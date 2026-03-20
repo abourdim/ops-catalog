@@ -69,6 +69,13 @@
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -107,6 +114,17 @@
       <details class="collapsible"><summary><span class="icon">&#128200;</span> <span data-i18n="sectionB">Phase Distribution</span></summary><div class="card"><canvas id="canvasB" width="700" height="250"></canvas></div></details>
       <!-- SECTION C: About -->
       <details class="collapsible"><summary><span class="icon">&#128214;</span> <span data-i18n="sectionC">About Phased Arrays</span></summary><div class="card"><p data-i18n="paInfo1">A phased array antenna consists of multiple radiating elements whose individual phases are controlled to steer the beam without physical movement.</p><p data-i18n="paInfo2" style="margin-top:.5rem">By adjusting the phase of each element, the combined radiation pattern can be steered to any direction. A Raspberry Pi can control phase shifters via SPI or I2C.</p><p data-i18n="paInfo3" style="margin-top:.5rem">This simulator shows how element count, spacing, and phase progression affect beam direction, gain, and sidelobe levels.</p></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
+
     </div>
     <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
     <div class="deco-band bottom-band" aria-hidden="true"></div>

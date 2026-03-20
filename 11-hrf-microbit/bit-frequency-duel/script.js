@@ -118,7 +118,7 @@ const LANG = {
     interferenceLow: 'Low interference',
     interferenceMed: 'Medium interference — consider changing channel',
     interferenceHigh: 'High interference — WiFi overlap detected!',
-  ,step1Title:'Configure RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capture Spectrum',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyze Signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classify & Report',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.'},
+  ,step1Title:'Configure RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capture Spectrum',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyze Signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classify & Report',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Device Code'},
   fr: {
     title: 'bit-frequency-duel', subtitle: '📊 visualiser · 📡 transmettre · 🔍 analyser',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -175,7 +175,7 @@ const LANG = {
     interferenceLow: 'Interférence faible',
     interferenceMed: 'Interférence moyenne — envisagez de changer de canal',
     interferenceHigh: 'Interférence forte — chevauchement WiFi détecté !',
-  ,step1Title:'Configurer RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capturer le spectre',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyser le signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classifier et rapporter',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.'},
+  ,step1Title:'Configurer RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capturer le spectre',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyser le signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classifier et rapporter',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Code Appareil'},
   ar: {
     title: 'bit-frequency-duel', subtitle: '📊 تصوّر · 📡 أرسل · 🔍 حلّل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -232,7 +232,7 @@ const LANG = {
     interferenceLow: 'تداخل منخفض',
     interferenceMed: 'تداخل متوسط — فكّر في تغيير القناة',
     interferenceHigh: 'تداخل عالي — تراكب WiFi مكتشف!',
-  ,step1Title:'تكوين RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'التقاط الطيف',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'تحليل الإشارة',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'تصنيف والتقرير',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.'}
+  ,step1Title:'تكوين RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'التقاط الطيف',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'تحليل الإشارة',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'تصنيف والتقرير',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1704,3 +1704,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

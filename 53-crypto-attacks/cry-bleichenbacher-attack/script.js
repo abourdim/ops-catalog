@@ -31,7 +31,7 @@ const LANG={
     wiki_oracle:'Padding Oracle: Server decrypts c and checks if plaintext starts with 00 02. This 1-bit leak enables full plaintext recovery.',
     wiki_intervals:'Interval Narrowing: Each conforming ciphertext narrows the range [a,b] containing the plaintext. After enough queries, a=b=plaintext.',
     mathExplain:'Bleichenbacher Attack Steps:\n1. Given ciphertext c = m^e mod N\n2. Choose random s, compute c\' = c * s^e mod N\n3. Server decrypts: (c\')^d = m*s mod N\n4. If result has valid PKCS#1 padding -> oracle says YES\n5. Each YES response constrains m to interval [a,b]\n6. Iterate with different s values to narrow [a,b]\n7. When a=b, plaintext m is recovered\n\nPKCS#1 v1.5 format (k-byte key):\n00 02 [PS >= 8 random bytes] 00 [message]\nValid range: 2*B <= m < 3*B where B = 2^(8*(k-2))'
-  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.'},
+  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.',sectionCode:'Device Code'},
   fr:{
     title:'Attaque de Bleichenbacher',subtitle:'Attaque oracle de remplissage RSA PKCS#1 v1.5',
     mainSection:'Labo Oracle de Remplissage',mainDesc:'Simulez l\'oracle de remplissage PKCS#1 v1.5 pour dechiffrer un texte RSA',
@@ -57,7 +57,7 @@ const LANG={
     wiki_oracle:'Oracle: Le serveur revele si le remplissage est valide apres dechiffrement.',
     wiki_intervals:'Retrecissement: Chaque texte conforme retrecit l\'intervalle [a,b].',
     mathExplain:'Etapes de l\'attaque Bleichenbacher:\n1. Texte chiffre c = m^e mod N\n2. Choisir s, calculer c\' = c * s^e mod N\n3. Le serveur dechiffre et verifie le remplissage\n4. Chaque reponse positive retrecit l\'intervalle\n5. Quand a=b, le message est recupere'
-  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.'},
+  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.',sectionCode:'Code Appareil'},
   ar:{
     title:'هجوم بلايخنباخر',subtitle:'هجوم اوراكل حشو RSA PKCS#1 v1.5 بمليون رسالة',
     mainSection:'مختبر اوراكل الحشو',mainDesc:'محاكاة اوراكل حشو PKCS#1 v1.5 لفك تشفير نص RSA',
@@ -83,7 +83,7 @@ const LANG={
     wiki_oracle:'الاوراكل: الخادم يكشف ما اذا كان الحشو صالحا.',
     wiki_intervals:'تضييق المجال: كل نص مطابق يضيق المجال [a,b].',
     mathExplain:'خطوات هجوم بلايخنباخر:\n1. النص المشفر c = m^e mod N\n2. اختر s واحسب c\' = c * s^e mod N\n3. الخادم يفك التشفير ويتحقق من الحشو\n4. كل اجابة ايجابية تضيق المجال\n5. عندما a=b يتم استعادة الرسالة'
-  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.'}
+  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.',sectionCode:'كود الجهاز'}
 };
 let currentLang='en';
 
@@ -578,3 +578,18 @@ function draw(){
 }
 draw();
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

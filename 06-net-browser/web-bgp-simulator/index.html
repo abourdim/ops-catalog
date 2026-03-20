@@ -19,7 +19,14 @@
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Run autonomous systems, inject bad routes, hijack traffic</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
@@ -41,6 +48,17 @@
       <details class="collapsible"><summary><span class="icon">&#128218;</span> <span data-i18n="sectionA">BGP Protocol Reference</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;line-height:1.8;"><p data-i18n="bgpRefText">BGP (Border Gateway Protocol) is the routing protocol of the internet. Autonomous Systems (AS) exchange routing information via BGP sessions. Each AS announces IP prefixes it owns. BGP uses path attributes (AS-PATH, LOCAL_PREF, MED) to select the best route. Route hijacking occurs when an AS announces prefixes it does not own.</p></div></div></details>
       <details class="collapsible"><summary><span class="icon">&#128737;&#65039;</span> <span data-i18n="sectionB">BGP Security</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;line-height:1.8;"><p data-i18n="secText">RPKI (Resource Public Key Infrastructure) validates route announcements. BGPsec adds path validation. Route Origin Validation (ROV) filters invalid prefixes. Without these, any AS can announce any prefix and redirect traffic.</p></div></div></details>
       <details class="collapsible"><summary><span class="icon">&#129514;</span> <span data-i18n="sectionC">Attack Analysis</span></summary><div class="card" style="padding:1rem;"><div style="font-size:.85rem;"><p data-i18n="analysisText">Analyze the impact of route hijacking on network traffic.</p><button class="btn-sm primary" id="analyzeBtn" style="margin-top:.5rem;">&#128200; <span data-i18n="analyzeBtn">Analyze Attack</span></button><div id="analysisResults" style="margin-top:.75rem;display:none;"></div></div></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
+
     </div>
     <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
     <div class="deco-band bottom-band" aria-hidden="true"></div>

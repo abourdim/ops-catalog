@@ -118,7 +118,7 @@ const LANG = {
     intruderDetected: '🚨 INTRUDER DETECTED — motion spike!',
     rulesApplied: '✅ Custom threat rules applied',
     threatAssessment: 'Threat',
-  ,step1Title:'Configure',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Process',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmit',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Verify',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).'},
+  ,step1Title:'Configure',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Process',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmit',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Verify',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'Device Code'},
   fr: {
     title: 'bit-field-scanner', subtitle: '📡 scanner · 🔐 évaluer · 🛡️ protéger',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -175,7 +175,7 @@ const LANG = {
     intruderDetected: '🚨 INTRUS DÉTECTÉ — pic de mouvement !',
     rulesApplied: '✅ Règles de menace personnalisées appliquées',
     threatAssessment: 'Menace',
-  ,step1Title:'Configurer',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Traiter',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmettre',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Vérifier',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).'},
+  ,step1Title:'Configurer',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Traiter',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmettre',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Vérifier',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'Code Appareil'},
   ar: {
     title: 'bit-field-scanner', subtitle: '📡 مسح · 🔐 تقييم · 🛡️ حماية',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -232,7 +232,7 @@ const LANG = {
     intruderDetected: '🚨 تم اكتشاف دخيل — ذروة حركة!',
     rulesApplied: '✅ تم تطبيق قواعد التهديد المخصصة',
     threatAssessment: 'التهديد',
-  ,step1Title:'تكوين',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'معالجة',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'إرسال',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'تحقق',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).'}
+  ,step1Title:'تكوين',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'معالجة',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'إرسال',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'تحقق',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1845,3 +1845,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

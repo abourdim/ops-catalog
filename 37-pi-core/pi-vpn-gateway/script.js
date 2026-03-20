@@ -102,7 +102,7 @@ const LANG = {
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
     themeChanged: '🎨 Theme →',
-  ,step1Title:'Connect Hardware',step1Desc:'Wire up sensors, displays, or radio modules to the Raspberry Pi GPIO pins.',step2Title:'Configure Software',step2Desc:'Install libraries and configure the Python script for your hardware setup.',step3Title:'Monitor Data',step3Desc:'Read sensor data in real time and process it through your algorithms.',step4Title:'Control & Log',step4Desc:'Trigger actions based on data thresholds and log results for analysis.'},
+  ,step1Title:'Connect Hardware',step1Desc:'Wire up sensors, displays, or radio modules to the Raspberry Pi GPIO pins.',step2Title:'Configure Software',step2Desc:'Install libraries and configure the Python script for your hardware setup.',step3Title:'Monitor Data',step3Desc:'Read sensor data in real time and process it through your algorithms.',step4Title:'Control & Log',step4Desc:'Trigger actions based on data thresholds and log results for analysis.',sectionCode:'Device Code'},
   fr: {
     title: 'Passerelle VPN Pi', subtitle: '🔐 tunnel · 🛡️ protéger · 🌍 connecter',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -143,7 +143,7 @@ const LANG = {
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
     themeChanged: '🎨 Thème →',
-  ,step1Title:'Connecter le matériel',step1Desc:'Branche les capteurs ou modules radio aux broches GPIO du Raspberry Pi.',step2Title:'Configurer le logiciel',step2Desc:'Installe les bibliothèques et configure le script Python.',step3Title:'Surveiller les données',step3Desc:'Lis les données des capteurs en temps réel et traite-les.',step4Title:'Contrôler et enregistrer',step4Desc:'Déclenche des actions selon les seuils et enregistre les résultats.'},
+  ,step1Title:'Connecter le matériel',step1Desc:'Branche les capteurs ou modules radio aux broches GPIO du Raspberry Pi.',step2Title:'Configurer le logiciel',step2Desc:'Installe les bibliothèques et configure le script Python.',step3Title:'Surveiller les données',step3Desc:'Lis les données des capteurs en temps réel et traite-les.',step4Title:'Contrôler et enregistrer',step4Desc:'Déclenche des actions selon les seuils et enregistre les résultats.',sectionCode:'Code Appareil'},
   ar: {
     title: 'بوابة VPN على Pi', subtitle: '🔐 نفق · 🛡️ حماية · 🌍 اتصال',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -184,7 +184,7 @@ const LANG = {
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
     themeChanged: '🎨 المظهر ←',
-  ,step1Title:'توصيل العتاد',step1Desc:'وصّل المستشعرات أو الوحدات بمنافذ GPIO في Raspberry Pi.',step2Title:'تكوين البرنامج',step2Desc:'ثبّت المكتبات وكوّن سكريبت Python لإعداد العتاد.',step3Title:'مراقبة البيانات',step3Desc:'اقرأ بيانات المستشعرات في الوقت الفعلي وعالجها.',step4Title:'تحكم وتسجيل',step4Desc:'أطلق إجراءات بناءً على حدود البيانات وسجّل النتائج.'}
+  ,step1Title:'توصيل العتاد',step1Desc:'وصّل المستشعرات أو الوحدات بمنافذ GPIO في Raspberry Pi.',step2Title:'تكوين البرنامج',step2Desc:'ثبّت المكتبات وكوّن سكريبت Python لإعداد العتاد.',step3Title:'مراقبة البيانات',step3Desc:'اقرأ بيانات المستشعرات في الوقت الفعلي وعالجها.',step4Title:'تحكم وتسجيل',step4Desc:'أطلق إجراءات بناءً على حدود البيانات وسجّل النتائج.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1505,3 +1505,18 @@ function populateVPNPeers(){
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

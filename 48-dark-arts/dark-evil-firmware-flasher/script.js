@@ -110,7 +110,7 @@ const LANG = {
     flashComplete: 'Flash complete!', flashReset: 'System reset',
     scanningFw: 'Scanning firmware...', vulnFound: 'Vulnerability found!',
     payloadInjected: 'Payload injected', checksumBypass: 'Checksum bypassed',
-  ,step1Title:'Identify Target',step1Desc:'Select the system, device, or protocol to analyze for vulnerabilities.',step2Title:'Prepare Attack',step2Desc:'Configure the attack parameters and set up the exploitation environment.',step3Title:'Execute',step3Desc:'Launch the simulated attack and observe how the vulnerability is exploited.',step4Title:'Defend',step4Desc:'Learn the countermeasures and defensive techniques to protect against this attack.'},
+  ,step1Title:'Identify Target',step1Desc:'Select the system, device, or protocol to analyze for vulnerabilities.',step2Title:'Prepare Attack',step2Desc:'Configure the attack parameters and set up the exploitation environment.',step3Title:'Execute',step3Desc:'Launch the simulated attack and observe how the vulnerability is exploited.',step4Title:'Defend',step4Desc:'Learn the countermeasures and defensive techniques to protect against this attack.',sectionCode:'Device Code'},
   fr: {
     title: 'Flasheur Firmware Malveillant',
     subtitle: 'Simulateur d\'analyse de firmware',
@@ -154,7 +154,7 @@ const LANG = {
     flashComplete: 'Flash termine!', flashReset: 'Systeme reinitialise',
     scanningFw: 'Scan firmware...', vulnFound: 'Vulnerabilite trouvee!',
     payloadInjected: 'Charge injectee', checksumBypass: 'Checksum contourne',
-  ,step1Title:'Identifier la cible',step1Desc:'Sélectionne le système ou protocole à analyser pour les vulnérabilités.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres d\'attaque et l\'environnement d\'exploitation.',step3Title:'Exécuter',step3Desc:'Lance l\'attaque simulée et observe comment la vulnérabilité est exploitée.',step4Title:'Défendre',step4Desc:'Apprends les contre-mesures et techniques défensives pour te protéger.'},
+  ,step1Title:'Identifier la cible',step1Desc:'Sélectionne le système ou protocole à analyser pour les vulnérabilités.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres d\'attaque et l\'environnement d\'exploitation.',step3Title:'Exécuter',step3Desc:'Lance l\'attaque simulée et observe comment la vulnérabilité est exploitée.',step4Title:'Défendre',step4Desc:'Apprends les contre-mesures et techniques défensives pour te protéger.',sectionCode:'Code Appareil'},
   ar: {
     title: 'محلل البرامج الثابتة الخبيثة',
     subtitle: 'محاكي تحليل ثغرات البرامج الثابتة',
@@ -198,7 +198,7 @@ const LANG = {
     flashComplete: 'اكتمل التحميل!', flashReset: 'إعادة تعيين النظام',
     scanningFw: 'جاري مسح البرنامج الثابت...', vulnFound: 'تم العثور على ثغرة!',
     payloadInjected: 'تم حقن الحمولة', checksumBypass: 'تم تجاوز المجموع',
-  ,step1Title:'تحديد الهدف',step1Desc:'اختر النظام أو البروتوكول لتحليل نقاط الضعف.',step2Title:'تحضير الهجوم',step2Desc:'اضبط معلمات الهجوم وأعد بيئة الاستغلال.',step3Title:'تنفيذ',step3Desc:'أطلق الهجوم المحاكى وراقب كيف يتم استغلال الثغرة.',step4Title:'دفاع',step4Desc:'تعلم الإجراءات المضادة والتقنيات الدفاعية للحماية.'}
+  ,step1Title:'تحديد الهدف',step1Desc:'اختر النظام أو البروتوكول لتحليل نقاط الضعف.',step2Title:'تحضير الهجوم',step2Desc:'اضبط معلمات الهجوم وأعد بيئة الاستغلال.',step3Title:'تنفيذ',step3Desc:'أطلق الهجوم المحاكى وراقب كيف يتم استغلال الثغرة.',step4Title:'دفاع',step4Desc:'تعلم الإجراءات المضادة والتقنيات الدفاعية للحماية.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1685,3 +1685,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

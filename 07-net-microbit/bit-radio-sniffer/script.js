@@ -124,7 +124,7 @@ const LANG = {
     challengeStarted: 'Challenge started', challengeComplete: 'Challenge complete!',
     hiddenMsgFound: 'Hidden message found!', busiestFound: 'Busiest channel identified!', cipherCracked: 'Caesar cipher cracked!',
     enterChannel: 'Enter the busiest channel number:', wrongChannel: 'Wrong channel! Try again.', enterDecoded: 'Enter the decoded message:', wrongDecode: 'Wrong decode! Try again.',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'bit-radio-sniffer', subtitle: '📻 scanner · 📡 capturer · 🔍 analyser',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -186,7 +186,7 @@ const LANG = {
     challengeStarted: 'Défi lancé', challengeComplete: 'Défi terminé !',
     hiddenMsgFound: 'Message caché trouvé !', busiestFound: 'Canal le plus actif identifié !', cipherCracked: 'Chiffre de César déchiffré !',
     enterChannel: 'Entrez le numéro du canal le plus actif :', wrongChannel: 'Mauvais canal ! Réessayez.', enterDecoded: 'Entrez le message décodé :', wrongDecode: 'Mauvais décodage ! Réessayez.',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: 'bit-radio-sniffer', subtitle: '📻 مسح · 📡 التقاط · 🔍 تحليل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -248,7 +248,7 @@ const LANG = {
     challengeStarted: 'بدأ التحدي', challengeComplete: 'اكتمل التحدي!',
     hiddenMsgFound: 'تم العثور على الرسالة المخفية!', busiestFound: 'تم تحديد القناة الأكثر نشاطاً!', cipherCracked: 'تم فك شفرة قيصر!',
     enterChannel: 'أدخل رقم القناة الأكثر نشاطاً:', wrongChannel: 'قناة خاطئة! حاول مرة أخرى.', enterDecoded: 'أدخل الرسالة المفكوكة:', wrongDecode: 'فك شفرة خاطئ! حاول مرة أخرى.',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1994,3 +1994,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

@@ -52,7 +52,7 @@ challenge1:'Trigger an election and identify which node becomes Leader. Note the
 challenge2:'Crash the Leader and observe how the cluster elects a new one automatically.',
 challenge3:'Create a split brain scenario and explain why neither partition can commit.',
 electionStarted:'⚡ Election started — Term',candidateRequesting:'🗳️ Node requesting votes',voteGranted:'✓ Vote granted by Node',leaderElected:'👑 Node elected as Leader for Term',heartbeat:'💓 Heartbeat from Leader to Followers',logReplicated:'📋 Log entry replicated to',committed:'✅ Entry committed by majority',nodeCrashed:'💥 Node crashed!',nodeHealed:'🩹 Node healed and rejoined',splitBrainActive:'⚠️ Network partitioned — Split brain!',splitBrainHealed:'✅ Network partition healed',noLeader:'❌ No leader — trigger an election first',
-,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.'},
+,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
 fr:{
 title:'Labo Consensus',subtitle:'🗳️ Raft · 📋 Journal · 💓 Battement · ⚡ Élection',
 disconnected:'Déconnecté',connected:'Simulation Active',
@@ -93,7 +93,7 @@ challenge1:'Déclenchez une élection et identifiez le Leader. Notez le numéro 
 challenge2:'Plantez le Leader et observez le cluster élire un nouveau leader automatiquement.',
 challenge3:'Créez un split brain et expliquez pourquoi aucune partition ne peut valider.',
 electionStarted:'⚡ Élection lancée — Terme',candidateRequesting:'🗳️ Nœud demande des votes',voteGranted:'✓ Vote accordé par Nœud',leaderElected:'👑 Nœud élu Leader pour le Terme',heartbeat:'💓 Battement du Leader aux Followers',logReplicated:'📋 Entrée répliquée vers',committed:'✅ Entrée validée par majorité',nodeCrashed:'💥 Nœud planté !',nodeHealed:'🩹 Nœud guéri et rejoint',splitBrainActive:'⚠️ Réseau partitionné — Split brain !',splitBrainHealed:'✅ Partition réseau guérie',noLeader:'❌ Pas de leader — déclenchez une élection d\'abord',
-,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.'},
+,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
 ar:{
 title:'مختبر الإجماع',subtitle:'🗳️ Raft · 📋 سجل · 💓 نبض · ⚡ انتخاب',
 disconnected:'غير متصل',connected:'المحاكاة نشطة',
@@ -134,7 +134,7 @@ challenge1:'شغّل انتخابًا وحدد أي عقدة تصبح القائ
 challenge2:'عطّل القائد ولاحظ كيف تنتخب المجموعة قائدًا جديدًا تلقائيًا.',
 challenge3:'أنشئ سيناريو انقسام دماغي واشرح لماذا لا يمكن لأي قسم الالتزام.',
 electionStarted:'⚡ بدأ الانتخاب — المصطلح',candidateRequesting:'🗳️ عقدة تطلب أصواتًا',voteGranted:'✓ تم منح صوت من العقدة',leaderElected:'👑 عقدة انتُخبت قائدًا للمصطلح',heartbeat:'💓 نبضة من القائد للتابعين',logReplicated:'📋 تم نسخ إدخال إلى',committed:'✅ تم الالتزام بالإدخال من الأغلبية',nodeCrashed:'💥 تعطلت العقدة!',nodeHealed:'🩹 تم شفاء العقدة وانضمامها',splitBrainActive:'⚠️ الشبكة مقسمة — انقسام دماغي!',splitBrainHealed:'✅ تم إصلاح تقسيم الشبكة',noLeader:'❌ لا يوجد قائد — شغّل انتخابًا أولاً',
-,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.'}};
+,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}};
 
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}
@@ -630,3 +630,18 @@ function init(){
 document.readyState==='loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

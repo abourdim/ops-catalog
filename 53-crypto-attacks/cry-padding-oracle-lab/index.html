@@ -6,6 +6,13 @@
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
 </style></head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-title">Padding Oracle Lab</div><div class="splash-sub" data-i18n="subtitle">Exploit CBC padding oracle to decrypt byte-by-byte</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
@@ -19,6 +26,16 @@
     </div>
     <details class="collapsible"><summary><span>&#128218;</span> <span data-i18n="sectionA">Attack Reference</span></summary><div class="card" id="refCard"></div></details>
     <details class="collapsible"><summary><span>&#128300;</span> <span data-i18n="sectionB">Math Deep Dive</span></summary><div class="card"><div id="mathBox" style="font-size:.78rem;line-height:1.6;color:var(--text-muted);padding:8px"></div></div></details>
+    
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
     <footer class="app-footer"><span>powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span></footer><div class="deco-band"></div></div>
   <div class="sidebar-overlay" id="helpOverlay"></div><aside class="sidebar sidebar-left" id="helpPanel"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">Help</span><button id="helpCloseBtn" class="btn-icon-only">&#10005;</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq">FAQ</button><button class="help-tab" data-tab="howto">How-To</button><button class="help-tab" data-tab="wiki">Wiki</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"></div><div class="help-content" id="helpHowto"></div><div class="help-content" id="helpWiki"></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
   <div class="sidebar-overlay" id="settingsOverlay"></div><aside class="sidebar" id="settingsPanel"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">Settings</span><button id="settingsCloseBtn" class="btn-icon-only">&#10005;</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">&#1593;&#1585;&#1576;&#1610;</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle"/> <span data-i18n="soundEffects">Sound effects</span></label></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>

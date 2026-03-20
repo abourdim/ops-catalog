@@ -24,7 +24,14 @@
     .stress-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.6)}
     .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.step-card{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;text-align:center}.step-card .step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.75rem;margin-bottom:6px}.step-card .step-icon{font-size:1.6rem;display:block;margin-bottom:4px}.step-card h4{font-size:.76rem;margin:4px 0 2px;color:var(--text)}.step-card p{font-size:.7rem;color:var(--text-muted);line-height:1.4}
     .challenge-list{display:flex;flex-direction:column;gap:8px}.challenge-item{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;display:flex;align-items:flex-start;gap:10px}.challenge-item .ch-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-weight:700;font-size:.72rem;flex-shrink:0}.challenge-item h4{font-size:.78rem;color:var(--text);margin-bottom:2px}.challenge-item p{font-size:.72rem;color:var(--text-muted);line-height:1.4}
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Skin conductance as crypto key</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
@@ -64,6 +71,17 @@
       <div class="challenge-item"><span class="ch-num">2</span><div><h4 data-i18n="ch2Title">Twin Test</h4><p data-i18n="ch2Desc">Have two people generate keys. Even identical twins produce different GSR patterns.</p></div></div>
       <div class="challenge-item"><span class="ch-num">3</span><div><h4 data-i18n="ch3Title">Entropy Analysis</h4><p data-i18n="ch3Desc">Generate 100 keys and check the distribution of byte values. Is it uniform?</p></div></div>
     </div></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
+
   </div>
   <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer><div class="deco-band bottom-band" aria-hidden="true"></div></div>
   <canvas id="matrixCanvas" class="matrix-canvas"></canvas><div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>

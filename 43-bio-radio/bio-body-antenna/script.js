@@ -145,7 +145,7 @@ const LANG = {
     grounded: 'Grounded \u2014 impedance dropped!',
     sweepDone: 'Frequency sweep complete',
     resonanceFound: 'Resonance found at',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Bio Antenne Corporelle',
     subtitle: 'Votre corps est une antenne 1.8 MHz',
@@ -237,7 +237,7 @@ const LANG = {
     grounded: 'Mass\u00e9 \u2014 imp\u00e9dance r\u00e9duite!',
     sweepDone: 'Balayage termin\u00e9',
     resonanceFound: 'R\u00e9sonance trouv\u00e9e \u00e0',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0647\u0648\u0627\u0626\u064a \u0627\u0644\u062c\u0633\u0645',
     subtitle: '\u062c\u0633\u0645\u0643 \u0647\u0648\u0627\u0626\u064a 1.8 \u0645\u064a\u063a\u0627\u0647\u0631\u062a\u0632',
@@ -329,7 +329,7 @@ const LANG = {
     grounded: '\u0645\u0624\u0631\u0636 \u2014 \u0627\u0646\u062e\u0641\u0636\u062a \u0627\u0644\u0645\u0639\u0627\u0648\u0642\u0629!',
     sweepDone: '\u0627\u0643\u062a\u0645\u0644 \u0645\u0633\u062d \u0627\u0644\u062a\u0631\u062f\u062f',
     resonanceFound: '\u062a\u0645 \u0625\u064a\u062c\u0627\u062f \u0627\u0644\u0631\u0646\u064a\u0646 \u0639\u0646\u062f',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ LANGUAGE ═══════ */
@@ -1660,3 +1660,18 @@ async function startSweep() {
   hideToast();
   sweepActive = false;
 }
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

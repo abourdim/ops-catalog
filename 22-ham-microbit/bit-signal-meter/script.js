@@ -115,7 +115,7 @@ const LANG = {
     scanComplete: 'Scan complete',
     signalUpdated: 'Signal updated',
     ledToggled: 'LED toggled',
-  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.'},
+  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code'},
   fr: {
     title: 'bit-signal-meter', subtitle: '📶 signal · 📊 mesurer · 💡 apprendre',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -169,7 +169,7 @@ const LANG = {
     scanComplete: 'Balayage terminé',
     signalUpdated: 'Signal mis à jour',
     ledToggled: 'LED basculée',
-  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.'},
+  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil'},
   ar: {
     title: 'bit-signal-meter', subtitle: '📶 إشارة · 📊 قياس · 💡 تعلّم',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -223,7 +223,7 @@ const LANG = {
     scanComplete: 'اكتمل المسح',
     signalUpdated: 'تم تحديث الإشارة',
     ledToggled: 'تم تبديل LED',
-  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.'}
+  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1682,3 +1682,18 @@ function init() {
 document.readyState === 'loading'
   ? document.addEventListener('DOMContentLoaded', init)
   : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

@@ -17,7 +17,14 @@
     .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
     .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
     .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
-  </style>
+  
+    /* Code tabs */
+    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+    .code-display.hidden { display: none; }
+</style>
 </head>
 <body>
   <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">🔓 Scan virtual servers and discover ports</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
@@ -47,6 +54,17 @@
     <details class="collapsible"><summary><span class="icon">📚</span> <span data-i18n="sectionA">How Port Scanning Works</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;line-height:1.8;" data-i18n="scanText">Port scanning sends probe packets to a range of ports on a target host. An open port responds (SYN-ACK for TCP), a closed port sends RST, and filtered ports give no response (blocked by firewall). Tools like Nmap use these responses to map services.</p></div></details>
     <details class="collapsible"><summary><span class="icon">🔢</span> <span data-i18n="sectionB">Common Ports Reference</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;line-height:1.8;" data-i18n="portsText">Well-known ports: 22 (SSH), 25 (SMTP), 53 (DNS), 80 (HTTP), 110 (POP3), 143 (IMAP), 443 (HTTPS), 3306 (MySQL), 3389 (RDP), 5432 (PostgreSQL), 8080 (HTTP Proxy).</p></div></details>
     <details class="collapsible"><summary><span class="icon">⚠️</span> <span data-i18n="sectionC">Vulnerability Assessment</span></summary><div class="card" style="padding:1rem;"><p style="font-size:.85rem;" data-i18n="vulnText">After scanning, assess open ports for known vulnerabilities. Outdated services, default credentials, and unnecessary open ports are common security risks.</p><button class="btn-sm primary" id="assessBtn" style="margin-top:.5rem;">⚠️ <span data-i18n="assessBtn">Assess Vulnerabilities</span></button><div id="vulnResults" style="margin-top:.5rem;display:none;"></div></div></details>
+
+      <details class="collapsible">
+        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+        <div class="card">
+          <div class="code-tabs" id="codeTabs">
+            <button class="code-tab active" data-codetarget="python">Python</button>
+          </div>
+            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+        </div>
+      </details>
+
   </div>
   <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
   <div class="deco-band bottom-band" aria-hidden="true"></div></div>

@@ -64,7 +64,7 @@ const LANG = {
     tl6: 'AP derives PTK, verifies MIC', tl7: 'AP sends EAPOL Message 3 (encrypted GTK + MIC)',
     tl8: 'Client installs PTK and GTK', tl9: 'Client sends EAPOL Message 4 (ACK)',
     tl10: 'Secure encrypted session established',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Handshake Theater — WPA 4 Etapes', subtitle: 'Regardez le handshake WPA2 se derouler',
     disconnected: 'Inactif', connected: 'Authentification',
@@ -98,7 +98,7 @@ const LANG = {
     tl4: 'Client derive PTK', tl5: 'Client envoie Message 2', tl6: 'AP verifie MIC',
     tl7: 'AP envoie Message 3', tl8: 'Client installe cles', tl9: 'Client envoie Message 4',
     tl10: 'Session chiffree etablie',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: 'مسرح المصافحة — WPA رباعي', subtitle: 'شاهد مصافحة WPA2 الرباعية تتكشف',
     disconnected: 'خامل', connected: 'مصافحة',
@@ -132,7 +132,7 @@ const LANG = {
     tl4: 'العميل يشتق PTK', tl5: 'العميل يرسل الرسالة 2', tl6: 'AP يتحقق',
     tl7: 'AP يرسل الرسالة 3', tl8: 'العميل يثبت المفاتيح', tl9: 'العميل يرسل الرسالة 4',
     tl10: 'جلسة مشفرة',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -390,3 +390,18 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
   function boot(){const c=ensureCanvas();if(!c)return setTimeout(boot,500);if(!_raf)draw();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

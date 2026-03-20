@@ -63,7 +63,7 @@ const LANG = {
     ready: '\ud83d\udc41 Bio Pupil Morse ready \u2014 blink to encode!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Bio Pupille Morse', subtitle: 'Dilatation pupillaire en code Morse',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -102,7 +102,7 @@ const LANG = {
     ready: '\ud83d\udc41 Pupille Morse pr\u00eat \u2014 clignez pour encoder!',
     logCleared: 'Journal effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec copie',
     langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: '\u0634\u0641\u0631\u0629 \u0627\u0644\u062d\u062f\u0642\u0629', subtitle: '\u062a\u0648\u0633\u0639 \u0627\u0644\u062d\u062f\u0642\u0629 \u0643\u0634\u0641\u0631\u0629 \u0645\u0648\u0631\u0633',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -138,7 +138,7 @@ const LANG = {
     ready: '\ud83d\udc41 \u0634\u0641\u0631\u0629 \u0627\u0644\u062d\u062f\u0642\u0629 \u062c\u0627\u0647\u0632\u0629!',
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
     langChanged: '\ud83c\udf10 \u0627\u0644\u0644\u063a\u0629 \u2190 \u0627\u0644\u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */
@@ -585,3 +585,18 @@ function init() {
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

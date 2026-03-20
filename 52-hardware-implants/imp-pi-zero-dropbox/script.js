@@ -41,7 +41,7 @@ const LANG = {
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     working: 'Working…', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     splashHint: 'tap to skip',
-  ,faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.',step1Title:'Design Implant',step1Desc:'A Pi Zero drop box is a small single-board computer hidden inside a target network via Ethernet.',step2Title:'Build & Program',step2Desc:'Once connected, it phones home via reverse SSH tunnel or cellular modem, bypassing firewalls.',step3Title:'Deploy',step3Desc:'The attacker uses the implant as a pivot point to scan internal subnets and exfiltrate data.',step4Title:'Monitor & Extract',step4Desc:'Detection relies on 802.1X port authentication, network monitoring, and physical security audits.'},
+  ,faq_q1:'What is this app?',faq_a1:'An interactive educational simulation from Workshop-DIY. Explore, experiment, and learn!',faq_q2:'How do I use it?',faq_a2:'Use the controls in the main section. Try different settings and watch what happens.',faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick a theme. There are 8 to choose from.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.',step1Title:'Design Implant',step1Desc:'A Pi Zero drop box is a small single-board computer hidden inside a target network via Ethernet.',step2Title:'Build & Program',step2Desc:'Once connected, it phones home via reverse SSH tunnel or cellular modem, bypassing firewalls.',step3Title:'Deploy',step3Desc:'The attacker uses the implant as a pivot point to scan internal subnets and exfiltrate data.',step4Title:'Monitor & Extract',step4Desc:'Detection relies on 802.1X port authentication, network monitoring, and physical security audits.',sectionCode:'Device Code'},
   fr: {
     title: 'imp-pi-zero-dropbox', subtitle: '📦 déployer · 🔓 pivoter · 🛡️ détecter',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -53,7 +53,7 @@ const LANG = {
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     working: 'En cours…', langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
     splashHint: 'appuyer pour passer',
-  ,faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.',step1Title:'Concevoir l\'implant',step1Desc:'A Pi Zero drop box is a small single-board computer hidden inside a target network via Ethernet.',step2Title:'Construire et programmer',step2Desc:'Once connected, it phones home via reverse SSH tunnel or cellular modem, bypassing firewalls.',step3Title:'Déployer',step3Desc:'The attacker uses the implant as a pivot point to scan internal subnets and exfiltrate data.',step4Title:'Surveiller et extraire',step4Desc:'Detection relies on 802.1X port authentication, network monitoring, and physical security audits.'},
+  ,faq_q1:'C\'est quoi cette appli?',faq_a1:'Une simulation educative interactive de Workshop-DIY. Explore, experimente et apprends!',faq_q2:'Comment l\'utiliser?',faq_a2:'Utilise les controles dans la section principale. Essaie differents reglages.',faq_q3:'Puis-je changer le theme?',faq_a3:'Oui! Ouvre les Parametres et choisis un theme. Il y en a 8.',faq_q4:'Mes donnees sont-elles privees?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.',step1Title:'Concevoir l\'implant',step1Desc:'A Pi Zero drop box is a small single-board computer hidden inside a target network via Ethernet.',step2Title:'Construire et programmer',step2Desc:'Once connected, it phones home via reverse SSH tunnel or cellular modem, bypassing firewalls.',step3Title:'Déployer',step3Desc:'The attacker uses the implant as a pivot point to scan internal subnets and exfiltrate data.',step4Title:'Surveiller et extraire',step4Desc:'Detection relies on 802.1X port authentication, network monitoring, and physical security audits.',sectionCode:'Code Appareil'},
   ar: {
     title: 'imp-pi-zero-dropbox', subtitle: '📦 نشر · 🔓 محور · 🛡️ كشف',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -65,7 +65,7 @@ const LANG = {
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', working: 'جارٍ…',
     langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
     splashHint: 'انقر للتخطي',
-  ,faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.',step1Title:'تصميم الزرع',step1Desc:'A Pi Zero drop box is a small single-board computer hidden inside a target network via Ethernet.',step2Title:'بناء وبرمجة',step2Desc:'Once connected, it phones home via reverse SSH tunnel or cellular modem, bypassing firewalls.',step3Title:'نشر',step3Desc:'The attacker uses the implant as a pivot point to scan internal subnets and exfiltrate data.',step4Title:'مراقبة واستخراج',step4Desc:'Detection relies on 802.1X port authentication, network monitoring, and physical security audits.'}
+  ,faq_q1:'ما هذا التطبيق؟',faq_a1:'محاكاة تعليمية تفاعلية من Workshop-DIY. استكشف وجرب وتعلم!',faq_q2:'كيف أستخدمه؟',faq_a2:'استخدم عناصر التحكم في القسم الرئيسي. جرب إعدادات مختلفة.',faq_q3:'هل يمكنني تغيير السمة؟',faq_a3:'نعم! افتح الإعدادات واختر سمة. هناك 8 سمات.',faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك.',step1Title:'تصميم الزرع',step1Desc:'A Pi Zero drop box is a small single-board computer hidden inside a target network via Ethernet.',step2Title:'بناء وبرمجة',step2Desc:'Once connected, it phones home via reverse SSH tunnel or cellular modem, bypassing firewalls.',step3Title:'نشر',step3Desc:'The attacker uses the implant as a pivot point to scan internal subnets and exfiltrate data.',step4Title:'مراقبة واستخراج',step4Desc:'Detection relies on 802.1X port authentication, network monitoring, and physical security audits.',sectionCode:'كود الجهاز'}
 };
 let currentLang = 'en';
 function setLanguage(lang) {
@@ -408,3 +408,18 @@ function init() {
   log(LANG[currentLang].ready, 'success');
 }
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});

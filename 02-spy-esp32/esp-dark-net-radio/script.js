@@ -118,7 +118,7 @@ const LANG = {
     ch2Title: 'Survive a Link Failure', ch2Desc: 'Break a link and send a message that still arrives. Prove the mesh can route around failures!',
     ch3Title: 'Encrypted Voice Call', ch3Desc: 'Send 10 voice packets across at least 3 hops. All packets must arrive encrypted and intact.',
     chPending: 'Pending', chComplete: 'Complete ✓',
-  },
+  ,sectionCode:'Device Code'},
   fr: {
     title: 'Dark Net Radio', subtitle: '📡 Réseau mesh WiFi chiffré hors ligne',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -175,7 +175,7 @@ const LANG = {
     ch2Title: 'Survivre à une Panne', ch2Desc: 'Cassez un lien et envoyez un message qui arrive quand même.',
     ch3Title: 'Appel Voix Chiffré', ch3Desc: 'Envoyez 10 paquets voix à travers au moins 3 sauts.',
     chPending: 'En attente', chComplete: 'Terminé ✓',
-  },
+  ,sectionCode:'Code Appareil'},
   ar: {
     title: 'راديو الشبكة المظلمة', subtitle: '📡 بناء شبكة mesh WiFi مشفرة بدون إنترنت',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -232,7 +232,7 @@ const LANG = {
     ch2Title: 'النجاة من عطل', ch2Desc: 'اكسر رابطًا وأرسل رسالة تصل رغم ذلك.',
     ch3Title: 'مكالمة صوتية مشفرة', ch3Desc: 'أرسل 10 حزم صوتية عبر 3 قفزات على الأقل.',
     chPending: 'قيد الانتظار', chComplete: 'مكتمل ✓',
-  }
+  ,sectionCode:'كود الجهاز'}
 };
 
 let currentLang = 'en';
@@ -1881,3 +1881,18 @@ document.readyState === 'loading'
   setStatus(true);
   draw();
 })();
+
+
+// ── Code Tab Switching ──
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('code-tab')) {
+    var tabs = e.target.parentElement;
+    tabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+    e.target.classList.add('active');
+    var target = e.target.getAttribute('data-codetarget');
+    var card = tabs.closest('.card');
+    card.querySelectorAll('.code-display').forEach(function(d) { d.classList.add('hidden'); });
+    var show = card.querySelector('#code-' + target);
+    if (show) show.classList.remove('hidden');
+  }
+});
