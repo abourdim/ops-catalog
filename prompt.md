@@ -17,11 +17,23 @@ You are working on a 488-app educational web catalog at `/home/abdelhak/Desktop/
 - Best reference app: `01-spy-microbit/bit-agent-id/` (has step cards, custom FAQ, lab experiments)
 - Git repo is in `ops-catalog/` with remote `git@github.com:abourdim/ops-catalog.git`
 
-## What Needs to Be Done (12 phases, in order)
+## Critical Issues Found (fix first!)
+- **75 apps have EMPTY style.css** (categories 51-55) — apps won't render properly
+- **92 apps have only 3 FAQ items** (missing faq_q4, mostly categories 43-55)
+- **Categories 43-55 may be missing** README.md, CHANGES.md, docs/HOWTO.md
+- **~250 apps have duplicate inline CSS** in index.html (bloated HTML)
+- **Step cards**: only 18/488 apps have them (not 21 as previously stated)
+
+## What Needs to Be Done (13 phases, in order)
+
+### Phase 0: Fix Broken Basics (MUST DO FIRST)
+- Copy template style.css to 75 apps with empty CSS (categories 51-55)
+- Add missing faq_q4 to 92 apps
+- Add missing doc files (README.md, CHANGES.md, docs/HOWTO.md) to categories 43-55
 
 ### TOP PRIORITY — Educational Content (Phases 1-5)
 
-**Phase 1: `add_how_it_works.py`** — Add 4-step "How It Works" cards to 470 apps missing them. Reference: bit-agent-id. CSS classes already exist. Generate app-specific steps + trilingual i18n (EN/FR/AR).
+**Phase 1: `add_how_it_works.py`** — Add 4-step "How It Works" cards to 470 apps missing them (only 18 currently have them). Reference: bit-agent-id. CSS classes already exist. Generate app-specific steps + trilingual i18n (EN/FR/AR).
 
 **Phase 2: `gen_code.py`** — Add `code/` folder to each app with real hardware source code: MicroPython + MakeCode JS (micro:bit), Arduino .ino (ESP32), Python (SDR/WiFi/RPi), GNURadio .grc (SDR/Ham). Also add a "Device Code" tab in index.html with copy/download.
 
