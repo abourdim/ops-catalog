@@ -44,6 +44,16 @@
     .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
     .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
     .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+
+    /* Learn section */
+    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+    .learn-badge { font-weight: 600; }
 </style>
 </head>
 <body>
@@ -55,7 +65,45 @@
         <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Idle</span></div></div></div>
     <!-- MAIN CARD -->
     <div class="card" id="mainCard">
-      <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F3B5;</span> <span data-i18n="mainSection">Audio Steganography</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Embed hidden messages in audio using spectral encoding</span> <span class="version-tag">v1.0</span></div></div></div>
+      <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F3B5;</span> <span data-i18n="mainSection">Audio Steganography</span></div>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+        <div class="card">
+          <div class="learn-grid">
+            <div class="learn-item">
+              <div class="learn-icon">🔊</div>
+              <div class="learn-title" data-i18n="learn1Title">Acoustics</div>
+              <div class="learn-desc" data-i18n="learn1Desc">How sound waves travel through air and materials</div>
+              <div class="learn-tag" data-i18n="learn1Tag">Physics</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🎯</div>
+              <div class="learn-title" data-i18n="learn2Title">Ultrasonic Tech</div>
+              <div class="learn-desc" data-i18n="learn2Desc">How high-frequency sound enables hidden communication</div>
+              <div class="learn-tag" data-i18n="learn2Tag">Signals</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🎤</div>
+              <div class="learn-title" data-i18n="learn3Title">Audio Analysis</div>
+              <div class="learn-desc" data-i18n="learn3Desc">How to capture and analyze sound patterns</div>
+              <div class="learn-tag" data-i18n="learn3Tag">Analysis</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🛡️</div>
+              <div class="learn-title" data-i18n="learn4Title">Acoustic Defense</div>
+              <div class="learn-desc" data-i18n="learn4Desc">How to detect and counter acoustic attacks</div>
+              <div class="learn-tag" data-i18n="learn4Tag">Defense</div>
+            </div>
+          </div>
+          <div class="learn-meta">
+            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Intermediate 🟡</span>
+            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">20 min ⏱</span>
+            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">12+ 🧒</span>
+          </div>
+        </div>
+      </details>
+<div class="card-subtitle"><span data-i18n="mainDesc">Embed hidden messages in audio using spectral encoding</span> <span class="version-tag">v1.0</span></div></div></div>
       <div style="position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;"><canvas id="stegoCanvas" width="780" height="200" style="width:100%;display:block;background:#0a0a1a;cursor:crosshair;"></canvas></div>
       <div style="padding:0 1rem;">
         <input id="hideInput" type="text" class="stego-input" placeholder="Secret message to hide..." data-i18n-placeholder="msgPlaceholder" maxlength="256"/>

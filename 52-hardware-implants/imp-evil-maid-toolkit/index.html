@@ -54,6 +54,16 @@
     .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
     .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
     .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+
+    /* Learn section */
+    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+    .learn-badge { font-weight: 600; }
 </style>
 </head>
 <body>
@@ -82,6 +92,44 @@
         <div id="implantStatus" class="status-row"><span class="status-dot-sm" id="implantDot"></span><span id="implantStatusText">Attack: Standby</span></div>
       </div>
     </div>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+        <div class="card">
+          <div class="learn-grid">
+            <div class="learn-item">
+              <div class="learn-icon">🔧</div>
+              <div class="learn-title" data-i18n="learn1Title">Hardware Design</div>
+              <div class="learn-desc" data-i18n="learn1Desc">How covert devices are built from components</div>
+              <div class="learn-tag" data-i18n="learn1Tag">Electronics</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">💻</div>
+              <div class="learn-title" data-i18n="learn2Title">Firmware</div>
+              <div class="learn-desc" data-i18n="learn2Desc">How embedded code controls hardware implants</div>
+              <div class="learn-tag" data-i18n="learn2Tag">Programming</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🔍</div>
+              <div class="learn-title" data-i18n="learn3Title">Detection</div>
+              <div class="learn-desc" data-i18n="learn3Desc">How to find hidden hardware in your environment</div>
+              <div class="learn-tag" data-i18n="learn3Tag">Counter-Intel</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🛡️</div>
+              <div class="learn-title" data-i18n="learn4Title">Physical Security</div>
+              <div class="learn-desc" data-i18n="learn4Desc">How to protect spaces from unauthorized devices</div>
+              <div class="learn-tag" data-i18n="learn4Tag">Defense</div>
+            </div>
+          </div>
+          <div class="learn-meta">
+            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Advanced 🔴</span>
+            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">30 min ⏱</span>
+            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">14+ 🧒</span>
+          </div>
+        </div>
+      </details>
+
     
       <details class="collapsible">
         <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>

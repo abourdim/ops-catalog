@@ -163,6 +163,16 @@
     .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
     .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
     .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+
+    /* Learn section */
+    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+    .learn-badge { font-weight: 600; }
 </style>
 </head>
 
@@ -322,6 +332,44 @@
       <div id="toastMessage" class="toast-text">Working…</div>
     </div>
   </div>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+        <div class="card">
+          <div class="learn-grid">
+            <div class="learn-item">
+              <div class="learn-icon">🔐</div>
+              <div class="learn-title" data-i18n="learn1Title">Cryptography</div>
+              <div class="learn-desc" data-i18n="learn1Desc">How secret codes protect messages from spies</div>
+              <div class="learn-tag" data-i18n="learn1Tag">Cybersecurity</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">📡</div>
+              <div class="learn-title" data-i18n="learn2Title">Wireless Communication</div>
+              <div class="learn-desc" data-i18n="learn2Desc">How devices send invisible signals through the air</div>
+              <div class="learn-tag" data-i18n="learn2Tag">Wireless</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🕵️</div>
+              <div class="learn-title" data-i18n="learn3Title">OPSEC</div>
+              <div class="learn-desc" data-i18n="learn3Desc">How to keep your operations secret and secure</div>
+              <div class="learn-tag" data-i18n="learn3Tag">Security</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🧮</div>
+              <div class="learn-title" data-i18n="learn4Title">Math in Security</div>
+              <div class="learn-desc" data-i18n="learn4Desc">How numbers and algorithms make unbreakable codes</div>
+              <div class="learn-tag" data-i18n="learn4Tag">Math</div>
+            </div>
+          </div>
+          <div class="learn-meta">
+            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Beginner 🟢</span>
+            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">15 min ⏱</span>
+            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">10+ 🧒</span>
+          </div>
+        </div>
+      </details>
+
 
       <details class="collapsible">
         <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>

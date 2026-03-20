@@ -22,6 +22,16 @@
     .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
     .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
     .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+
+    /* Learn section */
+    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+    .learn-badge { font-weight: 600; }
 </style></head><body>
 <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Tor Analyzer</div><div class="splash-sub" data-i18n="subtitle">Onion routing traffic analysis simulation</div><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
 <div class="app"><div class="deco-band top-band" aria-hidden="true"></div><div class="rows-container"><div class="header"><div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>&#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1649;&#1604;&#1604;&#1617;&#1614;&#1648;&#1607;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1600;&#1648;&#1606;&#1616; &#1649;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616;<span class="bism-ornament">&#x2726;</span></div><div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Tor Traffic Analyzer</h1><div class="subtitle" data-i18n="subtitle">Onion routing traffic analysis simulation</div></div></div><div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button><button id="logBtn" class="btn-icon-only" aria-label="Activity Log">&#x1F4DC;</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Idle</span></div></div></div>
@@ -29,6 +39,44 @@
 <div class="app-stats"><div class="stat"><div class="val" id="stat1">0</div><div class="lbl">Circuits</div></div><div class="stat"><div class="val" id="stat2">0</div><div class="lbl">Nodes Traced</div></div><div class="stat"><div class="val" id="stat3">0</div><div class="lbl">Latency ms</div></div><div class="stat"><div class="val" id="stat4">0%</div><div class="lbl">Anon Score</div></div></div>
 <div class="method-tabs" id="methodTabs"><div class="method-tab active" data-method="circuit">Circuit Map</div><div class="method-tab" data-method="guard">Guard Nodes</div><div class="method-tab" data-method="exit">Exit Analysis</div></div>
 <canvas id="appCanvas" class="app-canvas"></canvas></div>
+
+      <details class="collapsible" open>
+        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+        <div class="card">
+          <div class="learn-grid">
+            <div class="learn-item">
+              <div class="learn-icon">🕵️</div>
+              <div class="learn-title" data-i18n="learn1Title">Counter-Surveillance</div>
+              <div class="learn-desc" data-i18n="learn1Desc">How to detect if you are being monitored</div>
+              <div class="learn-tag" data-i18n="learn1Tag">Privacy</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🔒</div>
+              <div class="learn-title" data-i18n="learn2Title">Data Protection</div>
+              <div class="learn-desc" data-i18n="learn2Desc">How to erase digital traces and protect files</div>
+              <div class="learn-tag" data-i18n="learn2Tag">Security</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">📡</div>
+              <div class="learn-title" data-i18n="learn3Title">Communication Security</div>
+              <div class="learn-desc" data-i18n="learn3Desc">How to communicate without being intercepted</div>
+              <div class="learn-tag" data-i18n="learn3Tag">COMSEC</div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-icon">🏃</div>
+              <div class="learn-title" data-i18n="learn4Title">Evasion Techniques</div>
+              <div class="learn-desc" data-i18n="learn4Desc">How to avoid tracking and maintain privacy</div>
+              <div class="learn-tag" data-i18n="learn4Tag">Tradecraft</div>
+            </div>
+          </div>
+          <div class="learn-meta">
+            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Advanced 🔴</span>
+            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">30 min ⏱</span>
+            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">14+ 🧒</span>
+          </div>
+        </div>
+      </details>
+
 <details class="collapsible" open><summary><span class="icon">&#128373;</span> <span data-i18n="sectionA">Circuit Analysis</span></summary><div class="card"><div class="op-list" id="opList"></div></div></details>
 
       <details class="collapsible">
