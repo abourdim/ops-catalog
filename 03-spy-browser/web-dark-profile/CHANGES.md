@@ -1,9 +1,28 @@
-# CHANGES — Dark Profile
+# Changelog — Dark Profile
 
-## v1.2 (2025-03)
-- Initial release
-- 18 platform search simulation with hash-based results
-- Privacy risk score (Low/Medium/High/Critical)
-- Exposure report with category breakdown
-- Section C: Exposure Analysis
-- Trilingual i18n (EN / FR / AR)
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- Platform Database section
+- Privacy Protection section
+- Exposure Analysis section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

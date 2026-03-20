@@ -1,47 +1,45 @@
-# esp-dark-net-radio — How To Use
+# How To Use: Dark Net Radio
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
-- Optional: ESP32 boards for real mesh testing
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Explore the Mesh
-Open the app and observe the mesh topology canvas. Nodes represent ESP32 devices forming a private WiFi mesh.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Add Nodes
-Click "Add Node" to grow the mesh. Watch nodes auto-discover neighbors and form connections.
+## Detailed Steps
 
-### Step 3: Send Encrypted Messages
-Type a message, select source and destination nodes, and click "Send". Watch the encrypted message hop through relay nodes.
+### Step 1: ESP32 Creates AP
+Follow the on-screen instructions for this step.
 
-### Step 4: Break a Link
-Click on a connection to break it. The mesh detects the failure and reroutes messages through alternate paths.
+### Step 2: Node Discovery
+Follow the on-screen instructions for this step.
 
-### Step 5: Voice Simulation
-Click "Voice" to simulate voice packet streaming over the mesh. Watch packets flow in real-time.
+### Step 3: E2E Encryption
+Follow the on-screen instructions for this step.
 
-### Step 6: Try the Lab
-Open Section B to experiment with different mesh topologies, encryption settings, and failure scenarios.
+### Step 4: Mesh Routing
+Follow the on-screen instructions for this step.
 
-### Step 7: Complete the Challenges
-Test your knowledge with 3 challenges about mesh resilience, encryption, and network design.
 
-## What Each Step Teaches
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-| Step | Concept |
-|------|---------|
-| 1 | Mesh network topology |
-| 2 | Node discovery and ESP-NOW |
-| 3 | End-to-end encryption over mesh |
-| 4 | Self-healing and rerouting |
-| 5 | Real-time voice over mesh |
-| 6 | Network design principles |
-| 7 | Applied mesh networking |
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Going Further
-
-- Flash ESP32 boards with ESP-NOW mesh firmware
-- Test with real encrypted messaging
-- Build a mesh with 5+ ESP32 nodes
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

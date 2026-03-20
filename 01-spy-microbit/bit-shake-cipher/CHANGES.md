@@ -1,18 +1,28 @@
-# Changelog
+# Changelog — bit-shake-cipher
 
-## v1.0 — Initial Release
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Accelerometer visualizer with real-time X/Y/Z bars
-- Shake pattern recorder (4-second capture, mouse or DeviceMotion)
-- Pattern normalization and downsampling (max 50 points)
-- XOR encryption using pattern hash as cipher key
-- DTW (Dynamic Time Warping) pattern similarity comparison
-- Lock/unlock workflow with match score percentage
-- Section A: "How It Works" — 4-step explainer
-- Section B: "Lab" — interactive recorder with dual-pattern comparison
-- Section C: "Challenges" — 3 progressive challenges (complexity, brute force, threshold)
-- Help panel with app-specific FAQ, How-To, and Wiki entries
-- Trilingual i18n (EN/FR/AR) for all new keys
-- App-specific inline styles for accelerometer bars, pattern display, match score
-- Full template infrastructure preserved (splash, panels, settings, log, footer, easter eggs)
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- How It Works section
+- Lab — Shake Recorder section
+- Challenges section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

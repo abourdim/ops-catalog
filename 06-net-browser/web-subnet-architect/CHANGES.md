@@ -1,12 +1,28 @@
-# CHANGES — Subnet Architect
+# Changelog — Subnet Architect
 
-## v1.2 (2025-03)
-- Initial release
-- Canvas workspace with drag-and-drop
-- 4 device types: Router, Switch, Host, Firewall
-- Connection drawing and IP assignment
-- Traffic animation with routing simulation
-- Section C: Failure Simulation
-- Trilingual i18n (EN / FR / AR)
-- 8 themes support
-- Activity log integration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- Subnetting Basics section
+- IP Address Classes section
+- Failure Simulation section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

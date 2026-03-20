@@ -1,47 +1,45 @@
-# Spy Compass — Lab Guide
+# How To Use: bit-spy-compass
 
-A step-by-step guide to navigate secret waypoints using the micro:bit magnetometer.
+## Quick Start (5 minutes)
 
-## Step 1: Open the App
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-Open `index.html` in your browser. You will see the compass rose with a red needle pointing North (simulated). The heading display shows your current direction in degrees.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Step 2: Understand the Compass
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-The compass needle rotates based on heading data. In simulation mode, it drifts slowly. On a real device with a magnetometer (micro:bit or phone), it tracks the actual magnetic North. The cardinal letters (N, E, S, W) rotate around the dial.
+## Detailed Steps
 
-## Step 3: Review the Waypoints
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-Three spy waypoints are shown below the compass:
-- **Alpha Base** — bearing 045 (northeast)
-- **Bravo Tower** — bearing 160 (south-southeast)
-- **Charlie Bunker** — bearing 290 (west-northwest)
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-Each waypoint has a fixed bearing from the starting position.
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-## Step 4: Select a Target
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-Use the dropdown menu to select one of the three waypoints. Press the **Navigate** button. The status pill turns green to indicate active navigation. A green arrow appears on the compass showing the target bearing.
 
-## Step 5: Navigate Toward the Target
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-Turn your device (or watch the simulation) so the red compass needle aligns with the green target arrow. The bearing difference display updates in real time. The map view (Section B) shows your position moving toward the target with a trail line.
-
-## Step 6: Arrive at the Target
-
-When the bearing difference stays below 5 degrees for 3 continuous seconds, the "Arrived! Mission Complete!" indicator appears. A success sound plays and the event is logged. The status pill returns to disconnected.
-
-## Step 7: Try the Challenges
-
-Open Section C to attempt the spy challenges:
-1. Navigate blindfolded using only audio cues from the compass heading
-2. Find the shortest path visiting all 3 waypoints in sequence
-3. Manually calculate the bearing between two waypoints using a protractor and map
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-
-- Open the Activity Log to see all navigation events with timestamps
-- Enable sound effects in Settings for audio feedback
-- Try different themes for a fun visual experience
-- On mobile, the app uses the real magnetometer via the DeviceOrientation API
-- Calibrate a real micro:bit by tilting it in a full circle before use
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,113 +1,59 @@
-# bit-micro-vpn — Workshop DIY
+# bit-micro-vpn
 
-**Micro VPN: End-to-end encrypted relay simulation for micro:bit learning.**
+> 🛡️ encrypt · 🔗 tunnel · 🔐 protect
 
----
+**Category:** 07-net-microbit
 
-## What This App Teaches
-
-Students learn core networking security concepts through hands-on simulation:
-
-- **E2E Encryption** — XOR cipher demonstrates how only endpoints can read messages
-- **Relay/Proxy Concepts** — Packets travel through intermediate nodes that forward but cannot read encrypted data
-- **VPN Tunneling** — Visualize the encrypted pipe between Alice and Bob
-- **Man-in-the-Middle Attacks** — See why intermediaries fail to read encrypted traffic, and succeed without encryption
-
----
-
-## Features
-
-| Feature | Description |
-|---------|-------------|
-| Tunnel Canvas | Animated packet traveling Alice -> Relay(s) -> Bob |
-| XOR Encryption | Symmetric cipher with shared key |
-| Relay View | Shows what the relay node sees (hex cipher text or plaintext) |
-| Receiver View | Shows Bob's decrypted message |
-| Encryption Toggle | Turn E2E on/off to compare |
-| Multi-Hop | 1-3 relay nodes |
-| MITM Simulation | Attacker tries to read at relay |
-| Trilingual | English, French, Arabic (RTL) |
-| 8 Themes | Mosque, Zellige, Andalus, Riad, Medina, Space, Jungle, Robot |
-
----
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI layout: tunnel canvas, controls, sections A/B/C, help panel |
-| `script.js` | VPN simulation logic, i18n (EN/FR/AR), all template features |
-| `style.css` | Themes, animations, responsive layout (DO NOT MODIFY) |
-| `manifest.json` | PWA manifest |
-| `docs/HOWTO.md` | Step-by-step guide for students |
-| `CHANGES.md` | Version history |
-
----
-
-## Quick Start
-
-1. Open `index.html` in a browser
-2. Type a secret message
-3. Click **Encrypt & Send**
-4. Watch the packet travel through the encrypted tunnel
-5. Toggle encryption off and try again — see the difference!
-
----
+## Description
+bit-micro-vpn is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
 ## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-### Main Card
-- Tunnel visualization canvas
-- Message input + Encrypt & Send button
-- Hop slider (1-3 relay nodes)
-- Encryption toggle with padlock indicator
-- Relay view (what the relay sees)
-- Receiver view (what Bob sees)
-- MITM attack button
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
 
-### Section A: How It Works
-4 steps explaining the E2E encryption flow.
+## Controls
+- Start/Stop simulation
 
-### Section B: Lab
-3 experiments: toggle encryption, multi-hop, MITM attack.
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-### Section C: Challenge
-3 challenges: read as relay, sniff without encryption, design key exchange.
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-### Help Panel
-- **FAQ** — What is Micro VPN, XOR, relay nodes, MITM
-- **How-To** — Step-by-step usage guide
-- **Wiki** — E2E Encryption, VPN Tunneling, Relay Nodes, Man-in-the-Middle
-
----
-
-## JS API (VPN-specific)
-
-| Function | Description |
-|----------|-------------|
-| `xorEncrypt(text, key)` | XOR cipher (encrypt/decrypt) |
-| `toHexDisplay(text)` | Convert to hex string for relay view |
-| `drawTunnel(progress, hops, encrypted)` | Render tunnel canvas |
-| `animateTunnel(hops, encrypted)` | Animate packet through tunnel |
-| `vpnSendMessage()` | Encrypt and send message |
-| `vpnMitmAttack()` | Simulate MITM attack |
-| `vpnToggleEncryption()` | Toggle E2E on/off |
-
----
-
-## Template APIs (inherited)
-
-| Function | Description |
-|----------|-------------|
-| `log(msg, type)` | Log with typewriter. Types: info, success, error, tx, rx |
-| `showToast(msg, ms)` | Toast notification |
-| `setStatus(bool)` | Green/red status pill |
-| `playSound(type)` | click, success, error |
-| `setLanguage(lang)` | en, fr, ar |
-| `setTheme(name)` | 8 themes + retro |
-
----
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

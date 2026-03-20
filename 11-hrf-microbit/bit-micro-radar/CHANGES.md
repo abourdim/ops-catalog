@@ -1,27 +1,28 @@
-# CHANGES — bit-micro-radar
+# Changelog — bit-micro-radar
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Initial Release
-
-- Radar simulation with classic green canvas display (300x300)
-- Rotating sweep line with 30-degree fade trail
-- Concentric range rings with dynamic scaling (10m, 50m, 100m)
-- Cardinal direction labels (N, S, E, W)
-- Blip detection: objects glow when sweep line passes their angle
-- Blip decay over 5 seconds (classic radar fade effect)
-- Active mode: detects all objects
-- Passive mode: only detects objects that emit signals
-- Click-to-place: add virtual objects by clicking the canvas
-- Random object seeding with 5 types: aircraft, ship, vehicle, drone, unknown
-- Moving targets: ~30% of objects change position between sweeps
-- Stealth objects: ~10% appear as faint blips
-- Live object list with bearing, distance, and type
-- Real-time detection counter
-- Section A: "How It Works" — 4-step radar cycle explanation
-- Section B: "Lab" — interactive experiments (place, watch, range, modes)
-- Section C: "Challenge" — 3 challenges (full sweep ID, moving tracker, stealth detect)
-- Help panel: FAQ, How-To, Wiki (Radar Principles, Polar Coordinates, EM Detection, micro:bit Sensors)
-- Full trilingual support: English, French, Arabic (RTL)
-- All template features: 8 themes, log panel, toast, status pill, sound effects
-- PWA manifest updated for bit-micro-radar
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

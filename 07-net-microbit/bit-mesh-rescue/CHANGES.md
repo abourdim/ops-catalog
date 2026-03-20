@@ -1,19 +1,28 @@
-# CHANGES — bit-mesh-rescue
+# Changelog — bit-mesh-rescue
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Mesh network simulation with canvas-based visualization
-- Node class with id, x, y, status (active/failed/healing), neighbors
-- Auto-connect algorithm: nodes link to peers within 150px range
-- Kill mode: click nodes to simulate hardware failure
-- BFS-based healing with animated yellow transition
-- Message delivery test with animated path visualization
-- Health meter showing percentage of active nodes
-- Active paths counter and failed nodes counter
-- Heartbeat pulse animation on active nodes
-- 3 learning sections: How It Works, Lab, Challenge
-- Help panel with FAQ, How-To, and Wiki tabs
-- Wiki entries: Self-Healing Networks, Heartbeat Protocol, Redundant Routing, Fault Tolerance
-- Full i18n: English, French, Arabic (RTL)
-- All template features: 9 themes, activity log, sound effects, easter eggs
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

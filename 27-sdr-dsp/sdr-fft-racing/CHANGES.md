@@ -1,14 +1,28 @@
-# SDR FFT Racing — Changelog
+# Changelog — SDR FFT Racing
 
-## v1.0 — 2025-01-01
-- Initial release
-- 3 FFT algorithms: Naive DFT, Cooley-Tukey radix-2, Split-Radix
-- Visual race bar chart with winner display
-- Spectrum comparison overlay
-- Complexity growth chart O(N²) vs O(N log N)
-- 4 test signals, 4 window functions
-- FFT sizes 64 to 1024
-- Configurable race iterations
-- Max error computation between DFT and FFT
-- Trilingual i18n (EN/FR/AR with RTL)
-- 8 themes with Islamic art inspiration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure SDR step card
+- Capture Signal step card
+- Process & Filter step card
+- Visualize Output step card
+- Race Results section
+- Complexity Chart section
+- FFT Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

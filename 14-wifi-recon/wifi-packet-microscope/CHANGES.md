@@ -1,9 +1,28 @@
-# Changelog — Packet Microscope
+# Changelog — Packet Microscope  Frame Dissector
 
-## v1.0 — 2025-05-01
-- Initial release of Packet Microscope — Frame Dissector
-- Color-coded hex dump with 8 distinct field colors
-- Decoded field grid with all frame components
-- Frame list with click-to-dissect
-- Frame type statistics with percentages
-- Full i18n: EN/FR/AR, 8 themes, help panel, activity log
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan Airwaves step card
+- Identify Targets step card
+- Analyze Traffic step card
+- Detect Threats step card
+- Captured Frames section
+- Frame Type Statistics section
+- How It Works section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

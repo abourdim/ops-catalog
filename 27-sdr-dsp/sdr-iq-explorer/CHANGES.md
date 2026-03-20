@@ -1,13 +1,28 @@
-# SDR IQ Explorer — Changelog
+# Changelog — SDR IQ Explorer
 
-## v1.0 — 2025-01-01
-- Initial release
-- 7 IQ signal modes: CW, dual tone, sweep, chirp, QPSK, noise, imbalance
-- Lissajous / IQ scatter plane display
-- Separate I and Q time-domain waveforms
-- Instantaneous phase and magnitude display
-- IQ statistics: RMS, correlation, image rejection, inst. frequency
-- Auto IQ imbalance correction
-- Adjustable gain and phase imbalance controls
-- Trilingual i18n (EN/FR/AR with RTL)
-- 8 themes with Islamic art inspiration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure SDR step card
+- Capture Signal step card
+- Process & Filter step card
+- Visualize Output step card
+- IQ Statistics section
+- IQ Correction section
+- IQ Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

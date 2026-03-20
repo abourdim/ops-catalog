@@ -1,19 +1,45 @@
-# esp-tor-relay — How To Use
+# How To Use: Tor Relay  Onion Routing
 
-## Prerequisites
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in your browser
-2. Explore the main simulation panel
-3. Open Section A to learn how it works
-4. Open Section B for hands-on lab experiments
-5. Open Section C for challenges to test your knowledge
-6. Use Settings to change theme and language
-7. Check the Activity Log for simulation events
+### Open the App
+Open `index.html` in your browser. No internet required.
+
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
+
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- All simulations run locally — no server or hardware needed
-- Switch to Arabic for full RTL support
-- Try all 8 themes for different visual experiences
-- Export the activity log to review your session
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

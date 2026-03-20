@@ -1,18 +1,45 @@
-# HOWTO — Password Cracker
+# How To Use: Password Cracker
 
-## 1. Enter a Password
-Type a password in the input field (default: "secret123").
+## Quick Start (5 minutes)
 
-## 2. Choose Attack Type
-- Brute Force: tries every character combination position by position
-- Dictionary: scrolls through 40 common passwords looking for a match
-- Rainbow Table: computes hash and scans a pre-computed table
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Watch the Attack
-The display shows current attempt, progress bar, attempt count, elapsed time, and speed.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Stop an Attack
-Click Stop to halt the running attack at any time.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Analyze Password Strength
-Open Section C and click "Analyze Strength" for score (0-7), crack time estimate, and dictionary check.
+## Detailed Steps
+
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,29 +1,45 @@
-# How-To: Pi Radio Recorder
+# How To Use: Pi Radio Recorder
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Record** to start spectrum recording.
-3. The spectrum display and recording timer will activate.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Recording Controls
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Set center frequency before recording.
-- Click **Record** to start, **Stop** to end.
-- Timer, disk usage, and data rate update in real time.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Spectrum Monitor
+## Detailed Steps
 
-- Live spectrum shows signal activity around the center frequency.
-- Peaks indicate active transmissions.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Recording Archive
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- Past recordings are listed with filename, frequency, duration, and size.
-- Files are named with frequency, date, and time for easy identification.
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

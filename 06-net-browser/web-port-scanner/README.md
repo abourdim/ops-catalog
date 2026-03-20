@@ -1,33 +1,59 @@
-# 🔓 Port Scanner — Virtual Nmap
+# Port Scanner
 
-**Workshop DIY — Net Browser Collection**
+> 🔓 Scan virtual servers and discover ports
 
-Scan virtual servers, discover open ports and services. Simulated network security scanner.
+**Category:** 06-net-browser
+
+## Description
+Port Scanner is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How Port Scanning Works
+- Common Ports Reference
+- Vulnerability Assessment
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Target IP input with predefined virtual servers
-- Animated port scanning with progress bar
-- Port list showing open/closed/filtered status
-- Service identification and version detection
-- OS fingerprinting simulation
-- Section C: Vulnerability Assessment panel
-- Trilingual i18n (EN / FR / AR with RTL)
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Layout: main card (scanner + results) + 3 sections |
-| `script.js` | i18n, virtual server configs, scan engine, service detection |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`. Enter a target IP or select a server, then click Scan.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

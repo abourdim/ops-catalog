@@ -1,44 +1,59 @@
-# bit-dead-drop — Workshop DIY
+# bit-dead-drop
 
-BLE encrypted dead-drop message transfer simulation. Learn how spies exchange secret messages using Bluetooth Low Energy and XOR encryption.
+> 📨 encrypt · 📡 drop · 🔓 decrypt
 
-## What You'll Learn
+**Category:** 01-spy-microbit
 
-- How BLE (Bluetooth Low Energy) broadcasting works
-- XOR cipher encryption and decryption
-- Dead drop protocol: leave and retrieve secret messages
-- Signal strength (RSSI) and its effect on data integrity
+## Description
+bit-dead-drop is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-## Quick Start
+## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-Open `index.html` in any modern browser. No server needed.
+## How It Works
+- Configure
+- Process
+- Transmit
+- Verify
+
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- Interactive encryption/decryption simulator
-- BLE packet visualization on canvas
-- Signal strength simulation with RSSI slider
-- 3 spy challenges to test your knowledge
-- 8 themes (6 dark + 2 light Islamic)
-- Trilingual: EN / FR / AR (RTL)
-- Activity log with TX/RX events
-- PWA-ready
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main app UI |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
 | `script.js` | Simulation logic + i18n |
-| `style.css` | Themes + responsive layout |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `docs/HOWTO.md` | Step-by-step lab guide |
-
-## Version
-
-v1.0
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

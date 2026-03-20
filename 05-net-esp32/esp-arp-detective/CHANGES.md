@@ -1,12 +1,28 @@
-# esp-arp-detective — Changelog
+# Changelog — ARP Detective
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- ARP table display with IP, MAC, vendor, status
-- Network topology canvas with device connections
-- Spoof detection with alert bar and MITM visualization
-- Inject Spoof button for attack simulation
-- Statistics: devices, spoofs, ARP packets
-- 3 security challenges with reveal answers
-- Full trilingual i18n (EN/FR/AR)
-- Help panel: FAQ, How-To, Wiki
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- Network Topology section
+- MITM Visualization section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

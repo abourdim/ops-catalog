@@ -1,35 +1,59 @@
-# 📻 SDR Modulation Lab — Workshop DIY
+# SDR Modulation Lab
 
-Explore AM, FM, SSB, PSK, QAM modulation schemes with live constellation and spectrum displays.
+> 📻 Modulation Lab — AM, FM, PSK, QAM and more
 
-## Features
+**Category:** 27-sdr-dsp
 
-- **7 modulation types**: AM, DSB-SC, SSB (USB), FM, BPSK, QPSK, 16-QAM
-- **Time-domain display**: modulated waveform in real time
-- **Spectrum display**: frequency-domain view with dB scale
-- **Constellation diagram**: I/Q scatter plot for digital modulations
-- **Demodulation**: coherent and envelope detection with before/after
-- **Adjustable SNR**: observe noise effects on signal quality
-- **Signal metrics**: BER, EVM, bandwidth, power
-- **Trilingual**: English, Francais, Arabic (RTL)
-- **8 themes** with Islamic art inspiration
+## Description
+SDR Modulation Lab is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Signal Metrics
+- Demodulation Test
+- Modulation Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
 ## How It Works
+- Configure SDR
+- Capture Signal
+- Process & Filter
+- Visualize Output
 
-1. Select a modulation type
-2. Adjust carrier frequency and modulation index
-3. Set SNR to control noise level
-4. Press Start to see live time, spectrum, and constellation displays
+## Controls
+- Start/Stop simulation
+
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI with three canvas displays and controls |
-| `script.js` | Modulation engine, demod, constellation, i18n |
-| `style.css` | Shared Workshop DIY theme styles |
-| `manifest.json` | PWA manifest |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

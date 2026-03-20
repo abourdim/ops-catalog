@@ -1,11 +1,28 @@
-# CHANGES — Password Cracker
+# Changelog — Password Cracker
 
-## v1.2 (2025-03)
-- Initial release
-- Brute force attack with character-by-character animation
-- Dictionary attack with 40-word wordlist
-- Rainbow table hash lookup simulation
-- Stop button for all attacks
-- Section C: Password strength analyzer (score + crack time)
-- Progress bar, attempt counter, speed display
-- Trilingual i18n (EN / FR / AR)
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- Attack Methods Explained section
+- Strong Password Guide section
+- Password Strength Analyzer section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

@@ -1,19 +1,45 @@
-# HOWTO — Port Scanner
+# How To Use: Port Scanner
 
-## 1. Select a Target
-Enter a target IP address or choose from the predefined virtual servers.
+## Quick Start (5 minutes)
 
-## 2. Start the Scan
-Click "Scan" to begin the port scan simulation. Watch the progress bar and results appear.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Review Results
-Each port shows its status (open/closed/filtered), the service name, and version info.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Check OS Fingerprint
-After scanning, the OS fingerprint section shows the detected operating system.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Vulnerability Assessment
-Open Section C and click "Assess" to check for known vulnerabilities on open ports.
+## Detailed Steps
 
-## 6. Change Language/Theme
-Open Settings to switch between EN/FR/AR and choose from 8 themes.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

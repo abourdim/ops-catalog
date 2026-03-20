@@ -1,27 +1,45 @@
-# SDR Demod Challenge — How To Use
+# How To Use: SDR Demod Challenge
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. A mystery signal is automatically generated
-3. Study the spectrum and waterfall patterns
-4. Click the modulation type you think it is
+## Quick Start (5 minutes)
 
-## Scoring
-- Correct answer: +10 base points + streak bonus (2 pts per streak)
-- Wrong answer: -5 points, streak resets
-- Level increases every 3 correct answers (up to level 10)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Demod Toolbox (Section B)
-- **Envelope**: good for AM detection
-- **Coherent**: multiplies by carrier — good for DSB/SSB
-- **FM Discrim**: phase derivative — good for FM
-- **PSK**: differential detection — good for BPSK/QPSK
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
+
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- AM has visible carrier spike with two sidebands
-- FM has wider bandwidth with no strong carrier
-- SSB shows only one sideband
-- CW shows on-off keying pattern in waterfall
-- BPSK/QPSK have sinc-shaped spectrum envelopes
-- Use hints if stuck — no penalty for hints
-- Reveal resets your streak but teaches the answer
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

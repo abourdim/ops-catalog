@@ -1,43 +1,59 @@
-# ✈️ Aircraft Radar — ADS-B Receiver
+# Aircraft Radar
 
-**Workshop-DIY SIGINT Learning Lab**
+> ✈️ Plot every aircraft overhead with altitude, speed, callsign
 
-Plot every aircraft overhead with altitude, speed, callsign. Simulates a real ADS-B receiver decoding 1090 MHz transponder broadcasts.
+**Category:** 10-hrf-sigint
+
+## Description
+Aircraft Radar is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Altitude Chart
+- Aircraft Table
+- ADS-B Explained
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Sky map canvas with animated aircraft icons and callsign labels
-- Real-time altitude chart with per-aircraft traces
-- Aircraft table with sortable columns
-- Flight info panel on aircraft selection
-- Click aircraft on map or table to inspect
-- Realistic simulated ADS-B data (callsigns, squawk codes, flight levels)
-- Trilingual UI (EN/FR/AR) with RTL support
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App layout with sky map, altitude chart, table, Section C |
-| `script.js` | Simulation engine, rendering, i18n, all UI logic |
-| `style.css` | Shared Workshop-DIY theme system (do not modify) |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Click **Start Receiver**
-3. Watch aircraft appear on the sky map
-4. Click any aircraft for details
-
-## Tech Stack
-
-Vanilla JS, HTML5 Canvas, zero dependencies.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

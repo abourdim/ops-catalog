@@ -1,45 +1,45 @@
-# How-To: Radio Telescope — Hydrogen Line
+# How To Use: Radio Telescope
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Observation** to begin simulated hydrogen line reception.
-3. The spectrum will build up showing the 1420.405 MHz emission peak.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Reading the Spectrum
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- The X axis shows frequency from 1418 to 1422 MHz.
-- The Y axis shows power in dB.
-- The red dashed line marks the rest frequency of hydrogen (1420.405 MHz).
-- Peaks above the noise floor indicate hydrogen emission.
-- Doppler-shifted peaks reveal gas moving toward or away from us.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Controls
+## Detailed Steps
 
-- **Gain**: Increases the amplitude of the displayed signal.
-- **Averaging**: Smooths the spectrum by averaging multiple samples, reducing noise.
-- Higher averaging values produce cleaner spectra but respond slower to changes.
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Galaxy Rotation Curve
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- Open the **Galaxy Rotation Curve** section.
-- Data points accumulate from Doppler velocity measurements.
-- The dashed red line shows Keplerian prediction (without dark matter).
-- The blue line shows the observed flat curve (evidence for dark matter).
-- Measured points should cluster near the flat curve.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## Observation Statistics
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-- **Peak Power**: Strongest signal level in dB
-- **Peak Freq**: Frequency of the strongest bin in MHz
-- **Doppler**: Radial velocity calculated from frequency shift (km/s)
-- **SNR**: Signal-to-noise ratio in dB
 
-## About the Hydrogen Line
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-The hydrogen line at 1420.405 MHz (21 cm wavelength) is emitted when the
-electron in a neutral hydrogen atom flips its spin orientation. This rare
-transition becomes detectable across the galaxy because of the enormous
-quantity of hydrogen in interstellar space. Radio astronomers use Doppler
-shifts of this line to map galactic structure and rotation, providing
-evidence for dark matter through the flat rotation curve.
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

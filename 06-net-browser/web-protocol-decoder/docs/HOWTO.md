@@ -1,19 +1,45 @@
-# HOWTO — Protocol Decoder
+# How To Use: Protocol Decoder
 
-## 1. Enter Hex Data
-Paste hex bytes in the textarea, or click a sample button to load a pre-built packet.
+## Quick Start (5 minutes)
 
-## 2. Decode the Packet
-Click "Decode" to start the animated layer-by-layer parsing. Watch each protocol layer appear.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Explore Layers
-Each layer (Ethernet, IP, TCP, HTTP) is color-coded with field labels showing source/destination, ports, flags, etc.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. View Protocol Reference
-Open Section C for a reference guide to common protocol fields and their meanings.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Change Language
-Open Settings (gear icon) and select EN, FR, or AR. Arabic enables RTL layout.
+## Detailed Steps
 
-## 6. Change Theme
-Open Settings and choose from 8 available themes.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

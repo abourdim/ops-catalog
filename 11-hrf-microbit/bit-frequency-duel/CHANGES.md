@@ -1,21 +1,28 @@
-# CHANGES — bit-frequency-duel
+# Changelog — bit-frequency-duel
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Initial Release
-- 2.4GHz waterfall (spectrogram) display simulation
-- Canvas-based scrolling waterfall with heatmap coloring
-- Simulated WiFi signals at channels 1, 6, 11 (wide 20MHz bumps)
-- Simulated Bluetooth hopping (narrow random spikes)
-- Simulated noise floor
-- micro:bit transmit burst (green spike at selected channel)
-- Channel selector slider (0–83, corresponding to 2.400–2.483 GHz)
-- Power level selector slider (0–7)
-- Real-time interference meter (overlap with WiFi)
-- Section A: How It Works (4 educational steps)
-- Section B: Lab (4 hands-on exercises)
-- Section C: Challenge (3 progressive challenges)
-- Help panel with FAQ, How-To, and Wiki tabs
-- Wiki entries: 2.4GHz Band, Waterfall Display, Interference, Channel Selection
-- Trilingual i18n: English, French, Arabic (RTL)
-- Built on Workshop-DIY template v1.2
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

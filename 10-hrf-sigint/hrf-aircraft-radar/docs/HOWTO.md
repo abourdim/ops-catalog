@@ -1,49 +1,45 @@
-# How-To: Aircraft Radar — ADS-B Receiver
+# How To Use: Aircraft Radar
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Receiver** to begin simulated ADS-B reception.
-3. Aircraft will appear on the sky map, moving across the display.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Using the Sky Map
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Aircraft are shown as directional triangles with callsign labels.
-- Each aircraft displays flight level and speed.
-- Click an aircraft to select it and view full details in the info panel.
-- Compass directions (N/S/E/W) and range rings help orient the display.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Altitude Chart
+## Detailed Steps
 
-- Open the **Altitude Chart** section to see altitude history.
-- Each aircraft has a colored trace showing altitude over time.
-- Selected aircraft traces are highlighted.
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Aircraft Table
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- The **Aircraft Table** shows all tracked flights.
-- Columns: Callsign, Altitude, Speed, Heading, Squawk, Type.
-- Click any row to select that aircraft.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## Understanding the Data
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-- **Callsign**: Airline code + flight number (e.g., DAH1234)
-- **Altitude**: In feet above sea level
-- **Speed**: In knots (nautical miles per hour)
-- **Heading**: Direction of travel in degrees (0=North, 90=East)
-- **Squawk**: 4-digit transponder code assigned by ATC
-- **Type**: ICAO aircraft type designator (e.g., B738 = Boeing 737-800)
 
-## Settings
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
-- Activity log tracks all events
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## About ADS-B
-
-ADS-B (Automatic Dependent Surveillance-Broadcast) operates on 1090 MHz.
-Aircraft broadcast their position, altitude, speed, and identity in unencrypted
-Mode-S messages. With an RTL-SDR dongle and antenna, anyone can receive these
-signals and track aircraft overhead. This app simulates that experience.
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

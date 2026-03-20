@@ -1,34 +1,45 @@
-# SDR Signal Generator — How To Use
+# How To Use: SDR Signal Generator
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select a signal type from the dropdown
-3. Adjust frequency, amplitude, DC offset, and noise level
-4. Click **Generate** to see live waveform and spectrum
+## Quick Start (5 minutes)
 
-## Signal Types
-- **Sine/Square/Sawtooth/Triangle**: basic waveforms
-- **White/Pink Noise**: random signals for testing
-- **Sweep**: frequency sweep across band
-- **Multi-Tone**: custom additive synthesis via Tone Builder
-- **OFDM**: simulated orthogonal frequency division multiplexing
-- **Pulse**: periodic pulse train
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Audio Output
-- Click **Play Audio** to hear the signal through speakers
-- Uses Web Audio API oscillator for real-time synthesis
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Signal Properties (Section A)
-- RMS, peak-to-peak, crest factor, THD, bandwidth
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Tone Builder (Section B)
-- Add tones with + Add Tone (up to 8)
-- Set individual frequency and amplitude per tone
-- Click X to remove a tone
-- Select "Multi-Tone" signal type to use builder tones
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Use sine + low noise to test basic frequency response
-- Multi-tone with close frequencies reveals intermodulation
-- OFDM signal has high peak-to-average ratio (PAPR)
-- Pink noise has equal power per octave — useful for audio testing
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

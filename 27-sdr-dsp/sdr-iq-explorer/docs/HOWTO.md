@@ -1,37 +1,45 @@
-# SDR IQ Explorer — How To Use
+# How To Use: SDR IQ Explorer
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select an IQ signal mode from the dropdown
-3. Adjust frequency and optional imbalance parameters
-4. Click **Start** to begin live IQ visualization
+## Quick Start (5 minutes)
 
-## Displays
-- **IQ Plane (Lissajous)**: plots I vs Q as scatter points
-- **Time Domain**: I channel (gold) and Q channel (blue) waveforms
-- **Phase/Magnitude**: instantaneous phase (orange) and envelope (green)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## IQ Modes
-- **CW**: single complex tone — perfect circle on IQ plane
-- **Dual Tone**: two frequencies — creates complex Lissajous pattern
-- **Sweep**: frequency sweep — expanding spiral
-- **Chirp**: linear frequency chirp
-- **QPSK**: 4 constellation points with carrier
-- **Noise**: complex Gaussian noise
-- **IQ Imbalance**: demonstrates gain/phase mismatch effects
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## IQ Statistics (Section A)
-- I/Q RMS levels — should be equal for balanced system
-- Correlation — should be near zero for orthogonal I/Q
-- Image Rejection — higher is better
-- Instantaneous Frequency — derived from phase derivative
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## IQ Correction (Section B)
-- Click **Apply Auto-Correction** to compensate measured imbalance
-- Watch the IQ plane change from ellipse back to circle
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Start with CW mode and zero imbalance to see perfect circle
-- Add gain imbalance to see ellipse on IQ plane
-- Add phase imbalance to see tilted ellipse
-- Apply correction to see how compensation works
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

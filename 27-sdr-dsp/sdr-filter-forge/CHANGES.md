@@ -1,13 +1,28 @@
-# SDR Filter Forge — Changelog
+# Changelog — SDR Filter Forge
 
-## v1.0 — 2025-01-01
-- Initial release
-- FIR filter design: low-pass, high-pass, band-pass with Hamming window
-- IIR Butterworth filter design: LP, HP, BP via biquad cascade
-- Frequency response visualization with dB scale
-- Pole-zero diagram on complex plane
-- Filter coefficient display
-- Live test signal with before/after comparison
-- Adjustable order (2-64) and normalized cutoff
-- Trilingual i18n (EN/FR/AR with RTL)
-- 8 themes with Islamic art inspiration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure SDR step card
+- Capture Signal step card
+- Process & Filter step card
+- Visualize Output step card
+- Filter Coefficients section
+- Live Test Signal section
+- Filter Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

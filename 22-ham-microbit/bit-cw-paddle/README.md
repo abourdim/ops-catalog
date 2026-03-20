@@ -1,105 +1,59 @@
-# bit-cw-paddle — Workshop DIY
+# bit-cw-paddle
 
-**CW Morse Paddle Simulator** — learn Morse code with a virtual paddle key.
+> 🔑 dit dah dit — learn Morse code!
 
----
+**Category:** 22-ham-microbit
 
-## Overview
-
-This app teaches CW (Continuous Wave) Morse code communication. Students tap DIT and DAH paddle buttons to send dots and dashes, learning Morse code, timing rules, and the basics of ham radio CW operation.
-
----
-
-## Features
-
-| Feature | Description |
-|---------|-------------|
-| **Paddle Buttons** | DIT (short) and DAH (long) with tone playback via Web Audio API |
-| **Morse Display** | Visual dots and dashes appear in real time as you key |
-| **Auto-Decoder** | Timing-based decoder translates Morse to text automatically |
-| **Play Message** | Type text and hear it played back in Morse code |
-| **Practice Mode** | Random letter challenge — key it in Morse and verify |
-| **Speed Control** | Adjustable WPM (5-30 words per minute) |
-| **Tone Control** | Adjustable frequency (400-1000 Hz) |
-| **Keyboard Support** | Arrow keys or `.`/`-` as DIT/DAH shortcuts |
-| **Trilingual** | English, French, Arabic with full RTL support |
-| **8 Themes** | Mosque Gold, Zellige, Andalus, Space, Jungle, Robot, Riad, Medina |
-
----
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI layout — main card, sections A/B/C, help panel |
-| `script.js` | i18n, CW simulation engine, template infrastructure |
-| `style.css` | Themes, animations, responsive styles (unmodified template) |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Version history |
-| `docs/HOWTO.md` | Step-by-step usage guide |
-
----
+## Description
+bit-cw-paddle is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
 ## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-- **Main Card** — Paddle buttons, Morse display, decoder, speed/tone sliders, play message, practice mode
-- **Section A (How It Works)** — 4 timing rules: DIT, DAH, letter gap, word gap
-- **Section B (Lab)** — Keying practice, decode incoming Morse, speed test
-- **Section C (Challenge)** — Send SOS, decode at 15 WPM, key your name
+## How It Works
+- Tune Frequency
+- Transmit/Receive
+- Decode Signal
+- Log Contact
 
----
+## Controls
+- Start/Stop simulation
 
-## Morse Code Reference
-
-| Letter | Morse | Letter | Morse | Number | Morse |
-|--------|-------|--------|-------|--------|-------|
-| A | .- | N | -. | 0 | ----- |
-| B | -... | O | --- | 1 | .---- |
-| C | -.-. | P | .--. | 2 | ..--- |
-| D | -.. | Q | --.- | 3 | ...-- |
-| E | . | R | .-. | 4 | ....- |
-| F | ..-. | S | ... | 5 | ..... |
-| G | --. | T | - | 6 | -.... |
-| H | .... | U | ..- | 7 | --... |
-| I | .. | V | ...- | 8 | ---.. |
-| J | .--- | W | .-- | 9 | ----. |
-| K | -.- | X | -..- | | |
-| L | .-.. | Y | -.-- | | |
-| M | -- | Z | --.. | | |
-
----
-
-## Timing Rules
-
-- **DIT** = 1 unit
-- **DAH** = 3 units
-- **Intra-character gap** (between dots/dashes) = 1 unit
-- **Inter-character gap** (between letters) = 3 units
-- **Word gap** = 7 units
-- **1 unit at 15 WPM** = 80 ms
-
----
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
-
 1. Open `index.html` in any modern browser
-2. Press **DIT** or **DAH** to start keying Morse code
-3. Watch the decoder translate your input in real time
-4. Use **Practice Mode** to learn each letter
-5. Try the **Challenges** in Section C
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
----
-
-## Tech Stack
-
-- Vanilla HTML / CSS / JavaScript
-- Web Audio API for tone generation
-- No frameworks, no dependencies
-- PWA-ready with manifest.json
-
----
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

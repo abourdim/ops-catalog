@@ -1,48 +1,45 @@
-# HOWTO — kit-capture-the-flag Workshop Guide
+# How To Use: Capture The Flag
 
-## Overview
+## Quick Start (5 minutes)
 
-This workshop runs a simulated Capture The Flag competition. Students join teams, scan for clues broadcast by ESP32 beacons, decode them, and submit flag codes to score points.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
----
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Prerequisites
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-- A modern web browser
-- No internet connection required
-- Best with 2+ students (team competition)
+## Detailed Steps
 
----
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-## Workshop Flow (30-45 minutes)
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-### Part 1: Introduction (5 min)
-1. Open `index.html` in a browser
-2. Explain CTF concept: hidden flags, clue beacons, team competition
-3. Open Section A to review the rules
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-### Part 2: Setup Teams (5 min)
-1. Each student clicks **Join Red** or **Join Blue**
-2. Explain the scoreboard layout
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-### Part 3: Play the Game (15-20 min)
-1. Click **Start Game** to begin the 5-minute countdown
-2. Click **Scan Now** to receive clues
-3. Read the clue text carefully
-4. Type the flag code (FLAG{XXXX}) and click **Submit**
-5. Watch scores update in real-time
-6. Observe opponent team auto-captures
 
-### Part 4: Bonus Challenges (10 min)
-1. Open Section C
-2. Try the Speed Run, Cipher Flag, and Hidden Beacon challenges
-3. Discuss strategies for faster flag capture
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
----
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Key Learning Points
-
-1. CTF games teach security concepts in a fun, competitive format
-2. BLE beacons can broadcast small data packets wirelessly
-3. Simple ciphers can hide information from casual observers
-4. Teamwork and speed are essential in competitive scenarios
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

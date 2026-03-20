@@ -1,36 +1,59 @@
-# 🏎️ SDR FFT Racing — Workshop DIY
+# SDR FFT Racing
 
-Race FFT algorithms — compare Naive DFT, Cooley-Tukey, and Split-Radix implementations.
+> 🏎️ FFT Racing — Compare FFT algorithms
 
-## Features
+**Category:** 27-sdr-dsp
 
-- **3 FFT algorithms**: Naive DFT O(N²), Cooley-Tukey O(N log N), Split-Radix O(N log N)
-- **Visual race**: animated bar chart showing execution times
-- **Spectrum comparison**: overlay DFT vs FFT outputs (should be identical)
-- **Complexity chart**: O(N²) vs O(N log N) growth curves
-- **4 test signals**: sine + harmonics, white noise, impulse, chirp
-- **4 window functions**: rectangular, Hann, Hamming, Blackman
-- **FFT sizes**: 64 to 1024 points
-- **Configurable iterations** for benchmark accuracy
-- **Trilingual**: English, Francais, Arabic (RTL)
-- **8 themes** with Islamic art inspiration
+## Description
+SDR FFT Racing is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Race Results
+- Complexity Chart
+- FFT Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
 ## How It Works
+- Configure SDR
+- Capture Signal
+- Process & Filter
+- Visualize Output
 
-1. Choose FFT size, test signal, and window function
-2. Set iteration count for benchmark precision
-3. Click Race to run all three algorithms and compare
-4. View results, spectrum overlay, and complexity chart
+## Controls
+- Start/Stop simulation
+
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI with race and spectrum canvases |
-| `script.js` | 3 FFT implementations, benchmarking, i18n |
-| `style.css` | Shared Workshop DIY theme styles |
-| `manifest.json` | PWA manifest |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

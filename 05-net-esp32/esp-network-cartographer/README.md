@@ -1,22 +1,59 @@
-# esp-network-cartographer — Network Cartographer
+# esp-network-cartographer
 
-Multi-protocol radio landscape mapper. Scan WiFi, BLE, and ESP-NOW simultaneously and build a live radar-style map with color-coded devices.
+> 🗺️ scan · 📡 map · 🌐 discover
+
+**Category:** 05-net-esp32
+
+## Description
+esp-network-cartographer is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Signal Analysis
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Live radar map with range rings and pulsing device circles
-- WiFi (blue), BLE (green), ESP-NOW (orange) color coding
-- RSSI-based positioning (stronger = closer to center)
-- BLE device flickering simulation (advertising intervals)
-- Device list sorted by signal strength
-- Signal analysis with average RSSI and strongest device
-- 3 challenges on radio protocols
-- Trilingual i18n (EN/FR/AR) with RTL support
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`, click Start Scan, and watch the radio landscape come alive.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

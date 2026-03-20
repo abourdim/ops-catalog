@@ -1,41 +1,59 @@
-# 🦁 Signal Zoo — Modulation Encyclopedia
+# Signal Zoo
 
-**Workshop-DIY SIGINT Learning Lab**
+> 🦁 AM, FM, FSK, PSK, LoRa, Zigbee
 
-Visual encyclopedia of radio modulation types. Explore AM, FM, FSK, BPSK, QPSK, 16-QAM, LoRa, and Zigbee with interactive waveform, spectrum, and constellation diagrams.
+**Category:** 10-hrf-sigint
+
+## Description
+Signal Zoo is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Spectrum View
+- Constellation Diagram
+- Modulation Explained
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- 8 modulation types with animated waveform display
-- Frequency-domain spectrum view for each modulation
-- I/Q constellation diagram with ideal and noisy symbol points
-- Modulation selector with description panel
-- Trilingual UI (EN/FR/AR) with RTL support
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App layout with waveform, spectrum, constellation, Section C |
-| `script.js` | Modulation simulation engine, rendering, i18n, all UI logic |
-| `style.css` | Shared Workshop-DIY theme system (do not modify) |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Click a modulation button (AM, FM, FSK, etc.)
-3. View the waveform, spectrum, and constellation diagrams
-4. Compare different modulations
-
-## Tech Stack
-
-Vanilla JS, HTML5 Canvas, zero dependencies.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

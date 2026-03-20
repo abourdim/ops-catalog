@@ -1,20 +1,28 @@
-# CHANGES — LoRa Lab
+# Changelog — LoRa Lab
 
-## v1.2 — 2025-05-01
-- Chirp waterfall canvas with real-time animation
-- Spreading Factor selector (SF7-SF12)
-- Bandwidth and TX power controls
-- Range calculator graph comparing SF7/SF9/SF12
-- Message send with simulated TX/RX log
-- Link budget and airtime calculations
-- i18n EN/FR/AR with RTL support
-- 8 themes with melody feedback
-- Help panel (FAQ/How-To/Wiki)
-- Activity log with filters and export
-- Sound effects system
-- Splash screen
-- No external style.css — all styles inline
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-## v1.0 — 2025-03-15
-- Initial release with basic LoRa waterfall
-- SF selector and message input
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Range Calculator — Distance vs Power section
+- LoRa Message Log section
+- LoRa Theory — How Chirps Work section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

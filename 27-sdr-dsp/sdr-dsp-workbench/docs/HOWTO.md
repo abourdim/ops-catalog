@@ -1,41 +1,45 @@
-# SDR DSP Workbench — How To Use
+# How To Use: SDR DSP Workbench
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select a signal source (sine, square, sawtooth, noise, chirp, AM, FM)
-3. Adjust the frequency slider (100-4000 Hz)
-4. Choose a filter type and set the cutoff frequency
-5. Click **Start** to begin live DSP processing
+## Quick Start (5 minutes)
 
-## Displays
-- **Spectrum**: real-time frequency-domain view with dB scale
-- **Waterfall**: scrolling time-frequency display with color intensity mapping
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Signal Analysis (Section A)
-- Peak Frequency: dominant frequency component
-- Bandwidth: -3dB bandwidth around peak
-- SNR: signal-to-noise ratio in dB
-- RMS Level: root mean square level in dBFS
-- Crest Factor: peak-to-RMS ratio
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## DSP Chain Builder (Section B)
-- Click **+ Gain** to add a 2x amplifier
-- Click **+ Delay** to add a 100-sample echo
-- Click **+ Compressor** to add dynamic range compression
-- Click **+ Distortion** to add soft-clip distortion via tanh
-- Click any block to remove it from the chain
-- Click **Clear** to remove all blocks
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## DSP Theory (Section C)
-- Learn about FFT, filters, Nyquist theorem, windowing, and convolution
+## Detailed Steps
 
-## Settings
-- Change language: English, Francais, Arabic (auto-RTL)
-- Change theme: 8 built-in themes
-- Toggle sound effects
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Start with a sine wave to understand basic filtering
-- Compare low-pass vs high-pass to see filter effects on spectrum
-- Add noise source + band-pass filter to isolate frequency bands
-- Use the chain builder to understand signal processing pipelines
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

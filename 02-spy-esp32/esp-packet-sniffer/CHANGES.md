@@ -1,12 +1,28 @@
-# esp-packet-sniffer — Changelog
+# Changelog — Packet Sniffer  WiFi Radar
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- WiFi packet sniffer radar simulation
-- Circular radar sweep canvas with detected devices
-- Packet capture list with hex dump display
-- 802.11 frame header decoder
-- Device type identification (phone/laptop/IoT/router)
-- Channel selector (1-14)
-- Full trilingual i18n (EN/FR/AR)
-- Help panel: FAQ, How-To, Wiki
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- How It Works section
+- Lab — Packet Analysis section
+- Challenges section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

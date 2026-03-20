@@ -1,38 +1,45 @@
-# HOWTO — LoRa Lab
+# How To Use: LoRa Lab
 
-## What is this?
-LoRa Lab simulates ESP32 LoRa long-range radio using Chirp Spread Spectrum (CSS). You can visualize chirps on a waterfall display, send simulated messages, and compare range at different spreading factors.
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select a Spreading Factor (SF7 = fast, SF12 = long range)
-3. Choose bandwidth (125/250/500 kHz)
-4. Type a message and click Send
-5. Watch the chirp sweep across the waterfall
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Understanding the Waterfall
-- Colors represent signal intensity (blue = weak, yellow/red = strong)
-- Chirps appear as diagonal sweeps from low to high frequency
-- Each symbol's starting frequency encodes its value
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Range Calculator
-- Open Section A to see Distance vs Power graph
-- Green = SF7, Blue = SF9, Purple = SF12
-- Higher SF = longer range but slower data rate
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Settings
-- **Language**: English, French, Arabic (with RTL)
-- **Theme**: 8 visual themes (Mosque, Zellige, Andalus, etc.)
-- **Sound**: Toggle click/success/error audio feedback
+## Detailed Steps
 
-## Key Parameters
-| Parameter | Range | Effect |
-|-----------|-------|--------|
-| SF | 7-12 | Higher = more range, less speed |
-| BW | 125-500 kHz | Higher = more speed, less range |
-| TX Power | 2-20 dBm | Higher = more range |
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Files
-- `index.html` — UI with embedded styles
-- `script.js` — Simulation engine, i18n, themes
-- `manifest.json` — PWA manifest
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

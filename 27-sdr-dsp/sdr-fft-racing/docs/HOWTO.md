@@ -1,28 +1,45 @@
-# SDR FFT Racing — How To Use
+# How To Use: SDR FFT Racing
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select FFT size (64-1024), test signal, and window function
-3. Set iteration count (higher = more accurate benchmark)
-4. Click **Race!** to run the benchmark
+## Quick Start (5 minutes)
 
-## Algorithms
-- **Naive DFT**: direct O(N²) computation — baseline reference
-- **Cooley-Tukey**: classic radix-2 decimation-in-time FFT
-- **Split-Radix**: optimized FFT with pre-computed twiddle factors
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Race Results (Section A)
-- Execution time for each algorithm over all iterations
-- Max numerical error between DFT and FFT (should be near zero)
-- Winner indicator
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Complexity Chart (Section B)
-- Shows O(N²) vs O(N log N) growth curves
-- Demonstrates why FFT is essential for large signal blocks
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Start with small FFT (64) and few iterations to see quick results
-- Increase to 512 or 1024 to see dramatic DFT slowdown
-- Try different signals — performance is independent of signal content
-- Window functions affect spectrum but not FFT speed
-- Error between DFT and FFT should be at machine precision (~1e-7)
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

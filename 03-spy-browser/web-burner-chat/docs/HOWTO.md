@@ -1,16 +1,45 @@
-# HOWTO — Burner Chat
+# How To Use: Burner Chat
 
-## 1. Send a Message
-Type in the input field and click Send or press Enter.
+## Quick Start (5 minutes)
 
-## 2. Set Self-Destruct Timer
-Use the dropdown to select 10s, 30s, 60s, or Never.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Watch Messages Burn
-Messages show a countdown and fade/burn when the timer expires.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Receive Replies
-Agent Shadow auto-replies with spy-themed messages after a typing delay.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Inspect Encryption
-Open Section C and click "Inspect Last Message" to see simulated encryption details.
+## Detailed Steps
+
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

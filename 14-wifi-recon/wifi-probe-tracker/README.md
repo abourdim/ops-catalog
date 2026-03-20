@@ -1,36 +1,59 @@
-# Probe Tracker — Location Leaks
+# Probe Tracker  Location Leaks
 
-**WiFi probe request simulator revealing device-to-network location leaks.**
+> Probe requests reveal your location history
 
-## Overview
+**Category:** 14-wifi-recon
 
-Probe Tracker simulates the capture of 802.11 probe requests — management frames that WiFi devices continuously broadcast to find known networks. These probes leak SSID names, revealing a device's location history (hotels, airports, offices, homes).
+## Description
+Probe Tracker  Location Leaks is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Device → Network Mapping
+- Privacy Risk Analysis
+- How It Works
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan Airwaves
+- Identify Targets
+- Analyze Traffic
+- Detect Threats
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Live probe request log with MAC, SSID, signal strength
-- Device-to-network mapping table
-- Privacy risk analysis with severity rating
-- Statistics: total probes, unique devices, networks revealed, probe rate
-- Section C: educational explanation of probe request privacy risks
-- Full i18n: English, French, Arabic (RTL)
-- 8 themes with sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main UI with probe log, mapping table, risk analysis |
-| `script.js` | i18n, themes, panels, probe simulation logic |
-| `style.css` | Shared stylesheet (do not modify) |
-| `manifest.json` | PWA manifest |
-| `CHANGES.md` | Version changelog |
-| `docs/HOWTO.md` | Step-by-step usage guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html` in a browser and click **Start** to begin the simulation.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

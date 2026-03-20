@@ -1,17 +1,59 @@
-# Channel Heatmap — Congestion Map
+# Channel Heatmap  Congestion Map
 
-**14-channel WiFi congestion heatmap with signal analysis and AP listing.**
+> Visualize WiFi channel congestion
+
+**Category:** 14-wifi-recon
+
+## Description
+Channel Heatmap  Congestion Map is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Signal Strength Chart
+- AP List by Channel
+- How It Works
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan Airwaves
+- Identify Targets
+- Analyze Traffic
+- Detect Threats
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-- Color-coded heatmap grid (green/yellow/red) for all 14 channels
-- Signal strength bar chart
-- AP list by channel with SSID, MAC, signal
-- Clickable channel cells for detailed info
-- Statistics: total APs, busiest/freest channel, average signal
-- Full i18n: EN/FR/AR, 8 themes, help panel, activity log
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
-Open `index.html` and click **Scan** to start the heatmap simulation.
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
+
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

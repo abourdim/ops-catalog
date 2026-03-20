@@ -1,12 +1,28 @@
-# esp-dark-net-radio — Changelog
+# Changelog — Dark Net Radio
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- Private WiFi mesh network simulation
-- ESP-NOW mesh topology canvas with animated nodes
-- Encrypted text messaging with XOR cipher
-- Voice packet visualization
-- Node discovery and auto-connect
-- Link breaking and self-healing demo
-- Full trilingual i18n (EN/FR/AR)
-- Help panel: FAQ, How-To, Wiki
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- ESP32 Creates AP step card
+- Node Discovery step card
+- E2E Encryption step card
+- Mesh Routing step card
+- A — How It Works section
+- B — Mesh Lab section
+- C — Challenges section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

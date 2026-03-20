@@ -1,8 +1,28 @@
-# 🔓 Lockpick Trainer — Changelog
+# Changelog — pi-lockpick-trainer
 
-## v1.2 (2025-03-18)
-- Initial release with full simulation
-- Trilingual i18n (EN/FR/AR)
-- 8 themes
-- Pick Practice / Score Board / Technique Guide
-- Activity log, sound, easter eggs
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Gear Up step card
+- Deploy step card
+- Monitor step card
+- Extract step card
+- Pin Analysis section
+- Practice Log section
+- Skill Report section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

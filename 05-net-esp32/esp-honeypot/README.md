@@ -1,46 +1,59 @@
-# esp-honeypot — Workshop DIY
+# ESP Honeypot
 
-Fake SSH, HTTP, FTP services that log every connection attempt. Learn how honeypots work to detect and analyze network attacks.
+> 🍯 trap · 📡 log · 🔍 analyze
 
-## What You'll Learn
+**Category:** 05-net-esp32
 
-- How honeypots attract and log attacker activity
-- Common SSH/FTP brute-force attack patterns
-- Credential harvesting and analysis techniques
-- Geo-IP mapping of attack origins
+## Description
+ESP Honeypot is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-## Quick Start
+## Sections
+- Attacker Map
+- Credential Harvest
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-Open `index.html` in any modern browser. No server needed.
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- Toggle fake SSH, HTTP, FTP services on/off
-- Live connection log with IP, timestamp, credentials
-- Geo-IP attacker map on canvas
-- Credential harvest table
-- 3 security challenges with reveal answers
-- 8 themes (6 dark + 2 light Islamic)
-- Trilingual: EN / FR / AR (RTL)
-- Activity log with TX/RX events
-- PWA-ready
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main app UI |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
 | `script.js` | Simulation logic + i18n |
-| `style.css` | Themes + responsive layout |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step lab guide |
-
-## Version
-
-v1.0
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

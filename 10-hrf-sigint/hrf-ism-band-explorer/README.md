@@ -1,42 +1,59 @@
-# 📊 ISM Band Explorer
+# ISM Band Explorer
 
-**Workshop-DIY SIGINT Learning Lab**
+> 📊 433/868/915 MHz devices
 
-Scan and identify devices on 433/868/915 MHz ISM bands. Simulates rtl_433 device detection with protocol identification.
+**Category:** 10-hrf-sigint
+
+## Description
+ISM Band Explorer is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Device List
+- Protocol Identification
+- ISM Bands Explained
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- ISM band spectrum display with real-time device bursts
-- Device list with protocol, signal strength, and last-seen timestamps
-- Protocol identification panel with modulation and data rate details
-- Band selector (433/868/915 MHz) with per-band device databases
-- Simulated devices: weather stations, car keys, LoRa, Zigbee, TPMS, and more
-- Trilingual UI (EN/FR/AR) with RTL support
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App layout with spectrum, device list, protocol ID, Section C |
-| `script.js` | ISM simulation engine, rendering, i18n, all UI logic |
-| `style.css` | Shared Workshop-DIY theme system (do not modify) |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Click **Start Scanner**
-3. Watch devices appear on the spectrum and in the device list
-4. Click a device for protocol details
-
-## Tech Stack
-
-Vanilla JS, HTML5 Canvas, zero dependencies.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

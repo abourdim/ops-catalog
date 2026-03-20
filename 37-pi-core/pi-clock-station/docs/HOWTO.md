@@ -1,24 +1,45 @@
-# How-To: Pi Clock Station
+# How To Use: Pi Clock Station
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. The clock displays immediately with millisecond precision.
-3. Click **Start NTP Server** to activate time serving.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Clock Display
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Shows local time, date, and UTC simultaneously.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Time Accuracy
+## Detailed Steps
 
-- Offset graph shows drift from GPS reference in nanoseconds.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## NTP Clients
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- Lists all network devices polling for time.
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

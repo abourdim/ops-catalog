@@ -1,52 +1,59 @@
 # bit-shake-cipher
 
-Shake-pattern cipher unlock simulation for the micro:bit. Students create secret shake patterns using accelerometer data to encrypt and unlock messages, learning about physical authentication and pattern recognition.
+> 📳 shake · 🔐 cipher · 🔓 unlock
 
-## What You'll Learn
+**Category:** 01-spy-microbit
 
-- **Accelerometer data** — reading X/Y/Z acceleration values from the micro:bit sensor
-- **Pattern recognition** — recording and comparing motion sequences
-- **Physical authentication** — using gestures as cryptographic keys
-- **DTW matching** — Dynamic Time Warping algorithm for flexible pattern comparison
+## Description
+bit-shake-cipher is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-## Quick Start
+## Sections
+- How It Works
+- Lab — Shake Recorder
+- Challenges
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-1. Open `index.html` in any modern browser
-2. Click **Record Pattern** and move your mouse (or shake your phone)
-3. Type a secret message and click **Lock**
-4. Click **Shake to Unlock** and reproduce your shake pattern
-5. Check the match score to see how close you got
+## How It Works
+- Configure
+- Process
+- Transmit
+- Verify
 
-No server or build step required. Works offline as a PWA.
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- Real-time accelerometer visualizer (3-axis bars)
-- Shake pattern recorder with 4-second capture window
-- XOR encryption using pattern hash as key
-- DTW-based pattern similarity comparison
-- Interactive lab with side-by-side pattern comparison
-- 3 progressive challenges (complexity, brute force, false positives)
-- Trilingual UI (English, French, Arabic with RTL)
-- 8 visual themes (6 dark + 2 light)
-- Activity log, sound effects, and easter eggs
-- Mobile support via DeviceMotion API fallback
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App shell with main card, sections A/B/C, help panel |
-| `script.js` | Template infrastructure + shake cipher simulation logic |
-| `style.css` | Multi-theme template styles (do not modify) |
-| `manifest.json` | PWA manifest |
-| `docs/HOWTO.md` | Step-by-step lab guide |
-| `CHANGES.md` | Version changelog |
-
-## Version
-
-**v1.0** — Initial release with shake pattern recording, XOR encryption, DTW matching, lab, and challenges.
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

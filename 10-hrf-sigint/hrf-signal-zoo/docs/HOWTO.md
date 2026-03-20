@@ -1,35 +1,45 @@
-# How-To: Signal Zoo — Modulation Encyclopedia
+# How To Use: Signal Zoo
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click a modulation button to select it.
-3. Three views update simultaneously: waveform, spectrum, and constellation.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Modulation Types
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **AM**: Amplitude varies with message. Broadcast radio.
-- **FM**: Frequency varies with message. FM radio, two-way comms.
-- **FSK**: Two discrete frequencies for binary data. Pagers, sensors.
-- **BPSK**: Two phase states (0/180). 1 bit/symbol. GPS, DSSS.
-- **QPSK**: Four phase states. 2 bits/symbol. Satellite, 4G.
-- **16-QAM**: 16 amplitude+phase states. 4 bits/symbol. WiFi, LTE.
-- **LoRa**: Chirp spread spectrum. IoT long-range.
-- **Zigbee**: O-QPSK with half-sine. Home automation mesh.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Reading the Displays
+## Detailed Steps
 
-### Waveform
-- X axis is time, Y axis is amplitude.
-- Binary data bits shown along the top.
-- Observe how the carrier changes with each bit.
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-### Spectrum
-- Shows frequency content of the modulated signal.
-- Carrier at center, sidebands spread outward.
-- Bandwidth varies by modulation type.
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-### Constellation
-- I (in-phase) on X axis, Q (quadrature) on Y axis.
-- Each cluster represents a unique symbol/bit pattern.
-- More points = higher data rate but less noise tolerance.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

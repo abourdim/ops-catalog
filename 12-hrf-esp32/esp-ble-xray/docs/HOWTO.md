@@ -1,21 +1,45 @@
-# HOWTO — BLE X-Ray
+# How To Use: BLE X-Ray
 
-## What is this?
-BLE X-Ray visualizes Bluetooth Low Energy frequency hopping across the 2.4 GHz ISM band. BLE uses 40 channels (2 MHz each) and hops at 1600 times per second.
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in a browser
-2. Click "Start Scan" to begin simulation
-3. Watch the waterfall fill with channel activity
-4. Blue dots = data channels, Red markers = advertising channels
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Understanding the Display
-- **Waterfall**: Time flows downward, each column is a BLE channel (0-39)
-- **Histogram**: Shows which channels are used most
-- **Device List**: Simulated BLE devices with signal strength
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## BLE Channel Map
-- Channels 0-36: Data channels (used by connected devices)
-- Channel 37: 2402 MHz (advertising)
-- Channel 38: 2426 MHz (advertising)
-- Channel 39: 2480 MHz (advertising)
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

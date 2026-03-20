@@ -1,43 +1,45 @@
-# How-To Guide — WiFi Sonar
+# How To Use: WiFi Sonar  Living Map
 
-## Overview
-WiFi Sonar is a simulated radar-style visualizer for 802.11 wireless frames. It renders Access Points (APs) as fixed nodes on a sonar radar and client devices as orbiting dots.
+## Quick Start (5 minutes)
 
-## Step-by-Step
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-### 1. Launch the App
-Open `index.html` in any modern browser. A splash screen appears briefly.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### 2. Start the Sonar
-Click the **Start** button on the main card. The radar sweep begins, revealing APs and clients.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### 3. Observe the Radar
-- **Gold dots** = Access Points (fixed position)
-- **Blue dots** = Client devices (orbiting their AP)
-- The sweep beam highlights devices as it passes over them
-- SSID labels appear above each AP
+## Detailed Steps
 
-### 4. View Device List
-Expand the **Device List** section to see a table of all detected devices with MAC address, type, SSID, signal strength, and frame count.
+### Step 1: Scan Airwaves
+Follow the on-screen instructions for this step.
 
-### 5. Check Frame Statistics
-Expand **Frame Statistics** to see the breakdown:
-- **Management** frames (beacons, probes)
-- **Control** frames (ACK, RTS, CTS)
-- **Data** frames (payload)
+### Step 2: Identify Targets
+Follow the on-screen instructions for this step.
 
-### 6. Learn How It Works
-Expand **How It Works** for an educational explanation of WiFi monitoring concepts.
+### Step 3: Analyze Traffic
+Follow the on-screen instructions for this step.
 
-### 7. Stop the Sonar
-Click **Stop** to halt the simulation and freeze the current state.
+### Step 4: Detect Threats
+Follow the on-screen instructions for this step.
 
-## Settings
-- **Language**: English, French, Arabic (with RTL)
-- **Theme**: 8 visual themes (Mosque, Zellige, Andalus, etc.)
-- **Sound**: Toggle sound effects on/off
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- The Activity Log records all events (new APs, clients, frame captures)
-- Use log filters to focus on specific event types
-- Export logs for later analysis
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

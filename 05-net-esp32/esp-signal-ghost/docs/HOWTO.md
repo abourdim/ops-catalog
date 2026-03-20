@@ -1,42 +1,45 @@
-# esp-signal-ghost — How To Use
+# How To Use: esp-signal-ghost
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Start Ghosting
-Click "Start Ghosting" to begin cycling through random MAC addresses. The large display shows each new MAC.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Watch the Counters
-Ghost Devices counts unique MACs generated. Cycles/sec shows the current speed. The chaos meter fills as more ghosts appear.
+## Detailed Steps
 
-### Step 3: Enable TURBO
-Click the red TURBO button to dramatically increase the cycling speed. Watch the counters accelerate.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Monitor the Device Flood
-The scrolling list below shows each ghost device with a fake vendor, RSSI value, and timestamp.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Check the MAC Lab
-Open the MAC Lab section to see how ARP table entries grow and the DHCP pool depletes.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Reset
-Click Reset to clear all ghost devices and start fresh. Click Stop to pause without clearing.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
 
-| Step | Concept |
-|------|---------|
-| 1 | MAC address generation and spoofing |
-| 2 | Network device discovery overhead |
-| 3 | Flood attack amplification |
-| 4 | How networks track connected devices |
-| 5 | ARP table overflow and DHCP exhaustion |
-| 6 | Attack termination and cleanup |
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-## Going Further
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-- Observe how fast the chaos meter reaches 100%
-- Think about what port security would do in response
-- Compare normal mode vs TURBO mode cycle rates
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

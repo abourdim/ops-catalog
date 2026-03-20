@@ -1,32 +1,59 @@
-# 📋 Protocol Decoder — Packet Autopsy
+# Protocol Decoder
 
-**Workshop DIY — Net Browser Collection**
+> 📋 Layer-by-layer packet decoding
 
-Paste hex and watch layer-by-layer decoding with animated breakdown from Ethernet to HTTP.
+**Category:** 06-net-browser
+
+## Description
+Protocol Decoder is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- OSI Model Layers
+- Hex Encoding Guide
+- Protocol Reference
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Hex input textarea with sample packets
-- Animated layer-by-layer decoding (Ethernet, IP, TCP, HTTP)
-- Color-coded protocol layers with field labels
-- Byte highlighting as each layer is parsed
-- Section C: Protocol Reference panel
-- Trilingual i18n (EN / FR / AR with RTL)
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Layout: main card (hex input + layer breakdown) + 3 sections |
-| `script.js` | i18n, hex parser, protocol decoder, animation engine |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html` in a browser. Paste hex or use a sample, then click Decode.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

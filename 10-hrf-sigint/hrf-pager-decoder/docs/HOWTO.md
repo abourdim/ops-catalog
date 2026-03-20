@@ -1,53 +1,45 @@
-# How-To: Pager Decoder — POCSAG Monitor
+# How To Use: Pager Decoder
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Decoder** to begin simulated POCSAG reception.
-3. Messages will appear in the feed with decoded content.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Using the Message Feed
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Each message shows timestamp, baud rate, type (ALPHA/NUM), address, and content.
-- Messages scroll automatically; newest appear at the top.
-- The feed holds up to 100 messages before old ones are removed.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Filtering by Address
+## Detailed Steps
 
-- Enter a pager address (RIC) in the filter field to isolate a specific device.
-- Only messages matching the filter will appear in the feed.
-- Clear the filter to see all messages again.
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Switching Frequencies
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- Open the **Frequency Settings** section.
-- Click a frequency button to switch the receiver.
-- Common POCSAG frequencies: 152.0250, 152.0500, 152.4500, 152.8250, 157.9000, 466.0750 MHz.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## Understanding POCSAG Data
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-- **Address (RIC)**: 7-digit Radio Identity Code assigned to each pager
-- **Function (FN)**: 0-3, determines which alert tone the pager plays
-- **Baud Rate**: 512, 1200, or 2400 baud transmission speed
-- **Type**: ALPHA (alphanumeric text) or NUM (numeric-only)
 
-## Statistics
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-- **Total Messages**: All decoded messages since start
-- **Numeric**: Messages with numbers only
-- **Alphanumeric**: Messages containing text
-- **Unique Addresses**: Number of distinct pagers seen
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Settings
-
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
-- Activity log tracks all decoded messages
-
-## About POCSAG
-
-POCSAG (Post Office Code Standardisation Advisory Group) is a paging protocol
-used worldwide for one-way text messaging. Messages are transmitted unencrypted
-on VHF/UHF frequencies. With an RTL-SDR dongle and multimon-ng software, anyone
-can receive and decode these signals. This app simulates that experience.
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,51 +1,45 @@
-# esp-usb-rubber-ducky — How To Use
+# How To Use: USB Rubber Ducky  Keystroke Injector
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser
-- Optional: ESP32-S2/S3 board with USB HID support
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Choose a Payload
-Select from 3 preset payloads or write your own in the editor using DuckyScript-like commands.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Understand the Commands
-- `STRING text` — Types text characters
-- `DELAY ms` — Waits for specified milliseconds
-- `ENTER` — Presses Enter key
-- `GUI r` — Opens Run dialog (Windows key + R)
-- `CTRL ALT t` — Opens terminal (Linux)
+## Detailed Steps
 
-### Step 3: Deploy the Payload
-Click "Deploy" to execute. The virtual terminal shows keystrokes being typed in real time.
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-### Step 4: Adjust Speed
-Use the speed slider to watch in slow motion or execute instantly.
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-### Step 5: Write Custom Payloads
-Create your own harmless payloads. Try opening Notepad and typing a message.
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-### Step 6: Lab Experiments
-Open Section B to analyze payload timing, test detection evasion, and understand USB HID protocols.
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-### Step 7: Challenges
-Complete 3 challenges: write a payload that opens a browser, create a data exfil demo, and design a defense.
 
-## What Each Step Teaches
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-| Step | Concept |
-|------|---------|
-| 1 | USB HID attack vectors |
-| 2 | DuckyScript payload language |
-| 3 | Keystroke injection mechanics |
-| 4 | Timing and detection windows |
-| 5 | Payload crafting skills |
-| 6 | USB protocol analysis |
-| 7 | Attack/defense awareness |
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Going Further
-
-- Flash ESP32-S2 with USB HID firmware
-- Learn about USB descriptor spoofing
-- Study USB endpoint security measures
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

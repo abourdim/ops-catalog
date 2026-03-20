@@ -1,13 +1,28 @@
-# esp-wifi-thermometer — Changelog
+# Changelog — WiFi Thermometer
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- Interactive heatmap canvas with mouse-driven RSSI measurement
-- RSSI bar display with color-coded signal strength
-- Walk mode auto-generating heatmap points
-- Room layout canvas with AP positions, signal circles, walls
-- Signal analysis graph (RSSI over time)
-- Wall attenuation simulation
-- 3 challenges with reveal answers
-- Full trilingual i18n (EN/FR/AR)
-- Help panel: FAQ, How-To, Wiki
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- Room Layout section
+- Signal Analysis section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

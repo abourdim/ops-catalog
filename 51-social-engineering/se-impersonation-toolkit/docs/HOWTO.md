@@ -2,23 +2,52 @@
 
 ## Quick Start (5 minutes)
 
-### Step 1: Open the App
+### Open the App
 Open `index.html` in your browser. No internet required.
 
-### Step 2: Explore the Main Section
-Use the controls to start the simulation. Try different settings.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 3: Watch the Results
-Observe the visualization and check the activity log for details.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 4: Go Deeper
-Open the collapsible sections below the main area for theory and experiments.
+## Detailed Steps
 
-### Step 5: Change Language/Theme
-Open Settings (gear icon) to switch between English, French, or Arabic.
-Pick from 8 themes to customize the look.
+### Step 1: Research Target
+Follow the on-screen instructions for this step.
+
+### Step 2: Build Pretext
+Follow the on-screen instructions for this step.
+
+### Step 3: Execute Attack
+Follow the on-screen instructions for this step.
+
+### Step 4: Analyze & Defend
+Follow the on-screen instructions for this step.
+
+
+## Controls
+- **Build Profile**: Click to activate this function
+- **Verify**: Click to activate this function
+- **Construire**: Click to activate this function
+- **Vérifier**: Click to activate this function
+- **بناء**: Click to activate this function
+- **تحقق**: Click to activate this function
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Click the Help button for FAQ and Wiki content
+- Click the ❓ Help button for FAQ and Wiki content
 - The activity log can be filtered by type (info, success, error)
 - Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

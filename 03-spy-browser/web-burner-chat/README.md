@@ -1,32 +1,59 @@
-# 💬 Burner Chat — Ephemeral P2P
+# Burner Chat
 
-**Workshop DIY — Spy Browser Collection**
+> 💬 Encrypted chat that vanishes when you close the tab
 
-Encrypted chat that vanishes when you close the tab. Messages auto-destruct with configurable timers.
+**Category:** 03-spy-browser
+
+## Description
+Burner Chat is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How E2E Encryption Works
+- Ephemeral Messaging
+- Encryption Inspector
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure
+- Process
+- Transmit
+- Verify
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Simulated P2P chat with fake peer "Agent Shadow"
-- Configurable self-destruct timer (10s/30s/60s/never)
-- Message burn animation with countdown
-- E2E encryption visual indicator
-- Encryption inspector showing simulated AES-256-GCM details
-- 12 spy-themed auto-replies
-- Trilingual i18n (EN / FR / AR with RTL), 8 themes
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Chat UI + 3 sections (E2E, Ephemeral, Inspector) + help |
-| `script.js` | i18n, chat simulation, encryption visual, self-destruct timers |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`. Type a message, click Send, watch the peer reply and messages self-destruct.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

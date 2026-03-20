@@ -1,17 +1,28 @@
-# CHANGES — bit-agent-id
+# Changelog — bit-agent-id
 
-## v1.0 — 2025-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Agent identity card display with codename, clearance level, emoji avatar, and unique ID hash
-- Simulated public/private key pair generation (RSA-like with small primes)
-- Digital signature creation using modular exponentiation
-- BLE broadcast simulation with realistic ADV packet structure
-- Identity verification with VERIFIED/IMPOSTOR stamp animation
-- Section A: "How It Works" — 4-step visual guide to the crypto flow
-- Section B: "Lab" — 3 experiments (multi-gen, forge, compare)
-- Section C: "Challenge" — 3 challenges (fake ID, multi-factor auth, revocation)
-- Help panel with FAQ, How-To, and Wiki (Digital Signatures, Public Key Crypto, Identity Verification, BLE Auth)
-- Full i18n support: English, French, Arabic (RTL)
-- Inline styles for agent-card, id-badge, verify-stamp, key-hash
-- All template infrastructure preserved (themes, log, toast, settings, easter eggs)
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Generate Keys step card
+- Sign Identity step card
+- Broadcast via BLE step card
+- Verify Signature step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

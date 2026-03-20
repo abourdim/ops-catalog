@@ -1,38 +1,45 @@
-# esp-captive-portal — How To Use
+# How To Use: Captive Portal Lab
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Customize the Portal
-Edit the title, logo emoji, and terms text in the portal editor fields.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Preview Your Design
-Click Update Preview to see how your captive portal would appear to WiFi users.
+## Detailed Steps
 
-### Step 3: Simulate the Full Flow
-Click Simulate Connection to watch the 5-step connection process animate in sequence.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Understand the Flow Diagram
-Open Connection Flow Diagram to see the technical path from device to internet.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Try the Challenges
-Test your understanding of captive portal security in the Challenge section.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-| Step | Concept |
-|------|---------|
-| 1 | Portal design and user interface |
-| 2 | How users experience captive portals |
-| 3 | WiFi connection, DNS redirect, authentication flow |
-| 4 | Network architecture (AP, DNS, HTTP) |
-| 5 | Security risks and defenses |
 
-## Going Further
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-- Deploy a real captive portal on ESP32 with AsyncWebServer
-- Study the WiFiManager library for ESP32
-- Build an evil twin detector app
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

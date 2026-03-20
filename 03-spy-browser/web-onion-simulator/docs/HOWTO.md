@@ -1,16 +1,45 @@
-# HOWTO — Onion Simulator
+# How To Use: Onion Simulator
 
-## 1. Send a Message
-Type your secret message and click "Send through Tor".
+## Quick Start (5 minutes)
 
-## 2. Watch Encryption
-Three layers of encryption are added, shown as Base64-encoded strings.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Watch Routing
-The message travels through Entry Guard, Middle Relay, and Exit Node. Each hop peels one encryption layer.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Build Custom Circuit
-Open Section C and click "Build New Circuit" to randomize relay countries.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Change Language / Theme
-Open Settings to switch between EN, FR, AR and 8 themes.
+## Detailed Steps
+
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

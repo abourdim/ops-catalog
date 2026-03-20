@@ -1,13 +1,28 @@
 # Changelog — Pager Decoder
 
-## v1.2 (2026-03-18)
-- Initial release
-- Live POCSAG message feed with alphanumeric and numeric messages
-- Frequency selector with 6 common pager bands
-- Address filter for isolating specific pager devices
-- Statistics dashboard with total, numeric, alpha, unique addresses
-- Section C: POCSAG technology explanation
-- Trilingual i18n (EN/FR/AR) with full RTL support
-- Simulated POCSAG engine with realistic baud rates and RIC addresses
-- 8 themes, activity log, sound effects, Konami code
-- PWA manifest
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Frequency Settings section
+- Statistics section
+- POCSAG Explained section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

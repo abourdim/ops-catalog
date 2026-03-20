@@ -1,23 +1,28 @@
-# CHANGES — bit-extraction-signal
+# Changelog — bit-extraction-signal
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Emergency extraction beacon simulation with 4 priority levels
-- Binary frame encoder: agent ID + status + priority + grid + timestamp + checksum
-- Expanding concentric circle pulse animation (color and speed vary by priority)
-- Response timer tracking time since beacon activation
-- Hex dump display of encoded emergency packet
-- Simulated rescue acknowledgment with priority-dependent random delay
-- Periodic re-broadcast at intervals based on priority level
-- Cancel function to stop broadcast and return to standby
-- Section A: "How It Works" — 4-step explanation of beacon encoding and rescue flow
-- Section B: "Lab" — hands-on experiments with message building and decoding
-- Section C: "Challenge" — 3 challenges (minimum-byte MAYDAY, unknown frame decode, stealth protocol)
-- Help panel: FAQ (4 questions), How-To (4 steps), Wiki (Emergency Beacons, ELT/PLB, Signal Encoding, Rescue Protocols)
-- Full i18n: English, French, Arabic with all beacon-specific keys
-- Minimal inline styles for beacon-display, pulse-ring, priority-indicator, frame-hex
-- PWA manifest updated for bit-extraction-signal
-
-### Based On
-- Workshop-DIY template v1.2 (themes, panels, log, sound, easter eggs preserved)
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Gear Up step card
+- Deploy step card
+- Monitor step card
+- Extract step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

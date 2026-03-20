@@ -1,45 +1,59 @@
-# esp-internet-simulator -- Workshop DIY
+# Internet Simulator
 
-Internet Simulator is an interactive web app where each node represents a real internet component (DNS server, Router, Firewall, Web Server). Students trace an HTTP request journey through the full network stack.
+> 🌍 DNS · 🖥️ web · 🔀 router · 🛡️ firewall
 
-## What You Learn
+**Category:** 08-net-multi
 
-- **DNS Resolution**: How domain names map to IP addresses
-- **Routing**: How packets travel through network devices
-- **Firewalls**: How security rules filter traffic
-- **HTTP Request/Response**: The complete lifecycle of a web request
+## Description
+Internet Simulator is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Network canvas with labeled nodes (Client, DNS, Router, Firewall, Web Server)
-- Animated packet traveling through the network on each request
-- DNS resolution simulation with domain-to-IP mapping
-- Firewall with blocked domain list (try malware.bad)
-- Request/response path visualization with return journey
-- Hop-by-hop request log with timestamps
-- Trilingual: English, French, Arabic (RTL)
-- 8 visual themes, PWA-ready
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a modern browser
-2. Enter a URL (or use the default)
-3. Click **Send Request** and watch the packet journey
-4. Check the request log for hop details
-
-## Project Structure
-
-```
-esp-internet-simulator/
-  index.html        Main app page
-  script.js         App logic + network simulation
-  style.css         Theme system (do not modify)
-  manifest.json     PWA manifest
-  docs/HOWTO.md     Step-by-step guide
-  README.md         This file
-  CHANGES.md        Version history
-```
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Educational use -- Workshop-DIY project by abourdim.
+Workshop-DIY Educational Project

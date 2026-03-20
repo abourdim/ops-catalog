@@ -1,19 +1,45 @@
-# HOWTO — Certificate Inspector
+# How To Use: Certificate Inspector
 
-## 1. Select a Domain Scenario
-Click one of the 3 preset buttons: google.com (Valid), expired-cert.org (Expired), or self-signed.dev (Invalid).
+## Quick Start (5 minutes)
 
-## 2. Inspect the Chain
-Click "Inspect Chain" to visualize the TLS certificate chain. Watch each certificate card appear with animated transitions.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Review Certificate Details
-Each card shows: issuer, subject, validity dates, algorithm, and serial number. Color-coded status badges indicate chain health.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Compare All Chains
-Open Section C (Chain Comparison Tool) and click "Compare All Chains" to see all three scenarios side by side.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Change Language
-Open Settings (gear icon) and select EN, FR, or AR. Arabic enables RTL layout.
+## Detailed Steps
 
-## 6. Change Theme
-Open Settings and choose from 8 available themes.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

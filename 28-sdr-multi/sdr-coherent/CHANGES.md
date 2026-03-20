@@ -1,13 +1,28 @@
-# SDR Coherent Receiver — Changelog
+# Changelog — SDR Coherent Receiver
 
-## v1.0 — 2025-01-01
-- Initial release
-- 2-16 element coherent array simulation
-- Beam pattern computation and display
-- Array visualization with wavefronts
-- Combined spectrum after coherent combining
-- Performance metrics: gain, beam width, SLL, SNR improvement
-- Phase error injection and auto-calibration
-- Adjustable element spacing and steering angle
-- Trilingual i18n (EN/FR/AR with RTL)
-- 8 themes with Islamic art inspiration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure SDR step card
+- Capture Signal step card
+- Process & Filter step card
+- Visualize Output step card
+- Array Performance section
+- Phase Calibration section
+- Coherent Array Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

@@ -1,20 +1,28 @@
-# CHANGES — bit-cw-paddle
+# Changelog — bit-cw-paddle
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- CW Morse paddle simulator with DIT/DAH buttons
-- Full Morse code table: A-Z, 0-9
-- Web Audio API tone generator with adjustable frequency (400-1000 Hz)
-- Speed control slider (5-30 WPM)
-- Real-time Morse-to-text auto-decoder with timing gap analysis
-- Visual Morse display with animated dots and dashes
-- Play Message feature: type text and hear it in Morse code
-- Practice mode: random letter challenge with check/verify
-- Keyboard shortcuts: arrow keys and `.`/`-` for DIT/DAH
-- Section A: How It Works — 4 timing rules explained
-- Section B: Lab — keying practice, decode incoming, speed test
-- Section C: Challenge — SOS, decode at 15 WPM, key your name
-- Help panel: FAQ (4 items), How-To (4 steps), Wiki (Morse Code, CW Operation, Timing Rules, Ham Radio Basics)
-- Trilingual i18n: English, French, Arabic (full RTL support)
-- Built on Workshop-DIY template v1.2 (8 themes, splash, log, panels, easter eggs)
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Tune Frequency step card
+- Transmit/Receive step card
+- Decode Signal step card
+- Log Contact step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

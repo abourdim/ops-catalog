@@ -1,42 +1,59 @@
-# 🖥️ Pi War Room
+# Pi War Room
 
-**Workshop-DIY Pi Core Learning Lab**
+> 🖥️ hack · 🔍 analyze · 🛡️ defend
 
-Portable hacking station with multi-tool dashboard on Raspberry Pi. Simulates network scanning, WiFi recon, packet sniffing, brute force, and exploit checking.
+**Category:** 37-pi-core
+
+## Description
+Pi War Room is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Network Scanner
+- Exploit Toolkit
+- About Penetration Testing
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Connect Hardware
+- Configure Software
+- Monitor Data
+- Control & Log
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Terminal-style output for multiple security tools
-- Network scanner with host discovery table
-- Exploit toolkit with CVE database display
-- Tool selector: Nmap, WiFi Recon, Packet Sniff, Brute Force, Exploit Check
-- Pi system stats: CPU, RAM, temperature, host count
-- Trilingual UI (EN/FR/AR) with RTL support
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Dashboard with terminal, host table, exploit list, Section C |
-| `script.js` | War room simulation, i18n, all UI logic |
-| `style.css` | Shared Workshop-DIY theme system |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Select a tool and click **Run**
-3. Watch terminal output and host table populate
-4. Explore the exploit database
-
-## Tech Stack
-
-Vanilla JS, zero dependencies.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

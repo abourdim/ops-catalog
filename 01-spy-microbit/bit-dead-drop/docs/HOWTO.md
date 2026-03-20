@@ -1,47 +1,45 @@
-# bit-dead-drop — How To Use
+# How To Use: bit-dead-drop
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
-- Optional: Two micro:bit v2 boards for real BLE testing
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Write Your Secret Message
-Type a secret message in the input field. Keep it short — real BLE packets are limited to ~20 bytes.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Set the Encryption Key
-Enter a shared key. Both agents must know this key. In the real world, keys are exchanged in person or via a secure channel.
+## Detailed Steps
 
-### Step 3: Encrypt the Message
-Click "Encrypt" to see your message transformed into cipher text using XOR encryption. Watch the Activity Log for the encryption event.
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-### Step 4: Drop the Message
-Click "Send Drop" to broadcast the encrypted message via simulated BLE. The canvas shows the packet traveling through the air.
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-### Step 5: Receive the Drop
-Switch to "Receive" mode. Click "Scan" in the Lab section to detect nearby drops. The RSSI slider simulates distance — lower values mean weaker signal.
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-### Step 6: Decrypt the Message
-When you receive a drop, enter the correct key and decrypt. Wrong key = garbled output!
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-### Step 7: Try the Challenges
-Open the Challenge section and test your understanding. Can you break the cipher without the key?
 
-## What Each Step Teaches
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-| Step | Concept |
-|------|---------|
-| 1 | Plaintext and message formatting |
-| 2 | Shared secret keys |
-| 3 | XOR cipher (symmetric encryption) |
-| 4 | BLE advertising/broadcasting |
-| 5 | BLE scanning and RSSI |
-| 6 | Decryption and key verification |
-| 7 | Cryptanalysis basics |
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Going Further
-
-- Flash real micro:bit code using [MakeCode](https://makecode.microbit.org/)
-- Try AES encryption instead of XOR
-- Build a multi-hop relay with 3+ micro:bits
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

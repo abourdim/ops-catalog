@@ -1,12 +1,28 @@
-# CHANGES — Blockchain Messenger
+# Changelog — Blockchain Messenger
 
-## v1.2 (2025-03)
-- Initial release
-- Blockchain display with linked blocks and hash pointers
-- SHA-256-like hashing simulation
-- Block mining with animated nonce search
-- Tamper detection with chain break visualization
-- Section C: Mining difficulty adjustment
-- Trilingual i18n (EN / FR / AR)
-- 8 themes support
-- Activity log integration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- Blockchain Concepts section
+- Cryptographic Hashing section
+- Mining Settings section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

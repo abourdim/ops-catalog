@@ -1,19 +1,45 @@
-# HOWTO — Network Map
+# How To Use: Network Map
 
-## 1. Add Agents
-Click "Add Agent" to create new spy nodes. Up to 20 agents supported.
+## Quick Start (5 minutes)
 
-## 2. Move Nodes
-Click and drag nodes to rearrange. The physics engine auto-layouts connections.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Send Messages
-Click "Send Message" to see an encrypted message route between two random connected nodes.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Discover Connections
-Click "Discover Node" to reveal hidden connections between existing agents.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Analyze Network
-Open Section C and click "Analyze Network" for centrality rankings, density, and most connected agent.
+## Detailed Steps
 
-## 6. Reset
-Click Reset to clear all nodes and start fresh.
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

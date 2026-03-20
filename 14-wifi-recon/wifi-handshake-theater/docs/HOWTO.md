@@ -1,32 +1,45 @@
-# How-To Guide — Handshake Theater
+# How To Use: Handshake Theater  WPA 4-Way
 
-## Overview
-Handshake Theater visualizes the WPA2 4-way handshake, showing how a client and access point establish an encrypted connection.
+## Quick Start (5 minutes)
 
-## Step-by-Step
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-### 1. Launch the App
-Open `index.html` in any modern browser.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### 2. Play the Handshake
-Click **Play** to start the animation. Each of the 4 steps highlights in sequence.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### 3. Watch the Steps
-- **Step 1**: AP sends ANonce to client
-- **Step 2**: Client sends SNonce + MIC back
-- **Step 3**: AP sends encrypted GTK + MIC
-- **Step 4**: Client sends ACK, handshake complete
+## Detailed Steps
 
-### 4. View Key Derivation
-Expand **Key Derivation** to see PMK, ANonce, SNonce, PTK, GTK, and MIC values as they are generated.
+### Step 1: AP → Client: ANonce
+Follow the on-screen instructions for this step.
 
-### 5. Check the Timeline
-Expand **Handshake Timeline** for a chronological record of each event.
+### Step 2: Client → AP: SNonce + MIC
+Follow the on-screen instructions for this step.
 
-### 6. Reset
-Click **Reset** to clear everything and replay the animation.
+### Step 3: AP → Client: GTK + MIC
+Follow the on-screen instructions for this step.
+
+### Step 4: Client → AP: ACK
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Each step takes 2 seconds for easy observation
-- The activity log tracks all EAPOL messages with TX/RX labels
-- Use different themes to change the visual style
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,47 +1,45 @@
-# How To Use Gossip Protocol
+# How To Use: Gossip Protocol
 
-## Overview
+## Quick Start (5 minutes)
 
-This app simulates a gossip (epidemic) protocol where data spreads from one seeded node to all others through probabilistic peer-to-peer communication rounds.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
----
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Step 1: Seed a Node
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-Click any gray node on the canvas, or press **Seed Node**. The seeded node turns green (infected with data).
+## Detailed Steps
 
-## Step 2: Watch the Rounds
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-Gossip rounds run automatically. Each round, every infected node picks a random neighbor and tries to share data. The neighbor becomes infected based on the spread probability.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-## Step 3: Adjust Parameters
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-- **Nodes slider**: Set 6-25 nodes to see different network sizes.
-- **Spread % slider**: Control infection probability (10-100%).
-- **Reset button**: Start over with fresh uninfected nodes.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## Step 4: Monitor Convergence
 
-- The **timeline bar** fills as more nodes get infected.
-- Stats show round count, infected/total, and convergence status.
-- Convergence = all nodes have the data.
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
----
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Experiments
-
-| Experiment | What to observe |
-|-----------|----------------|
-| 100% spread, 6 nodes | Fastest convergence |
-| 10% spread, 25 nodes | Slow, many rounds needed |
-| 50% spread, 12 nodes | Typical behavior |
-
----
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Nothing happening | Click a node to seed it first |
-| Convergence is slow | Increase spread probability |
-| Nodes not connecting | Reset to regenerate the network |
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

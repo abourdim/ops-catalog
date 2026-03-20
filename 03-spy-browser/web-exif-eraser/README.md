@@ -1,65 +1,59 @@
-# web-exif-eraser — Workshop DIY
+# EXIF Eraser
 
-**Strip hidden metadata from photos before sharing — privacy-first EXIF scrubber simulation**
+> 🧹 scan · 🔍 reveal · 🛡️ protect
 
----
+**Category:** 03-spy-browser
 
-## What It Teaches
+## Description
+EXIF Eraser is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-EXIF Eraser helps students understand the hidden metadata embedded in every digital photo. Students learn about:
+## Sections
+- How It Works
+- Comparison Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-- **EXIF Metadata** — What data cameras and phones secretly embed in photos
-- **GPS Geotagging** — How photos reveal your exact location
-- **Privacy Risks** — Why metadata can be dangerous when shared online
-- **Metadata Scrubbing** — How to remove hidden data before sharing
+## How It Works
+- What is EXIF Data?
+- Why Is It Dangerous?
+- How Scrubbing Works
+- Best Practices
 
----
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main UI with upload zone, metadata tables, 3 sections (How It Works, Comparison Lab, Challenge), help panel |
-| `script.js` | Full simulation engine, fake EXIF generator, scrubber, i18n (EN/FR/AR), template infrastructure |
-| `style.css` | Template styles (8 themes, animations, responsive) — DO NOT MODIFY |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step workshop guide |
-
----
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-### Main Card
-- **Upload Zone** — Drag & drop or click to upload an image (or use sample)
-- **Sample Image** — Canvas-drawn mosque scene with generated EXIF
-- **Metadata Table (Before)** — Shows all hidden EXIF fields with values
-- **Privacy Risk Badge** — HIGH/MEDIUM/LOW/CLEAN indicator
-- **Scrub Button** — Animated removal of each metadata field
-- **Metadata Table (After)** — Shows scrubbed (empty) fields
-- **Stats Row** — Fields before, after, and removed count
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-### Section A — How It Works
-- 4-step visual guide: What is EXIF, Why dangerous, How scrubbing works, Best practices
-
-### Section B — Comparison Lab
-- Side-by-side before/after comparison
-- Batch scrub (3 samples) with sequential logging
-
-### Section C — Challenge
-- **Find the Spy** — Analyze mystery photo metadata to find location/device/time
-- **Spot the Difference** — Visual comparison showing metadata is invisible
-- **Privacy Audit** — Timed scrub of 5 images with scoring
-
----
-
-## i18n
-
-Full trilingual support: English, French, Arabic (RTL).
-
----
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

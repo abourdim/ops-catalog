@@ -1,13 +1,28 @@
-# Changelog — Probe Tracker
+# Changelog — Probe Tracker  Location Leaks
 
-## v1.0 — 2025-05-01
-- Initial release of Probe Tracker — Location Leaks
-- Live probe request log with MAC, SSID, signal, timestamp
-- Device-to-network mapping table with vendor identification
-- Privacy risk analysis with LOW/MEDIUM/HIGH severity rating
-- Statistics dashboard: total probes, unique devices, networks revealed, probe rate
-- Section C: How It Works educational panel
-- Full i18n support: English, French, Arabic (RTL)
-- 8 themes with sound effects
-- Help panel with FAQ, How-To, Wiki tabs
-- Activity log with filters, copy, export
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan Airwaves step card
+- Identify Targets step card
+- Analyze Traffic step card
+- Detect Threats step card
+- Device → Network Mapping section
+- Privacy Risk Analysis section
+- How It Works section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

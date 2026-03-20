@@ -1,27 +1,59 @@
-# 🔗 SDR Coherent Receiver — Workshop DIY
+# SDR Coherent Receiver
 
-Simulate coherent multi-SDR reception with phase-locked combining, beamforming, and array processing.
+> 🔗 Coherent Receiver — Phase-locked multi-SDR
+
+**Category:** 28-sdr-multi
+
+## Description
+SDR Coherent Receiver is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Array Performance
+- Phase Calibration
+- Coherent Array Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure SDR
+- Capture Signal
+- Process & Filter
+- Visualize Output
+
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- **Array visualization**: SDR elements with wavefronts and beam direction
-- **Beam pattern**: polar-like display showing main lobe, sidelobes, nulls
-- **Combined spectrum**: shows signal after coherent combining
-- **Performance metrics**: array gain, beam width, SLL, SNR improvement
-- **Phase calibration**: add random phase errors and apply auto-correction
-- **Adjustable**: 2-16 elements, spacing, steering angle, signal angle, SNR
-- **Trilingual**: English, Francais, Arabic (RTL)
-- **8 themes** with Islamic art inspiration
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI with array, beam pattern, spectrum canvases |
-| `script.js` | Array processing, beamforming, calibration, i18n |
-| `style.css` | Shared Workshop DIY theme styles |
-| `manifest.json` | PWA manifest |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

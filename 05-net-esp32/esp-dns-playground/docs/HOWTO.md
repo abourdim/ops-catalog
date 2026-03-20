@@ -1,43 +1,45 @@
-# esp-dns-playground — How To Use
+# How To Use: DNS Playground
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
-- Optional: ESP32 board for real DNS server deployment
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Review Default Rules
-The app starts with sample rules redirecting evil.com and ads.tracker.net. Review how domains map to IPs.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Add Custom Rules
-Enter a domain name and target IP, then click Add Rule. Try redirecting a known domain to 0.0.0.0 (block) or 192.168.4.1 (redirect to ESP32).
+## Detailed Steps
 
-### Step 3: Test the Resolver
-Type any domain in the resolver input and click Resolve. Compare the before (normal DNS) and after (ESP DNS) results.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Start Auto Queries
-Click Start DNS Server to generate simulated DNS traffic. Watch queries appear in the log with their resolution results.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Watch the Animation
-Open the DNS Animation section to see packets flowing from client through ESP32 to the internet, with blocked queries highlighted in red.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Try the Challenges
-Test your understanding of DNS concepts in the Challenge section.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
 
-| Step | Concept |
-|------|---------|
-| 1 | DNS rule tables and domain mapping |
-| 2 | DNS sinkholes and ad-blocking |
-| 3 | DNS resolution comparison |
-| 4 | DNS query traffic patterns |
-| 5 | Network packet visualization |
-| 6 | DNS security and filtering concepts |
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-## Going Further
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-- Deploy a real DNS server on ESP32 with the DNSServer library
-- Build a Pi-hole-like ad blocker with blocklists
-- Explore DNS over HTTPS (DoH) for encrypted DNS
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

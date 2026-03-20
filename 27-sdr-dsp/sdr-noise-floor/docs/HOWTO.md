@@ -1,32 +1,45 @@
-# SDR Noise Floor — How To Use
+# How To Use: SDR Noise Floor
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Set temperature (290K = room temp), bandwidth, and noise figure
-3. Click **Start** to begin live noise floor analysis
-4. Adjust test signal level to see it emerge from noise
+## Quick Start (5 minutes)
 
-## Controls
-- **Temperature**: affects thermal noise power (higher = more noise)
-- **Bandwidth**: wider bandwidth = higher noise floor
-- **Noise Figure**: receiver-added noise in dB
-- **Test Signal**: inject a signal at specified dBm level
-- **Averaging**: reduce noise variance (3dB improvement per doubling)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Noise Calculations (Section A)
-- **kTB**: theoretical thermal noise power
-- **Noise Floor**: kTB + noise figure
-- **MDS**: minimum detectable signal (NF + 3dB)
-- **SNR**: signal-to-noise ratio at test signal level
-- **Dynamic Range**: noise floor to 0 dBm compression point
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Noise Distribution (Section B)
-- Histogram shows amplitude distribution of noise samples
-- White curve shows ideal Gaussian distribution for comparison
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Room temperature (290K) gives -174 dBm/Hz thermal noise
-- A good LNA has NF of 1-3 dB
-- Doubling bandwidth raises noise floor by 3 dB
-- Averaging 8x reduces displayed noise by ~9 dB
-- MDS determines the weakest signal your receiver can hear
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

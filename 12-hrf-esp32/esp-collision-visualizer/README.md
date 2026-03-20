@@ -1,24 +1,59 @@
-# 💥 Collision Visualizer — Workshop DIY v1.2
+# Collision Visualizer
 
-2.4GHz signal collision simulator — dual TX, collision zone, BER analysis.
+> 2.4GHz Signal Collision
+
+**Category:** 12-hrf-esp32
+
+## Description
+Collision Visualizer is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- BER Over Time
+- Collision Analysis
+- Collision Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-- Animated dual transmitter waveforms with collision zone
-- Adjustable TX1/TX2 power sliders
-- Real-time BER (Bit Error Rate) calculation
-- Bit stream display with red error highlighting
-- BER over time chart
-- Capture effect analysis
-- i18n EN/FR/AR, 8 themes, activity log
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-| File | Description |
-|------|-------------|
-| `index.html` | UI with embedded styles |
-| `script.js` | Collision sim, BER calc, i18n |
-| `manifest.json` | PWA manifest |
-| `CHANGES.md` | Version history |
-| `docs/HOWTO.md` | Usage guide |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

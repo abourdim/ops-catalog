@@ -1,36 +1,45 @@
-# 🛡️ Faraday Test — How-To Guide
+# How To Use: pi-faraday-test
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in Chrome/Firefox/Safari.
-2. The main card shows primary simulation controls.
-3. Click collapsible sections for more features.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Language
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-Settings > Language > EN / FR / AR (RTL auto).
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Theme
+## Detailed Steps
 
-Settings > Theme > 8 choices.
+### Step 1: Gear Up
+Follow the on-screen instructions for this step.
 
-## Activity Log
+### Step 2: Deploy
+Follow the on-screen instructions for this step.
 
-Click 📜 to open. Filter by All/Info/Success/Error/TX/RX.
+### Step 3: Monitor
+Follow the on-screen instructions for this step.
 
-## Sections
+### Step 4: Extract
+Follow the on-screen instructions for this step.
 
-- **Signal Meter**: Primary feature controls
-- **Test Results**: Secondary operations
-- **Report**: Statistics and monitoring
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-
-- Long-press log line = Morse blink
-- Triple-click logo = Matrix rain
-- Konami code = retro theme
-- Shake phone = bug report export
-
-## Privacy
-
-All data stays in your browser. No tracking.
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

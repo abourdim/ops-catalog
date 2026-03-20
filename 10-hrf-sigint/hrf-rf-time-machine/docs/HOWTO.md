@@ -1,40 +1,45 @@
-# How-To: RF Time Machine — Spectrum DVR
+# How To Use: RF Time Machine
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Record** to start capturing spectrum frames.
-3. The waterfall will build up showing signals over time.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Transport Controls
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **Record**: Start capturing simulated spectrum frames.
-- **Stop**: Halt recording or playback.
-- **Play**: Replay recorded frames from current position.
-- **Rewind**: Jump back to the beginning of the recording.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Timeline Scrubber
+## Detailed Steps
 
-- After stopping, drag the timeline slider to seek to any point.
-- The waterfall and spectrum views update to show the selected frame.
-- The time display shows current position and total duration.
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Reading the Waterfall
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- X axis shows frequency (centered on 100.0 MHz, 2.4 MHz bandwidth).
-- Y axis is time — newest data at the bottom.
-- Color represents signal power: blue = noise floor, yellow = moderate, red = strong.
-- Horizontal lines indicate persistent signals (e.g., FM stations).
-- Brief bursts appear as short colored streaks.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## Live Spectrum
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-- Shows the current FFT frame as a traditional spectrum plot.
-- Updates in real-time during recording or as you scrub the timeline.
 
-## About Spectrum DVR
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-A Spectrum DVR records FFT frames over time, creating a rewindable waterfall.
-This is invaluable for catching intermittent signals, analyzing time-varying
-behavior, or reviewing spectrum activity you may have missed. Tools like
-gqrx, SDR#, and inspectrum provide this capability with real SDR hardware.
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

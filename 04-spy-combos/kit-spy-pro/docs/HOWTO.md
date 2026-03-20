@@ -1,52 +1,45 @@
-# HOWTO — kit-spy-pro Workshop Guide
+# How To Use: Spy Kit Pro
 
-## Overview
+## Quick Start (5 minutes)
 
-This workshop teaches students about IoT device networks, encrypted communications, and mission coordination using a simulated 3-device spy system.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
----
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Prerequisites
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-- A modern web browser (Chrome, Firefox, Edge)
-- No internet connection required
+## Detailed Steps
 
----
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-## Workshop Flow (45-60 minutes)
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-### Part 1: Introduction (10 min)
-1. Open `index.html` in a browser
-2. Explain the 3-device system: wearable (micro:bit), field scanner (ESP32), HQ (browser)
-3. Open Section A to review Device Setup Guide
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-### Part 2: Connect Devices (5 min)
-1. Click **Connect Devices**
-2. Watch BLE and MQTT connections simulate
-3. Observe telemetry appearing on the dashboard
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-### Part 3: Run a Mission (15 min)
-1. Select a mission from the dropdown (start with Recon)
-2. Click **Start Mission** and follow the step-by-step log
-3. Try each mission type and discuss differences
 
-### Part 4: Encrypted Comms (10 min)
-1. Type a message in the comms input
-2. Observe the ROT13 encrypted version
-3. Watch for simulated responses
-4. Discuss why encryption matters
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-### Part 5: Agent Tracking (10 min)
-1. Open Section C (Agent Tracker)
-2. Click **Add Agent** multiple times
-3. Click **Track All** to see positions
-4. Try the Speed Recon and Decode challenges
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
----
-
-## Key Learning Points
-
-1. IoT systems use multiple protocols (BLE, WiFi, MQTT) to communicate
-2. Encryption protects messages from interception
-3. Real-time telemetry enables remote monitoring
-4. Mission coordination requires reliable communications
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

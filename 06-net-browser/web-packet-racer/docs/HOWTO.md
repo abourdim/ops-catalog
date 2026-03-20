@@ -1,21 +1,45 @@
-# HOWTO — Packet Racer
+# How To Use: Packet Racer
 
-## 1. Start the Race
-Click "Start Race" to begin. Your packet starts at the source node.
+## Quick Start (5 minutes)
 
-## 2. Navigate
-Use arrow keys or on-screen buttons to move your packet through the network.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Avoid Obstacles
-- Firewalls (red): Block your path, find alternate routes
-- Congestion (orange): Slow you down temporarily
-- Packet Loss (purple): Reduce your health/score
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Reach the Destination
-Navigate through routers (green checkpoints) to reach the destination server.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Check Your Score
-Timer and score display at the top. Faster completion = higher score.
+## Detailed Steps
 
-## 6. Try Different Difficulties
-Open Section C to change difficulty level and view high scores.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

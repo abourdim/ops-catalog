@@ -1,43 +1,59 @@
-# esp-spectrum-wars — Workshop DIY
+# Spectrum Wars
 
-Multiple devices compete for bandwidth on the same WiFi channel. Visualize signal collisions and throughput degradation.
+> ⚔️ compete · 📡 transmit · 💥 collide
 
-## What You'll Learn
+**Category:** 05-net-esp32
 
-- RF spectrum contention and shared medium concepts
-- CSMA/CA collision avoidance protocol
-- How device count affects throughput
-- WiFi 6 OFDMA and MU-MIMO solutions
+## Description
+Spectrum Wars is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-## Quick Start
+## Sections
+- Throughput Graph
+- Collision Visualization
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-Open `index.html` in any modern browser. No server needed.
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- Spectrum canvas showing competing signal waveforms
-- Per-device throughput graphs with real-time updates
-- Collision counter and visualization
-- Add/remove competitor devices dynamically
-- Collision detection animation canvas
-- 3 challenges, 8 themes, trilingual (EN/FR/AR), PWA-ready
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main app UI |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
 | `script.js` | Simulation logic + i18n |
-| `style.css` | Themes + responsive layout |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step lab guide |
-
-## Version
-
-v1.0
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

@@ -1,39 +1,45 @@
-# How-To: Pi Mesh Node
+# How To Use: Pi Mesh Node
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Mesh** to begin the mesh network simulation.
-3. Messages will start arriving from other simulated nodes.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Sending Messages
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Type your message in the input field.
-- Click **Send** to broadcast to the mesh network.
-- Messages appear in the Message Console with timestamps.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Node Map
+## Detailed Steps
 
-- Shows all mesh nodes and their connections.
-- Your node (Base Camp) is highlighted in cyan.
-- Relay nodes are shown in green with link lines.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Configuration
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- **Channel**: Select LoRa frequency channel.
-- **SF**: Spreading Factor (higher = longer range, slower speed).
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
 
-## Signal Quality
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
 
-- **RSSI**: Received Signal Strength Indicator (closer to 0 = stronger).
-- **SNR**: Signal-to-Noise Ratio (higher = cleaner signal).
 
-## Settings
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## About LoRa Mesh
-
-LoRa uses chirp spread spectrum modulation for long-range, low-power communication. Mesh networking extends range by having intermediate nodes relay messages. Projects like Meshtastic make this accessible with affordable hardware.
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

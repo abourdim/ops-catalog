@@ -1,9 +1,28 @@
-# Changelog — Channel Heatmap
+# Changelog — Channel Heatmap  Congestion Map
 
-## v1.0 — 2025-05-01
-- Initial release of Channel Heatmap — Congestion Map
-- 14-channel heatmap grid with congestion coloring
-- Signal strength bar chart
-- AP list by channel with detailed info
-- Clickable channel cells
-- Full i18n: EN/FR/AR, 8 themes, help panel, activity log
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan Airwaves step card
+- Identify Targets step card
+- Analyze Traffic step card
+- Detect Threats step card
+- Signal Strength Chart section
+- AP List by Channel section
+- How It Works section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

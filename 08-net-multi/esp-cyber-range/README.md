@@ -1,40 +1,59 @@
-# esp-cyber-range -- Workshop DIY
+# Cyber Range
 
-Cyber Range is a Red vs Blue attack/defense training simulator. Students take turns as attackers (Red Team) and defenders (Blue Team) on a simulated corporate network with servers, workstations, databases, firewalls, and IDS.
+> ⚔️ red team · 🛡️ blue team · 🏢 network
 
-## What You Learn
+**Category:** 08-net-multi
 
-- **Red Team Tactics**: Port scanning, vulnerability exploitation, lateral movement, data exfiltration
-- **Blue Team Defenses**: Firewalls, IDS, patching, network segmentation
-- **Attack/Defense Dynamics**: How defenses counter specific attack types
-- **Incident Response**: Real-time event monitoring and scoring
+## Description
+Cyber Range is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Corporate network canvas with 9 nodes (Internet, Firewall, Router, Switches, Servers, Workstation, DB, IDS)
-- Red Team panel with 4 attack types, Blue Team panel with 4 defense types
-- Score tracking: points for successful attacks and defenses
-- Animated attack/defense packets traversing the network
-- Real-time event feed with color-coded notifications
-- Defense state tracking (firewall blocks port scans, IDS detects lateral movement, etc.)
-- Trilingual: English, French, Arabic (RTL)
-- 8 visual themes, PWA-ready
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html`
-2. Deploy Blue Team defenses (firewall, IDS, patch, isolate)
-3. Launch Red Team attacks (port scan, exploit, lateral, exfil)
-4. Watch scores and event feed
-
-## Project Structure
-
-```
-esp-cyber-range/
-  index.html, script.js, style.css, manifest.json
-  docs/HOWTO.md, README.md, CHANGES.md
-```
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Educational use -- Workshop-DIY project by abourdim.
+Workshop-DIY Educational Project

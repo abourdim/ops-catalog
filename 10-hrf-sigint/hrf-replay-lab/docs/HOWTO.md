@@ -1,32 +1,45 @@
-# How To Use — Replay Lab
+# How To Use: Replay Lab
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in a modern browser (Chrome, Firefox, Edge)
-2. Click **Transmit** to send a keyfob signal
-3. Click **Capture** to record the transmission
-4. Click **Replay** to retransmit the captured signal
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## The Experiment
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Fixed Code Mode (default)
-1. Transmit a keyfob signal (always sends the same code)
-2. Capture the signal
-3. Replay it -- the door opens! This shows the vulnerability
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Rolling Code Mode
-1. Toggle **Rolling Code** ON
-2. Transmit -- the keyfob sends a new code each time
-3. Capture and replay -- the door stays locked!
-4. The code has already been used and the receiver expects the next one
+## Detailed Steps
 
-## Controls
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-- **Transmit**: Simulate a keyfob press
-- **Capture**: Record the last transmission
-- **Replay**: Retransmit the captured signal
-- **Rolling Code Toggle**: Switch between fixed and rolling code modes
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-## Educational Notes
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-Rolling codes (KeeLoq, etc.) use synchronized counters. Each press generates a new code, making captured signals useless for replay.
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

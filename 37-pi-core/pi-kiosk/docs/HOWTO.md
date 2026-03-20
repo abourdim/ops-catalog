@@ -1,23 +1,45 @@
-# How-To: Pi Kiosk
+# How To Use: Pi Kiosk
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Kiosk** to activate all panels.
-3. Each panel shows a different RF data stream.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Display Panels
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Panel 1: Waterfall 144 MHz (green)
-- Panel 2: FFT 433 MHz (cyan)
-- Panel 3: APRS Map data (orange)
-- Panel 4: System Stats (magenta)
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Layout Options
+## Detailed Steps
 
-- Select 2x2 Grid, 1+3, or 4x1 Strip from the dropdown.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
+
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

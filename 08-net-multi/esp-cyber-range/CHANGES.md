@@ -1,18 +1,28 @@
-# CHANGES
+# Changelog — Cyber Range
 
-## v1.0 -- 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Corporate network canvas with 9 nodes (Internet, Firewall, Router, 2 Switches, Web Server, Workstation, Database, IDS)
-- Red Team attack panel: port scan, exploit vulnerability, lateral movement, data exfiltration
-- Blue Team defense panel: enable firewall, deploy IDS, patch systems, isolate segment
-- Defense-aware attack outcomes (firewall blocks scans, IDS detects lateral movement, etc.)
-- Score tracking with Red vs Blue scoreboard
-- Animated attack/defense packets on the network canvas
-- Real-time color-coded event feed
-- Section A: "How It Works" with 4-step Red/Blue explanation
-- Section B: "Lab" with tactical experiment tips
-- Section C: "Challenge" with 3 progressive attack/defense challenges
-- Help panel with cyber range FAQ, How-To, and Wiki
-- Full trilingual support (EN/FR/AR)
-- All Workshop-DIY template features: 8 themes, splash, settings, easter eggs, PWA
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

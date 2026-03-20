@@ -1,21 +1,28 @@
-# CHANGES — bit-rf-alarm-system
+# Changelog — bit-rf-alarm-system
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Alarm panel with Armed/Disarmed/ALERT visual states
-- Keypad for manual code entry (code: 1234)
-- Remote control buttons: Arm and Disarm
-- RF jamming simulation — floods channel, blocks commands, signal meter drops
-- Record & Replay attack — captures disarm frame, retransmits it
-- Security mode toggle: Basic (fixed code "1234") vs Secure (rolling codes)
-- Rolling code display showing current transmission code
-- Signal quality meter with real-time animation during jamming
-- Section A: How It Works — 4-step explanation of RF alarm vulnerabilities
-- Section B: Lab — 4 guided experiments (jam, replay, secure mode, rolling codes)
-- Section C: Challenge — 3 challenges (disarm without code, defeat rolling codes, design unbreakable alarm)
-- Help panel: FAQ (4 items), How-To (4 steps), Wiki (RF Jamming, Replay Attacks, Rolling Codes, Secure RF Protocols)
-- Full trilingual support: English, French, Arabic
-- All text uses data-i18n keys
-- Minimal inline styles for alarm-specific components (alarm-panel, keypad, signal-meter, attack-tools)
-- Template infrastructure preserved: themes, log, toast, status, panels, sound, easter eggs
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

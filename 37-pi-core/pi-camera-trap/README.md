@@ -1,24 +1,59 @@
-# 📷 Pi Camera Trap
+# Pi Camera Trap
 
-**Workshop-DIY Pi Core Learning Lab**
+> 📷 capture · 🌙 night · 🦊 detect
 
-Motion-triggered camera trap with IR night vision. Simulates field deployment with live feed, motion detection, capture gallery, and battery monitoring.
+**Category:** 37-pi-core
+
+## Description
+Pi Camera Trap is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Live Feed
+- Capture Gallery
+- About Camera Traps
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Connect Hardware
+- Configure Software
+- Monitor Data
+- Control & Log
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Simulated live camera feed (day/night modes)
-- Motion detection with animal identification
-- Capture gallery with timestamps
-- Battery and IR LED status monitoring
-- Sensitivity control
-- Trilingual UI (EN/FR/AR) with RTL support
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Click **Arm Camera** to start motion detection
-3. Watch for animal detections in the gallery
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

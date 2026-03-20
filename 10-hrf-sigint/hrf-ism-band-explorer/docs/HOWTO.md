@@ -1,33 +1,45 @@
-# How-To: ISM Band Explorer
+# How To Use: ISM Band Explorer
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Scanner** to begin ISM band scanning.
-3. Devices will appear as they are detected.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Selecting a Band
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Use the band dropdown to choose 433, 868, or 915 MHz.
-- Each band has its own set of device types and protocols.
-- Switching bands restarts the scan.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Reading the Device List
+## Detailed Steps
 
-- **Device**: Name of the detected device or sensor type.
-- **Freq**: Exact transmission frequency in MHz.
-- **Protocol**: Identified protocol name (e.g., LoRaWAN, Oregon v2.1).
-- **Signal**: Signal strength in dBm with visual bars.
-- **Last Seen**: Timestamp of most recent transmission.
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Protocol Identification
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- Click any device row to see detailed protocol information.
-- Details include modulation type, data rate, and a description.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## About ISM Bands
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-ISM bands at 433, 868, and 915 MHz are unlicensed spectrum allocations for
-low-power devices. With an RTL-SDR dongle and rtl_433 software, you can
-receive and decode hundreds of device protocols including weather stations,
-car key fobs, tire pressure sensors, LoRa IoT devices, and more.
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

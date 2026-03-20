@@ -1,19 +1,45 @@
-# HOWTO — BGP Simulator
+# How To Use: BGP Simulator
 
-## 1. View AS Topology
-The canvas shows 6 interconnected Autonomous Systems with BGP peering links.
+## Quick Start (5 minutes)
 
-## 2. Select an AS
-Click on any AS node to view its routing table and BGP neighbors.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Inject a Route
-Click "Inject Bad Route" to simulate a BGP route hijack from the attacker AS.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Watch Traffic Redirect
-After injection, traffic animation shows packets being redirected through the hijacker AS.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Analyze Attack
-Open Section C and click "Analyze Attack" to see the impact of the route hijack.
+## Detailed Steps
 
-## 6. Reset
-Click "Reset Network" to restore the original routing state.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

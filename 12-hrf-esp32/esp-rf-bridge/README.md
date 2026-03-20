@@ -1,23 +1,59 @@
-# 🌉 RF Bridge — Workshop DIY v1.2
+# RF Bridge
 
-Wireless SDR over WiFi bridge simulator — ESP32 streams HackRF IQ data.
+> Wireless SDR over WiFi
+
+**Category:** 12-hrf-esp32
+
+## Description
+RF Bridge is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Bandwidth Usage Over Time
+- Stream Configuration
+- RF Bridge Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-- Spectrum waterfall with configurable center frequency and bandwidth
-- Real-time throughput, latency, dropped packet stats
-- Buffer usage indicator
-- Bandwidth history graph
-- Stream configuration panel
-- i18n EN/FR/AR, 8 themes, activity log
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-| File | Description |
-|------|-------------|
-| `index.html` | UI with embedded styles |
-| `script.js` | Stream sim, waterfall, i18n |
-| `manifest.json` | PWA manifest |
-| `CHANGES.md` | Version history |
-| `docs/HOWTO.md` | Usage guide |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

@@ -1,23 +1,45 @@
-# How-To: Pi Camera Trap
+# How To Use: Pi Camera Trap
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Arm Camera** to enable motion detection.
-3. Animals will be detected and captured automatically.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Live Feed
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Shows simulated camera output with noise pattern.
-- Switches between day (color) and night (IR green) modes.
-- Timestamp and status overlay in corners.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Capture Gallery
+## Detailed Steps
 
-- Thumbnails appear as animals are detected.
-- Manual snapshots can be taken with the **Manual Snap** button.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- **Sensitivity**: Low/Medium/High for motion trigger threshold.
-- Change language (EN/FR/AR) in Settings panel.
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
+
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

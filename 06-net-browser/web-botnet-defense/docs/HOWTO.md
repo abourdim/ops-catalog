@@ -1,19 +1,45 @@
-# HOWTO — Botnet Defense
+# How To Use: Botnet Defense
 
-## 1. View the Network
-The canvas shows a C2 server, bot nodes, and a target server.
+## Quick Start (5 minutes)
 
-## 2. Start Infection
-Click "Spread Infection" to watch the C2 compromise nodes one by one.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Launch DDoS
-Click "Launch DDoS" to see all bots flood the target server.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Defend the Network
-Click on infected nodes to isolate them. Click "Isolate Bot" to quarantine.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Trace the C2
-Open Section C and click "Trace C2" to find the command and control server.
+## Detailed Steps
 
-## 6. Reset
-Click "Reset Network" to restore all nodes to clean state.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

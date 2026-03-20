@@ -1,24 +1,28 @@
-# Changelog — bit-rf-remote-control
+# Changelog — RF Remote Control
 
-## v1.0 — Initial Release
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Protocol Frame Builder with editable hex fields (preamble, address, command, payload, checksum).
-- Command Grid: UP, DOWN, LEFT, RIGHT, A, B buttons mapped to hex command codes.
-- Virtual Device Display: a robot that moves on valid commands, with trail dots.
-- Frame Inspector: color-coded hex dump showing TX and RX frames side by side.
-- Error Rate Slider (0-50%): simulates noisy channel with random bit flips.
-- XOR Checksum: automatic computation on transmit; verification on receive with pass/fail indicator.
-- Keyboard controls: arrow keys for movement, A/B keys for actions.
-- Trilingual i18n: English, French, Arabic with full RTL support.
-- Section A (How It Works): 4-step protocol design walkthrough.
-- Section B (Lab): hands-on experiments with frame formats and error rates.
-- Section C (Challenge): ACK protocol, 1-bit error correction, replay attack defense.
-- Help Panel: FAQ, How-To, Wiki with radio protocol topics.
-- Full Workshop-DIY template infrastructure: splash, themes, log, toast, settings, easter eggs.
-
-### Technical
-- Vanilla JS only, no dependencies.
-- PWA manifest included.
-- All text uses data-i18n for trilingual support.
-- Minimal inline styles for simulation components; main CSS untouched.
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

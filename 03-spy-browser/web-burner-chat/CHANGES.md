@@ -1,11 +1,28 @@
-# CHANGES — Burner Chat
+# Changelog — Burner Chat
 
-## v1.2 (2025-03)
-- Initial release
-- Simulated P2P chat with Agent Shadow
-- Self-destruct timers (10s/30s/60s/never)
-- Message burn animation with countdown
-- E2E encryption indicator
-- Section C: Encryption Inspector
-- 12 spy-themed auto-replies
-- Trilingual i18n (EN / FR / AR)
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- How E2E Encryption Works section
+- Ephemeral Messaging section
+- Encryption Inspector section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

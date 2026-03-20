@@ -1,47 +1,59 @@
 # bit-spy-compass
 
-Spy compass waypoint navigation simulation built with the Workshop-DIY template. Uses the micro:bit magnetometer (or browser DeviceOrientation API) to navigate to secret waypoints using compass bearings.
+> 🧭 navigate · 🔐 decode · 🏆 explore
 
-## What You'll Learn
+**Category:** 01-spy-microbit
 
-- **Magnetometer** — how the micro:bit reads Earth's magnetic field
-- **Compass Bearings** — measuring direction as degrees from North (0-360)
-- **Waypoint Navigation** — moving from point to point using bearing calculations
-- **Map Plotting** — visualizing position, waypoints, and trail on a 2D canvas
+## Description
+bit-spy-compass is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-## Quick Start
+## Sections
+- How It Works
+- Lab — Map View
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-1. Open `index.html` in a browser (or serve with any static server).
-2. The compass needle rotates automatically in simulation mode, or uses your device's magnetometer if available.
-3. Select a target waypoint from the dropdown and press **Navigate**.
-4. Turn your device (or watch the simulation) until the bearing difference drops below 5 degrees for 3 seconds — mission complete!
+## How It Works
+- Configure
+- Process
+- Transmit
+- Verify
+
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- Animated compass rose with rotating needle and cardinal markers
-- 3 preset spy waypoints (Alpha Base, Bravo Tower, Charlie Bunker)
-- Real-time bearing difference display
-- Arrived detection (less than 5 degrees for 3 seconds)
-- Map canvas with position dot, waypoint markers, and trail line
-- DeviceOrientation API support for real compass data
-- Trilingual interface (EN / FR / AR) with full RTL support
-- 8 themes, activity log, sound effects, and all Workshop-DIY template features
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App structure — compass, waypoints, map, challenges |
-| `script.js` | Simulation engine, LANG object, template infrastructure |
-| `style.css` | Workshop-DIY shared stylesheet (do not modify) |
-| `manifest.json` | PWA manifest |
-| `CHANGES.md` | Version changelog |
-| `docs/HOWTO.md` | Step-by-step lab guide |
-
-## Version
-
-**v1.0** — Initial release
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

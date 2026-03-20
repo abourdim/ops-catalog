@@ -1,42 +1,45 @@
-# esp-wifi-thermometer — How To Use
+# How To Use: WiFi Thermometer
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Explore the Heatmap
-Move your cursor over the main canvas. The RSSI reading changes based on distance from simulated access points.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Click to Measure
-Click on the canvas to place a measurement point. Each click adds a data point to the signal analysis graph.
+## Detailed Steps
 
-### Step 3: Start Walk Mode
-Click Start Walk Mode. A simulated walker moves randomly, painting the heatmap and recording RSSI history.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Analyze the Room
-Open Room Layout to see the floor plan with AP positions, signal coverage circles, and wall obstacles.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Check the Graph
-Open Signal Analysis to see RSSI plotted over time during your walk.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Try the Challenges
-Test your understanding of WiFi signal concepts.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
 
-| Step | Concept |
-|------|---------|
-| 1 | RSSI and distance relationship |
-| 2 | Point measurement technique |
-| 3 | Site survey methodology |
-| 4 | AP placement and wall effects |
-| 5 | Signal trend analysis |
-| 6 | Network planning principles |
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-## Going Further
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-- Use ESP32 with `WiFi.scanNetworks()` for real RSSI data
-- Build a physical WiFi heatmap tool with an ESP32 and GPS module
-- Study professional tools like Ekahau for enterprise site surveys
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

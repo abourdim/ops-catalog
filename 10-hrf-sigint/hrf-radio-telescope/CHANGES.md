@@ -1,14 +1,28 @@
 # Changelog — Radio Telescope
 
-## v1.2 (2026-03-18)
-- Initial release
-- Spectrum display with 512-bin FFT simulation at 1420.405 MHz
-- Hydrogen emission peak with Doppler drift simulation
-- Secondary arm emission and absorption dip
-- Galaxy rotation curve with Keplerian vs flat comparison
-- Gain and averaging sliders for signal processing
-- Observation stats: peak power, frequency, Doppler velocity, SNR
-- Section C: Hydrogen line science explanation
-- Trilingual i18n (EN/FR/AR) with full RTL support
-- 8 themes, activity log, sound effects, Konami code
-- PWA manifest
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Galaxy Rotation Curve section
+- Observation Log section
+- Hydrogen Line Explained section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

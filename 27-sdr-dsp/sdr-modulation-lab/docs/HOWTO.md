@@ -1,30 +1,45 @@
-# SDR Modulation Lab — How To Use
+# How To Use: SDR Modulation Lab
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select a modulation type (AM, FM, BPSK, QPSK, 16-QAM, etc.)
-3. Adjust carrier frequency, modulation index, and SNR
-4. Click **Start** to begin live simulation
+## Quick Start (5 minutes)
 
-## Displays
-- **Time Domain**: modulated waveform showing amplitude vs time
-- **Spectrum**: frequency-domain view showing occupied bandwidth
-- **Constellation**: I/Q diagram for digital modulations (BPSK, QPSK, QAM)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Signal Metrics (Section A)
-- BER: bit error rate estimate for digital modulations
-- EVM: error vector magnitude as percentage
-- Bandwidth Occupied: estimated signal bandwidth
-- Signal Power: total signal power in dBm
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Demodulation (Section B)
-- Shows demodulated baseband signal
-- AM uses envelope detection
-- FM uses frequency discriminator
-- Digital modes use coherent detection
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Start with AM at high SNR to understand basics
-- Lower SNR to see constellation spread in QPSK/QAM
-- Compare AM vs SSB bandwidth in spectrum view
-- Note how 16-QAM is more bandwidth-efficient but noise-sensitive
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

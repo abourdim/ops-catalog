@@ -1,35 +1,45 @@
-# How-To: Shake Cipher Lab Guide
+# How To Use: bit-shake-cipher
 
-## Step 1 — Explore the Accelerometer
+## Quick Start (5 minutes)
 
-Open the app and move your mouse over the main card. Watch the X (red), Y (green), and Z (blue) bars respond to your movement. On mobile, tilt and shake your device to see real accelerometer data.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Step 2 — Record Your Shake Pattern
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-Click **Record Pattern**. You have 4 seconds to create a unique motion sequence. Move your mouse in a distinctive pattern (zigzag, circle, figure-8). The pattern display shows the captured data points.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Step 3 — Lock a Message
+## Detailed Steps
 
-Type a secret message in the input field (e.g., "Hello World"). Click **Lock**. The message is encrypted using your shake pattern as a key. The locked display shows the cipher in hexadecimal.
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-## Step 4 — Shake to Unlock
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-Click **Shake to Unlock** and reproduce your original shake pattern as closely as possible. The app compares your attempt with the stored pattern using DTW (Dynamic Time Warping).
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-## Step 5 — Analyze the Match Score
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-Check the match percentage. Above 55% unlocks the message; below fails. Try multiple times to see how consistent your pattern is. A good pattern should be easy for you to repeat but hard for others.
 
-## Step 6 — Use the Lab
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-Open **Section B (Lab)** to experiment with pattern comparison. Record Pattern A, then Pattern B, and click **Compare** to see the DTW similarity score. Try recording the same pattern twice vs. two different patterns.
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Step 7 — Take on the Challenges
-
-Open **Section C (Challenges)** and work through the three challenges:
-
-1. **Pattern Complexity** — Create a highly unique pattern that only you can reproduce
-2. **Brute Force Test** — Test how many random patterns can break your lock
-3. **False Positive Threshold** — Find the balance between security and usability
-
-Record your findings in the Activity Log for discussion with your class.
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

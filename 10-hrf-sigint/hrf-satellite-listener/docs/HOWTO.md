@@ -1,37 +1,45 @@
-# How To Use — Satellite Listener
+# How To Use: Satellite Listener
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in a modern browser (Chrome, Firefox, Edge)
-2. Click **Track Satellite** to begin receiving a NOAA pass
-3. Watch the 137 MHz waterfall as the signal appears
-4. See the weather image build line by line
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Controls
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **Track Satellite**: Start simulating a NOAA satellite pass
-- **Waterfall Display**: Shows the 137 MHz signal
-- **APT Decoder**: Converts signal to weather image
-- **Elevation Display**: Shows satellite position in the sky
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## How Satellite Reception Works
+## Detailed Steps
 
-1. NOAA weather satellites orbit at ~850 km altitude
-2. They transmit APT images at 137 MHz
-3. Signal appears as the satellite rises above the horizon
-4. Signal is strongest at maximum elevation
-5. APT encodes image data as audio tones
-6. Each line of the image takes 0.5 seconds
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## NOAA Satellites
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-| Satellite | Frequency |
-|-----------|-----------|
-| NOAA 15 | 137.620 MHz |
-| NOAA 18 | 137.9125 MHz |
-| NOAA 19 | 137.100 MHz |
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) from the Settings panel
-- Switch between 8 visual themes
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,19 +1,45 @@
-# HOWTO — Firewall Fortress
+# How To Use: Firewall Fortress
 
-## 1. Add Firewall Rules
-Use the rule editor to add rules: specify source IP, destination IP, port, protocol, and action (ALLOW/DENY).
+## Quick Start (5 minutes)
 
-## 2. Start the Game
-Click "Start Wave" to begin. Packets will stream from left to right.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Watch Your Rules Work
-Packets matching DENY rules are blocked (points). Unblocked attack packets damage your fortress (lose lives).
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Survive the Waves
-Each wave brings more packets and trickier attacks. Adjust rules between waves.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Advanced Rules
-Open Section C to explore advanced rule patterns like port ranges and wildcards.
+## Detailed Steps
 
-## 6. Change Language/Theme
-Open Settings to switch between EN/FR/AR and choose from 8 themes.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

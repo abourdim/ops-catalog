@@ -1,13 +1,28 @@
 # Changelog — GSM Tower Mapper
 
-## v1.2 (2026-03-18)
-- Initial release
-- Tower map with animated coverage circles and pulsing effect
-- Tower list with Cell ID, LAC, band, MCC/MNC, signal, distance
-- Signal details panel with operator info
-- Click-to-select on map and table
-- 6 simulated operators across GSM/UMTS/LTE bands
-- Section C: GSM/LTE technology explanation
-- Trilingual i18n (EN/FR/AR) with full RTL support
-- 8 themes, activity log, sound effects, Konami code
-- PWA manifest
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Tower List section
+- Signal Details section
+- GSM/LTE Explained section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

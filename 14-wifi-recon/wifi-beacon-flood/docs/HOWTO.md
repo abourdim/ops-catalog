@@ -1,17 +1,45 @@
-# How-To Guide — Beacon Flood
+# How To Use: Beacon Flood  AP Visualizer
 
-## Overview
-Beacon Flood simulates a beacon flood attack where hundreds of fake APs are created.
+## Quick Start (5 minutes)
 
-## Steps
-1. Open `index.html` in a browser
-2. Click **Start** to begin the flood
-3. Watch fake APs appear in the grid with SSIDs, MACs, and channels
-4. Check **Channel Distribution** for per-channel AP density
-5. View **Hidden Networks** for APs broadcasting without SSIDs
-6. Click **Stop** to halt the simulation
+### Open the App
+Open `index.html` in your browser. No internet required.
+
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
+
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Scan Airwaves
+Follow the on-screen instructions for this step.
+
+### Step 2: Identify Targets
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Traffic
+Follow the on-screen instructions for this step.
+
+### Step 4: Detect Threats
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Hidden networks appear with a red border and ghost icon
-- The channel chart updates in real-time
-- Some SSIDs are humorous to demonstrate social engineering potential
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

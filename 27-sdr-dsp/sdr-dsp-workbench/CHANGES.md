@@ -1,13 +1,28 @@
-# SDR DSP Workbench — Changelog
+# Changelog — SDR DSP Workbench
 
-## v1.0 — 2025-01-01
-- Initial release
-- 7 signal sources: sine, square, sawtooth, noise, chirp, AM, FM
-- 5 filter types: none, low-pass, high-pass, band-pass, notch
-- Live spectrum and waterfall display with color-mapped intensity
-- Signal analysis: peak freq, bandwidth, SNR, RMS, crest factor
-- DSP chain builder with gain, delay, compressor, distortion blocks
-- FFT sizes from 256 to 4096 with Hann windowing
-- Trilingual i18n (EN/FR/AR with RTL)
-- 8 themes with Islamic art inspiration
-- PWA manifest included
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure SDR step card
+- Capture Signal step card
+- Process & Filter step card
+- Visualize Output step card
+- Signal Analysis section
+- DSP Chain Builder section
+- DSP Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

@@ -1,22 +1,45 @@
-# HOWTO — Collision Visualizer
+# How To Use: Collision Visualizer
 
-## What is this?
-Collision Visualizer shows what happens when two 2.4 GHz transmitters broadcast on the same frequency. Bits collide, errors occur, and the Bit Error Rate rises.
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in a browser
-2. Click "Start Simulation"
-3. Adjust TX1 and TX2 power with sliders
-4. Watch the collision zone (red) on the canvas
-5. See errored bits highlighted in red in the bit stream
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Key Concepts
-- **BER**: Percentage of bits received incorrectly
-- **SIR**: Signal-to-Interference Ratio (power difference in dB)
-- **Capture Effect**: When SIR > 6 dB, the stronger signal dominates
-- **Equal Power**: Maximum interference and highest BER
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Experiment Ideas
-- Set both TX to 10 dBm — maximum collision
-- Set TX1=20, TX2=2 — capture effect kicks in
-- Watch BER chart respond to power changes in real time
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

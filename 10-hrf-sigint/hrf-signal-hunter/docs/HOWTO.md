@@ -1,30 +1,45 @@
-# How To Use — Signal Hunter
+# How To Use: Signal Hunter
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in a modern browser (Chrome, Firefox, Edge)
-2. Click **New Hunt** to start a scavenger hunt
-3. Click on the map to move your receiver
-4. Watch the signal strength and compass for clues
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Controls
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **New Hunt**: Start a new game with random transmitter locations
-- **Map Canvas**: Click to move your receiver position
-- **Signal Compass**: Shows direction to nearest transmitter
-- **Signal Strength**: Bar showing proximity (red=hot, blue=cold)
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## How the Hunt Works
+## Detailed Steps
 
-1. Hidden transmitters are placed randomly on the map
-2. Move your receiver by clicking on the map
-3. Signal strength increases as you get closer
-4. The compass needle points toward the nearest transmitter
-5. When close enough, the transmitter is "found"
-6. Find all transmitters to complete the hunt
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) from the Settings panel
-- Switch between 8 visual themes
-- Enable sound effects for proximity feedback
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

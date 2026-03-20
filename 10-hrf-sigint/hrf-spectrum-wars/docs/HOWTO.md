@@ -1,36 +1,45 @@
-# How To Use — Spectrum Wars
+# How To Use: Spectrum Wars
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in a modern browser (Chrome, Firefox, Edge)
-2. Click **New Game** to start a frequency battle
-3. Place transmissions on the spectrum
-4. Try to control more bandwidth than your opponent
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Controls
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **New Game**: Start a fresh battle
-- **Spectrum Display**: Click to place a transmission at that frequency
-- **Jam**: Spend a turn jamming an opponent frequency
-- **End Turn**: Finish your turn
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## How the Game Works
+## Detailed Steps
 
-1. Two players take turns placing transmissions on a shared spectrum
-2. Each transmission occupies a frequency band
-3. Players can jam (disrupt) opponent transmissions
-4. Score is based on total bandwidth controlled
-5. Game ends after a set number of rounds
-6. Player with higher bandwidth score wins
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## Strategies
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-- Spread transmissions across the spectrum for coverage
-- Jam opponent high-power transmissions
-- Use narrow bands to fit more transmissions
-- Watch for gaps in the opponent spectrum
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) from the Settings panel
-- Switch between 8 visual themes
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

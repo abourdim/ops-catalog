@@ -1,35 +1,59 @@
-# 🔬 SDR Filter Forge — Workshop DIY
+# SDR Filter Forge
 
-Design, visualize and test digital filters for SDR signal processing.
+> 🔬 Filter Forge — Design your digital filters
 
-## Features
+**Category:** 27-sdr-dsp
 
-- **FIR filter design**: low-pass, high-pass, band-pass with Hamming window
-- **IIR filter design**: Butterworth low-pass, high-pass, band-pass (biquad cascade)
-- **Frequency response plot** with dB scale
-- **Pole-zero diagram** on the complex plane
-- **Filter coefficient display** for both FIR and IIR
-- **Live test signal**: multi-frequency signal with before/after comparison
-- **Adjustable order** (2-64 taps) and **cutoff frequency**
-- **Trilingual**: English, Francais, Arabic (RTL)
-- **8 themes** with Islamic art inspiration
+## Description
+SDR Filter Forge is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Filter Coefficients
+- Live Test Signal
+- Filter Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
 ## How It Works
+- Configure SDR
+- Capture Signal
+- Process & Filter
+- Visualize Output
 
-1. Select filter type (FIR or IIR) and topology
-2. Set order and normalized cutoff frequency
-3. Click Design to compute and visualize
-4. Click Test to apply filter to a sample signal
+## Controls
+- Start/Stop simulation
+
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI with frequency response and pole-zero canvas |
-| `script.js` | Filter design engine, FIR/IIR, i18n, simulation |
-| `style.css` | Shared Workshop DIY theme styles |
-| `manifest.json` | PWA manifest |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

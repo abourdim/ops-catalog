@@ -1,82 +1,59 @@
-# bit-frequency-duel — Workshop DIY
+# bit-frequency-duel
 
-**2.4GHz Waterfall Spectrum Simulator for micro:bit Education**
+> 📊 visualize · 📡 transmit · 🔍 analyze
 
----
+**Category:** 11-hrf-microbit
 
-## What This App Teaches
+## Description
+bit-frequency-duel is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-Frequency Duel visualizes the 2.4GHz ISM band as a real-time waterfall display (spectrogram). Students see simulated micro:bit signals alongside WiFi and Bluetooth traffic, learning about:
+## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-- **Spectrum sharing** — many devices coexist in the same 2.4GHz band
-- **Interference** — what happens when signals overlap in frequency
-- **Channel selection** — choosing the right micro:bit channel to avoid WiFi
-- **Waterfall displays** — how professionals read spectrograms
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
 
----
+## Controls
+- Start/Stop simulation
+
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
-
-1. Open `index.html` in a browser (no server needed)
-2. Watch the waterfall display scroll with simulated WiFi, Bluetooth, and noise
-3. Select a channel (0–83) and power level (0–7)
-4. Press **Transmit** to send a micro:bit burst and see it on the spectrum
-5. Check the interference meter and find a clear channel
-
----
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI layout with waterfall canvas, sliders, sections A/B/C, help panel |
-| `script.js` | Template engine + i18n (EN/FR/AR) + waterfall simulation |
-| `style.css` | 9 themes, animations, responsive layout (do not modify) |
-| `manifest.json` | PWA manifest |
-| `docs/HOWTO.md` | Step-by-step lab guide for students |
-| `CHANGES.md` | Version history |
-
----
-
-## Simulation Details
-
-### Waterfall Display
-- Canvas scrolls upward at ~12 rows/second
-- Each row represents the full 2.400–2.485 GHz band (85 columns)
-- Color heatmap: dark blue (noise) -> blue (weak) -> green (medium) -> yellow (strong) -> red (very strong)
-
-### Signal Types
-| Signal | Color | Pattern |
-|--------|-------|---------|
-| micro:bit | Green | Narrow 1MHz spike at selected channel |
-| WiFi | Blue-yellow | Wide 20MHz bumps at channels 1, 6, 11 |
-| Bluetooth | Purple spikes | Random narrow hops across band |
-| Noise | Dark gray | Low-level random floor |
-
-### Interference Calculation
-- Measures overlap between selected micro:bit channel and WiFi center frequencies
-- WiFi centers at 2412, 2437, 2462 MHz (columns 12, 37, 62)
-- Interference 0% = clear channel, 100% = direct WiFi overlap
-
----
-
-## i18n
-
-Trilingual: English, French, Arabic (RTL). All UI text uses `data-i18n` attributes mapped to the `LANG` object in `script.js`.
-
----
-
-## API Used
-
-| Function | Purpose |
-|----------|---------|
-| `log(msg, type)` | Log events (info, success, error, tx, rx) |
-| `showToast(msg, ms)` | Toast notification |
-| `setStatus(bool)` | Connection status pill |
-| `playSound(type)` | Audio feedback |
-
----
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

@@ -1,12 +1,28 @@
-# esp-usb-rubber-ducky — Changelog
+# Changelog — USB Rubber Ducky  Keystroke Injector
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- USB HID keystroke injection simulator
-- DuckyScript-like payload editor with syntax highlighting
-- Virtual terminal with typing animation
-- 3 preset harmless payloads (Hello World, System Info, Rick Roll)
-- Execution speed slider (slow to instant)
-- Payload library with descriptions
-- Full trilingual i18n (EN/FR/AR)
-- Help panel: FAQ, How-To, Wiki
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- USB HID Fundamentals section
+- DuckyScript Reference section
+- ESP32-S2 Setup Guide section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

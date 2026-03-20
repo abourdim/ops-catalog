@@ -1,19 +1,28 @@
-# CHANGES — web-exif-eraser
+# Changelog — EXIF Eraser
 
-## v1.0 — 2025-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Upload zone with drag & drop and file picker support
-- Canvas-drawn sample image (mosque sunset scene)
-- Fake EXIF generator with 21 realistic metadata fields (GPS, camera, lens, timestamp, artist, etc.)
-- Metadata display tables (before/after scrub) with styled rows
-- Privacy risk badge (HIGH/MEDIUM/LOW/CLEAN) based on metadata content
-- Animated metadata scrub with field-by-field removal logging
-- Statistics row (fields before, after, removed)
-- Section A: "How It Works" — 4-step guide (What is EXIF, Why dangerous, How scrubbing works, Best practices)
-- Section B: "Comparison Lab" — side-by-side before/after metadata view, batch scrub (3 samples)
-- Section C: "Challenge" — 3 challenges (Find the Spy, Spot the Difference, Privacy Audit with scoring)
-- Help panel with FAQ, How-To, and Wiki (EXIF Data, GPS Geotagging, Privacy, Metadata Scrubbing)
-- Full i18n support: English, French, Arabic (RTL)
-- Inline styles for upload-zone, meta-table, compare-grid, risk-badge, stat-row
-- All template infrastructure preserved (themes, log, toast, settings, easter eggs)
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- What is EXIF Data? step card
+- Why Is It Dangerous? step card
+- How Scrubbing Works step card
+- Best Practices step card
+- How It Works section
+- Comparison Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

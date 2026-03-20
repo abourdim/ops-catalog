@@ -1,45 +1,45 @@
-# 🏃 APRS Tracker — How-To Guide
+# How To Use: my-project
 
-## Overview
+## Quick Start (5 minutes)
 
-GPS position plotting and path tracking. This app runs entirely in your browser with simulated data.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Getting Started
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-1. **Open the app** — Open `index.html` in any modern browser
-2. **Choose your language** — Click ⚙️ Settings and pick EN / FR / AR
-3. **Pick a theme** — 8 themes available (6 dark + 2 light)
-4. **Explore Section A** — Learn the theory behind APRS Tracker
-5. **Use Section B** — Configure parameters and controls
-6. **Watch Section C** — See the live simulation output
-7. **Check the Log** — Click 📜 to see decoded data and events
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Controls
+## Detailed Steps
 
-| Control | Action |
-|---------|--------|
-| ⚙️ Settings | Language, theme, sound effects |
-| ❓ Help | FAQ, How-To, Wiki tabs |
-| 📜 Activity Log | Timestamped events, filter by type |
-| Start/Stop | Begin or pause the simulation |
+### Step 1: Tune Frequency
+Follow the on-screen instructions for this step.
 
-## Keyboard Shortcuts
+### Step 2: Transmit/Receive
+Follow the on-screen instructions for this step.
 
-| Key | Action |
-|-----|--------|
-| Escape | Close all panels |
-| Ctrl+Z (in log) | Undo last log entry |
-| ↑↑↓↓←→←→BA | Retro theme easter egg |
+### Step 3: Decode Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Log Contact
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-
-- Triple-click the logo for matrix rain effect
-- Long-press a log line to blink it in Morse code
-- Shake your phone to export a bug report
-- All data stays in your browser — 100% private
-
-## Troubleshooting
-
-- **No audio?** Enable sound in Settings and click the page first
-- **RTL broken?** Make sure Arabic is selected in Settings
-- **Simulation not starting?** Click the Start button in Section B
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

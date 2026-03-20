@@ -1,11 +1,28 @@
-# CHANGES — Metadata Detective
+# Changelog — Metadata Detective
 
-## v1.2 (2025-03)
-- Initial release
-- 4 fake photos with full EXIF simulation (20+ fields)
-- GPS map canvas with coordinate plotting
-- Forensic analysis engine (timestamp, software, tampering detection)
-- Section C: Forensic Analysis panel
-- Trilingual i18n (EN / FR / AR)
-- 8 themes support
-- Activity log integration
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- EXIF Field Reference section
+- Privacy Tips section
+- Forensic Analysis section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

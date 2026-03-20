@@ -1,32 +1,45 @@
-# How-To: GSM Tower Mapper
+# How To Use: GSM Tower Mapper
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start Scan** to begin simulated tower detection.
-3. Towers appear on the map with coverage circles.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Reading the Map
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Your position is shown at the center marked "YOU".
-- Towers are triangular icons with operator name and signal strength.
-- Coverage circles pulse to indicate active transmission.
-- Green circles = strong signal, amber = moderate.
-- Click a tower to select it and see a dashed line to your position.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Tower List
+## Detailed Steps
 
-- **Cell ID**: Unique cell sector identifier (0-65535)
-- **LAC**: Location Area Code grouping nearby cells
-- **Band**: Radio technology and frequency (GSM 900, LTE 800, etc.)
-- **MCC/MNC**: Mobile Country Code / Mobile Network Code
-- **Signal**: Received signal strength in dBm
-- **Distance**: Approximate distance from your position in km
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-## About GSM/LTE Tower Scanning
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-Cell towers broadcast on specific frequency bands and can be detected with
-an RTL-SDR dongle and tools like grgsm_scanner. Each tower sector has a
-unique Cell ID combined with LAC and MCC/MNC for global identification.
-This technique is used for coverage mapping, network analysis, and
-understanding cellular infrastructure.
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

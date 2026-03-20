@@ -1,14 +1,28 @@
 # Changelog — RF Waterfall
 
-## v1.2 (2026-03-18)
-- Initial release
-- Scrolling waterfall spectrogram canvas
-- 12 simulated signals (FM, WiFi 2.4/5, BLE, ISM 433/868/915, GPS, LTE)
-- Frequency tuner with center/span sliders
-- Quick preset buttons for common bands
-- Color scale legend
-- Auto-detected signal list with counters
-- Frequency database (Section C)
-- RF Spectrum Guide (Section B)
-- Trilingual i18n (EN/FR/AR)
-- Full template integration (8 themes, log, panels, sound)
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Detected Signals section
+- RF Spectrum Guide section
+- Frequency Database section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

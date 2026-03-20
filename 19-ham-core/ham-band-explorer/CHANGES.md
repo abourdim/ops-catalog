@@ -1,14 +1,27 @@
-# Band Explorer — CHANGES
+# Changelog — my-project
 
-## v1.0.0 (2025-03-18)
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- Initial release
-- Full simulation engine
-- Trilingual i18n (EN/FR/AR)
-- 8 themes with musical switcher
-- Activity log with filters and export
-- Responsive layout
-- PWA manifest
-- Section A: Theory / Documentation
-- Section B: Controls / Configuration
-- Section C: Simulation Output / Visualization
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Tune Frequency step card
+- Transmit/Receive step card
+- Decode Signal step card
+- Log Contact step card
+- Section A section
+- Section B section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

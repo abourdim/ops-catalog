@@ -1,30 +1,59 @@
-# 🕵️ Dark Profile — Digital Footprint
+# Dark Profile
 
-**Workshop DIY — Spy Browser Collection**
+> 🕵️ Search usernames across platforms
 
-Search usernames across 18 platforms to calculate your digital exposure and privacy risk score.
+**Category:** 03-spy-browser
+
+## Description
+Dark Profile is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Platform Database
+- Privacy Protection
+- Exposure Analysis
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure
+- Process
+- Transmit
+- Verify
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- 18 simulated platforms (social, coding, forums, messaging, gaming, media)
-- Deterministic hash-based search results per username
-- Privacy risk score calculator (Low/Medium/High/Critical)
-- Exposure report with category breakdown and recommendations
-- Trilingual i18n (EN / FR / AR with RTL), 8 themes
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main card + 3 sections (Platform DB, Privacy, Exposure) + help |
-| `script.js` | i18n, platform search simulation, risk scoring, exposure report |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`. Type a username, click Search, view results grid and risk score.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

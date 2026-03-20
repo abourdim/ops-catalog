@@ -1,36 +1,45 @@
-# How-To: Pi War Room
+# How To Use: Pi War Room
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Select a security tool from the dropdown.
-3. Click **Run** to start the simulated operation.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Available Tools
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **Nmap Scan**: Network host discovery and port scanning
-- **WiFi Recon**: Wireless network detection and analysis
-- **Packet Sniff**: Network traffic capture and inspection
-- **Brute Force**: Password attack simulation
-- **Exploit Check**: Vulnerability assessment against CVE database
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Network Scanner
+## Detailed Steps
 
-- The host table shows all discovered devices on the network.
-- Each entry displays IP, MAC address, OS, open ports, and status.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Exploit Toolkit
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- Browse known vulnerabilities sorted by severity.
-- Color-coded: Red=Critical, Orange=High, Yellow=Medium, Green=Low.
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
-- Activity log tracks all tool operations
 
-## Important Note
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-This is an educational simulation. Always obtain proper authorization before performing security testing on any network.
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

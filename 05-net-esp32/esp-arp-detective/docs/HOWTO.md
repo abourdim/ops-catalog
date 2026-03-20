@@ -1,42 +1,45 @@
-# esp-arp-detective — How To Use
+# How To Use: ARP Detective
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Start ARP Scan
-Click Start Scan to begin monitoring. Simulated devices will appear in the ARP table.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Observe Normal Traffic
-Watch legitimate ARP entries appear with green status indicators. Note the IP-MAC-Vendor mappings.
+## Detailed Steps
 
-### Step 3: Inject a Spoof
-Click Inject Spoof to simulate an ARP spoofing attack. The alert bar activates and the spoofed entry appears in red.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Analyze the Topology
-Open Network Topology to see how devices connect. Spoofed connections appear as red lines.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Visualize MITM
-Open MITM Visualization to see how the attacker intercepts traffic between victim and gateway.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Try the Challenges
-Test your understanding of ARP security concepts.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
 
-| Step | Concept |
-|------|---------|
-| 1 | ARP protocol and network discovery |
-| 2 | Normal ARP table behavior |
-| 3 | ARP spoofing mechanics |
-| 4 | Network topology and trust |
-| 5 | Man-in-the-Middle attack flow |
-| 6 | Defense strategies |
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-## Going Further
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-- Use ESP32 to build a real ARP monitor with `esp_wifi_get_arp_table()`
-- Implement static ARP entries on your router
-- Study Wireshark ARP filters for real detection
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

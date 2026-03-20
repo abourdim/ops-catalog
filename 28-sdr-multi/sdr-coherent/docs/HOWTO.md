@@ -1,31 +1,45 @@
-# SDR Coherent Receiver — How To Use
+# How To Use: SDR Coherent Receiver
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Set number of SDR elements (2-16) and spacing
-3. Adjust beam steering angle and signal arrival angle
-4. Click **Start** to see live beam pattern and array response
+## Quick Start (5 minutes)
 
-## Controls
-- **Elements**: number of SDR receivers in the array
-- **Spacing**: distance between elements in wavelengths (0.5 lambda typical)
-- **Beam Steering**: direction the array focuses sensitivity
-- **Signal Angle**: direction of incoming signal
-- **SNR**: signal-to-noise ratio
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Array Performance (Section A)
-- Array Gain: theoretical gain from coherent combining (10 log10 N)
-- Beam Width: -3dB width of main lobe in degrees
-- Sidelobe Level: strongest sidelobe relative to main beam
-- SNR Improvement: gained by coherent combining
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Phase Calibration (Section B)
-- Click **Add Phase Errors** to simulate realistic SDR clock mismatches
-- Watch how beam pattern degrades
-- Click **Calibrate** to correct errors and restore pattern
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Half-wavelength spacing (0.50 lambda) avoids grating lobes
-- More elements = narrower beam and higher gain
-- Steer beam to signal direction for maximum reception
-- Phase errors broaden beam and raise sidelobes
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

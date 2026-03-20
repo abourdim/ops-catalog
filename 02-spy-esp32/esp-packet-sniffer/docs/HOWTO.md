@@ -1,47 +1,45 @@
-# esp-packet-sniffer — How To Use
+# How To Use: Packet Sniffer  WiFi Radar
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser
-- Optional: ESP32 with monitor mode firmware
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Start Scanning
-Click "Start Scan" to begin capturing simulated WiFi packets. The radar display shows detected devices.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Observe the Radar
-Devices appear on the circular radar at different distances based on signal strength. Colors indicate device types.
+## Detailed Steps
 
-### Step 3: Inspect Packets
-Click a captured packet to view its hex dump and decoded 802.11 frame header (type, subtype, addresses, sequence).
+### Step 1: Configure
+Follow the on-screen instructions for this step.
 
-### Step 4: Filter by Type
-Use the packet type filters to isolate beacons, probe requests, data frames, or management frames.
+### Step 2: Process
+Follow the on-screen instructions for this step.
 
-### Step 5: Change Channel
-Switch WiFi channels to see different traffic. Each channel has different activity levels.
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
 
-### Step 6: Lab Experiments
-Open Section B to generate custom traffic, decode headers in detail, and identify hidden devices.
+### Step 4: Verify
+Follow the on-screen instructions for this step.
 
-### Step 7: Challenges
-Complete 3 challenges: find a hidden device, identify the router, and decode an encrypted frame header.
 
-## What Each Step Teaches
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-| Step | Concept |
-|------|---------|
-| 1 | WiFi promiscuous/monitor mode |
-| 2 | RSSI and signal strength |
-| 3 | 802.11 frame structure |
-| 4 | Frame types and subtypes |
-| 5 | WiFi channel allocation |
-| 6 | Network reconnaissance |
-| 7 | Packet analysis skills |
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Going Further
-
-- Use ESP32 with esp_wifi_set_promiscuous() for real capture
-- Compare with Wireshark captures
-- Learn about pcap file format
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,33 +1,59 @@
-# Blockchain Messenger — Tamper-Proof
+# Blockchain Messenger
 
-**Workshop DIY — Net Browser Collection**
+> Messages in blockchain, tamper one and the chain breaks
 
-Messages stored in a blockchain. Tamper one block and the chain breaks visibly.
+**Category:** 06-net-browser
+
+## Description
+Blockchain Messenger is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Blockchain Concepts
+- Cryptographic Hashing
+- Mining Settings
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Blockchain display with linked blocks and hash pointers
-- Message input and mine button
-- SHA-like hashing with mining animation
-- Tamper button on any block to modify data
-- Chain validation that breaks on tamper
-- Section C: Mining difficulty settings
-- Trilingual i18n (EN / FR / AR with RTL)
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Layout with blockchain display, message input, mining controls |
-| `script.js` | Blockchain engine, hashing, mining animation, tamper detection |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html` in a browser. Type messages, mine blocks, try tampering.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

@@ -1,43 +1,59 @@
-# esp-wifi-thermometer — Workshop DIY
+# WiFi Thermometer
 
-Map WiFi signal strength as a live heatmap. Learn about RSSI, signal propagation, and WiFi site surveys.
+> 🌡️ measure · 🗺️ map · 📡 analyze
 
-## What You'll Learn
+**Category:** 05-net-esp32
 
-- RSSI measurement and signal strength interpretation
-- WiFi heatmap creation and analysis
-- Signal propagation through walls and obstacles
-- Access point placement strategy
+## Description
+WiFi Thermometer is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
 
-## Quick Start
+## Sections
+- Room Layout
+- Signal Analysis
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
-Open `index.html` in any modern browser. No server needed.
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
-- Interactive heatmap canvas with cursor RSSI reading
-- RSSI bar indicator with color coding
-- Walk mode for auto-generated heatmap data
-- Room layout with AP positions and wall obstacles
-- Signal analysis graph (RSSI over time)
-- 3 challenges, 8 themes, trilingual (EN/FR/AR), PWA-ready
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main app UI |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
 | `script.js` | Simulation logic + i18n |
-| `style.css` | Themes + responsive layout |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step lab guide |
-
-## Version
-
-v1.0
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

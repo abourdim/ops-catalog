@@ -1,21 +1,28 @@
-# CHANGES — bit-radio-cartographer
+# Changelog — bit-radio-cartographer
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Interactive heatmap canvas (600x350, 8px grid cells)
-- Transmitter placement via click — multiple TXs with power summing
-- Real-time RSSI display on mouse hover (dBm + grid coordinates)
-- Log-distance path loss model: RSSI = txPower - 10 * n * log10(d) + noise
-- Obstacle walls — click-and-drag to draw, adjustable attenuation (5-30 dB)
-- Frequency comparison: 2.4 GHz (n=2.8) vs 900 MHz (n=2.2)
-- Color-coded heatmap: red (strong) to blue (weak)
-- Export heatmap as PNG image (canvas.toDataURL)
-- Section A: "How It Works" — 4-step visual guide
-- Section B: "Lab" — multi-TX, obstacles, frequency toggle, dead zones
-- Section C: "Challenge" — 3 challenges (full coverage, dead zone, 3-TX layout)
-- Help panel: FAQ (5 questions), How-To (5 steps), Wiki (RSSI, Propagation, Heatmaps, Coverage)
-- Full i18n: English, French, Arabic (all keys)
-- Color legend gradient bar (strong to weak)
-- Transmitter/obstacle count display
-- Built on Workshop-DIY template v1.2 (themes, log, toast, status, sound, easter eggs)
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Place Transmitter step card
+- Measure RSSI step card
+- Interpolate Data step card
+- Generate Heatmap step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

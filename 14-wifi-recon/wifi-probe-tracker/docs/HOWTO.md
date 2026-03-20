@@ -1,32 +1,45 @@
-# How-To Guide — Probe Tracker
+# How To Use: Probe Tracker  Location Leaks
 
-## Overview
-Probe Tracker simulates WiFi probe request capture to demonstrate how devices leak location information through normal WiFi behavior.
+## Quick Start (5 minutes)
 
-## Step-by-Step
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-### 1. Launch the App
-Open `index.html` in any modern browser.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### 2. Start Capturing
-Click **Start** to begin the probe request simulation.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### 3. Watch the Probe Log
-Observe probe requests appearing in real-time with MAC address, SSID name, and signal strength.
+## Detailed Steps
 
-### 4. Check Device-Network Mapping
-Expand the mapping section to see which devices have probed which networks. Each SSID reveals a location the device has visited.
+### Step 1: Scan Airwaves
+Follow the on-screen instructions for this step.
 
-### 5. Review Privacy Risk
-Expand **Privacy Risk Analysis** to see the severity rating based on the number of networks and location categories revealed.
+### Step 2: Identify Targets
+Follow the on-screen instructions for this step.
 
-### 6. Learn How It Works
-Expand **How It Works** for an explanation of why probe requests are a privacy concern.
+### Step 3: Analyze Traffic
+Follow the on-screen instructions for this step.
 
-### 7. Stop Capturing
-Click **Stop** to halt the simulation.
+### Step 4: Detect Threats
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Devices probe for multiple SSIDs, building a location profile over time
-- The risk level increases as more networks from different location categories are revealed
-- Export the activity log for detailed analysis
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

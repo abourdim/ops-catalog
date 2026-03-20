@@ -1,22 +1,59 @@
-# esp-signal-ghost — Signal Ghost
+# esp-signal-ghost
 
-MAC address phantom simulation. Rapidly cycle through random MAC addresses to flood the network with ghost devices. Watch the chaos meter rise as ARP tables overflow and DHCP pools drain.
+> 👻 spoof · 🔄 cycle · 🌊 flood
+
+**Category:** 05-net-esp32
+
+## Description
+esp-signal-ghost is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- MAC Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Large animated MAC address display with rapid cycling
-- Ghost device counter, cycle rate, and unique MAC tracker
-- Network chaos meter (0-100%) with color gradient
-- TURBO mode for extreme flood speed
-- Detected devices flood list with vendor and RSSI
-- ARP table and DHCP pool depletion simulation
-- 3 challenges on MAC spoofing and flooding
-- Trilingual i18n (EN/FR/AR) with RTL support
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`, click Start Ghosting, then hit TURBO to see the network chaos meter climb.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

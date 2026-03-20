@@ -1,23 +1,45 @@
-# HOWTO — RF IoT Audit
+# How To Use: RF IoT Audit
 
-## What is this?
-RF IoT Audit simulates an ESP32 scanning WiFi, BLE, and ESP-NOW protocols simultaneously. It reveals all wireless IoT devices in range and flags security issues.
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in a browser
-2. Click "Start Audit" to begin scanning
-3. Watch all 3 panels populate with devices
-4. Check the Protocol Distribution chart for traffic patterns
-5. Review the Audit Report for security warnings
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## The 3 Protocols
-| Protocol | What it finds |
-|----------|---------------|
-| WiFi (802.11) | Access points, SSIDs, encryption type |
-| BLE | Phones, wearables, trackers, IoT devices |
-| ESP-NOW | Peer-to-peer ESP32 sensor data |
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Security Flags
-- **OPEN WiFi**: Unencrypted networks nearby
-- **ESP-NOW traffic**: Check if encrypted
-- **BLE Trackers**: AirTag/Tile-like devices in range
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

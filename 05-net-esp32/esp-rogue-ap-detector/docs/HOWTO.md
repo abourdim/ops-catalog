@@ -1,36 +1,45 @@
-# esp-rogue-ap-detector — How To Use
+# How To Use: esp-rogue-ap-detector
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Scan for APs
-Click "Scan APs" to discover nearby access points. Each AP is shown with its fingerprint.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Review Fingerprints
-Check the table: SSID, BSSID (MAC), channel, encryption, signal strength, and status.
+## Detailed Steps
 
-### Step 3: Inject an Evil Twin
-Click "Inject Evil Twin" to simulate an attacker creating a fake "CampusWiFi" AP with a different BSSID and channel.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Observe Detection
-The detector automatically compares fingerprints and shows a red alert when the rogue AP is found.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Compare Fingerprints
-Click "Compare" to see the legitimate vs rogue AP side by side with mismatch fields highlighted in red.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Try the Challenges
-Test your understanding of evil twin attacks and AP security.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
 
-| Step | Concept |
-|------|---------|
-| 1 | WiFi scanning and beacon frames |
-| 2 | AP fingerprinting (BSSID, channel, encryption) |
-| 3 | Evil twin attack simulation |
-| 4 | Rogue AP detection by fingerprint comparison |
-| 5 | Forensic analysis of AP differences |
-| 6 | Security awareness |
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,35 +1,59 @@
-# Signal Hunter — RF Scavenger
+# Signal Hunter
 
-> Triangulate hidden transmitters in a hot/cold scavenger hunt
+> Signal Hunter \u2014 RF Scavenger
 
-## Overview
+**Category:** 10-hrf-sigint
 
-An RF scavenger hunt game where you navigate a map canvas to find hidden transmitters. A signal compass and signal strength meter guide you with hot/cold feedback. Find all transmitters to win!
+## Description
+Signal Hunter is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Found Transmitters
+- How Triangulation Works
+- RF Direction Finding
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Map canvas with terrain and hidden transmitter locations
-- Signal strength compass with directional indicator
-- Hot/cold proximity feedback with color coding
-- Score tracking with timer and transmitters found
-- Multiple difficulty levels
-- Triangulation learning section (Section C)
-- Trilingual (EN/FR/AR) with RTL support
-- 8 themes, sound effects, activity log
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App layout with map canvas, compass, score |
-| `script.js` | Game engine, i18n, theme, panels |
-| `style.css` | Shared Workshop-DIY template (DO NOT EDIT) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html` in any modern browser. Click **New Hunt** to start.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

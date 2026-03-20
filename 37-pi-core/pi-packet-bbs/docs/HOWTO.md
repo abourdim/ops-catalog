@@ -1,26 +1,45 @@
-# How-To: Pi Packet BBS
+# How To Use: Pi Packet BBS
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Enter your callsign and click **Connect**.
-3. The TNC terminal will initialize and begin receiving packets.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Message Board
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Browse bulletins posted by other stations.
-- Click **Post Bulletin** to add your own message.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Station Directory
+## Detailed Steps
 
-- Lists all known packet stations with callsigns and last heard times.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
 
-## About AX.25
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
 
-AX.25 is the amateur radio version of X.25, used for packet radio since 1982. It operates at 1200 baud on VHF using AFSK modulation, providing reliable digital communication over radio links.
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

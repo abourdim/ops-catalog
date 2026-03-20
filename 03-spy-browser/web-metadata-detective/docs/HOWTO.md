@@ -1,23 +1,45 @@
-# HOWTO — Metadata Detective
+# How To Use: Metadata Detective
 
-## 1. Select a Photo
-Click one of the 4 photo buttons (Street, Selfie, Drone, Landscape) to select a sample image.
+## Quick Start (5 minutes)
 
-## 2. Extract Metadata
-Click "Extract Metadata" to simulate EXIF extraction. Watch the metadata table populate row by row with animated entries.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. View GPS Map
-After extraction, scroll down to see the GPS location plotted on a canvas world map with coordinates and city name.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Run Forensic Analysis
-Open Section C (Forensic Analysis) and click "Run Forensic Analysis" to check for:
-- Timestamp consistency (creation vs modification dates)
-- GPS data presence
-- Software analysis (editing software detection)
-- Resolution and color space verification
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Change Language
-Open Settings (gear icon) and select EN, FR, or AR. Arabic enables RTL layout.
+## Detailed Steps
 
-## 6. Change Theme
-Open Settings and choose from 8 available themes.
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

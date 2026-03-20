@@ -1,33 +1,59 @@
-# 🏰 Firewall Fortress — Rule Defense
+# Firewall Fortress
 
-**Workshop DIY — Net Browser Collection**
+> 🏰 Write firewall rules to block attacks
 
-Tower defense game: write firewall rules to block attack packets. Blocked = points, passed = damage.
+**Category:** 06-net-browser
+
+## Description
+Firewall Fortress is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How Firewalls Work
+- Common Attack Patterns
+- Advanced Rules
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Packet stream canvas with animated packets flowing left to right
-- Rule editor (source IP, destination IP, port, protocol, action)
-- Score and lives display
-- Wave system with increasing difficulty
-- Color-coded packets (safe=green, attack=red, suspicious=yellow)
-- Section C: Advanced Rules panel
-- Trilingual i18n (EN / FR / AR with RTL)
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Layout: main card (game canvas + rule editor) + 3 sections |
-| `script.js` | i18n, packet generator, rule engine, game loop |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`. Add firewall rules, then click Start to defend against incoming packets.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

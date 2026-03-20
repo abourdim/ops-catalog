@@ -1,32 +1,45 @@
-# SDR Filter Forge — How To Use
+# How To Use: SDR Filter Forge
 
-## Quick Start
-1. Open `index.html` in any modern browser
-2. Select a filter type from the dropdown (FIR or IIR)
-3. Adjust the filter order and cutoff frequency
-4. Click **Design** to compute and visualize the filter
+## Quick Start (5 minutes)
 
-## Filter Types
-- **FIR Low-Pass**: passes low frequencies, blocks high
-- **FIR High-Pass**: passes high frequencies, blocks low
-- **FIR Band-Pass**: passes a frequency band
-- **IIR Butterworth LP/HP/BP**: efficient recursive filters
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Displays
-- **Frequency Response**: magnitude response in dB vs normalized frequency
-- **Pole-Zero Plot**: zeros (circles) and poles (crosses) on the complex plane
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Coefficients (Section A)
-- View computed filter coefficients
-- FIR: tap weights h[n]
-- IIR: biquad section b/a coefficients
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Live Test (Section B)
-- Click **Test** to apply the filter to a multi-frequency test signal
-- Gray = original signal, colored = filtered output
+## Detailed Steps
+
+### Step 1: Configure SDR
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Signal
+Follow the on-screen instructions for this step.
+
+### Step 3: Process & Filter
+Follow the on-screen instructions for this step.
+
+### Step 4: Visualize Output
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
 ## Tips
-- Start with FIR low-pass, order 16, cutoff 0.5
-- Increase order for sharper roll-off
-- Watch pole-zero plot to check IIR stability
-- Compare FIR vs IIR with same cutoff to see differences
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,42 +1,45 @@
-# How-To: Pi SDR Station
+# How To Use: Pi SDR Station
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in any modern browser.
-2. Click **Start SDR** to begin simulated reception.
-3. The waterfall display and FFT spectrum will activate.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Tuning Frequencies
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- Enter a frequency in the input field (24-1766 MHz).
-- Click **Tune** to change the center frequency.
-- The waterfall frequency range updates automatically based on sample rate.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Adjusting Settings
+## Detailed Steps
 
-- **Gain**: Use the slider to adjust receiver gain (0-50 dB).
-- **Mode**: Select demodulation mode (FM, AM, USB, LSB, RAW IQ).
-- **Sample Rate**: Choose bandwidth from 250 kHz to 2.4 MHz.
+### Step 1: Connect Hardware
+Follow the on-screen instructions for this step.
 
-## Reading the Displays
+### Step 2: Configure Software
+Follow the on-screen instructions for this step.
 
-- **Waterfall**: Time flows downward. Bright colors = strong signals.
-- **FFT**: Real-time power spectrum. Peaks indicate active signals.
-- **Audio Meter**: Shows demodulated audio output level.
-- **SNR**: Signal-to-noise ratio of current reception.
+### Step 3: Monitor Data
+Follow the on-screen instructions for this step.
 
-## Pi System Monitoring
+### Step 4: Control & Log
+Follow the on-screen instructions for this step.
 
-- CPU usage, RAM, temperature, and uptime are shown in the top cards.
-- Values simulate realistic Raspberry Pi behavior under SDR load.
 
-## Settings
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-- Change language (EN/FR/AR) in Settings panel
-- Switch between 8 visual themes
-- Toggle sound effects
-- Activity log tracks all events
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## About SDR
-
-Software-Defined Radio uses software to process radio signals instead of dedicated hardware. An RTL-SDR dongle costs around $25 and can receive from 24 MHz to 1.766 GHz. Combined with a Raspberry Pi, it becomes a powerful remote SDR server accessible over the network.
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

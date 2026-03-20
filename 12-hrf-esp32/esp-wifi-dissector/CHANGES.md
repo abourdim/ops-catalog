@@ -1,14 +1,28 @@
-# CHANGES — WiFi Dissector
+# Changelog — WiFi Dissector
 
-## v1.2 — 2025-05-01
-- Color-coded hex byte display for all 802.11 fields
-- 6 frame types: Beacon, Probe, Data, ACK, RTS, Auth
-- Layer-by-layer decode with FC bit detail
-- Auto-capture mode with weighted random frames
-- Capture statistics bar chart
-- Hover tooltips on hex bytes
-- i18n EN/FR/AR, 8 themes, activity log
-- No external style.css
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-## v1.0 — 2025-03-15
-- Initial release with basic beacon frame display
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Layer-by-Layer Decode section
+- Capture Statistics section
+- 802.11 Frame Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

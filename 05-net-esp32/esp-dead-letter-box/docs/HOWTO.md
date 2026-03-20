@@ -1,46 +1,45 @@
-# esp-dead-letter-box — How To Use
+# How To Use: esp-dead-letter-box
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Scan for Networks
-Click "Scan Networks" to discover nearby WiFi access points. Normal APs appear with their SSIDs.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Find Hidden APs
-Look for entries marked [HIDDEN] in red. These are the dead drops. If you don't see them, increase the signal strength slider and try Active Probe.
+## Detailed Steps
 
-### Step 3: Connect to the Dead Drop
-Click on a hidden AP to connect. The app reveals the hidden SSID and opens the file vault.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Browse the Vault
-The vault contains encrypted files. Click any file to see its encrypted hex content.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Decrypt Files
-Enter the decryption key `ESPION` and click "Decrypt Selected". The file content is revealed using XOR decryption.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Download Files
-Click "Download" to save the selected file (encrypted or decrypted) to your device.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-### Step 7: Try the Challenges
-Test your knowledge about hidden SSIDs, XOR weaknesses, and dead drop security.
 
-## What Each Step Teaches
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-| Step | Concept |
-|------|---------|
-| 1 | WiFi beacon scanning |
-| 2 | Hidden SSID detection |
-| 3 | AP association |
-| 4 | Encrypted file storage |
-| 5 | XOR symmetric decryption |
-| 6 | Data exfiltration |
-| 7 | Security analysis |
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-## Going Further
-
-- Try decrypting with the wrong key to see garbled output
-- Compare active probe vs passive scan results
-- Think about how AES would improve security over XOR
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

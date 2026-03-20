@@ -1,33 +1,59 @@
-# esp-mesh-whisper — Mesh Whisper
+# esp-mesh-whisper
 
-Self-healing ESP32 mesh network simulation. Messages hop node to node using BFS routing. Kill nodes to see the mesh reroute around failures, then heal to watch links rebuild.
+> 🕸️ mesh · 🔄 heal · 💬 whisper
+
+**Category:** 05-net-esp32
+
+## Description
+esp-mesh-whisper is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Topology Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Interactive mesh canvas with 9 ESP32 nodes
-- BFS shortest-path routing with hop-by-hop animation
-- Kill nodes to simulate failures, mesh auto-reroutes
-- Heal all to restore dead nodes with visual transition
-- Topology lab with density and hop statistics
-- 3 challenges with reveal answers
-- Trilingual i18n (EN/FR/AR) with RTL support
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Layout with mesh canvas, sections A/B/C, help panel |
-| `script.js` | i18n, simulation engine, BFS routing, canvas rendering |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
-| `docs/HOWTO.md` | Step-by-step usage guide |
-| `CHANGES.md` | Version changelog |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html` in any modern browser. Click two nodes on the mesh canvas to select source and destination, type a message, and click Send.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

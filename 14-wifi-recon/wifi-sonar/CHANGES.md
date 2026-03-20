@@ -1,17 +1,28 @@
-# Changelog — WiFi Sonar
+# Changelog — WiFi Sonar  Living Map
 
-## v1.0 — 2025-05-01
-- Initial release of WiFi Sonar — Living Map
-- Radar canvas with sweep beam animation
-- APs rendered as fixed nodes with SSID labels
-- Client devices orbit their associated AP
-- Frame counter: total frames, AP count, client count
-- Device list table (MAC, type, SSID, signal, frames)
-- Frame statistics breakdown (Management, Control, Data)
-- Section C: How It Works educational panel
-- Full i18n support: English, French, Arabic (RTL)
-- 8 themes with sound effects
-- Help panel with FAQ, How-To, Wiki tabs
-- Activity log with filters, copy, export
-- Splash screen with auto-dismiss
-- PWA manifest for offline support
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan Airwaves step card
+- Identify Targets step card
+- Analyze Traffic step card
+- Detect Threats step card
+- Device List section
+- Frame Statistics section
+- How It Works section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

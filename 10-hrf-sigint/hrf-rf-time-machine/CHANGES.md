@@ -1,15 +1,28 @@
 # Changelog — RF Time Machine
 
-## v1.2 (2026-03-18)
-- Initial release
-- Waterfall display with power-to-color mapping (blue-yellow-red)
-- Record/Stop/Play/Rewind transport controls
-- Timeline scrubber for seeking within recorded history
-- Live spectrum view with real-time FFT visualization
-- Recording info: frames, duration, center frequency, bandwidth
-- Simulated signals with appearance/disappearance and frequency drift
-- Up to 300 frames recording buffer
-- Section C: Spectrum DVR technology explanation
-- Trilingual i18n (EN/FR/AR) with full RTL support
-- 8 themes, activity log, sound effects, Konami code
-- PWA manifest
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Live Spectrum section
+- Recording Info section
+- Spectrum DVR Explained section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

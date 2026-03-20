@@ -1,37 +1,59 @@
-# 📡 SDR DSP Workbench — Workshop DIY
+# SDR DSP Workbench
 
-Interactive DSP signal processing workbench with live waterfall and spectrum display.
+> 📡 DSP Workbench — Build your signal chain
 
-## Features
+**Category:** 27-sdr-dsp
 
-- **7 signal sources**: sine, square, sawtooth, white noise, chirp, AM, FM
-- **5 filter types**: none, low-pass, high-pass, band-pass, notch
-- **Live spectrum display** with dB scale and frequency axis
-- **Waterfall display** with color-mapped intensity
-- **Signal analysis**: peak frequency, bandwidth, SNR, RMS level, crest factor
-- **DSP chain builder**: add gain, delay, compressor, distortion blocks
-- **FFT sizes**: 256 to 4096 points with Hann windowing
-- **Trilingual**: English, Francais, Arabic (RTL)
-- **8 themes** with Islamic art inspiration
-- **PWA ready** — works offline
+## Description
+SDR DSP Workbench is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Signal Analysis
+- DSP Chain Builder
+- DSP Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
 
 ## How It Works
+- Configure SDR
+- Capture Signal
+- Process & Filter
+- Visualize Output
 
-1. Select a signal source and adjust frequency
-2. Choose a filter type and set cutoff frequency
-3. Press Start to begin real-time DSP processing
-4. Watch the spectrum and waterfall update live
-5. Add DSP chain blocks for additional processing
+## Controls
+- Start/Stop simulation
+
+## Features
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | UI layout with canvas displays and controls |
-| `script.js` | DSP engine, FFT, filters, i18n, simulation |
-| `style.css` | Shared Workshop DIY theme styles |
-| `manifest.json` | PWA manifest |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

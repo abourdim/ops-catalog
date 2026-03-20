@@ -1,30 +1,28 @@
-# CHANGES — bit-satellite-alarm
+# Changelog — bit-satellite-alarm
 
-## v1.0 — Initial Release
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-### Added
-- Polar sky map canvas with horizon ring, elevation circles (30/60/90), cardinal directions, and crosshairs
-- Satellite trajectory arc rendering with animated dot tracking
-- Simplified pass prediction engine generating 5 upcoming passes based on orbital parameters
-- Next pass countdown timer with Orbitron monospace display
-- Alarm system with visual flash and audio beeps on pass start
-- Satellite info panel showing name, elevation, azimuth, and visibility in real time
-- Pass list table with time, max elevation, and duration for upcoming passes
-- Simulate Pass button for accelerated pass animation
-- Section A (How It Works) — 4-step explanation of satellite pass prediction
-- Section B (Lab) — interactive controls for observer lat/lon, orbit altitude, and inclination
-- Lab timer for measuring pass duration with stopwatch functionality
-- Section C (Challenge) — 3 orbital mechanics challenges
-- Help panel with FAQ (4 items), How-To (4 steps), Wiki (4 entries: Orbital Mechanics, Pass Prediction, Elevation & Azimuth, ISS Facts)
-- Full trilingual i18n: English, French, Arabic (with RTL support)
-- All satellite-specific LANG keys for EN/FR/AR
-- Minimal inline styles for sky-map, pass-list, sat-info, countdown, step-list, challenge-list
-- PWA manifest updated for bit-satellite-alarm
-
-### Template Features Preserved
-- 8 themes with musical melodies
-- Splash screen, Konami code, Matrix rain
-- Morse code log, ghost cursors, pixel pet
-- Debug panel, shake-to-report, time-travel log
-- Whisper mode, breathing guide, music reactive
-- AI chat, AR mode, log resize
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Tune Frequency step card
+- Transmit/Receive step card
+- Decode Signal step card
+- Log Contact step card
+- How It Works section
+- Lab section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

@@ -1,34 +1,59 @@
-# Satellite Listener — NOAA Weather
+# Satellite Listener
 
-> Decode satellite weather images from NOAA
+> Satellite Listener \u2014 NOAA Weather
 
-## Overview
+**Category:** 10-hrf-sigint
 
-Simulate receiving and decoding NOAA weather satellite transmissions at 137 MHz. Watch a waterfall display as the satellite passes overhead, then see an APT (Automatic Picture Transmission) image build line by line, just like real satellite reception.
+## Description
+Satellite Listener is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Reception Log
+- How Satellite Reception Works
+- NOAA Satellite Database
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- 137 MHz waterfall display showing satellite signal
-- APT decoder building weather image progressively
-- Satellite pass simulation with signal strength curve
-- Image building line by line like real reception
-- NOAA satellite info database (Section C)
-- Trilingual (EN/FR/AR) with RTL support
-- 8 themes, sound effects, activity log
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | App layout with waterfall, APT decoder, image |
-| `script.js` | Satellite sim engine, i18n, theme, panels |
-| `style.css` | Shared Workshop-DIY template (DO NOT EDIT) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html` in any modern browser. Click **Track Satellite** to begin.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

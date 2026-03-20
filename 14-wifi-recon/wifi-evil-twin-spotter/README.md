@@ -1,16 +1,59 @@
-# Evil Twin Spotter — AP Verifier
+# Evil Twin Spotter  AP Verifier
 
-**Detect rogue evil twin access points through attribute comparison and mismatch analysis.**
+> Detect rogue access points by attribute comparison
+
+**Category:** 14-wifi-recon
+
+## Description
+Evil Twin Spotter  AP Verifier is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Mismatch Details
+- All Detected APs
+- How It Works
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan Airwaves
+- Identify Targets
+- Analyze Traffic
+- Detect Threats
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-- Side-by-side legitimate vs evil twin AP comparison
-- Attribute mismatch highlighting (MAC, channel, encryption, signal, beacon, vendor)
-- Alert banners: safe (green) and danger (red)
-- Mismatch detail list with all detected differences
-- Full i18n: EN/FR/AR, 8 themes, help panel, activity log
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
-Open `index.html` and click **Scan** to start the evil twin detection simulation.
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
+
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

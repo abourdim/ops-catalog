@@ -1,20 +1,59 @@
-# esp-rogue-ap-detector — Rogue AP Detector
+# esp-rogue-ap-detector
 
-Evil twin WiFi AP detector simulation. Fingerprint access points, inject evil twins, and compare fingerprints side by side.
+> 🔍 scan · 🔬 fingerprint · 🚨 detect
+
+**Category:** 05-net-esp32
+
+## Description
+esp-rogue-ap-detector is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Comparison Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- AP scanning with BSSID, SSID, channel, encryption, signal fingerprints
-- Evil twin injection simulation
-- Side-by-side fingerprint comparison with mismatch highlighting
-- Red alert animation on rogue detection
-- 3 challenges on evil twin attacks
-- Trilingual i18n (EN/FR/AR) with RTL support
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`, click Scan APs, then Inject Evil Twin to see detection in action.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

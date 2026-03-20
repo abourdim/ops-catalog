@@ -1,16 +1,45 @@
-# HOWTO — Dark Profile
+# How To Use: Dark Profile
 
-## 1. Search a Username
-Type any username and click Search or press Enter. Results are deterministic per username.
+## Quick Start (5 minutes)
 
-## 2. View Platform Results
-Each platform shows FOUND (green) or NOT FOUND (red) with animated card appearance.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Read Risk Score
-The risk percentage and level (Low/Medium/High/Critical) appear below the grid.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Generate Exposure Report
-Open Section C and click Generate Exposure Report for category breakdown and recommendations.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Change Language / Theme
-Open Settings (gear icon) to switch between EN, FR, AR and 8 themes.
+## Detailed Steps
+
+### Step 1: Configure
+Follow the on-screen instructions for this step.
+
+### Step 2: Process
+Follow the on-screen instructions for this step.
+
+### Step 3: Transmit
+Follow the on-screen instructions for this step.
+
+### Step 4: Verify
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

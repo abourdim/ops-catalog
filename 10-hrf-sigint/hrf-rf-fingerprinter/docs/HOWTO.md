@@ -1,31 +1,45 @@
-# How To Use — RF Fingerprinter
+# How To Use: RF Fingerprinter
 
-## Getting Started
+## Quick Start (5 minutes)
 
-1. Open `index.html` in a modern browser (Chrome, Firefox, Edge)
-2. Select a device from the dropdown to simulate
-3. Click **Capture** to record its RF fingerprint
-4. Compare fingerprints in the database
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Controls
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-- **Device Selector**: Choose which device to simulate
-- **Capture**: Record the current device waveform as a fingerprint
-- **Store**: Save fingerprint to the database
-- **Compare**: Match a new capture against stored fingerprints
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Understanding Fingerprints
+## Detailed Steps
 
-Each wireless device has subtle unique characteristics:
-- Clock drift patterns
-- Power-on transients
-- Modulation imperfections
-- Frequency offset
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
 
-These create a unique "fingerprint" even among identical devices.
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
 
-## Settings
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
 
-- Change language (EN/FR/AR) from the Settings panel
-- Switch between 8 visual themes
-- Enable sound effects for capture feedback
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,34 +1,45 @@
-# HOWTO — WiFi Dissector
+# How To Use: WiFi Dissector
 
-## What is this?
-WiFi Dissector simulates 802.11 frame capture and decoding. Each byte is color-coded by field (Frame Control, Duration, MAC addresses, Sequence Control, Body, FCS).
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in a browser
-2. Select a frame type (Beacon, Data, etc.)
-3. Click "Generate Frame"
-4. Hover over hex bytes to see field details
-5. Open "Layer-by-Layer Decode" for full breakdown
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Frame Types
-| Type | FC Bytes | Description |
-|------|----------|-------------|
-| Beacon | 80 00 | AP announcement |
-| Probe Request | 40 00 | Client scanning |
-| Data | 08 01 | Payload transfer |
-| ACK | D4 00 | Acknowledgement |
-| RTS | B4 00 | Request to Send |
-| Auth | B0 00 | Authentication |
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Color Legend
-- **Red** — Frame Control
-- **Blue** — Duration/ID
-- **Teal** — Address 1 (Receiver)
-- **Yellow** — Address 2 (Transmitter)
-- **Orange** — Address 3 (BSSID)
-- **Dark** — Sequence Control
-- **Purple** — Frame Body
-- **Gray** — FCS (CRC-32)
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## Auto Capture
-Click "Auto Capture" to continuously generate frames with realistic traffic distribution (heavy on beacons and data). Statistics chart updates live.
+## Detailed Steps
+
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

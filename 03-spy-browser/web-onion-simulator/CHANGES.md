@@ -1,10 +1,28 @@
-# CHANGES — Onion Simulator
+# Changelog — Onion Simulator
 
-## v1.2 (2025-03)
-- Initial release
-- Animated Tor routing with 5-node circuit
-- 3-layer encryption/decryption visualization
-- 12 country relay pool
-- Circuit builder in Section C
-- Canvas-based network rendering
-- Trilingual i18n (EN / FR / AR)
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
+
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure step card
+- Process step card
+- Transmit step card
+- Verify step card
+- How Onion Routing Works section
+- Encryption Layers section
+- Circuit Builder section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

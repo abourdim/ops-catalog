@@ -1,32 +1,59 @@
-# 🔓 Password Cracker — Attack Simulator
+# Password Cracker
 
-**Workshop DIY — Spy Browser Collection**
+> 🔓 Watch brute force, dictionary, and rainbow attacks
 
-Watch brute force, dictionary, and rainbow table attacks crack passwords in real-time.
+**Category:** 03-spy-browser
+
+## Description
+Password Cracker is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Attack Methods Explained
+- Strong Password Guide
+- Password Strength Analyzer
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure
+- Process
+- Transmit
+- Verify
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- 3 attack types: Brute Force, Dictionary (40 words), Rainbow Table
-- Character-by-character brute force animation
-- Dictionary word scrolling with match detection
-- Rainbow table hash lookup simulation
-- Password strength analyzer (score 0-7, crack time estimate)
-- Progress bar, attempt counter, speed display
-- Trilingual i18n (EN / FR / AR with RTL), 8 themes
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main card + 3 sections (Methods, Strong PW Guide, Analyzer) + help |
-| `script.js` | i18n, 3 attack simulations, strength analyzer |
-| `style.css` | Shared template styles (unchanged) |
-| `manifest.json` | PWA manifest |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`. Enter a password, select an attack type, watch the cracking animation.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

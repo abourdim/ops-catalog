@@ -1,25 +1,59 @@
-# 📡 Pi Remote Antenna Station
+# Pi Remote Antenna Station
 
-**Workshop-DIY Pi+Antenna Learning Lab**
+> 📡 remote · 🎛️ control · 🌐 operate
 
-Full remote antenna operation and control station. Simulates rotator control, transceiver panel, waterfall display, and PTT across HF/VHF bands.
+**Category:** 38-pi-antenna
+
+## Description
+Pi Remote Antenna Station is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Antenna Control
+- Transceiver Panel
+- About Remote Operation
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Connect Hardware
+- Configure Software
+- Monitor Data
+- Control & Log
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Antenna rotator compass display with azimuth/elevation control
-- Transceiver waterfall display
-- S-meter, SWR, power, and mode indicators
-- Multi-band selection (80m-70cm)
-- PTT button for transmit simulation
-- Trilingual UI (EN/FR/AR) with RTL support
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Click **Connect Station**
-3. Adjust azimuth/elevation sliders
-4. Select band and mode, use PTT
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

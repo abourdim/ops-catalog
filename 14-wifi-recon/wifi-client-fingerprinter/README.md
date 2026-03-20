@@ -1,16 +1,59 @@
-# Client Fingerprinter — Device ID
+# Client Fingerprinter  Device ID
 
-**Fingerprint WiFi clients by behavioral patterns with uniqueness scoring.**
+> Identify devices by their wireless behavior
+
+**Category:** 14-wifi-recon
+
+## Description
+Client Fingerprinter  Device ID is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Vendor Distribution
+- Fingerprint Details
+- How It Works
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan Airwaves
+- Identify Targets
+- Analyze Traffic
+- Detect Threats
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-- Fingerprint table with MAC, vendor, OS, probes, HT caps, uniqueness score
-- Uniqueness bar visualization (green/yellow/red)
-- Vendor distribution chart
-- Detailed fingerprint view on click (rates, power save, WMM, interval)
-- Full i18n: EN/FR/AR, 8 themes, help panel, activity log
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
-Open `index.html` and click **Scan** to start fingerprinting.
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
+
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

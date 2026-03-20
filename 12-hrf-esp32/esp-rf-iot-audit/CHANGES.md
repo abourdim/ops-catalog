@@ -1,13 +1,28 @@
-# CHANGES — RF IoT Audit
+# Changelog — RF IoT Audit
 
-## v1.2 — 2025-05-01
-- 3-panel concurrent WiFi/BLE/ESP-NOW monitor
-- Simulated device lists per protocol
-- Protocol distribution timeline chart
-- Security audit report with flag detection
-- Open WiFi and unencrypted ESP-NOW warnings
-- i18n EN/FR/AR, 8 themes
-- No external style.css
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-## v1.0 — 2025-03-15
-- Initial release
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Protocol Distribution section
+- Audit Report section
+- Multi-Protocol Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

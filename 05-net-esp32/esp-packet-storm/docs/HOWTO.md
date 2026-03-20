@@ -1,42 +1,45 @@
-# esp-packet-storm — How To Use
+# How To Use: esp-packet-storm
 
-## Prerequisites
+## Quick Start (5 minutes)
 
-- A modern web browser (Chrome, Firefox, Edge, Safari)
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Lab Walkthrough
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-### Step 1: Select Protocol
-Choose TCP, UDP, ICMP, ARP, or MIX from the dropdown. MIX generates a random mix of all types.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-### Step 2: Set the Rate
-Adjust the rate slider to control how many packets per second are generated (1-100 pps).
+## Detailed Steps
 
-### Step 3: Start the Storm
-Click "Start Storm" to begin. Watch packets flow across the matrix-style canvas with color-coded trails.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
 
-### Step 4: Inspect Packets
-The hex inspector shows raw packet data for each generated packet, including headers, IPs, ports, and flags.
+### Step 2: Capture
+Follow the on-screen instructions for this step.
 
-### Step 5: Analyze Protocol Breakdown
-The protocol bar shows the ratio of TCP (blue), UDP (green), ICMP (yellow), and ARP (red) packets.
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
 
-### Step 6: Stop and Review
-Click "Stop" to halt generation. Review statistics and the activity log for a summary.
+### Step 4: Report
+Follow the on-screen instructions for this step.
 
-## What Each Step Teaches
 
-| Step | Concept |
-|------|---------|
-| 1 | Network protocol types |
-| 2 | Traffic rate and bandwidth |
-| 3 | Packet generation and flow |
-| 4 | Hex packet inspection (like Wireshark) |
-| 5 | Protocol distribution analysis |
-| 6 | Traffic monitoring |
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
 
-## Going Further
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
 
-- Compare TCP vs UDP packet structures in the hex inspector
-- Generate a pure ARP storm and observe the header format
-- Think about how an IDS would flag this traffic
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,19 +1,45 @@
-# HOWTO — Blockchain Messenger
+# How To Use: Blockchain Messenger
 
-## 1. Type a Message
-Enter a message in the input field at the top.
+## Quick Start (5 minutes)
 
-## 2. Mine a Block
-Click "Mine Block" to hash the message and add it to the blockchain.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. View the Chain
-Each block shows: index, timestamp, message, previous hash, current hash, and nonce.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Tamper with a Block
-Click the "Tamper" button on any block to modify its data. Watch the chain break!
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Validate Chain
-The chain validation indicator shows green (valid) or red (broken) status.
+## Detailed Steps
 
-## 6. Adjust Difficulty
-Open Section C to change mining difficulty and see how it affects mining time.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

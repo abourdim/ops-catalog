@@ -1,22 +1,47 @@
 # Bio Skin Galvanic Key
 
-> A Workshop-DIY educational web app
+> Skin conductance as crypto key
+
+**Category:** 43-bio-radio
 
 ## Description
-An interactive Bio Skin Galvanic Key simulation for educational exploration.
+Bio Skin Galvanic Key is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- A \u2014 How It Works
+- C \u2014 Challenges
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Skin Electrodes
+- GSR Measurement
+- LSB Extraction
+- Key Output
+
+## Controls
+- Start/Stop simulation
 
 ## Features
 - Interactive simulation with real-time visualization
 - Trilingual interface (English, French, Arabic with RTL)
 - 8 color themes including 2 light modes
 - Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
 - Works offline from `file://` — no server needed
 
 ## Quick Start
 1. Open `index.html` in any modern browser
-2. Explore the main simulation section
-3. Try different settings and watch the results
-4. Open collapsible sections for deeper learning
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
 | File | Purpose |
@@ -25,6 +50,8 @@ An interactive Bio Skin Galvanic Key simulation for educational exploration.
 | `script.js` | Simulation logic + i18n |
 | `style.css` | Shared Workshop-DIY theme |
 | `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
 | `docs/HOWTO.md` | Step-by-step guide |
 
 ## License

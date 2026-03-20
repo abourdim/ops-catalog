@@ -1,14 +1,28 @@
-# CHANGES — BLE X-Ray
+# Changelog — BLE X-Ray
 
-## v1.2 — 2025-05-01
-- 2.4 GHz waterfall with 40 BLE channels
-- Animated frequency hopping with prime increment algorithm
-- Advertising channel markers (37, 38, 39)
-- Channel usage histogram
-- Simulated device list with RSSI bars
-- Hop speed selector (1x/4x/16x)
-- i18n EN/FR/AR, 8 themes
-- No external style.css
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-## v1.0 — 2025-03-15
-- Initial release
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Configure RF step card
+- Capture Spectrum step card
+- Analyze Signal step card
+- Classify & Report step card
+- Channel Usage Histogram section
+- BLE Device List section
+- BLE Frequency Hopping Theory section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki

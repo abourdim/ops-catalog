@@ -1,21 +1,59 @@
-# esp-packet-storm — Packet Storm
+# esp-packet-storm
 
-Network traffic generator with cyberpunk matrix-style visualization. Generate TCP, UDP, ICMP, and ARP packets with real-time hex inspection and protocol breakdown.
+> ⚡ generate · 📊 analyze · 🌊 storm
+
+**Category:** 05-net-esp32
+
+## Description
+esp-packet-storm is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Protocol Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Matrix-style packet flow canvas with color-coded protocols
-- TCP/UDP/ICMP/ARP packet generation with realistic headers
-- Adjustable rate slider (1-100 packets/sec)
-- Live hex inspector showing raw packet bytes
-- Protocol breakdown bar with statistics
-- 3 challenges on networking protocols
-- Trilingual i18n (EN/FR/AR) with RTL support
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-Open `index.html`, select a protocol, adjust the rate, and click Start Storm.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

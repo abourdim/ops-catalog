@@ -1,24 +1,45 @@
-# HOWTO — RF Bridge
+# How To Use: RF Bridge
 
-## What is this?
-RF Bridge simulates an ESP32 acting as a wireless bridge between a HackRF SDR and remote clients over WiFi. IQ samples are streamed in real-time.
+## Quick Start (5 minutes)
 
-## Quick Start
-1. Open `index.html` in a browser
-2. Select center frequency and bandwidth
-3. Click "Connect Bridge" to start streaming
-4. Watch the waterfall and monitor throughput stats
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## Stream Parameters
-| Parameter | Options |
-|-----------|---------|
-| Center Freq | 88 MHz, 433 MHz, 868 MHz, 915 MHz, 2.4 GHz |
-| Bandwidth | 1/2/5/10/20 MHz |
-| IQ Format | 8-bit unsigned |
-| Protocol | UDP/TCP hybrid |
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## Key Metrics
-- **Throughput**: Actual data rate (Mbps)
-- **Latency**: End-to-end delay (ms)
-- **Dropped**: Packet loss percentage
-- **Buffer**: Ring buffer fill level
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
+
+## Detailed Steps
+
+### Step 1: Configure RF
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture Spectrum
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze Signal
+Follow the on-screen instructions for this step.
+
+### Step 4: Classify & Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

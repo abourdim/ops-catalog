@@ -1,44 +1,59 @@
-# 📡 Pi SDR Station
+# Pi SDR Station
 
-**Workshop-DIY Pi Core Learning Lab**
+> 📡 receive · 🔊 demodulate · 📊 analyze
 
-Dedicated SDR receiver server on Raspberry Pi. Simulates a full rtl_tcp-based SDR server with waterfall display, FFT spectrum, demodulation modes, and Pi system monitoring.
+**Category:** 37-pi-core
+
+## Description
+Pi SDR Station is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Waterfall Display
+- Signal Demodulator
+- About SDR Technology
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Connect Hardware
+- Configure Software
+- Monitor Data
+- Control & Log
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Real-time waterfall display with color-mapped signal intensity
-- FFT spectrum analyzer with gain-responsive visualization
-- Frequency tuning from 24 MHz to 1766 MHz
-- Multiple demodulation modes: FM, AM, USB, LSB, RAW IQ
-- Adjustable gain and sample rate controls
-- Pi system stats: CPU, RAM, temperature, uptime
-- Audio output level meter with SNR display
-- Trilingual UI (EN/FR/AR) with RTL support
-- 8 themes, activity log, sound effects
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Dashboard layout with waterfall, FFT, controls, Section C |
-| `script.js` | SDR simulation engine, rendering, i18n, all UI logic |
-| `style.css` | Shared Workshop-DIY theme system |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Step-by-step guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a browser
-2. Click **Start SDR** to begin reception
-3. Adjust frequency, gain, and mode
-4. Watch the waterfall and FFT displays
-
-## Tech Stack
-
-Vanilla JS, HTML5 Canvas, zero dependencies.
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

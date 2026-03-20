@@ -1,19 +1,45 @@
-# HOWTO — DNS Odyssey
+# How To Use: DNS Odyssey
 
-## 1. Enter a Domain
-Type a domain name in the input field (e.g., www.example.com).
+## Quick Start (5 minutes)
 
-## 2. Start Resolution
-Click "Resolve" to begin the step-by-step recursive DNS resolution animation.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. Watch the Journey
-The canvas shows packets traveling: Browser > Recursive Resolver > Root Server > TLD Server > Authoritative Server.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Check TTL Cache
-After resolution, the TTL cache shows cached DNS records with remaining time.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. View History
-Open Section C to see all previously resolved domains.
+## Detailed Steps
 
-## 6. Change Language
-Open Settings and select EN, FR, or AR.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

@@ -1,36 +1,58 @@
-# 📡 FT8 Station — Workshop DIY
+# my-project
 
-14.074 MHz FT8 decode simulator
+> 🚀 explore · 🎨 create · 💡 innovate
+
+**Category:** 20-ham-digital
+
+## Description
+my-project is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Section A
+- Section B
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Tune Frequency
+- Transmit/Receive
+- Decode Signal
+- Log Contact
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Full browser-based simulation (no server needed)
-- Trilingual UI: English, Français, العربية
-- 8 built-in themes (6 dark + 2 light)
-- RTL support for Arabic
-- Activity log with filters, export, and Morse blink
-- Responsive design (mobile + desktop)
-- PWA-ready manifest
-- Privacy-first: all data stays local
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
-
-```bash
-# Just open in a browser
-open index.html
-```
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Full app with embedded CSS |
-| `script.js` | Template engine + FT8 Station simulation |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Version history |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
 | `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

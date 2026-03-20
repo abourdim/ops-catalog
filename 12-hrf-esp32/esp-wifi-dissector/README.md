@@ -1,23 +1,59 @@
-# 🔬 WiFi Dissector — Workshop DIY v1.2
+# WiFi Dissector
 
-802.11 frame decode simulator with color-coded hex display.
+> 802.11 Frame Decode
+
+**Category:** 12-hrf-esp32
+
+## Description
+WiFi Dissector is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Layer-by-Layer Decode
+- Capture Statistics
+- 802.11 Frame Theory
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Configure RF
+- Capture Spectrum
+- Analyze Signal
+- Classify & Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-- Generate Beacon, Probe, Data, ACK, RTS, Auth frames
-- Color-coded hex byte display per 802.11 field
-- Layer-by-layer decode with FC bit breakdown
-- Auto-capture mode with statistics chart
-- i18n EN/FR/AR with RTL
-- 8 themes, sound effects, activity log
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
+
+## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
 ## Files
-| File | Description |
-|------|-------------|
-| `index.html` | UI with embedded styles |
-| `script.js` | Frame sim, i18n, themes |
-| `manifest.json` | PWA manifest |
-| `CHANGES.md` | Version history |
-| `docs/HOWTO.md` | Usage guide |
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

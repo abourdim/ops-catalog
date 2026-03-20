@@ -1,37 +1,59 @@
-# 👻 Stealth AP — Workshop DIY
+# pi-stealth-ap
 
-**Hidden WiFi with MAC rotation**
+> 📶 stealth access point — hidden WiFi for covert ops
+
+**Category:** 39-agent-gear
+
+## Description
+pi-stealth-ap is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- Client Monitor
+- Traffic Analysis
+- Security Report
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Gear Up
+- Deploy
+- Monitor
+- Extract
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- Full agent-themed simulation with immersive UI
-- Trilingual: English / Francais / Arabic (RTL)
-- 8 themes (6 dark + 2 light Islamic)
-- Activity log with TX/RX filtering
-- Sound effects, whisper mode, breathing guide
-- PWA-ready, works offline
-- Section A: AP Manager
-- Section B: MAC Rotation
-- Section C: Stealth Config
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `index.html` | Main UI |
-| `script.js` | Simulation + i18n + template |
-| `style.css` | Themes and layout |
-| `manifest.json` | PWA manifest |
-| `README.md` | This file |
-| `CHANGES.md` | Changelog |
-| `docs/HOWTO.md` | Guide |
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in any browser
-2. Interact with the simulation dashboard
-3. Settings for language/theme
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Workshop-DIY — [abourdim](https://github.com/abourdim)
+Workshop-DIY Educational Project

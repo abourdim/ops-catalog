@@ -1,19 +1,45 @@
-# HOWTO — Traceroute Quest
+# How To Use: Traceroute Quest
 
-## 1. Enter a Destination
-Type a hostname (e.g. tokyo.example.jp) in the input field, or click "Random" for a random destination.
+## Quick Start (5 minutes)
 
-## 2. Trace the Route
-Click "Trace Route" to start the animated traceroute simulation. Watch the packet hop across the world map.
+### Open the App
+Open `index.html` in your browser. No internet required.
 
-## 3. View Hop Details
-As each hop is discovered, it appears in the table below the map with host, IP, city, and latency information.
+### Read Learning Objectives
+The "🎯 What You Shall Learn" section (open by default) tells you what
+skills and concepts you'll explore.
 
-## 4. Analyze Route Statistics
-Open Section C (Route Statistics) and click "Calculate Stats" to see total hops, total latency, average latency, and the longest hop.
+### Watch the Demo
+Click "▶️ Watch Demo" and press Play for a guided walkthrough.
+The demo highlights each element and explains what to do.
 
-## 5. Change Language
-Open Settings (gear icon) and select EN, FR, or AR. Arabic enables RTL layout.
+## Detailed Steps
 
-## 6. Change Theme
-Open Settings and choose from 8 available themes.
+### Step 1: Scan
+Follow the on-screen instructions for this step.
+
+### Step 2: Capture
+Follow the on-screen instructions for this step.
+
+### Step 3: Analyze
+Follow the on-screen instructions for this step.
+
+### Step 4: Report
+Follow the on-screen instructions for this step.
+
+
+## Language & Theme
+1. Click the ⚙️ Settings gear icon
+2. Choose English, French, or Arabic
+3. Pick from 8 color themes
+4. Arabic automatically enables right-to-left layout
+
+## Hardware Code
+Check the "📦 Device Code" section to find real firmware you can
+flash to micro:bit, ESP32, or run on Raspberry Pi / SDR.
+
+## Tips
+- Click the ❓ Help button for FAQ and Wiki content
+- The activity log can be filtered by type (info, success, error)
+- Everything runs locally — your data stays on your device
+- Try the Lab section for hands-on experiments

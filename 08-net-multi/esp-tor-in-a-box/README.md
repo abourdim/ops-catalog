@@ -1,44 +1,59 @@
-# esp-tor-in-a-box -- Workshop DIY
+# Tor in a Box
 
-Tor in a Box simulates physical onion routing with 3 ESP32 relay nodes. Students type a message that gets wrapped in 3 layers of XOR encryption, then watch each relay peel one layer until the plaintext is revealed at the exit.
+> 🧅 onion · 🔐 layers · 🛡️ privacy
 
-## What You Learn
+**Category:** 08-net-multi
 
-- **Onion Routing**: Multi-layer encryption where each relay peels one layer
-- **XOR Encryption**: Simple bitwise cipher demonstrating the layering principle
-- **Anonymity**: Why 3 relays (guard, middle, exit) provide sender/receiver unlinkability
-- **Relay Roles**: Guard knows sender, exit knows destination, middle knows neither
+## Description
+Tor in a Box is an interactive educational web app from Workshop-DIY.
+It provides a hands-on simulation environment where you can explore,
+experiment, and learn about the underlying technology.
+
+## Sections
+- How It Works
+- Lab
+- Challenge
+- What You Shall Learn
+- Watch Demo
+- Device Code
+
+## How It Works
+- Scan
+- Capture
+- Analyze
+- Report
+
+## Controls
+- Start/Stop simulation
 
 ## Features
-
-- 3-node relay canvas with onion layer visualization
-- Message input with triple XOR encryption (wrap at sender, unwrap at each relay)
-- Animated packet with shrinking onion layers at each hop
-- Layer display showing encrypted hex at each stage
-- Random key generation for each message
-- Trilingual: English, French, Arabic (RTL)
-- 8 visual themes, PWA-ready
+- Interactive simulation with real-time visualization
+- Trilingual interface (English, French, Arabic with RTL)
+- 8 color themes including 2 light modes
+- Activity log with filtering and export
+- Guided demo walkthrough
+- Learning objectives with difficulty badges
+- Hardware device code (📦 Device Code section)
+- Works offline from `file://` — no server needed
 
 ## Quick Start
+1. Open `index.html` in any modern browser
+2. Read "What You Shall Learn" to understand the goals
+3. Follow "How It Works" step cards
+4. Try "Watch Demo" for a guided walkthrough
+5. Experiment in the main simulation
+6. Check the Lab section for hands-on challenges
 
-1. Open `index.html` in a modern browser
-2. Type a secret message
-3. Click **Encrypt & Send**
-4. Watch the 3-layer encryption being peeled at each relay
-
-## Project Structure
-
-```
-esp-tor-in-a-box/
-  index.html        Main app page
-  script.js         App logic + onion routing simulation
-  style.css         Theme system (do not modify)
-  manifest.json     PWA manifest
-  docs/HOWTO.md     Step-by-step guide
-  README.md         This file
-  CHANGES.md        Version history
-```
+## Files
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app interface |
+| `script.js` | Simulation logic + i18n |
+| `style.css` | Shared Workshop-DIY theme |
+| `manifest.json` | PWA metadata |
+| `sw.js` | Service worker for offline |
+| `code/` | Hardware source code |
+| `docs/HOWTO.md` | Step-by-step guide |
 
 ## License
-
-Educational use -- Workshop-DIY project by abourdim.
+Workshop-DIY Educational Project

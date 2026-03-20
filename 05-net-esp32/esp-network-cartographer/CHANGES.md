@@ -1,13 +1,28 @@
-# esp-network-cartographer — Changelog
+# Changelog — esp-network-cartographer
 
-## v1.0 — 2026-03-18
+## v2.0.0 — Enhanced Release
+- "What You Shall Learn" section with learning objectives and badges
+- "How It Works" 4-step cards with trilingual translations
+- "Watch Demo" guided walkthrough with auto-play
+- "Device Code" section with hardware source files
+- 8 kid-friendly FAQ items (EN/FR/AR)
+- PWA icons (192px + 512px)
+- Service worker for offline support
+- Improved documentation
 
-- Live radar-style radio map canvas
-- WiFi/BLE/ESP-NOW multi-protocol scanning simulation
-- RSSI-based device positioning with range rings
-- BLE advertising interval flickering
-- Device list sorted by signal strength
-- Signal analysis section with statistics
-- Section C (Challenge) with 3 questions
-- Full trilingual i18n (EN/FR/AR)
-- Help panel: FAQ, How-To, Wiki
+## v1.0.0 — Initial Release
+- Full interactive simulation
+- Scan step card
+- Capture step card
+- Analyze step card
+- Report step card
+- How It Works section
+- Signal Analysis section
+- Challenge section
+- What You Shall Learn section
+- Watch Demo section
+- Device Code section
+- Trilingual support (EN/FR/AR)
+- 8 color themes
+- Activity log with filtering
+- Help panel with FAQ, How-To, Wiki
