@@ -1,13 +1,21 @@
 {
-  "name": "Client Fingerprinter — Device ID",
-  "short_name": "Client Fingerprinter",
+  "name": "Client Fingerprinter  Device ID — Workshop DIY",
+  "short_name": "Client Fingerprinter  Device I",
   "description": "Fingerprint WiFi clients by their behavioral patterns and uniqueness score",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#08091a",
   "theme_color": "#08091a",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

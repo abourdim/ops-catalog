@@ -323,3 +323,8 @@ function demoShow() {
   // Add highlight
   if (step.target) { var t = document.querySelector(step.target); if (t) { t.classList.add('demo-highlight'); t.scrollIntoView({behavior:'smooth', block:'center'}); } }
 }
+
+// Service Worker Registration (skip on file://)
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  navigator.serviceWorker.register('sw.js').catch(function(){});
+}

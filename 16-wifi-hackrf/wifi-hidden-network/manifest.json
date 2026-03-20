@@ -1,13 +1,21 @@
 {
-  "name": "my-project — Workshop DIY",
-  "short_name": "my-project",
+  "name": "WiFi Hidden Network Detector — Workshop DIY",
+  "short_name": "WiFi Hidden Network Detector",
   "description": "A Workshop-DIY educational web app",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#08091a",
   "theme_color": "#08091a",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

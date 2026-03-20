@@ -1,13 +1,21 @@
 {
-  "name": "Evil Twin Spotter — AP Verifier",
-  "short_name": "Evil Twin Spotter",
+  "name": "Evil Twin Spotter  AP Verifier — Workshop DIY",
+  "short_name": "Evil Twin Spotter  AP Verifier",
   "description": "Detect evil twin access points by comparing AP attributes and spotting mismatches",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#08091a",
   "theme_color": "#08091a",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
