@@ -29,10 +29,6 @@ const LANG={
     challengeReveal2:'SSIDs are just names — anyone can create an AP with any name. The BSSID (MAC) is harder to spoof but still possible.',
     challengeReveal3:'Check beacon interval timing, probe response patterns, supported rates, vendor OUI, certificate validation, and physical signal direction.',
     revealBtn:'Reveal Answer',
-    faq_q1:'What is an evil twin?',faq_a1:'A rogue AP that copies a legitimate network\'s SSID to trick users into connecting.',
-    faq_q2:'What is BSSID?',faq_a2:'The MAC address of the AP\'s radio. Each AP has a unique BSSID.',
-    faq_q3:'Can evil twins be detected?',faq_a3:'Yes, by comparing fingerprints: BSSID, channel, encryption type, beacon intervals.',
-    faq_q4:'Is this a real scanner?',faq_a4:'No. This is a simulation for educational purposes.',
     howto_1:'Click Scan APs to discover nearby access points.',
     howto_2:'Click Inject Evil Twin to simulate a rogue AP attack.',
     howto_3:'Click Compare to see fingerprint differences side by side.',
@@ -48,8 +44,7 @@ const LANG={
     ready:'🔍 Rogue AP Detector ready — scan to fingerprint networks!',
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
-    splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'ESP32 scans all WiFi channels and records AP fingerprints (BSSID, SSID, channel, encryption).',step2Title:'Capture',step2Desc:'Fingerprints are stored in a known-good database for comparison.',step3Title:'Analyze',step3Desc:'On each scan, new APs are compared against the database for mismatches.',step4Title:'Report',step4Desc:'If an AP shares the SSID but has a different BSSID or channel, it is flagged as a rogue.',sectionCode:'Device Code'},
+    splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',step1Title:'Scan',step1Desc:'ESP32 scans all WiFi channels and records AP fingerprints (BSSID, SSID, channel, encryption).',step2Title:'Capture',step2Desc:'Fingerprints are stored in a known-good database for comparison.',step3Title:'Analyze',step3Desc:'On each scan, new APs are compared against the database for mismatches.',step4Title:'Report',step4Desc:'If an AP shares the SSID but has a different BSSID or channel, it is flagged as a rogue.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Mesh Whisper and Esp Packet Storm! Each teaches something different. 🚀'},
   fr:{
     title:'esp-rogue-ap-detector',subtitle:'🔍 scanner · 🔬 empreinte · 🚨 détecter',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -70,10 +65,6 @@ const LANG={
     challengeReveal2:'Les SSID sont des noms — n\'importe qui peut en créer. Le BSSID est plus dur à usurper.',
     challengeReveal3:'Vérifier l\'intervalle beacon, les réponses probe, les taux supportés, l\'OUI du vendeur.',
     revealBtn:'Révéler',
-    faq_q1:'Qu\'est-ce qu\'un jumeau maléfique ?',faq_a1:'Un AP rogue qui copie le SSID d\'un réseau légitime.',
-    faq_q2:'Qu\'est-ce que le BSSID ?',faq_a2:'L\'adresse MAC de la radio de l\'AP.',
-    faq_q3:'Peut-on détecter les jumeaux ?',faq_a3:'Oui, en comparant les empreintes.',
-    faq_q4:'Est-ce un vrai scanner ?',faq_a4:'Non. C\'est une simulation.',
     howto_1:'Cliquez Scanner les AP.',howto_2:'Cliquez Injecter Jumeau pour simuler.',howto_3:'Cliquez Comparer pour l\'analyse.',howto_4:'Surveillez l\'alerte rouge.',
     wiki_evil_title:'👿 Attaque Jumeau',wiki_evil:'L\'attaquant crée un faux AP avec le même SSID.',
     wiki_fp_title:'🔬 Empreinte AP',wiki_fp:'Collecte BSSID, SSID, canal, chiffrement.',
@@ -86,8 +77,7 @@ const LANG={
     ready:'🔍 Détecteur prêt — scannez les réseaux !',
     logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
-    splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'L\'ESP32 scanne tous les canaux WiFi et enregistre les empreintes.',step2Title:'Capturer',step2Desc:'Les empreintes sont stockées dans une base de référence.',step3Title:'Analyser',step3Desc:'À chaque scan, les AP sont comparés à la base pour détecter les différences.',step4Title:'Rapporter',step4Desc:'Si un AP partage le SSID mais a un BSSID ou canal différent, il est marqué rogue.',sectionCode:'Code Appareil'},
+    splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',step1Title:'Scanner',step1Desc:'L\'ESP32 scanne tous les canaux WiFi et enregistre les empreintes.',step2Title:'Capturer',step2Desc:'Les empreintes sont stockées dans une base de référence.',step3Title:'Analyser',step3Desc:'À chaque scan, les AP sont comparés à la base pour détecter les différences.',step4Title:'Rapporter',step4Desc:'Si un AP partage le SSID mais a un BSSID ou canal différent, il est marqué rogue.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Mesh Whisper and Esp Packet Storm ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'esp-rogue-ap-detector',subtitle:'🔍 مسح · 🔬 بصمة · 🚨 كشف',
     disconnected:'غير متصل',connected:'متصل',
@@ -108,10 +98,6 @@ const LANG={
     challengeReveal2:'SSID مجرد أسماء — أي شخص يمكنه إنشاء AP بأي اسم.',
     challengeReveal3:'فحص توقيت beacon، أنماط الاستجابة، المعدلات المدعومة، OUI الشركة المصنعة.',
     revealBtn:'اكشف الإجابة',
-    faq_q1:'ما هو التوأم الشرير؟',faq_a1:'AP مزيف ينسخ SSID شبكة شرعية لخداع المستخدمين.',
-    faq_q2:'ما هو BSSID؟',faq_a2:'عنوان MAC لراديو نقطة الوصول.',
-    faq_q3:'هل يمكن كشف التوائم؟',faq_a3:'نعم، بمقارنة البصمات.',
-    faq_q4:'هل هذا ماسح حقيقي؟',faq_a4:'لا. هذه محاكاة تعليمية.',
     howto_1:'انقر مسح نقاط الوصول.',howto_2:'انقر حقن توأم شرير للمحاكاة.',howto_3:'انقر مقارنة للتحليل.',howto_4:'راقب التنبيه الأحمر.',
     wiki_evil_title:'👿 هجوم التوأم الشرير',wiki_evil:'المهاجم ينشئ AP مزيف بنفس SSID.',
     wiki_fp_title:'🔬 بصمة AP',wiki_fp:'جمع BSSID, SSID, القناة, التشفير لتعريف AP.',
@@ -124,8 +110,7 @@ const LANG={
     ready:'🔍 كاشف AP المزيف جاهز — امسح لبصمة الشبكات!',
     logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
-    splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'ESP32 يمسح كل قنوات WiFi ويسجل بصمات AP.',step2Title:'التقاط',step2Desc:'البصمات تُخزن في قاعدة بيانات مرجعية.',step3Title:'تحليل',step3Desc:'في كل مسح، تُقارن البصمات الجديدة بالقاعدة.',step4Title:'تقرير',step4Desc:'إذا شارك AP نفس SSID لكن بـ BSSID أو قناة مختلفة، يُعلّم كمزيف.',sectionCode:'كود الجهاز'}
+    splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',step1Title:'مسح',step1Desc:'ESP32 يمسح كل قنوات WiFi ويسجل بصمات AP.',step2Title:'التقاط',step2Desc:'البصمات تُخزن في قاعدة بيانات مرجعية.',step3Title:'تحليل',step3Desc:'في كل مسح، تُقارن البصمات الجديدة بالقاعدة.',step4Title:'تقرير',step4Desc:'إذا شارك AP نفس SSID لكن بـ BSSID أو قناة مختلفة، يُعلّم كمزيف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Mesh Whisper and Esp Packet Storm! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */

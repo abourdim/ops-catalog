@@ -19,10 +19,6 @@ const LANG={
     activityLog:'Activity Log',eventsMsg:'Events & messages',
     clear:'Clear',copy:'Copy',theme:'Theme',export:'Export',filterAll:'All',
     settings:'Settings',language:'Language',help:'Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',
-    faq_q1:'What is DNS Odyssey?',faq_a1:'A DNS resolution visualizer showing step-by-step recursive resolution.',
-    faq_q2:'Is this real DNS?',faq_a2:'No, all data is simulated for educational purposes.',
-    faq_q3:'How do I change the language?',faq_a3:'Open Settings and pick your language.',
-    faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',
     howto_1:'Enter a domain name.',howto_2:'Click Resolve to start.',howto_3:'Watch animated resolution.',howto_4:'Check TTL cache and history.',
     wiki_themes_title:'Themes',wiki_themes:'8 built-in themes.',wiki_i18n_title:'Languages',wiki_i18n:'Trilingual: EN, FR, AR.',
     wiki_log_title:'Activity Log',wiki_log:'Timestamped, color-coded log.',wiki_privacy_title:'Privacy',wiki_privacy:'Local-first. No data sent.',
@@ -40,8 +36,7 @@ const LANG={
     step4:'Root refers to TLD server',step5:'Resolver queries TLD server',step6:'TLD refers to authoritative server',
     step7:'Resolver queries authoritative server',step8:'Authoritative returns IP address',step9:'Resolver caches and returns to browser',
     browser:'Browser',resolver:'Resolver',rootSrv:'Root (.)',tldSrv:'TLD',authSrv:'Auth NS',
-    cached:'CACHED',ttl:'TTL',ip:'IP',noCache:'Not in cache',
-  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+    cached:'CACHED',ttl:'TTL',ip:'IP',noCache:'Not in cache',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Web Packet Racer and Web Firewall Fortress! Each teaches something different. 🚀'},
   fr:{
     title:'DNS Odyssee',subtitle:'Suivez la resolution DNS recursive etape par etape',
     disconnected:'Deconnecte',connected:'Connecte',
@@ -50,10 +45,6 @@ const LANG={
     activityLog:'Journal',eventsMsg:'Evenements et messages',
     clear:'Effacer',copy:'Copier',theme:'Theme',export:'Exporter',filterAll:'Tout',
     settings:'Parametres',language:'Langue',help:'Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',
-    faq_q1:'Qu\'est-ce que DNS Odyssee?',faq_a1:'Un visualiseur de resolution DNS recursive etape par etape.',
-    faq_q2:'C\'est du vrai DNS?',faq_a2:'Non, donnees simulees pour l\'education.',
-    faq_q3:'Comment changer la langue?',faq_a3:'Ouvrez Parametres et choisissez.',
-    faq_q4:'Mes donnees sont privees?',faq_a4:'Oui. Tout fonctionne localement.',
     howto_1:'Entrez un nom de domaine.',howto_2:'Cliquez Resoudre.',howto_3:'Regardez l\'animation.',howto_4:'Verifiez le cache TTL et l\'historique.',
     wiki_themes_title:'Themes',wiki_themes:'8 themes.',wiki_i18n_title:'Langues',wiki_i18n:'Trilingue.',
     wiki_log_title:'Journal',wiki_log:'Journal horodate.',wiki_privacy_title:'Confidentialite',wiki_privacy:'Local-first.',
@@ -71,8 +62,7 @@ const LANG={
     step4:'Racine renvoie vers le serveur TLD',step5:'Le resolveur interroge le serveur TLD',step6:'TLD renvoie vers le serveur autoritaire',
     step7:'Le resolveur interroge le serveur autoritaire',step8:'Le serveur autoritaire retourne l\'adresse IP',step9:'Le resolveur met en cache et retourne au navigateur',
     browser:'Navigateur',resolver:'Resolveur',rootSrv:'Racine (.)',tldSrv:'TLD',authSrv:'NS Auth',
-    cached:'EN CACHE',ttl:'TTL',ip:'IP',noCache:'Pas en cache',
-  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+    cached:'EN CACHE',ttl:'TTL',ip:'IP',noCache:'Pas en cache',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Packet Racer and Web Firewall Fortress ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'رحلة DNS',subtitle:'شاهد حل DNS التكراري خطوة بخطوة',
     disconnected:'غير متصل',connected:'متصل',
@@ -81,10 +71,6 @@ const LANG={
     activityLog:'سجل النشاط',eventsMsg:'الاحداث والرسائل',
     clear:'مسح',copy:'نسخ',theme:'المظهر',export:'تصدير',filterAll:'الكل',
     settings:'الاعدادات',language:'اللغة',help:'مساعدة',faq:'اسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',
-    faq_q1:'ما هي رحلة DNS؟',faq_a1:'اداة تصور حل DNS التكراري خطوة بخطوة.',
-    faq_q2:'هل هذا DNS حقيقي؟',faq_a2:'لا، بيانات محاكاة لاغراض تعليمية.',
-    faq_q3:'كيف اغير اللغة؟',faq_a3:'افتح الاعدادات واختر لغتك.',
-    faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محليا.',
     howto_1:'ادخل اسم نطاق.',howto_2:'انقر حل للبدء.',howto_3:'شاهد الرسوم المتحركة.',howto_4:'تحقق من ذاكرة TTL والسجل.',
     wiki_themes_title:'المظاهر',wiki_themes:'8 مظاهر.',wiki_i18n_title:'اللغات',wiki_i18n:'ثلاثي اللغات.',
     wiki_log_title:'سجل النشاط',wiki_log:'سجل مؤرخ.',wiki_privacy_title:'الخصوصية',wiki_privacy:'محلي اولا.',
@@ -102,8 +88,7 @@ const LANG={
     step4:'الجذر يحيل الى خادم TLD',step5:'المحلل يستعلم خادم TLD',step6:'TLD يحيل الى الخادم المعتمد',
     step7:'المحلل يستعلم الخادم المعتمد',step8:'الخادم المعتمد يعيد عنوان IP',step9:'المحلل يخزن ويعيد للمتصفح',
     browser:'المتصفح',resolver:'المحلل',rootSrv:'الجذر (.)',tldSrv:'TLD',authSrv:'NS المعتمد',
-    cached:'مخزن',ttl:'TTL',ip:'IP',noCache:'غير مخزن',
-  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
+    cached:'مخزن',ttl:'TTL',ip:'IP',noCache:'غير مخزن',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Web Packet Racer and Web Firewall Fortress! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang='en';

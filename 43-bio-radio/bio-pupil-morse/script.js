@@ -41,10 +41,6 @@ const LANG = {
     ch1Title: 'Spell Your Name', ch1Desc: 'Use pupil dilation to spell your name in Morse code.',
     ch2Title: 'Speed Record', ch2Desc: 'Try to achieve 5 words per minute using only pupil dilation.',
     ch3Title: 'Secret Message', ch3Desc: 'Send a secret message to a partner who decodes it.',
-    faq_q1: 'Can you control pupil dilation?', faq_a1: 'With training, some people can voluntarily dilate pupils by thinking of dark environments or emotional states.',
-    faq_q2: 'What is the pupil size range?', faq_a2: 'Human pupils range from 2mm (bright light) to 8mm (darkness). Our threshold is 4.5mm.',
-    faq_q3: 'How fast can you send Morse?', faq_a3: 'Experienced operators reach 5-10 WPM with pupil dilation.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click Start Tracking to begin pupil monitoring.',
     howto_2: 'Use Dot and Dash buttons to simulate dilation signals.',
     howto_3: 'Use Space to separate letters, or press keyboard Space/Slash.',
@@ -62,8 +58,7 @@ const LANG = {
     t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
     ready: '\ud83d\udc41 Bio Pupil Morse ready \u2014 blink to encode!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
-  ,sectionCode:'Device Code'},
+    langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates bio-signals! 🔬 You get to experiment with body signals into radio in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real body signals into radio so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real biometric radio technology! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bio Skin Galvanic Key and Bio Nerve Impulse Detector! Each teaches something different. 🚀'},
   fr: {
     title: 'Bio Pupille Morse', subtitle: 'Dilatation pupillaire en code Morse',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -80,10 +75,6 @@ const LANG = {
     ch1Title: '\u00c9pelez Votre Nom', ch1Desc: 'Utilisez la dilatation pupillaire pour \u00e9peler votre nom.',
     ch2Title: 'Record de Vitesse', ch2Desc: 'Essayez 5 mots par minute avec la dilatation pupillaire.',
     ch3Title: 'Message Secret', ch3Desc: 'Envoyez un message secret \u00e0 un partenaire.',
-    faq_q1: 'Peut-on contr\u00f4ler la dilatation?', faq_a1: 'Avec l\'entra\u00eenement, certains peuvent volontairement dilater leurs pupilles.',
-    faq_q2: 'Quelle est la plage de taille?', faq_a2: 'Les pupilles vont de 2mm (lumi\u00e8re vive) \u00e0 8mm (obscurit\u00e9). Seuil: 4.5mm.',
-    faq_q3: 'Quelle vitesse en Morse?', faq_a3: 'Les exp\u00e9riment\u00e9s atteignent 5-10 MPM par dilatation.',
-    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Cliquez D\u00e9marrer pour le suivi pupillaire.',
     howto_2: 'Utilisez Point et Trait pour simuler la dilatation.',
     howto_3: 'Utilisez Espace pour s\u00e9parer les lettres.',
@@ -101,8 +92,7 @@ const LANG = {
     t_medina: 'M\u00e9dina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
     ready: '\ud83d\udc41 Pupille Morse pr\u00eat \u2014 clignez pour encoder!',
     logCleared: 'Journal effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec copie',
-    langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
-  ,sectionCode:'Code Appareil'},
+    langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule bio-signals ! 🔬 Tu peux expérimenter avec body signals into radio en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais body signals into radio.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai biometric radio technology ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bio Skin Galvanic Key and Bio Nerve Impulse Detector ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: '\u0634\u0641\u0631\u0629 \u0627\u0644\u062d\u062f\u0642\u0629', subtitle: '\u062a\u0648\u0633\u0639 \u0627\u0644\u062d\u062f\u0642\u0629 \u0643\u0634\u0641\u0631\u0629 \u0645\u0648\u0631\u0633',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -119,10 +109,6 @@ const LANG = {
     ch1Title: '\u062a\u0647\u062c\u0626 \u0627\u0633\u0645\u0643', ch1Desc: '\u0627\u0633\u062a\u062e\u062f\u0645 \u062a\u0648\u0633\u0639 \u0627\u0644\u062d\u062f\u0642\u0629 \u0644\u062a\u0647\u062c\u0626 \u0627\u0633\u0645\u0643.',
     ch2Title: '\u0631\u0642\u0645 \u0642\u064a\u0627\u0633\u064a', ch2Desc: '\u062d\u0627\u0648\u0644 5 \u0643\u0644\u0645\u0627\u062a \u0641\u064a \u0627\u0644\u062f\u0642\u064a\u0642\u0629.',
     ch3Title: '\u0631\u0633\u0627\u0644\u0629 \u0633\u0631\u064a\u0629', ch3Desc: '\u0623\u0631\u0633\u0644 \u0631\u0633\u0627\u0644\u0629 \u0633\u0631\u064a\u0629 \u0644\u0634\u0631\u064a\u0643\u0643.',
-    faq_q1: '\u0647\u0644 \u064a\u0645\u0643\u0646 \u0627\u0644\u062a\u062d\u0643\u0645 \u0628\u0627\u0644\u062a\u0648\u0633\u0639\u061f', faq_a1: '\u0645\u0639 \u0627\u0644\u062a\u062f\u0631\u064a\u0628 \u064a\u0645\u0643\u0646 \u0644\u0644\u0628\u0639\u0636 \u062a\u0648\u0633\u064a\u0639 \u062d\u062f\u0642\u0627\u062a\u0647\u0645 \u0625\u0631\u0627\u062f\u064a\u064b\u0627.',
-    faq_q2: '\u0645\u0627 \u0646\u0637\u0627\u0642 \u062d\u062c\u0645 \u0627\u0644\u062d\u062f\u0642\u0629\u061f', faq_a2: '2\u0645\u0645 (\u0636\u0648\u0621 \u0633\u0627\u0637\u0639) \u0625\u0644\u0649 8\u0645\u0645 (\u0638\u0644\u0627\u0645). \u0627\u0644\u0639\u062a\u0628\u0629: 4.5\u0645\u0645.',
-    faq_q3: '\u0645\u0627 \u0633\u0631\u0639\u0629 \u0625\u0631\u0633\u0627\u0644 \u0645\u0648\u0631\u0633\u061f', faq_a3: '\u0627\u0644\u0645\u062a\u0645\u0631\u0633\u0648\u0646 \u064a\u0635\u0644\u0648\u0646 5-10 \u0643\u0644\u0645\u0629/\u062f\u0642\u064a\u0642\u0629.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: '\u0627\u0646\u0642\u0631 \u0628\u062f\u0621 \u0627\u0644\u062a\u062a\u0628\u0639 \u0644\u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u062d\u062f\u0642\u0629.', howto_2: '\u0627\u0633\u062a\u062e\u062f\u0645 \u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0646\u0642\u0637\u0629 \u0648\u0627\u0644\u0634\u0631\u0637\u0629.',
     howto_3: '\u0627\u0633\u062a\u062e\u062f\u0645 \u0627\u0644\u0645\u0633\u0627\u0641\u0629 \u0644\u0644\u0641\u0635\u0644 \u0628\u064a\u0646 \u0627\u0644\u062d\u0631\u0648\u0641.', howto_4: '\u0627\u0646\u0642\u0631 \u0641\u0643 \u0627\u0644\u0634\u0641\u0631\u0629 \u0644\u0644\u062a\u0631\u062c\u0645\u0629.',
     wiki_pupil_title: '\ud83d\udc41 \u0642\u064a\u0627\u0633 \u0627\u0644\u062d\u062f\u0642\u0629', wiki_pupil: '\u0627\u0644\u062d\u062f\u0642\u0627\u062a: 2-8\u0645\u0645. \u062a\u062a\u0623\u062b\u0631 \u0628\u0627\u0644\u0636\u0648\u0621 \u0648\u0627\u0644\u0639\u0627\u0637\u0641\u0629.',
@@ -137,8 +123,7 @@ const LANG = {
     t_medina: '\u0645\u062f\u064a\u0646\u0629', t_space: '\u0641\u0636\u0627\u0621', t_jungle: '\u0623\u062f\u063a\u0627\u0644', t_robot: '\u0631\u0648\u0628\u0648\u062a',
     ready: '\ud83d\udc41 \u0634\u0641\u0631\u0629 \u0627\u0644\u062d\u062f\u0642\u0629 \u062c\u0627\u0647\u0632\u0629!',
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
-    langChanged: '\ud83c\udf10 \u0627\u0644\u0644\u063a\u0629 \u2190 \u0627\u0644\u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
-  ,sectionCode:'كود الجهاز'}
+    langChanged: '\ud83c\udf10 \u0627\u0644\u0644\u063a\u0629 \u2190 \u0627\u0644\u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي bio-signals! 🔬 يمكنك التجربة مع body signals into radio في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج body signals into radio حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا biometric radio technology حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bio Skin Galvanic Key and Bio Nerve Impulse Detector! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */

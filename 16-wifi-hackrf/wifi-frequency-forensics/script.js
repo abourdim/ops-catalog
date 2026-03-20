@@ -71,10 +71,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is frequency forensics?', faq_a1: 'Analyzing WiFi channels to detect interference and unauthorized transmissions.',
-    faq_q2: 'Is this real?', faq_a2: 'No, simulation for educational purposes.',
-    faq_q3: 'What is HackRF?', faq_a3: 'An open-source SDR platform for signal analysis.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
     howto_1: 'Click Analyze to start scanning.', howto_2: 'Watch the spectrum visualization.',
     howto_3: 'Check channel data below.', howto_4: 'Customize in Settings.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
@@ -91,8 +87,7 @@ const LANG = {
     newVersion: 'UPDATE', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     start: 'Analyze', stop: 'Stop', channels: 'Channels', power: 'Power', interference: 'Interference', bandwidth: 'BW',
     simStarted: 'Analysis started', simStopped: 'Analysis stopped', channelScanned: 'Channel scanned',
-    howItWorksText: 'WiFi frequency forensics uses SDR to analyze 2.4GHz and 5GHz bands. By measuring signal power across channels, we identify interference and congestion. This simulation visualizes a spectrum analyzer.',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
+    howItWorksText: 'WiFi frequency forensics uses SDR to analyze 2.4GHz and 5GHz bands. By measuring signal power across channels, we identify interference and congestion. This simulation visualizes a spectrum analyzer.',step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need HackRF One. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Wifi Protocol Rainbow and Wifi Hidden Network! Each teaches something different. 🚀'},
   fr: {
     title: 'Forensique Frequence WiFi', subtitle: 'Analyser les canaux WiFi avec HackRF',
     disconnected: 'Inactif', connected: 'Analyse',
@@ -101,9 +96,6 @@ const LANG = {
     activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', theme: 'Theme',
     settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Forensique de frequence?', faq_a1: 'Analyser les canaux WiFi pour detecter les interferences.',
-    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation.', faq_q3: 'HackRF?', faq_a3: 'Plateforme SDR open-source.',
-    faq_q4: 'Donnees privees?', faq_a4: 'Oui, tout local.',
     howto_1: 'Cliquez Analyser.', howto_2: 'Observez le spectre.', howto_3: 'Consultez les donnees.', howto_4: 'Personnalisez.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
     wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.', wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local.',
@@ -116,8 +108,7 @@ const LANG = {
     langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
     start: 'Analyser', stop: 'Arreter', channels: 'Canaux', power: 'Puissance', interference: 'Interference', bandwidth: 'BP',
     simStarted: 'Analyse demarree', simStopped: 'Analyse arretee', channelScanned: 'Canal analyse',
-    howItWorksText: 'La forensique utilise la SDR pour analyser les bandes 2.4GHz et 5GHz.',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
+    howItWorksText: 'La forensique utilise la SDR pour analyser les bandes 2.4GHz et 5GHz.',step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut HackRF One. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Wifi Protocol Rainbow and Wifi Hidden Network ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'تحليل ترددات WiFi', subtitle: 'تحليل قنوات WiFi باستخدام HackRF',
     disconnected: 'خامل', connected: 'تحليل',
@@ -126,9 +117,6 @@ const LANG = {
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو تحليل الترددات؟', faq_a1: 'تحليل قنوات WiFi لكشف التداخل.',
-    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة فقط.', faq_q3: 'ما هو HackRF؟', faq_a3: 'منصة SDR مفتوحة المصدر.',
-    faq_q4: 'خصوصية؟', faq_a4: 'نعم، كل شيء محلي.',
     howto_1: 'انقر تحليل.', howto_2: 'شاهد الطيف.', howto_3: 'تابع البيانات.', howto_4: 'خصص الإعدادات.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي.',
     wiki_log_title: '📜 سجل', wiki_log: 'مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
@@ -140,8 +128,7 @@ const LANG = {
     newVersion: 'تحديث', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
     start: 'تحليل', stop: 'إيقاف', channels: 'قنوات', power: 'طاقة', interference: 'تداخل', bandwidth: 'عرض',
     simStarted: 'بدأ التحليل', simStopped: 'توقف التحليل', channelScanned: 'تم مسح القناة',
-    howItWorksText: 'تحليل ترددات WiFi يستخدم SDR لتحليل نطاقات 2.4GHz و 5GHz.',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
+    howItWorksText: 'تحليل ترددات WiFi يستخدم SDR لتحليل نطاقات 2.4GHz و 5GHz.',step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي WiFi! 🔬 يمكنك التجربة مع WiFi signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج WiFi signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا wireless networks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج HackRF One. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Wifi Protocol Rainbow and Wifi Hidden Network! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

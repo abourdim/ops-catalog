@@ -79,10 +79,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Pi Antenna Switch?', faq_a1: 'A remote antenna switching controller using Raspberry Pi GPIO relays.',
-    faq_q2: 'How many antennas?', faq_a2: 'Supports 2 to 8 antenna ports. Select the count and click to switch.',
-    faq_q3: 'How does auto-scan work?', faq_a3: 'Auto-scan cycles through all antennas measuring signal strength to find the best one.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Select the number of antennas and click Connect Pi.',
     howto_2: 'Click an antenna button to switch to it.',
     howto_3: 'Use Auto-Scan to find the best antenna.',
@@ -104,8 +100,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Connect Hardware',step1Desc:'Wire up sensors, displays, or radio modules to the Raspberry Pi GPIO pins.',step2Title:'Configure Software',step2Desc:'Install libraries and configure the Python script for your hardware setup.',step3Title:'Monitor Data',step3Desc:'Read sensor data in real time and process it through your algorithms.',step4Title:'Control & Log',step4Desc:'Trigger actions based on data thresholds and log results for analysis.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Connect Hardware',step1Desc:'Wire up sensors, displays, or radio modules to the Raspberry Pi GPIO pins.',step2Title:'Configure Software',step2Desc:'Install libraries and configure the Python script for your hardware setup.',step3Title:'Monitor Data',step3Desc:'Read sensor data in real time and process it through your algorithms.',step4Title:'Control & Log',step4Desc:'Trigger actions based on data thresholds and log results for analysis.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates Raspberry Pi projects! 🔬 You get to experiment with sensors and GPIO in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sensors and GPIO so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real physical computing! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need Raspberry Pi. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Pi Phased Array and Pi Remote Station! Each teaches something different. 🚀'},
   fr: {
     title: 'Commutateur Antenne Pi', subtitle: '📡 commuter · 🔌 connecter · 🎛️ contrôler',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -123,10 +118,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le commutateur antenne Pi ?', faq_a1: 'Un contrôleur de commutation d\'antenne à distance via relais GPIO du Raspberry Pi.',
-    faq_q2: 'Combien d\'antennes ?', faq_a2: 'Supporte 2 à 8 ports antenne. Sélectionnez le nombre et cliquez pour commuter.',
-    faq_q3: 'Comment fonctionne le scan auto ?', faq_a3: 'Le scan auto parcourt toutes les antennes en mesurant la force du signal pour trouver la meilleure.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
     howto_1: 'Sélectionnez le nombre d\'antennes et cliquez Connecter Pi.',
     howto_2: 'Cliquez sur une antenne pour commuter.',
     howto_3: 'Utilisez Scan auto pour trouver la meilleure antenne.',
@@ -148,8 +139,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'Connecter le matériel',step1Desc:'Branche les capteurs ou modules radio aux broches GPIO du Raspberry Pi.',step2Title:'Configurer le logiciel',step2Desc:'Installe les bibliothèques et configure le script Python.',step3Title:'Surveiller les données',step3Desc:'Lis les données des capteurs en temps réel et traite-les.',step4Title:'Contrôler et enregistrer',step4Desc:'Déclenche des actions selon les seuils et enregistre les résultats.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'Connecter le matériel',step1Desc:'Branche les capteurs ou modules radio aux broches GPIO du Raspberry Pi.',step2Title:'Configurer le logiciel',step2Desc:'Installe les bibliothèques et configure le script Python.',step3Title:'Surveiller les données',step3Desc:'Lis les données des capteurs en temps réel et traite-les.',step4Title:'Contrôler et enregistrer',step4Desc:'Déclenche des actions selon les seuils et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule Raspberry Pi projects ! 🔬 Tu peux expérimenter avec sensors and GPIO en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sensors and GPIO.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai physical computing ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut Raspberry Pi. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Pi Phased Array and Pi Remote Station ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'مفتاح هوائي Pi', subtitle: '📡 تبديل · 🔌 اتصال · 🎛️ تحكم',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -167,10 +157,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو مفتاح هوائي Pi؟', faq_a1: 'متحكم تبديل هوائي عن بعد باستخدام مرحلات GPIO في Raspberry Pi.',
-    faq_q2: 'كم عدد الهوائيات؟', faq_a2: 'يدعم 2 إلى 8 منافذ هوائي. حدد العدد وانقر للتبديل.',
-    faq_q3: 'كيف يعمل المسح التلقائي؟', faq_a3: 'المسح التلقائي يمر على جميع الهوائيات ويقيس قوة الإشارة لإيجاد الأفضل.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'حدد عدد الهوائيات وانقر اتصال بـ Pi.',
     howto_2: 'انقر على زر هوائي للتبديل إليه.',
     howto_3: 'استخدم المسح التلقائي لإيجاد أفضل هوائي.',
@@ -192,8 +178,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'توصيل العتاد',step1Desc:'وصّل المستشعرات أو الوحدات بمنافذ GPIO في Raspberry Pi.',step2Title:'تكوين البرنامج',step2Desc:'ثبّت المكتبات وكوّن سكريبت Python لإعداد العتاد.',step3Title:'مراقبة البيانات',step3Desc:'اقرأ بيانات المستشعرات في الوقت الفعلي وعالجها.',step4Title:'تحكم وتسجيل',step4Desc:'أطلق إجراءات بناءً على حدود البيانات وسجّل النتائج.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'توصيل العتاد',step1Desc:'وصّل المستشعرات أو الوحدات بمنافذ GPIO في Raspberry Pi.',step2Title:'تكوين البرنامج',step2Desc:'ثبّت المكتبات وكوّن سكريبت Python لإعداد العتاد.',step3Title:'مراقبة البيانات',step3Desc:'اقرأ بيانات المستشعرات في الوقت الفعلي وعالجها.',step4Title:'تحكم وتسجيل',step4Desc:'أطلق إجراءات بناءً على حدود البيانات وسجّل النتائج.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي Raspberry Pi projects! 🔬 يمكنك التجربة مع sensors and GPIO في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج sensors and GPIO حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا physical computing حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج Raspberry Pi. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Pi Phased Array and Pi Remote Station! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

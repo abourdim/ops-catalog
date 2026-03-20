@@ -85,10 +85,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is a honeypot network?', faq_a1: 'A collection of fake WiFi APs designed to attract and study attackers. Each AP mimics a different network type.',
-    faq_q2: 'Is this real?', faq_a2: 'No, this is a simulation. No real WiFi networks are created. Everything runs in your browser.',
-    faq_q3: 'What is a probe request?', faq_a3: 'When a device searches for known WiFi networks, it sends probe requests revealing previously connected networks.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No real network connections are made.',
     howto_1: 'Click Deploy Network to activate all honeypot APs.',
     howto_2: 'Watch the attack log for probe requests and associations.',
     howto_3: 'Open Network Topology to see the live canvas visualization.',
@@ -110,8 +106,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Esp Wifi Canary and Esp Roaming Visualizer! Each teaches something different. 🚀'},
   fr: {
     title: 'Reseau Honeypot ESP', subtitle: '🍯 deployer · 📡 surveiller · 🔍 analyser',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -135,10 +130,6 @@ const LANG = {
     settings: '⚙️ Parametres', language: 'Langue',
     helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce qu\'un reseau honeypot ?', faq_a1: 'Un ensemble de faux AP WiFi concus pour attirer et etudier les attaquants.',
-    faq_q2: 'Est-ce reel ?', faq_a2: 'Non, c\'est une simulation. Aucun vrai reseau WiFi n\'est cree.',
-    faq_q3: 'Qu\'est-ce qu\'une requete probe ?', faq_a3: 'Quand un appareil cherche des reseaux connus, il envoie des requetes probe revelant ses connexions passees.',
-    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Clique sur Deployer le Reseau pour activer tous les AP.',
     howto_2: 'Observe le journal d\'attaques pour les sondes et associations.',
     howto_3: 'Ouvre Topologie Reseau pour la visualisation canvas en direct.',
@@ -160,8 +151,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Wifi Canary and Esp Roaming Visualizer ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'شبكة مصائد ESP', subtitle: '🍯 انشر · 📡 راقب · 🔍 حلّل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -185,10 +175,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي شبكة المصائد؟', faq_a1: 'مجموعة من نقاط وصول WiFi مزيفة مصممة لجذب ودراسة المهاجمين.',
-    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، هذه محاكاة. لا يتم إنشاء شبكات WiFi حقيقية.',
-    faq_q3: 'ما هو طلب الاستكشاف؟', faq_a3: 'عندما يبحث جهاز عن شبكات معروفة يرسل طلبات استكشاف تكشف الشبكات السابقة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: 'اضغط نشر الشبكة لتفعيل جميع نقاط الوصول المصائد.',
     howto_2: 'راقب سجل الهجمات لطلبات الاستكشاف والارتباطات.',
     howto_3: 'افتح طوبولوجيا الشبكة للتصور الحي.',
@@ -210,8 +196,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي WiFi! 🔬 يمكنك التجربة مع WiFi signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج WiFi signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا wireless networks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Wifi Canary and Esp Roaming Visualizer! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

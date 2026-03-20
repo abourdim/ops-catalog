@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What does this app do?', faq_a1: 'It simulates satellite pass prediction and alerting. Learn how the ISS and other satellites appear in your sky!',
-    faq_q2: 'Is the tracking real-time?', faq_a2: 'This is a simulation for learning purposes. It uses simplified orbital models to demonstrate pass prediction concepts.',
-    faq_q3: 'What is elevation and azimuth?', faq_a3: 'Elevation is the angle above the horizon (0° = horizon, 90° = directly overhead). Azimuth is the compass direction (0° = North, 90° = East).',
-    faq_q4: 'Can I change my observer location?', faq_a4: 'Yes! Use the Lab section sliders to adjust your latitude and longitude, then run a new simulation.',
     howto_1: 'View the sky map to see the polar projection of satellite passes over your location.',
     howto_2: 'Click "Set Alarm" to arm the alert for the next predicted pass.',
     howto_3: 'Click "Simulate Pass" to watch an accelerated ISS pass animation across the sky map.',
@@ -122,8 +118,7 @@ const LANG = {
     nextPassIn: 'Next pass in', visible: 'Visible', notVisible: 'Not visible',
     labSimDone: '🧪 Lab simulation complete', labResetDone: '🔄 Lab reset to defaults',
     timerStarted: '⏱️ Timer started — click again to stop', timerStopped: '⏱️ Pass timed:',
-    north: 'N', south: 'S', east: 'E', west: 'W',
-  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code'},
+    north: 'N', south: 'S', east: 'E', west: 'W',step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates ham radio! 🔬 You get to experiment with radio signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real amateur radio communication! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Cw Paddle and Bit Fox Hunt Compass! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-satellite-alarm', subtitle: '🛰️ suivre · 🔔 alerter · 🌌 explorer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -134,10 +129,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Que fait cette application ?', faq_a1: 'Elle simule la prédiction de passages de satellites. Apprenez comment l\'ISS et d\'autres satellites apparaissent dans votre ciel !',
-    faq_q2: 'Le suivi est-il en temps réel ?', faq_a2: 'C\'est une simulation à but pédagogique. Elle utilise des modèles orbitaux simplifiés pour démontrer les concepts de prédiction de passage.',
-    faq_q3: 'Qu\'est-ce que l\'élévation et l\'azimut ?', faq_a3: 'L\'élévation est l\'angle au-dessus de l\'horizon (0° = horizon, 90° = au zénith). L\'azimut est la direction de la boussole (0° = Nord, 90° = Est).',
-    faq_q4: 'Puis-je changer ma position ?', faq_a4: 'Oui ! Utilisez les curseurs du Labo pour ajuster votre latitude et longitude, puis lancez une nouvelle simulation.',
     howto_1: 'Consultez la carte du ciel pour voir la projection polaire des passages de satellites.',
     howto_2: 'Cliquez sur "Alarme" pour armer l\'alerte pour le prochain passage prédit.',
     howto_3: 'Cliquez sur "Simuler" pour voir une animation accélérée du passage de l\'ISS.',
@@ -183,8 +174,7 @@ const LANG = {
     nextPassIn: 'Prochain passage dans', visible: 'Visible', notVisible: 'Non visible',
     labSimDone: '🧪 Simulation labo terminée', labResetDone: '🔄 Labo réinitialisé',
     timerStarted: '⏱️ Chrono démarré — cliquez à nouveau pour arrêter', timerStopped: '⏱️ Passage chronométré :',
-    north: 'N', south: 'S', east: 'E', west: 'O',
-  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil'},
+    north: 'N', south: 'S', east: 'E', west: 'O',step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule ham radio ! 🔬 Tu peux expérimenter avec radio signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai amateur radio communication ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Cw Paddle and Bit Fox Hunt Compass ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-satellite-alarm', subtitle: '🛰️ تتبّع · 🔔 تنبيه · 🌌 استكشاف',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -195,10 +185,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ماذا يفعل هذا التطبيق؟', faq_a1: 'يحاكي التنبؤ بمرور الأقمار الصناعية والتنبيه. تعلّم كيف تظهر محطة الفضاء الدولية في سمائك!',
-    faq_q2: 'هل التتبع في الوقت الحقيقي؟', faq_a2: 'هذه محاكاة لأغراض تعليمية. تستخدم نماذج مدارية مبسطة لشرح مفاهيم التنبؤ بالمرور.',
-    faq_q3: 'ما هو الارتفاع والسمت؟', faq_a3: 'الارتفاع هو الزاوية فوق الأفق (0° = الأفق، 90° = فوق الرأس مباشرة). السمت هو اتجاه البوصلة (0° = الشمال، 90° = الشرق).',
-    faq_q4: 'هل يمكنني تغيير موقع المراقبة؟', faq_a4: 'نعم! استخدم أشرطة التمرير في المختبر لضبط خط العرض والطول، ثم شغّل محاكاة جديدة.',
     howto_1: 'شاهد خريطة السماء لرؤية الإسقاط القطبي لمرور الأقمار الصناعية فوق موقعك.',
     howto_2: 'انقر على "تنبيه" لتفعيل الإنذار للمرور القادم.',
     howto_3: 'انقر على "محاكاة" لمشاهدة رسم متحرك مسرّع لمرور محطة الفضاء.',
@@ -244,8 +230,7 @@ const LANG = {
     nextPassIn: 'المرور القادم خلال', visible: 'مرئي', notVisible: 'غير مرئي',
     labSimDone: '🧪 انتهت محاكاة المختبر', labResetDone: '🔄 تم إعادة تعيين المختبر',
     timerStarted: '⏱️ بدأ المؤقت — انقر مرة أخرى للإيقاف', timerStopped: '⏱️ مدة المرور:',
-    north: 'ش', south: 'ج', east: 'شر', west: 'غ',
-  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز'}
+    north: 'ش', south: 'ج', east: 'شر', west: 'غ',step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي ham radio! 🔬 يمكنك التجربة مع radio signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا amateur radio communication حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Cw Paddle and Bit Fox Hunt Compass! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

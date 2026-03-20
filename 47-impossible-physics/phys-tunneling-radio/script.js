@@ -18,10 +18,6 @@ const LANG = {
     activityLog: '📜 Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', export: 'Export', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language', help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is quantum tunneling?', faq_a1: 'A quantum phenomenon where particles pass through energy barriers they classically couldn\'t overcome.',
-    faq_q2: 'Can radio waves tunnel?', faq_a2: 'EM waves exhibit evanescent wave coupling through sub-wavelength barriers, analogous to quantum tunneling.',
-    faq_q3: 'What affects tunneling probability?', faq_a3: 'Barrier width, height, and particle energy. Thinner barriers increase tunneling.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Select a barrier type.', howto_2: 'Adjust barrier height and wave energy.',
     howto_3: 'Click Start to see wave packets hitting the barrier.', howto_4: 'Watch transmitted and reflected components.',
     wiki_t1: '🌀 Quantum Tunneling', wiki_d1: 'The wave function penetrates classically forbidden regions.',
@@ -41,8 +37,7 @@ const LANG = {
     splashHint: 'tap to skip', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     simStarted: '🌀 Tunneling active', simStopped: '⏹ Stopped', simReset: '↺ Reset',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus', t_riad: 'Riad',
-    t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-  ,step1Title:'Set Parameters',step1Desc:'Configure the physical constants and initial conditions for the experiment.',step2Title:'Run Experiment',step2Desc:'Start the simulation and observe the physics phenomenon in action.',step3Title:'Measure Results',step3Desc:'Capture quantitative measurements from the simulated experiment.',step4Title:'Compare Theory',step4Desc:'Compare your experimental results with theoretical predictions.',sectionCode:'Device Code'},
+    t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',step1Title:'Set Parameters',step1Desc:'Configure the physical constants and initial conditions for the experiment.',step2Title:'Run Experiment',step2Desc:'Start the simulation and observe the physics phenomenon in action.',step3Title:'Measure Results',step3Desc:'Capture quantitative measurements from the simulated experiment.',step4Title:'Compare Theory',step4Desc:'Compare your experimental results with theoretical predictions.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates impossible physics! 🔬 You get to experiment with exotic physical phenomena in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real exotic physical phenomena so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real cutting-edge physics simulations! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Phys Metamaterial Simulator and Phys Sagnac Interferometer! Each teaches something different. 🚀'},
   fr: {
     title: 'Radio Tunnel Quantique', subtitle: '🌀 RF à travers les barrières quantiques',
     disconnected: 'Hors ligne', connected: 'Tunnel actif',
@@ -51,10 +46,6 @@ const LANG = {
     activityLog: '📜 Journal', eventsMsg: 'Événements',
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue', help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que l\'effet tunnel ?', faq_a1: 'Un phénomène quantique où les particules traversent des barrières d\'énergie.',
-    faq_q2: 'Les ondes radio peuvent-elles tunneler ?', faq_a2: 'Les ondes EM présentent un couplage évanescent à travers les barrières.',
-    faq_q3: 'Qu\'affecte la probabilité de tunnel ?', faq_a3: 'Largeur et hauteur de la barrière, et énergie de la particule.',
-    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Choisissez un type de barrière.', howto_2: 'Ajustez la hauteur et l\'énergie.',
     howto_3: 'Cliquez Démarrer.', howto_4: 'Observez les composantes transmises et réfléchies.',
     wiki_t1: '🌀 Effet Tunnel Quantique', wiki_d1: 'La fonction d\'onde pénètre les régions classiquement interdites.',
@@ -74,8 +65,7 @@ const LANG = {
     splashHint: 'appuyer pour passer', langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
     simStarted: '🌀 Tunnel actif', simStopped: '⏹ Arrêté', simReset: '↺ Réinitialisé',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous', t_riad: 'Riad',
-    t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-  ,step1Title:'Définir les paramètres',step1Desc:'Configure les constantes physiques et conditions initiales.',step2Title:'Lancer l\'expérience',step2Desc:'Démarre la simulation et observe le phénomène physique en action.',step3Title:'Mesurer les résultats',step3Desc:'Capture les mesures quantitatives de l\'expérience simulée.',step4Title:'Comparer à la théorie',step4Desc:'Compare tes résultats expérimentaux aux prédictions théoriques.',sectionCode:'Code Appareil'},
+    t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',step1Title:'Définir les paramètres',step1Desc:'Configure les constantes physiques et conditions initiales.',step2Title:'Lancer l\'expérience',step2Desc:'Démarre la simulation et observe le phénomène physique en action.',step3Title:'Mesurer les résultats',step3Desc:'Capture les mesures quantitatives de l\'expérience simulée.',step4Title:'Comparer à la théorie',step4Desc:'Compare tes résultats expérimentaux aux prédictions théoriques.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule impossible physics ! 🔬 Tu peux expérimenter avec exotic physical phenomena en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais exotic physical phenomena.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai cutting-edge physics simulations ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Phys Metamaterial Simulator and Phys Sagnac Interferometer ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'راديو النفق الكمي', subtitle: '🌀 RF عبر الحواجز الكمية',
     disconnected: 'غير متصل', connected: 'نفق نشط',
@@ -84,10 +74,6 @@ const LANG = {
     activityLog: '📜 سجل النشاط', eventsMsg: 'الأحداث',
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة', help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيفية الاستخدام', wiki: 'ويكي',
-    faq_q1: 'ما هو النفق الكمي؟', faq_a1: 'ظاهرة كمية تمر فيها الجسيمات عبر حواجز طاقة لا يمكن تجاوزها كلاسيكياً.',
-    faq_q2: 'هل يمكن لموجات الراديو أن تنفق؟', faq_a2: 'تظهر الموجات الكهرومغناطيسية اقتراناً تلاشوياً عبر الحواجز.',
-    faq_q3: 'ما الذي يؤثر على احتمال النفق؟', faq_a3: 'عرض وارتفاع الحاجز وطاقة الجسيم.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: 'اختر نوع الحاجز.', howto_2: 'اضبط ارتفاع الحاجز وطاقة الموجة.',
     howto_3: 'اضغط ابدأ لرؤية حزم الموجات.', howto_4: 'شاهد المكونات المنقولة والمنعكسة.',
     wiki_t1: '🌀 النفق الكمي', wiki_d1: 'دالة الموجة تخترق المناطق المحظورة كلاسيكياً.',
@@ -107,8 +93,7 @@ const LANG = {
     splashHint: 'انقر للتخطي', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
     simStarted: '🌀 النفق نشط', simStopped: '⏹ توقف', simReset: '↺ إعادة ضبط',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس', t_riad: 'رياض',
-    t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-  ,step1Title:'تعيين المعلمات',step1Desc:'اضبط الثوابت الفيزيائية والشروط الأولية للتجربة.',step2Title:'تشغيل التجربة',step2Desc:'ابدأ المحاكاة وراقب الظاهرة الفيزيائية أثناء حدوثها.',step3Title:'قياس النتائج',step3Desc:'التقط القياسات الكمية من التجربة المحاكاة.',step4Title:'مقارنة بالنظرية',step4Desc:'قارن نتائجك التجريبية بالتنبؤات النظرية.',sectionCode:'كود الجهاز'}
+    t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',step1Title:'تعيين المعلمات',step1Desc:'اضبط الثوابت الفيزيائية والشروط الأولية للتجربة.',step2Title:'تشغيل التجربة',step2Desc:'ابدأ المحاكاة وراقب الظاهرة الفيزيائية أثناء حدوثها.',step3Title:'قياس النتائج',step3Desc:'التقط القياسات الكمية من التجربة المحاكاة.',step4Title:'مقارنة بالنظرية',step4Desc:'قارن نتائجك التجريبية بالتنبؤات النظرية.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي impossible physics! 🔬 يمكنك التجربة مع exotic physical phenomena في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج exotic physical phenomena حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا cutting-edge physics simulations حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Phys Metamaterial Simulator and Phys Sagnac Interferometer! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

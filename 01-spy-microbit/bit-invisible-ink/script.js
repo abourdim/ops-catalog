@@ -73,10 +73,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Invisible Ink?', faq_a1: 'A simulation of self-destructing messages. Send a secret message that vanishes after the recipient reads it.',
-    faq_q2: 'How does the self-destruct timer work?', faq_a2: 'Choose a delay (5s-60s). Once the message is opened, the countdown starts. When it reaches zero, the message is destroyed character by character.',
-    faq_q3: 'What are read receipts?', faq_a3: 'Read receipts record the exact time the message was opened. This is logged so the sender knows when the message was viewed.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Type a secret message in the compose area.',
     howto_2: 'Select a self-destruct timer from the dropdown.',
     howto_3: 'Click "Send Secret Message" to encrypt and transmit.',
@@ -126,8 +122,7 @@ const LANG = {
     screenshotDetected: 'Screenshot attempt detected! Accelerating destruction!',
     noMessage: 'Please type a message first.',
     readAt: 'Read at:',
-    pendingMsgs: 'pending messages',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    pendingMsgs: 'pending messages',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Shake Cipher and Bit Stealth Alarm! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-invisible-ink', subtitle: '🔏 encre invisible · 🔥 auto-destruction · 👁️ accusés de lecture',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -138,10 +133,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que l\'Encre Invisible ?', faq_a1: 'Une simulation de messages auto-destructeurs. Envoyez un message secret qui disparaît après lecture.',
-    faq_q2: 'Comment fonctionne le minuteur ?', faq_a2: 'Choisissez un délai (5s-60s). Une fois le message ouvert, le compte à rebours démarre. À zéro, le message est détruit caractère par caractère.',
-    faq_q3: 'Que sont les accusés de lecture ?', faq_a3: 'Les accusés de lecture enregistrent l\'heure exacte d\'ouverture du message. C\'est consigné pour que l\'expéditeur sache quand le message a été lu.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
     howto_1: 'Tapez un message secret dans la zone de composition.',
     howto_2: 'Sélectionnez un minuteur d\'auto-destruction.',
     howto_3: 'Cliquez sur « Envoyer Message Secret » pour chiffrer et transmettre.',
@@ -191,8 +182,7 @@ const LANG = {
     screenshotDetected: 'Tentative de capture détectée ! Destruction accélérée !',
     noMessage: 'Veuillez d\'abord taper un message.',
     readAt: 'Lu à :',
-    pendingMsgs: 'messages en attente',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    pendingMsgs: 'messages en attente',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Shake Cipher and Bit Stealth Alarm ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-invisible-ink', subtitle: '🔏 حبر خفي · 🔥 تدمير ذاتي · 👁️ إيصالات قراءة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -203,10 +193,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو الحبر الخفي؟', faq_a1: 'محاكاة للرسائل ذاتية التدمير. أرسل رسالة سرية تختفي بعد قراءتها.',
-    faq_q2: 'كيف يعمل مؤقت التدمير الذاتي؟', faq_a2: 'اختر مهلة (5-60 ثانية). بمجرد فتح الرسالة، يبدأ العد التنازلي. عند الصفر، يتم تدمير الرسالة حرفًا بحرف.',
-    faq_q3: 'ما هي إيصالات القراءة؟', faq_a3: 'إيصالات القراءة تسجل الوقت الدقيق لفتح الرسالة. يتم تسجيل ذلك ليعرف المرسل متى تمت قراءة الرسالة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'اكتب رسالة سرية في منطقة الكتابة.',
     howto_2: 'حدد مؤقت التدمير الذاتي من القائمة المنسدلة.',
     howto_3: 'انقر على "إرسال رسالة سرية" للتشفير والإرسال.',
@@ -256,8 +242,7 @@ const LANG = {
     screenshotDetected: 'تم اكتشاف محاولة لقطة شاشة! تسريع التدمير!',
     noMessage: 'يرجى كتابة رسالة أولاً.',
     readAt: 'قُرئت في:',
-    pendingMsgs: 'رسائل معلقة',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    pendingMsgs: 'رسائل معلقة',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Bit Shake Cipher and Bit Stealth Alarm! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

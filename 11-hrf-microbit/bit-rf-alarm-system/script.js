@@ -73,10 +73,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'An RF alarm simulator that teaches you how wireless alarm systems work — and how attackers exploit them using jamming and replay attacks.',
-    faq_q2: 'Do I need a real micro:bit?', faq_a2: 'No! This app simulates everything in your browser. But you can build a real version with two micro:bits using the radio blocks.',
-    faq_q3: 'Is this legal to try on real alarms?', faq_a3: 'No. Jamming and spoofing real radio signals is illegal in most countries. This simulation is for educational purposes only.',
-    faq_q4: 'What are rolling codes?', faq_a4: 'Rolling codes generate a new unique code for every transmission. Even if an attacker captures a code, it cannot be reused — the system has already moved to the next code.',
     howto_1: 'Start by arming the alarm using the "Arm" remote button or enter code 1234 on the keypad and press OK.',
     howto_2: 'Try the "Jam Signal" button while armed — watch the signal quality drop and commands fail.',
     howto_3: 'Use "Record & Replay" to capture a disarm code, then replay it to disarm without knowing the code.',
@@ -139,8 +135,7 @@ const LANG = {
     msgSecureOff: '🔓 Secure mode OFF — basic fixed codes',
     msgAlertTriggered: '🚨 ALERT triggered — wrong code!',
     msgCodeUsed: 'Code: ',
-    msgRollingCode: 'Rolling code: ',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    msgRollingCode: 'Rolling code: ',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Frequency Duel and Bit Micro Radar! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-rf-alarm-system', subtitle: '🚨 Construire · 📡 Brouiller · 🔐 Securiser',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -151,10 +146,6 @@ const LANG = {
     settings: '⚙️ Parametres', language: 'Langue',
     helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Un simulateur d\'alarme RF qui t\'apprend comment fonctionnent les systemes d\'alarme sans fil — et comment les attaquants les exploitent par brouillage et rejeu.',
-    faq_q2: 'J\'ai besoin d\'un vrai micro:bit ?', faq_a2: 'Non ! Cette appli simule tout dans ton navigateur. Mais tu peux construire une version reelle avec deux micro:bits en utilisant les blocs radio.',
-    faq_q3: 'C\'est legal sur de vraies alarmes ?', faq_a3: 'Non. Brouiller et usurper de vrais signaux radio est illegal dans la plupart des pays. Cette simulation est uniquement educative.',
-    faq_q4: 'C\'est quoi les codes tournants ?', faq_a4: 'Les codes tournants generent un code unique pour chaque transmission. Meme si un attaquant capture un code, il ne peut pas etre reutilise.',
     howto_1: 'Commence par armer l\'alarme avec le bouton "Armer" ou entre le code 1234 sur le clavier et appuie sur OK.',
     howto_2: 'Essaie le bouton "Brouiller" quand l\'alarme est armee — regarde la qualite du signal chuter.',
     howto_3: 'Utilise "Enregistrer & Rejouer" pour capturer un code de desarmement, puis rejoue-le.',
@@ -215,8 +206,7 @@ const LANG = {
     msgSecureOff: '🔓 Mode securise OFF — codes fixes basiques',
     msgAlertTriggered: '🚨 ALERTE declenchee — mauvais code !',
     msgCodeUsed: 'Code : ',
-    msgRollingCode: 'Code tournant : ',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    msgRollingCode: 'Code tournant : ',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Frequency Duel and Bit Micro Radar ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'نظام إنذار RF', subtitle: '🚨 بناء · 📡 تشويش · 🔐 تأمين',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -227,10 +217,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'محاكي إنذار RF يعلمك كيف تعمل أنظمة الإنذار اللاسلكية — وكيف يستغلها المهاجمون بالتشويش وهجمات الإعادة.',
-    faq_q2: 'هل أحتاج micro:bit حقيقي؟', faq_a2: 'لا! هذا التطبيق يحاكي كل شيء في متصفحك. لكن يمكنك بناء نسخة حقيقية بجهازي micro:bit.',
-    faq_q3: 'هل هذا قانوني على إنذارات حقيقية؟', faq_a3: 'لا. تشويش وانتحال إشارات الراديو الحقيقية غير قانوني. هذه المحاكاة للأغراض التعليمية فقط.',
-    faq_q4: 'ما هي الرموز المتدحرجة؟', faq_a4: 'الرموز المتدحرجة تولد رمزًا فريدًا لكل إرسال. حتى لو التقط مهاجم رمزًا، لا يمكن إعادة استخدامه.',
     howto_1: 'ابدأ بتفعيل الإنذار باستخدام زر "تفعيل" أو أدخل الرمز 1234 واضغط OK.',
     howto_2: 'جرب زر "تشويش" وراقب جودة الإشارة تنخفض وتفشل الأوامر.',
     howto_3: 'استخدم "تسجيل وإعادة" لالتقاط رمز التعطيل، ثم أعد بثه.',
@@ -291,8 +277,7 @@ const LANG = {
     msgSecureOff: '🔓 الوضع الآمن مُوقف — رموز ثابتة أساسية',
     msgAlertTriggered: '🚨 إنذار — رمز خاطئ!',
     msgCodeUsed: 'الرمز: ',
-    msgRollingCode: 'رمز متدحرج: ',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    msgRollingCode: 'رمز متدحرج: ',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Frequency Duel and Bit Micro Radar! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

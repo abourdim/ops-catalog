@@ -26,10 +26,6 @@ const LANG = {
     splashHint:'tap to skip', langChanged:'Language > English', themeChanged:'Theme >',
     txStart:'TX: Transmitting...', txDone:'TX: Complete',
     rxStart:'RX: Listening...', rxStop:'RX: Stopped', noMsg:'Enter a message first',
-    faq_q1:'What is this?', faq_a1:'An acoustic modem that transmits text using ultrasonic frequencies above 18kHz — inaudible to most adults.',
-    faq_q2:'How does it work?', faq_a2:'Each byte is encoded as FSK (Frequency-Shift Keying) tones around the carrier frequency. Binary 0 = carrier-200Hz, 1 = carrier+200Hz.',
-    faq_q3:'Can I send between devices?', faq_a3:'Yes — transmit on one device, listen on another nearby device with a microphone. Range: 1-5 meters.',
-    faq_q4:'Is data private?', faq_a4:'Everything runs locally in your browser. No data is sent to any server.',
     howto_1:'Type your message in the input field.', howto_2:'Select carrier frequency and baud rate.',
     howto_3:'Click Transmit to send via ultrasound.', howto_4:'On another device, click Listen to decode.',
     wiki_fsk_title:'FSK Modulation', wiki_fsk:'Frequency-Shift Keying encodes binary data by shifting between two frequencies. Simple, robust, widely used.',
@@ -43,7 +39,7 @@ const LANG = {
     challengeReveal3:'A spectrum analyzer would reveal FSK tones at 18-22kHz. Countermeasures: ultrasonic jammer, bandpass filter, or blocking speakers/mics above 17kHz.',
     revealBtn:'Reveal Answer',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code'},
+  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates acoustic warfare! 🔬 You get to experiment with sound waves in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sound waves so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real acoustic science and attacks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Sonic Glass Laser Mic and Sonic Seismic Footprint! Each teaches something different. 🚀'},
   fr: {
     title:'Liaison Ultrasonique', subtitle:'Modem Acoustique 20kHz+', disconnected:'Inactif', connected:'Actif',
     mainSection:'Liaison Ultrasonique', mainDesc:'Transmettre du texte via porteuse ultrasonique',
@@ -59,10 +55,6 @@ const LANG = {
     splashHint:'appuyer pour passer', langChanged:'Langue > Francais', themeChanged:'Theme >',
     txStart:'TX: Transmission...', txDone:'TX: Termine',
     rxStart:'RX: Ecoute...', rxStop:'RX: Arrete', noMsg:'Entrez un message',
-    faq_q1:'Qu\'est-ce que c\'est?', faq_a1:'Un modem acoustique qui transmet du texte par ultrasons au-dessus de 18kHz — inaudible pour la plupart des adultes.',
-    faq_q2:'Comment ca fonctionne?', faq_a2:'Chaque octet est encode en FSK autour de la frequence porteuse. Bit 0 = porteuse-200Hz, 1 = porteuse+200Hz.',
-    faq_q3:'Puis-je envoyer entre appareils?', faq_a3:'Oui — transmettez sur un appareil, ecoutez sur un autre a proximite. Portee: 1-5 metres.',
-    faq_q4:'Mes donnees sont-elles privees?', faq_a4:'Tout fonctionne localement dans votre navigateur.',
     howto_1:'Tapez votre message.', howto_2:'Selectionnez la frequence porteuse et le debit.',
     howto_3:'Cliquez Transmettre pour envoyer par ultrasons.', howto_4:'Sur un autre appareil, cliquez Ecouter pour decoder.',
     wiki_fsk_title:'Modulation FSK', wiki_fsk:'Le decalage de frequence encode les donnees binaires en alternant entre deux frequences.',
@@ -76,7 +68,7 @@ const LANG = {
     challengeReveal3:'Un analyseur de spectre revelerait les tons FSK. Contre-mesures: brouilleur ultrasonique ou filtre passe-bande.',
     revealBtn:'Reveler la reponse',
     t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil'},
+  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule acoustic warfare ! 🔬 Tu peux expérimenter avec sound waves en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sound waves.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai acoustic science and attacks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Sonic Glass Laser Mic and Sonic Seismic Footprint ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'رابط البيانات فوق الصوتي', subtitle:'مودم صوتي 20kHz+', disconnected:'خامل', connected:'نشط',
     mainSection:'رابط البيانات فوق الصوتي', mainDesc:'إرسال النصوص عبر حامل فوق صوتي',
@@ -92,10 +84,6 @@ const LANG = {
     splashHint:'انقر للتخطي', langChanged:'اللغة > العربية', themeChanged:'المظهر >',
     txStart:'إرسال جاري...', txDone:'اكتمل الإرسال',
     rxStart:'استقبال جاري...', rxStop:'توقف الاستقبال', noMsg:'أدخل رسالة أولاً',
-    faq_q1:'ما هذا؟', faq_a1:'مودم صوتي ينقل النصوص باستخدام ترددات فوق صوتية فوق 18 كيلوهرتز — غير مسموعة لمعظم البالغين.',
-    faq_q2:'كيف يعمل؟', faq_a2:'كل بايت يُرمّز كنغمات FSK حول تردد الحامل. بت 0 = حامل-200 هرتز، 1 = حامل+200 هرتز.',
-    faq_q3:'هل يمكنني الإرسال بين الأجهزة؟', faq_a3:'نعم — أرسل من جهاز واستمع من جهاز قريب بميكروفون. المدى: 1-5 أمتار.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'كل شيء يعمل محليًا في متصفحك.',
     howto_1:'اكتب رسالتك في حقل الإدخال.', howto_2:'اختر تردد الحامل وسرعة البود.',
     howto_3:'انقر إرسال للنقل عبر الموجات فوق الصوتية.', howto_4:'على جهاز آخر، انقر استماع للاستقبال.',
     wiki_fsk_title:'تعديل FSK', wiki_fsk:'إزاحة التردد تُرمّز البيانات الثنائية بالتبديل بين ترددين.',
@@ -109,7 +97,7 @@ const LANG = {
     challengeReveal3:'محلل الطيف سيكشف نغمات FSK. الإجراءات المضادة: مشوش فوق صوتي أو مرشح تمرير نطاقي.',
     revealBtn:'اكشف الإجابة',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز'}
+  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي acoustic warfare! 🔬 يمكنك التجربة مع sound waves في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج sound waves حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا acoustic science and attacks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Sonic Glass Laser Mic and Sonic Seismic Footprint! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 function T(k) { return (LANG[currentLang] || LANG.en)[k] || LANG.en[k] || k; }

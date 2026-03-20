@@ -72,10 +72,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is EXIF Eraser?', faq_a1: 'A privacy tool that reveals and removes hidden metadata from photos. Learn what data your photos leak before sharing.',
-    faq_q2: 'Does it modify my real files?', faq_a2: 'No. Everything runs locally in simulation. No files are modified on disk. The app generates fake EXIF to demonstrate the concept.',
-    faq_q3: 'What kind of data does EXIF contain?', faq_a3: 'GPS coordinates, camera model, timestamps, lens info, software used, orientation, copyright, and sometimes even your name.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Upload an image or click "Use sample image" to load a demo photo.',
     howto_2: 'View the metadata table to see what hidden data the image contains.',
     howto_3: 'Click "Scrub Metadata" to remove all EXIF data and see the before/after comparison.',
@@ -121,8 +117,7 @@ const LANG = {
     allClean: '✅ All metadata removed',
     riskHigh: 'HIGH', riskMedium: 'MEDIUM', riskLow: 'LOW', riskClean: 'CLEAN',
     challengeComplete: '🏆 Challenge complete!',
-    batchComplete: '📦 Batch scrub complete — all images cleaned',
-  ,sectionCode:'Device Code'},
+    batchComplete: '📦 Batch scrub complete — all images cleaned',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Web Burner Chat and Web Metadata Detective! Each teaches something different. 🚀'},
   fr: {
     title: 'EXIF Eraser', subtitle: '🧹 scanner · 🔍 révéler · 🛡️ protéger',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -132,10 +127,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que EXIF Eraser ?', faq_a1: 'Un outil de confidentialité qui révèle et supprime les métadonnées cachées des photos.',
-    faq_q2: 'Est-ce que ça modifie mes vrais fichiers ?', faq_a2: 'Non. Tout fonctionne localement en simulation. Aucun fichier n\'est modifié.',
-    faq_q3: 'Quels types de données contient l\'EXIF ?', faq_a3: 'Coordonnées GPS, modèle d\'appareil, horodatages, objectif, logiciel utilisé, orientation, copyright et parfois votre nom.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé.',
     howto_1: 'Téléchargez une image ou cliquez sur "Utiliser un exemple" pour charger une photo démo.',
     howto_2: 'Consultez le tableau des métadonnées pour voir les données cachées.',
     howto_3: 'Cliquez sur "Nettoyer les métadonnées" pour supprimer toutes les données EXIF.',
@@ -181,8 +172,7 @@ const LANG = {
     allClean: '✅ Toutes les métadonnées supprimées',
     riskHigh: 'ÉLEVÉ', riskMedium: 'MOYEN', riskLow: 'FAIBLE', riskClean: 'PROPRE',
     challengeComplete: '🏆 Défi terminé !',
-    batchComplete: '📦 Nettoyage par lot terminé — toutes les images nettoyées',
-  ,sectionCode:'Code Appareil'},
+    batchComplete: '📦 Nettoyage par lot terminé — toutes les images nettoyées',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Burner Chat and Web Metadata Detective ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'ممحاة EXIF', subtitle: '🧹 فحص · 🔍 كشف · 🛡️ حماية',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -192,10 +182,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي ممحاة EXIF؟', faq_a1: 'أداة خصوصية تكشف وتزيل البيانات الوصفية المخفية من الصور.',
-    faq_q2: 'هل تعدّل ملفاتي الحقيقية؟', faq_a2: 'لا. كل شيء يعمل محليًا في المحاكاة. لا يتم تعديل أي ملفات.',
-    faq_q3: 'ما نوع البيانات التي يحتويها EXIF؟', faq_a3: 'إحداثيات GPS، طراز الكاميرا، الطوابع الزمنية، العدسة، البرنامج المستخدم، الاتجاه، وأحيانًا اسمك.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'حمّل صورة أو انقر على "استخدم صورة نموذجية" لتحميل صورة تجريبية.',
     howto_2: 'اعرض جدول البيانات الوصفية لرؤية البيانات المخفية.',
     howto_3: 'انقر على "تنظيف البيانات الوصفية" لإزالة جميع بيانات EXIF.',
@@ -241,8 +227,7 @@ const LANG = {
     allClean: '✅ تمت إزالة جميع البيانات الوصفية',
     riskHigh: 'عالي', riskMedium: 'متوسط', riskLow: 'منخفض', riskClean: 'نظيف',
     challengeComplete: '🏆 اكتمل التحدي!',
-    batchComplete: '📦 اكتمل التنظيف الدفعي — تم تنظيف جميع الصور',
-  ,sectionCode:'كود الجهاز'}
+    batchComplete: '📦 اكتمل التنظيف الدفعي — تم تنظيف جميع الصور',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Web Burner Chat and Web Metadata Detective! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

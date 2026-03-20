@@ -95,10 +95,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Agent ID?', faq_a1: 'Agent ID simulates encrypted BLE identity authentication. Generate a key pair, sign your identity, broadcast it, and let others verify you.',
-    faq_q2: 'How does verification work?', faq_a2: 'The receiver uses the sender\'s public key to decrypt the signature and compare it to the ID hash. A match means VERIFIED; a mismatch means IMPOSTOR.',
-    faq_q3: 'Can I forge an identity?', faq_a3: 'Not without the private key! The Lab section lets you try forging to see why cryptographic signatures are tamper-proof.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. Keys are generated client-side only.',
     howto_1: 'Click "Generate Identity" to create your agent profile with a unique key pair.',
     howto_2: 'Click "Broadcast ID" to simulate sending your signed identity via BLE.',
     howto_3: 'Click "Verify Agent" to scan for a nearby agent and check their identity signature.',
@@ -120,8 +116,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Panic Button and Bit Dead Drop! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-agent-id', subtitle: '🪪 identité · 🔐 crypto · 📡 BLE',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -155,10 +150,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce qu\'Agent ID ?', faq_a1: 'Agent ID simule l\'authentification d\'identité chiffrée via BLE. Génère une paire de clés, signe ton identité, diffuse-la et laisse les autres te vérifier.',
-    faq_q2: 'Comment fonctionne la vérification ?', faq_a2: 'Le récepteur utilise la clé publique de l\'émetteur pour déchiffrer la signature et la comparer au hash de l\'ID. Match = VÉRIFIÉ, écart = IMPOSTEUR.',
-    faq_q3: 'Puis-je falsifier une identité ?', faq_a3: 'Pas sans la clé privée ! La section Labo te permet d\'essayer pour comprendre pourquoi les signatures sont inviolables.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part. Les clés sont générées côté client uniquement.',
     howto_1: 'Clique sur « Générer Identité » pour créer ton profil agent avec une paire de clés unique.',
     howto_2: 'Clique sur « Diffuser ID » pour simuler l\'envoi de ton identité signée via BLE.',
     howto_3: 'Clique sur « Vérifier Agent » pour scanner un agent à proximité et vérifier sa signature.',
@@ -180,8 +171,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Panic Button and Bit Dead Drop ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-agent-id', subtitle: '🪪 هوية · 🔐 تشفير · 📡 بلوتوث',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -215,10 +205,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو Agent ID؟', faq_a1: 'Agent ID يحاكي مصادقة الهوية المشفرة عبر BLE. أنشئ زوج مفاتيح، وقّع هويتك، ابثها ودع الآخرين يتحققون منك.',
-    faq_q2: 'كيف يعمل التحقق؟', faq_a2: 'يستخدم المستقبل المفتاح العام للمرسل لفك تشفير التوقيع ومقارنته بهاش الهوية. تطابق = تم التحقق، عدم تطابق = محتال.',
-    faq_q3: 'هل يمكنني تزوير هوية؟', faq_a3: 'ليس بدون المفتاح الخاص! قسم المختبر يتيح لك المحاولة لفهم لماذا التوقيعات غير قابلة للتزوير.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك. لا يتم إرسال أي بيانات. المفاتيح تُنشأ من جهة العميل فقط.',
     howto_1: 'انقر على "إنشاء هوية" لإنشاء ملف العميل مع زوج مفاتيح فريد.',
     howto_2: 'انقر على "بث الهوية" لمحاكاة إرسال هويتك الموقّعة عبر BLE.',
     howto_3: 'انقر على "التحقق من عميل" لمسح عميل قريب والتحقق من توقيع هويته.',
@@ -240,8 +226,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Bit Panic Button and Bit Dead Drop! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

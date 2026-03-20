@@ -57,10 +57,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What are metamaterials?', faq_a1: 'Engineered structures with EM properties not found in nature, like negative refractive index.',
-    faq_q2: 'What is negative refraction?', faq_a2: 'Light bends opposite to normal direction when entering a negative-index material.',
-    faq_q3: 'How does EM cloaking work?', faq_a3: 'Graded-index metamaterials guide EM waves around an object, making it invisible.',
-    faq_q4: 'What are split-ring resonators?', faq_a4: 'Metal ring structures creating artificial magnetic resonance at specific frequencies.',
     howto_1: 'Choose a metamaterial type from the dropdown.',
     howto_2: 'Adjust frequency and refractive index sliders.',
     howto_3: 'Press Start to see wave propagation through the material.',
@@ -83,8 +79,7 @@ const LANG = {
     splashHint: 'tap to skip', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     simStarted: '▶ Simulation started', simStopped: '⏹ Stopped', simReset: '↺ Reset',
     t_mosque: 'Mosque', t_zellige: 'Zellige', t_andalus: 'Andalus', t_riad: 'Riad',
-    t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
-  ,step1Title:'Set Parameters',step1Desc:'Configure the physical constants and initial conditions for the experiment.',step2Title:'Run Experiment',step2Desc:'Start the simulation and observe the physics phenomenon in action.',step3Title:'Measure Results',step3Desc:'Capture quantitative measurements from the simulated experiment.',step4Title:'Compare Theory',step4Desc:'Compare your experimental results with theoretical predictions.',sectionCode:'Device Code'},
+    t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',step1Title:'Set Parameters',step1Desc:'Configure the physical constants and initial conditions for the experiment.',step2Title:'Run Experiment',step2Desc:'Start the simulation and observe the physics phenomenon in action.',step3Title:'Measure Results',step3Desc:'Capture quantitative measurements from the simulated experiment.',step4Title:'Compare Theory',step4Desc:'Compare your experimental results with theoretical predictions.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates impossible physics! 🔬 You get to experiment with exotic physical phenomena in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real exotic physical phenomena so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real cutting-edge physics simulations! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Phys Bell Inequality Rf and Phys Radio Black Hole! Each teaches something different. 🚀'},
   fr: {
     title: 'Simulateur de Métamatériaux', subtitle: '🔬 Réfraction négative & camouflage',
     disconnected: 'Hors ligne', connected: 'Simulation',
@@ -94,10 +89,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Que sont les métamatériaux ?', faq_a1: 'Des structures avec des propriétés EM introuvables dans la nature.',
-    faq_q2: 'Qu\'est-ce que la réfraction négative ?', faq_a2: 'La lumière se courbe à l\'opposé dans un matériau à indice négatif.',
-    faq_q3: 'Comment fonctionne le camouflage EM ?', faq_a3: 'Les métamatériaux à gradient guident les ondes EM autour d\'un objet.',
-    faq_q4: 'Que sont les résonateurs annulaires ?', faq_a4: 'Des anneaux métalliques créant une résonance magnétique artificielle.',
     howto_1: 'Choisissez un type de métamatériau.', howto_2: 'Ajustez la fréquence et l\'indice.',
     howto_3: 'Appuyez Démarrer pour voir la propagation.', howto_4: 'Ouvrez Analyse des Ondes.',
     wiki_neg_title: '🔄 Réfraction Négative', wiki_neg: 'Quand ε et μ sont négatifs, la loi de Snell s\'inverse.',
@@ -118,8 +109,7 @@ const LANG = {
     splashHint: 'appuyer pour passer', langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
     simStarted: '▶ Simulation démarrée', simStopped: '⏹ Arrêté', simReset: '↺ Réinitialisé',
     t_mosque: 'Mosquée', t_zellige: 'Zellige', t_andalus: 'Andalous', t_riad: 'Riad',
-    t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
-  ,step1Title:'Définir les paramètres',step1Desc:'Configure les constantes physiques et conditions initiales.',step2Title:'Lancer l\'expérience',step2Desc:'Démarre la simulation et observe le phénomène physique en action.',step3Title:'Mesurer les résultats',step3Desc:'Capture les mesures quantitatives de l\'expérience simulée.',step4Title:'Comparer à la théorie',step4Desc:'Compare tes résultats expérimentaux aux prédictions théoriques.',sectionCode:'Code Appareil'},
+    t_medina: 'Médina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',step1Title:'Définir les paramètres',step1Desc:'Configure les constantes physiques et conditions initiales.',step2Title:'Lancer l\'expérience',step2Desc:'Démarre la simulation et observe le phénomène physique en action.',step3Title:'Mesurer les résultats',step3Desc:'Capture les mesures quantitatives de l\'expérience simulée.',step4Title:'Comparer à la théorie',step4Desc:'Compare tes résultats expérimentaux aux prédictions théoriques.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule impossible physics ! 🔬 Tu peux expérimenter avec exotic physical phenomena en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais exotic physical phenomena.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai cutting-edge physics simulations ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Phys Bell Inequality Rf and Phys Radio Black Hole ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'محاكي الميتاماتيريال', subtitle: '🔬 الانكسار السلبي والتخفي',
     disconnected: 'غير متصل', connected: 'يحاكي',
@@ -129,10 +119,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيفية الاستخدام', wiki: 'ويكي',
-    faq_q1: 'ما هي الميتاماتيريال؟', faq_a1: 'هياكل مهندسة بخصائص كهرومغناطيسية غير موجودة في الطبيعة.',
-    faq_q2: 'ما هو الانكسار السلبي؟', faq_a2: 'ينحني الضوء بالاتجاه المعاكس عند دخول مادة ذات معامل سلبي.',
-    faq_q3: 'كيف يعمل التخفي الكهرومغناطيسي؟', faq_a3: 'تقوم الميتاماتيريال بتوجيه الموجات حول الجسم لجعله غير مرئي.',
-    faq_q4: 'ما هي المرنانات الحلقية المشقوقة؟', faq_a4: 'هياكل حلقية معدنية تخلق رنيناً مغناطيسياً عند ترددات محددة.',
     howto_1: 'اختر نوع الميتاماتيريال.', howto_2: 'اضبط التردد ومعامل الانكسار.',
     howto_3: 'اضغط ابدأ لرؤية انتشار الموجة.', howto_4: 'افتح تحليل الأمواج لرؤية الحقول.',
     wiki_neg_title: '🔄 الانكسار السلبي', wiki_neg: 'عندما تكون ε و μ سالبتين ينعكس قانون سنل.',
@@ -153,8 +139,7 @@ const LANG = {
     splashHint: 'انقر للتخطي', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
     simStarted: '▶ بدأت المحاكاة', simStopped: '⏹ توقف', simReset: '↺ إعادة ضبط',
     t_mosque: 'مسجد', t_zellige: 'زليج', t_andalus: 'أندلس', t_riad: 'رياض',
-    t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',
-  ,step1Title:'تعيين المعلمات',step1Desc:'اضبط الثوابت الفيزيائية والشروط الأولية للتجربة.',step2Title:'تشغيل التجربة',step2Desc:'ابدأ المحاكاة وراقب الظاهرة الفيزيائية أثناء حدوثها.',step3Title:'قياس النتائج',step3Desc:'التقط القياسات الكمية من التجربة المحاكاة.',step4Title:'مقارنة بالنظرية',step4Desc:'قارن نتائجك التجريبية بالتنبؤات النظرية.',sectionCode:'كود الجهاز'}
+    t_medina: 'مدينة', t_space: 'فضاء', t_jungle: 'أدغال', t_robot: 'روبوت',step1Title:'تعيين المعلمات',step1Desc:'اضبط الثوابت الفيزيائية والشروط الأولية للتجربة.',step2Title:'تشغيل التجربة',step2Desc:'ابدأ المحاكاة وراقب الظاهرة الفيزيائية أثناء حدوثها.',step3Title:'قياس النتائج',step3Desc:'التقط القياسات الكمية من التجربة المحاكاة.',step4Title:'مقارنة بالنظرية',step4Desc:'قارن نتائجك التجريبية بالتنبؤات النظرية.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي impossible physics! 🔬 يمكنك التجربة مع exotic physical phenomena في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج exotic physical phenomena حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا cutting-edge physics simulations حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Phys Bell Inequality Rf and Phys Radio Black Hole! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

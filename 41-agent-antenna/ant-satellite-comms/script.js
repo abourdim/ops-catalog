@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Satellite Comms Station?', faq_a1: 'A ground station simulator for managing satellite uplink and downlink communications.',
-    faq_q2: 'How do I track satellites?', faq_a2: 'The Orbit Tracker shows satellite positions. Select a satellite to lock the antenna.',
-    faq_q3: 'What is link budget?', faq_a3: 'Link budget calculates signal strength from ground station to satellite including path loss and gains.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Activate the ground station.', howto_2: 'Track satellite orbits.',
     howto_3: 'Calculate link budget parameters.', howto_4: 'Monitor uplink/downlink signals.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
@@ -92,8 +88,7 @@ const LANG = {
     scStat1: 'Status', scStat2: 'Uplink', scStat3: 'Downlink', scStat4: 'Elevation',
     scActivate: 'Power On', scAct1: 'Lock Satellite', scEmerg: 'Emergency',
     activated: '🛰️ Ground station powered on!', deactivated: '🛰️ Station powered down',
-    locked: '🔒 Satellite locked!', lostSignal: '📡 Signal lost!',
-  ,step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code'},
+    locked: '🔒 Satellite locked!', lostSignal: '📡 Signal lost!',step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates antennas! 🔬 You get to experiment with radio wave patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio wave patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real antenna design and physics! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Ant Covert Antenna and Ant Direction Finder Pro! Each teaches something different. 🚀'},
   fr: {
     title: 'Station Satellite', subtitle: '🛰️ Gestion liaison montante/descendante',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -104,10 +99,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que la Station Satellite ?', faq_a1: 'Un simulateur de station sol pour les communications satellite.',
-    faq_q2: 'Comment suivre les satellites ?', faq_a2: 'Le suivi orbital montre les positions. Sélectionnez un satellite pour verrouiller.',
-    faq_q3: 'Qu\'est-ce que le bilan de liaison ?', faq_a3: 'Il calcule la puissance du signal entre la station sol et le satellite.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Activez la station sol.', howto_2: 'Suivez les orbites satellites.',
     howto_3: 'Calculez le bilan de liaison.', howto_4: 'Surveillez les signaux.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
@@ -124,8 +115,7 @@ const LANG = {
     scStat1: 'Statut', scStat2: 'Montée', scStat3: 'Descente', scStat4: 'Élévation',
     scActivate: 'Allumer', scAct1: 'Verrouiller', scEmerg: 'Urgence',
     activated: '🛰️ Station sol activée !', deactivated: '🛰️ Station éteinte',
-    locked: '🔒 Satellite verrouillé !', lostSignal: '📡 Signal perdu !',
-  ,step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil'},
+    locked: '🔒 Satellite verrouillé !', lostSignal: '📡 Signal perdu !',step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule antennas ! 🔬 Tu peux expérimenter avec radio wave patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio wave patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai antenna design and physics ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Ant Covert Antenna and Ant Direction Finder Pro ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'محطة اتصالات فضائية', subtitle: '🛰️ إدارة الوصلة الصاعدة/النازلة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -136,10 +126,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي محطة الاتصالات الفضائية؟', faq_a1: 'محاكي محطة أرضية لإدارة اتصالات القمر الصناعي.',
-    faq_q2: 'كيف أتتبع الأقمار؟', faq_a2: 'تتبع المدار يعرض مواقع الأقمار. اختر قمرًا للقفل.',
-    faq_q3: 'ما هي ميزانية الوصلة؟', faq_a3: 'تحسب قوة الإشارة بين المحطة والقمر الصناعي.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
     howto_1: 'فعّل المحطة الأرضية.', howto_2: 'تتبع مدارات الأقمار.',
     howto_3: 'احسب معلمات الوصلة.', howto_4: 'راقب الإشارات.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
@@ -156,8 +142,7 @@ const LANG = {
     scStat1: 'الحالة', scStat2: 'صاعدة', scStat3: 'نازلة', scStat4: 'الارتفاع',
     scActivate: 'تشغيل', scAct1: 'قفل', scEmerg: 'طوارئ',
     activated: '🛰️ تم تشغيل المحطة!', deactivated: '🛰️ تم إيقاف المحطة',
-    locked: '🔒 تم قفل القمر الصناعي!', lostSignal: '📡 فقدان الإشارة!',
-  ,step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز'}
+    locked: '🔒 تم قفل القمر الصناعي!', lostSignal: '📡 فقدان الإشارة!',step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي antennas! 🔬 يمكنك التجربة مع radio wave patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio wave patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا antenna design and physics حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Ant Covert Antenna and Ant Direction Finder Pro! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -41,10 +41,6 @@ const LANG = {
     ch1Title: 'Alpha Boost', ch1Desc: 'Close your eyes and relax. Can you boost alpha above 15 Hz?',
     ch2Title: 'Focus Challenge', ch2Desc: 'Reach 80% focus by increasing beta wave activity.',
     ch3Title: 'Brain-to-Brain', ch3Desc: 'Transmit your brain state to a partner. Can they guess your state?',
-    faq_q1: 'What are brainwaves?', faq_a1: 'Electrical signals from neurons. Different frequencies = different mental states.',
-    faq_q2: 'Can I transmit thoughts?', faq_a2: 'Not thoughts, but brain states (relaxed, focused) can be detected and transmitted.',
-    faq_q3: 'What does each band mean?', faq_a3: 'Delta: sleep. Theta: drowsy. Alpha: relaxed. Beta: focused. Gamma: high cognition.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click Start EEG to begin brainwave simulation.', howto_2: 'Select Relax or Focus to change state.', howto_3: 'Click Transmit to send brain state via radio.',
     wiki_eeg_title: '\ud83e\udde0 EEG Bands', wiki_eeg: 'Delta (0.5-4Hz), Theta (4-8Hz), Alpha (8-13Hz), Beta (13-30Hz), Gamma (30-100Hz).',
     wiki_bci_title: '\ud83d\udce1 Brain-Computer Interface', wiki_bci: 'BCI reads brain signals to control devices. EEG is the most common non-invasive method.',
@@ -56,8 +52,7 @@ const LANG = {
     ready: '\ud83e\udde0 Brainwave Radio ready \u2014 connect your mind!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
-    eegStarted: 'EEG acquisition started', eegStopped: 'EEG stopped', modeRelax: 'Mode: Relaxation \u2014 boosting alpha', modeFocus: 'Mode: Focus \u2014 boosting beta', needEEG: 'Start EEG first',
-  ,sectionCode:'Device Code'},
+    eegStarted: 'EEG acquisition started', eegStopped: 'EEG stopped', modeRelax: 'Mode: Relaxation \u2014 boosting alpha', modeFocus: 'Mode: Focus \u2014 boosting beta', needEEG: 'Start EEG first',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates bio-signals! 🔬 You get to experiment with body signals into radio in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real body signals into radio so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real biometric radio technology! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bio Voice Rf Fingerprint and Bio Skin Galvanic Key! Each teaches something different. 🚀'},
   fr: {
     title: 'Bio Radio C\u00e9r\u00e9brale', subtitle: 'EEG vers transmission radio',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -72,10 +67,6 @@ const LANG = {
     ch1Title: 'Boost Alpha', ch1Desc: 'Fermez les yeux. Boostez alpha au-dessus de 15 Hz.',
     ch2Title: 'D\u00e9fi Focus', ch2Desc: 'Atteignez 80% de concentration.',
     ch3Title: 'Cerveau-\u00e0-Cerveau', ch3Desc: 'Transmettez votre \u00e9tat \u00e0 un partenaire.',
-    faq_q1: 'Que sont les ondes c\u00e9r\u00e9brales?', faq_a1: 'Signaux \u00e9lectriques des neurones. Diff\u00e9rentes fr\u00e9quences = diff\u00e9rents \u00e9tats.',
-    faq_q2: 'Peut-on transmettre des pens\u00e9es?', faq_a2: 'Pas les pens\u00e9es, mais les \u00e9tats c\u00e9r\u00e9braux peuvent \u00eatre d\u00e9tect\u00e9s.',
-    faq_q3: 'Que signifie chaque bande?', faq_a3: 'Delta: sommeil. Th\u00eata: somnolence. Alpha: d\u00e9tendu. B\u00eata: concentr\u00e9.',
-    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Cliquez D\u00e9marrer EEG.', howto_2: 'S\u00e9lectionnez Relaxation ou Concentration.', howto_3: 'Cliquez Transmettre.',
     wiki_eeg_title: '\ud83e\udde0 Bandes EEG', wiki_eeg: 'Delta (0.5-4Hz), Th\u00eata (4-8Hz), Alpha (8-13Hz), B\u00eata (13-30Hz), Gamma (30-100Hz).',
     wiki_bci_title: '\ud83d\udce1 Interface Cerveau-Machine', wiki_bci: 'Les syst\u00e8mes ICM lisent les signaux c\u00e9r\u00e9braux. L\'EEG est la m\u00e9thode non-invasive la plus courante.',
@@ -87,8 +78,7 @@ const LANG = {
     ready: '\ud83e\udde0 Radio c\u00e9r\u00e9brale pr\u00eate \u2014 connectez votre esprit!',
     logCleared: 'Journal effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec copie',
     langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
-    eegStarted: 'Acquisition EEG d\u00e9marr\u00e9e', eegStopped: 'EEG arr\u00eat\u00e9', modeRelax: 'Mode: Relaxation \u2014 boost alpha', modeFocus: 'Mode: Concentration \u2014 boost b\u00eata', needEEG: 'D\u00e9marrez l\'EEG d\'abord',
-  ,sectionCode:'Code Appareil'},
+    eegStarted: 'Acquisition EEG d\u00e9marr\u00e9e', eegStopped: 'EEG arr\u00eat\u00e9', modeRelax: 'Mode: Relaxation \u2014 boost alpha', modeFocus: 'Mode: Concentration \u2014 boost b\u00eata', needEEG: 'D\u00e9marrez l\'EEG d\'abord',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule bio-signals ! 🔬 Tu peux expérimenter avec body signals into radio en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais body signals into radio.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai biometric radio technology ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bio Voice Rf Fingerprint and Bio Skin Galvanic Key ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: '\u0631\u0627\u062f\u064a\u0648 \u0627\u0644\u0645\u0648\u062c\u0627\u062a \u0627\u0644\u062f\u0645\u0627\u063a\u064a\u0629', subtitle: 'EEG \u0625\u0644\u0649 \u0625\u0631\u0633\u0627\u0644 \u0631\u0627\u062f\u064a\u0648\u064a',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -103,10 +93,6 @@ const LANG = {
     ch1Title: '\u0628\u0648\u0633\u062a \u0623\u0644\u0641\u0627', ch1Desc: '\u0623\u063a\u0644\u0642 \u0639\u064a\u0646\u064a\u0643 \u0648\u0627\u0633\u062a\u0631\u062e. \u0647\u0644 \u062a\u0631\u0641\u0639 \u0623\u0644\u0641\u0627 \u0641\u0648\u0642 15\u061f',
     ch2Title: '\u062a\u062d\u062f\u064a \u0627\u0644\u062a\u0631\u0643\u064a\u0632', ch2Desc: '\u0627\u0628\u0644\u063a 80% \u062a\u0631\u0643\u064a\u0632 \u0628\u0631\u0641\u0639 \u0628\u064a\u062a\u0627.',
     ch3Title: '\u062f\u0645\u0627\u063a-\u0625\u0644\u0649-\u062f\u0645\u0627\u063a', ch3Desc: '\u0623\u0631\u0633\u0644 \u062d\u0627\u0644\u062a\u0643 \u0644\u0634\u0631\u064a\u0643. \u0647\u0644 \u064a\u062e\u0645\u0646\u061f',
-    faq_q1: '\u0645\u0627 \u0647\u064a \u0627\u0644\u0645\u0648\u062c\u0627\u062a \u0627\u0644\u062f\u0645\u0627\u063a\u064a\u0629\u061f', faq_a1: '\u0625\u0634\u0627\u0631\u0627\u062a \u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0645\u0646 \u0627\u0644\u062e\u0644\u0627\u064a\u0627 \u0627\u0644\u0639\u0635\u0628\u064a\u0629.',
-    faq_q2: '\u0647\u0644 \u064a\u0645\u0643\u0646 \u0646\u0642\u0644 \u0627\u0644\u0623\u0641\u0643\u0627\u0631\u061f', faq_a2: '\u0644\u064a\u0633 \u0627\u0644\u0623\u0641\u0643\u0627\u0631\u060c \u0644\u0643\u0646 \u062d\u0627\u0644\u0627\u062a \u0627\u0644\u062f\u0645\u0627\u063a \u064a\u0645\u0643\u0646 \u0643\u0634\u0641\u0647\u0627.',
-    faq_q3: '\u0645\u0627\u0630\u0627 \u062a\u0639\u0646\u064a \u0643\u0644 \u0645\u0648\u062c\u0629\u061f', faq_a3: '\u062f\u0644\u062a\u0627: \u0646\u0648\u0645. \u062b\u064a\u062a\u0627: \u0646\u0639\u0627\u0633. \u0623\u0644\u0641\u0627: \u0627\u0633\u062a\u0631\u062e\u0627\u0621. \u0628\u064a\u062a\u0627: \u062a\u0631\u0643\u064a\u0632.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: '\u0627\u0646\u0642\u0631 \u0628\u062f\u0621 EEG.', howto_2: '\u0627\u062e\u062a\u0631 \u0627\u0633\u062a\u0631\u062e\u0627\u0621 \u0623\u0648 \u062a\u0631\u0643\u064a\u0632.', howto_3: '\u0627\u0646\u0642\u0631 \u0625\u0631\u0633\u0627\u0644.',
     wiki_eeg_title: '\ud83e\udde0 \u0646\u0637\u0627\u0642\u0627\u062a EEG', wiki_eeg: '\u062f\u0644\u062a\u0627 (0.5-4Hz)\u060c \u062b\u064a\u062a\u0627 (4-8Hz)\u060c \u0623\u0644\u0641\u0627 (8-13Hz)\u060c \u0628\u064a\u062a\u0627 (13-30Hz)\u060c \u063a\u0627\u0645\u0627 (30-100Hz).',
     wiki_bci_title: '\ud83d\udce1 \u0648\u0627\u062c\u0647\u0629 \u062f\u0645\u0627\u063a-\u062d\u0627\u0633\u0648\u0628', wiki_bci: '\u062a\u0642\u0631\u0623 \u0625\u0634\u0627\u0631\u0627\u062a \u0627\u0644\u062f\u0645\u0627\u063a \u0644\u0644\u062a\u062d\u0643\u0645 \u0628\u0627\u0644\u0623\u062c\u0647\u0632\u0629.',
@@ -118,8 +104,7 @@ const LANG = {
     ready: '\ud83e\udde0 \u0631\u0627\u062f\u064a\u0648 \u0627\u0644\u062f\u0645\u0627\u063a \u062c\u0627\u0647\u0632!',
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
     langChanged: '\ud83c\udf10 \u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
-    eegStarted: '\u0628\u062f\u0623 \u0627\u0644\u062a\u0642\u0627\u0637 EEG', eegStopped: '\u062a\u0648\u0642\u0641 EEG', modeRelax: '\u0627\u0633\u062a\u0631\u062e\u0627\u0621 \u2014 \u0628\u0648\u0633\u062a \u0623\u0644\u0641\u0627', modeFocus: '\u062a\u0631\u0643\u064a\u0632 \u2014 \u0628\u0648\u0633\u062a \u0628\u064a\u062a\u0627', needEEG: '\u0627\u0628\u062f\u0623 EEG \u0623\u0648\u0644\u0627\u064b',
-  ,sectionCode:'كود الجهاز'}
+    eegStarted: '\u0628\u062f\u0623 \u0627\u0644\u062a\u0642\u0627\u0637 EEG', eegStopped: '\u062a\u0648\u0642\u0641 EEG', modeRelax: '\u0627\u0633\u062a\u0631\u062e\u0627\u0621 \u2014 \u0628\u0648\u0633\u062a \u0623\u0644\u0641\u0627', modeFocus: '\u062a\u0631\u0643\u064a\u0632 \u2014 \u0628\u0648\u0633\u062a \u0628\u064a\u062a\u0627', needEEG: '\u0627\u0628\u062f\u0623 EEG \u0623\u0648\u0644\u0627\u064b',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي bio-signals! 🔬 يمكنك التجربة مع body signals into radio في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج body signals into radio حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا biometric radio technology حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bio Voice Rf Fingerprint and Bio Skin Galvanic Key! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK (same pattern as bio-body-antenna) ═══════ */

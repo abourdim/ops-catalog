@@ -72,11 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Radio Cartographer?', faq_a1: 'A simulation tool that maps radio signal strength across an area, creating a heatmap to visualize coverage.',
-    faq_q2: 'How do I place a transmitter?', faq_a2: 'Click "Place Transmitter", then click on the map. You can place multiple transmitters.',
-    faq_q3: 'What is RSSI?', faq_a3: 'Received Signal Strength Indicator — a measurement of how strong a radio signal is at a given point. Measured in dBm.',
-    faq_q4: 'How do obstacles work?', faq_a4: 'Obstacles attenuate the signal passing through them. The attenuation (in dB) can be adjusted in the Lab section.',
-    faq_q5: 'Can I export my heatmap?', faq_a5: 'Yes! Click "Export Heatmap" to download the current heatmap as a PNG image.',
     howto_1: 'Click "Place Transmitter" then click on the map to position a transmitter.',
     howto_2: 'Hover over the map to see real-time RSSI readings at each point.',
     howto_3: 'Use "Add Obstacle" to place walls that block signal. Adjust attenuation in the Lab.',
@@ -125,8 +120,7 @@ const LANG = {
     heatmapExported: '💾 Heatmap exported',
     placeTxMode: '📡 Click on map to place transmitter...',
     placeObstacleMode: '🧱 Click and drag on map to place obstacle...',
-    freqChanged: '📶 Frequency changed to',
-  ,sectionCode:'Device Code'},
+    freqChanged: '📶 Frequency changed to',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Bit Radio Sniffer and Bit Mesh Rescue! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-radio-cartographer', subtitle: '🗺️ cartographier · 📡 mesurer · 📊 visualiser',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -137,11 +131,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Radio Cartographe ?', faq_a1: 'Un outil de simulation qui cartographie la puissance du signal radio sur une zone, créant une carte thermique pour visualiser la couverture.',
-    faq_q2: 'Comment placer un émetteur ?', faq_a2: 'Clique sur "Placer émetteur", puis clique sur la carte. Tu peux placer plusieurs émetteurs.',
-    faq_q3: 'Qu\'est-ce que le RSSI ?', faq_a3: 'Indicateur de puissance du signal reçu — une mesure de la force d\'un signal radio en un point donné. Mesuré en dBm.',
-    faq_q4: 'Comment fonctionnent les obstacles ?', faq_a4: 'Les obstacles atténuent le signal qui les traverse. L\'atténuation (en dB) est réglable dans la section Labo.',
-    faq_q5: 'Puis-je exporter ma carte thermique ?', faq_a5: 'Oui ! Clique sur "Exporter carte" pour télécharger la carte thermique en PNG.',
     howto_1: 'Clique sur "Placer émetteur" puis clique sur la carte pour positionner un émetteur.',
     howto_2: 'Survole la carte pour voir les mesures RSSI en temps réel à chaque point.',
     howto_3: 'Utilise "Ajouter obstacle" pour placer des murs qui bloquent le signal. Règle l\'atténuation dans le Labo.',
@@ -189,8 +178,7 @@ const LANG = {
     heatmapExported: '💾 Carte thermique exportée',
     placeTxMode: '📡 Clique sur la carte pour placer un émetteur...',
     placeObstacleMode: '🧱 Clique et glisse sur la carte pour placer un obstacle...',
-    freqChanged: '📶 Fréquence changée à',
-  ,sectionCode:'Code Appareil'},
+    freqChanged: '📶 Fréquence changée à',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Radio Sniffer and Bit Mesh Rescue ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-radio-cartographer', subtitle: '🗺️ رسم خريطة · 📡 قياس · 📊 تصوّر',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -201,11 +189,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو رسام خرائط الراديو؟', faq_a1: 'أداة محاكاة ترسم خريطة قوة إشارة الراديو عبر منطقة، وتنشئ خريطة حرارية لتصور التغطية.',
-    faq_q2: 'كيف أضع جهاز إرسال؟', faq_a2: 'انقر على "وضع جهاز إرسال"، ثم انقر على الخريطة. يمكنك وضع عدة أجهزة إرسال.',
-    faq_q3: 'ما هو RSSI؟', faq_a3: 'مؤشر قوة الإشارة المستقبلة — قياس مدى قوة إشارة الراديو في نقطة معينة. يُقاس بـ dBm.',
-    faq_q4: 'كيف تعمل العوائق؟', faq_a4: 'العوائق تُضعف الإشارة المارة عبرها. يمكن ضبط التخفيف (بالديسيبل) في قسم المختبر.',
-    faq_q5: 'هل يمكنني تصدير الخريطة الحرارية؟', faq_a5: 'نعم! انقر على "تصدير الخريطة" لتنزيل الخريطة الحرارية كصورة PNG.',
     howto_1: 'انقر على "وضع جهاز إرسال" ثم انقر على الخريطة لوضع جهاز إرسال.',
     howto_2: 'مرّر المؤشر على الخريطة لرؤية قراءات RSSI الفورية في كل نقطة.',
     howto_3: 'استخدم "إضافة عائق" لوضع جدران تحجب الإشارة. اضبط التخفيف في المختبر.',
@@ -253,8 +236,7 @@ const LANG = {
     heatmapExported: '💾 تم تصدير الخريطة الحرارية',
     placeTxMode: '📡 انقر على الخريطة لوضع جهاز إرسال...',
     placeObstacleMode: '🧱 انقر واسحب على الخريطة لوضع عائق...',
-    freqChanged: '📶 تم تغيير التردد إلى',
-  ,sectionCode:'كود الجهاز'}
+    freqChanged: '📶 تم تغيير التردد إلى',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Radio Sniffer and Bit Mesh Rescue! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

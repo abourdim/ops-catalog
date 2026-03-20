@@ -59,10 +59,6 @@ const LANG = {
     challengeReveal3: 'Redundancy! Each node connects to multiple neighbors, creating alternate paths. The more connections, the more resilient the mesh.',
     revealBtn: 'Reveal Answer',
     avgHops: 'Avg Hops:', meshDensity: 'Mesh Density:', deadNodes: 'Dead Nodes:',
-    faq_q1: 'What is a mesh network?', faq_a1: 'A mesh network connects devices to each other, not to a central router. Each node can relay messages for others.',
-    faq_q2: 'What is ESP-MESH?', faq_a2: 'ESP-MESH is Espressif\'s protocol for ESP32 chips. It builds a self-organizing, self-healing mesh over WiFi.',
-    faq_q3: 'How does self-healing work?', faq_a3: 'When a node fails, neighbors detect the loss and reroute traffic through alternate paths automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click on the mesh canvas to select source and destination nodes.',
     howto_2: 'Type a message and click Send to watch it hop through the mesh.',
     howto_3: 'Click Kill Node to destroy a node and see the mesh reroute.',
@@ -80,8 +76,7 @@ const LANG = {
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     soundEffects: '🔊 Sound effects', whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap', musicMode: 'Music reactive',
     chatPlaceholder: 'Talk to the robot...', splashHint: 'tap to skip', newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'ESP32 nodes form a mesh network, each connecting to nearby neighbors.',step2Title:'Capture',step2Desc:'Messages use BFS routing to find the shortest path between nodes.',step3Title:'Analyze',step3Desc:'When a node dies, the mesh detects the failure and reroutes traffic.',step4Title:'Report',step4Desc:'Self-healing rebuilds links automatically when nodes come back online.',sectionCode:'Device Code'},
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',step1Title:'Scan',step1Desc:'ESP32 nodes form a mesh network, each connecting to nearby neighbors.',step2Title:'Capture',step2Desc:'Messages use BFS routing to find the shortest path between nodes.',step3Title:'Analyze',step3Desc:'When a node dies, the mesh detects the failure and reroutes traffic.',step4Title:'Report',step4Desc:'Self-healing rebuilds links automatically when nodes come back online.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Network Cartographer and Esp Signal Ghost! Each teaches something different. 🚀'},
   fr: {
     title: 'esp-mesh-whisper', subtitle: '🕸️ maillage · 🔄 guérir · 💬 murmurer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -105,10 +100,6 @@ const LANG = {
     challengeReveal3: 'Redondance ! Chaque noeud se connecte à plusieurs voisins, créant des chemins alternatifs.',
     revealBtn: 'Révéler',
     avgHops: 'Sauts Moy:', meshDensity: 'Densité:', deadNodes: 'Noeuds Morts:',
-    faq_q1: 'Qu\'est-ce qu\'un maillage ?', faq_a1: 'Un maillage connecte les appareils entre eux, pas à un routeur central. Chaque noeud relaye les messages.',
-    faq_q2: 'Qu\'est-ce que ESP-MESH ?', faq_a2: 'ESP-MESH est le protocole d\'Espressif pour les puces ESP32. Il construit un maillage auto-organisé.',
-    faq_q3: 'Comment fonctionne l\'auto-guérison ?', faq_a3: 'Quand un noeud tombe, les voisins détectent la perte et reroutent automatiquement.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans votre navigateur.',
     howto_1: 'Cliquez sur le canvas pour sélectionner les noeuds source et destination.',
     howto_2: 'Tapez un message et cliquez Envoyer pour le voir traverser le maillage.',
     howto_3: 'Cliquez Tuer Noeud pour détruire un noeud et voir le reroutage.',
@@ -126,8 +117,7 @@ const LANG = {
     logCleared: 'Journal effacé', copied: 'Copié !', copyFail: 'Échec',
     soundEffects: '🔊 Effets sonores', whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap', musicMode: 'Réactif musique',
     chatPlaceholder: 'Parle au robot...', splashHint: 'appuyer pour passer', newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'Les noeuds ESP32 forment un maillage réseau, chacun se connectant aux voisins proches.',step2Title:'Capturer',step2Desc:'Les messages utilisent le routage BFS pour trouver le chemin le plus court.',step3Title:'Analyser',step3Desc:'Quand un noeud meurt, le maillage détecte la panne et reroute le trafic.',step4Title:'Rapporter',step4Desc:'L\'auto-guérison reconstruit les liens quand les noeuds reviennent en ligne.',sectionCode:'Code Appareil'},
+    langChanged: '🌐 Langue → Français', themeChanged: '🎨 Thème →',step1Title:'Scanner',step1Desc:'Les noeuds ESP32 forment un maillage réseau, chacun se connectant aux voisins proches.',step2Title:'Capturer',step2Desc:'Les messages utilisent le routage BFS pour trouver le chemin le plus court.',step3Title:'Analyser',step3Desc:'Quand un noeud meurt, le maillage détecte la panne et reroute le trafic.',step4Title:'Rapporter',step4Desc:'L\'auto-guérison reconstruit les liens quand les noeuds reviennent en ligne.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Network Cartographer and Esp Signal Ghost ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'esp-mesh-whisper', subtitle: '🕸️ شبكة · 🔄 شفاء · 💬 همس',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -151,10 +141,6 @@ const LANG = {
     challengeReveal3: 'التكرار! كل عقدة تتصل بعدة جيران، مما يخلق مسارات بديلة.',
     revealBtn: 'اكشف الإجابة',
     avgHops: 'متوسط القفزات:', meshDensity: 'كثافة الشبكة:', deadNodes: 'العقد الميتة:',
-    faq_q1: 'ما هي شبكة المتداخلة؟', faq_a1: 'شبكة متداخلة تربط الأجهزة ببعضها، ليس بموجه مركزي. كل عقدة تنقل رسائل الآخرين.',
-    faq_q2: 'ما هو ESP-MESH؟', faq_a2: 'ESP-MESH هو بروتوكول Espressif لشرائح ESP32. يبني شبكة ذاتية التنظيم.',
-    faq_q3: 'كيف يعمل الإصلاح الذاتي؟', faq_a3: 'عندما تفشل عقدة، يكتشف الجيران الفقد ويعيدون التوجيه تلقائياً.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: 'انقر على اللوحة لتحديد عقد المصدر والوجهة.',
     howto_2: 'اكتب رسالة وانقر إرسال لمشاهدتها تعبر الشبكة.',
     howto_3: 'انقر قتل عقدة لتدمير عقدة ومشاهدة إعادة التوجيه.',
@@ -172,8 +158,7 @@ const LANG = {
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     soundEffects: '🔊 مؤثرات صوتية', whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط', musicMode: 'تفاعل موسيقي',
     chatPlaceholder: 'تحدث مع الروبوت...', splashHint: 'انقر للتخطي', newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'عقد ESP32 تشكل شبكة متداخلة، كل عقدة تتصل بالجيران القريبين.',step2Title:'التقاط',step2Desc:'الرسائل تستخدم توجيه BFS لإيجاد أقصر مسار بين العقد.',step3Title:'تحليل',step3Desc:'عندما تموت عقدة، الشبكة تكتشف العطل وتعيد توجيه حركة المرور.',step4Title:'تقرير',step4Desc:'الإصلاح الذاتي يعيد بناء الروابط تلقائياً عندما تعود العقد.',sectionCode:'كود الجهاز'}
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',step1Title:'مسح',step1Desc:'عقد ESP32 تشكل شبكة متداخلة، كل عقدة تتصل بالجيران القريبين.',step2Title:'التقاط',step2Desc:'الرسائل تستخدم توجيه BFS لإيجاد أقصر مسار بين العقد.',step3Title:'تحليل',step3Desc:'عندما تموت عقدة، الشبكة تكتشف العطل وتعيد توجيه حركة المرور.',step4Title:'تقرير',step4Desc:'الإصلاح الذاتي يعيد بناء الروابط تلقائياً عندما تعود العقد.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Network Cartographer and Esp Signal Ghost! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is CW Paddle?', faq_a1: 'A virtual Morse code paddle simulator. Tap DIT and DAH to send dots and dashes, and the app decodes them in real time.',
-    faq_q2: 'How do I send a letter?', faq_a2: 'Press DIT for a short tone (dot) and DAH for a long tone (dash). Combine them to form letters — for example, A is DIT-DAH (.-).',
-    faq_q3: 'What is WPM?', faq_a3: 'WPM stands for Words Per Minute. It controls the speed of Morse code timing. Beginners should start at 5-10 WPM.',
-    faq_q4: 'Can I change the tone?', faq_a4: 'Yes! Use the Tone slider to adjust the frequency between 400 Hz and 1000 Hz. The classic CW tone is around 700 Hz.',
     howto_1: 'Press the DIT button for a short dot or DAH for a long dash.',
     howto_2: 'Watch the Morse display to see your dots and dashes appear visually.',
     howto_3: 'The decoder automatically translates your Morse input into text after a short pause.',
@@ -114,8 +110,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates ham radio! 🔬 You get to experiment with radio signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real amateur radio communication! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Signal Meter and Bit Fox Hunt Compass! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-cw-paddle', subtitle: '🔑 dit dah dit — apprends le Morse !',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -126,10 +121,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi CW Paddle ?', faq_a1: 'Un simulateur de manipulateur Morse virtuel. Appuie sur DIT et DAH pour envoyer des points et des traits, et l\'appli les décode en temps réel.',
-    faq_q2: 'Comment envoyer une lettre ?', faq_a2: 'Appuie sur DIT pour un son court (point) et DAH pour un son long (trait). Combine-les pour former des lettres — par exemple, A = DIT-DAH (.-).',
-    faq_q3: 'C\'est quoi le WPM ?', faq_a3: 'WPM signifie Mots Par Minute. Ça contrôle la vitesse du code Morse. Les débutants devraient commencer à 5-10 WPM.',
-    faq_q4: 'Je peux changer le ton ?', faq_a4: 'Oui ! Utilise le curseur Ton pour ajuster la fréquence entre 400 Hz et 1000 Hz. Le ton CW classique est autour de 700 Hz.',
     howto_1: 'Appuie sur DIT pour un point court ou DAH pour un trait long.',
     howto_2: 'Regarde l\'affichage Morse pour voir tes points et traits apparaître.',
     howto_3: 'Le décodeur traduit automatiquement ton entrée Morse en texte après une courte pause.',
@@ -168,8 +159,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule ham radio ! 🔬 Tu peux expérimenter avec radio signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai amateur radio communication ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Signal Meter and Bit Fox Hunt Compass ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-cw-paddle', subtitle: '🔑 دت داه دت — تعلّم شفرة مورس!',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -180,10 +170,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو CW Paddle؟', faq_a1: 'محاكي مفتاح مورس افتراضي. اضغط DIT و DAH لإرسال النقاط والشرطات، والتطبيق يفك الشفرة فورياً.',
-    faq_q2: 'كيف أرسل حرفاً؟', faq_a2: 'اضغط DIT لنغمة قصيرة (نقطة) و DAH لنغمة طويلة (شرطة). اجمعهما لتكوين الحروف — مثلاً، A = DIT-DAH (.-).',
-    faq_q3: 'ما هو WPM؟', faq_a3: 'WPM يعني كلمات في الدقيقة. يتحكم في سرعة توقيت شفرة مورس. يجب أن يبدأ المبتدئون بـ 5-10 WPM.',
-    faq_q4: 'هل يمكنني تغيير النغمة؟', faq_a4: 'نعم! استخدم شريط النغمة لضبط التردد بين 400 و 1000 هرتز. نغمة CW الكلاسيكية حوالي 700 هرتز.',
     howto_1: 'اضغط زر DIT لنقطة قصيرة أو DAH لشرطة طويلة.',
     howto_2: 'شاهد شاشة مورس لرؤية النقاط والشرطات تظهر بصرياً.',
     howto_3: 'المُفكّك يترجم تلقائياً إدخال مورس إلى نص بعد توقف قصير.',
@@ -222,8 +208,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي ham radio! 🔬 يمكنك التجربة مع radio signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا amateur radio communication حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Signal Meter and Bit Fox Hunt Compass! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

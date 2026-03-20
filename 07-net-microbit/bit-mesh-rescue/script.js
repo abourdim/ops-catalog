@@ -73,10 +73,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Mesh Rescue?', faq_a1: 'A simulation that teaches how mesh networks automatically recover when nodes fail. Build, break, and heal networks!',
-    faq_q2: 'How do I kill a node?', faq_a2: 'Click "Kill Node" then click any active (green) node on the canvas. It will turn red and its connections will break.',
-    faq_q3: 'What does healing do?', faq_a3: 'The heal function uses BFS to find alternative routes through surviving nodes, restoring network connectivity.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Add nodes to build your mesh network. Each node auto-connects to nearby peers.',
     howto_2: 'Kill nodes to simulate failures and watch the network degrade in real time.',
     howto_3: 'Click "Heal Network" to trigger automatic route recalculation via BFS.',
@@ -123,8 +119,7 @@ const LANG = {
     killModeOn: 'Kill mode ON — click a node to destroy it',
     killModeOff: 'Kill mode OFF',
     noNodes: 'Add some nodes first!',
-    tooFewNodes: 'Need at least 2 nodes to test messaging',
-  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+    tooFewNodes: 'Need at least 2 nodes to test messaging',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Bit Micro Vpn and Bit Ble Mesh Chat! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-mesh-rescue', subtitle: '🔄 mesh · 🛡️ sauvetage · 💡 resilience',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -135,10 +130,6 @@ const LANG = {
     settings: '⚙️ Parametres', language: 'Langue',
     helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Mesh Rescue ?', faq_a1: 'Une simulation qui montre comment les reseaux mesh se reparent automatiquement quand des noeuds tombent en panne.',
-    faq_q2: 'Comment detruire un noeud ?', faq_a2: 'Clique sur "Detruire Noeud" puis clique sur un noeud actif (vert) sur le canevas. Il deviendra rouge.',
-    faq_q3: 'Que fait la reparation ?', faq_a3: 'La fonction de reparation utilise le BFS pour trouver des routes alternatives a travers les noeuds survivants.',
-    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoye nulle part.',
     howto_1: 'Ajoute des noeuds pour construire ton reseau mesh. Chaque noeud se connecte automatiquement aux voisins.',
     howto_2: 'Detruis des noeuds pour simuler des pannes et observe la degradation du reseau.',
     howto_3: 'Clique sur "Reparer Reseau" pour declencher le recalcul automatique des routes via BFS.',
@@ -185,8 +176,7 @@ const LANG = {
     killModeOn: 'Mode destruction ON — clique sur un noeud pour le detruire',
     killModeOff: 'Mode destruction OFF',
     noNodes: 'Ajoute d\'abord des noeuds !',
-    tooFewNodes: 'Il faut au moins 2 noeuds pour tester la messagerie',
-  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+    tooFewNodes: 'Il faut au moins 2 noeuds pour tester la messagerie',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Micro Vpn and Bit Ble Mesh Chat ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-mesh-rescue', subtitle: '🔄 شبكة · 🛡️ إنقاذ · 💡 مرونة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -197,10 +187,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو إنقاذ الشبكة؟', faq_a1: 'محاكاة تعلّم كيف تتعافى شبكات الميش تلقائيًا عند فشل العقد. ابنِ، دمّر، وأصلح الشبكات!',
-    faq_q2: 'كيف أدمّر عقدة؟', faq_a2: 'انقر على "تدمير عقدة" ثم انقر على أي عقدة نشطة (خضراء) على اللوحة. ستتحول إلى اللون الأحمر.',
-    faq_q3: 'ماذا يفعل الإصلاح؟', faq_a3: 'وظيفة الإصلاح تستخدم BFS للعثور على مسارات بديلة عبر العقد الناجية، واستعادة اتصال الشبكة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'أضف عقدًا لبناء شبكة الميش الخاصة بك. كل عقدة تتصل تلقائيًا بالجيران القريبين.',
     howto_2: 'دمّر العقد لمحاكاة الأعطال وشاهد تدهور الشبكة في الوقت الحقيقي.',
     howto_3: 'انقر على "إصلاح الشبكة" لتفعيل إعادة حساب المسارات تلقائيًا عبر BFS.',
@@ -247,8 +233,7 @@ const LANG = {
     killModeOn: 'وضع التدمير مفعّل — انقر على عقدة لتدميرها',
     killModeOff: 'وضع التدمير متوقف',
     noNodes: 'أضف بعض العقد أولًا!',
-    tooFewNodes: 'تحتاج عقدتين على الأقل لاختبار الرسائل',
-  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
+    tooFewNodes: 'تحتاج عقدتين على الأقل لاختبار الرسائل',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Micro Vpn and Bit Ble Mesh Chat! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -32,10 +32,6 @@ const LANG = {
     clear:'Clear', copy:'Copy', export:'Export', filterAll:'All',
     settings:'⚙️ Settings', language:'Language', theme:'Theme', soundEffects:'🔊 Sound effects',
     help:'❓ Help', faq:'FAQ', howto:'How-To', wiki:'Wiki',
-    faq_q1:'What is deepfake voice cloning?', faq_a1:'AI technology that replicates a person\'s voice from short audio samples using neural network models.',
-    faq_q2:'Is this real cloning?', faq_a2:'No. This is a purely educational simulation that visualizes how the process works without actually cloning voices.',
-    faq_q3:'How to detect deepfakes?', faq_a3:'Look for unnatural pauses, metallic artifacts, inconsistent pitch, spectral anomalies, and phase discontinuities.',
-    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally in your browser. No data leaves your device.',
     howto_1:'Select a voice type (male, female, child) from the dropdown.',
     howto_2:'Click Record to capture a simulated voice sample and observe the waveform.',
     howto_3:'Click Clone Voice to simulate AI synthesis and watch the similarity meter rise.',
@@ -53,7 +49,7 @@ const LANG = {
     working:'Working...', splashHint:'tap to skip',
     langChanged:'🌐 Language → English', themeChanged:'🎨 Theme →',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Research Target',step1Desc:'A voice sample is recorded and converted to a spectrogram representation.',step2Title:'Build Pretext',step2Desc:'An AI model analyzes the voice\'s unique characteristics (timbre, pitch, cadence).',step3Title:'Execute Attack',step3Desc:'The model generates a synthetic clone that mimics the original voice patterns.',step4Title:'Analyze & Defend',step4Desc:'Detection algorithms analyze spectral anomalies to identify deepfake artifacts.',sectionCode:'Device Code'},
+  ,step1Title:'Research Target',step1Desc:'A voice sample is recorded and converted to a spectrogram representation.',step2Title:'Build Pretext',step2Desc:'An AI model analyzes the voice\'s unique characteristics (timbre, pitch, cadence).',step3Title:'Execute Attack',step3Desc:'The model generates a synthetic clone that mimics the original voice patterns.',step4Title:'Analyze & Defend',step4Desc:'Detection algorithms analyze spectral anomalies to identify deepfake artifacts.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates social engineering! 🔬 You get to experiment with human psychology in security in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real human psychology in security so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real social manipulation awareness! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Se Dumpster Diving Sim and Se Qr Code Poisoner! Each teaches something different. 🚀'},
   fr: {
     title:'Clonage Vocal Deepfake', subtitle:'Simuler les menaces de clonage vocal IA',
     disconnected:'Déconnecté', connected:'Connecté',
@@ -77,10 +73,6 @@ const LANG = {
     clear:'Effacer', copy:'Copier', export:'Exporter', filterAll:'Tout',
     settings:'⚙️ Paramètres', language:'Langue', theme:'Thème', soundEffects:'🔊 Effets sonores',
     help:'❓ Aide', faq:'FAQ', howto:'Guide', wiki:'Wiki',
-    faq_q1:'Qu\'est-ce que le clonage vocal deepfake?', faq_a1:'Technologie IA qui réplique la voix d\'une personne à partir d\'échantillons courts via des réseaux neuronaux.',
-    faq_q2:'Est-ce un vrai clonage?', faq_a2:'Non. C\'est une simulation éducative qui visualise le processus sans cloner de voix.',
-    faq_q3:'Comment détecter les deepfakes?', faq_a3:'Cherchez les pauses non naturelles, artefacts métalliques, hauteur incohérente et anomalies spectrales.',
-    faq_q4:'Mes données sont-elles privées?', faq_a4:'Oui. Tout fonctionne localement dans votre navigateur.',
     howto_1:'Sélectionnez un type de voix dans le menu déroulant.',
     howto_2:'Cliquez Enregistrer pour capturer un échantillon vocal simulé.',
     howto_3:'Cliquez Cloner pour simuler la synthèse IA et observer la similarité.',
@@ -98,7 +90,7 @@ const LANG = {
     working:'En cours...', splashHint:'appuyer pour passer',
     langChanged:'🌐 Langue → Français', themeChanged:'🎨 Thème →',
     t_mosque:'Mosquée',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Médina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Rechercher la cible',step1Desc:'Un échantillon vocal est enregistré et converti en représentation spectrogramme.',step2Title:'Construire le prétexte',step2Desc:'Un modèle IA analyse les caractéristiques uniques de la voix (timbre, hauteur, cadence).',step3Title:'Exécuter l\'attaque',step3Desc:'Le modèle génère un clone synthétique imitant les patterns vocaux originaux.',step4Title:'Analyser et défendre',step4Desc:'Les algorithmes de détection analysent les anomalies spectrales pour identifier les artefacts deepfake.',sectionCode:'Code Appareil'},
+  ,step1Title:'Rechercher la cible',step1Desc:'Un échantillon vocal est enregistré et converti en représentation spectrogramme.',step2Title:'Construire le prétexte',step2Desc:'Un modèle IA analyse les caractéristiques uniques de la voix (timbre, hauteur, cadence).',step3Title:'Exécuter l\'attaque',step3Desc:'Le modèle génère un clone synthétique imitant les patterns vocaux originaux.',step4Title:'Analyser et défendre',step4Desc:'Les algorithmes de détection analysent les anomalies spectrales pour identifier les artefacts deepfake.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule social engineering ! 🔬 Tu peux expérimenter avec human psychology in security en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais human psychology in security.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai social manipulation awareness ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Se Dumpster Diving Sim and Se Qr Code Poisoner ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'مُستنسخ الصوت المزيّف', subtitle:'محاكاة تهديدات استنساخ الصوت بالذكاء الاصطناعي',
     disconnected:'غير متصل', connected:'متصل',
@@ -122,10 +114,6 @@ const LANG = {
     clear:'مسح', copy:'نسخ', export:'تصدير', filterAll:'الكل',
     settings:'⚙️ الإعدادات', language:'اللغة', theme:'المظهر', soundEffects:'🔊 المؤثرات الصوتية',
     help:'❓ مساعدة', faq:'أسئلة شائعة', howto:'كيف تستخدم', wiki:'ويكي',
-    faq_q1:'ما هو استنساخ الصوت المزيّف؟', faq_a1:'تقنية ذكاء اصطناعي تستنسخ صوت شخص من عينات صوتية قصيرة باستخدام نماذج الشبكات العصبية.',
-    faq_q2:'هل هذا استنساخ حقيقي؟', faq_a2:'لا. هذه محاكاة تعليمية بحتة تُصوّر كيفية عمل العملية دون استنساخ فعلي للأصوات.',
-    faq_q3:'كيف تكشف التزييف العميق؟', faq_a3:'ابحث عن التوقفات غير الطبيعية والأصوات المعدنية والنبرة غير المتسقة والشذوذ الطيفي.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'نعم. كل شيء يعمل محليًا في متصفحك. لا تغادر أي بيانات جهازك.',
     howto_1:'اختر نوع الصوت من القائمة المنسدلة.',
     howto_2:'انقر تسجيل لالتقاط عينة صوتية ومراقبة شكل الموجة.',
     howto_3:'انقر استنساخ الصوت لمحاكاة التوليف ومشاهدة مقياس التشابه يرتفع.',
@@ -143,7 +131,7 @@ const LANG = {
     working:'جارٍ...', splashHint:'انقر للتخطي',
     langChanged:'🌐 اللغة ← العربية', themeChanged:'🎨 المظهر ←',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'البحث عن الهدف',step1Desc:'يتم تسجيل عينة صوتية وتحويلها إلى تمثيل طيفي.',step2Title:'بناء الذريعة',step2Desc:'يحلل نموذج الذكاء الاصطناعي الخصائص الفريدة للصوت (الجرس، النبرة، الإيقاع).',step3Title:'تنفيذ الهجوم',step3Desc:'يولّد النموذج نسخة صناعية تحاكي أنماط الصوت الأصلية.',step4Title:'تحليل ودفاع',step4Desc:'تحلل خوارزميات الكشف الشذوذ الطيفي لتحديد آثار التزييف العميق.',sectionCode:'كود الجهاز'}
+  ,step1Title:'البحث عن الهدف',step1Desc:'يتم تسجيل عينة صوتية وتحويلها إلى تمثيل طيفي.',step2Title:'بناء الذريعة',step2Desc:'يحلل نموذج الذكاء الاصطناعي الخصائص الفريدة للصوت (الجرس، النبرة، الإيقاع).',step3Title:'تنفيذ الهجوم',step3Desc:'يولّد النموذج نسخة صناعية تحاكي أنماط الصوت الأصلية.',step4Title:'تحليل ودفاع',step4Desc:'تحلل خوارزميات الكشف الشذوذ الطيفي لتحديد آثار التزييف العميق.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي social engineering! 🔬 يمكنك التجربة مع human psychology in security في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج human psychology in security حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا social manipulation awareness حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Se Dumpster Diving Sim and Se Qr Code Poisoner! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

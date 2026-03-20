@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Bug Sweeper?', faq_a1: 'An RF bug detector simulator. Scan frequency bands to find hidden listening devices.',
-    faq_q2: 'How do I scan?', faq_a2: 'Click Start Scan to begin real-time scanning, or Full Sweep for a complete band analysis.',
-    faq_q3: 'What are the colored peaks?', faq_a3: 'Green = normal signals. Yellow = suspicious. Red = likely bug detected!',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Select a frequency band from the dropdown.', howto_2: 'Click Start Scan for real-time monitoring.',
     howto_3: 'Click Full Sweep for a complete band analysis.', howto_4: 'Check Detected Bugs section for suspicious signals.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes with dark and light variants.',
@@ -102,8 +98,7 @@ const LANG = {
     clear_status: 'CLEAR', suspicious: 'SUSPICIOUS', bugDetected: 'BUG DETECTED',
     bugHint: 'Suspicious signals will appear here during scanning.',
     sweepComplete: 'Full sweep complete', bugsFound: 'bugs found',
-    noBugs: 'No bugs detected', scanning: 'Scanning...',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    noBugs: 'No bugs detected', scanning: 'Scanning...',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Direction Finder and Hrf Rf Jail! Each teaches something different. 🚀'},
   fr: {
     title: 'Balayeur RF', subtitle: 'Balayeur RF — Détecteur de mouchards',
     disconnected: 'En attente', connected: 'Balayage',
@@ -114,10 +109,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le Balayeur RF?', faq_a1: 'Un simulateur de détecteur de mouchards RF.',
-    faq_q2: 'Comment scanner?', faq_a2: 'Cliquez Démarrer pour le balayage en temps réel.',
-    faq_q3: 'Que signifient les couleurs?', faq_a3: 'Vert = normal. Jaune = suspect. Rouge = mouchard détecté!',
-    faq_q4: 'Données privées?', faq_a4: 'Oui. Tout est local.',
     howto_1: 'Sélectionnez une bande de fréquences.', howto_2: 'Cliquez Démarrer pour le monitoring.',
     howto_3: 'Cliquez Balayage Complet pour l\'analyse.', howto_4: 'Vérifiez les mouchards détectés.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes avec variantes sombres et claires.',
@@ -144,8 +135,7 @@ const LANG = {
     clear_status: 'CLAIR', suspicious: 'SUSPECT', bugDetected: 'MOUCHARD DÉTECTÉ',
     bugHint: 'Les signaux suspects apparaîtront ici.',
     sweepComplete: 'Balayage complet', bugsFound: 'mouchards trouvés',
-    noBugs: 'Aucun mouchard détecté', scanning: 'Balayage...',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    noBugs: 'Aucun mouchard détecté', scanning: 'Balayage...',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Direction Finder and Hrf Rf Jail ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'كاسح التنصت', subtitle: 'كاسح التنصت — كشف أجهزة التنصت',
     disconnected: 'خامل', connected: 'مسح',
@@ -156,10 +146,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو كاسح التنصت؟', faq_a1: 'محاكي لكشف أجهزة التنصت اللاسلكية.',
-    faq_q2: 'كيف أبدأ المسح؟', faq_a2: 'انقر بدء المسح للمراقبة الحية.',
-    faq_q3: 'ماذا تعني الألوان؟', faq_a3: 'أخضر = عادي. أصفر = مشبوه. أحمر = جهاز تنصت!',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
     howto_1: 'اختر نطاق التردد.', howto_2: 'انقر بدء المسح للمراقبة.',
     howto_3: 'انقر مسح شامل للتحليل الكامل.', howto_4: 'تحقق من الأجهزة المكتشفة.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مع تنويعات.',
@@ -186,8 +172,7 @@ const LANG = {
     clear_status: 'آمن', suspicious: 'مشبوه', bugDetected: 'جهاز تنصت!',
     bugHint: 'ستظهر الإشارات المشبوهة هنا.',
     sweepComplete: 'اكتمل المسح الشامل', bugsFound: 'أجهزة مكتشفة',
-    noBugs: 'لم يتم اكتشاف أجهزة', scanning: 'جارٍ المسح...',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    noBugs: 'لم يتم اكتشاف أجهزة', scanning: 'جارٍ المسح...',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Direction Finder and Hrf Rf Jail! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

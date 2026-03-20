@@ -26,10 +26,6 @@ const LANG = {
     splashHint:'tap to skip', langChanged:'Language > English', themeChanged:'Theme >',
     pingSent:'Ping sent', echoDetected:'Echo detected',
     autoStart:'Auto scan started', autoStop:'Auto scan stopped', mapCleared:'Map cleared',
-    faq_q1:'What is Sonar Mapper?', faq_a1:'Maps room geometry using sound echoes, similar to how bats navigate using echolocation and how submarines use sonar.',
-    faq_q2:'How accurate is it?', faq_a2:'Depends on microphone/speaker quality and room acoustics. Typically 0.5-2m precision in quiet environments.',
-    faq_q3:'What is PPI display?', faq_a3:'Plan Position Indicator — a circular radar display showing detected targets as dots at their bearing and range from center.',
-    faq_q4:'Is my data private?', faq_a4:'100% local processing. No audio data leaves your browser.',
     howto_1:'Click Send Ping to emit a short audio chirp.', howto_2:'Sound bounces off walls and objects.',
     howto_3:'Microphone captures the echoes and measures delay.', howto_4:'The PPI display builds a map of the surroundings.',
     wiki_echo_title:'Echolocation', wiki_echo:'Distance = (speed of sound x echo delay) / 2. Speed of sound: ~343 m/s at 20C.',
@@ -43,7 +39,7 @@ const LANG = {
     challengeReveal3:'Ultrasound has very short wavelengths (1.7-17mm), allowing bats to detect tiny insects. It is also more directional, creating a focused beam.',
     revealBtn:'Reveal Answer',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code'},
+  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates acoustic warfare! 🔬 You get to experiment with sound waves in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sound waves so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real acoustic science and attacks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Sonic Audio Steganography and Sonic Dolphin Attack Lab! Each teaches something different. 🚀'},
   fr: {
     title:'Cartographe Sonar', subtitle:'Cartographie par Echolocalisation',
     disconnected:'Inactif', connected:'Balayage',
@@ -59,10 +55,6 @@ const LANG = {
     splashHint:'appuyer pour passer', langChanged:'Langue > Francais', themeChanged:'Theme >',
     pingSent:'Ping envoye', echoDetected:'Echo detecte',
     autoStart:'Balayage auto demarre', autoStop:'Balayage auto arrete', mapCleared:'Carte effacee',
-    faq_q1:'Qu\'est-ce que le Cartographe Sonar?', faq_a1:'Cartographie la geometrie de la piece par echos sonores, comme les chauves-souris ou les sous-marins.',
-    faq_q2:'Quelle precision?', faq_a2:'Depend de la qualite du micro/haut-parleur. Typiquement 0.5-2m de precision en environnement calme.',
-    faq_q3:'Qu\'est-ce que l\'affichage PPI?', faq_a3:'Indicateur de Position en Plan — affichage radar circulaire montrant les cibles detectees.',
-    faq_q4:'Mes donnees sont-elles privees?', faq_a4:'Traitement 100% local.',
     howto_1:'Cliquez Envoyer Ping pour emettre un chirp.', howto_2:'Le son rebondit sur les murs.',
     howto_3:'Le micro capture les echos et mesure le delai.', howto_4:'L\'affichage PPI construit une carte.',
     wiki_echo_title:'Echolocalisation', wiki_echo:'Distance = (vitesse du son x delai d\'echo) / 2. Vitesse du son: ~343 m/s a 20C.',
@@ -76,7 +68,7 @@ const LANG = {
     challengeReveal3:'Les ultrasons ont des longueurs d\'onde tres courtes (1.7-17mm), permettant de detecter de minuscules insectes.',
     revealBtn:'Reveler la reponse',
     t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil'},
+  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule acoustic warfare ! 🔬 Tu peux expérimenter avec sound waves en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sound waves.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai acoustic science and attacks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Sonic Audio Steganography and Sonic Dolphin Attack Lab ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'مسح السونار', subtitle:'رسم خرائط بالصدى',
     disconnected:'خامل', connected:'مسح',
@@ -92,10 +84,6 @@ const LANG = {
     splashHint:'انقر للتخطي', langChanged:'اللغة > العربية', themeChanged:'المظهر >',
     pingSent:'تم إرسال النبضة', echoDetected:'تم اكتشاف الصدى',
     autoStart:'بدأ المسح التلقائي', autoStop:'توقف المسح التلقائي', mapCleared:'تم مسح الخريطة',
-    faq_q1:'ما هو مسح السونار؟', faq_a1:'يرسم خريطة الغرفة باستخدام أصداء الصوت، مثلما تتنقل الخفافيش بالاستدلال بالصدى.',
-    faq_q2:'ما مدى الدقة؟', faq_a2:'يعتمد على جودة الميكروفون والسماعة. عادة 0.5-2 متر في بيئات هادئة.',
-    faq_q3:'ما هو عرض PPI؟', faq_a3:'مؤشر الموضع المستوي — عرض رادار دائري يظهر الأهداف المكتشفة كنقاط.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'معالجة محلية 100%.',
     howto_1:'انقر إرسال نبضة لبث صوت قصير.', howto_2:'الصوت يرتد عن الجدران والأجسام.',
     howto_3:'الميكروفون يلتقط الأصداء ويقيس التأخير.', howto_4:'عرض PPI يبني خريطة المحيط.',
     wiki_echo_title:'الاستدلال بالصدى', wiki_echo:'المسافة = (سرعة الصوت × تأخير الصدى) / 2. سرعة الصوت: ~343 م/ث عند 20 درجة.',
@@ -109,7 +97,7 @@ const LANG = {
     challengeReveal3:'الموجات فوق الصوتية لها أطوال موجية قصيرة جدًا (1.7-17 مم)، مما يسمح للخفافيش باكتشاف حشرات صغيرة.',
     revealBtn:'اكشف الإجابة',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز'}
+  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي acoustic warfare! 🔬 يمكنك التجربة مع sound waves في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج sound waves حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا acoustic science and attacks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Sonic Audio Steganography and Sonic Dolphin Attack Lab! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 function T(k) { return (LANG[currentLang] || LANG.en)[k] || LANG.en[k] || k; }

@@ -88,10 +88,6 @@ const LANG = {
     challengeReveal3: 'Agents meet in person to agree on a key (out-of-band exchange). For digital exchange, use Diffie-Hellman: each agent generates a partial key, shares it publicly, then combines to create a shared secret.',
     revealBtn: 'Reveal Answer',
     dropLogEmpty: 'No drops intercepted yet...',
-    faq_q1: 'What is a dead drop?', faq_a1: 'A dead drop is a spy technique where agents leave encrypted messages at hidden locations. This app simulates it using BLE.',
-    faq_q2: 'What is BLE?', faq_a2: 'BLE (Bluetooth Low Energy) is a wireless protocol for short-range communication. micro:bit uses it to send small data packets.',
-    faq_q3: 'How does XOR encryption work?', faq_a3: 'XOR compares each bit of your message with the key. Same bits give 0, different bits give 1. Apply XOR again with the same key to decrypt.',
-    faq_q4: 'Can I use this with a real micro:bit?', faq_a4: 'This app is a simulation. To use real BLE, flash the MakeCode program onto two micro:bit v2 boards and pair them.',
     howto_1: 'Type a secret message and a shared key in the main card.',
     howto_2: 'Click Encrypt to see the XOR cipher output in the cipher box.',
     howto_3: 'Click Send Drop to broadcast the encrypted message via simulated BLE.',
@@ -117,8 +113,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Input Data',step1Desc:'Agent A writes a secret message and enters a shared key.',step2Title:'Train Model',step2Desc:'The message is encrypted using XOR cipher with the shared key.',step3Title:'Classify',step3Desc:'The encrypted message is "dropped" via BLE broadcast into the air.',step4Title:'Evaluate',step4Desc:'Agent B scans, receives the drop, and decrypts with the same key.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Input Data',step1Desc:'Agent A writes a secret message and enters a shared key.',step2Title:'Train Model',step2Desc:'The message is encrypted using XOR cipher with the shared key.',step3Title:'Classify',step3Desc:'The encrypted message is "dropped" via BLE broadcast into the air.',step4Title:'Evaluate',step4Desc:'Agent B scans, receives the drop, and decrypts with the same key.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates AI-powered radio! 🔬 You get to experiment with machine learning for signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real machine learning for signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real neural networks and radio! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Ai Neural Demodulator and Ai Gpt Radio Operator! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-dead-drop', subtitle: '📨 chiffrer · 📡 déposer · 🔓 déchiffrer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -145,10 +140,6 @@ const LANG = {
     challengeReveal3: 'Les agents se rencontrent en personne pour convenir d\'une clé (échange hors bande). Pour un échange numérique, utilisez Diffie-Hellman : chaque agent génère une clé partielle, la partage publiquement, puis combine pour créer un secret partagé.',
     revealBtn: 'Révéler la réponse',
     dropLogEmpty: 'Aucun drop intercepté pour le moment...',
-    faq_q1: 'Qu\'est-ce qu\'un dead drop ?', faq_a1: 'Un dead drop est une technique d\'espionnage où les agents laissent des messages chiffrés dans des lieux cachés. Cette appli le simule avec BLE.',
-    faq_q2: 'Qu\'est-ce que le BLE ?', faq_a2: 'BLE (Bluetooth Low Energy) est un protocole sans fil pour la communication courte portée. Le micro:bit l\'utilise pour envoyer des paquets.',
-    faq_q3: 'Comment fonctionne le chiffrement XOR ?', faq_a3: 'XOR compare chaque bit de votre message avec la clé. Bits identiques donnent 0, différents donnent 1. Appliquez XOR à nouveau avec la même clé pour déchiffrer.',
-    faq_q4: 'Puis-je utiliser un vrai micro:bit ?', faq_a4: 'Cette appli est une simulation. Pour du vrai BLE, flashez le programme MakeCode sur deux cartes micro:bit v2.',
     howto_1: 'Tapez un message secret et une clé partagée dans la carte principale.',
     howto_2: 'Cliquez Chiffrer pour voir le résultat XOR dans la boîte cipher.',
     howto_3: 'Cliquez Envoyer Drop pour diffuser le message chiffré via BLE simulé.',
@@ -174,8 +165,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'Données d\'entrée',step1Desc:'L\'agent A écrit un message secret et entre une clé partagée.',step2Title:'Entraîner le modèle',step2Desc:'Le message est chiffré avec le chiffrement XOR et la clé partagée.',step3Title:'Classifier',step3Desc:'Le message chiffré est "déposé" par diffusion BLE dans les airs.',step4Title:'Évaluer',step4Desc:'L\'agent B scanne, reçoit le drop et déchiffre avec la même clé.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'Données d\'entrée',step1Desc:'L\'agent A écrit un message secret et entre une clé partagée.',step2Title:'Entraîner le modèle',step2Desc:'Le message est chiffré avec le chiffrement XOR et la clé partagée.',step3Title:'Classifier',step3Desc:'Le message chiffré est "déposé" par diffusion BLE dans les airs.',step4Title:'Évaluer',step4Desc:'L\'agent B scanne, reçoit le drop et déchiffre avec la même clé.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule AI-powered radio ! 🔬 Tu peux expérimenter avec machine learning for signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais machine learning for signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai neural networks and radio ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Ai Neural Demodulator and Ai Gpt Radio Operator ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-dead-drop', subtitle: '📨 تشفير · 📡 إيداع · 🔓 فك تشفير',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -202,10 +192,6 @@ const LANG = {
     challengeReveal3: 'يلتقي العملاء شخصيًا للاتفاق على مفتاح (تبادل خارج النطاق). للتبادل الرقمي، استخدم Diffie-Hellman: كل عميل يولّد مفتاحًا جزئيًا ويشاركه علنًا ثم يدمجانه لإنشاء سر مشترك.',
     revealBtn: 'اكشف الإجابة',
     dropLogEmpty: 'لم يتم اعتراض أي إيداع بعد...',
-    faq_q1: 'ما هو الـ dead drop؟', faq_a1: 'الـ dead drop تقنية تجسس يترك فيها العملاء رسائل مشفرة في أماكن مخفية. هذا التطبيق يحاكيها باستخدام BLE.',
-    faq_q2: 'ما هو BLE؟', faq_a2: 'BLE (بلوتوث منخفض الطاقة) بروتوكول لاسلكي للاتصال قصير المدى. يستخدمه الـ micro:bit لإرسال حزم بيانات صغيرة.',
-    faq_q3: 'كيف يعمل تشفير XOR؟', faq_a3: 'XOR يقارن كل بت من رسالتك مع المفتاح. البتات المتشابهة تعطي 0 والمختلفة تعطي 1. طبّق XOR مرة أخرى بنفس المفتاح لفك التشفير.',
-    faq_q4: 'هل يمكنني استخدام micro:bit حقيقي؟', faq_a4: 'هذا التطبيق محاكاة. لاستخدام BLE حقيقي، حمّل برنامج MakeCode على لوحتي micro:bit v2.',
     howto_1: 'اكتب رسالة سرية ومفتاحًا مشتركًا في البطاقة الرئيسية.',
     howto_2: 'انقر تشفير لرؤية نتيجة XOR في صندوق الشيفرة.',
     howto_3: 'انقر إرسال Drop لبث الرسالة المشفرة عبر BLE محاكى.',
@@ -231,8 +217,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'بيانات الإدخال',step1Desc:'العميل أ يكتب رسالة سرية ويدخل مفتاحًا مشتركًا.',step2Title:'تدريب النموذج',step2Desc:'يتم تشفير الرسالة باستخدام شيفرة XOR مع المفتاح المشترك.',step3Title:'تصنيف',step3Desc:'الرسالة المشفرة تُودَع عبر بث BLE في الهواء.',step4Title:'تقييم',step4Desc:'العميل ب يمسح ويستقبل الإيداع ويفك تشفيره بنفس المفتاح.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'بيانات الإدخال',step1Desc:'العميل أ يكتب رسالة سرية ويدخل مفتاحًا مشتركًا.',step2Title:'تدريب النموذج',step2Desc:'يتم تشفير الرسالة باستخدام شيفرة XOR مع المفتاح المشترك.',step3Title:'تصنيف',step3Desc:'الرسالة المشفرة تُودَع عبر بث BLE في الهواء.',step4Title:'تقييم',step4Desc:'العميل ب يمسح ويستقبل الإيداع ويفك تشفيره بنفس المفتاح.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي AI-powered radio! 🔬 يمكنك التجربة مع machine learning for signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج machine learning for signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا neural networks and radio حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Ai Neural Demodulator and Ai Gpt Radio Operator! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

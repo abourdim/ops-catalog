@@ -71,10 +71,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Signal Forge?', faq_a1: 'A waveform crafter — build and modulate custom RF signals.',
-    faq_q2: 'How do I create signals?', faq_a2: 'Select waveform type, frequency, and modulation, then click Transmit.',
-    faq_q3: 'What modulations are available?', faq_a3: 'AM, FM, and PSK modulation schemes.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
     howto_1: 'Select a waveform type (sine, square, etc.).', howto_2: 'Adjust frequency and amplitude.',
     howto_3: 'Choose a modulation scheme.', howto_4: 'Click Transmit to send to the library.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual.',
@@ -93,8 +89,7 @@ const LANG = {
     amplitude: 'Amplitude:', sigInfo: 'Signal Info', transmit: 'Transmit',
     addHarmonic: 'Add Harmonic', resetForge: 'Reset',
     forgeHint: 'Craft signals and transmit them to the library.',
-    transmitted: 'Signal transmitted',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    transmitted: 'Signal transmitted',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Direction Finder and Hrf Rf Cloak! Each teaches something different. 🚀'},
   fr: {
     title: 'Forge de Signaux', subtitle: 'Forge de Signaux — Artisan RF',
     disconnected: 'En attente', connected: 'Transmission',
@@ -104,10 +99,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que la Forge?', faq_a1: 'Un créateur de formes d\'onde RF.',
-    faq_q2: 'Comment créer?', faq_a2: 'Choisissez type, fréquence et modulation.',
-    faq_q3: 'Quelles modulations?', faq_a3: 'AM, FM et PSK.',
-    faq_q4: 'Données privées?', faq_a4: 'Oui.',
     howto_1: 'Choisissez un type d\'onde.', howto_2: 'Ajustez fréquence et amplitude.',
     howto_3: 'Choisissez la modulation.', howto_4: 'Cliquez Transmettre.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
@@ -125,8 +116,7 @@ const LANG = {
     waveform: 'Forme d\'onde', modulation: 'Modulation', frequency: 'Fréquence (Hz):',
     amplitude: 'Amplitude:', sigInfo: 'Info Signal', transmit: 'Transmettre',
     addHarmonic: 'Harmonique', resetForge: 'Réinitialiser',
-    forgeHint: 'Créez des signaux et transmettez-les.', transmitted: 'Signal transmis',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    forgeHint: 'Créez des signaux et transmettez-les.', transmitted: 'Signal transmis',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Direction Finder and Hrf Rf Cloak ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'مصنع الإشارات', subtitle: 'مصنع الإشارات — صياغة RF',
     disconnected: 'خامل', connected: 'إرسال',
@@ -136,10 +126,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو المصنع؟', faq_a1: 'أداة لصياغة أشكال الموجات RF.',
-    faq_q2: 'كيف أصنع إشارة؟', faq_a2: 'اختر النوع والتردد والتعديل.',
-    faq_q3: 'ما التعديلات المتاحة؟', faq_a3: 'AM وFM وPSK.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
     howto_1: 'اختر نوع الموجة.', howto_2: 'اضبط التردد والسعة.',
     howto_3: 'اختر نظام التعديل.', howto_4: 'انقر إرسال.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
@@ -157,8 +143,7 @@ const LANG = {
     waveform: 'شكل الموجة', modulation: 'التعديل', frequency: 'التردد (Hz):',
     amplitude: 'السعة:', sigInfo: 'معلومات الإشارة', transmit: 'إرسال',
     addHarmonic: 'إضافة توافقي', resetForge: 'إعادة تعيين',
-    forgeHint: 'اصنع إشارات وأرسلها إلى المكتبة.', transmitted: 'تم إرسال الإشارة',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    forgeHint: 'اصنع إشارات وأرسلها إلى المكتبة.', transmitted: 'تم إرسال الإشارة',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Direction Finder and Hrf Rf Cloak! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

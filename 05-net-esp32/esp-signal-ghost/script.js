@@ -31,10 +31,6 @@ const LANG={
     challengeReveal2:'Port security limits MACs per port. 802.1X authenticates devices. Dynamic ARP inspection validates ARP packets.',
     challengeReveal3:'MAC randomization (phones for privacy) changes your MAC periodically. MAC flooding deliberately generates thousands of fake MACs to attack infrastructure.',
     revealBtn:'Reveal Answer',
-    faq_q1:'What is MAC spoofing?',faq_a1:'Changing a device\'s MAC address to impersonate another or appear as new on the network.',
-    faq_q2:'What is a MAC flood attack?',faq_a2:'Sending thousands of frames with different source MACs to overflow the switch\'s CAM table.',
-    faq_q3:'Is this attacking a real network?',faq_a3:'No! This is a simulation. No real packets are sent.',
-    faq_q4:'Why do phones randomize MACs?',faq_a4:'For privacy. Random MACs prevent tracking across WiFi networks.',
     howto_1:'Click Start Ghosting to begin cycling MAC addresses.',
     howto_2:'Watch the MAC display cycle rapidly and ghost devices accumulate.',
     howto_3:'Click TURBO to increase the cycle rate dramatically.',
@@ -48,8 +44,7 @@ const LANG={
     ready:'👻 Signal Ghost ready — start flooding the network!',
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
-    splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'ESP32 generates random MAC addresses at high speed.',step2Title:'Capture',step2Desc:'Each MAC sends probe requests, making the network see a new device.',step3Title:'Analyze',step3Desc:'Network equipment fills its tables with ghost entries, causing confusion.',step4Title:'Report',step4Desc:'The chaos meter shows how much the network is disrupted.',sectionCode:'Device Code'},
+    splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',step1Title:'Scan',step1Desc:'ESP32 generates random MAC addresses at high speed.',step2Title:'Capture',step2Desc:'Each MAC sends probe requests, making the network see a new device.',step3Title:'Analyze',step3Desc:'Network equipment fills its tables with ghost entries, causing confusion.',step4Title:'Report',step4Desc:'The chaos meter shows how much the network is disrupted.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Mesh Whisper and Esp Rogue Ap Detector! Each teaches something different. 🚀'},
   fr:{
     title:'esp-signal-ghost',subtitle:'👻 usurper · 🔄 cycler · 🌊 inonder',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -69,10 +64,6 @@ const LANG={
     challengeReveal2:'Sécurité des ports, 802.1X, inspection ARP dynamique.',
     challengeReveal3:'La randomisation (téléphones) change le MAC pour la vie privée. L\'inondation attaque l\'infrastructure.',
     revealBtn:'Révéler',
-    faq_q1:'Qu\'est-ce que l\'usurpation MAC ?',faq_a1:'Changer l\'adresse MAC pour se faire passer pour un autre appareil.',
-    faq_q2:'Qu\'est-ce qu\'une inondation MAC ?',faq_a2:'Envoyer des milliers de trames avec des MACs différents.',
-    faq_q3:'Attaque réelle ?',faq_a3:'Non ! C\'est une simulation.',
-    faq_q4:'Pourquoi les téléphones randomisent les MAC ?',faq_a4:'Pour la vie privée.',
     howto_1:'Cliquez Lancer le fantôme.',howto_2:'Regardez le MAC changer rapidement.',howto_3:'Cliquez TURBO pour accélérer.',howto_4:'Surveillez le compteur de chaos.',
     wiki_mac_title:'🏷️ Adresse MAC',wiki_mac:'Adresse matérielle de 48 bits identifiant une interface réseau.',
     wiki_cam_title:'📋 Table CAM',wiki_cam:'Table du switch associant MACs aux ports.',
@@ -82,8 +73,7 @@ const LANG={
     t_mosque:'Mosquée',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Médina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',
     ready:'👻 Signal Ghost prêt — inondez le réseau !',logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
-    splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'L\'ESP32 génère des adresses MAC aléatoires à grande vitesse.',step2Title:'Capturer',step2Desc:'Chaque MAC envoie des requêtes probe, le réseau voit un nouvel appareil.',step3Title:'Analyser',step3Desc:'L\'équipement réseau remplit ses tables avec des entrées fantômes.',step4Title:'Rapporter',step4Desc:'Le compteur de chaos montre la perturbation du réseau.',sectionCode:'Code Appareil'},
+    splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',step1Title:'Scanner',step1Desc:'L\'ESP32 génère des adresses MAC aléatoires à grande vitesse.',step2Title:'Capturer',step2Desc:'Chaque MAC envoie des requêtes probe, le réseau voit un nouvel appareil.',step3Title:'Analyser',step3Desc:'L\'équipement réseau remplit ses tables avec des entrées fantômes.',step4Title:'Rapporter',step4Desc:'Le compteur de chaos montre la perturbation du réseau.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Mesh Whisper and Esp Rogue Ap Detector ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'esp-signal-ghost',subtitle:'👻 تزييف · 🔄 دوران · 🌊 إغراق',
     disconnected:'غير متصل',connected:'متصل',
@@ -103,10 +93,6 @@ const LANG={
     challengeReveal2:'أمن المنافذ يحد MACs لكل منفذ. 802.1X يوثق الأجهزة.',
     challengeReveal3:'العشوائية (الهواتف) تغير MAC للخصوصية. الإغراق يهاجم البنية التحتية عمداً.',
     revealBtn:'اكشف الإجابة',
-    faq_q1:'ما هو تزييف MAC؟',faq_a1:'تغيير عنوان MAC للتنكر كجهاز آخر.',
-    faq_q2:'ما هو إغراق MAC؟',faq_a2:'إرسال آلاف الإطارات بعناوين MAC مختلفة.',
-    faq_q3:'هل هذا هجوم حقيقي؟',faq_a3:'لا! هذه محاكاة.',
-    faq_q4:'لماذا الهواتف تعشّو MAC؟',faq_a4:'للخصوصية. منع التتبع عبر شبكات WiFi.',
     howto_1:'انقر بدء الشبح لبدء تدوير العناوين.',howto_2:'راقب العرض يتغير بسرعة.',howto_3:'انقر توربو لزيادة السرعة.',howto_4:'راقب عداد الفوضى.',
     wiki_mac_title:'🏷️ عنوان MAC',wiki_mac:'عنوان عتاد 48 بت يعرّف واجهة الشبكة.',
     wiki_cam_title:'📋 جدول CAM',wiki_cam:'جدول السويتش يربط MACs بالمنافذ.',
@@ -116,8 +102,7 @@ const LANG={
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',
     ready:'👻 Signal Ghost جاهز — أغرق الشبكة!',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
-    splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'ESP32 يولّد عناوين MAC عشوائية بسرعة عالية.',step2Title:'التقاط',step2Desc:'كل MAC يرسل طلبات probe، الشبكة ترى جهازاً جديداً.',step3Title:'تحليل',step3Desc:'معدات الشبكة تملأ جداولها بإدخالات شبحية.',step4Title:'تقرير',step4Desc:'عداد الفوضى يوضح مدى تعطل الشبكة.',sectionCode:'كود الجهاز'}
+    splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',step1Title:'مسح',step1Desc:'ESP32 يولّد عناوين MAC عشوائية بسرعة عالية.',step2Title:'التقاط',step2Desc:'كل MAC يرسل طلبات probe، الشبكة ترى جهازاً جديداً.',step3Title:'تحليل',step3Desc:'معدات الشبكة تملأ جداولها بإدخالات شبحية.',step4Title:'تقرير',step4Desc:'عداد الفوضى يوضح مدى تعطل الشبكة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Mesh Whisper and Esp Rogue Ap Detector! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */

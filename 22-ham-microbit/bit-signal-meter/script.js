@@ -85,10 +85,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A Workshop-DIY signal meter simulation. It teaches radio signal measurement using a micro:bit-style 5x5 LED matrix.',
-    faq_q2: 'What is an S-meter?', faq_a2: 'An S-meter displays received signal strength in S-units (S1 to S9, then S9+dB). Each S-unit represents 6 dB of signal change.',
-    faq_q3: 'How do I read the LED bar graph?', faq_a3: 'Columns light up left to right. More lit columns mean a stronger signal. The height of each column shows fine-grained level.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Move the Signal Level slider to simulate different signal strengths from -120 dBm to -30 dBm.',
     howto_2: 'Adjust the Noise Floor slider to add background noise and see how SNR changes.',
     howto_3: 'Click Auto Scan to watch an animated sweep from weak to strong signal levels.',
@@ -114,8 +110,7 @@ const LANG = {
     scanning: 'Scanning signals…',
     scanComplete: 'Scan complete',
     signalUpdated: 'Signal updated',
-    ledToggled: 'LED toggled',
-  ,step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code'},
+    ledToggled: 'LED toggled',step1Title:'Tune Frequency',step1Desc:'Select the operating band and tune to the target frequency.',step2Title:'Transmit/Receive',step2Desc:'Send or receive radio signals using the chosen modulation mode.',step3Title:'Decode Signal',step3Desc:'The received signal is processed and decoded into readable data.',step4Title:'Log Contact',step4Desc:'Record the contact details: callsign, frequency, mode, and signal report.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates ham radio! 🔬 You get to experiment with radio signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real amateur radio communication! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Cw Paddle and Bit Fox Hunt Compass! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-signal-meter', subtitle: '📶 signal · 📊 mesurer · 💡 apprendre',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -139,10 +134,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Une simulation S-mètre Workshop-DIY. Elle enseigne la mesure du signal radio avec une matrice LED 5x5 style micro:bit.',
-    faq_q2: 'Qu\'est-ce qu\'un S-mètre ?', faq_a2: 'Un S-mètre affiche la puissance du signal en unités S (S1 à S9, puis S9+dB). Chaque unité S = 6 dB.',
-    faq_q3: 'Comment lire le graphique LED ?', faq_a3: 'Les colonnes s\'allument de gauche à droite. Plus de colonnes allumées = signal plus fort. La hauteur montre le niveau fin.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
     howto_1: 'Déplacez le curseur Niveau du signal pour simuler des puissances de -120 dBm à -30 dBm.',
     howto_2: 'Ajustez le curseur Plancher de bruit pour ajouter du bruit et voir le RSB changer.',
     howto_3: 'Cliquez Balayage auto pour voir un balayage animé des niveaux de signal.',
@@ -168,8 +159,7 @@ const LANG = {
     scanning: 'Balayage en cours…',
     scanComplete: 'Balayage terminé',
     signalUpdated: 'Signal mis à jour',
-    ledToggled: 'LED basculée',
-  ,step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil'},
+    ledToggled: 'LED basculée',step1Title:'Régler la fréquence',step1Desc:'Sélectionne la bande et règle la fréquence cible.',step2Title:'Émettre/Recevoir',step2Desc:'Envoie ou reçois des signaux radio avec le mode de modulation choisi.',step3Title:'Décoder le signal',step3Desc:'Le signal reçu est traité et décodé en données lisibles.',step4Title:'Enregistrer le contact',step4Desc:'Note les détails : indicatif, fréquence, mode et rapport de signal.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule ham radio ! 🔬 Tu peux expérimenter avec radio signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai amateur radio communication ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Cw Paddle and Bit Fox Hunt Compass ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-signal-meter', subtitle: '📶 إشارة · 📊 قياس · 💡 تعلّم',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -193,10 +183,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'محاكاة مقياس إشارة من Workshop-DIY. يعلّم قياس الإشارة اللاسلكية باستخدام مصفوفة LED بأسلوب micro:bit.',
-    faq_q2: 'ما هو مقياس S؟', faq_a2: 'مقياس S يعرض قوة الإشارة بوحدات S (من S1 إلى S9 ثم S9+dB). كل وحدة S تمثل تغيرًا بمقدار 6 dB.',
-    faq_q3: 'كيف أقرأ الرسم البياني LED؟', faq_a3: 'تضيء الأعمدة من اليسار إلى اليمين. أعمدة أكثر = إشارة أقوى. ارتفاع كل عمود يظهر المستوى الدقيق.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'حرّك شريط مستوى الإشارة لمحاكاة قوى إشارة مختلفة من -120 إلى -30 dBm.',
     howto_2: 'اضبط شريط أرضية الضوضاء لإضافة ضوضاء ومشاهدة تغيّر نسبة الإشارة/الضوضاء.',
     howto_3: 'انقر مسح تلقائي لمشاهدة مسح متحرك لمستويات الإشارة من الضعيف إلى القوي.',
@@ -222,8 +208,7 @@ const LANG = {
     scanning: 'جارٍ مسح الإشارات…',
     scanComplete: 'اكتمل المسح',
     signalUpdated: 'تم تحديث الإشارة',
-    ledToggled: 'تم تبديل LED',
-  ,step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز'}
+    ledToggled: 'تم تبديل LED',step1Title:'ضبط التردد',step1Desc:'اختر نطاق التشغيل واضبط التردد المستهدف.',step2Title:'إرسال/استقبال',step2Desc:'أرسل أو استقبل إشارات الراديو باستخدام وضع التعديل المختار.',step3Title:'فك تشفير الإشارة',step3Desc:'تتم معالجة الإشارة المستقبلة وفك تشفيرها إلى بيانات مقروءة.',step4Title:'تسجيل الاتصال',step4Desc:'سجّل تفاصيل الاتصال: إشارة النداء والتردد والوضع وتقرير الإشارة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي ham radio! 🔬 يمكنك التجربة مع radio signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا amateur radio communication حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Cw Paddle and Bit Fox Hunt Compass! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

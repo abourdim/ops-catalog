@@ -31,10 +31,6 @@ const LANG={
     challengeReveal2:'RSSI decreases with distance: -30dBm very close, -70dBm medium, -90dBm far. Walls cause additional loss.',
     challengeReveal3:'ESP-NOW is connectionless, sends packets directly between ESP32s without a router. Max 250 bytes, lower latency.',
     revealBtn:'Reveal Answer',
-    faq_q1:'What protocols does it scan?',faq_a1:'WiFi (802.11), BLE, and ESP-NOW — all in 2.4GHz.',
-    faq_q2:'What does the map show?',faq_a2:'Each circle is a device. Size reflects signal strength. Color indicates protocol.',
-    faq_q3:'Is this scanning real devices?',faq_a3:'No. Simulation with fake devices.',
-    faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally.',
     howto_1:'Click Start Scan to begin.',howto_2:'Watch devices appear on the map.',
     howto_3:'Check device list for details.',howto_4:'Click Stop to freeze or Clear to reset.',
     wiki_wifi_title:'📶 WiFi',wiki_wifi:'Wireless LAN, beacons, 30-100m range.',
@@ -47,8 +43,7 @@ const LANG={
     ready:'🗺️ Network Cartographer ready — start scanning!',
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
-    splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'ESP32 scans WiFi, BLE, and ESP-NOW protocols simultaneously.',step2Title:'Capture',step2Desc:'Each device is plotted based on RSSI (signal strength = distance).',step3Title:'Analyze',step3Desc:'Different protocols shown as different colored circles.',step4Title:'Report',step4Desc:'The device list shows details: name, MAC, RSSI, protocol.',sectionCode:'Device Code'},
+    splashHint:'tap to skip',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',step1Title:'Scan',step1Desc:'ESP32 scans WiFi, BLE, and ESP-NOW protocols simultaneously.',step2Title:'Capture',step2Desc:'Each device is plotted based on RSSI (signal strength = distance).',step3Title:'Analyze',step3Desc:'Different protocols shown as different colored circles.',step4Title:'Report',step4Desc:'The device list shows details: name, MAC, RSSI, protocol.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Signal Ghost and Esp Honeypot! Each teaches something different. 🚀'},
   fr:{
     title:'esp-network-cartographer',subtitle:'🗺️ scanner · 📡 cartographier · 🌐 découvrir',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -65,15 +60,13 @@ const LANG={
     challengeReveal2:'RSSI diminue avec la distance. Les murs causent des pertes supplémentaires.',
     challengeReveal3:'ESP-NOW est sans connexion, envoie directement entre ESP32 sans routeur.',
     revealBtn:'Révéler',
-    faq_q1:'Quels protocoles ?',faq_a1:'WiFi, BLE et ESP-NOW en 2.4GHz.',faq_q2:'Que montre la carte ?',faq_a2:'Cercles = appareils. Taille = signal. Couleur = protocole.',faq_q3:'Scan réel ?',faq_a3:'Non, simulation.',faq_q4:'Données privées ?',faq_a4:'Oui, tout est local.',
     howto_1:'Cliquez Lancer le scan.',howto_2:'Regardez les appareils apparaître.',howto_3:'Consultez la liste.',howto_4:'Arrêtez ou effacez.',
     wiki_wifi_title:'📶 WiFi',wiki_wifi:'LAN sans fil, 30-100m.',wiki_ble_title:'📱 BLE',wiki_ble:'IoT courte portée, 10-50m.',wiki_espnow_title:'📡 ESP-NOW',wiki_espnow:'Protocole ESP32, sans routeur.',wiki_rssi_title:'📊 RSSI',wiki_rssi:'-30=excellent, -70=moyen, -90=faible.',
     working:'En cours…',scanning:'Scan du paysage radio...',scanStarted:'Scan lancé !',scanStopped:'Scan arrêté.',mapCleared:'Carte effacée.',devFound:'appareil découvert',
     t_mosque:'Mosquée',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Médina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',
     ready:'🗺️ Cartographe prêt — lancez le scan !',logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
-    splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'L\'ESP32 scanne WiFi, BLE et ESP-NOW simultanément.',step2Title:'Capturer',step2Desc:'Chaque appareil est placé selon son RSSI.',step3Title:'Analyser',step3Desc:'Les protocoles ont des couleurs différentes.',step4Title:'Rapporter',step4Desc:'La liste montre nom, MAC, RSSI, protocole.',sectionCode:'Code Appareil'},
+    splashHint:'appuyer pour passer',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',step1Title:'Scanner',step1Desc:'L\'ESP32 scanne WiFi, BLE et ESP-NOW simultanément.',step2Title:'Capturer',step2Desc:'Chaque appareil est placé selon son RSSI.',step3Title:'Analyser',step3Desc:'Les protocoles ont des couleurs différentes.',step4Title:'Rapporter',step4Desc:'La liste montre nom, MAC, RSSI, protocole.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Signal Ghost and Esp Honeypot ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'esp-network-cartographer',subtitle:'🗺️ مسح · 📡 خريطة · 🌐 اكتشاف',
     disconnected:'غير متصل',connected:'متصل',
@@ -90,15 +83,13 @@ const LANG={
     challengeReveal2:'RSSI ينخفض مع المسافة. الجدران تسبب خسائر إضافية.',
     challengeReveal3:'ESP-NOW بدون اتصال، يرسل مباشرة بين ESP32 بدون راوتر.',
     revealBtn:'اكشف الإجابة',
-    faq_q1:'ما البروتوكولات الممسوحة؟',faq_a1:'WiFi وBLE وESP-NOW في 2.4GHz.',faq_q2:'ماذا تُظهر الخريطة؟',faq_a2:'دوائر = أجهزة. الحجم = قوة الإشارة.',faq_q3:'مسح حقيقي؟',faq_a3:'لا، محاكاة.',faq_q4:'بياناتي خاصة؟',faq_a4:'نعم، كل شيء محلي.',
     howto_1:'انقر بدء المسح.',howto_2:'راقب ظهور الأجهزة.',howto_3:'راجع القائمة.',howto_4:'أوقف أو امسح.',
     wiki_wifi_title:'📶 WiFi',wiki_wifi:'شبكة لاسلكية، 30-100 متر.',wiki_ble_title:'📱 BLE',wiki_ble:'بروتوكول IoT قصير المدى.',wiki_espnow_title:'📡 ESP-NOW',wiki_espnow:'بروتوكول ESP32 بدون راوتر.',wiki_rssi_title:'📊 RSSI',wiki_rssi:'-30=ممتاز، -70=متوسط، -90=ضعيف.',
     working:'جارٍ…',scanning:'مسح المشهد الراديوي...',scanStarted:'بدأ المسح!',scanStopped:'توقف المسح.',mapCleared:'تم مسح الخريطة.',devFound:'جهاز مكتشف',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',
     ready:'🗺️ رسام خرائط الشبكة جاهز — ابدأ المسح!',logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
-    splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'ESP32 يمسح WiFi وBLE وESP-NOW في آن واحد.',step2Title:'التقاط',step2Desc:'كل جهاز يُوضع حسب RSSI.',step3Title:'تحليل',step3Desc:'البروتوكولات المختلفة بألوان مختلفة.',step4Title:'تقرير',step4Desc:'قائمة الأجهزة تعرض التفاصيل.',sectionCode:'كود الجهاز'}
+    splashHint:'انقر للتخطي',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',step1Title:'مسح',step1Desc:'ESP32 يمسح WiFi وBLE وESP-NOW في آن واحد.',step2Title:'التقاط',step2Desc:'كل جهاز يُوضع حسب RSSI.',step3Title:'تحليل',step3Desc:'البروتوكولات المختلفة بألوان مختلفة.',step4Title:'تقرير',step4Desc:'قائمة الأجهزة تعرض التفاصيل.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Signal Ghost and Esp Honeypot! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK (compact) ═══════ */

@@ -71,10 +71,6 @@ const LANG = {
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Capture The Flag?', faq_a1: 'A physical team game where ESP32 beacons broadcast clues. Teams scan, decode, and submit flag codes to score points.',
-    faq_q2: 'Do I need real ESP32s?', faq_a2: 'No. The app simulates ESP32 broadcasts with fake clues and flags.',
-    faq_q3: 'How do I score points?', faq_a3: 'Capture flags (100 pts), be first to capture (50 bonus), and submit quickly for speed bonus (up to 25 pts).',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Join a team (Red or Blue) by clicking the team button.',
     howto_2: 'Click "Start Game" to begin the 5-minute countdown.',
     howto_3: 'Use "Scan Now" to receive clues from ESP32 beacons.',
@@ -98,8 +94,7 @@ const LANG = {
     scanNow: 'Scan Now', submitFlag: 'Submit', startGame: 'Start Game', resetGame: 'Reset',
     noEvents: 'No events yet. Start the game!', startChallenge: 'Start Challenge',
     flagCorrect: '🚩 Flag captured!', flagWrong: '❌ Invalid flag code', gameOver: '⏰ Game over!',
-    gameStarted: '▶️ Game started — 5:00 on the clock!', joinedTeam: 'Joined team:',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    gameStarted: '▶️ Game started — 5:00 on the clock!', joinedTeam: 'Joined team:',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Kit Spy Pro and Kit Escape Hq! Each teaches something different. 🚀'},
   fr: {
     title: 'Capture The Flag', subtitle: '🚩 scanner · 🏃 compétir · 🏆 capturer',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -108,10 +103,6 @@ const LANG = {
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Capture The Flag ?', faq_a1: 'Un jeu d\'équipe physique où des balises ESP32 diffusent des indices.',
-    faq_q2: 'Ai-je besoin de vrais ESP32 ?', faq_a2: 'Non. L\'appli simule les diffusions avec de faux indices et drapeaux.',
-    faq_q3: 'Comment marquer des points ?', faq_a3: 'Capturez des drapeaux (100 pts), soyez le premier (50 bonus), soumettez vite (25 pts bonus).',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Rejoins une équipe (Rouge ou Bleue).', howto_2: 'Clique sur "Démarrer" pour lancer le compte à rebours.',
     howto_3: 'Utilise "Scanner" pour recevoir les indices.', howto_4: 'Entre le code du drapeau et clique Soumettre.',
     wiki_ctf_title: '🚩 CTF', wiki_ctf: 'Capture The Flag — compétition de capture de jetons cachés.',
@@ -132,8 +123,7 @@ const LANG = {
     scanNow: 'Scanner', submitFlag: 'Soumettre', startGame: 'Démarrer', resetGame: 'Réinitialiser',
     noEvents: 'Aucun événement. Démarrez le jeu !', startChallenge: 'Commencer le défi',
     flagCorrect: '🚩 Drapeau capturé !', flagWrong: '❌ Code de drapeau invalide', gameOver: '⏰ Fin du jeu !',
-    gameStarted: '▶️ Jeu démarré — 5:00 au chrono !', joinedTeam: 'Équipe rejointe :',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    gameStarted: '▶️ Jeu démarré — 5:00 au chrono !', joinedTeam: 'Équipe rejointe :',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Kit Spy Pro and Kit Escape Hq ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'التقط العلم', subtitle: '🚩 فحص · 🏃 تنافس · 🏆 التقاط',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -142,10 +132,6 @@ const LANG = {
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو التقط العلم؟', faq_a1: 'لعبة فريقية فعلية حيث تبث أجهزة ESP32 أدلة. الفرق تمسح وتفك الشفرة وتقدم أكواد الأعلام.',
-    faq_q2: 'هل أحتاج أجهزة ESP32 حقيقية؟', faq_a2: 'لا. التطبيق يحاكي البث بأدلة وأعلام وهمية.',
-    faq_q3: 'كيف أحرز نقاطًا؟', faq_a3: 'التقط الأعلام (100 نقطة)، كن الأول (50 مكافأة)، قدّم بسرعة (حتى 25 نقطة إضافية).',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
     howto_1: 'انضم إلى فريق (أحمر أو أزرق).', howto_2: 'انقر على "بدء اللعبة" لبدء العد التنازلي.',
     howto_3: 'استخدم "المسح الآن" لاستقبال الأدلة.', howto_4: 'أدخل رمز العلم (FLAG{XXXX}) وانقر إرسال.',
     wiki_ctf_title: '🚩 CTF', wiki_ctf: 'التقط العلم — مسابقة لإيجاد والتقاط الرموز المخفية.',
@@ -166,8 +152,7 @@ const LANG = {
     scanNow: 'مسح الآن', submitFlag: 'إرسال', startGame: 'بدء اللعبة', resetGame: 'إعادة ضبط',
     noEvents: 'لا أحداث بعد. ابدأ اللعبة!', startChallenge: 'ابدأ التحدي',
     flagCorrect: '🚩 تم التقاط العلم!', flagWrong: '❌ رمز علم غير صالح', gameOver: '⏰ انتهت اللعبة!',
-    gameStarted: '▶️ بدأت اللعبة — 5:00 على الساعة!', joinedTeam: 'انضممت للفريق:',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    gameStarted: '▶️ بدأت اللعبة — 5:00 على الساعة!', joinedTeam: 'انضممت للفريق:',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Kit Spy Pro and Kit Escape Hq! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -91,10 +91,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A micro:bit radar simulator that teaches electromagnetic detection, polar coordinates, and sensor-based mapping.',
-    faq_q2: 'How does the radar work?', faq_a2: 'The sweep line rotates 360 degrees. Objects are detected as blips when the line passes their angular position. Blips fade over time like a real radar.',
-    faq_q3: 'What is the difference between Active and Passive mode?', faq_a3: 'Active mode detects all objects by sending out signals. Passive mode only detects objects that emit their own electromagnetic signals.',
-    faq_q4: 'Can I place my own objects?', faq_a4: 'Yes! Click anywhere on the radar canvas to place a virtual object. It will appear on the next sweep pass.',
     howto_1: 'Press "Start Sweep" to begin the radar rotation and scan for objects.',
     howto_2: 'Click on the radar canvas to place virtual objects at specific positions.',
     howto_3: 'Adjust the range selector (10m, 50m, 100m) to zoom in or out of the scan area.',
@@ -116,8 +112,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Rf Remote Control and Bit Rf Alarm System! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-micro-radar', subtitle: '📡 scanner · 🗺️ cartographier · 🎯 détecter',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -147,10 +142,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Un simulateur radar micro:bit qui enseigne la détection électromagnétique, les coordonnées polaires et la cartographie par capteurs.',
-    faq_q2: 'Comment fonctionne le radar ?', faq_a2: 'La ligne de balayage tourne à 360°. Les objets sont détectés comme des points lumineux quand la ligne passe à leur position angulaire. Les points s\'estompent comme un vrai radar.',
-    faq_q3: 'Quelle est la différence entre mode Actif et Passif ?', faq_a3: 'Le mode Actif détecte tous les objets en envoyant des signaux. Le mode Passif ne détecte que les objets émettant leurs propres signaux.',
-    faq_q4: 'Puis-je placer mes propres objets ?', faq_a4: 'Oui ! Cliquez n\'importe où sur le canevas radar pour placer un objet virtuel. Il apparaîtra au prochain passage.',
     howto_1: 'Appuyez sur "Lancer le balayage" pour commencer la rotation radar.',
     howto_2: 'Cliquez sur le canevas radar pour placer des objets virtuels.',
     howto_3: 'Ajustez le sélecteur de portée (10m, 50m, 100m) pour zoomer.',
@@ -172,8 +163,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Rf Remote Control and Bit Rf Alarm System ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-micro-radar', subtitle: '📡 مسح · 🗺️ خريطة · 🎯 كشف',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -203,10 +193,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'محاكي رادار micro:bit يُعلّم الكشف الكهرومغناطيسي والإحداثيات القطبية ورسم الخرائط بالمستشعرات.',
-    faq_q2: 'كيف يعمل الرادار؟', faq_a2: 'يدور خط المسح 360 درجة. تُكشف الأجسام كنقاط مضيئة عندما يمر الخط بموقعها الزاوي. تتلاشى النقاط مع الوقت كرادار حقيقي.',
-    faq_q3: 'ما الفرق بين الوضع النشط والسلبي؟', faq_a3: 'الوضع النشط يكشف جميع الأجسام بإرسال إشارات. الوضع السلبي يكشف فقط الأجسام التي تبعث إشاراتها الخاصة.',
-    faq_q4: 'هل يمكنني وضع أجسامي الخاصة؟', faq_a4: 'نعم! انقر في أي مكان على لوحة الرادار لوضع جسم افتراضي. سيظهر في المرور التالي.',
     howto_1: 'اضغط "بدء المسح" لبدء دوران الرادار والبحث عن الأجسام.',
     howto_2: 'انقر على لوحة الرادار لوضع أجسام افتراضية في مواقع محددة.',
     howto_3: 'اضبط محدد المدى (10م، 50م، 100م) للتكبير أو التصغير.',
@@ -228,8 +214,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Rf Remote Control and Bit Rf Alarm System! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

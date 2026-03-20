@@ -45,10 +45,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', filterAll: 'All',
     theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'An ADS-B aircraft radar simulator. It shows how SDR receivers decode aircraft transponder broadcasts to plot flights on a map in real time.',
-    faq_q2: 'Do I need real hardware?', faq_a2: 'No. This app simulates ADS-B reception with realistic aircraft data. In real life you would use an RTL-SDR dongle tuned to 1090 MHz.',
-    faq_q3: 'What is a squawk code?', faq_a3: 'A 4-digit octal code assigned by ATC. Special codes: 7500 (hijack), 7600 (radio failure), 7700 (emergency).',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click "Start Receiver" to begin simulated ADS-B reception.',
     howto_2: 'Watch aircraft appear on the sky map with callsign labels.',
     howto_3: 'Click an aircraft icon to see detailed flight information.',
@@ -72,8 +68,7 @@ const LANG = {
     thCallsign: 'Callsign', thAlt: 'Alt (ft)', thSpeed: 'Speed (kt)', thHeading: 'Hdg', thSquawk: 'Squawk', thType: 'Type',
     adsbInfo: 'ADS-B (Automatic Dependent Surveillance-Broadcast) is a surveillance technology where aircraft broadcast their GPS position, altitude, speed, and identification. Operating on 1090 MHz, these unencrypted signals can be received with an RTL-SDR dongle and a simple antenna. This app simulates the decoded output of an ADS-B receiver.',
     receiverStarted: '📡 ADS-B receiver started on 1090 MHz', receiverStopped: '🔴 Receiver stopped',
-    newAircraft: 'New aircraft detected:', aircraftLost: 'Aircraft lost:',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    newAircraft: 'New aircraft detected:', aircraftLost: 'Aircraft lost:',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need RTL-SDR or HackRF. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Gsm Tower Mapper and Hrf Radio Telescope! Each teaches something different. 🚀'},
   fr: {
     title: 'Radar Aérien', subtitle: '✈️ Tracez chaque avion avec altitude, vitesse, indicatif',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -83,10 +78,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', filterAll: 'Tout',
     theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que cette appli ?', faq_a1: 'Un simulateur de radar ADS-B. Il montre comment les récepteurs SDR décodent les transpondeurs d\'avions pour tracer les vols sur une carte.',
-    faq_q2: 'Ai-je besoin de matériel ?', faq_a2: 'Non. L\'appli simule la réception ADS-B. En vrai, il faut un dongle RTL-SDR sur 1090 MHz.',
-    faq_q3: 'Qu\'est-ce qu\'un code squawk ?', faq_a3: 'Un code octal à 4 chiffres assigné par le contrôle aérien. Codes spéciaux : 7500, 7600, 7700.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans votre navigateur.',
     howto_1: 'Cliquez "Démarrer" pour lancer la réception ADS-B simulée.',
     howto_2: 'Observez les avions apparaître sur la carte.',
     howto_3: 'Cliquez un avion pour voir ses informations de vol.',
@@ -110,8 +101,7 @@ const LANG = {
     thCallsign: 'Indicatif', thAlt: 'Alt (ft)', thSpeed: 'Vit (kt)', thHeading: 'Cap', thSquawk: 'Squawk', thType: 'Type',
     adsbInfo: 'L\'ADS-B est une technologie de surveillance où les avions diffusent leur position GPS, altitude, vitesse et identification sur 1090 MHz.',
     receiverStarted: '📡 Récepteur ADS-B démarré sur 1090 MHz', receiverStopped: '🔴 Récepteur arrêté',
-    newAircraft: 'Nouvel avion détecté :', aircraftLost: 'Avion perdu :',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    newAircraft: 'Nouvel avion détecté :', aircraftLost: 'Avion perdu :',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut RTL-SDR or HackRF. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Gsm Tower Mapper and Hrf Radio Telescope ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'رادار الطائرات', subtitle: '✈️ تتبع كل طائرة بالارتفاع والسرعة والإشارة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -121,10 +111,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', filterAll: 'الكل',
     theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'محاكي رادار ADS-B. يوضح كيف تفك أجهزة SDR إشارات الطائرات لرسمها على خريطة.',
-    faq_q2: 'هل أحتاج أجهزة حقيقية؟', faq_a2: 'لا. التطبيق يحاكي استقبال ADS-B. في الواقع تحتاج RTL-SDR على 1090 ميغاهرتز.',
-    faq_q3: 'ما هو رمز Squawk؟', faq_a3: 'رمز ثماني من 4 أرقام. رموز خاصة: 7500 (اختطاف)، 7600 (عطل راديو)، 7700 (طوارئ).',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
     howto_1: 'اضغط "بدء الاستقبال" لتشغيل محاكاة ADS-B.',
     howto_2: 'شاهد الطائرات تظهر على خريطة السماء.',
     howto_3: 'اضغط على طائرة لرؤية معلومات الرحلة.',
@@ -148,8 +134,7 @@ const LANG = {
     thCallsign: 'الإشارة', thAlt: 'الارتفاع', thSpeed: 'السرعة', thHeading: 'الاتجاه', thSquawk: 'Squawk', thType: 'النوع',
     adsbInfo: 'ADS-B هي تقنية مراقبة حيث تبث الطائرات موقعها GPS وارتفاعها وسرعتها وهويتها على 1090 ميغاهرتز.',
     receiverStarted: '📡 بدأ مستقبل ADS-B على 1090 ميغاهرتز', receiverStopped: '🔴 توقف المستقبل',
-    newAircraft: 'طائرة جديدة:', aircraftLost: 'فقدت طائرة:',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    newAircraft: 'طائرة جديدة:', aircraftLost: 'فقدت طائرة:',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج RTL-SDR or HackRF. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Gsm Tower Mapper and Hrf Radio Telescope! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

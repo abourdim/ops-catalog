@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is RF Perimeter Security?', faq_a1: 'A simulator that monitors a defined zone for unauthorized RF transmissions and alerts on intrusions.',
-    faq_q2: 'How does detection work?', faq_a2: 'Sensors placed around the perimeter detect any RF signals. Unknown signals trigger threat alerts.',
-    faq_q3: 'What frequencies are monitored?', faq_a3: 'The system scans across HF, VHF, UHF and microwave bands for comprehensive coverage.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Activate the perimeter monitoring system.', howto_2: 'View the zone map with sensor positions.',
     howto_3: 'Check the threat log for detected intrusions.', howto_4: 'Configure alert thresholds and responses.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
@@ -93,8 +89,7 @@ const LANG = {
     rpActivate: 'Arm Perimeter', rpAct1: 'Sweep Now', rpEmerg: 'Lockdown',
     activated: '📡 Perimeter armed!', deactivated: '📡 Perimeter disarmed',
     threatDetected: '🚨 Unauthorized transmission detected!', sweepClean: '✅ Sweep clean!',
-    lockdown: '🔒 LOCKDOWN initiated!',
-  ,step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code'},
+    lockdown: '🔒 LOCKDOWN initiated!',step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates antennas! 🔬 You get to experiment with radio wave patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio wave patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real antenna design and physics! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Ant Direction Finder Pro and Ant Antenna In A Bag! Each teaches something different. 🚀'},
   fr: {
     title: 'Sécurité Périmètre RF', subtitle: '📡 Surveillance de zone contre transmissions non autorisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -105,10 +100,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que la Sécurité Périmètre RF ?', faq_a1: 'Un simulateur de surveillance de zone contre les transmissions RF non autorisées.',
-    faq_q2: 'Comment fonctionne la détection ?', faq_a2: 'Des capteurs détectent tout signal RF. Les signaux inconnus déclenchent des alertes.',
-    faq_q3: 'Quelles fréquences sont surveillées ?', faq_a3: 'Le système balaye HF, VHF, UHF et micro-ondes.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Activez le système de surveillance.', howto_2: 'Consultez la carte de zone.',
     howto_3: 'Vérifiez le journal des menaces.', howto_4: 'Configurez les seuils d\'alerte.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
@@ -126,8 +117,7 @@ const LANG = {
     rpActivate: 'Armer', rpAct1: 'Balayage', rpEmerg: 'Confinement',
     activated: '📡 Périmètre armé !', deactivated: '📡 Périmètre désarmé',
     threatDetected: '🚨 Transmission non autorisée détectée !', sweepClean: '✅ Balayage propre !',
-    lockdown: '🔒 Confinement initié !',
-  ,step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil'},
+    lockdown: '🔒 Confinement initié !',step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule antennas ! 🔬 Tu peux expérimenter avec radio wave patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio wave patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai antenna design and physics ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Ant Direction Finder Pro and Ant Antenna In A Bag ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'أمن المحيط RF', subtitle: '📡 مراقبة المنطقة ضد الإرسال غير المصرح به',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -138,10 +128,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو أمن المحيط RF؟', faq_a1: 'محاكي لمراقبة منطقة محددة ضد الإرسال RF غير المصرح به.',
-    faq_q2: 'كيف يعمل الكشف؟', faq_a2: 'أجهزة استشعار حول المحيط تكشف إشارات RF غير معروفة.',
-    faq_q3: 'ما الترددات المراقبة؟', faq_a3: 'النظام يمسح HF و VHF و UHF والموجات الدقيقة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
     howto_1: 'فعّل نظام مراقبة المحيط.', howto_2: 'اعرض خريطة المنطقة.',
     howto_3: 'تحقق من سجل التهديدات.', howto_4: 'اضبط حدود التنبيه.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
@@ -159,8 +145,7 @@ const LANG = {
     rpActivate: 'تسليح', rpAct1: 'مسح', rpEmerg: 'إغلاق',
     activated: '📡 تم تسليح المحيط!', deactivated: '📡 تم نزع تسليح المحيط',
     threatDetected: '🚨 تم كشف إرسال غير مصرح به!', sweepClean: '✅ المسح نظيف!',
-    lockdown: '🔒 تم بدء الإغلاق!',
-  ,step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز'}
+    lockdown: '🔒 تم بدء الإغلاق!',step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي antennas! 🔬 يمكنك التجربة مع radio wave patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio wave patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا antenna design and physics حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Ant Direction Finder Pro and Ant Antenna In A Bag! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

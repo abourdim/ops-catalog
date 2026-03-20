@@ -71,10 +71,6 @@ const LANG = {
     activityLog: 'Activity Log', eventsMsg: 'Events & messages',
     clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Escape HQ?', faq_a1: 'A spy-themed escape room simulator. Solve 4 puzzles to unlock the exit before time runs out.',
-    faq_q2: 'Do I need real hardware?', faq_a2: 'No. ESP32 locks and micro:bit gadgets are simulated in the browser.',
-    faq_q3: 'How do I solve the puzzles?', faq_a3: 'Click a puzzle card to open it. Each has a different mechanic: decode text, memorize patterns, find sequences, or answer logic.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click "Start Escape" to begin the 10-minute countdown.',
     howto_2: 'Click any puzzle card to open it and solve the challenge.',
     howto_3: 'Solving a puzzle unlocks one lock and may add items to your inventory.',
@@ -97,8 +93,7 @@ const LANG = {
     inventory: 'Inventory', startEscape: 'Start Escape', resetEscape: 'Reset',
     startChallenge: 'Start Challenge', checkPattern: 'Check Pattern',
     escaped: '🏆 ESCAPED! You made it out!', timeUp: '⏰ Time is up! You did not escape.',
-    lockUnlocked: '🔓 Lock unlocked!', puzzleCorrect: '✅ Puzzle solved!', puzzleWrong: '❌ Wrong answer, try again.',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    lockUnlocked: '🔓 Lock unlocked!', puzzleCorrect: '✅ Puzzle solved!', puzzleWrong: '❌ Wrong answer, try again.',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Kit Capture The Flag and Kit Spy Pro! Each teaches something different. 🚀'},
   fr: {
     title: 'Escape HQ', subtitle: '🏰 résoudre · 🔓 déverrouiller · 🏃 s\'échapper',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -107,10 +102,6 @@ const LANG = {
     activityLog: 'Journal', eventsMsg: 'Événements et messages',
     clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce qu\'Escape HQ ?', faq_a1: 'Un simulateur de salle d\'évasion espion. Résolvez 4 énigmes pour déverrouiller la sortie.',
-    faq_q2: 'Ai-je besoin de matériel ?', faq_a2: 'Non. Les verrous ESP32 et gadgets micro:bit sont simulés.',
-    faq_q3: 'Comment résoudre les énigmes ?', faq_a3: 'Cliquez sur une carte d\'énigme pour l\'ouvrir. Chacune a un mécanisme différent.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Clique sur "Commencer l\'évasion" pour lancer le compte à rebours.', howto_2: 'Clique sur une énigme pour l\'ouvrir et la résoudre.',
     howto_3: 'Résoudre une énigme déverrouille un verrou et peut ajouter des objets.', howto_4: 'Déverrouille les 4 verrous pour t\'échapper !',
     wiki_cipher_title: '🔤 Chiffre de César', wiki_cipher: 'Un chiffrement par substitution où chaque lettre est décalée.',
@@ -129,8 +120,7 @@ const LANG = {
     startChallenge: 'Commencer le défi', checkPattern: 'Vérifier le motif',
     inventory: 'Inventaire', puzzleLocked: '🔒 Verrouillé', puzzleSolved: '🔓 Résolu',
     escaped: '🏆 ÉCHAPPÉ ! Vous avez réussi !', timeUp: '⏰ Temps écoulé !',
-    lockUnlocked: '🔓 Verrou déverrouillé !', puzzleCorrect: '✅ Énigme résolue !', puzzleWrong: '❌ Mauvaise réponse.',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    lockUnlocked: '🔓 Verrou déverrouillé !', puzzleCorrect: '✅ Énigme résolue !', puzzleWrong: '❌ Mauvaise réponse.',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Kit Capture The Flag and Kit Spy Pro ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'مقر الهروب', subtitle: '🏰 حل · 🔓 فتح · 🏃 هروب',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -139,10 +129,6 @@ const LANG = {
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث والرسائل',
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو مقر الهروب؟', faq_a1: 'محاكي غرفة هروب تجسسية. حل 4 ألغاز لفتح باب الخروج قبل نفاد الوقت.',
-    faq_q2: 'هل أحتاج أجهزة حقيقية؟', faq_a2: 'لا. أقفال ESP32 وأدوات micro:bit محاكاة في المتصفح.',
-    faq_q3: 'كيف أحل الألغاز؟', faq_a3: 'انقر على بطاقة لغز لفتحه. كل لغز له آلية مختلفة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
     howto_1: 'انقر على "ابدأ الهروب" لبدء العد التنازلي.', howto_2: 'انقر على أي بطاقة لغز لفتحها وحلها.',
     howto_3: 'حل لغز يفتح قفلًا واحدًا وقد يضيف عناصر للمخزون.', howto_4: 'افتح الأقفال الأربعة للهروب!',
     wiki_cipher_title: '🔤 شفرة قيصر', wiki_cipher: 'شفرة استبدال حيث يتم إزاحة كل حرف بعدد ثابت.',
@@ -161,8 +147,7 @@ const LANG = {
     startChallenge: 'ابدأ التحدي', checkPattern: 'تحقق من النمط',
     inventory: 'المخزون', puzzleLocked: '🔒 مقفل', puzzleSolved: '🔓 محلول',
     escaped: '🏆 هربت! نجحت في الخروج!', timeUp: '⏰ انتهى الوقت!',
-    lockUnlocked: '🔓 تم فتح القفل!', puzzleCorrect: '✅ تم حل اللغز!', puzzleWrong: '❌ إجابة خاطئة.',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    lockUnlocked: '🔓 تم فتح القفل!', puzzleCorrect: '✅ تم حل اللغز!', puzzleWrong: '❌ إجابة خاطئة.',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Kit Capture The Flag and Kit Spy Pro! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

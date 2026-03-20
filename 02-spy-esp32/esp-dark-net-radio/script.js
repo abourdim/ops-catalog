@@ -72,11 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Dark Net Radio?', faq_a1: 'A simulator for ESP32-based private mesh networks. Build offline encrypted communication systems with no internet.',
-    faq_q2: 'How do I add mesh nodes?', faq_a2: 'Click "Add Node" or click on the canvas. Nodes auto-connect to nearby peers forming a mesh topology.',
-    faq_q3: 'How does encryption work?', faq_a3: 'Messages are encrypted using simulated AES-256. Type a message and click Send to see the encrypted output.',
-    faq_q4: 'What happens when a link breaks?', faq_a4: 'The mesh automatically discovers alternative routes. Messages find a new path if one exists.',
-    faq_q5: 'Is any real data transmitted?', faq_a5: 'No. Everything is simulated in your browser. No data leaves your device. Fully offline and private.',
     howto_1: 'Add ESP32 nodes by clicking "Add Node" or clicking on the canvas.',
     howto_2: 'Watch nodes auto-discover each other and form mesh links (animated).',
     howto_3: 'Type a message and click Send to see AES-256 encryption in action.',
@@ -117,8 +112,7 @@ const LANG = {
     ch1Title: 'Build a 5-Node Mesh', ch1Desc: 'Create a mesh network with at least 5 nodes. All must be connected. Watch the topology form!',
     ch2Title: 'Survive a Link Failure', ch2Desc: 'Break a link and send a message that still arrives. Prove the mesh can route around failures!',
     ch3Title: 'Encrypted Voice Call', ch3Desc: 'Send 10 voice packets across at least 3 hops. All packets must arrive encrypted and intact.',
-    chPending: 'Pending', chComplete: 'Complete ✓',
-  ,sectionCode:'Device Code'},
+    chPending: 'Pending', chComplete: 'Complete ✓',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Esp Shadow Cam and Esp Packet Sniffer! Each teaches something different. 🚀'},
   fr: {
     title: 'Dark Net Radio', subtitle: '📡 Réseau mesh WiFi chiffré hors ligne',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -129,11 +123,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Dark Net Radio ?', faq_a1: 'Un simulateur de réseaux mesh privés basés sur ESP32. Construisez des systèmes de communication chiffrés hors ligne.',
-    faq_q2: 'Comment ajouter des nœuds ?', faq_a2: 'Cliquez sur "Ajouter Nœud" ou sur le canvas. Les nœuds se connectent automatiquement.',
-    faq_q3: 'Comment fonctionne le chiffrement ?', faq_a3: 'Les messages sont chiffrés en AES-256 simulé. Tapez un message et envoyez pour voir le résultat.',
-    faq_q4: 'Que se passe-t-il si un lien casse ?', faq_a4: 'Le mesh découvre automatiquement des routes alternatives.',
-    faq_q5: 'Des données réelles sont transmises ?', faq_a5: 'Non. Tout est simulé dans votre navigateur. Aucune donnée ne quitte votre appareil.',
     howto_1: 'Ajoutez des nœuds ESP32 en cliquant sur "Ajouter Nœud" ou sur le canvas.',
     howto_2: 'Regardez les nœuds se découvrir et former des liens mesh (animé).',
     howto_3: 'Tapez un message et cliquez Envoyer pour voir le chiffrement AES-256.',
@@ -174,8 +163,7 @@ const LANG = {
     ch1Title: 'Construire un Mesh à 5 Nœuds', ch1Desc: 'Créez un réseau mesh avec au moins 5 nœuds. Tous doivent être connectés.',
     ch2Title: 'Survivre à une Panne', ch2Desc: 'Cassez un lien et envoyez un message qui arrive quand même.',
     ch3Title: 'Appel Voix Chiffré', ch3Desc: 'Envoyez 10 paquets voix à travers au moins 3 sauts.',
-    chPending: 'En attente', chComplete: 'Terminé ✓',
-  ,sectionCode:'Code Appareil'},
+    chPending: 'En attente', chComplete: 'Terminé ✓',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Shadow Cam and Esp Packet Sniffer ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'راديو الشبكة المظلمة', subtitle: '📡 بناء شبكة mesh WiFi مشفرة بدون إنترنت',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -186,11 +174,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو راديو الشبكة المظلمة؟', faq_a1: 'محاكي لشبكات mesh خاصة قائمة على ESP32. بناء أنظمة اتصال مشفرة بدون إنترنت.',
-    faq_q2: 'كيف أضيف عقد mesh؟', faq_a2: 'انقر على "إضافة عقدة" أو على اللوحة. العقد تتصل تلقائيًا.',
-    faq_q3: 'كيف يعمل التشفير؟', faq_a3: 'الرسائل مشفرة بمحاكاة AES-256. اكتب رسالة وأرسلها لترى النتيجة.',
-    faq_q4: 'ماذا يحدث عند كسر رابط؟', faq_a4: 'الشبكة تكتشف تلقائيًا مسارات بديلة.',
-    faq_q5: 'هل يتم إرسال بيانات حقيقية؟', faq_a5: 'لا. كل شيء محاكاة في متصفحك. لا تغادر أي بيانات جهازك.',
     howto_1: 'أضف عقد ESP32 بالنقر على "إضافة عقدة" أو على اللوحة.',
     howto_2: 'شاهد العقد تكتشف بعضها وتشكل روابط mesh.',
     howto_3: 'اكتب رسالة وانقر إرسال لترى تشفير AES-256.',
@@ -231,8 +214,7 @@ const LANG = {
     ch1Title: 'بناء Mesh من 5 عقد', ch1Desc: 'أنشئ شبكة mesh بـ5 عقد على الأقل. يجب أن تكون كلها متصلة.',
     ch2Title: 'النجاة من عطل', ch2Desc: 'اكسر رابطًا وأرسل رسالة تصل رغم ذلك.',
     ch3Title: 'مكالمة صوتية مشفرة', ch3Desc: 'أرسل 10 حزم صوتية عبر 3 قفزات على الأقل.',
-    chPending: 'قيد الانتظار', chComplete: 'مكتمل ✓',
-  ,sectionCode:'كود الجهاز'}
+    chPending: 'قيد الانتظار', chComplete: 'مكتمل ✓',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Esp Shadow Cam and Esp Packet Sniffer! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

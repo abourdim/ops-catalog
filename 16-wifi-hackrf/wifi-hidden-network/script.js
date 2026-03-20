@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What are hidden networks?', faq_a1: 'WiFi networks that don\'t broadcast their SSID in beacon frames.',
-    faq_q2: 'Is this real?', faq_a2: 'No, simulation for educational purposes.',
-    faq_q3: 'Active vs Passive?', faq_a3: 'Passive listens for beacons. Active sends probe requests to reveal SSIDs.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Click Scan to start monitoring.', howto_2: 'Watch the radar visualization.',
     howto_3: 'Check detected networks below.', howto_4: 'Toggle Active/Passive mode.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
@@ -100,8 +96,7 @@ const LANG = {
     passive: 'Passive', active: 'Active Probe',
     simStarted: 'Scan started', simStopped: 'Scan stopped', networkFound: 'Network detected',
     hiddenFound: 'HIDDEN network revealed', probeReq: 'Probe request sent',
-    howItWorksText: 'Hidden networks broadcast beacons with empty SSIDs. By capturing probe responses and correlating MAC addresses, we can reveal these networks. Passive mode listens for beacons; Active mode sends directed probe requests.',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
+    howItWorksText: 'Hidden networks broadcast beacons with empty SSIDs. By capturing probe responses and correlating MAC addresses, we can reveal these networks. Passive mode listens for beacons; Active mode sends directed probe requests.',step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need HackRF One. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Wifi Protocol Rainbow and Wifi Full Spectrum! Each teaches something different. 🚀'},
   fr: {
     title: 'Detecteur Reseaux WiFi Caches', subtitle: 'Reveler les reseaux WiFi caches',
     disconnected: 'Inactif', connected: 'Analyse',
@@ -110,10 +105,6 @@ const LANG = {
     activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', theme: 'Theme',
     settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Reseaux caches?', faq_a1: 'Reseaux WiFi qui ne diffusent pas leur SSID.',
-    faq_q2: 'Est-ce reel?', faq_a2: 'Non, simulation educative.',
-    faq_q3: 'Actif vs Passif?', faq_a3: 'Passif ecoute les balises. Actif envoie des sondes.',
-    faq_q4: 'Donnees privees?', faq_a4: 'Oui, tout local.',
     howto_1: 'Cliquez Scanner.', howto_2: 'Observez le radar.', howto_3: 'Consultez les reseaux.', howto_4: 'Basculez Actif/Passif.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
     wiki_log_title: '📜 Journal', wiki_log: 'Journal horodate.', wiki_privacy_title: '🔒 Confidentialite', wiki_privacy: 'Local.',
@@ -128,8 +119,7 @@ const LANG = {
     passive: 'Passif', active: 'Sonde Active',
     simStarted: 'Scan demarre', simStopped: 'Scan arrete', networkFound: 'Reseau detecte',
     hiddenFound: 'Reseau CACHE revele', probeReq: 'Sonde envoyee',
-    howItWorksText: 'Les reseaux caches diffusent des balises avec des SSID vides. En capturant les reponses aux sondes, on peut les reveler.',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
+    howItWorksText: 'Les reseaux caches diffusent des balises avec des SSID vides. En capturant les reponses aux sondes, on peut les reveler.',step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut HackRF One. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Wifi Protocol Rainbow and Wifi Full Spectrum ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'كاشف شبكات WiFi المخفية', subtitle: 'كشف شبكات WiFi المخفية. فحص نشط ومراقبة سلبية',
     disconnected: 'خامل', connected: 'فحص',
@@ -138,10 +128,6 @@ const LANG = {
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي الشبكات المخفية؟', faq_a1: 'شبكات WiFi لا تبث اسمها SSID في إطارات الإشارة.',
-    faq_q2: 'هل هذا حقيقي؟', faq_a2: 'لا، محاكاة تعليمية فقط.',
-    faq_q3: 'نشط أم سلبي؟', faq_a3: 'السلبي يستمع للإشارات. النشط يرسل طلبات فحص.',
-    faq_q4: 'خصوصية؟', faq_a4: 'نعم، كل شيء محلي.',
     howto_1: 'انقر فحص للبدء.', howto_2: 'شاهد الرادار.', howto_3: 'تابع الشبكات المكتشفة.', howto_4: 'بدّل بين النشط والسلبي.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي.',
     wiki_log_title: '📜 سجل', wiki_log: 'مؤرخ.', wiki_privacy_title: '🔒 الخصوصية', wiki_privacy: 'محلي.',
@@ -155,8 +141,7 @@ const LANG = {
     passive: 'سلبي', active: 'فحص نشط',
     simStarted: 'بدأ الفحص', simStopped: 'توقف الفحص', networkFound: 'تم اكتشاف شبكة',
     hiddenFound: 'تم كشف شبكة مخفية', probeReq: 'تم إرسال طلب فحص',
-    howItWorksText: 'الشبكات المخفية تبث إشارات بدون SSID. بالتقاط استجابات الفحص وربط عناوين MAC يمكننا كشفها.',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
+    howItWorksText: 'الشبكات المخفية تبث إشارات بدون SSID. بالتقاط استجابات الفحص وربط عناوين MAC يمكننا كشفها.',step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي WiFi! 🔬 يمكنك التجربة مع WiFi signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج WiFi signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا wireless networks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج HackRF One. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Wifi Protocol Rainbow and Wifi Full Spectrum! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

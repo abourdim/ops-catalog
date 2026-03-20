@@ -71,10 +71,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language', helpSettings: '❓ Help', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Hackathon Arena?', faq_a1: 'A competitive hacking challenge platform with timer, scoring, and progressive difficulty.',
-    faq_q2: 'How does scoring work?', faq_a2: 'Points depend on difficulty level and time remaining. Faster = more bonus points.',
-    faq_q3: 'Are these real exploits?', faq_a3: 'No. All challenges are educational puzzles simulated locally.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
     howto_1: 'Select difficulty and click Start Game.',
     howto_2: 'Read the challenge and enter the flag.',
     howto_3: 'Use hints if stuck (costs points).',
@@ -95,8 +91,7 @@ const LANG = {
     timerLabel: 'Time Remaining', scoreLabel: 'Score', levelLabel: 'Difficulty',
     startGame: 'Start Game', resetGame: 'Reset', challengeLabel: 'Challenge',
     submit: 'Submit', hint: 'Hint', rankings: 'Rankings', statsTitle: 'Performance Overview',
-    col_team: 'Team', col_score: 'Score', col_solved: 'Solved', col_time: 'Time',
-  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+    col_team: 'Team', col_score: 'Score', col_solved: 'Solved', col_time: 'Time',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Web Cyber Academy and Web Operation Blackout! Each teaches something different. 🚀'},
   fr: {
     title: 'Arene Hackathon', subtitle: '⚔️ Competir · ⏱️ Courir · 🏆 Conquerir',
     disconnected: 'Hors ligne', connected: 'En ligne',
@@ -106,10 +101,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Theme',
     settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi ?', faq_a1: 'Plateforme de defis hacking competitifs.',
-    faq_q2: 'Comment marche le scoring ?', faq_a2: 'Points selon difficulte et temps restant.',
-    faq_q3: 'Ce sont de vrais exploits ?', faq_a3: 'Non. Puzzles educatifs simules.',
-    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout est local.',
     howto_1: 'Choisissez la difficulte et demarrez.',
     howto_2: 'Lisez le defi et entrez le flag.',
     howto_3: 'Utilisez les indices si bloque.',
@@ -130,8 +121,7 @@ const LANG = {
     timerLabel: 'Temps Restant', scoreLabel: 'Score', levelLabel: 'Difficulte',
     startGame: 'Demarrer', resetGame: 'Reinitialiser', challengeLabel: 'Defi',
     submit: 'Soumettre', hint: 'Indice', rankings: 'Classement', statsTitle: 'Apercu Performance',
-    col_team: 'Equipe', col_score: 'Score', col_solved: 'Resolus', col_time: 'Temps',
-  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+    col_team: 'Equipe', col_score: 'Score', col_solved: 'Resolus', col_time: 'Temps',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Cyber Academy and Web Operation Blackout ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'ساحة الهاكاثون', subtitle: '⚔️ تنافس · ⏱️ سابق · 🏆 اقهر التحديات',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -141,10 +131,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الاعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي ساحة الهاكاثون؟', faq_a1: 'منصة تحديات اختراق تنافسية مع مؤقت ونقاط.',
-    faq_q2: 'كيف يعمل التنقيط؟', faq_a2: 'النقاط حسب الصعوبة والوقت المتبقي.',
-    faq_q3: 'هل هذه اختراقات حقيقية؟', faq_a3: 'لا. ألغاز تعليمية محاكاة.',
-    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
     howto_1: 'اختر الصعوبة واضغط بدء.',
     howto_2: 'اقرأ التحدي وأدخل العلم.',
     howto_3: 'استخدم التلميحات اذا علقت.',
@@ -165,8 +151,7 @@ const LANG = {
     timerLabel: 'الوقت المتبقي', scoreLabel: 'النقاط', levelLabel: 'الصعوبة',
     startGame: 'بدء اللعبة', resetGame: 'اعادة', challengeLabel: 'التحدي',
     submit: 'ارسال', hint: 'تلميح', rankings: 'الترتيب', statsTitle: 'نظرة عامة على الاداء',
-    col_team: 'الفريق', col_score: 'النقاط', col_solved: 'محلول', col_time: 'الوقت',
-  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
+    col_team: 'الفريق', col_score: 'النقاط', col_solved: 'محلول', col_time: 'الوقت',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Web Cyber Academy and Web Operation Blackout! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

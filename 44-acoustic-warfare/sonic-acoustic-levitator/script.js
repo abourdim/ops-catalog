@@ -29,10 +29,6 @@ const LANG = {
     espConnected:'ESP32 connected (simulation mode)',
     espDisconnected:'ESP32 not connected',
     connectFirst:'Connect ESP32 first',
-    faq_q1:'What is acoustic levitation?', faq_a1:'Using standing waves from ultrasonic transducers to trap small objects at pressure nodes, counteracting gravity with acoustic radiation pressure.',
-    faq_q2:'What can be levitated?', faq_a2:'Small lightweight objects: styrofoam beads, water droplets, small insects. Maximum size depends on the wavelength of the ultrasound.',
-    faq_q3:'Do I need real hardware?', faq_a3:'This app simulates the levitation. For real hardware, you need an ESP32, L298N driver, and an array of 40kHz ultrasonic transducers.',
-    faq_q4:'What frequency works best?', faq_a4:'40 kHz is most common because cheap transducers are widely available. 25-28 kHz works for larger objects.',
     howto_1:'Connect to the ESP32 controller (simulated).',
     howto_2:'Set frequency and phase offset for optimal node formation.',
     howto_3:'Click Levitate to activate the standing wave field.',
@@ -48,7 +44,7 @@ const LANG = {
     challengeReveal3:'Wavelength = 343m/s / 40000Hz = 8.575mm. Node spacing = half-wavelength = 4.29mm. Number of nodes in 10cm gap = 100mm / 4.29mm = ~23 nodes.',
     revealBtn:'Reveal Answer',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code'},
+  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates acoustic warfare! 🔬 You get to experiment with sound waves in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sound waves so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real acoustic science and attacks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Sonic Acoustic Covert Channel and Sonic Voice Cloak! Each teaches something different. 🚀'},
   fr: {
     title:'Levitateur Acoustique', subtitle:'Levitation Ultrasonique ESP32',
     disconnected:'Deconnecte', connected:'Connecte',
@@ -68,10 +64,6 @@ const LANG = {
     espConnected:'ESP32 connecte (mode simulation)',
     espDisconnected:'ESP32 non connecte',
     connectFirst:'Connectez d\'abord l\'ESP32',
-    faq_q1:'Qu\'est-ce que la levitation acoustique?', faq_a1:'Utilisation d\'ondes stationnaires ultrasoniques pour pieger de petits objets aux noeuds de pression, contrant la gravite par pression de radiation acoustique.',
-    faq_q2:'Que peut-on faire leviter?', faq_a2:'Petits objets legers: billes de polystyrene, gouttelettes d\'eau, petits insectes. La taille maximale depend de la longueur d\'onde.',
-    faq_q3:'Ai-je besoin de materiel?', faq_a3:'Cette appli simule la levitation. Pour du vrai materiel: ESP32, driver L298N et un reseau de transducteurs 40kHz.',
-    faq_q4:'Quelle frequence fonctionne le mieux?', faq_a4:'40 kHz est la plus courante car les transducteurs bon marche sont largement disponibles. 25-28 kHz pour des objets plus gros.',
     howto_1:'Connectez-vous au controleur ESP32 (simule).',
     howto_2:'Reglez la frequence et le decalage de phase pour une formation optimale des noeuds.',
     howto_3:'Cliquez Leviter pour activer le champ d\'ondes stationnaires.',
@@ -87,7 +79,7 @@ const LANG = {
     challengeReveal3:'Longueur d\'onde = 343m/s / 40000Hz = 8,575mm. Espacement des noeuds = demi-longueur d\'onde = 4,29mm. Nombre de noeuds dans 10cm = ~23.',
     revealBtn:'Reveler la reponse',
     t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil'},
+  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule acoustic warfare ! 🔬 Tu peux expérimenter avec sound waves en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sound waves.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai acoustic science and attacks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Sonic Acoustic Covert Channel and Sonic Voice Cloak ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'الرافعة الصوتية', subtitle:'رفع بالموجات فوق الصوتية ESP32',
     disconnected:'غير متصل', connected:'متصل',
@@ -107,10 +99,6 @@ const LANG = {
     espConnected:'ESP32 متصل (وضع المحاكاة)',
     espDisconnected:'ESP32 غير متصل',
     connectFirst:'وصّل ESP32 أولاً',
-    faq_q1:'ما هو الرفع الصوتي؟', faq_a1:'استخدام الموجات المستقرة من محولات فوق صوتية لحبس الأجسام الصغيرة عند عقد الضغط، مقاومة الجاذبية بضغط الإشعاع الصوتي.',
-    faq_q2:'ما الذي يمكن رفعه؟', faq_a2:'أجسام خفيفة صغيرة: حبيبات البوليسترين، قطرات الماء، حشرات صغيرة. الحجم الأقصى يعتمد على طول الموجة.',
-    faq_q3:'هل أحتاج عتادًا حقيقيًا؟', faq_a3:'هذا التطبيق يحاكي الرفع. للعتاد الحقيقي تحتاج ESP32 ومشغل L298N ومصفوفة محولات 40kHz.',
-    faq_q4:'ما أفضل تردد؟', faq_a4:'40 كيلوهرتز الأكثر شيوعًا لتوفر المحولات الرخيصة. 25-28 كيلوهرتز للأجسام الأكبر.',
     howto_1:'اتصل بوحدة تحكم ESP32 (محاكاة).',
     howto_2:'اضبط التردد وإزاحة الطور لتشكيل عقد مثالية.',
     howto_3:'انقر رفع لتفعيل حقل الموجات المستقرة.',
@@ -126,7 +114,7 @@ const LANG = {
     challengeReveal3:'طول الموجة = 343/40000 = 8.575 مم. تباعد العقد = نصف طول الموجة = 4.29 مم. عدد العقد في 10 سم = ~23 عقدة.',
     revealBtn:'اكشف الإجابة',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز'}
+  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي acoustic warfare! 🔬 يمكنك التجربة مع sound waves في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج sound waves حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا acoustic science and attacks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Sonic Acoustic Covert Channel and Sonic Voice Cloak! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 function T(k) { return (LANG[currentLang] || LANG.en)[k] || LANG.en[k] || k; }

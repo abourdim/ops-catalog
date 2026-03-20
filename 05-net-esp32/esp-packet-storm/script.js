@@ -29,10 +29,6 @@ const LANG={
     challengeReveal2:'ARP maps IP to MAC addresses. ARP spoofing lets attackers redirect traffic (man-in-the-middle).',
     challengeReveal3:'Monitor bandwidth, check for unusual packet rates, use IDS/IPS, and look for traffic patterns deviating from baseline.',
     revealBtn:'Reveal Answer',labDesc:'The protocol breakdown bar shows the ratio of different packet types.',
-    faq_q1:'What is a packet storm?',faq_a1:'A flood of network packets for testing and understanding network protocols.',
-    faq_q2:'Are real packets sent?',faq_a2:'No. This is a simulation. No actual network traffic is generated.',
-    faq_q3:'What do the hex bytes mean?',faq_a3:'Simulated packet headers — source/dest IP, ports, flags, and protocol fields.',
-    faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser.',
     howto_1:'Select a protocol type (TCP, UDP, ICMP, ARP, or MIX).',
     howto_2:'Adjust the rate slider to control packets per second.',
     howto_3:'Click Start Storm to begin generating packets.',
@@ -46,8 +42,7 @@ const LANG={
     ready:'⚡ Packet Storm ready — select protocol and unleash!',
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
-    splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'The generator creates fake network packets with realistic headers.',step2Title:'Capture',step2Desc:'Each packet type (TCP, UDP, ICMP, ARP) has its own header structure and color.',step3Title:'Analyze',step3Desc:'The matrix-style canvas shows packets flowing in real-time.',step4Title:'Report',step4Desc:'The hex inspector shows raw packet bytes like Wireshark.',sectionCode:'Device Code'},
+    splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',step1Title:'Scan',step1Desc:'The generator creates fake network packets with realistic headers.',step2Title:'Capture',step2Desc:'Each packet type (TCP, UDP, ICMP, ARP) has its own header structure and color.',step3Title:'Analyze',step3Desc:'The matrix-style canvas shows packets flowing in real-time.',step4Title:'Report',step4Desc:'The hex inspector shows raw packet bytes like Wireshark.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Rogue Ap Detector and Esp Dns Playground! Each teaches something different. 🚀'},
   fr:{
     title:'esp-packet-storm',subtitle:'⚡ générer · 📊 analyser · 🌊 tempête',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -66,10 +61,6 @@ const LANG={
     challengeReveal2:'ARP associe IP aux adresses MAC. L\'usurpation ARP permet le man-in-the-middle.',
     challengeReveal3:'Surveiller la bande passante, vérifier les taux inhabituels, utiliser IDS/IPS.',
     revealBtn:'Révéler',labDesc:'La barre montre la répartition des types de paquets.',
-    faq_q1:'Qu\'est-ce qu\'une tempête de paquets ?',faq_a1:'Un flot de paquets réseau pour tester et comprendre les protocoles.',
-    faq_q2:'De vrais paquets sont envoyés ?',faq_a2:'Non. C\'est une simulation.',
-    faq_q3:'Que signifient les octets hex ?',faq_a3:'Des en-têtes simulés — IP source/dest, ports, drapeaux.',
-    faq_q4:'Mes données sont privées ?',faq_a4:'Oui. Tout fonctionne localement.',
     howto_1:'Sélectionnez un type de protocole.',howto_2:'Ajustez le débit avec le curseur.',howto_3:'Cliquez Lancer pour générer les paquets.',howto_4:'Observez l\'inspecteur hex et la barre de protocoles.',
     wiki_tcp_title:'🔵 TCP',wiki_tcp:'Fiable, ordonné, orienté connexion.',wiki_udp_title:'🟢 UDP',wiki_udp:'Rapide, sans connexion.',wiki_icmp_title:'🟡 ICMP',wiki_icmp:'Pour ping et traceroute.',wiki_arp_title:'🔴 ARP',wiki_arp:'Associe IP aux adresses MAC.',
     working:'En cours…',stormStarted:'Tempête lancée !',stormStopped:'Tempête arrêtée.',
@@ -77,8 +68,7 @@ const LANG={
     ready:'⚡ Packet Storm prêt — sélectionnez et déchaînez !',
     logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
-    splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'Le générateur crée de faux paquets réseau avec des en-têtes réalistes.',step2Title:'Capturer',step2Desc:'Chaque type (TCP, UDP, ICMP, ARP) a sa propre structure et couleur.',step3Title:'Analyser',step3Desc:'Le canvas montre les paquets en temps réel style Matrix.',step4Title:'Rapporter',step4Desc:'L\'inspecteur hex montre les octets bruts comme Wireshark.',sectionCode:'Code Appareil'},
+    splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',step1Title:'Scanner',step1Desc:'Le générateur crée de faux paquets réseau avec des en-têtes réalistes.',step2Title:'Capturer',step2Desc:'Chaque type (TCP, UDP, ICMP, ARP) a sa propre structure et couleur.',step3Title:'Analyser',step3Desc:'Le canvas montre les paquets en temps réel style Matrix.',step4Title:'Rapporter',step4Desc:'L\'inspecteur hex montre les octets bruts comme Wireshark.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Rogue Ap Detector and Esp Dns Playground ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'esp-packet-storm',subtitle:'⚡ توليد · 📊 تحليل · 🌊 عاصفة',
     disconnected:'غير متصل',connected:'متصل',
@@ -97,10 +87,6 @@ const LANG={
     challengeReveal2:'ARP يربط IP بعناوين MAC. تزييف ARP يتيح هجمات الوسيط.',
     challengeReveal3:'مراقبة عرض النطاق، فحص معدلات غير عادية، استخدام أنظمة IDS/IPS.',
     revealBtn:'اكشف الإجابة',labDesc:'شريط البروتوكولات يوضح نسبة أنواع الحزم.',
-    faq_q1:'ما هي عاصفة الحزم؟',faq_a1:'فيض من حزم الشبكة لاختبار وفهم البروتوكولات.',
-    faq_q2:'هل تُرسل حزم حقيقية؟',faq_a2:'لا. هذه محاكاة.',
-    faq_q3:'ماذا تعني البايتات السداسية؟',faq_a3:'ترويسات حزم محاكاة — IP المصدر/الوجهة، المنافذ، الأعلام.',
-    faq_q4:'هل بياناتي خاصة؟',faq_a4:'نعم. كل شيء يعمل محلياً.',
     howto_1:'اختر نوع البروتوكول.',howto_2:'اضبط المعدل بالمنزلق.',howto_3:'انقر بدء العاصفة لتوليد الحزم.',howto_4:'راقب المفتش السداسي وشريط البروتوكولات.',
     wiki_tcp_title:'🔵 TCP',wiki_tcp:'موثوق، مرتب، موجّه بالاتصال.',wiki_udp_title:'🟢 UDP',wiki_udp:'سريع، بدون اتصال.',wiki_icmp_title:'🟡 ICMP',wiki_icmp:'للبينغ وتتبع المسار.',wiki_arp_title:'🔴 ARP',wiki_arp:'يربط عناوين IP بعناوين MAC.',
     working:'جارٍ…',stormStarted:'بدأت العاصفة!',stormStopped:'توقفت العاصفة.',
@@ -108,8 +94,7 @@ const LANG={
     ready:'⚡ Packet Storm جاهز — اختر البروتوكول وأطلق العاصفة!',
     logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
-    splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'المولّد ينشئ حزم شبكة مزيفة بترويسات واقعية.',step2Title:'التقاط',step2Desc:'كل نوع حزمة (TCP, UDP, ICMP, ARP) له بنية ولون خاص.',step3Title:'تحليل',step3Desc:'اللوحة تعرض الحزم تتدفق بأسلوب ماتريكس.',step4Title:'تقرير',step4Desc:'المفتش السداسي يعرض بايتات الحزم الخام.',sectionCode:'كود الجهاز'}
+    splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',step1Title:'مسح',step1Desc:'المولّد ينشئ حزم شبكة مزيفة بترويسات واقعية.',step2Title:'التقاط',step2Desc:'كل نوع حزمة (TCP, UDP, ICMP, ARP) له بنية ولون خاص.',step3Title:'تحليل',step3Desc:'اللوحة تعرض الحزم تتدفق بأسلوب ماتريكس.',step4Title:'تقرير',step4Desc:'المفتش السداسي يعرض بايتات الحزم الخام.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Rogue Ap Detector and Esp Dns Playground! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK (same across all apps) ═══════ */

@@ -42,10 +42,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', filterAll: 'All',
     settings: 'Settings', language: 'Language', theme: 'Theme', soundEffects: 'Sound effects',
     help: 'Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is the 4-way handshake?', faq_a1: 'A protocol that establishes encryption keys between a WiFi client and access point using WPA2.',
-    faq_q2: 'Is this a real handshake?', faq_a2: 'No, this is a simulation showing the message flow and key derivation process.',
-    faq_q3: 'What is the PTK?', faq_a3: 'The Pairwise Transient Key encrypts unicast traffic between a specific client and the AP.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Click Play to start the handshake animation.',
     howto_2: 'Watch each step highlight as messages are exchanged.',
     howto_3: 'See cryptographic keys appear in the Key Derivation section.',
@@ -63,8 +59,7 @@ const LANG = {
     tl4: 'Client derives PTK from PMK + ANonce + SNonce', tl5: 'Client sends EAPOL Message 2 (SNonce + MIC)',
     tl6: 'AP derives PTK, verifies MIC', tl7: 'AP sends EAPOL Message 3 (encrypted GTK + MIC)',
     tl8: 'Client installs PTK and GTK', tl9: 'Client sends EAPOL Message 4 (ACK)',
-    tl10: 'Secure encrypted session established',
-  ,sectionCode:'Device Code'},
+    tl10: 'Secure encrypted session established',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Wifi Sonar and Wifi Packet Microscope! Each teaches something different. 🚀'},
   fr: {
     title: 'Handshake Theater — WPA 4 Etapes', subtitle: 'Regardez le handshake WPA2 se derouler',
     disconnected: 'Inactif', connected: 'Authentification',
@@ -80,10 +75,6 @@ const LANG = {
     activityLog: 'Journal', eventsMsg: 'Evenements', clear: 'Effacer', copy: 'Copier', export: 'Exporter', filterAll: 'Tout',
     settings: 'Parametres', language: 'Langue', theme: 'Theme', soundEffects: 'Effets sonores',
     help: 'Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le handshake 4 etapes ?', faq_a1: 'Un protocole d\'authentification WPA2.',
-    faq_q2: 'Est-ce un vrai handshake ?', faq_a2: 'Non, c\'est une simulation.',
-    faq_q3: 'Qu\'est-ce que le PTK ?', faq_a3: 'La cle PTK chiffre le trafic unicast.',
-    faq_q4: 'Mes donnees sont-elles privees ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Cliquez Jouer pour lancer.', howto_2: 'Observez chaque etape.',
     howto_3: 'Voyez les cles apparaitre.', howto_4: 'Consultez la chronologie.',
     wiki_hs_title: 'Handshake', wiki_hs: 'Le handshake WPA2 utilise EAPOL.',
@@ -97,8 +88,7 @@ const LANG = {
     tl1: 'AP genere ANonce', tl2: 'AP envoie Message 1', tl3: 'Client genere SNonce',
     tl4: 'Client derive PTK', tl5: 'Client envoie Message 2', tl6: 'AP verifie MIC',
     tl7: 'AP envoie Message 3', tl8: 'Client installe cles', tl9: 'Client envoie Message 4',
-    tl10: 'Session chiffree etablie',
-  ,sectionCode:'Code Appareil'},
+    tl10: 'Session chiffree etablie',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Wifi Sonar and Wifi Packet Microscope ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'مسرح المصافحة — WPA رباعي', subtitle: 'شاهد مصافحة WPA2 الرباعية تتكشف',
     disconnected: 'خامل', connected: 'مصافحة',
@@ -114,10 +104,6 @@ const LANG = {
     activityLog: 'سجل النشاط', eventsMsg: 'الأحداث', clear: 'مسح', copy: 'نسخ', export: 'تصدير', filterAll: 'الكل',
     settings: 'الإعدادات', language: 'اللغة', theme: 'المظهر', soundEffects: 'مؤثرات صوتية',
     help: 'مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي المصافحة الرباعية؟', faq_a1: 'بروتوكول لإنشاء مفاتيح التشفير.',
-    faq_q2: 'هل هذه حقيقية؟', faq_a2: 'لا، هذه محاكاة.',
-    faq_q3: 'ما هو PTK؟', faq_a3: 'مفتاح يشفر حركة المرور.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
     howto_1: 'انقر تشغيل.', howto_2: 'شاهد الخطوات.',
     howto_3: 'شاهد المفاتيح.', howto_4: 'تحقق من الجدول الزمني.',
     wiki_hs_title: 'المصافحة', wiki_hs: 'تستخدم إطارات EAPOL.',
@@ -131,8 +117,7 @@ const LANG = {
     tl1: 'AP يولد ANonce', tl2: 'AP يرسل الرسالة 1', tl3: 'العميل يولد SNonce',
     tl4: 'العميل يشتق PTK', tl5: 'العميل يرسل الرسالة 2', tl6: 'AP يتحقق',
     tl7: 'AP يرسل الرسالة 3', tl8: 'العميل يثبت المفاتيح', tl9: 'العميل يرسل الرسالة 4',
-    tl10: 'جلسة مشفرة',
-  ,sectionCode:'كود الجهاز'}
+    tl10: 'جلسة مشفرة',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي WiFi! 🔬 يمكنك التجربة مع WiFi signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج WiFi signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا wireless networks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Wifi Sonar and Wifi Packet Microscope! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

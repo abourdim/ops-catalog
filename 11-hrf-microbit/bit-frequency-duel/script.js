@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'A 2.4GHz spectrum waterfall simulator. Visualize micro:bit, WiFi, and Bluetooth signals sharing the same band.',
-    faq_q2: 'Do I need a real micro:bit?', faq_a2: 'No. This is a simulation. Use the Transmit button and sliders to experiment with the 2.4GHz band.',
-    faq_q3: 'What do the colors mean?', faq_a3: 'Blue = weak signal, green = medium, yellow = strong, red = very strong. Each signal type also has its own color in the legend.',
-    faq_q4: 'How do I reduce interference?', faq_a4: 'Choose a channel away from WiFi hotspots (channels 1, 6, 11) and use lower power when possible.',
     howto_1: 'Watch the waterfall display to see existing WiFi and Bluetooth signals in the 2.4GHz band.',
     howto_2: 'Use the channel slider (0–83) to select a micro:bit frequency channel.',
     howto_3: 'Adjust the power slider (0–7) to control signal strength.',
@@ -117,8 +113,7 @@ const LANG = {
     interferenceNone: 'No interference — clear channel!',
     interferenceLow: 'Low interference',
     interferenceMed: 'Medium interference — consider changing channel',
-    interferenceHigh: 'High interference — WiFi overlap detected!',
-  ,step1Title:'Configure RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capture Spectrum',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyze Signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classify & Report',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Device Code'},
+    interferenceHigh: 'High interference — WiFi overlap detected!',step1Title:'Configure RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capture Spectrum',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyze Signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classify & Report',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Rf Alarm System and Bit Rf Remote Control! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-frequency-duel', subtitle: '📊 visualiser · 📡 transmettre · 🔍 analyser',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -129,10 +124,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Un simulateur de spectre 2.4GHz en cascade. Visualisez les signaux micro:bit, WiFi et Bluetooth partageant la même bande.',
-    faq_q2: 'Ai-je besoin d\'un vrai micro:bit ?', faq_a2: 'Non. C\'est une simulation. Utilisez le bouton Transmettre et les curseurs pour expérimenter.',
-    faq_q3: 'Que signifient les couleurs ?', faq_a3: 'Bleu = signal faible, vert = moyen, jaune = fort, rouge = très fort. Chaque type de signal a aussi sa propre couleur dans la légende.',
-    faq_q4: 'Comment réduire les interférences ?', faq_a4: 'Choisissez un canal éloigné des points WiFi (canaux 1, 6, 11) et utilisez une puissance plus faible si possible.',
     howto_1: 'Observez la cascade pour voir les signaux WiFi et Bluetooth existants dans la bande 2.4GHz.',
     howto_2: 'Utilisez le curseur de canal (0–83) pour sélectionner un canal de fréquence micro:bit.',
     howto_3: 'Ajustez le curseur de puissance (0–7) pour contrôler l\'intensité du signal.',
@@ -174,8 +165,7 @@ const LANG = {
     interferenceNone: 'Aucune interférence — canal libre !',
     interferenceLow: 'Interférence faible',
     interferenceMed: 'Interférence moyenne — envisagez de changer de canal',
-    interferenceHigh: 'Interférence forte — chevauchement WiFi détecté !',
-  ,step1Title:'Configurer RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capturer le spectre',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyser le signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classifier et rapporter',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Code Appareil'},
+    interferenceHigh: 'Interférence forte — chevauchement WiFi détecté !',step1Title:'Configurer RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'Capturer le spectre',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'Analyser le signal',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'Classifier et rapporter',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Rf Alarm System and Bit Rf Remote Control ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-frequency-duel', subtitle: '📊 تصوّر · 📡 أرسل · 🔍 حلّل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -186,10 +176,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'محاكي طيف 2.4GHz بعرض شلالي. تصوّر إشارات micro:bit وWiFi وBluetooth تتشارك نفس النطاق.',
-    faq_q2: 'هل أحتاج micro:bit حقيقي؟', faq_a2: 'لا. هذه محاكاة. استخدم زر الإرسال والمنزلقات للتجربة مع نطاق 2.4GHz.',
-    faq_q3: 'ماذا تعني الألوان؟', faq_a3: 'أزرق = إشارة ضعيفة، أخضر = متوسطة، أصفر = قوية، أحمر = قوية جدًا. لكل نوع إشارة لونه الخاص في وسيلة الإيضاح.',
-    faq_q4: 'كيف أقلل التداخل؟', faq_a4: 'اختر قناة بعيدة عن نقاط WiFi الساخنة (القنوات 1، 6، 11) واستخدم طاقة أقل إن أمكن.',
     howto_1: 'راقب عرض الشلال لرؤية إشارات WiFi وBluetooth الموجودة في نطاق 2.4GHz.',
     howto_2: 'استخدم منزلق القناة (0–83) لتحديد قناة تردد micro:bit.',
     howto_3: 'اضبط منزلق الطاقة (0–7) للتحكم في قوة الإشارة.',
@@ -231,8 +217,7 @@ const LANG = {
     interferenceNone: 'لا تداخل — قناة واضحة!',
     interferenceLow: 'تداخل منخفض',
     interferenceMed: 'تداخل متوسط — فكّر في تغيير القناة',
-    interferenceHigh: 'تداخل عالي — تراكب WiFi مكتشف!',
-  ,step1Title:'تكوين RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'التقاط الطيف',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'تحليل الإشارة',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'تصنيف والتقرير',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'كود الجهاز'}
+    interferenceHigh: 'تداخل عالي — تراكب WiFi مكتشف!',step1Title:'تكوين RF',step1Desc:'The 2.4GHz ISM band (2.400–2.485 GHz) is shared by WiFi, Bluetooth, micro:bit, and many other devices.',step2Title:'التقاط الطيف',step2Desc:'The waterfall display shows radio energy over time — each row is a spectrum snapshot, scrolling upward.',step3Title:'تحليل الإشارة',step3Desc:'The micro:bit uses 84 channels of 1MHz width each across the 2.4GHz band.',step4Title:'تصنيف والتقرير',step4Desc:'Interference appears as overlapping colored signals — finding clear channels is key to reliable communication.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Rf Alarm System and Bit Rf Remote Control! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

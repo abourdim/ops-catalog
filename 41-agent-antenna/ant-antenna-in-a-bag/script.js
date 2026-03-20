@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Antenna in a Bag?', faq_a1: 'A portable, rapidly deployable antenna kit simulator for field operations. Select components, pick a frequency band, and deploy.',
-    faq_q2: 'How does deployment work?', faq_a2: 'Click Deploy Kit to simulate unpacking and setting up the antenna. The canvas shows the antenna visualization.',
-    faq_q3: 'What are the frequency bands?', faq_a3: 'HF (3-30 MHz), VHF (30-300 MHz), UHF (300 MHz-3 GHz), and SHF (3-30 GHz) for different mission profiles.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Select antenna components in Kit Builder.', howto_2: 'Choose a frequency band for your mission.',
     howto_3: 'Click Deploy Kit to set up the antenna.', howto_4: 'Use Auto-Tune to optimize signal strength.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
@@ -94,8 +90,7 @@ const LANG = {
     abSecA: 'Select Components', abSecB: 'Frequency Bands', abSecC: 'Link Budget Calculator',
     abBuild: 'Build Kit', abReset: 'Reset',
     deployed: '📡 Antenna deployed!', packed: '📦 Kit packed up', tuning: '🔧 Auto-tuning...',
-    tuned: '✅ Signal optimized!', kitBuilt: '🎒 Kit assembled',
-  ,step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code'},
+    tuned: '✅ Signal optimized!', kitBuilt: '🎒 Kit assembled',step1Title:'Design Antenna',step1Desc:'Choose the antenna type and set physical dimensions based on target frequency.',step2Title:'Calculate Parameters',step2Desc:'Compute impedance, gain, SWR, and radiation pattern from the design.',step3Title:'Simulate',step3Desc:'Run the simulation to visualize the antenna\'s performance across frequencies.',step4Title:'Optimize',step4Desc:'Adjust dimensions to minimize SWR and maximize gain at the target frequency.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates antennas! 🔬 You get to experiment with radio wave patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio wave patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real antenna design and physics! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Ant Covert Antenna and Ant Rf Perimeter! Each teaches something different. 🚀'},
   fr: {
     title: 'Antenne de Poche', subtitle: '🎒 Kit antenne portable',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -106,10 +101,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Antenne de Poche ?', faq_a1: 'Un simulateur de kit antenne portable pour les opérations terrain.',
-    faq_q2: 'Comment déployer ?', faq_a2: 'Cliquez sur Déployer pour simuler l\'installation de l\'antenne.',
-    faq_q3: 'Quelles sont les bandes ?', faq_a3: 'HF, VHF, UHF et SHF pour différents profils de mission.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Sélectionnez les composants.', howto_2: 'Choisissez une bande de fréquence.',
     howto_3: 'Déployez le kit antenne.', howto_4: 'Utilisez l\'auto-réglage.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes intégrés.',
@@ -126,8 +117,7 @@ const LANG = {
     abStat1: 'Statut Kit', abStat2: 'Signal', abStat3: 'Bande', abStat4: 'Temps',
     abDeploy: 'Déployer', abTune: 'Auto-Réglage', abPack: 'Ranger',
     deployed: '📡 Antenne déployée !', packed: '📦 Kit rangé', tuning: '🔧 Réglage...',
-    tuned: '✅ Signal optimisé !', kitBuilt: '🎒 Kit assemblé',
-  ,step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil'},
+    tuned: '✅ Signal optimisé !', kitBuilt: '🎒 Kit assemblé',step1Title:'Concevoir l\'antenne',step1Desc:'Choisis le type d\'antenne et définis les dimensions selon la fréquence.',step2Title:'Calculer les paramètres',step2Desc:'Calcule impédance, gain, ROS et diagramme de rayonnement.',step3Title:'Simuler',step3Desc:'Lance la simulation pour visualiser les performances de l\'antenne.',step4Title:'Optimiser',step4Desc:'Ajuste les dimensions pour minimiser le ROS et maximiser le gain.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule antennas ! 🔬 Tu peux expérimenter avec radio wave patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio wave patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai antenna design and physics ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Ant Covert Antenna and Ant Rf Perimeter ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'هوائي في حقيبة', subtitle: '🎒 محاكي هوائي محمول',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -138,10 +128,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو هوائي في حقيبة؟', faq_a1: 'محاكي لعدة هوائي محمولة قابلة للنشر السريع.',
-    faq_q2: 'كيف يعمل النشر؟', faq_a2: 'انقر على نشر لمحاكاة تركيب الهوائي.',
-    faq_q3: 'ما هي نطاقات التردد؟', faq_a3: 'HF، VHF، UHF و SHF لمهام مختلفة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
     howto_1: 'اختر المكونات.', howto_2: 'حدد نطاق التردد.',
     howto_3: 'انشر عدة الهوائي.', howto_4: 'استخدم الضبط التلقائي.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
@@ -158,8 +144,7 @@ const LANG = {
     abStat1: 'حالة العدة', abStat2: 'الإشارة', abStat3: 'النطاق', abStat4: 'وقت النشر',
     abDeploy: 'نشر', abTune: 'ضبط تلقائي', abPack: 'حزم',
     deployed: '📡 تم نشر الهوائي!', packed: '📦 تم حزم العدة', tuning: '🔧 جارٍ الضبط...',
-    tuned: '✅ تم تحسين الإشارة!', kitBuilt: '🎒 تم تجميع العدة',
-  ,step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز'}
+    tuned: '✅ تم تحسين الإشارة!', kitBuilt: '🎒 تم تجميع العدة',step1Title:'تصميم الهوائي',step1Desc:'اختر نوع الهوائي واضبط الأبعاد حسب التردد المستهدف.',step2Title:'حساب المعلمات',step2Desc:'احسب المعاوقة والكسب و SWR ونمط الإشعاع.',step3Title:'محاكاة',step3Desc:'شغّل المحاكاة لعرض أداء الهوائي عبر الترددات.',step4Title:'تحسين',step4Desc:'اضبط الأبعاد لتقليل SWR وزيادة الكسب عند التردد المستهدف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي antennas! 🔬 يمكنك التجربة مع radio wave patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio wave patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا antenna design and physics حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Ant Covert Antenna and Ant Rf Perimeter! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -44,10 +44,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme', export: 'Export', filterAll: 'All',
     settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is swarm intelligence?', faq_a1: 'Swarm intelligence is collective behavior of decentralized agents following simple rules to achieve complex coordinated movement, inspired by bees and birds.',
-    faq_q2: 'What is ESP-NOW?', faq_a2: 'ESP-NOW is a low-power, peer-to-peer wireless protocol by Espressif for ESP32 chips. It enables fast, connectionless communication without Wi-Fi infrastructure.',
-    faq_q3: 'How do formations work?', faq_a3: 'Each node is assigned a target position based on the formation type (line, circle, grid, V-shape). Nodes smoothly interpolate toward their targets.',
-    faq_q4: 'What commands can I send?', faq_a4: 'Try: rotate (spin formation), halt (freeze), patrol (sweep area), scatter (random positions), rally (converge to center).',
     howto_1: 'Choose a formation using the buttons below the canvas to command the swarm.',
     howto_2: 'Adjust speed and node count to see different swarm behaviors.',
     howto_3: 'Type commands in the input field and press Send to issue orders.',
@@ -80,8 +76,7 @@ const LANG = {
     challenge3: 'Set a rally point, then switch to V-shape formation — watch the swarm reorganize mid-flight.',
     cmdReceived: 'Command received', cmdRotate: 'Rotating formation', cmdHalt: 'All nodes halted',
     cmdPatrol: 'Patrol mode engaged', cmdRally: 'Rally point set', cmdUnknown: 'Unknown command',
-    formationChanged: 'Formation →', rallySet: 'Rally point set',
-  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+    formationChanged: 'Formation →', rallySet: 'Rally point set',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Cyber Range and Esp Internet Simulator! Each teaches something different. 🚀'},
   fr: {
     title: 'Swarm Net', subtitle: '🐝 essaim · 📡 ESP-NOW · 🎯 formation',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -91,10 +86,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Thème', export: 'Exporter', filterAll: 'Tout',
     settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que l\'intelligence d\'essaim ?', faq_a1: 'L\'intelligence d\'essaim est le comportement collectif d\'agents décentralisés suivant des règles simples pour réaliser des mouvements coordonnés complexes, inspiré des abeilles et des oiseaux.',
-    faq_q2: 'Qu\'est-ce que ESP-NOW ?', faq_a2: 'ESP-NOW est un protocole sans fil pair-à-pair basse consommation d\'Espressif pour les puces ESP32. Il permet une communication rapide sans infrastructure Wi-Fi.',
-    faq_q3: 'Comment fonctionnent les formations ?', faq_a3: 'Chaque nœud reçoit une position cible basée sur le type de formation. Les nœuds interpolent doucement vers leurs cibles.',
-    faq_q4: 'Quelles commandes puis-je envoyer ?', faq_a4: 'Essayez : rotate (tourner), halt (arrêter), patrol (patrouiller), scatter (disperser), rally (rassembler).',
     howto_1: 'Choisissez une formation avec les boutons sous le canevas pour commander l\'essaim.',
     howto_2: 'Ajustez la vitesse et le nombre de nœuds pour observer différents comportements.',
     howto_3: 'Tapez des commandes dans le champ et appuyez sur Envoyer pour donner des ordres.',
@@ -127,8 +118,7 @@ const LANG = {
     challenge3: 'Définissez un point de ralliement, puis passez en V — regardez le réorganisation en vol.',
     cmdReceived: 'Commande reçue', cmdRotate: 'Rotation de la formation', cmdHalt: 'Tous les nœuds arrêtés',
     cmdPatrol: 'Mode patrouille engagé', cmdRally: 'Point de ralliement défini', cmdUnknown: 'Commande inconnue',
-    formationChanged: 'Formation →', rallySet: 'Point de ralliement défini',
-  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+    formationChanged: 'Formation →', rallySet: 'Point de ralliement défini',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Cyber Range and Esp Internet Simulator ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'Swarm Net', subtitle: '🐝 سرب · 📡 ESP-NOW · 🎯 تشكيل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -138,10 +128,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', export: 'تصدير', filterAll: 'الكل',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو ذكاء السرب؟', faq_a1: 'ذكاء السرب هو السلوك الجماعي لعوامل لامركزية تتبع قواعد بسيطة لتحقيق حركة منسقة معقدة.',
-    faq_q2: 'ما هو ESP-NOW؟', faq_a2: 'ESP-NOW هو بروتوكول لاسلكي نظير إلى نظير منخفض الطاقة من Espressif لشرائح ESP32.',
-    faq_q3: 'كيف تعمل التشكيلات؟', faq_a3: 'يتم تعيين موقع مستهدف لكل عقدة بناءً على نوع التشكيل. تنتقل العقد بسلاسة نحو أهدافها.',
-    faq_q4: 'ما هي الأوامر المتاحة؟', faq_a4: 'جرّب: rotate (دوران)، halt (توقف)، patrol (دورية)، scatter (تفرق)، rally (تجمع).',
     howto_1: 'اختر تشكيلاً باستخدام الأزرار أسفل اللوحة لقيادة السرب.',
     howto_2: 'اضبط السرعة وعدد العقد لمشاهدة سلوكيات مختلفة.',
     howto_3: 'اكتب أوامر في حقل الإدخال واضغط إرسال.',
@@ -174,8 +160,7 @@ const LANG = {
     challenge3: 'حدد نقطة تجمع ثم انتقل إلى تشكيل V — شاهد إعادة التنظيم.',
     cmdReceived: 'تم استلام الأمر', cmdRotate: 'تدوير التشكيل', cmdHalt: 'توقف جميع العقد',
     cmdPatrol: 'وضع الدورية مُفعّل', cmdRally: 'تم تحديد نقطة التجمع', cmdUnknown: 'أمر غير معروف',
-    formationChanged: 'التشكيل →', rallySet: 'تم تحديد نقطة التجمع',
-  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
+    formationChanged: 'التشكيل →', rallySet: 'تم تحديد نقطة التجمع',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Cyber Range and Esp Internet Simulator! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -21,10 +21,6 @@ const LANG = {
     clear:'Clear', copy:'Copy', theme:'Theme', export:'Export', filterAll:'All',
     settings:'⚙️ Settings', language:'Language',
     help:'❓ Help', faq:'FAQ', howto:'How-To', wiki:'Wiki',
-    faq_q1:'What is Dark Profile?', faq_a1:'A digital footprint simulator that searches usernames across platforms.',
-    faq_q2:'Is this a real search?', faq_a2:'No. All results are simulated locally.',
-    faq_q3:'How do I change the language?', faq_a3:'Open Settings and pick your language.',
-    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally.',
     howto_1:'Type a username in the search field.', howto_2:'Click Search to scan platforms.',
     howto_3:'View results and risk score.', howto_4:'Generate an exposure report.',
     wiki_themes_title:'🎨 Themes', wiki_themes:'8 built-in themes.',
@@ -47,8 +43,7 @@ const LANG = {
     exposureText:'Cross-referencing usernames across platforms can reveal identity clusters.',
     exposureBtn:'Generate Exposure Report', generating:'Generating report...',
     reportDone:'Exposure report generated!',
-    riskLow:'LOW RISK', riskMed:'MEDIUM RISK', riskHigh:'HIGH RISK', riskCritical:'CRITICAL RISK',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    riskLow:'LOW RISK', riskMed:'MEDIUM RISK', riskHigh:'HIGH RISK', riskCritical:'CRITICAL RISK',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Web Metadata Detective and Web Burner Chat! Each teaches something different. 🚀'},
   fr: {
     title:'Profil Sombre', subtitle:'🕵️ Rechercher des pseudos sur les plateformes',
     disconnected:'Deconnecte', connected:'Connecte',
@@ -58,10 +53,6 @@ const LANG = {
     clear:'Effacer', copy:'Copier', theme:'Theme', export:'Exporter', filterAll:'Tout',
     settings:'⚙️ Parametres', language:'Langue',
     help:'❓ Aide', faq:'FAQ', howto:'Guide', wiki:'Wiki',
-    faq_q1:'Qu\'est-ce que Profil Sombre ?', faq_a1:'Un simulateur d\'empreinte numerique.',
-    faq_q2:'C\'est une vraie recherche ?', faq_a2:'Non. Tout est simule localement.',
-    faq_q3:'Comment changer la langue ?', faq_a3:'Ouvrez Parametres et choisissez.',
-    faq_q4:'Mes donnees sont privees ?', faq_a4:'Oui. Tout fonctionne localement.',
     howto_1:'Tapez un pseudo.', howto_2:'Cliquez Rechercher.',
     howto_3:'Voyez les resultats et le score.', howto_4:'Generez un rapport.',
     wiki_themes_title:'🎨 Themes', wiki_themes:'8 themes.',
@@ -84,8 +75,7 @@ const LANG = {
     exposureText:'Le croisement des pseudos peut reveler des clusters d\'identite.',
     exposureBtn:'Generer Rapport', generating:'Generation...',
     reportDone:'Rapport genere !',
-    riskLow:'RISQUE FAIBLE', riskMed:'RISQUE MOYEN', riskHigh:'RISQUE ELEVE', riskCritical:'RISQUE CRITIQUE',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    riskLow:'RISQUE FAIBLE', riskMed:'RISQUE MOYEN', riskHigh:'RISQUE ELEVE', riskCritical:'RISQUE CRITIQUE',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Metadata Detective and Web Burner Chat ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'الملف المظلم', subtitle:'🕵️ البحث عن اسماء المستخدمين عبر المنصات',
     disconnected:'غير متصل', connected:'متصل',
@@ -95,10 +85,6 @@ const LANG = {
     clear:'مسح', copy:'نسخ', theme:'المظهر', export:'تصدير', filterAll:'الكل',
     settings:'⚙️ الاعدادات', language:'اللغة',
     help:'❓ مساعدة', faq:'اسئلة شائعة', howto:'كيف تستخدم', wiki:'ويكي',
-    faq_q1:'ما هو الملف المظلم؟', faq_a1:'محاكي بصمة رقمية يبحث عن اسماء المستخدمين.',
-    faq_q2:'هل هذا بحث حقيقي؟', faq_a2:'لا. كل النتائج محاكاة محليا.',
-    faq_q3:'كيف اغير اللغة؟', faq_a3:'افتح الاعدادات واختر لغتك.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'نعم. كل شيء يعمل محليا.',
     howto_1:'اكتب اسم مستخدم.', howto_2:'انقر بحث.',
     howto_3:'شاهد النتائج ودرجة المخاطر.', howto_4:'ولد تقرير التعرض.',
     wiki_themes_title:'🎨 المظاهر', wiki_themes:'8 مظاهر.',
@@ -121,8 +107,7 @@ const LANG = {
     exposureText:'مقارنة الاسماء عبر المنصات يكشف مجموعات الهوية.',
     exposureBtn:'توليد تقرير التعرض', generating:'جاري التوليد...',
     reportDone:'تم توليد التقرير!',
-    riskLow:'خطر منخفض', riskMed:'خطر متوسط', riskHigh:'خطر مرتفع', riskCritical:'خطر حرج',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    riskLow:'خطر منخفض', riskMed:'خطر متوسط', riskHigh:'خطر مرتفع', riskCritical:'خطر حرج',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Web Metadata Detective and Web Burner Chat! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang='en';

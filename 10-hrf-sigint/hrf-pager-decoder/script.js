@@ -43,10 +43,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', filterAll: 'All',
     theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is POCSAG?', faq_a1: 'A paging protocol for one-way text/numeric messages, transmitted unencrypted on radio frequencies.',
-    faq_q2: 'Do I need hardware?', faq_a2: 'No, this is a simulator. Real decoding uses an RTL-SDR dongle and multimon-ng.',
-    faq_q3: 'What is a RIC address?', faq_a3: 'Radio Identity Code — a unique 7-digit number assigned to each pager device.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Click "Start Decoder" to begin simulated POCSAG reception.',
     howto_2: 'Watch decoded messages appear in the feed with timestamps.',
     howto_3: 'Filter by pager address to isolate specific devices.',
@@ -69,8 +65,7 @@ const LANG = {
     statAlphaLabel: 'Alphanumeric', statAddrsLabel: 'Unique Addresses',
     pocsagInfo: 'POCSAG (Post Office Code Standardisation Advisory Group) is a paging protocol used worldwide. Messages are transmitted unencrypted at 512, 1200, or 2400 baud on VHF/UHF frequencies. Each pager has a unique address (RIC). Messages can be numeric-only or alphanumeric. With an RTL-SDR and software like multimon-ng, anyone can decode these signals.',
     decoderStarted: '📡 POCSAG decoder started on', decoderStopped: '🔴 Decoder stopped',
-    newMessage: 'MSG', freqChanged: '📻 Frequency →',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    newMessage: 'MSG', freqChanged: '📻 Frequency →',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need RTL-SDR or HackRF. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Satellite Listener and Hrf Rf Waterfall! Each teaches something different. 🚀'},
   fr: {
     title: 'Decodeur Pager', subtitle: '📟 Decodez les messages pager en temps reel',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -80,10 +75,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', filterAll: 'Tout',
     theme: 'Theme', settings: '⚙️ Parametres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que POCSAG ?', faq_a1: 'Un protocole de radiomessagerie pour messages texte/numeriques, transmis non chiffres.',
-    faq_q2: 'Ai-je besoin de materiel ?', faq_a2: 'Non, c\'est un simulateur. Le vrai decodage utilise un dongle RTL-SDR.',
-    faq_q3: 'Qu\'est-ce qu\'une adresse RIC ?', faq_a3: 'Radio Identity Code — un numero unique a 7 chiffres pour chaque pager.',
-    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Cliquez "Demarrer" pour lancer la reception POCSAG simulee.',
     howto_2: 'Observez les messages decodes apparaitre dans le flux.',
     howto_3: 'Filtrez par adresse pour isoler un pager specifique.',
@@ -106,8 +97,7 @@ const LANG = {
     statAlphaLabel: 'Alphanumerique', statAddrsLabel: 'Adresses uniques',
     pocsagInfo: 'POCSAG est un protocole de radiomessagerie mondial. Les messages sont transmis non chiffres a 512, 1200 ou 2400 baud sur VHF/UHF.',
     decoderStarted: '📡 Decodeur POCSAG demarre sur', decoderStopped: '🔴 Decodeur arrete',
-    newMessage: 'MSG', freqChanged: '📻 Frequence →',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    newMessage: 'MSG', freqChanged: '📻 Frequence →',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut RTL-SDR or HackRF. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Satellite Listener and Hrf Rf Waterfall ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'فك تشفير البيجر', subtitle: '📟 فك تشفير رسائل البيجر في الوقت الحقيقي',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -117,10 +107,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', filterAll: 'الكل',
     theme: 'المظهر', settings: '⚙️ الاعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو POCSAG؟', faq_a1: 'بروتوكول استدعاء لرسائل نصية/رقمية احادية الاتجاه، تُبث بدون تشفير.',
-    faq_q2: 'هل احتاج اجهزة؟', faq_a2: 'لا، هذا محاكي. الفك الحقيقي يستخدم RTL-SDR.',
-    faq_q3: 'ما هو عنوان RIC؟', faq_a3: 'رمز هوية الراديو — رقم فريد من 7 ارقام لكل جهاز بيجر.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
     howto_1: 'اضغط "بدء فك التشفير" لتشغيل محاكاة POCSAG.',
     howto_2: 'شاهد الرسائل المفككة تظهر في التغذية.',
     howto_3: 'فلتر حسب العنوان لعزل اجهزة معينة.',
@@ -143,8 +129,7 @@ const LANG = {
     statAlphaLabel: 'ابجدية رقمية', statAddrsLabel: 'عناوين فريدة',
     pocsagInfo: 'POCSAG بروتوكول استدعاء عالمي. الرسائل تبث بدون تشفير على ترددات VHF/UHF.',
     decoderStarted: '📡 بدا فك تشفير POCSAG على', decoderStopped: '🔴 توقف فك التشفير',
-    newMessage: 'رسالة', freqChanged: '📻 التردد →',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    newMessage: 'رسالة', freqChanged: '📻 التردد →',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج RTL-SDR or HackRF. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Satellite Listener and Hrf Rf Waterfall! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

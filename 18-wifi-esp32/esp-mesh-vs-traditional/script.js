@@ -86,10 +86,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is mesh WiFi?', faq_a1: 'Interconnected nodes relaying data to each other for seamless coverage without a single point of failure.',
-    faq_q2: 'What is traditional WiFi?', faq_a2: 'A star topology where all devices connect to a single router. Simple but limited range.',
-    faq_q3: 'Can ESP32 do mesh?', faq_a3: 'Yes! ESP-MDF enables ESP32 devices to form self-healing mesh networks.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Select a view mode: Mesh, Traditional, or Split View.',
     howto_2: 'Click Start Simulation to begin the comparison.',
     howto_3: 'Watch the topology canvas for real-time packet routing.',
@@ -109,8 +105,7 @@ const LANG = {
     whisperMode: 'Whisper mode', breathingGuide: 'Breathing guide', dhikrTap: 'Tap',
     musicMode: 'Music reactive', chatPlaceholder: 'Talk to the robot...',
     splashHint: 'tap to skip', newVersion: 'UPDATE',
-    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
+    langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Esp Wifi Canary and Esp Captive Portal Atk! Each teaches something different. 🚀'},
   fr: {
     title: 'Mesh vs Traditionnel', subtitle: '🔀 mesh · 📶 traditionnel · ⚡ comparer',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -134,10 +129,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Theme', settings: '⚙️ Parametres', language: 'Langue',
     helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le WiFi mesh ?', faq_a1: 'Des noeuds interconnectes qui relaient les donnees pour une couverture sans point de defaillance unique.',
-    faq_q2: 'Qu\'est-ce que le WiFi traditionnel ?', faq_a2: 'Topologie en etoile ou tous les appareils se connectent a un routeur unique.',
-    faq_q3: 'L\'ESP32 peut-il faire du mesh ?', faq_a3: 'Oui ! ESP-MDF permet aux ESP32 de former des reseaux mesh auto-reparants.',
-    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Selectionne un mode de vue : Mesh, Traditionnel ou Vue Double.',
     howto_2: 'Clique sur Lancer la Simulation pour commencer la comparaison.',
     howto_3: 'Observe le canvas topologie pour le routage en temps reel.',
@@ -153,8 +144,7 @@ const LANG = {
     whisperMode: 'Mode murmure', breathingGuide: 'Guide respiratoire', dhikrTap: 'Tap',
     musicMode: 'Reactif musique', chatPlaceholder: 'Parle au robot...',
     splashHint: 'appuyer pour passer', newVersion: 'MAJ',
-    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
+    langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Wifi Canary and Esp Captive Portal Atk ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'Mesh مقابل تقليدي', subtitle: '🔀 شبكي · 📶 تقليدي · ⚡ قارن',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -178,10 +168,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو WiFi الشبكي؟', faq_a1: 'عقد مترابطة تنقل البيانات لبعضها لتغطية سلسة بدون نقطة فشل واحدة.',
-    faq_q2: 'ما هو WiFi التقليدي؟', faq_a2: 'طوبولوجيا نجمية حيث تتصل جميع الأجهزة براوتر واحد.',
-    faq_q3: 'هل يمكن لـ ESP32 عمل شبكة mesh؟', faq_a3: 'نعم! ESP-MDF يمكّن أجهزة ESP32 من تشكيل شبكات mesh ذاتية الإصلاح.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: 'اختر وضع العرض: شبكي، تقليدي أو عرض مزدوج.',
     howto_2: 'اضغط بدء المحاكاة لبدء المقارنة.',
     howto_3: 'شاهد لوحة الطوبولوجيا لتوجيه الحزم الحي.',
@@ -197,8 +183,7 @@ const LANG = {
     whisperMode: 'وضع الهمس', breathingGuide: 'دليل التنفس', dhikrTap: 'اضغط',
     musicMode: 'تفاعل موسيقي', chatPlaceholder: 'تحدث مع الروبوت...',
     splashHint: 'انقر للتخطي', newVersion: 'تحديث',
-    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
+    langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي WiFi! 🔬 يمكنك التجربة مع WiFi signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج WiFi signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا wireless networks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Wifi Canary and Esp Captive Portal Atk! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

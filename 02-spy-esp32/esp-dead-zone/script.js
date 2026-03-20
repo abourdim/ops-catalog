@@ -72,11 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Dead Zone?', faq_a1: 'Dead Zone is an educational WiFi device detector simulator. It teaches you how ESP32-based scanners discover nearby wireless devices by capturing probe requests and beacon frames.',
-    faq_q2: 'What are probe requests?', faq_a2: 'Probe requests are WiFi frames that devices send to discover known networks. They reveal previously connected SSIDs, exposing your travel and location history.',
-    faq_q3: 'Can this detect hidden cameras?', faq_a3: 'Yes! Hidden WiFi cameras emit detectable wireless signals. This tool identifies suspicious devices by analyzing MAC vendor prefixes, signal patterns, and probe behavior.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation for learning purposes.',
-    faq_q5: 'What is MAC address randomization?', faq_a5: 'Modern devices use random MAC addresses when scanning for WiFi to prevent tracking. The local bit (second hex character is 2,6,A,E) indicates a randomized address.',
     howto_1: 'Click "Start Scan" to begin detecting nearby WiFi devices (simulated).',
     howto_2: 'Watch the radar map as devices appear at varying distances based on signal strength.',
     howto_3: 'Open "Probe Request Analysis" to see which networks devices are searching for.',
@@ -118,8 +113,7 @@ const LANG = {
     tip2: '🔴 Tracking devices probe very few SSIDs but have strong, constant signals',
     tip3: '🔴 Suspicious devices often have randomized MACs (local bit set)',
     tip4: '🔴 Look for devices that appear only when you move to a new location',
-    tip5: '🔴 WiFi cameras typically maintain a persistent connection to one SSID',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    tip5: '🔴 WiFi cameras typically maintain a persistent connection to one SSID',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Esp Vault and Esp Tor Relay! Each teaches something different. 🚀'},
   fr: {
     title: 'Dead Zone — Détecteur', subtitle: '📵 Trouvez chaque appareil WiFi autour de vous',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -130,11 +124,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Dead Zone ?', faq_a1: 'Un simulateur éducatif de détection d\'appareils WiFi basé sur ESP32.',
-    faq_q2: 'Que sont les requêtes probe ?', faq_a2: 'Ce sont des trames WiFi que les appareils envoient pour trouver des réseaux connus.',
-    faq_q3: 'Peut-il détecter les caméras cachées ?', faq_a3: 'Oui ! Les caméras WiFi cachées émettent des signaux sans fil détectables.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement. C\'est une simulation éducative.',
-    faq_q5: 'Qu\'est-ce que la randomisation MAC ?', faq_a5: 'Les appareils modernes utilisent des adresses MAC aléatoires pour empêcher le pistage.',
     howto_1: 'Cliquez sur "Démarrer Scan" pour commencer la détection (simulée).',
     howto_2: 'Regardez la carte radar quand les appareils apparaissent.',
     howto_3: 'Ouvrez "Analyse Probe" pour voir les réseaux recherchés.',
@@ -164,8 +153,7 @@ const LANG = {
     devicesFound: 'Appareils Trouvés', probeRequests: 'Requêtes Probe', uniqueVendors: 'Fabricants Uniques',
     idle: 'INACTIF', scanning: 'EN COURS', scanState: 'État du Scan',
     lookupVendor: 'Rechercher',
-    safe: 'SÛR', noSuspicious: 'Aucun appareil suspect détecté. Lancez un scan.',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    safe: 'SÛR', noSuspicious: 'Aucun appareil suspect détecté. Lancez un scan.',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Vault and Esp Tor Relay ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'المنطقة الميتة — كاشف الأجهزة', subtitle: '📵 اعثر على كل جهاز WiFi حولك',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -176,11 +164,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي المنطقة الميتة؟', faq_a1: 'محاكي تعليمي لكشف أجهزة WiFi باستخدام ESP32.',
-    faq_q2: 'ما هي طلبات الفحص؟', faq_a2: 'إطارات WiFi ترسلها الأجهزة لاكتشاف الشبكات المعروفة.',
-    faq_q3: 'هل يمكنه كشف الكاميرات المخفية؟', faq_a3: 'نعم! الكاميرات المخفية تصدر إشارات لاسلكية قابلة للكشف.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا. هذه محاكاة تعليمية.',
-    faq_q5: 'ما هو عشوائية عنوان MAC؟', faq_a5: 'الأجهزة الحديثة تستخدم عناوين MAC عشوائية لمنع التتبع.',
     howto_1: 'انقر على "بدء الفحص" لبدء الكشف (محاكاة).',
     howto_2: 'شاهد خريطة الرادار عند ظهور الأجهزة.',
     howto_3: 'افتح "تحليل الفحص" لرؤية الشبكات المطلوبة.',
@@ -210,8 +193,7 @@ const LANG = {
     devicesFound: 'أجهزة مكتشفة', probeRequests: 'طلبات فحص', uniqueVendors: 'شركات مصنعة',
     idle: 'خامل', scanning: 'يفحص', scanState: 'حالة الفحص',
     lookupVendor: 'بحث',
-    safe: 'آمن', noSuspicious: 'لم يتم الكشف عن أجهزة مشبوهة. ابدأ الفحص.',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    safe: 'آمن', noSuspicious: 'لم يتم الكشف عن أجهزة مشبوهة. ابدأ الفحص.',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Esp Vault and Esp Tor Relay! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

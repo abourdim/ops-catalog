@@ -28,10 +28,6 @@ const LANG = {
     encoded:'Message encoded in audio!', decoded:'Message decoded successfully!',
     noMsg:'Enter a message first', noAudio:'No encoded audio to decode',
     playing:'Playing stego audio...', stopped:'Playback stopped',
-    faq_q1:'What is audio steganography?', faq_a1:'Hiding secret data within audio files so the audio sounds normal but carries hidden information that can be extracted by the receiver.',
-    faq_q2:'Is it detectable?', faq_a2:'Good steganography is perceptually invisible. Steganalysis tools look for statistical anomalies in the audio spectrum.',
-    faq_q3:'How is the data encoded?', faq_a3:'Each bit of the message is encoded as a high-frequency tone (19kHz for 0, 19.5kHz for 1) at very low amplitude, imperceptible to human ears.',
-    faq_q4:'Is my data private?', faq_a4:'100% local processing. Audio is generated and processed entirely in your browser.',
     howto_1:'Type your secret message in the input field.', howto_2:'Click Encode to hide it inside a generated audio carrier.',
     howto_3:'Click Play to hear the carrier audio (message is inaudible).', howto_4:'Click Decode to extract the hidden message from the audio.',
     wiki_lsb_title:'LSB Encoding', wiki_lsb:'Replace least significant bits of audio samples with message bits. Imperceptible to human ear but detectable by statistical analysis.',
@@ -45,7 +41,7 @@ const LANG = {
     challengeReveal3:'Spectral analysis would reveal unusual energy peaks at 19-20kHz. Statistical tests (chi-square, RS analysis) can detect non-random patterns in LSB values.',
     revealBtn:'Reveal Answer',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code'},
+  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates acoustic warfare! 🔬 You get to experiment with sound waves in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sound waves so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real acoustic science and attacks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Sonic Ultrasonic Data Link and Sonic Acoustic Covert Channel! Each teaches something different. 🚀'},
   fr: {
     title:'Steganographie Audio', subtitle:'Cacher des Donnees dans la Musique',
     disconnected:'Inactif', connected:'Traitement',
@@ -63,10 +59,6 @@ const LANG = {
     encoded:'Message encode dans l\'audio!', decoded:'Message decode avec succes!',
     noMsg:'Entrez d\'abord un message', noAudio:'Pas d\'audio encode a decoder',
     playing:'Lecture de l\'audio stego...', stopped:'Lecture arretee',
-    faq_q1:'Qu\'est-ce que la steganographie audio?', faq_a1:'Cacher des donnees secretes dans des fichiers audio pour que l\'audio sonne normalement tout en transportant des informations cachees.',
-    faq_q2:'Est-ce detectable?', faq_a2:'Une bonne steganographie est imperceptible. Les outils de steganalyse cherchent des anomalies statistiques dans le spectre audio.',
-    faq_q3:'Comment les donnees sont-elles encodees?', faq_a3:'Chaque bit du message est encode comme un ton haute frequence (19kHz pour 0, 19.5kHz pour 1) a tres faible amplitude.',
-    faq_q4:'Mes donnees sont-elles privees?', faq_a4:'Traitement 100% local. L\'audio est genere et traite entierement dans votre navigateur.',
     howto_1:'Tapez votre message secret dans le champ.', howto_2:'Cliquez Encoder pour le cacher dans un audio porteur.',
     howto_3:'Cliquez Jouer pour entendre l\'audio (le message est inaudible).', howto_4:'Cliquez Decoder pour extraire le message cache.',
     wiki_lsb_title:'Encodage LSB', wiki_lsb:'Remplacer les bits de poids faible des echantillons audio par les bits du message. Imperceptible a l\'oreille.',
@@ -80,7 +72,7 @@ const LANG = {
     challengeReveal3:'L\'analyse spectrale revelerait des pics d\'energie inhabituels a 19-20kHz. Des tests statistiques detecteraient des motifs non aleatoires.',
     revealBtn:'Reveler la reponse',
     t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil'},
+  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule acoustic warfare ! 🔬 Tu peux expérimenter avec sound waves en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sound waves.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai acoustic science and attacks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Sonic Ultrasonic Data Link and Sonic Acoustic Covert Channel ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'إخفاء صوتي', subtitle:'إخفاء البيانات داخل الموسيقى',
     disconnected:'خامل', connected:'معالجة',
@@ -98,10 +90,6 @@ const LANG = {
     encoded:'تم تشفير الرسالة في الصوت!', decoded:'تم فك الرسالة بنجاح!',
     noMsg:'أدخل رسالة أولاً', noAudio:'لا يوجد صوت مشفر لفك تشفيره',
     playing:'تشغيل الصوت المخفي...', stopped:'توقف التشغيل',
-    faq_q1:'ما هو الإخفاء الصوتي؟', faq_a1:'إخفاء بيانات سرية داخل ملفات صوتية بحيث يبدو الصوت طبيعيًا لكنه يحمل معلومات مخفية يمكن استخراجها.',
-    faq_q2:'هل يمكن اكتشافه؟', faq_a2:'الإخفاء الجيد غير محسوس. أدوات التحليل تبحث عن شذوذ إحصائي في الطيف الصوتي.',
-    faq_q3:'كيف يتم ترميز البيانات؟', faq_a3:'كل بت من الرسالة يُرمّز كنغمة عالية التردد (19 كيلوهرتز لـ 0، 19.5 كيلوهرتز لـ 1) بسعة منخفضة جدًا.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'معالجة محلية 100%. الصوت يُولّد ويُعالج بالكامل في متصفحك.',
     howto_1:'اكتب رسالتك السرية في حقل الإدخال.', howto_2:'انقر تشفير لإخفائها داخل حامل صوتي.',
     howto_3:'انقر تشغيل للاستماع للصوت (الرسالة غير مسموعة).', howto_4:'انقر فك التشفير لاستخراج الرسالة المخفية.',
     wiki_lsb_title:'ترميز LSB', wiki_lsb:'استبدال البتات الأقل أهمية في عينات الصوت ببتات الرسالة. غير محسوس للأذن البشرية.',
@@ -115,7 +103,7 @@ const LANG = {
     challengeReveal3:'التحليل الطيفي سيكشف قمم طاقة غير عادية عند 19-20 كيلوهرتز. اختبارات إحصائية تكشف أنماطًا غير عشوائية.',
     revealBtn:'اكشف الإجابة',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز'}
+  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي acoustic warfare! 🔬 يمكنك التجربة مع sound waves في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج sound waves حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا acoustic science and attacks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Sonic Ultrasonic Data Link and Sonic Acoustic Covert Channel! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 function T(k) { return (LANG[currentLang] || LANG.en)[k] || LANG.en[k] || k; }

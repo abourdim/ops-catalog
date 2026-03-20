@@ -46,10 +46,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme', export: 'Export', filterAll: 'All',
     settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Metadata Detective?', faq_a1: 'A photo forensics simulator that extracts hidden EXIF metadata from images.',
-    faq_q2: 'Is this real EXIF data?', faq_a2: 'No, simulated data for educational purposes. No real photos are processed.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings and pick your language. Arabic enables RTL automatically.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Select a sample photo from the buttons.', howto_2: 'Click Extract Metadata to reveal EXIF data.',
     howto_3: 'View GPS coordinates on the map canvas.', howto_4: 'Run Forensic Analysis for deeper insights.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes.',
@@ -73,8 +69,7 @@ const LANG = {
     forensicText: 'Forensics uses EXIF to verify authenticity, track origins, and detect tampering.',
     extracting: 'Extracting EXIF metadata...', extracted: 'EXIF data extracted!',
     analyzing: 'Running forensic analysis...', analyzed: 'Forensic analysis complete!',
-    noPhoto: 'Select a photo first', tamperDetected: 'Tampering detected!', noTamper: 'No tampering detected.',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    noPhoto: 'Select a photo first', tamperDetected: 'Tampering detected!', noTamper: 'No tampering detected.',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Web Phishing Trainer and Web Password Cracker! Each teaches something different. 🚀'},
   fr: {
     title: 'Detective Metadata', subtitle: '🔎 Extraire les donnees cachees des photos',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -84,10 +79,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Theme', export: 'Exporter', filterAll: 'Tout',
     settings: '⚙️ Parametres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Detective Metadata ?', faq_a1: 'Un simulateur de forensique photo qui extrait les metadonnees EXIF cachees.',
-    faq_q2: 'Ce sont de vraies donnees EXIF ?', faq_a2: 'Non, donnees simulees a des fins educatives.',
-    faq_q3: 'Comment changer la langue ?', faq_a3: 'Ouvrez Parametres et choisissez votre langue.',
-    faq_q4: 'Mes donnees sont privees ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Selectionnez un echantillon photo.', howto_2: 'Cliquez Extraire pour reveler les donnees EXIF.',
     howto_3: 'Visualisez les coordonnees GPS sur la carte.', howto_4: 'Lancez l\'analyse forensique.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes integres.',
@@ -111,8 +102,7 @@ const LANG = {
     forensicText: 'La forensique utilise les EXIF pour verifier l\'authenticite et detecter les modifications.',
     extracting: 'Extraction des metadonnees EXIF...', extracted: 'Donnees EXIF extraites !',
     analyzing: 'Analyse forensique en cours...', analyzed: 'Analyse forensique terminee !',
-    noPhoto: 'Selectionnez une photo', tamperDetected: 'Falsification detectee !', noTamper: 'Aucune falsification detectee.',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    noPhoto: 'Selectionnez une photo', tamperDetected: 'Falsification detectee !', noTamper: 'Aucune falsification detectee.',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Phishing Trainer and Web Password Cracker ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'محقق البيانات الوصفية', subtitle: '🔎 استخراج البيانات المخفية من الصور',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -122,10 +112,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', export: 'تصدير', filterAll: 'الكل',
     settings: '⚙️ الاعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو محقق البيانات الوصفية؟', faq_a1: 'محاكي تحليل جنائي للصور يستخرج بيانات EXIF المخفية.',
-    faq_q2: 'هل هذه بيانات EXIF حقيقية؟', faq_a2: 'لا، بيانات محاكاة لاغراض تعليمية.',
-    faq_q3: 'كيف اغير اللغة؟', faq_a3: 'افتح الاعدادات واختر لغتك. العربية تفعل الاتجاه من اليمين لليسار.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليا في متصفحك.',
     howto_1: 'اختر صورة من الازرار.', howto_2: 'انقر استخراج للكشف عن بيانات EXIF.',
     howto_3: 'شاهد احداثيات GPS على الخريطة.', howto_4: 'شغل التحليل الجنائي.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
@@ -149,8 +135,7 @@ const LANG = {
     forensicText: 'التحليل الجنائي يستخدم EXIF للتحقق من الاصالة وكشف التلاعب.',
     extracting: 'جاري استخراج بيانات EXIF...', extracted: 'تم استخراج بيانات EXIF!',
     analyzing: 'جاري التحليل الجنائي...', analyzed: 'اكتمل التحليل الجنائي!',
-    noPhoto: 'اختر صورة اولا', tamperDetected: 'تم اكتشاف تلاعب!', noTamper: 'لم يتم اكتشاف تلاعب.',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    noPhoto: 'اختر صورة اولا', tamperDetected: 'تم اكتشاف تلاعب!', noTamper: 'لم يتم اكتشاف تلاعب.',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Web Phishing Trainer and Web Password Cracker! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

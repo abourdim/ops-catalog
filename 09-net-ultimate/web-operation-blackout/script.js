@@ -71,10 +71,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language', helpSettings: '❓ Help', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Operation Blackout?', faq_a1: 'A network outage simulator. Practice incident response and service restoration.',
-    faq_q2: 'Are these real outages?', faq_a2: 'No. All scenarios are simulated locally for educational purposes.',
-    faq_q3: 'What is MTTR?', faq_a3: 'Mean Time To Recovery. The average time it takes to restore a failed service.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
     howto_1: 'Click Trigger Outage to simulate a failure.',
     howto_2: 'Click on failed services to restore them.',
     howto_3: 'Use Response Actions for different recovery strategies.',
@@ -96,8 +92,7 @@ const LANG = {
     randomScenario: 'Random Scenario', timelineTitle: 'Outage Timeline',
     uptime: 'Uptime', mttr: 'MTTR', incidents: 'Incidents', severity: 'Severity',
     incidentLog: 'Incident Log', responseActions: 'Response Actions',
-    infraTitle: 'Infrastructure Topology', infraHint: 'Click a node to view details',
-  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+    infraTitle: 'Infrastructure Topology', infraHint: 'Click a node to view details',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Web Hackathon Arena and Web Cyber Academy! Each teaches something different. 🚀'},
   fr: {
     title: 'Operation Blackout', subtitle: '⚡ Detecter · 🔧 Repondre · 🔄 Restaurer les services',
     disconnected: 'Hors ligne', connected: 'En ligne',
@@ -107,10 +102,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Theme',
     settings: '⚙️ Parametres', language: 'Langue', helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi ?', faq_a1: 'Simulateur de pannes reseau pour pratiquer la reponse aux incidents.',
-    faq_q2: 'Ce sont de vraies pannes ?', faq_a2: 'Non. Tout est simule localement.',
-    faq_q3: 'Qu\'est-ce que le MTTR ?', faq_a3: 'Temps Moyen de Retablissement.',
-    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout est local.',
     howto_1: 'Cliquez Declencher Panne pour simuler.',
     howto_2: 'Cliquez sur les services en panne.',
     howto_3: 'Utilisez les Actions de Reponse.',
@@ -132,8 +123,7 @@ const LANG = {
     randomScenario: 'Scenario Aleatoire', timelineTitle: 'Chronologie des Pannes',
     uptime: 'Disponibilite', mttr: 'MTTR', incidents: 'Incidents', severity: 'Severite',
     incidentLog: 'Journal d\'Incidents', responseActions: 'Actions de Reponse',
-    infraTitle: 'Topologie d\'Infrastructure', infraHint: 'Cliquez sur un noeud',
-  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+    infraTitle: 'Topologie d\'Infrastructure', infraHint: 'Cliquez sur un noeud',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Hackathon Arena and Web Cyber Academy ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'عملية الانقطاع', subtitle: '⚡ اكتشاف · 🔧 استجابة · 🔄 استعادة الخدمات',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -143,10 +133,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الاعدادات', language: 'اللغة', helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي عملية الانقطاع؟', faq_a1: 'محاكي انقطاع شبكة لممارسة الاستجابة للحوادث.',
-    faq_q2: 'هل هذه انقطاعات حقيقية؟', faq_a2: 'لا. كل السيناريوهات محاكاة محلية.',
-    faq_q3: 'ما هو MTTR؟', faq_a3: 'متوسط وقت الاستعادة.',
-    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
     howto_1: 'اضغط تفعيل الانقطاع لمحاكاة عطل.',
     howto_2: 'اضغط على الخدمات المعطلة لاستعادتها.',
     howto_3: 'استخدم اجراءات الاستجابة.',
@@ -168,8 +154,7 @@ const LANG = {
     randomScenario: 'سيناريو عشوائي', timelineTitle: 'الخط الزمني للانقطاع',
     uptime: 'وقت التشغيل', mttr: 'متوسط الاستعادة', incidents: 'الحوادث', severity: 'الخطورة',
     incidentLog: 'سجل الحوادث', responseActions: 'اجراءات الاستجابة',
-    infraTitle: 'طوبولوجيا البنية التحتية', infraHint: 'اضغط على عقدة للتفاصيل',
-  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
+    infraTitle: 'طوبولوجيا البنية التحتية', infraHint: 'اضغط على عقدة للتفاصيل',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Web Hackathon Arena and Web Cyber Academy! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

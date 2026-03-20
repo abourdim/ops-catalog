@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is signal interception?', faq_a1: 'Signal interception is the capture and analysis of radio transmissions across frequency bands for intelligence gathering.',
-    faq_q2: 'What frequency bands can I scan?', faq_a2: 'VHF (30-300 MHz), UHF (300-3000 MHz), and SHF (3-30 GHz) bands with AM, FM, SSB, and digital modulation.',
-    faq_q3: 'How does the waterfall display work?', faq_a3: 'The waterfall shows signal intensity over time and frequency. Bright colors indicate strong signals.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere. This is a simulation only.',
     howto_1: 'Select frequency band and modulation type.',
     howto_2: 'Click Start Scan to begin intercepting signals.',
     howto_3: 'Watch the waterfall display and spectrum analyzer.',
@@ -103,8 +99,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates field agent gear! 🔬 You get to experiment with covert tech in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real covert tech so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real tactical communication! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Pi Agent Communicator and Pi Lockpick Trainer! Each teaches something different. 🚀'},
   fr: {
     title: 'pi-signal-intercept', subtitle: '📡 interception de signal — capturer les transmissions',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -115,10 +110,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que l\'interception de signal ?', faq_a1: 'L\'interception est la capture et l\'analyse des transmissions radio pour le renseignement.',
-    faq_q2: 'Quelles bandes de fréquences ?', faq_a2: 'VHF (30-300 MHz), UHF (300-3000 MHz) et SHF (3-30 GHz) avec AM, FM, SSB et numérique.',
-    faq_q3: 'Comment fonctionne l\'affichage cascade ?', faq_a3: 'La cascade montre l\'intensité du signal dans le temps et la fréquence.',
-    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement. C\'est une simulation.',
     howto_1: 'Sélectionne la bande de fréquence et le type de modulation.',
     howto_2: 'Clique sur Démarrer le scan pour intercepter les signaux.',
     howto_3: 'Observe l\'affichage cascade et l\'analyseur de spectre.',
@@ -146,8 +137,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule field agent gear ! 🔬 Tu peux expérimenter avec covert tech en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais covert tech.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai tactical communication ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Pi Agent Communicator and Pi Lockpick Trainer ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'pi-signal-intercept', subtitle: '📡 اعتراض الإشارات — التقاط البث',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -158,10 +148,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو اعتراض الإشارات؟', faq_a1: 'اعتراض الإشارات هو التقاط وتحليل البث اللاسلكي عبر نطاقات الترددات.',
-    faq_q2: 'ما نطاقات التردد المتاحة؟', faq_a2: 'VHF و UHF و SHF مع تعديل AM و FM و SSB والرقمي.',
-    faq_q3: 'كيف يعمل عرض الشلال؟', faq_a3: 'يُظهر الشلال شدة الإشارة عبر الزمن والتردد.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'اختر نطاق التردد ونوع التعديل.',
     howto_2: 'انقر بدء المسح لبدء اعتراض الإشارات.',
     howto_3: 'راقب عرض الشلال ومحلل الطيف.',
@@ -189,8 +175,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي field agent gear! 🔬 يمكنك التجربة مع covert tech في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج covert tech حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا tactical communication حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Pi Agent Communicator and Pi Lockpick Trainer! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -71,10 +71,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is RF Cloak?', faq_a1: 'A simulator for making devices invisible to RF detection through signal masking.',
-    faq_q2: 'How does frequency hopping work?', faq_a2: 'The signal rapidly changes frequency according to a pseudo-random pattern.',
-    faq_q3: 'What is spread spectrum?', faq_a3: 'Spreading the signal across a wide bandwidth so it looks like noise.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally.',
     howto_1: 'Select a cloaking mode.', howto_2: 'Click Activate Cloak.',
     howto_3: 'Adjust the hop rate with the slider.', howto_4: 'Watch the visibility meter drop.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes.',
@@ -95,8 +91,7 @@ const LANG = {
     visibility: 'Visibility', cloakStats: 'Cloak Stats', hopPattern: 'Hop Pattern',
     visible: 'VISIBLE', hidden: 'HIDDEN', partial: 'PARTIAL',
     cloakHint: 'Activate the cloak to see masking in action.',
-    cloakOn: 'Cloak activated', cloakOff: 'Cloak deactivated',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    cloakOn: 'Cloak activated', cloakOff: 'Cloak deactivated',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Signal Forge and Hrf Tracker Hunter! Each teaches something different. 🚀'},
   fr: {
     title: 'Camouflage RF', subtitle: 'Camouflage RF — Masquage de Signal',
     disconnected: 'Exposé', connected: 'Camouflé',
@@ -106,10 +101,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le Camouflage RF?', faq_a1: 'Un simulateur de masquage RF.',
-    faq_q2: 'Comment fonctionne le saut?', faq_a2: 'Le signal change rapidement de fréquence.',
-    faq_q3: 'Spectre étalé?', faq_a3: 'Étaler le signal pour qu\'il ressemble à du bruit.',
-    faq_q4: 'Données privées?', faq_a4: 'Oui.',
     howto_1: 'Choisissez un mode.', howto_2: 'Cliquez Activer.',
     howto_3: 'Ajustez la vitesse de saut.', howto_4: 'Observez la visibilité baisser.',
     wiki_themes_title: '🎨 Thèmes', wiki_themes: '8 thèmes.', wiki_i18n_title: '🌐 Langues', wiki_i18n: 'Trilingue.',
@@ -127,8 +118,7 @@ const LANG = {
     activateCloak: 'Activer', deactivateCloak: 'Désactiver', hopRate: 'Vitesse:',
     visibility: 'Visibilité', cloakStats: 'Stats', hopPattern: 'Motif de Saut',
     visible: 'VISIBLE', hidden: 'CACHÉ', partial: 'PARTIEL',
-    cloakHint: 'Activez le camouflage pour voir le masquage.', cloakOn: 'Camouflage activé', cloakOff: 'Camouflage désactivé',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    cloakHint: 'Activez le camouflage pour voir le masquage.', cloakOn: 'Camouflage activé', cloakOff: 'Camouflage désactivé',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Signal Forge and Hrf Tracker Hunter ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'عباءة RF', subtitle: 'عباءة RF — إخفاء الإشارات',
     disconnected: 'مكشوف', connected: 'مخفي',
@@ -138,10 +128,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هي عباءة RF؟', faq_a1: 'محاكي لإخفاء الأجهزة من الكشف اللاسلكي.',
-    faq_q2: 'كيف يعمل قفز الترددات؟', faq_a2: 'تتغير الإشارة بسرعة وفق نمط عشوائي.',
-    faq_q3: 'ما هو الطيف المنتشر؟', faq_a3: 'نشر الإشارة لتبدو كضوضاء.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم.',
     howto_1: 'اختر وضع الإخفاء.', howto_2: 'انقر تفعيل.',
     howto_3: 'اضبط سرعة القفز.', howto_4: 'راقب مقياس الرؤية.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر.', wiki_i18n_title: '🌐 اللغات', wiki_i18n: 'ثلاثي اللغات.',
@@ -159,8 +145,7 @@ const LANG = {
     activateCloak: 'تفعيل الإخفاء', deactivateCloak: 'إلغاء', hopRate: 'سرعة القفز:',
     visibility: 'الرؤية', cloakStats: 'إحصائيات', hopPattern: 'نمط القفز',
     visible: 'مرئي', hidden: 'مخفي', partial: 'جزئي',
-    cloakHint: 'فعّل الإخفاء لرؤية المحاكاة.', cloakOn: 'تم تفعيل الإخفاء', cloakOff: 'تم إلغاء الإخفاء',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    cloakHint: 'فعّل الإخفاء لرؤية المحاكاة.', cloakOn: 'تم تفعيل الإخفاء', cloakOff: 'تم إلغاء الإخفاء',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Signal Forge and Hrf Tracker Hunter! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

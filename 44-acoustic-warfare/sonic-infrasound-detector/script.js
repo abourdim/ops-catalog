@@ -26,10 +26,6 @@ const LANG = {
     splashHint:'tap to skip', langChanged:'Language > English', themeChanged:'Theme >',
     started:'Monitoring started — listening for infrasound', stopped:'Monitoring stopped',
     quiet:'QUIET', seismic:'SEISMIC', volcanic:'VOLCANIC', nuclear:'NUCLEAR SIGNATURE',
-    faq_q1:'What is infrasound?', faq_a1:'Sound below 20Hz, inaudible to humans but produced by earthquakes, volcanoes, nuclear tests, severe weather, and ocean waves.',
-    faq_q2:'Can my phone mic detect infrasound?', faq_a2:'Most MEMS microphones have limited low-frequency response. This app amplifies and visualizes what your hardware can capture, with simulated classification.',
-    faq_q3:'What is the CTBTO?', faq_a3:'The Comprehensive Nuclear-Test-Ban Treaty Organization operates 60+ infrasound stations worldwide to monitor for clandestine nuclear tests.',
-    faq_q4:'Is my data private?', faq_a4:'100% local processing. Audio never leaves your device.',
     howto_1:'Click Start Monitor to begin capturing audio.', howto_2:'Select a frequency filter to focus on specific event types.',
     howto_3:'Watch the seismograph trace for anomalous low-frequency signals.', howto_4:'Check the detection log for classified events.',
     wiki_infra_title:'Infrasound Sources', wiki_infra:'Earthquakes (0.01-1 Hz), volcanoes (0.5-5 Hz), nuclear tests (0.1-10 Hz), severe weather (1-10 Hz), ocean microbaroms (0.05-0.5 Hz).',
@@ -43,7 +39,7 @@ const LANG = {
     challengeReveal3:'Large volcanic eruptions like Krakatoa (1883) and Hunga Tonga (2022) generated infrasound that circled the globe multiple times, detectable by barometers worldwide.',
     revealBtn:'Reveal Answer',
     t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code'},
+  ,step1Title:'Generate Sound',step1Desc:'Create a specific acoustic signal with precise frequency and amplitude.',step2Title:'Propagate',step2Desc:'The sound wave travels through air, walls, or other media to the target.',step3Title:'Detect & Capture',step3Desc:'Microphones or sensors capture the acoustic energy and convert it to data.',step4Title:'Analyze & Decode',step4Desc:'Signal processing extracts hidden information or maps the acoustic environment.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates acoustic warfare! 🔬 You get to experiment with sound waves in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real sound waves so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real acoustic science and attacks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Sonic Seismic Footprint and Sonic Parametric Speaker! Each teaches something different. 🚀'},
   fr: {
     title:'Detecteur Infrason', subtitle:'Detecter Seismes / Nucleaire / Volcans',
     disconnected:'Inactif', connected:'Surveillance',
@@ -59,10 +55,6 @@ const LANG = {
     splashHint:'appuyer pour passer', langChanged:'Langue > Francais', themeChanged:'Theme >',
     started:'Surveillance demarree — ecoute des infrasound', stopped:'Surveillance arretee',
     quiet:'CALME', seismic:'SISMIQUE', volcanic:'VOLCANIQUE', nuclear:'SIGNATURE NUCLEAIRE',
-    faq_q1:'Qu\'est-ce que l\'infrason?', faq_a1:'Son en dessous de 20Hz, inaudible mais produit par seismes, volcans, tests nucleaires, meteo severe et vagues oceaniques.',
-    faq_q2:'Mon micro peut-il detecter les infrasound?', faq_a2:'La plupart des micros MEMS ont une reponse basse frequence limitee. Cette appli amplifie et visualise ce que votre materiel capture.',
-    faq_q3:'Qu\'est-ce que l\'OTICE?', faq_a3:'L\'Organisation du Traite d\'Interdiction Complete des Essais Nucleaires opere 60+ stations infrasoniques mondiales.',
-    faq_q4:'Mes donnees sont-elles privees?', faq_a4:'Traitement 100% local. L\'audio ne quitte jamais votre appareil.',
     howto_1:'Cliquez Demarrer pour commencer la capture audio.', howto_2:'Selectionnez un filtre frequentiel pour cibler des types d\'evenements.',
     howto_3:'Observez la trace sismographique pour des signaux anormaux.', howto_4:'Consultez le journal de detection pour les evenements classifies.',
     wiki_infra_title:'Sources d\'Infrason', wiki_infra:'Seismes (0.01-1 Hz), volcans (0.5-5 Hz), tests nucleaires (0.1-10 Hz), meteo severe (1-10 Hz).',
@@ -76,7 +68,7 @@ const LANG = {
     challengeReveal3:'Les grandes eruptions volcaniques comme Krakatoa (1883) et Hunga Tonga (2022) ont genere des infrason detectables dans le monde entier.',
     revealBtn:'Reveler la reponse',
     t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot'
-  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil'},
+  ,step1Title:'Générer le son',step1Desc:'Crée un signal acoustique avec une fréquence et amplitude précises.',step2Title:'Propager',step2Desc:'L\'onde sonore se déplace dans l\'air, les murs ou d\'autres milieux.',step3Title:'Détecter et capturer',step3Desc:'Les microphones capturent l\'énergie acoustique et la convertissent.',step4Title:'Analyser et décoder',step4Desc:'Le traitement extrait les informations cachées ou cartographie l\'environnement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule acoustic warfare ! 🔬 Tu peux expérimenter avec sound waves en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais sound waves.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai acoustic science and attacks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Sonic Seismic Footprint and Sonic Parametric Speaker ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'كاشف الموجات دون الصوتية', subtitle:'كشف الزلازل / النووي / البراكين',
     disconnected:'خامل', connected:'مراقبة',
@@ -92,10 +84,6 @@ const LANG = {
     splashHint:'انقر للتخطي', langChanged:'اللغة > العربية', themeChanged:'المظهر >',
     started:'بدأت المراقبة — الاستماع للموجات دون الصوتية', stopped:'توقفت المراقبة',
     quiet:'هادئ', seismic:'زلزالي', volcanic:'بركاني', nuclear:'توقيع نووي',
-    faq_q1:'ما هي الموجات دون الصوتية؟', faq_a1:'صوت تحت 20 هرتز، غير مسموع للبشر لكن تنتجه الزلازل والبراكين والتفجيرات النووية والطقس القاسي.',
-    faq_q2:'هل يمكن لميكروفون هاتفي اكتشافها؟', faq_a2:'معظم ميكروفونات MEMS لها استجابة محدودة للترددات المنخفضة. هذا التطبيق يضخم ويعرض ما يلتقطه جهازك.',
-    faq_q3:'ما هي CTBTO؟', faq_a3:'منظمة معاهدة الحظر الشامل للتجارب النووية تشغل أكثر من 60 محطة رصد دون صوتي حول العالم.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'معالجة محلية 100%. الصوت لا يغادر جهازك أبدًا.',
     howto_1:'انقر بدء المراقبة لالتقاط الصوت.', howto_2:'اختر فلتر التردد للتركيز على أنواع محددة.',
     howto_3:'راقب أثر السيسموغراف لإشارات منخفضة التردد غير عادية.', howto_4:'تحقق من سجل الكشف للأحداث المصنفة.',
     wiki_infra_title:'مصادر الموجات دون الصوتية', wiki_infra:'زلازل (0.01-1 هرتز)، براكين (0.5-5 هرتز)، تفجيرات نووية (0.1-10 هرتز)، طقس قاسٍ (1-10 هرتز).',
@@ -109,7 +97,7 @@ const LANG = {
     challengeReveal3:'الانفجارات البركانية الكبيرة مثل كراكاتوا (1883) وهونغا تونغا (2022) أنتجت موجات دون صوتية طافت الكرة الأرضية عدة مرات.',
     revealBtn:'اكشف الإجابة',
     t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت'
-  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز'}
+  ,step1Title:'توليد الصوت',step1Desc:'أنشئ إشارة صوتية بتردد وسعة محددين.',step2Title:'انتشار',step2Desc:'تنتقل الموجة الصوتية عبر الهواء أو الجدران أو الوسائط الأخرى.',step3Title:'كشف والتقاط',step3Desc:'تلتقط الميكروفونات الطاقة الصوتية وتحولها إلى بيانات.',step4Title:'تحليل وفك تشفير',step4Desc:'تستخرج المعالجة المعلومات المخفية أو ترسم خريطة البيئة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي acoustic warfare! 🔬 يمكنك التجربة مع sound waves في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج sound waves حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا acoustic science and attacks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Sonic Seismic Footprint and Sonic Parametric Speaker! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 function T(k) { return (LANG[currentLang] || LANG.en)[k] || LANG.en[k] || k; }

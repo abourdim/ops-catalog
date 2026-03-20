@@ -38,10 +38,6 @@ const LANG = {
     ch1Title: 'Stress Key', ch1Desc: 'Generate a key while stressed vs calm. Are both equally random?',
     ch2Title: 'Twin Test', ch2Desc: 'Two people generate keys. Even twins produce different GSR patterns.',
     ch3Title: 'Entropy Analysis', ch3Desc: 'Generate 100 keys and check distribution. Is it uniform?',
-    faq_q1: 'What is GSR?', faq_a1: 'Galvanic Skin Response measures electrical conductance of skin, changing with sweat gland activity.',
-    faq_q2: 'Why is GSR good for keys?', faq_a2: 'LSBs of GSR readings contain high-entropy noise from biological processes.',
-    faq_q3: 'Is this truly random?', faq_a3: 'GSR provides biological randomness that can seed cryptographic generators.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click Start GSR to begin measurement.', howto_2: 'Collect at least 50 samples.', howto_3: 'Click Generate Key for a 256-bit key.',
     wiki_gsr_title: '\ud83d\udca7 Galvanic Skin Response', wiki_gsr: 'Skin conductance: 1-20 microsiemens. Stress increases sweat and conductance.',
     wiki_entropy_title: '\ud83d\udd22 Entropy Harvesting', wiki_entropy: 'LSBs of analog readings are dominated by thermal noise, providing quality entropy.',
@@ -54,8 +50,7 @@ const LANG = {
     ready: '\ud83d\udca7 Galvanic Key ready \u2014 touch to generate!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
-    gsrStarted: 'GSR measurement started', gsrStopped: 'GSR stopped', needData: 'Collect more GSR data (need 50+ samples)', keyGenerated: 'Key generated',
-  ,sectionCode:'Device Code'},
+    gsrStarted: 'GSR measurement started', gsrStopped: 'GSR stopped', needData: 'Collect more GSR data (need 50+ samples)', keyGenerated: 'Key generated',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates bio-signals! 🔬 You get to experiment with body signals into radio in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real body signals into radio so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real biometric radio technology! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bio Brainwave Radio and Bio Nerve Impulse Detector! Each teaches something different. 🚀'},
   fr: {
     title: 'Bio Cl\u00e9 Galvanique', subtitle: 'Conductance cutan\u00e9e comme cl\u00e9 crypto',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -70,10 +65,6 @@ const LANG = {
     ch1Title: 'Cl\u00e9 Stress', ch1Desc: 'G\u00e9n\u00e9rez stress\u00e9 vs calme. Les deux al\u00e9atoires?',
     ch2Title: 'Test Jumeaux', ch2Desc: 'M\u00eame jumeaux, diff\u00e9rents motifs GSR.',
     ch3Title: 'Analyse Entropie', ch3Desc: 'G\u00e9n\u00e9rez 100 cl\u00e9s. Distribution uniforme?',
-    faq_q1: 'Qu\'est-ce que le GSR?', faq_a1: 'Mesure de la conductance cutan\u00e9e li\u00e9e aux glandes sudoripares.',
-    faq_q2: 'Pourquoi le GSR pour les cl\u00e9s?', faq_a2: 'Les LSB contiennent du bruit biologique impr\u00e9visible.',
-    faq_q3: 'Vraiment al\u00e9atoire?', faq_a3: 'Le GSR fournit du hasard biologique exploitable.',
-    faq_q4: 'Mes données sont-elles privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Cliquez D\u00e9marrer GSR.', howto_2: 'Collectez 50+ \u00e9chantillons.', howto_3: 'Cliquez G\u00e9n\u00e9rer Cl\u00e9.',
     wiki_gsr_title: '\ud83d\udca7 R\u00e9ponse Galvanique', wiki_gsr: 'Conductance: 1-20 \u00b5S. Le stress augmente la sueur.',
     wiki_entropy_title: '\ud83d\udd22 R\u00e9colte d\'Entropie', wiki_entropy: 'Les LSB analogiques contiennent du bruit thermique.',
@@ -86,8 +77,7 @@ const LANG = {
     ready: '\ud83d\udca7 Cl\u00e9 galvanique pr\u00eate!',
     logCleared: 'Effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec',
     langChanged: '\ud83c\udf10 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
-    gsrStarted: 'Mesure GSR d\u00e9marr\u00e9e', gsrStopped: 'GSR arr\u00eat\u00e9', needData: 'Collectez plus (50+ \u00e9chantillons)', keyGenerated: 'Cl\u00e9 g\u00e9n\u00e9r\u00e9e',
-  ,sectionCode:'Code Appareil'},
+    gsrStarted: 'Mesure GSR d\u00e9marr\u00e9e', gsrStopped: 'GSR arr\u00eat\u00e9', needData: 'Collectez plus (50+ \u00e9chantillons)', keyGenerated: 'Cl\u00e9 g\u00e9n\u00e9r\u00e9e',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule bio-signals ! 🔬 Tu peux expérimenter avec body signals into radio en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais body signals into radio.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai biometric radio technology ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bio Brainwave Radio and Bio Nerve Impulse Detector ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: '\u0645\u0641\u062a\u0627\u062d \u0627\u0644\u062c\u0644\u062f \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a', subtitle: '\u0645\u0648\u0635\u0644\u064a\u0629 \u0627\u0644\u062c\u0644\u062f \u0643\u0645\u0641\u062a\u0627\u062d \u062a\u0634\u0641\u064a\u0631',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -102,10 +92,6 @@ const LANG = {
     ch1Title: '\u0645\u0641\u062a\u0627\u062d \u0627\u0644\u0625\u062c\u0647\u0627\u062f', ch1Desc: '\u0648\u0644\u0651\u062f \u0645\u0641\u062a\u0627\u062d \u0645\u062c\u0647\u062f\u064b\u0627 \u0648\u0647\u0627\u062f\u0626\u064b\u0627.',
     ch2Title: '\u0627\u062e\u062a\u0628\u0627\u0631 \u0627\u0644\u062a\u0648\u0623\u0645', ch2Desc: '\u062d\u062a\u0649 \u0627\u0644\u062a\u0648\u0627\u0626\u0645 \u064a\u0646\u062a\u062c\u0648\u0646 \u0623\u0646\u0645\u0627\u0637 \u0645\u062e\u062a\u0644\u0641\u0629.',
     ch3Title: '\u062a\u062d\u0644\u064a\u0644 \u0627\u0644\u0625\u0646\u062a\u0631\u0648\u0628\u064a', ch3Desc: '\u0648\u0644\u0651\u062f 100 \u0645\u0641\u062a\u0627\u062d. \u0647\u0644 \u0627\u0644\u062a\u0648\u0632\u064a\u0639 \u0645\u0646\u062a\u0638\u0645\u061f',
-    faq_q1: '\u0645\u0627 \u0647\u0648 GSR\u061f', faq_a1: '\u0642\u064a\u0627\u0633 \u0645\u0648\u0635\u0644\u064a\u0629 \u0627\u0644\u062c\u0644\u062f \u0627\u0644\u0645\u0631\u062a\u0628\u0637\u0629 \u0628\u0627\u0644\u063a\u062f\u062f \u0627\u0644\u0639\u0631\u0642\u064a\u0629.',
-    faq_q2: '\u0644\u0645\u0627\u0630\u0627 GSR \u0644\u0644\u0645\u0641\u0627\u062a\u064a\u062d\u061f', faq_a2: 'LSB \u062a\u062d\u062a\u0648\u064a \u0639\u0644\u0649 \u0636\u0648\u0636\u0627\u0621 \u0628\u064a\u0648\u0644\u0648\u062c\u064a.',
-    faq_q3: '\u0639\u0634\u0648\u0627\u0626\u064a \u062d\u0642\u064b\u0627\u061f', faq_a3: 'GSR \u064a\u0648\u0641\u0631 \u0639\u0634\u0648\u0627\u0626\u064a\u0629 \u0628\u064a\u0648\u0644\u0648\u062c\u064a\u0629.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: '\u0627\u0646\u0642\u0631 \u0628\u062f\u0621 GSR.', howto_2: '\u0627\u062c\u0645\u0639 50+ \u0639\u064a\u0646\u0629.', howto_3: '\u0627\u0646\u0642\u0631 \u062a\u0648\u0644\u064a\u062f \u0645\u0641\u062a\u0627\u062d.',
     wiki_gsr_title: '\ud83d\udca7 \u0627\u0633\u062a\u062c\u0627\u0628\u0629 \u0627\u0644\u062c\u0644\u062f', wiki_gsr: '\u0627\u0644\u0645\u0648\u0635\u0644\u064a\u0629: 1-20 \u00b5S. \u0627\u0644\u0625\u062c\u0647\u0627\u062f \u064a\u0632\u064a\u062f \u0627\u0644\u0639\u0631\u0642.',
     wiki_entropy_title: '\ud83d\udd22 \u062d\u0635\u0627\u062f \u0627\u0644\u0625\u0646\u062a\u0631\u0648\u0628\u064a', wiki_entropy: 'LSB \u0627\u0644\u062a\u0646\u0627\u0638\u0631\u064a\u0629 \u062a\u062d\u062a\u0648\u064a \u0639\u0644\u0649 \u0636\u0648\u0636\u0627\u0621 \u062d\u0631\u0627\u0631\u064a.',
@@ -118,8 +104,7 @@ const LANG = {
     ready: '\ud83d\udca7 \u0645\u0641\u062a\u0627\u062d \u0627\u0644\u062c\u0644\u062f \u062c\u0627\u0647\u0632!',
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
     langChanged: '\ud83c\udf10 \u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
-    gsrStarted: '\u0628\u062f\u0623 \u0642\u064a\u0627\u0633 GSR', gsrStopped: '\u062a\u0648\u0642\u0641 GSR', needData: '\u0627\u062c\u0645\u0639 \u0628\u064a\u0627\u0646\u0627\u062a \u0623\u0643\u062b\u0631 (50+)', keyGenerated: '\u062a\u0645 \u062a\u0648\u0644\u064a\u062f \u0627\u0644\u0645\u0641\u062a\u0627\u062d',
-  ,sectionCode:'كود الجهاز'}
+    gsrStarted: '\u0628\u062f\u0623 \u0642\u064a\u0627\u0633 GSR', gsrStopped: '\u062a\u0648\u0642\u0641 GSR', needData: '\u0627\u062c\u0645\u0639 \u0628\u064a\u0627\u0646\u0627\u062a \u0623\u0643\u062b\u0631 (50+)', keyGenerated: '\u062a\u0645 \u062a\u0648\u0644\u064a\u062f \u0627\u0644\u0645\u0641\u062a\u0627\u062d',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي bio-signals! 🔬 يمكنك التجربة مع body signals into radio في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج body signals into radio حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا biometric radio technology حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bio Brainwave Radio and Bio Nerve Impulse Detector! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */

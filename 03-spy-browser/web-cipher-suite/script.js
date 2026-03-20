@@ -72,12 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is this app?', faq_a1: 'An all-in-one cryptography learning toolkit. Explore classical and modern ciphers, encrypt/decrypt messages, and learn how crypto works step by step.',
-    faq_q2: 'What is the difference between symmetric and asymmetric?', faq_a2: 'Symmetric ciphers (Caesar, Vigenere, AES, OTP) use the same key. Asymmetric (RSA) uses a public key to encrypt and a private key to decrypt.',
-    faq_q3: 'Is the RSA here real?', faq_a3: 'No. Simplified RSA with small primes for learning. Real RSA uses 2048+ bit keys.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
-    faq_q5: 'What is steganography?', faq_a5: 'Steganography hides secret messages inside ordinary-looking data like images.',
-    faq_q6: 'What is a one-time pad?', faq_a6: 'The only mathematically proven unbreakable cipher. Key must be truly random, same length as message, never reused.',
     howto_1: 'Select a cipher type from the dropdown.',
     howto_2: 'Enter your key (shift number, keyword, or auto-generate for RSA).',
     howto_3: 'Type your plaintext and click Encrypt or Decrypt.',
@@ -125,8 +119,7 @@ const LANG = {
     col_cipher: 'Cipher', col_type: 'Type', col_keylen: 'Key Length', col_security: 'Security', col_era: 'Era',
     c_caesar: 'Caesar Shift', c_vigenere: 'Vigenere', c_rsa: 'RSA (simplified)', c_aes: 'AES (XOR-based)', c_otp: 'One-Time Pad', c_stego: 'Steganography',
     keyHintCaesar: 'Enter a number 1-25 for the shift amount',
-    encrypted: 'Encrypted', decrypted: 'Decrypted',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    encrypted: 'Encrypted', decrypted: 'Decrypted',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Web Dark Profile and Web Metadata Detective! Each teaches something different. 🚀'},
   fr: {
     title: 'Suite Crypto', subtitle: '🔐 Chiffrer · 🔓 Dechiffrer · 🎬 Visualiser',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -137,12 +130,6 @@ const LANG = {
     settings: '⚙️ Parametres', language: 'Langue',
     helpSettings: '❓ Aide & Parametres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'C\'est quoi cette appli ?', faq_a1: 'Un toolkit de cryptographie tout-en-un pour apprendre les chiffrements classiques et modernes.',
-    faq_q2: 'Difference symetrique / asymetrique ?', faq_a2: 'Symetrique: meme cle. Asymetrique (RSA): cle publique pour chiffrer, privee pour dechiffrer.',
-    faq_q3: 'Le RSA est reel ?', faq_a3: 'Non. RSA simplifie avec petits nombres premiers pour l\'apprentissage.',
-    faq_q4: 'Donnees privees ?', faq_a4: 'Oui. Tout fonctionne localement.',
-    faq_q5: 'C\'est quoi la steganographie ?', faq_a5: 'Cacher des messages dans des images.',
-    faq_q6: 'C\'est quoi le masque jetable ?', faq_a6: 'Le seul chiffrement mathematiquement incassable.',
     howto_1: 'Choisissez un type de chiffrement.',
     howto_2: 'Entrez votre cle.',
     howto_3: 'Tapez votre texte et cliquez Chiffrer ou Dechiffrer.',
@@ -184,8 +171,7 @@ const LANG = {
     col_cipher: 'Chiffrement', col_type: 'Type', col_keylen: 'Longueur Cle', col_security: 'Securite', col_era: 'Epoque',
     c_caesar: 'Cesar', c_vigenere: 'Vigenere', c_rsa: 'RSA (simplifie)', c_aes: 'AES (XOR)', c_otp: 'Masque Jetable', c_stego: 'Steganographie',
     keyHintCaesar: 'Entrez un nombre 1-25',
-    encrypted: 'Chiffre', decrypted: 'Dechiffre',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    encrypted: 'Chiffre', decrypted: 'Dechiffre',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Web Dark Profile and Web Metadata Detective ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'جناح التشفير', subtitle: '🔐 تشفير · 🔓 فك التشفير · 🎬 تصور',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -196,12 +182,6 @@ const LANG = {
     settings: '⚙️ الاعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة واعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'اسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هذا التطبيق؟', faq_a1: 'مجموعة ادوات تشفير شاملة للتعلم. استكشف الشيفرات الكلاسيكية والحديثة.',
-    faq_q2: 'ما الفرق بين المتماثل وغير المتماثل؟', faq_a2: 'المتماثل: نفس المفتاح. غير المتماثل (RSA): مفتاح عام للتشفير وخاص لفك التشفير.',
-    faq_q3: 'هل RSA حقيقي؟', faq_a3: 'لا. RSA مبسط بأعداد اولية صغيرة للتعلم.',
-    faq_q4: 'بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي في متصفحك.',
-    faq_q5: 'ما هو اخفاء المعلومات؟', faq_a5: 'اخفاء رسائل سرية داخل صور.',
-    faq_q6: 'ما هو القناع لمرة واحدة؟', faq_a6: 'التشفير الوحيد غير القابل للكسر رياضيا.',
     howto_1: 'اختر نوع الشيفرة.',
     howto_2: 'أدخل مفتاحك.',
     howto_3: 'اكتب نصك واضغط تشفير او فك التشفير.',
@@ -243,8 +223,7 @@ const LANG = {
     col_cipher: 'الشيفرة', col_type: 'النوع', col_keylen: 'طول المفتاح', col_security: 'الأمان', col_era: 'العصر',
     c_caesar: 'شيفرة قيصر', c_vigenere: 'فيجينير', c_rsa: 'RSA (مبسط)', c_aes: 'AES (XOR)', c_otp: 'قناع لمرة واحدة', c_stego: 'اخفاء المعلومات',
     keyHintCaesar: 'أدخل رقم 1-25 لمقدار الازاحة',
-    encrypted: 'تم التشفير', decrypted: 'تم فك التشفير',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    encrypted: 'تم التشفير', decrypted: 'تم فك التشفير',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Web Dark Profile and Web Metadata Detective! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

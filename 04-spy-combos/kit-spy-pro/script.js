@@ -72,10 +72,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', theme: 'Theme',
     settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Spy Kit Pro?', faq_a1: 'A 3-device spy system simulator: wearable (micro:bit), field scanner (ESP32), and browser HQ.',
-    faq_q2: 'Do I need real hardware?', faq_a2: 'No. Everything is simulated. Fake telemetry is generated to demonstrate how the real system would work.',
-    faq_q3: 'What is the encrypted channel?', faq_a3: 'Messages are simulated with AES-256 encryption. You type plaintext, and the system shows encrypted and decoded forms.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click "Connect Devices" to simulate connecting the wearable and field device.',
     howto_2: 'Select a mission from the dropdown and click "Start Mission" to begin.',
     howto_3: 'Watch telemetry update in real-time on the 3-panel dashboard.',
@@ -106,8 +102,7 @@ const LANG = {
     startChallenge: 'Start Challenge',
     devicesConnected: '🔗 All devices connected!', missionStarted: '🎯 Mission started:',
     missionComplete: '🏆 Mission complete!', messageSent: '📤 Message sent (encrypted)',
-    messageReceived: '📥 Incoming encrypted message',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    messageReceived: '📥 Incoming encrypted message',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Kit Capture The Flag and Kit Escape Hq! Each teaches something different. 🚀'},
   fr: {
     title: 'Spy Kit Pro', subtitle: '🎯 portable · 📡 terrain · 🖥️ QG',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -117,10 +112,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', theme: 'Thème',
     settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Spy Kit Pro ?', faq_a1: 'Un simulateur d\'espionnage à 3 appareils : portable (micro:bit), scanner terrain (ESP32) et QG navigateur.',
-    faq_q2: 'Ai-je besoin de matériel réel ?', faq_a2: 'Non. Tout est simulé avec de fausses données de télémétrie.',
-    faq_q3: 'Qu\'est-ce que le canal chiffré ?', faq_a3: 'Les messages sont simulés avec un chiffrement AES-256.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur.',
     howto_1: 'Clique sur "Connecter les appareils" pour simuler la connexion.', howto_2: 'Sélectionne une mission et clique sur "Démarrer la mission".',
     howto_3: 'Observe la télémétrie en temps réel sur le tableau de bord.', howto_4: 'Utilise le canal chiffré pour envoyer et recevoir des messages.',
     wiki_ble_title: '📶 BLE', wiki_ble: 'Bluetooth Low Energy — sans fil courte portée utilisé par le micro:bit.',
@@ -145,8 +136,7 @@ const LANG = {
     startChallenge: 'Commencer le défi',
     devicesConnected: '🔗 Tous les appareils connectés !', missionStarted: '🎯 Mission démarrée :',
     missionComplete: '🏆 Mission terminée !', messageSent: '📤 Message envoyé (chiffré)',
-    messageReceived: '📥 Message chiffré entrant',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    messageReceived: '📥 Message chiffré entrant',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Kit Capture The Flag and Kit Escape Hq ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'طقم التجسس برو', subtitle: '🎯 قابل للارتداء · 📡 ميداني · 🖥️ مقر',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -156,10 +146,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', theme: 'المظهر',
     settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو طقم التجسس برو؟', faq_a1: 'محاكي نظام تجسس بثلاثة أجهزة: قابل للارتداء (micro:bit)، ماسح ميداني (ESP32)، ومقر المتصفح.',
-    faq_q2: 'هل أحتاج أجهزة حقيقية؟', faq_a2: 'لا. كل شيء محاكى ببيانات تلميترية وهمية.',
-    faq_q3: 'ما هي القناة المشفرة؟', faq_a3: 'الرسائل محاكاة بتشفير AES-256.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك.',
     howto_1: 'انقر على "توصيل الأجهزة" لمحاكاة الاتصال.', howto_2: 'اختر مهمة وانقر على "بدء المهمة".',
     howto_3: 'شاهد التلميتري في الوقت الحقيقي على لوحة القيادة.', howto_4: 'استخدم قناة الاتصال المشفرة لإرسال واستقبال الرسائل.',
     wiki_ble_title: '📶 BLE', wiki_ble: 'بلوتوث منخفض الطاقة — لاسلكي قصير المدى يستخدمه micro:bit.',
@@ -184,8 +170,7 @@ const LANG = {
     startChallenge: 'ابدأ التحدي',
     devicesConnected: '🔗 تم توصيل جميع الأجهزة!', missionStarted: '🎯 بدأت المهمة:',
     missionComplete: '🏆 اكتملت المهمة!', messageSent: '📤 تم إرسال الرسالة (مشفرة)',
-    messageReceived: '📥 رسالة مشفرة واردة',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    messageReceived: '📥 رسالة مشفرة واردة',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Kit Capture The Flag and Kit Escape Hq! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

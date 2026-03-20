@@ -24,17 +24,13 @@ const LANG={
     forging:'Forging certificate...',forged:'Certificate forged!',
     verifying:'Verifying chain...',chainValid:'Chain VALID',chainInvalid:'Chain INVALID (forgery detected)',
     resetDone:'All certificates cleared',
-    faq_q1:'What is certificate forgery?',faq_a1:'Creating a fake X.509 certificate that impersonates a legitimate server, bypassing PKI trust chain validation.',
-    faq_q2:'What is a null-byte attack?',faq_a2:'Injecting \\0 in the CN field so validators see a truncated domain. e.g. evil.com\\0.good.com passes as good.com.',
-    faq_q3:'Why MD5 collisions matter?',faq_a3:'MD5 hash collisions allow forging a rogue CA certificate with the same signature as a legitimate one.',
-    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere. Your experiments stay on your device.',
     howto_1:'Enter a root CA name and target domain.',howto_2:'Choose an attack type from the dropdown.',howto_3:'Click Forge Certificate to create the forged chain.',howto_4:'Click Verify Chain to see if the forgery is detected.',
     wiki_self:'Self-signed: Certificate signed by its own key, not a trusted CA. Browsers reject unless manually trusted.',
     wiki_chain:'Chain bypass: Missing intermediate validation. Attacker creates fake intermediate CA.',
     wiki_null:'Null-byte: CN=evil.com\\x00.target.com tricks parsers that stop at \\0.',
     wiki_md5:'MD5 collision: Two different certificates with identical MD5 hash, enabling signature forgery.',
     mathExplain:'X.509 Certificate Chain:\n1. Root CA (self-signed, trusted by OS/browser)\n2. Intermediate CA (signed by Root)\n3. Leaf cert (signed by Intermediate)\n\nValidation: Browser walks chain from leaf to root,\nchecking each signature: verify(parent.pubkey, child.sig)\n\nAttack vectors:\n- Self-signed: skip chain entirely\n- Chain break: forge intermediate with different key\n- Null-byte: CN parsing vulnerability\n- MD5 collision: forge cert with matching hash'
-  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.',sectionCode:'Device Code'},
+  ,step1Title:'Choose Algorithm',step1Desc:'Select the cryptographic algorithm and key parameters to analyze.',step2Title:'Set Up Attack',step2Desc:'Configure the attack parameters: known plaintext, side-channel data, or timing.',step3Title:'Execute Attack',step3Desc:'Run the cryptographic attack and attempt to recover the secret key.',step4Title:'Analyze Results',step4Desc:'Evaluate attack success rate and understand the vulnerability exploited.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates cryptographic attacks! 🔬 You get to experiment with breaking encryption in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real breaking encryption so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real mathematical attacks on ciphers! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Cry Aes Side Channel and Cry Replay Attack Forge! Each teaches something different. 🚀'},
   fr:{
     title:'Labo Falsification de Certificats X.509',subtitle:'Falsifiez des certificats, contournez la validation PKI',
     mainSection:'Forge de Certificat',mainDesc:'Creez un CA racine, intermediaire et certificat feuille, puis tentez la falsification',
@@ -53,17 +49,13 @@ const LANG={
     forging:'Falsification en cours...',forged:'Certificat falsifie!',
     verifying:'Verification de la chaine...',chainValid:'Chaine VALIDE',chainInvalid:'Chaine INVALIDE (falsification detectee)',
     resetDone:'Tous les certificats effaces',
-    faq_q1:'Qu\'est-ce que la falsification de certificat?',faq_a1:'Creer un faux certificat X.509 qui usurpe l\'identite d\'un serveur legitime.',
-    faq_q2:'Qu\'est-ce qu\'une attaque null-byte?',faq_a2:'Injection de \\0 dans le champ CN pour tromper les validateurs.',
-    faq_q3:'Pourquoi les collisions MD5 comptent?',faq_a3:'Les collisions MD5 permettent de falsifier un certificat CA rogue avec la meme signature.',
-    faq_q4:'Mes données sont-elles privées ?', faq_a4:'Oui. Tout fonctionne localement dans ton navigateur. Aucune donnée n\'est envoyée nulle part.',
     howto_1:'Entrez un nom de CA racine et un domaine cible.',howto_2:'Choisissez un type d\'attaque.',howto_3:'Cliquez sur Falsifier le Certificat.',howto_4:'Cliquez sur Verifier la Chaine.',
     wiki_self:'Auto-signe: Certificat signe par sa propre cle, non approuve par un CA.',
     wiki_chain:'Contournement de chaine: Validation intermediaire manquante.',
     wiki_null:'Null-byte: CN=evil.com\\x00.cible.com trompe les parseurs.',
     wiki_md5:'Collision MD5: Deux certificats differents avec le meme hachage MD5.',
     mathExplain:'Chaine de Certificats X.509:\n1. CA Racine (auto-signe, approuve par OS/navigateur)\n2. CA Intermediaire (signe par Racine)\n3. Certificat feuille (signe par Intermediaire)\n\nValidation: Le navigateur parcourt la chaine,\nverifiant chaque signature.'
-  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.',sectionCode:'Code Appareil'},
+  ,step1Title:'Choisir l\'algorithme',step1Desc:'Sélectionne l\'algorithme cryptographique et les paramètres de clé.',step2Title:'Préparer l\'attaque',step2Desc:'Configure les paramètres : texte clair connu, canal latéral ou timing.',step3Title:'Exécuter l\'attaque',step3Desc:'Lance l\'attaque cryptographique et tente de récupérer la clé.',step4Title:'Analyser les résultats',step4Desc:'Évalue le taux de réussite et comprends la vulnérabilité exploitée.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule cryptographic attacks ! 🔬 Tu peux expérimenter avec breaking encryption en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais breaking encryption.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai mathematical attacks on ciphers ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Cry Aes Side Channel and Cry Replay Attack Forge ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'مختبر تزوير شهادات X.509',subtitle:'زور الشهادات واستكشف تجاوز التحقق من سلسلة PKI',
     mainSection:'ورشة تزوير الشهادات',mainDesc:'انشئ سلطة جذرية ووسيطة وشهادة طرفية ثم حاول التزوير',
@@ -82,17 +74,13 @@ const LANG={
     forging:'جاري تزوير الشهادة...',forged:'تم تزوير الشهادة!',
     verifying:'جاري التحقق من السلسلة...',chainValid:'السلسلة صالحة',chainInvalid:'السلسلة غير صالحة (تم كشف التزوير)',
     resetDone:'تم مسح جميع الشهادات',
-    faq_q1:'ما هو تزوير الشهادات؟',faq_a1:'انشاء شهادة X.509 مزيفة تنتحل هوية خادم شرعي لتجاوز سلسلة الثقة.',
-    faq_q2:'ما هو هجوم البايت الفارغ؟',faq_a2:'حقن \\0 في حقل CN لخداع المحققين الذين يتوقفون عند البايت الفارغ.',
-    faq_q3:'لماذا تصادمات MD5 مهمة؟',faq_a3:'تصادمات MD5 تسمح بتزوير شهادة CA مارقة بنفس التوقيع.',
-    faq_q4:'هل بياناتي خاصة؟', faq_a4:'نعم. كل شيء يعمل محلياً في متصفحك. لا يتم إرسال أي بيانات إلى أي مكان.',
     howto_1:'ادخل اسم السلطة الجذرية والنطاق المستهدف.',howto_2:'اختر نوع الهجوم.',howto_3:'انقر تزوير الشهادة.',howto_4:'انقر التحقق من السلسلة.',
     wiki_self:'ذاتي التوقيع: شهادة موقعة بمفتاحها الخاص، غير موثوقة من CA.',
     wiki_chain:'تجاوز السلسلة: عدم التحقق من الشهادة الوسيطة.',
     wiki_null:'بايت فارغ: CN=evil.com\\x00.target.com يخدع المحللين.',
     wiki_md5:'تصادم MD5: شهادتان مختلفتان بنفس هاش MD5.',
     mathExplain:'سلسلة شهادات X.509:\n1. السلطة الجذرية (ذاتية التوقيع، موثوقة من النظام)\n2. السلطة الوسيطة (موقعة من الجذرية)\n3. شهادة طرفية (موقعة من الوسيطة)\n\nالتحقق: المتصفح يتنقل من الشهادة الطرفية الى الجذرية'
-  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.',sectionCode:'كود الجهاز'}
+  ,step1Title:'اختيار الخوارزمية',step1Desc:'اختر الخوارزمية التشفيرية ومعلمات المفتاح للتحليل.',step2Title:'إعداد الهجوم',step2Desc:'اضبط معلمات الهجوم: نص واضح معروف أو قناة جانبية أو توقيت.',step3Title:'تنفيذ الهجوم',step3Desc:'شغّل الهجوم التشفيري وحاول استعادة المفتاح السري.',step4Title:'تحليل النتائج',step4Desc:'قيّم معدل نجاح الهجوم وافهم الثغرة المستغلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي cryptographic attacks! 🔬 يمكنك التجربة مع breaking encryption في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج breaking encryption حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا mathematical attacks on ciphers حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Cry Aes Side Channel and Cry Replay Attack Forge! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 let currentLang='en';
 

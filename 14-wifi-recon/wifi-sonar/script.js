@@ -44,10 +44,6 @@ const LANG = {
     settings: 'Settings', language: 'Language', theme: 'Theme',
     soundEffects: 'Sound effects',
     help: 'Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is WiFi Sonar?', faq_a1: 'A radar-style visualizer for WiFi devices. APs appear fixed, clients orbit around their associated AP.',
-    faq_q2: 'Is this capturing real WiFi?', faq_a2: 'No, this is a simulation. Real WiFi monitoring requires monitor mode hardware and special drivers.',
-    faq_q3: 'What are the frame types?', faq_a3: 'Management (beacons, probes), Control (ACK, RTS/CTS), and Data frames. Each serves a different role in 802.11.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Click Start to begin the sonar simulation.',
     howto_2: 'Watch APs appear as fixed nodes and clients orbit around them.',
     howto_3: 'Open the Device List to see all detected devices.',
@@ -62,8 +58,7 @@ const LANG = {
     simStarted: 'Sonar scanning started', simStopped: 'Sonar scanning stopped',
     newAP: 'New AP detected', newClient: 'New client detected',
     beacon: 'Beacon', probe: 'Probe Req', probeResp: 'Probe Resp', ack: 'ACK', data: 'Data', rts: 'RTS', cts: 'CTS',
-    management: 'Management', control: 'Control', dataType: 'Data',
-  ,step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code'},
+    management: 'Management', control: 'Control', dataType: 'Data',step1Title:'Scan Airwaves',step1Desc:'WiFi adapter scans all channels to discover nearby access points and clients.',step2Title:'Identify Targets',step2Desc:'Detected devices are fingerprinted by MAC, SSID, signal strength, and encryption type.',step3Title:'Analyze Traffic',step3Desc:'Captured frames are decoded to reveal communication patterns and vulnerabilities.',step4Title:'Detect Threats',step4Desc:'Security analysis identifies rogue APs, weak encryption, and suspicious activity.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates WiFi! 🔬 You get to experiment with WiFi signals in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real WiFi signals so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real wireless networks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Wifi Deauth Detector and Wifi Channel Heatmap! Each teaches something different. 🚀'},
   fr: {
     title: 'WiFi Sonar — Carte Vivante', subtitle: 'Chaque trame WiFi sur le radar sonar',
     disconnected: 'Deconnecte', connected: 'Balayage',
@@ -78,10 +73,6 @@ const LANG = {
     settings: 'Parametres', language: 'Langue', theme: 'Theme',
     soundEffects: 'Effets sonores',
     help: 'Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que WiFi Sonar ?', faq_a1: 'Un visualiseur radar pour les appareils WiFi. Les AP sont fixes, les clients orbitent.',
-    faq_q2: 'Capture-t-il du vrai WiFi ?', faq_a2: 'Non, c\'est une simulation. La vraie surveillance WiFi necessite du materiel en mode moniteur.',
-    faq_q3: 'Quels sont les types de trames ?', faq_a3: 'Gestion (balises, sondes), Controle (ACK, RTS/CTS) et Donnees.',
-    faq_q4: 'Mes donnees sont-elles privees ?', faq_a4: 'Oui. Tout fonctionne localement dans votre navigateur.',
     howto_1: 'Cliquez sur Demarrer pour lancer la simulation sonar.',
     howto_2: 'Observez les AP comme noeuds fixes et les clients en orbite.',
     howto_3: 'Ouvrez la liste des appareils pour voir les peripheriques detectes.',
@@ -96,8 +87,7 @@ const LANG = {
     simStarted: 'Balayage sonar demarre', simStopped: 'Balayage sonar arrete',
     newAP: 'Nouvel AP detecte', newClient: 'Nouveau client detecte',
     beacon: 'Balise', probe: 'Sonde Req', probeResp: 'Sonde Resp', ack: 'ACK', data: 'Donnees', rts: 'RTS', cts: 'CTS',
-    management: 'Gestion', control: 'Controle', dataType: 'Donnees',
-  ,step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil'},
+    management: 'Gestion', control: 'Controle', dataType: 'Donnees',step1Title:'Scanner les ondes',step1Desc:'L\'adaptateur WiFi scanne tous les canaux pour découvrir les points d\'accès.',step2Title:'Identifier les cibles',step2Desc:'Les appareils détectés sont identifiés par MAC, SSID et puissance du signal.',step3Title:'Analyser le trafic',step3Desc:'Les trames capturées sont décodées pour révéler les schémas de communication.',step4Title:'Détecter les menaces',step4Desc:'L\'analyse de sécurité identifie les AP pirates et les faiblesses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule WiFi ! 🔬 Tu peux expérimenter avec WiFi signals en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais WiFi signals.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai wireless networks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Wifi Deauth Detector and Wifi Channel Heatmap ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'سونار WiFi — خريطة حية', subtitle: 'كل إطار WiFi على رادار السونار',
     disconnected: 'غير متصل', connected: 'مسح جارٍ',
@@ -112,10 +102,6 @@ const LANG = {
     settings: 'الإعدادات', language: 'اللغة', theme: 'المظهر',
     soundEffects: 'مؤثرات صوتية',
     help: 'مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو سونار WiFi؟', faq_a1: 'عارض بنمط الرادار لأجهزة WiFi. نقاط الوصول ثابتة، العملاء يدورون.',
-    faq_q2: 'هل يلتقط WiFi حقيقي؟', faq_a2: 'لا، هذه محاكاة. المراقبة الحقيقية تتطلب أجهزة خاصة.',
-    faq_q3: 'ما هي أنواع الإطارات؟', faq_a3: 'إدارة (إشارات، فحص)، تحكم (ACK, RTS/CTS)، وبيانات.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً في متصفحك.',
     howto_1: 'انقر بدء لتشغيل محاكاة السونار.',
     howto_2: 'شاهد نقاط الوصول كعقد ثابتة والعملاء يدورون.',
     howto_3: 'افتح قائمة الأجهزة لرؤية الأجهزة المكتشفة.',
@@ -130,8 +116,7 @@ const LANG = {
     simStarted: 'بدأ مسح السونار', simStopped: 'توقف مسح السونار',
     newAP: 'نقطة وصول جديدة', newClient: 'عميل جديد',
     beacon: 'إشارة', probe: 'طلب فحص', probeResp: 'رد فحص', ack: 'ACK', data: 'بيانات', rts: 'RTS', cts: 'CTS',
-    management: 'إدارة', control: 'تحكم', dataType: 'بيانات',
-  ,step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز'}
+    management: 'إدارة', control: 'تحكم', dataType: 'بيانات',step1Title:'مسح الموجات',step1Desc:'يفحص محول WiFi جميع القنوات لاكتشاف نقاط الوصول القريبة.',step2Title:'تحديد الأهداف',step2Desc:'يتم تحديد الأجهزة المكتشفة بواسطة MAC و SSID وقوة الإشارة.',step3Title:'تحليل حركة البيانات',step3Desc:'يتم فك تشفير الإطارات الملتقطة لكشف أنماط الاتصال.',step4Title:'كشف التهديدات',step4Desc:'يحدد التحليل الأمني نقاط الوصول المزيفة ونقاط الضعف.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي WiFi! 🔬 يمكنك التجربة مع WiFi signals في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج WiFi signals حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا wireless networks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Wifi Deauth Detector and Wifi Channel Heatmap! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

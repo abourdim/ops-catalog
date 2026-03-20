@@ -40,10 +40,6 @@ const LANG = {
     clear:'Clear', copy:'Copy', export:'Export', theme:'Theme',
     settings:'\u2699\uFE0F Settings', language:'Language',
     help:'\u2753 Help', faq:'FAQ', howto:'How-To', wiki:'Wiki',
-    faq_q1:'What is RF Waterfall?', faq_a1:'A simulated spectrum display that shows radio frequency activity as a scrolling waterfall plot.',
-    faq_q2:'Are these real signals?', faq_a2:'No. This is a simulation for learning. Real signals require an SDR dongle.',
-    faq_q3:'How do I tune to a frequency?', faq_a3:'Use the frequency tuner sliders or click a preset button.',
-    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally in your browser.',
     howto_1:'Click Start Scan to begin the waterfall display.',
     howto_2:'Adjust center frequency and span to zoom into bands.',
     howto_3:'Use presets to quickly jump to FM, WiFi, or ISM bands.',
@@ -73,8 +69,7 @@ const LANG = {
     guideP2:'FM radio (88\u2013108 MHz), ISM bands (433 MHz keyfobs, 915 MHz sensors), WiFi (2.4 & 5 GHz), Bluetooth/BLE (2.4 GHz).',
     guideP3:'A waterfall display scrolls time downward. Each row is one sweep across your chosen frequency range.',
     // DB
-    dbTitle:'Common Frequency Allocations',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    dbTitle:'Common Frequency Allocations',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need RTL-SDR or HackRF. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Signal Hunter and Hrf Rf Fingerprinter! Each teaches something different. 🚀'},
   fr: {
     title:'Cascade RF', subtitle:'Cascade RF \u2014 Affichage Spectral',
     disconnected:'D\u00e9connect\u00e9', connected:'Connect\u00e9',
@@ -84,10 +79,6 @@ const LANG = {
     clear:'Effacer', copy:'Copier', export:'Exporter', theme:'Th\u00e8me',
     settings:'\u2699\uFE0F Param\u00e8tres', language:'Langue',
     help:'\u2753 Aide', faq:'FAQ', howto:'Guide', wiki:'Wiki',
-    faq_q1:'Qu\'est-ce que la Cascade RF ?', faq_a1:'Un affichage spectral simul\u00e9 montrant l\'activit\u00e9 radio sous forme de cascade d\u00e9filante.',
-    faq_q2:'Ce sont de vrais signaux ?', faq_a2:'Non. C\'est une simulation. Les vrais signaux n\u00e9cessitent un dongle SDR.',
-    faq_q3:'Comment r\u00e9gler une fr\u00e9quence ?', faq_a3:'Utilisez les curseurs ou cliquez sur un pr\u00e9r\u00e9glage.',
-    faq_q4:'Mes donn\u00e9es sont priv\u00e9es ?', faq_a4:'Oui. Tout fonctionne localement.',
     howto_1:'Cliquez D\u00e9marrer pour lancer la cascade.', howto_2:'Ajustez la fr\u00e9quence et la plage.',
     howto_3:'Utilisez les pr\u00e9r\u00e9glages pour les bandes.', howto_4:'Surveillez la liste des signaux.',
     wiki_waterfall_title:'Affichage Cascade', wiki_waterfall:'La cascade d\u00e9file vers le bas montrant la puissance sur les fr\u00e9quences.',
@@ -113,8 +104,7 @@ const LANG = {
     guideP1:'Le spectre de 0 \u00e0 6 GHz contient de nombreux services.',
     guideP2:'FM (88\u2013108 MHz), ISM (433 MHz), WiFi (2.4 & 5 GHz), Bluetooth (2.4 GHz).',
     guideP3:'La cascade d\u00e9file le temps vers le bas. Chaque ligne est un balayage.',
-    dbTitle:'Allocations de Fr\u00e9quences',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    dbTitle:'Allocations de Fr\u00e9quences',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut RTL-SDR or HackRF. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Signal Hunter and Hrf Rf Fingerprinter ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'\u0634\u0644\u0627\u0644 RF', subtitle:'\u0634\u0644\u0627\u0644 RF \u2014 \u0639\u0631\u0636 \u0627\u0644\u0637\u064A\u0641',
     disconnected:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644', connected:'\u0645\u062A\u0635\u0644',
@@ -124,10 +114,6 @@ const LANG = {
     clear:'\u0645\u0633\u062D', copy:'\u0646\u0633\u062E', export:'\u062A\u0635\u062F\u064A\u0631', theme:'\u0627\u0644\u0645\u0638\u0647\u0631',
     settings:'\u2699\uFE0F \u0627\u0644\u0625\u0639\u062F\u0627\u062F\u0627\u062A', language:'\u0627\u0644\u0644\u063A\u0629',
     help:'\u2753 \u0645\u0633\u0627\u0639\u062F\u0629', faq:'\u0623\u0633\u0626\u0644\u0629', howto:'\u0643\u064A\u0641', wiki:'\u0648\u064A\u0643\u064A',
-    faq_q1:'\u0645\u0627 \u0647\u0648 \u0634\u0644\u0627\u0644 RF\u061F', faq_a1:'\u0639\u0631\u0636 \u0637\u064A\u0641\u064A \u0645\u062D\u0627\u0643\u0649 \u064A\u0639\u0631\u0636 \u0627\u0644\u0646\u0634\u0627\u0637 \u0627\u0644\u0644\u0627\u0633\u0644\u0643\u064A \u0643\u0634\u0644\u0627\u0644 \u0645\u062A\u062F\u0641\u0642.',
-    faq_q2:'\u0647\u0644 \u0647\u0630\u0647 \u0625\u0634\u0627\u0631\u0627\u062A \u062D\u0642\u064A\u0642\u064A\u0629\u061F', faq_a2:'\u0644\u0627. \u0647\u0630\u0647 \u0645\u062D\u0627\u0643\u0627\u0629 \u0644\u0644\u062A\u0639\u0644\u0645.',
-    faq_q3:'\u0643\u064A\u0641 \u0623\u0636\u0628\u0637 \u0627\u0644\u062A\u0631\u062F\u062F\u061F', faq_a3:'\u0627\u0633\u062A\u062E\u062F\u0645 \u0623\u0634\u0631\u0637\u0629 \u0627\u0644\u062A\u0645\u0631\u064A\u0631 \u0623\u0648 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0633\u0631\u064A\u0639\u0629.',
-    faq_q4:'\u0647\u0644 \u0628\u064A\u0627\u0646\u0627\u062A\u064A \u062E\u0627\u0635\u0629\u061F', faq_a4:'\u0646\u0639\u0645. \u0643\u0644 \u0634\u064A\u0621 \u064A\u0639\u0645\u0644 \u0645\u062D\u0644\u064A\u064B\u0627.',
     howto_1:'\u0627\u0646\u0642\u0631 \u0628\u062F\u0621 \u0627\u0644\u0645\u0633\u062D \u0644\u0628\u062F\u0621 \u0627\u0644\u0634\u0644\u0627\u0644.', howto_2:'\u0627\u0636\u0628\u0637 \u0627\u0644\u062A\u0631\u062F\u062F \u0648\u0627\u0644\u0646\u0637\u0627\u0642.',
     howto_3:'\u0627\u0633\u062A\u062E\u062F\u0645 \u0627\u0644\u0625\u0639\u062F\u0627\u062F\u0627\u062A \u0627\u0644\u0633\u0631\u064A\u0639\u0629.', howto_4:'\u0631\u0627\u0642\u0628 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0625\u0634\u0627\u0631\u0627\u062A.',
     wiki_waterfall_title:'\u0639\u0631\u0636 \u0627\u0644\u0634\u0644\u0627\u0644', wiki_waterfall:'\u064A\u0639\u0631\u0636 \u0627\u0644\u0634\u0644\u0627\u0644 \u0627\u0644\u0637\u0627\u0642\u0629 \u0639\u0628\u0631 \u0627\u0644\u062A\u0631\u062F\u062F\u0627\u062A.',
@@ -153,8 +139,7 @@ const LANG = {
     guideP1:'\u0627\u0644\u0637\u064A\u0641 \u0645\u0646 0 \u0625\u0644\u0649 6 GHz \u064A\u062D\u062A\u0648\u064A \u0639\u0644\u0649 \u062E\u062F\u0645\u0627\u062A \u0643\u062B\u064A\u0631\u0629.',
     guideP2:'FM (88-108 MHz)\u060C ISM (433 MHz)\u060C WiFi (2.4 & 5 GHz)\u060C Bluetooth.',
     guideP3:'\u0627\u0644\u0634\u0644\u0627\u0644 \u064A\u0645\u0631\u0631 \u0627\u0644\u0632\u0645\u0646 \u0644\u0644\u0623\u0633\u0641\u0644. \u0643\u0644 \u0633\u0637\u0631 \u0647\u0648 \u0645\u0633\u062D \u0648\u0627\u062D\u062F.',
-    dbTitle:'\u062A\u062E\u0635\u064A\u0635\u0627\u062A \u0627\u0644\u062A\u0631\u062F\u062F\u0627\u062A',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    dbTitle:'\u062A\u062E\u0635\u064A\u0635\u0627\u062A \u0627\u0644\u062A\u0631\u062F\u062F\u0627\u062A',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج RTL-SDR or HackRF. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Signal Hunter and Hrf Rf Fingerprinter! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

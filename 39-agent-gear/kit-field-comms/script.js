@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is the Field Comms Kit?', faq_a1: 'A portable secure communications backpack with mesh networking, HF radio backup, and encrypted burst messaging for field operations.',
-    faq_q2: 'How does the mesh network work?', faq_a2: 'Nodes automatically discover peers and relay encrypted packets. Each node extends range by hopping messages through the mesh.',
-    faq_q3: 'What is burst transmission?', faq_a3: 'Data is compressed and sent in a rapid burst to minimize interception time. The shorter the transmission, the harder it is to detect.',
-    faq_q4: 'What does the panic button do?', faq_a4: 'Broadcasts an emergency SOS on all frequencies with GPS coordinates. Auto-wipes sensitive data from the kit after transmission.',
     howto_1: 'Click Open Channel to establish a secure communications link.',
     howto_2: 'Use Freq Scan to find clear frequencies with low interference.',
     howto_3: 'Send Burst to transmit encrypted data packets to field agents.',
@@ -114,8 +110,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates field agent gear! 🔬 You get to experiment with covert tech in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real covert tech so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real tactical communication! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Pi Spy Zero and Pi Burst Transmitter! Each teaches something different. 🚀'},
   fr: {
     title: 'kit-field-comms', subtitle: 'Kit Communications Terrain — Comms Portables Sécurisées',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -126,10 +121,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le kit comms terrain ?', faq_a1: 'Un sac à dos de communications sécurisées avec réseau maillé, radio HF de secours et messagerie chiffrée par rafale.',
-    faq_q2: 'Comment fonctionne le réseau maillé ?', faq_a2: 'Les noeuds découvrent automatiquement les pairs et relaient les paquets chiffrés. Chaque noeud étend la portée.',
-    faq_q3: 'Qu\'est-ce que la transmission par rafale ?', faq_a3: 'Les données sont compressées et envoyées en rafale rapide pour minimiser le temps d\'interception.',
-    faq_q4: 'Que fait le bouton panique ?', faq_a4: 'Diffuse un SOS d\'urgence sur toutes les fréquences avec coordonnées GPS. Efface automatiquement les données sensibles.',
     howto_1: 'Cliquez sur Ouvrir Canal pour établir un lien de communication sécurisé.',
     howto_2: 'Utilisez Scan Fréq pour trouver des fréquences claires.',
     howto_3: 'Envoi Rafale pour transmettre des paquets chiffrés aux agents terrain.',
@@ -168,8 +159,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule field agent gear ! 🔬 Tu peux expérimenter avec covert tech en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais covert tech.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai tactical communication ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Pi Spy Zero and Pi Burst Transmitter ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'طقم اتصالات ميداني', subtitle: 'طقم اتصالات ميداني — اتصالات آمنة محمولة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -180,10 +170,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو طقم الاتصالات الميداني؟', faq_a1: 'حقيبة اتصالات آمنة محمولة مع شبكة معشقة وراديو HF احتياطي ورسائل مشفرة بالرشقات.',
-    faq_q2: 'كيف تعمل الشبكة المعشقة؟', faq_a2: 'تكتشف العقد تلقائياً الأقران وتنقل الحزم المشفرة. كل عقدة تمدد النطاق.',
-    faq_q3: 'ما هو الإرسال بالرشقات؟', faq_a3: 'يتم ضغط البيانات وإرسالها في رشقة سريعة لتقليل وقت الاعتراض.',
-    faq_q4: 'ماذا يفعل زر الذعر؟', faq_a4: 'يبث إشارة استغاثة طارئة على جميع الترددات مع إحداثيات GPS ويمسح البيانات الحساسة تلقائياً.',
     howto_1: 'انقر فتح القناة لإنشاء رابط اتصال آمن.',
     howto_2: 'استخدم مسح التردد للعثور على ترددات واضحة.',
     howto_3: 'إرسال رشقة لنقل حزم مشفرة للعملاء الميدانيين.',
@@ -222,8 +208,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي field agent gear! 🔬 يمكنك التجربة مع covert tech في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج covert tech حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا tactical communication حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Pi Spy Zero and Pi Burst Transmitter! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

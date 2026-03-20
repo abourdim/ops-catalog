@@ -23,10 +23,6 @@ const LANG = {
     clear:'Clear', copy:'Copy', export:'Export', theme:'Theme',
     settings:'\u2699\uFE0F Settings', language:'Language',
     help:'\u2753 Help', faq:'FAQ', howto:'How-To', wiki:'Wiki',
-    faq_q1:'What is RF Fingerprinting?', faq_a1:'Identifying devices by their unique RF characteristics.',
-    faq_q2:'How does it work?', faq_a2:'Each device has subtle hardware variations creating unique waveforms.',
-    faq_q3:'Is this real?', faq_a3:'This is a simulation. Real fingerprinting needs an SDR.',
-    faq_q4:'Is my data private?', faq_a4:'Yes. Everything runs locally.',
     howto_1:'Select a device type.', howto_2:'Click Capture to record its fingerprint.',
     howto_3:'Click Store to save to database.', howto_4:'Capture another and Compare.',
     wiki_fp_title:'RF Fingerprinting', wiki_fp:'Uses hardware imperfections to identify individual devices.',
@@ -46,8 +42,7 @@ const LANG = {
     guideP1:'Every wireless device has tiny manufacturing variations in its radio components.',
     guideP2:'These cause unique patterns in clock drift, frequency offset, power transients, and modulation imperfections.',
     guideP3:'By capturing and analyzing these patterns, individual devices can be identified even among identical models.',
-    dbTitle:'Device Identification Methods',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    dbTitle:'Device Identification Methods',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need RTL-SDR or HackRF. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Pager Decoder and Hrf Rf Waterfall! Each teaches something different. 🚀'},
   fr: {
     title:'Empreinte RF', subtitle:'Empreinte RF \u2014 Signatures',
     disconnected:'En attente', connected:'Capture',
@@ -57,10 +52,6 @@ const LANG = {
     clear:'Effacer', copy:'Copier', export:'Exporter', theme:'Th\u00e8me',
     settings:'\u2699\uFE0F Param\u00e8tres', language:'Langue',
     help:'\u2753 Aide', faq:'FAQ', howto:'Guide', wiki:'Wiki',
-    faq_q1:'Qu\'est-ce que l\'empreinte RF ?', faq_a1:'Identifier les appareils par leurs caract\u00e9ristiques RF.',
-    faq_q2:'Comment \u00e7a marche ?', faq_a2:'Chaque appareil a des variations mat\u00e9rielles uniques.',
-    faq_q3:'C\'est r\u00e9el ?', faq_a3:'C\'est une simulation.',
-    faq_q4:'Donn\u00e9es priv\u00e9es ?', faq_a4:'Oui. Tout est local.',
     howto_1:'S\u00e9lectionnez un appareil.', howto_2:'Cliquez Capturer.',
     howto_3:'Cliquez Stocker.', howto_4:'Capturez un autre et Comparez.',
     wiki_fp_title:'Empreinte RF', wiki_fp:'Utilise les imperfections mat\u00e9rielles.',
@@ -80,8 +71,7 @@ const LANG = {
     guideP1:'Chaque appareil a des variations de fabrication.',
     guideP2:'Cela cr\u00e9e des patterns uniques.',
     guideP3:'En analysant ces patterns, on identifie chaque appareil.',
-    dbTitle:'M\u00e9thodes d\'Identification',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    dbTitle:'M\u00e9thodes d\'Identification',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut RTL-SDR or HackRF. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Pager Decoder and Hrf Rf Waterfall ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title:'\u0628\u0635\u0645\u0629 RF', subtitle:'\u0628\u0635\u0645\u0629 RF \u2014 \u062A\u0648\u0642\u064A\u0639\u0627\u062A \u0627\u0644\u0623\u062C\u0647\u0632\u0629',
     disconnected:'\u062E\u0627\u0645\u0644', connected:'\u0627\u0644\u062A\u0642\u0627\u0637',
@@ -91,10 +81,6 @@ const LANG = {
     clear:'\u0645\u0633\u062D', copy:'\u0646\u0633\u062E', export:'\u062A\u0635\u062F\u064A\u0631', theme:'\u0627\u0644\u0645\u0638\u0647\u0631',
     settings:'\u2699\uFE0F \u0625\u0639\u062F\u0627\u062F\u0627\u062A', language:'\u0627\u0644\u0644\u063A\u0629',
     help:'\u2753 \u0645\u0633\u0627\u0639\u062F\u0629', faq:'\u0623\u0633\u0626\u0644\u0629', howto:'\u0643\u064A\u0641', wiki:'\u0648\u064A\u0643\u064A',
-    faq_q1:'\u0645\u0627 \u0647\u064A \u0628\u0635\u0645\u0629 RF\u061F', faq_a1:'\u062A\u0639\u0631\u064A\u0641 \u0627\u0644\u0623\u062C\u0647\u0632\u0629 \u0628\u062E\u0635\u0627\u0626\u0635\u0647\u0627.',
-    faq_q2:'\u0643\u064A\u0641 \u062A\u0639\u0645\u0644\u061F', faq_a2:'\u0643\u0644 \u062C\u0647\u0627\u0632 \u0644\u0647 \u062A\u0628\u0627\u064A\u0646\u0627\u062A \u0641\u0631\u064A\u062F\u0629.',
-    faq_q3:'\u0647\u0630\u0627 \u062D\u0642\u064A\u0642\u064A\u061F', faq_a3:'\u0645\u062D\u0627\u0643\u0627\u0629 \u0641\u0642\u0637.',
-    faq_q4:'\u0628\u064A\u0627\u0646\u0627\u062A\u064A \u062E\u0627\u0635\u0629\u061F', faq_a4:'\u0646\u0639\u0645.',
     howto_1:'\u0627\u062E\u062A\u0631 \u062C\u0647\u0627\u0632.', howto_2:'\u0627\u0646\u0642\u0631 \u0627\u0644\u062A\u0642\u0627\u0637.', howto_3:'\u0627\u0646\u0642\u0631 \u062A\u062E\u0632\u064A\u0646.', howto_4:'\u0627\u0644\u062A\u0642\u0637 \u0622\u062E\u0631 \u0648\u0642\u0627\u0631\u0646.',
     wiki_fp_title:'\u0628\u0635\u0645\u0629 RF', wiki_fp:'\u062A\u0633\u062A\u062E\u062F\u0645 \u0639\u064A\u0648\u0628 \u0627\u0644\u0639\u062A\u0627\u062F.',
     wiki_use_title:'\u062D\u0627\u0644\u0627\u062A \u0627\u0644\u0627\u0633\u062A\u062E\u062F\u0627\u0645', wiki_use:'\u0643\u0634\u0641 \u0627\u0644\u0623\u062C\u0647\u0632\u0629 \u0627\u0644\u0645\u062E\u0627\u062F\u0639\u0629.',
@@ -113,8 +99,7 @@ const LANG = {
     guideP1:'\u0643\u0644 \u062C\u0647\u0627\u0632 \u0644\u0647 \u062A\u0628\u0627\u064A\u0646\u0627\u062A \u062A\u0635\u0646\u064A\u0639.',
     guideP2:'\u062A\u0633\u0628\u0628 \u0623\u0646\u0645\u0627\u0637 \u0641\u0631\u064A\u062F\u0629.',
     guideP3:'\u064A\u0645\u0643\u0646 \u062A\u0639\u0631\u064A\u0641 \u0643\u0644 \u062C\u0647\u0627\u0632.',
-    dbTitle:'\u0637\u0631\u0642 \u0627\u0644\u062A\u0639\u0631\u064A\u0641',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    dbTitle:'\u0637\u0631\u0642 \u0627\u0644\u062A\u0639\u0631\u064A\u0641',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج RTL-SDR or HackRF. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Pager Decoder and Hrf Rf Waterfall! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang='en';

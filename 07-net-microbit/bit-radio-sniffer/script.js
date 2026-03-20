@@ -92,10 +92,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Radio Sniffer?', faq_a1: 'A simulation that teaches how radio frequency scanning works using micro:bit radio groups.',
-    faq_q2: 'How do I scan channels?', faq_a2: 'Use the channel slider to pick a channel, then click "Start Scan" or "Auto Scan" to sweep all channels.',
-    faq_q3: 'What are the 84 channels?', faq_a3: 'micro:bit radio uses groups 0-83. Each group is a separate communication channel on the 2.4GHz band.',
-    faq_q4: 'Is this real radio traffic?', faq_a4: 'No. This is a simulation for learning. Real packet sniffing requires actual micro:bit hardware.',
     howto_1: 'Select a channel (0-83) using the slider or type a number.',
     howto_2: 'Click "Start Scan" to monitor the selected channel for packets.',
     howto_3: 'Use "Auto Scan" to sweep through all 84 channels automatically.',
@@ -123,8 +119,7 @@ const LANG = {
     burstGenerated: 'Burst generated', spectrumCleared: 'Spectrum cleared', captureExported: 'Capture exported',
     challengeStarted: 'Challenge started', challengeComplete: 'Challenge complete!',
     hiddenMsgFound: 'Hidden message found!', busiestFound: 'Busiest channel identified!', cipherCracked: 'Caesar cipher cracked!',
-    enterChannel: 'Enter the busiest channel number:', wrongChannel: 'Wrong channel! Try again.', enterDecoded: 'Enter the decoded message:', wrongDecode: 'Wrong decode! Try again.',
-  ,sectionCode:'Device Code'},
+    enterChannel: 'Enter the busiest channel number:', wrongChannel: 'Wrong channel! Try again.', enterDecoded: 'Enter the decoded message:', wrongDecode: 'Wrong decode! Try again.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Bit Ble Mesh Chat and Bit Micro Vpn! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-radio-sniffer', subtitle: '📻 scanner · 📡 capturer · 🔍 analyser',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -154,10 +149,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Radio Sniffer ?', faq_a1: 'Une simulation qui enseigne le fonctionnement du scan de fréquences radio avec les groupes radio micro:bit.',
-    faq_q2: 'Comment scanner les canaux ?', faq_a2: 'Utilisez le curseur pour choisir un canal, puis cliquez "Démarrer" ou "Auto Scan".',
-    faq_q3: 'Quels sont les 84 canaux ?', faq_a3: 'Le micro:bit utilise les groupes 0-83. Chaque groupe est un canal de communication séparé sur la bande 2.4GHz.',
-    faq_q4: 'Est-ce du vrai trafic radio ?', faq_a4: 'Non. C\'est une simulation pour apprendre. Le vrai sniffing nécessite du matériel micro:bit.',
     howto_1: 'Sélectionnez un canal (0-83) avec le curseur.',
     howto_2: 'Cliquez "Démarrer" pour surveiller le canal sélectionné.',
     howto_3: 'Utilisez "Auto Scan" pour balayer les 84 canaux automatiquement.',
@@ -185,8 +176,7 @@ const LANG = {
     burstGenerated: 'Rafale générée', spectrumCleared: 'Spectre effacé', captureExported: 'Capture exportée',
     challengeStarted: 'Défi lancé', challengeComplete: 'Défi terminé !',
     hiddenMsgFound: 'Message caché trouvé !', busiestFound: 'Canal le plus actif identifié !', cipherCracked: 'Chiffre de César déchiffré !',
-    enterChannel: 'Entrez le numéro du canal le plus actif :', wrongChannel: 'Mauvais canal ! Réessayez.', enterDecoded: 'Entrez le message décodé :', wrongDecode: 'Mauvais décodage ! Réessayez.',
-  ,sectionCode:'Code Appareil'},
+    enterChannel: 'Entrez le numéro du canal le plus actif :', wrongChannel: 'Mauvais canal ! Réessayez.', enterDecoded: 'Entrez le message décodé :', wrongDecode: 'Mauvais décodage ! Réessayez.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Ble Mesh Chat and Bit Micro Vpn ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-radio-sniffer', subtitle: '📻 مسح · 📡 التقاط · 🔍 تحليل',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -216,10 +206,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو متتبع الراديو؟', faq_a1: 'محاكاة تعلّم كيف يعمل مسح ترددات الراديو باستخدام مجموعات راديو micro:bit.',
-    faq_q2: 'كيف أمسح القنوات؟', faq_a2: 'استخدم شريط التمرير لاختيار قناة، ثم انقر "بدء المسح" أو "مسح تلقائي".',
-    faq_q3: 'ما هي القنوات الـ84؟', faq_a3: 'يستخدم micro:bit المجموعات 0-83. كل مجموعة هي قناة اتصال منفصلة على نطاق 2.4GHz.',
-    faq_q4: 'هل هذا تراسل راديو حقيقي؟', faq_a4: 'لا. هذه محاكاة للتعلم. التقاط الحزم الحقيقي يتطلب جهاز micro:bit فعلي.',
     howto_1: 'اختر قناة (0-83) باستخدام شريط التمرير.',
     howto_2: 'انقر "بدء المسح" لمراقبة القناة المحددة.',
     howto_3: 'استخدم "مسح تلقائي" لمسح جميع القنوات الـ84 تلقائياً.',
@@ -247,8 +233,7 @@ const LANG = {
     burstGenerated: 'تم توليد دفعة', spectrumCleared: 'تم مسح الطيف', captureExported: 'تم تصدير الالتقاط',
     challengeStarted: 'بدأ التحدي', challengeComplete: 'اكتمل التحدي!',
     hiddenMsgFound: 'تم العثور على الرسالة المخفية!', busiestFound: 'تم تحديد القناة الأكثر نشاطاً!', cipherCracked: 'تم فك شفرة قيصر!',
-    enterChannel: 'أدخل رقم القناة الأكثر نشاطاً:', wrongChannel: 'قناة خاطئة! حاول مرة أخرى.', enterDecoded: 'أدخل الرسالة المفكوكة:', wrongDecode: 'فك شفرة خاطئ! حاول مرة أخرى.',
-  ,sectionCode:'كود الجهاز'}
+    enterChannel: 'أدخل رقم القناة الأكثر نشاطاً:', wrongChannel: 'قناة خاطئة! حاول مرة أخرى.', enterDecoded: 'أدخل الرسالة المفكوكة:', wrongDecode: 'فك شفرة خاطئ! حاول مرة أخرى.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Ble Mesh Chat and Bit Micro Vpn! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

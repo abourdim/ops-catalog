@@ -35,10 +35,6 @@ const LANG={
     challengeReveal2:'XOR with a short key repeats, making it vulnerable to frequency analysis. If the plaintext is known, the key is trivially recovered.',
     challengeReveal3:'Use AES encryption, MAC address filtering, time-limited AP activation, and one-time download tokens.',
     revealBtn:'Reveal Answer',labDesc:'Try scanning with different signal strengths. Hidden APs require active probing.',
-    faq_q1:'What is a dead letter box?',faq_a1:'A dead letter box (dead drop) is a secret location where agents exchange encrypted information without meeting.',
-    faq_q2:'What is a hidden SSID?',faq_a2:'A hidden SSID means the AP does not broadcast its name in beacon frames. You must know the exact name to connect.',
-    faq_q3:'How does XOR decryption work?',faq_a3:'Each byte of the file is XORed with the corresponding key byte. Apply the same key again to get the original file back.',
-    faq_q4:'Is this a real WiFi scanner?',faq_a4:'No. This is a simulation. Real WiFi scanning requires native OS APIs.',
     howto_1:'Click Scan Networks to discover nearby access points.',
     howto_2:'Look for hidden APs marked in red — these are the dead drops.',
     howto_3:'Click a hidden AP to connect and reveal its file vault.',
@@ -54,8 +50,7 @@ const LANG={
     ready:'📦 Dead Letter Box ready — scan for hidden networks!',
     logCleared:'Log cleared',copied:'Copied!',copyFail:'Copy failed',
     soundEffects:'🔊 Sound effects',whisperMode:'Whisper mode',breathingGuide:'Breathing guide',dhikrTap:'Tap',musicMode:'Music reactive',
-    splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',
-  ,step1Title:'Scan',step1Desc:'An ESP32 creates a hidden WiFi access point — invisible to normal scans.',step2Title:'Capture',step2Desc:'Agents who know the SSID connect and access the encrypted file vault.',step3Title:'Analyze',step3Desc:'Files are XOR-encrypted. Only agents with the key can decrypt them.',step4Title:'Report',step4Desc:'The dead drop is ephemeral — the ESP32 can be powered off and moved.',sectionCode:'Device Code'},
+    splashHint:'tap to skip',newVersion:'UPDATE',langChanged:'🌐 Language → English',themeChanged:'🎨 Theme →',step1Title:'Scan',step1Desc:'An ESP32 creates a hidden WiFi access point — invisible to normal scans.',step2Title:'Capture',step2Desc:'Agents who know the SSID connect and access the encrypted file vault.',step3Title:'Analyze',step3Desc:'Files are XOR-encrypted. Only agents with the key can decrypt them.',step4Title:'Report',step4Desc:'The dead drop is ephemeral — the ESP32 can be powered off and moved.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Honeypot and Esp Wifi Thermometer! Each teaches something different. 🚀'},
   fr:{
     title:'esp-dead-letter-box',subtitle:'📦 scanner · 🔐 déchiffrer · 📂 extraire',
     disconnected:'Déconnecté',connected:'Connecté',
@@ -78,10 +73,6 @@ const LANG={
     challengeReveal2:'XOR avec une clé courte se répète, vulnérable à l\'analyse fréquentielle.',
     challengeReveal3:'Utiliser AES, filtrage MAC, activation temporelle et jetons de téléchargement unique.',
     revealBtn:'Révéler',labDesc:'Essayez de scanner avec différentes puissances de signal.',
-    faq_q1:'Qu\'est-ce qu\'une boîte aux lettres morte ?',faq_a1:'Un endroit secret où les agents échangent des informations chiffrées sans se rencontrer.',
-    faq_q2:'Qu\'est-ce qu\'un SSID caché ?',faq_a2:'Le point d\'accès ne diffuse pas son nom dans les trames beacon.',
-    faq_q3:'Comment fonctionne le déchiffrement XOR ?',faq_a3:'Chaque octet est XORé avec l\'octet correspondant de la clé.',
-    faq_q4:'Est-ce un vrai scanner WiFi ?',faq_a4:'Non. C\'est une simulation.',
     howto_1:'Cliquez Scanner pour découvrir les points d\'accès.',
     howto_2:'Cherchez les AP cachés marqués en rouge.',
     howto_3:'Cliquez un AP caché pour vous connecter au coffre-fort.',
@@ -97,8 +88,7 @@ const LANG={
     ready:'📦 Dead Letter Box prêt — scannez les réseaux cachés !',
     logCleared:'Journal effacé',copied:'Copié !',copyFail:'Échec',
     soundEffects:'🔊 Effets sonores',whisperMode:'Mode murmure',breathingGuide:'Guide respiratoire',dhikrTap:'Tap',musicMode:'Réactif musique',
-    splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',
-  ,step1Title:'Scanner',step1Desc:'Un ESP32 crée un point d\'accès WiFi caché — invisible aux scans normaux.',step2Title:'Capturer',step2Desc:'Les agents qui connaissent le SSID se connectent et accèdent au coffre-fort.',step3Title:'Analyser',step3Desc:'Les fichiers sont chiffrés en XOR. Seuls les agents avec la clé peuvent déchiffrer.',step4Title:'Rapporter',step4Desc:'Le drop est éphémère — l\'ESP32 peut être éteint et déplacé.',sectionCode:'Code Appareil'},
+    splashHint:'appuyer pour passer',newVersion:'MAJ',langChanged:'🌐 Langue → Français',themeChanged:'🎨 Thème →',step1Title:'Scanner',step1Desc:'Un ESP32 crée un point d\'accès WiFi caché — invisible aux scans normaux.',step2Title:'Capturer',step2Desc:'Les agents qui connaissent le SSID se connectent et accèdent au coffre-fort.',step3Title:'Analyser',step3Desc:'Les fichiers sont chiffrés en XOR. Seuls les agents avec la clé peuvent déchiffrer.',step4Title:'Rapporter',step4Desc:'Le drop est éphémère — l\'ESP32 peut être éteint et déplacé.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Honeypot and Esp Wifi Thermometer ! Chacune enseigne quelque chose de différent. 🚀'},
   ar:{
     title:'esp-dead-letter-box',subtitle:'📦 مسح · 🔐 فك تشفير · 📂 استخراج',
     disconnected:'غير متصل',connected:'متصل',
@@ -121,10 +111,6 @@ const LANG={
     challengeReveal2:'XOR بمفتاح قصير يتكرر، مما يجعله عرضة لتحليل التردد.',
     challengeReveal3:'استخدم تشفير AES وتصفية MAC وتفعيل محدود بالوقت ورموز تنزيل لمرة واحدة.',
     revealBtn:'اكشف الإجابة',labDesc:'جرب المسح بقوى إشارة مختلفة.',
-    faq_q1:'ما هو صندوق البريد الميت؟',faq_a1:'مكان سري يتبادل فيه العملاء معلومات مشفرة بدون لقاء.',
-    faq_q2:'ما هو SSID المخفي؟',faq_a2:'نقطة الوصول لا تبث اسمها في إطارات البث.',
-    faq_q3:'كيف يعمل فك تشفير XOR؟',faq_a3:'كل بايت يُطبق عليه XOR مع البايت المقابل من المفتاح.',
-    faq_q4:'هل هذا ماسح WiFi حقيقي؟',faq_a4:'لا. هذه محاكاة.',
     howto_1:'انقر مسح الشبكات لاكتشاف نقاط الوصول.',
     howto_2:'ابحث عن APs المخفية المحددة باللون الأحمر.',
     howto_3:'انقر AP مخفي للاتصال وكشف خزنة الملفات.',
@@ -140,8 +126,7 @@ const LANG={
     ready:'📦 Dead Letter Box جاهز — امسح الشبكات المخفية!',
     logCleared:'تم مسح السجل',copied:'تم النسخ!',copyFail:'فشل النسخ',
     soundEffects:'🔊 مؤثرات صوتية',whisperMode:'وضع الهمس',breathingGuide:'دليل التنفس',dhikrTap:'اضغط',musicMode:'تفاعل موسيقي',
-    splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',
-  ,step1Title:'مسح',step1Desc:'ESP32 ينشئ نقطة وصول WiFi مخفية — غير مرئية للمسح العادي.',step2Title:'التقاط',step2Desc:'العملاء الذين يعرفون SSID يتصلون ويصلون لخزنة الملفات المشفرة.',step3Title:'تحليل',step3Desc:'الملفات مشفرة بـ XOR. فقط العملاء مع المفتاح يمكنهم فك التشفير.',step4Title:'تقرير',step4Desc:'نقطة الإيداع مؤقتة — يمكن إيقاف ESP32 ونقله.',sectionCode:'كود الجهاز'}
+    splashHint:'انقر للتخطي',newVersion:'تحديث',langChanged:'🌐 اللغة ← العربية',themeChanged:'🎨 المظهر ←',step1Title:'مسح',step1Desc:'ESP32 ينشئ نقطة وصول WiFi مخفية — غير مرئية للمسح العادي.',step2Title:'التقاط',step2Desc:'العملاء الذين يعرفون SSID يتصلون ويصلون لخزنة الملفات المشفرة.',step3Title:'تحليل',step3Desc:'الملفات مشفرة بـ XOR. فقط العملاء مع المفتاح يمكنهم فك التشفير.',step4Title:'تقرير',step4Desc:'نقطة الإيداع مؤقتة — يمكن إيقاف ESP32 ونقله.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Honeypot and Esp Wifi Thermometer! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang='en';

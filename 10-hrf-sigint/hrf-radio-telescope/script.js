@@ -39,10 +39,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', filterAll: 'All',
     theme: 'Theme', settings: '⚙️ Settings', language: 'Language',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is the hydrogen line?', faq_a1: 'A 1420.405 MHz radio signal emitted by neutral hydrogen atoms. It is the most important frequency in radio astronomy.',
-    faq_q2: 'Do I need a radio telescope?', faq_a2: 'No, this is a simulator. Real observations use an RTL-SDR with a filtered LNA and a horn antenna.',
-    faq_q3: 'What is Doppler shift?', faq_a3: 'When hydrogen moves toward or away from us, the frequency shifts. This reveals the velocity of gas clouds.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Click "Start Observation" to begin simulated hydrogen line reception.',
     howto_2: 'Watch the spectrum build up around 1420.405 MHz.',
     howto_3: 'Adjust gain and averaging to improve signal visibility.',
@@ -64,8 +60,7 @@ const LANG = {
     rotationHint: 'Doppler shifts in the hydrogen line reveal how fast different parts of the galaxy rotate',
     h1Info: 'The hydrogen line (21 cm line) at 1420.405 MHz is emitted by neutral hydrogen atoms when the electron spin-flips. This transition is detectable across the galaxy due to the vast amount of hydrogen in interstellar space. By measuring Doppler shifts, radio astronomers map the rotation of the Milky Way.',
     obsStarted: '📡 Observation started — tuned to 1420.405 MHz', obsStopped: '🔴 Observation stopped',
-    h1Detected: '🌟 Hydrogen line detected!', signalUpdate: '📊 Signal update',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    h1Detected: '🌟 Hydrogen line detected!', signalUpdate: '📊 Signal update',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need RTL-SDR or HackRF. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Hrf Fm Pirate Radio and Hrf Pager Decoder! Each teaches something different. 🚀'},
   fr: {
     title: 'Radiotélescope', subtitle: '🔭 Radioastronomie — raie hydrogène 1420 MHz',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -75,10 +70,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', filterAll: 'Tout',
     theme: 'Thème', settings: '⚙️ Paramètres', language: 'Langue',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que la raie hydrogène ?', faq_a1: 'Un signal radio à 1420.405 MHz émis par l\'hydrogène neutre. La fréquence la plus importante en radioastronomie.',
-    faq_q2: 'Ai-je besoin d\'un radiotélescope ?', faq_a2: 'Non, c\'est un simulateur. Les vraies observations utilisent un RTL-SDR avec LNA filtré.',
-    faq_q3: 'Qu\'est-ce que le décalage Doppler ?', faq_a3: 'Quand l\'hydrogène se déplace, la fréquence change. Cela révèle la vitesse des nuages de gaz.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Cliquez "Démarrer" pour lancer l\'observation simulée.',
     howto_2: 'Observez le spectre se construire autour de 1420.405 MHz.',
     howto_3: 'Ajustez le gain et le moyennage pour améliorer la visibilité.',
@@ -100,8 +91,7 @@ const LANG = {
     rotationHint: 'Les décalages Doppler révèlent la vitesse de rotation des parties de la galaxie',
     h1Info: 'La raie hydrogène à 1420.405 MHz est émise par l\'hydrogène neutre lors du retournement de spin de l\'électron.',
     obsStarted: '📡 Observation démarrée — accordé sur 1420.405 MHz', obsStopped: '🔴 Observation arrêtée',
-    h1Detected: '🌟 Raie hydrogène détectée !', signalUpdate: '📊 Mise à jour signal',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    h1Detected: '🌟 Raie hydrogène détectée !', signalUpdate: '📊 Mise à jour signal',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut RTL-SDR or HackRF. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Hrf Fm Pirate Radio and Hrf Pager Decoder ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'تلسكوب راديوي', subtitle: '🔭 فلك راديوي — خط الهيدروجين 1420 ميغاهرتز',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -111,10 +101,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', filterAll: 'الكل',
     theme: 'المظهر', settings: '⚙️ الإعدادات', language: 'اللغة',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو خط الهيدروجين؟', faq_a1: 'إشارة راديوية عند 1420.405 ميغاهرتز من ذرات الهيدروجين المحايدة.',
-    faq_q2: 'هل أحتاج تلسكوب راديوي؟', faq_a2: 'لا، هذا محاكي. الرصد الحقيقي يستخدم RTL-SDR مع LNA مفلتر.',
-    faq_q3: 'ما هو انزياح دوبلر؟', faq_a3: 'عندما يتحرك الهيدروجين نحونا أو بعيدًا، يتغير التردد.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا.',
     howto_1: 'اضغط "بدء الرصد" لتشغيل محاكاة استقبال خط الهيدروجين.',
     howto_2: 'شاهد الطيف يتشكل حول 1420.405 ميغاهرتز.',
     howto_3: 'اضبط الكسب والتوسيط لتحسين رؤية الإشارة.',
@@ -136,8 +122,7 @@ const LANG = {
     rotationHint: 'انزياحات دوبلر في خط الهيدروجين تكشف سرعة دوران أجزاء المجرة',
     h1Info: 'خط الهيدروجين عند 1420.405 ميغاهرتز ينبعث من ذرات الهيدروجين المحايدة عند انقلاب دوران الإلكترون.',
     obsStarted: '📡 بدأ الرصد — مضبوط على 1420.405 ميغاهرتز', obsStopped: '🔴 توقف الرصد',
-    h1Detected: '🌟 تم كشف خط الهيدروجين!', signalUpdate: '📊 تحديث الإشارة',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    h1Detected: '🌟 تم كشف خط الهيدروجين!', signalUpdate: '📊 تحديث الإشارة',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج RTL-SDR or HackRF. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Hrf Fm Pirate Radio and Hrf Pager Decoder! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

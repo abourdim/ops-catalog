@@ -27,8 +27,6 @@ const LANG = {
     ch1Title: 'Heart Harmony', ch1Desc: 'Get 5 nodes to 95% sync.',
     ch2Title: 'Maximum Mesh', ch2Desc: 'Add as many nodes as possible.',
     ch3Title: 'Heart Orchestra', ch3Desc: 'Create sequential beating patterns.',
-    faq_q1: 'How does heartbeat sync work?', faq_a1: 'Nodes adjust BPM toward neighbors, like fireflies synchronizing.',
-    faq_q2: 'What is PPG?', faq_a2: 'Photoplethysmography detects blood volume changes via light sensor.',
     howto_1: 'Click Start Mesh to initialize with 3 nodes.', howto_2: 'Add nodes and watch auto-linking.',
     howto_3: 'Use Force Sync to instantly align BPMs.',
     wiki1_title: '\u2764 Heartbeat Sensing', wiki1_text: 'PPG sensors measure light absorption changes as blood flows.',
@@ -43,8 +41,7 @@ const LANG = {
     t_medina: 'Medina', t_space: 'Space', t_jungle: 'Jungle', t_robot: 'Robot',
     ready: '\u2764 Bio Heartbeat Mesh ready \u2014 connect to sync!',
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
-    langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',
-  ,faq_q3:'Can I change the theme?',faq_a3:'Yes! Open Settings and pick from 8 themes.',faq_q4:'Is my data private?',faq_a4:'Yes. Everything runs locally in your browser. No data is sent anywhere.',sectionCode:'Device Code'},
+    langChanged: '\ud83c\udf10 Language \u2192 English', themeChanged: '\ud83c\udfa8 Theme \u2192',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates bio-signals! 🔬 You get to experiment with body signals into radio in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real body signals into radio so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real biometric radio technology! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bio Body Antenna and Bio Thermal Signature! Each teaches something different. 🚀'},
   fr: {
     title: 'Bio R\u00e9seau Cardiaque', subtitle: 'R\u00e9seau maill\u00e9 synchronis\u00e9 au c\u0153ur',
     disconnected: 'D\u00e9connect\u00e9', connected: 'Connect\u00e9',
@@ -60,8 +57,6 @@ const LANG = {
     ch1Title: 'Harmonie Cardiaque', ch1Desc: '5 n\u0153uds \u00e0 95% de sync.',
     ch2Title: 'Maille Maximum', ch2Desc: 'Ajoutez le plus de n\u0153uds possible.',
     ch3Title: 'Orchestre Cardiaque', ch3Desc: 'Cr\u00e9ez des battements s\u00e9quentiels.',
-    faq_q1: 'Comment fonctionne la sync?', faq_a1: 'Ajustement vers la moyenne des voisins.',
-    faq_q2: 'Qu\'est-ce que le PPG?', faq_a2: 'Photoppl\u00e9thysmographie par capteur lumineux.',
     howto_1: 'Cliquez D\u00e9marrer pour 3 n\u0153uds.', howto_2: 'Ajoutez des n\u0153uds et observez.',
     howto_3: 'Forcez la synchronisation instantan\u00e9e.',
     wiki1_title: '\u2764 Capteur PPG', wiki1_text: 'Mesure les variations d\'absorption lumineuse du sang.',
@@ -76,8 +71,7 @@ const LANG = {
     t_medina: 'M\u00e9dina', t_space: 'Espace', t_jungle: 'Jungle', t_robot: 'Robot',
     ready: '\u2764 R\u00e9seau cardiaque pr\u00eat!',
     logCleared: 'Effac\u00e9', copied: 'Copi\u00e9!', copyFail: '\u00c9chec',
-    langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',
-  ,faq_q3:'Puis-je changer le th\u00e8me?',faq_a3:'Oui! Ouvre les Param\u00e8tres et choisis parmi 8 th\u00e8mes.',faq_q4:'Mes donn\u00e9es sont-elles priv\u00e9es?',faq_a4:'Oui. Tout fonctionne localement dans ton navigateur.',sectionCode:'Code Appareil'},
+    langChanged: '\ud83c\udf10 Langue \u2192 Fran\u00e7ais', themeChanged: '\ud83c\udfa8 Th\u00e8me \u2192',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule bio-signals ! 🔬 Tu peux expérimenter avec body signals into radio en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais body signals into radio.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai biometric radio technology ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bio Body Antenna and Bio Thermal Signature ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: '\u0634\u0628\u0643\u0629 \u0646\u0628\u0636 \u0627\u0644\u0642\u0644\u0628', subtitle: '\u0634\u0628\u0643\u0629 \u0645\u062a\u0632\u0627\u0645\u0646\u0629 \u0645\u0639 \u0646\u0628\u0636 \u0627\u0644\u0642\u0644\u0628',
     disconnected: '\u063a\u064a\u0631 \u0645\u062a\u0635\u0644', connected: '\u0645\u062a\u0635\u0644',
@@ -93,8 +87,6 @@ const LANG = {
     ch1Title: '\u062a\u0646\u0627\u063a\u0645 \u0627\u0644\u0642\u0644\u0648\u0628', ch1Desc: '5 \u0639\u0642\u062f \u0628\u062a\u0632\u0627\u0645\u0646 95%.',
     ch2Title: '\u0623\u0642\u0635\u0649 \u0634\u0628\u0643\u0629', ch2Desc: '\u0623\u0636\u0641 \u0623\u0643\u062b\u0631 \u0639\u062f\u062f \u0645\u0645\u0643\u0646.',
     ch3Title: '\u0623\u0648\u0631\u0643\u0633\u062a\u0631\u0627 \u0627\u0644\u0642\u0644\u0628', ch3Desc: '\u0623\u0646\u0634\u0626 \u0623\u0646\u0645\u0627\u0637 \u062a\u062a\u0627\u0628\u0639\u064a\u0629.',
-    faq_q1: '\u0643\u064a\u0641 \u062a\u0639\u0645\u0644 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629\u061f', faq_a1: '\u0627\u0644\u0639\u0642\u062f \u062a\u0636\u0628\u0637 \u0646\u062d\u0648 \u0645\u062a\u0648\u0633\u0637 \u0627\u0644\u062c\u064a\u0631\u0627\u0646.',
-    faq_q2: '\u0645\u0627 \u0647\u0648 PPG\u061f', faq_a2: '\u0642\u064a\u0627\u0633 \u062a\u063a\u064a\u0631\u0627\u062a \u062d\u062c\u0645 \u0627\u0644\u062f\u0645 \u0628\u0627\u0644\u0636\u0648\u0621.',
     howto_1: '\u0627\u0646\u0642\u0631 \u0628\u062f\u0621 \u0644\u0625\u0646\u0634\u0627\u0621 3 \u0639\u0642\u062f.', howto_2: '\u0623\u0636\u0641 \u0639\u0642\u062f\u064b\u0627 \u0648\u0634\u0627\u0647\u062f.',
     howto_3: '\u0627\u0633\u062a\u062e\u062f\u0645 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629 \u0627\u0644\u0641\u0648\u0631\u064a\u0629.',
     wiki1_title: '\u2764 PPG', wiki1_text: '\u0642\u064a\u0627\u0633 \u0627\u0645\u062a\u0635\u0627\u0635 \u0627\u0644\u0636\u0648\u0621 \u0623\u062b\u0646\u0627\u0621 \u062a\u062f\u0641\u0642 \u0627\u0644\u062f\u0645.',
@@ -109,8 +101,7 @@ const LANG = {
     t_medina: '\u0645\u062f\u064a\u0646\u0629', t_space: '\u0641\u0636\u0627\u0621', t_jungle: '\u0623\u062f\u063a\u0627\u0644', t_robot: '\u0631\u0648\u0628\u0648\u062a',
     ready: '\u2764 \u0634\u0628\u0643\u0629 \u0627\u0644\u0646\u0628\u0636 \u062c\u0627\u0647\u0632\u0629!',
     logCleared: '\u062a\u0645 \u0627\u0644\u0645\u0633\u062d', copied: '\u062a\u0645!', copyFail: '\u0641\u0634\u0644',
-    langChanged: '\ud83c\udf10 \u0627\u0644\u0644\u063a\u0629 \u2190 \u0627\u0644\u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',
-  ,faq_q3:'\u0647\u0644 \u064a\u0645\u0643\u0646\u0646\u064a \u062a\u063a\u064a\u064a\u0631 \u0627\u0644\u0633\u0645\u0629\u061f',faq_a3:'\u0646\u0639\u0645! \u0627\u0641\u062a\u062d \u0627\u0644\u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0648\u0627\u062e\u062a\u0631.',faq_q4:'\u0647\u0644 \u0628\u064a\u0627\u0646\u0627\u062a\u064a \u062e\u0627\u0635\u0629\u061f',faq_a4:'\u0646\u0639\u0645. \u0643\u0644 \u0634\u064a\u0621 \u064a\u0639\u0645\u0644 \u0645\u062d\u0644\u064a\u0627\u064b.',sectionCode:'كود الجهاز'}
+    langChanged: '\ud83c\udf10 \u0627\u0644\u0644\u063a\u0629 \u2190 \u0627\u0644\u0639\u0631\u0628\u064a\u0629', themeChanged: '\ud83c\udfa8 \u0627\u0644\u0645\u0638\u0647\u0631 \u2190',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي bio-signals! 🔬 يمكنك التجربة مع body signals into radio في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج body signals into radio حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا biometric radio technology حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bio Body Antenna and Bio Thermal Signature! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 /* ═══════ FRAMEWORK ═══════ */

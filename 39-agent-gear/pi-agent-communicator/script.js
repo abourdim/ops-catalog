@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is the Agent Communicator?', faq_a1: 'A Pi-based encrypted messaging system using numbers station protocols and one-time pad encryption.',
-    faq_q2: 'What is a numbers station?', faq_a2: 'A shortwave radio station broadcasting sequences of numbers encoding secret messages since the Cold War.',
-    faq_q3: 'What is one-time pad encryption?', faq_a3: 'The only theoretically unbreakable cipher. Each character encrypted with a unique random key never reused.',
-    faq_q4: 'What does Burn Keys do?', faq_a4: 'Permanently destroys all encryption keys in memory making decryption impossible.',
     howto_1: 'Click Connect to establish an encrypted channel with the agent network.',
     howto_2: 'Type a message and click Encode to encrypt it into a number sequence.',
     howto_3: 'Use Decode to decrypt incoming number sequences from other agents.',
@@ -113,8 +109,7 @@ const LANG = {
     splashHint: 'tap to skip',
     newVersion: 'UPDATE',
     langChanged: '🌐 Language → English',
-    themeChanged: '🎨 Theme →',
-  ,step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code'},
+    themeChanged: '🎨 Theme →',step1Title:'Gear Up',step1Desc:'Select and configure your field equipment for the mission.',step2Title:'Deploy',step2Desc:'Activate sensors and establish secure communication channels.',step3Title:'Monitor',step3Desc:'Track signals, analyze data, and watch for anomalies in real time.',step4Title:'Extract',step4Desc:'Collect results, generate reports, and secure all gathered intelligence.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates field agent gear! 🔬 You get to experiment with covert tech in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real covert tech so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real tactical communication! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Pi Counter Surveillance and Pi Faraday Test! Each teaches something different. 🚀'},
   fr: {
     title: 'pi-agent-communicator', subtitle: 'Communicateur Agent Pi — Messagerie Chiffrée',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -125,10 +120,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le communicateur agent ?', faq_a1: 'Système de messagerie chiffrée Pi avec protocoles station de nombres et masque jetable.',
-    faq_q2: 'Qu\'est-ce qu\'une station de nombres ?', faq_a2: 'Station radio ondes courtes diffusant des séquences codées. Utilisée par les services de renseignement.',
-    faq_q3: 'Qu\'est-ce que le masque jetable ?', faq_a3: 'Le seul chiffrement incassable. Chaque caractère chiffré avec une clé aléatoire unique jamais réutilisée.',
-    faq_q4: 'Que fait Brûler les Clés ?', faq_a4: 'Détruit définitivement toutes les clés de chiffrement en mémoire.',
     howto_1: 'Cliquez Connecter pour établir un canal chiffré.',
     howto_2: 'Tapez un message et cliquez Encoder pour le chiffrer.',
     howto_3: 'Utilisez Décoder pour déchiffrer les séquences reçues.',
@@ -161,8 +152,7 @@ const LANG = {
     splashHint: 'appuyer pour passer',
     newVersion: 'MAJ',
     langChanged: '🌐 Langue → Français',
-    themeChanged: '🎨 Thème →',
-  ,step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil'},
+    themeChanged: '🎨 Thème →',step1Title:'S\'équiper',step1Desc:'Sélectionne et configure ton équipement de terrain pour la mission.',step2Title:'Déployer',step2Desc:'Active les capteurs et établis des canaux de communication sécurisés.',step3Title:'Surveiller',step3Desc:'Traque les signaux, analyse les données et guette les anomalies.',step4Title:'Extraire',step4Desc:'Collecte les résultats, génère des rapports et sécurise le renseignement.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule field agent gear ! 🔬 Tu peux expérimenter avec covert tech en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais covert tech.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai tactical communication ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Pi Counter Surveillance and Pi Faraday Test ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'جهاز اتصال العميل', subtitle: 'جهاز اتصال العميل — رسائل مشفرة',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -173,10 +163,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو جهاز اتصال العميل؟', faq_a1: 'نظام رسائل مشفرة يستخدم بروتوكولات محطة الأرقام وتشفير القناع لمرة واحدة.',
-    faq_q2: 'ما هي محطة الأرقام؟', faq_a2: 'محطة راديو موجات قصيرة تبث تسلسلات أرقام مشفرة.',
-    faq_q3: 'ما هو تشفير القناع لمرة واحدة؟', faq_a3: 'الشفرة الوحيدة غير القابلة للكسر نظرياً.',
-    faq_q4: 'ماذا يفعل حرق المفاتيح؟', faq_a4: 'يدمر نهائياً جميع مفاتيح التشفير في الذاكرة.',
     howto_1: 'انقر اتصال لإنشاء قناة مشفرة.',
     howto_2: 'اكتب رسالة وانقر تشفير لتحويلها لأرقام.',
     howto_3: 'استخدم فك التشفير لفك تسلسلات الأرقام.',
@@ -209,8 +195,7 @@ const LANG = {
     splashHint: 'انقر للتخطي',
     newVersion: 'تحديث',
     langChanged: '🌐 اللغة ← العربية',
-    themeChanged: '🎨 المظهر ←',
-  ,step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز'}
+    themeChanged: '🎨 المظهر ←',step1Title:'تجهيز',step1Desc:'اختر وكوّن معدات الميدان للمهمة.',step2Title:'نشر',step2Desc:'فعّل المستشعرات وأنشئ قنوات اتصال آمنة.',step3Title:'مراقبة',step3Desc:'تتبع الإشارات وحلل البيانات وراقب الشذوذ في الوقت الفعلي.',step4Title:'استخراج',step4Desc:'اجمع النتائج وأنشئ التقارير وأمّن الاستخبارات المجمّعة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي field agent gear! 🔬 يمكنك التجربة مع covert tech في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج covert tech حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا tactical communication حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Pi Counter Surveillance and Pi Faraday Test! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is Micro VPN?', faq_a1: 'A simulation of an end-to-end encrypted relay network using micro:bit. Learn how VPN tunnels protect your data!',
-    faq_q2: 'What is XOR encryption?', faq_a2: 'XOR is a simple cipher where each character is combined with a key character using the exclusive-or operation. It is symmetric: the same key encrypts and decrypts.',
-    faq_q3: 'What is a relay node?', faq_a3: 'A relay forwards data between two endpoints. With encryption, the relay cannot read the contents — it only passes encrypted bytes along.',
-    faq_q4: 'What is a Man-in-the-Middle attack?', faq_a4: 'An attacker intercepts communication between two parties. With E2E encryption, the attacker sees only gibberish. Without it, they can read everything.',
     howto_1: 'Type a secret message in the input field and click "Encrypt & Send".',
     howto_2: 'Watch the animated packet travel from Alice through relay nodes to Bob.',
     howto_3: 'Toggle encryption off and send again — observe the relay can now read plaintext.',
@@ -126,8 +122,7 @@ const LANG = {
     noMsgToSniff: 'Send a message first!',
     enterMsg: 'Please enter a message.',
     tunnelSecure: 'Tunnel is secure',
-    tunnelInsecure: 'Tunnel NOT secure',
-  ,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+    tunnelInsecure: 'Tunnel NOT secure',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Bit Mesh Rescue and Bit Radio Cartographer! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-micro-vpn', subtitle: '🛡️ chiffrer · 🔗 tunneliser · 🔐 protéger',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -138,10 +133,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Micro VPN ?', faq_a1: 'Une simulation de réseau relais chiffré de bout en bout avec micro:bit. Apprends comment les tunnels VPN protègent tes données !',
-    faq_q2: 'Qu\'est-ce que le chiffrement XOR ?', faq_a2: 'XOR est un chiffrement simple où chaque caractère est combiné avec un caractère clé par l\'opération ou-exclusif. Il est symétrique : la même clé chiffre et déchiffre.',
-    faq_q3: 'Qu\'est-ce qu\'un noeud relais ?', faq_a3: 'Un relais transmet les données entre deux points. Avec le chiffrement, le relais ne peut pas lire le contenu — il transmet seulement les octets chiffrés.',
-    faq_q4: 'Qu\'est-ce qu\'une attaque MITM ?', faq_a4: 'Un attaquant intercepte la communication entre deux parties. Avec le chiffrement E2E, l\'attaquant ne voit que du charabia. Sans chiffrement, il peut tout lire.',
     howto_1: 'Tape un message secret dans le champ et clique sur "Chiffrer & Envoyer".',
     howto_2: 'Regarde le paquet animé voyager d\'Alice à travers les relais jusqu\'à Bob.',
     howto_3: 'Désactive le chiffrement et renvoie — observe que le relais peut maintenant lire le texte.',
@@ -192,8 +183,7 @@ const LANG = {
     noMsgToSniff: 'Envoie d\'abord un message !',
     enterMsg: 'Veuillez entrer un message.',
     tunnelSecure: 'Le tunnel est sécurisé',
-    tunnelInsecure: 'Le tunnel N\'EST PAS sécurisé',
-  ,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+    tunnelInsecure: 'Le tunnel N\'EST PAS sécurisé',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Mesh Rescue and Bit Radio Cartographer ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-micro-vpn', subtitle: '🛡️ شفّر · 🔗 أنشئ نفقًا · 🔐 احمِ',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -204,10 +194,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو مايكرو VPN؟', faq_a1: 'محاكاة لشبكة ترحيل مشفّرة من الطرف إلى الطرف باستخدام micro:bit. تعلّم كيف تحمي أنفاق VPN بياناتك!',
-    faq_q2: 'ما هو تشفير XOR؟', faq_a2: 'XOR هو شيفرة بسيطة حيث يتم دمج كل حرف مع حرف مفتاح باستخدام عملية أو-الحصرية. إنه متماثل: نفس المفتاح يشفّر ويفك التشفير.',
-    faq_q3: 'ما هي عقدة الترحيل؟', faq_a3: 'الترحيل ينقل البيانات بين نقطتين. مع التشفير، لا يستطيع الترحيل قراءة المحتوى — إنه ينقل فقط البايتات المشفّرة.',
-    faq_q4: 'ما هو هجوم الرجل في المنتصف؟', faq_a4: 'مهاجم يعترض الاتصال بين طرفين. مع تشفير E2E، يرى المهاجم فقط رموزًا عشوائية. بدونه، يمكنه قراءة كل شيء.',
     howto_1: 'اكتب رسالة سرية في حقل الإدخال وانقر على "شفّر وأرسل".',
     howto_2: 'شاهد الحزمة المتحركة تسافر من أليس عبر عقد الترحيل إلى بوب.',
     howto_3: 'أوقف التشفير وأرسل مرة أخرى — لاحظ أن الترحيل يمكنه الآن قراءة النص.',
@@ -258,8 +244,7 @@ const LANG = {
     noMsgToSniff: 'أرسل رسالة أولاً!',
     enterMsg: 'الرجاء إدخال رسالة.',
     tunnelSecure: 'النفق آمن',
-    tunnelInsecure: 'النفق غير آمن',
-  ,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}
+    tunnelInsecure: 'النفق غير آمن',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Bit Mesh Rescue and Bit Radio Cartographer! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -82,10 +82,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', theme: 'Theme',
     settings: 'Settings', language: 'Language',
     help: 'Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is nanosecond radar?', faq_a1: 'Ultra-short pulse radar for sub-millimeter precision ranging.',
-    faq_q2: 'How do I change the theme?', faq_a2: 'Open Settings and pick a theme from the dropdown.',
-    faq_q3: 'How do I change the language?', faq_a3: 'Open Settings and pick your language.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Adjust pulse rate and precision sliders.',
     howto_2: 'Click Start Scan to begin radar simulation.',
     howto_3: 'Watch targets appear on the radar sweep.',
@@ -105,8 +101,7 @@ const LANG = {
     langChanged: 'Language: English', themeChanged: 'Theme:',
     scanStarted: 'Radar scan started', scanStopped: 'Radar scan stopped',
     scanReset: 'Radar reset', targetDetected: 'Target detected!',
-    targetLost: 'Target lost', sweepComplete: 'Sweep complete',
-  ,step1Title:'Set Time Reference',step1Desc:'Establish a precise time base using atomic clocks or network synchronization.',step2Title:'Measure Interval',step2Desc:'Capture timing data with nanosecond precision across the system.',step3Title:'Detect Anomalies',step3Desc:'Compare timestamps to find drift, jitter, or deliberate manipulation.',step4Title:'Exploit or Defend',step4Desc:'Use timing information to attack vulnerable systems or strengthen defenses.',sectionCode:'Device Code'},
+    targetLost: 'Target lost', sweepComplete: 'Sweep complete',step1Title:'Set Time Reference',step1Desc:'Establish a precise time base using atomic clocks or network synchronization.',step2Title:'Measure Interval',step2Desc:'Capture timing data with nanosecond precision across the system.',step3Title:'Detect Anomalies',step3Desc:'Compare timestamps to find drift, jitter, or deliberate manipulation.',step4Title:'Exploit or Defend',step4Desc:'Use timing information to attack vulnerable systems or strengthen defenses.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates time manipulation! 🔬 You get to experiment with timing and synchronization in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real timing and synchronization so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real temporal attacks and precision clocks! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Chrono Chronos Beacon and Chrono Epoch Vault! Each teaches something different. 🚀'},
   fr: {
     title: 'Radar Nanoseconde Chrono',
     subtitle: 'Radar temporel precision nanoseconde',
@@ -127,10 +122,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', theme: 'Theme',
     settings: 'Parametres', language: 'Langue',
     help: 'Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le radar nanoseconde?', faq_a1: 'Radar a impulsions ultra-courtes.',
-    faq_q2: 'Comment changer le theme?', faq_a2: 'Ouvrez Parametres.',
-    faq_q3: 'Comment changer la langue?', faq_a3: 'Ouvrez Parametres.',
-    faq_q4: 'Mes donnees sont privees?', faq_a4: 'Oui. Tout est local.',
     howto_1: 'Reglez la frequence et la precision.',
     howto_2: 'Cliquez Demarrer pour le balayage.',
     howto_3: 'Observez les cibles sur le radar.',
@@ -150,8 +141,7 @@ const LANG = {
     langChanged: 'Langue: Francais', themeChanged: 'Theme:',
     scanStarted: 'Balayage demarre', scanStopped: 'Balayage arrete',
     scanReset: 'Radar reinitialise', targetDetected: 'Cible detectee!',
-    targetLost: 'Cible perdue', sweepComplete: 'Balayage termine',
-  ,step1Title:'Définir la référence',step1Desc:'Établis une base de temps précise via horloge atomique ou synchronisation.',step2Title:'Mesurer l\'intervalle',step2Desc:'Capture les données temporelles avec une précision nanoseconde.',step3Title:'Détecter les anomalies',step3Desc:'Compare les horodatages pour trouver la dérive ou la manipulation.',step4Title:'Exploiter ou défendre',step4Desc:'Utilise les informations temporelles pour attaquer ou renforcer les défenses.',sectionCode:'Code Appareil'},
+    targetLost: 'Cible perdue', sweepComplete: 'Balayage termine',step1Title:'Définir la référence',step1Desc:'Établis une base de temps précise via horloge atomique ou synchronisation.',step2Title:'Mesurer l\'intervalle',step2Desc:'Capture les données temporelles avec une précision nanoseconde.',step3Title:'Détecter les anomalies',step3Desc:'Compare les horodatages pour trouver la dérive ou la manipulation.',step4Title:'Exploiter ou défendre',step4Desc:'Utilise les informations temporelles pour attaquer ou renforcer les défenses.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule time manipulation ! 🔬 Tu peux expérimenter avec timing and synchronization en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais timing and synchronization.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai temporal attacks and precision clocks ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Chrono Chronos Beacon and Chrono Epoch Vault ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'رادار النانوثانية كرونو',
     subtitle: 'رادار توقيت بدقة النانوثانية',
@@ -172,10 +162,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', theme: 'المظهر',
     settings: 'الإعدادات', language: 'اللغة',
     help: 'مساعدة', faq: 'أسئلة شائعة', howto: 'كيف', wiki: 'ويكي',
-    faq_q1: 'ما هو رادار النانوثانية؟', faq_a1: 'رادار بنبضات قصيرة جدا للقياس الدقيق.',
-    faq_q2: 'كيف أغير المظهر؟', faq_a2: 'افتح الإعدادات.',
-    faq_q3: 'كيف أغير اللغة؟', faq_a3: 'افتح الإعدادات.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء محلي.',
     howto_1: 'اضبط معدل النبض والدقة.',
     howto_2: 'انقر بدء المسح.',
     howto_3: 'راقب الأهداف على الرادار.',
@@ -195,8 +181,7 @@ const LANG = {
     langChanged: 'اللغة: العربية', themeChanged: 'المظهر:',
     scanStarted: 'بدأ المسح', scanStopped: 'توقف المسح',
     scanReset: 'إعادة تعيين الرادار', targetDetected: 'تم اكتشاف هدف!',
-    targetLost: 'فقد الهدف', sweepComplete: 'اكتمل المسح',
-  ,step1Title:'تعيين المرجع الزمني',step1Desc:'أنشئ قاعدة زمنية دقيقة باستخدام الساعات الذرية أو المزامنة.',step2Title:'قياس الفاصل',step2Desc:'التقط بيانات التوقيت بدقة نانوثانية عبر النظام.',step3Title:'كشف الشذوذ',step3Desc:'قارن الطوابع الزمنية للعثور على الانحراف أو التلاعب.',step4Title:'استغلال أو دفاع',step4Desc:'استخدم معلومات التوقيت لمهاجمة الأنظمة أو تعزيز الدفاعات.',sectionCode:'كود الجهاز'}
+    targetLost: 'فقد الهدف', sweepComplete: 'اكتمل المسح',step1Title:'تعيين المرجع الزمني',step1Desc:'أنشئ قاعدة زمنية دقيقة باستخدام الساعات الذرية أو المزامنة.',step2Title:'قياس الفاصل',step2Desc:'التقط بيانات التوقيت بدقة نانوثانية عبر النظام.',step3Title:'كشف الشذوذ',step3Desc:'قارن الطوابع الزمنية للعثور على الانحراف أو التلاعب.',step4Title:'استغلال أو دفاع',step4Desc:'استخدم معلومات التوقيت لمهاجمة الأنظمة أو تعزيز الدفاعات.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي time manipulation! 🔬 يمكنك التجربة مع timing and synchronization في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج timing and synchronization حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا temporal attacks and precision clocks حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Chrono Chronos Beacon and Chrono Epoch Vault! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

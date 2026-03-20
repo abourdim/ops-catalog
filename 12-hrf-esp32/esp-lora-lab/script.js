@@ -46,10 +46,6 @@ const LANG = {
     clear: 'Clear', copy: 'Copy', export: 'Export', filterAll: 'All',
     settings: '⚙️ Settings', language: 'Language', theme: 'Theme',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is LoRa Lab?', faq_a1: 'A simulator for LoRa long-range radio using chirp spread spectrum on ESP32.',
-    faq_q2: 'What is Spreading Factor?', faq_a2: 'SF controls range vs data rate. SF12 = max range, SF7 = max speed.',
-    faq_q3: 'How far can LoRa reach?', faq_a3: '15+ km in open terrain with SF12/20dBm.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser.',
     howto_1: 'Select SF and bandwidth from controls.',
     howto_2: 'Type a message and press Send.',
     howto_3: 'Watch chirps on the waterfall display.',
@@ -64,8 +60,7 @@ const LANG = {
     logCleared: 'Log cleared', copied: 'Copied!', copyFail: 'Copy failed',
     working: 'Working…', langChanged: '🌐 Language → English', themeChanged: '🎨 Theme →',
     msgSent: 'Message sent via LoRa', chirpAnim: 'Chirp animation active',
-    t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',
-  ,step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code'},
+    t_mosque:'Mosque',t_zellige:'Zellige',t_andalus:'Andalus',t_riad:'Riad',t_medina:'Medina',t_space:'Space',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configure RF',step1Desc:'Set the frequency band, modulation type, and signal parameters.',step2Title:'Capture Spectrum',step2Desc:'Scan the radio spectrum to detect and capture signals of interest.',step3Title:'Analyze Signal',step3Desc:'Apply signal processing to identify modulation, encoding, and source.',step4Title:'Classify & Report',step4Desc:'Categorize the signal type and log detailed analysis results.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It simulates RF signals! 🔬 You get to experiment with radio frequency patterns in a safe sandbox.',faq_q2:'How does it work?',faq_a2:'The simulation runs in your browser. It models real radio frequency patterns so you can see what happens step by step.',faq_q3:'What should I try first?',faq_a3:'Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.',faq_q4:'What\'s the real science?',faq_a4:'This is real signal intelligence! The same principles are used by professionals in the field. 🧪',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! Push the parameters to extremes and see what happens. That\'s how scientists discover new things! 💡',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need ESP32. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Esp Ble Xray and Esp Wifi Dissector! Each teaches something different. 🚀'},
   fr: {
     title: '📶 Labo LoRa', subtitle: 'Radio Longue Portee — Spectre Chirp',
     disconnected: 'Deconnecte', connected: 'Connecte',
@@ -81,10 +76,6 @@ const LANG = {
     clear: 'Effacer', copy: 'Copier', export: 'Exporter', filterAll: 'Tout',
     settings: '⚙️ Parametres', language: 'Langue', theme: 'Theme',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que Labo LoRa?', faq_a1: 'Un simulateur radio LoRa longue portee avec spectre chirp sur ESP32.',
-    faq_q2: 'Qu\'est-ce que le facteur d\'etalement?', faq_a2: 'SF controle portee vs debit. SF12 = portee max.',
-    faq_q3: 'Quelle portee pour LoRa?', faq_a3: '15+ km en terrain ouvert avec SF12/20dBm.',
-    faq_q4: 'Mes donnees sont privees?', faq_a4: 'Oui. Tout fonctionne localement.',
     howto_1: 'Selectionnez SF et bande passante.', howto_2: 'Tapez un message et appuyez Envoyer.',
     howto_3: 'Observez les chirps sur la cascade.', howto_4: 'Ouvrez le calculateur de portee.',
     wiki_themes_title: '🎨 Themes', wiki_themes: '8 themes integres.',
@@ -97,8 +88,7 @@ const LANG = {
     logCleared: 'Journal efface', copied: 'Copie!', copyFail: 'Echec',
     working: 'En cours…', langChanged: '🌐 Langue → Francais', themeChanged: '🎨 Theme →',
     msgSent: 'Message envoye via LoRa',
-    t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',
-  ,step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil'},
+    t_mosque:'Mosquee',t_zellige:'Zellige',t_andalus:'Andalous',t_riad:'Riad',t_medina:'Medina',t_space:'Espace',t_jungle:'Jungle',t_robot:'Robot',step1Title:'Configurer RF',step1Desc:'Règle la bande de fréquence, le type de modulation et les paramètres.',step2Title:'Capturer le spectre',step2Desc:'Scanne le spectre radio pour détecter et capturer les signaux.',step3Title:'Analyser le signal',step3Desc:'Applique le traitement du signal pour identifier la modulation et la source.',step4Title:'Classifier et rapporter',step4Desc:'Catégorise le type de signal et enregistre les résultats.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle simule RF signals ! 🔬 Tu peux expérimenter avec radio frequency patterns en toute sécurité.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle modélise de vrais radio frequency patterns.',faq_q3:'Que dois-je essayer ?',faq_a3:'Appuie sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est du vrai signal intelligence ! Les mêmes principes utilisés par les professionnels. 🧪',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Pousse les paramètres à l\'extrême et observe. C\'est comme ça qu\'on découvre ! 💡',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut ESP32. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Absolument sûr ! 🛡️ Tout tourne localement. Pas d\'internet requis.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Ble Xray and Esp Wifi Dissector ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: '📶 مختبر LoRa', subtitle: 'راديو بعيد المدى — طيف Chirp',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -114,10 +104,6 @@ const LANG = {
     clear: 'مسح', copy: 'نسخ', export: 'تصدير', filterAll: 'الكل',
     settings: '⚙️ الإعدادات', language: 'اللغة', theme: 'المظهر',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو مختبر LoRa؟', faq_a1: 'محاكي لراديو LoRa بعيد المدى بطيف chirp على ESP32.',
-    faq_q2: 'ما هو عامل الانتشار؟', faq_a2: 'SF يتحكم في المدى مقابل المعدل.',
-    faq_q3: 'ما مدى وصول LoRa؟', faq_a3: '15+ كم في التضاريس المفتوحة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محلياً.',
     howto_1: 'اختر SF وعرض النطاق.', howto_2: 'اكتب رسالة واضغط إرسال.',
     howto_3: 'شاهد chirps على شاشة الشلال.', howto_4: 'افتح حاسبة المدى.',
     wiki_themes_title: '🎨 المظاهر', wiki_themes: '8 مظاهر مدمجة.',
@@ -130,8 +116,7 @@ const LANG = {
     logCleared: 'تم مسح السجل', copied: 'تم النسخ!', copyFail: 'فشل النسخ',
     working: 'جارٍ…', langChanged: '🌐 اللغة ← العربية', themeChanged: '🎨 المظهر ←',
     msgSent: 'تم إرسال الرسالة عبر LoRa',
-    t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',
-  ,step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز'}
+    t_mosque:'مسجد',t_zellige:'زليج',t_andalus:'أندلس',t_riad:'رياض',t_medina:'مدينة',t_space:'فضاء',t_jungle:'أدغال',t_robot:'روبوت',step1Title:'تكوين RF',step1Desc:'اضبط نطاق التردد ونوع التعديل ومعلمات الإشارة.',step2Title:'التقاط الطيف',step2Desc:'امسح الطيف الراديوي لاكتشاف والتقاط الإشارات المطلوبة.',step3Title:'تحليل الإشارة',step3Desc:'طبّق معالجة الإشارة لتحديد التعديل والترميز والمصدر.',step4Title:'تصنيف والتقرير',step4Desc:'صنّف نوع الإشارة وسجّل نتائج التحليل المفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يحاكي RF signals! 🔬 يمكنك التجربة مع radio frequency patterns في بيئة آمنة.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تنمذج radio frequency patterns حقيقية خطوة بخطوة.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم عدّل الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هذا signal intelligence حقيقي! نفس المبادئ المستخدمة من المحترفين. 🧪',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! ادفع المعلمات للحدود القصوى وشاهد. هكذا يكتشف العلماء! 💡',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج ESP32. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ كل شيء يعمل محلياً. لا حاجة للإنترنت.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Ble Xray and Esp Wifi Dissector! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

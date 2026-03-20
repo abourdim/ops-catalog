@@ -92,10 +92,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is an accelerometer?', faq_a1: 'An accelerometer measures acceleration forces on 3 axes (X, Y, Z). The micro:bit has one built-in that detects tilts, shakes, and motion.',
-    faq_q2: 'How does pattern authentication work?', faq_a2: 'Your unique shake pattern becomes a physical key. The app records acceleration data and uses it to encrypt messages. Only the same pattern can unlock them.',
-    faq_q3: 'What is the micro:bit?', faq_a3: 'The BBC micro:bit is a pocket-sized computer with sensors (accelerometer, compass, light, temperature) that teaches coding and electronics.',
-    faq_q4: 'Can I use this without a micro:bit?', faq_a4: 'Yes! The app simulates the accelerometer using mouse movement (desktop) or the DeviceMotion API (mobile). No hardware needed.',
     howto_1: 'Click "Record Pattern" and move your mouse (or shake your phone) to create a unique shake pattern.',
     howto_2: 'Type a secret message in the input field and click "Lock" to encrypt it with your pattern.',
     howto_3: 'Click "Shake to Unlock" and reproduce your shake pattern to decrypt the message.',
@@ -130,8 +126,7 @@ const LANG = {
     labRecording: '🔴 Recording pattern...',
     labRecordDone: '✅ Pattern recorded',
     labCompareResult: '📐 DTW similarity: ',
-    labNeedBoth: '⚠️ Record both patterns first',
-  ,step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code'},
+    labNeedBoth: '⚠️ Record both patterns first',step1Title:'Configure',step1Desc:'Set up the simulation parameters and choose your encryption method.',step2Title:'Process',step2Desc:'The data is processed through the chosen algorithm or technique.',step3Title:'Transmit',step3Desc:'The processed signal or message is sent through the communication channel.',step4Title:'Verify',step4Desc:'The receiver decodes, verifies, and validates the received data.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Micro Wire and Bit Spy Compass! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-shake-cipher', subtitle: '📳 secouer · 🔐 chiffrer · 🔓 déverrouiller',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -162,10 +157,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce qu\'un accéléromètre ?', faq_a1: 'Un capteur qui mesure les forces d\'accélération sur 3 axes (X, Y, Z). Le micro:bit en a un intégré pour détecter inclinaisons, secousses et mouvements.',
-    faq_q2: 'Comment fonctionne l\'authentification par motif ?', faq_a2: 'Votre motif de secousse unique devient une clé physique. L\'appli enregistre les données d\'accélération pour chiffrer les messages.',
-    faq_q3: 'Qu\'est-ce que le micro:bit ?', faq_a3: 'Le BBC micro:bit est un micro-ordinateur de poche avec capteurs (accéléromètre, boussole, lumière, température) pour apprendre la programmation.',
-    faq_q4: 'Puis-je utiliser sans micro:bit ?', faq_a4: 'Oui ! L\'appli simule l\'accéléromètre avec le mouvement de souris (bureau) ou l\'API DeviceMotion (mobile). Aucun matériel requis.',
     howto_1: 'Cliquez "Enregistrer le motif" et bougez la souris (ou secouez votre téléphone) pour créer un motif unique.',
     howto_2: 'Tapez un message secret et cliquez "Verrouiller" pour le chiffrer avec votre motif.',
     howto_3: 'Cliquez "Secouer pour déverrouiller" et reproduisez votre motif pour déchiffrer le message.',
@@ -200,8 +191,7 @@ const LANG = {
     labRecording: '🔴 Enregistrement du motif...',
     labRecordDone: '✅ Motif enregistré',
     labCompareResult: '📐 Similarité DTW : ',
-    labNeedBoth: '⚠️ Enregistrez les deux motifs d\'abord',
-  ,step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil'},
+    labNeedBoth: '⚠️ Enregistrez les deux motifs d\'abord',step1Title:'Configurer',step1Desc:'Configure les paramètres de simulation et choisis ta méthode de chiffrement.',step2Title:'Traiter',step2Desc:'Les données sont traitées par l\'algorithme ou la technique choisie.',step3Title:'Transmettre',step3Desc:'Le signal ou message traité est envoyé par le canal de communication.',step4Title:'Vérifier',step4Desc:'Le récepteur décode, vérifie et valide les données reçues.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Micro Wire and Bit Spy Compass ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-shake-cipher', subtitle: '📳 هزّ · 🔐 تشفير · 🔓 فتح',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -232,10 +222,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو مقياس التسارع؟', faq_a1: 'مستشعر يقيس قوى التسارع على 3 محاور (X، Y، Z). يحتوي micro:bit على واحد مدمج لاكتشاف الميل والهز والحركة.',
-    faq_q2: 'كيف تعمل المصادقة بالنمط؟', faq_a2: 'يصبح نمط الهز الفريد مفتاحًا فيزيائيًا. يسجل التطبيق بيانات التسارع ويستخدمها لتشفير الرسائل. نفس النمط فقط يمكنه فتحها.',
-    faq_q3: 'ما هو micro:bit؟', faq_a3: 'BBC micro:bit هو حاسوب بحجم الجيب مع مستشعرات (تسارع، بوصلة، ضوء، حرارة) لتعليم البرمجة والإلكترونيات.',
-    faq_q4: 'هل يمكنني الاستخدام بدون micro:bit؟', faq_a4: 'نعم! يحاكي التطبيق مقياس التسارع باستخدام حركة الفأرة (سطح المكتب) أو واجهة DeviceMotion (الهاتف). لا حاجة لعتاد.',
     howto_1: 'انقر "تسجيل النمط" وحرّك الفأرة (أو هزّ هاتفك) لإنشاء نمط هز فريد.',
     howto_2: 'اكتب رسالة سرية في حقل الإدخال وانقر "قفل" لتشفيرها بنمطك.',
     howto_3: 'انقر "هزّ لفتح القفل" وأعد إنتاج نمط الهز لفك تشفير الرسالة.',
@@ -270,8 +256,7 @@ const LANG = {
     labRecording: '🔴 جارٍ تسجيل النمط...',
     labRecordDone: '✅ تم تسجيل النمط',
     labCompareResult: '📐 تشابه DTW: ',
-    labNeedBoth: '⚠️ سجّل كلا النمطين أولاً',
-  ,step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز'}
+    labNeedBoth: '⚠️ سجّل كلا النمطين أولاً',step1Title:'تكوين',step1Desc:'اضبط معلمات المحاكاة واختر طريقة التشفير.',step2Title:'معالجة',step2Desc:'تتم معالجة البيانات عبر الخوارزمية أو التقنية المختارة.',step3Title:'إرسال',step3Desc:'يتم إرسال الإشارة أو الرسالة المعالجة عبر قناة الاتصال.',step4Title:'تحقق',step4Desc:'يقوم المستقبل بفك التشفير والتحقق من البيانات المستلمة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Bit Micro Wire and Bit Spy Compass! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';

@@ -16,10 +16,6 @@ mainSection:'Cyber Range — Red vs Blue',mainDesc:'Physical network for attack/
 sectionA:'How It Works',sectionB:'Lab',sectionC:'Challenge',
 activityLog:'Activity Log',eventsMsg:'Events & messages',clear:'Clear',copy:'Copy',theme:'Theme',export:'Export',filterAll:'All',
 settings:'⚙️ Settings',language:'Language',help:'❓ Help',faq:'FAQ',howto:'How-To',wiki:'Wiki',
-faq_q1:'What is a cyber range?',faq_a1:'A cyber range is a simulated environment for practicing cybersecurity. Red teams attack, blue teams defend.',
-faq_q2:'What is a port scan?',faq_a2:'A port scan probes a server for open ports/services. Attackers use it for recon; defenders monitor for it.',
-faq_q3:'What is lateral movement?',faq_a3:'Lateral movement is when an attacker moves from one compromised system to another within the network.',
-faq_q4:'What is an IDS?',faq_a4:'An Intrusion Detection System monitors network traffic for suspicious activity and alerts defenders.',
 howto_1:'Use Red Team buttons to launch attacks against the corporate network.',
 howto_2:'Use Blue Team buttons to deploy defenses before or after attacks.',
 howto_3:'Watch the canvas for attack animations and the event feed for details.',
@@ -53,8 +49,7 @@ atkExploitOK:'Exploited CVE-2024-1234 on web server!',atkExploitBlocked:'Exploit
 atkLateralOK:'Moved laterally to database server',atkLateralBlocked:'Lateral movement detected by IDS!',
 atkExfilOK:'Data exfiltrated: 2.3 GB stolen!',atkExfilBlocked:'Exfiltration blocked — segment isolated!',
 defFirewallOK:'Firewall enabled — blocking unauthorized traffic',defIDSOK:'IDS deployed — monitoring for anomalies',
-defPatchOK:'All systems patched — vulnerabilities closed',defIsolateOK:'Network segment isolated — containment active',
-,step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code'},
+defPatchOK:'All systems patched — vulnerabilities closed',defIsolateOK:'Network segment isolated — containment active',step1Title:'Scan',step1Desc:'The network is scanned to discover active devices and services.',step2Title:'Capture',step2Desc:'Network packets are intercepted and captured for analysis.',step3Title:'Analyze',step3Desc:'Packet data is parsed to reveal protocols, addresses, and payloads.',step4Title:'Report',step4Desc:'Results are visualized as graphs, maps, or detailed reports.',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It lets you see how computer networks talk to each other! 🌐 Like X-ray vision for internet traffic.',faq_q2:'How does it work?',faq_a2:'The simulation shows real network protocols — the rules that computers follow to send data across the internet.',faq_q3:'What should I try first?',faq_a3:'Start a scan and watch the packets fly! 📡 Each colored packet is a different type of network message.',faq_q4:'What\'s the real science?',faq_a4:'This is how the entire internet works! TCP/IP, DNS, ARP — these protocols power every website you visit. 🌍',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See what happens when you inject bad packets or flood the network. That\'s network security! 🛡️',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'Totally safe! 🛡️ This is a simulation — no real network traffic. Everything stays in your browser.',faq_q8:'What should I try next?',faq_a8:'Try Esp Swarm Net and Esp Internet Simulator! Each teaches something different. 🚀'},
 fr:{
 title:'Cyber Range',subtitle:'⚔️ équipe rouge · 🛡️ équipe bleue · 🏢 réseau',
 disconnected:'Déconnecté',connected:'Connecté',
@@ -62,10 +57,6 @@ mainSection:'Cyber Range — Rouge vs Bleu',mainDesc:'Réseau physique pour entr
 sectionA:'Comment ça marche',sectionB:'Labo',sectionC:'Défi',
 activityLog:'Journal',eventsMsg:'Événements',clear:'Effacer',copy:'Copier',theme:'Thème',export:'Exporter',filterAll:'Tout',
 settings:'⚙️ Paramètres',language:'Langue',help:'❓ Aide',faq:'FAQ',howto:'Guide',wiki:'Wiki',
-faq_q1:'Qu\'est-ce qu\'un cyber range ?',faq_a1:'Un cyber range est un environnement simulé pour pratiquer la cybersécurité.',
-faq_q2:'Qu\'est-ce qu\'un scan de ports ?',faq_a2:'Un scan de ports sonde un serveur pour trouver les services ouverts.',
-faq_q3:'Qu\'est-ce que le mouvement latéral ?',faq_a3:'Le mouvement latéral est quand un attaquant se déplace d\'un système compromis à un autre.',
-faq_q4:'Qu\'est-ce qu\'un IDS ?',faq_a4:'Un système de détection d\'intrusion surveille le trafic réseau pour détecter les activités suspectes.',
 howto_1:'Utilisez les boutons Équipe Rouge pour lancer des attaques.',howto_2:'Utilisez les boutons Équipe Bleue pour déployer des défenses.',
 howto_3:'Regardez le canevas et le flux d\'événements.',howto_4:'Essayez de surpasser l\'équipe adverse.',
 wiki_red_title:'⚔️ Équipe Rouge',wiki_red:'Les équipes rouges simulent de vrais attaquants.',
@@ -95,8 +86,7 @@ atkExploitOK:'CVE-2024-1234 exploité sur le serveur !',atkExploitBlocked:'Explo
 atkLateralOK:'Mouvement latéral vers le serveur de base de données',atkLateralBlocked:'Mouvement latéral détecté par l\'IDS !',
 atkExfilOK:'Données exfiltrées : 2.3 Go volés !',atkExfilBlocked:'Exfiltration bloquée — segment isolé !',
 defFirewallOK:'Pare-feu activé — trafic non autorisé bloqué',defIDSOK:'IDS déployé — surveillance des anomalies',
-defPatchOK:'Systèmes patchés — vulnérabilités fermées',defIsolateOK:'Segment réseau isolé — confinement actif',
-,step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil'},
+defPatchOK:'Systèmes patchés — vulnérabilités fermées',defIsolateOK:'Segment réseau isolé — confinement actif',step1Title:'Scanner',step1Desc:'Le réseau est scanné pour découvrir les appareils et services actifs.',step2Title:'Capturer',step2Desc:'Les paquets réseau sont interceptés et capturés pour analyse.',step3Title:'Analyser',step3Desc:'Les données des paquets sont analysées pour révéler protocoles et adresses.',step4Title:'Rapporter',step4Desc:'Les résultats sont visualisés sous forme de graphiques ou rapports.',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'Elle te permet de voir comment les réseaux communiquent ! 🌐 Comme une vision aux rayons X du trafic internet.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation montre de vrais protocoles réseau — les règles que les ordinateurs suivent pour envoyer des données.',faq_q3:'Que dois-je essayer ?',faq_a3:'Lance un scan et regarde les paquets voler ! 📡 Chaque paquet coloré est un type de message différent.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'C\'est comme ça que tout internet fonctionne ! TCP/IP, DNS, ARP — ces protocoles alimentent chaque site. 🌍',faq_q5:'Je peux le casser ?',faq_a5:'Essaie le Labo ! Vois ce qui se passe quand tu injectes de mauvais paquets. C\'est la sécurité réseau ! 🛡️',faq_q6:'Quel matériel ?',faq_a6:'Pour la version réelle, il te faut a computer with Python 3. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'Totalement sûr ! 🛡️ C\'est une simulation — pas de vrai trafic réseau.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Esp Swarm Net and Esp Internet Simulator ! Chacune enseigne quelque chose de différent. 🚀'},
 ar:{
 title:'ميدان السيبراني',subtitle:'⚔️ فريق أحمر · 🛡️ فريق أزرق · 🏢 شبكة',
 disconnected:'غير متصل',connected:'متصل',
@@ -104,10 +94,6 @@ mainSection:'الميدان السيبراني — أحمر ضد أزرق',mainD
 sectionA:'كيف يعمل',sectionB:'المختبر',sectionC:'التحدي',
 activityLog:'سجل النشاط',eventsMsg:'الأحداث',clear:'مسح',copy:'نسخ',theme:'المظهر',export:'تصدير',filterAll:'الكل',
 settings:'⚙️ الإعدادات',language:'اللغة',help:'❓ مساعدة',faq:'أسئلة شائعة',howto:'كيف تستخدم',wiki:'ويكي',
-faq_q1:'ما هو الميدان السيبراني؟',faq_a1:'الميدان السيبراني هو بيئة محاكاة لممارسة الأمن السيبراني.',
-faq_q2:'ما هو مسح المنافذ؟',faq_a2:'مسح المنافذ يفحص الخادم للعثور على المنافذ/الخدمات المفتوحة.',
-faq_q3:'ما هو الحركة الجانبية؟',faq_a3:'الحركة الجانبية هي عندما ينتقل المهاجم من نظام مخترق إلى آخر داخل الشبكة.',
-faq_q4:'ما هو نظام كشف التسلل؟',faq_a4:'نظام كشف التسلل يراقب حركة مرور الشبكة للكشف عن الأنشطة المشبوهة.',
 howto_1:'استخدم أزرار الفريق الأحمر لشن الهجمات.',howto_2:'استخدم أزرار الفريق الأزرق لنشر الدفاعات.',
 howto_3:'شاهد اللوحة وتغذية الأحداث.',howto_4:'حاول التفوق على الفريق المنافس.',
 wiki_red_title:'⚔️ الفريق الأحمر',wiki_red:'الفرق الحمراء تحاكي المهاجمين الحقيقيين.',
@@ -137,8 +123,7 @@ atkExploitOK:'تم استغلال CVE-2024-1234!',atkExploitBlocked:'فشل ال
 atkLateralOK:'حركة جانبية نحو خادم قاعدة البيانات',atkLateralBlocked:'حركة جانبية كُشفت بنظام كشف التسلل!',
 atkExfilOK:'تم تسريب 2.3 جيجابايت!',atkExfilBlocked:'التسريب حُظر — القطاع معزول!',
 defFirewallOK:'الجدار الناري مُفعّل — حظر حركة المرور غير المصرح بها',defIDSOK:'نظام كشف التسلل مُنشر — مراقبة الشذوذ',
-defPatchOK:'جميع الأنظمة محدّثة — الثغرات مُغلقة',defIsolateOK:'قطاع الشبكة معزول — الاحتواء نشط',
-,step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز'}};
+defPatchOK:'جميع الأنظمة محدّثة — الثغرات مُغلقة',defIsolateOK:'قطاع الشبكة معزول — الاحتواء نشط',step1Title:'مسح',step1Desc:'يتم فحص الشبكة لاكتشاف الأجهزة والخدمات النشطة.',step2Title:'التقاط',step2Desc:'يتم اعتراض حزم الشبكة والتقاطها للتحليل.',step3Title:'تحليل',step3Desc:'يتم تحليل بيانات الحزم لكشف البروتوكولات والعناوين.',step4Title:'تقرير',step4Desc:'يتم عرض النتائج كرسوم بيانية أو تقارير مفصلة.',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'يتيح لك رؤية كيف تتحدث الشبكات! 🌐 مثل رؤية بالأشعة السينية لحركة الإنترنت.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعرض بروتوكولات شبكة حقيقية — القواعد التي تتبعها الحواسيب لإرسال البيانات.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'ابدأ مسحاً وشاهد الحزم تطير! 📡 كل حزمة ملونة هي نوع مختلف من الرسائل.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'هكذا يعمل الإنترنت بأكمله! TCP/IP و DNS و ARP — هذه البروتوكولات تشغل كل موقع. 🌍',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب المختبر! شاهد ما يحدث عند حقن حزم سيئة. هذا هو أمن الشبكات! 🛡️',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج a computer with Python 3. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن تماماً! 🛡️ هذه محاكاة — لا حركة شبكة حقيقية.',faq_q8:'ماذا بعد؟',faq_a8:'جرب Esp Swarm Net and Esp Internet Simulator! كل واحد يعلّم شيئاً مختلفاً. 🚀'}};
 
 let currentLang='en';
 function setLanguage(lang){currentLang=lang;const s=LANG[lang];if(!s)return;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(s[k]!=null)el.textContent=s[k];});document.querySelectorAll('[data-i18n-opt]').forEach(o=>{const k=o.dataset.i18nOpt;if(s[k]!=null)o.textContent=s[k];});document.title=`${s.title} — Workshop DIY`;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;const sel=$('langSelect');if(sel)sel.value=lang;try{localStorage.setItem('wdiy-lang',lang);}catch{}log(s.langChanged,'info');}

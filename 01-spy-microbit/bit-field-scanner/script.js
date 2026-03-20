@@ -72,10 +72,6 @@ const LANG = {
     settings: '⚙️ Settings', language: 'Language',
     helpSettings: '❓ Help & Settings', settingsTab: '⚙️',
     help: '❓ Help', faq: 'FAQ', howto: 'How-To', wiki: 'Wiki',
-    faq_q1: 'What is the Field Scanner?', faq_a1: 'A multi-sensor threat assessment HUD that combines all micro:bit sensors into a single dashboard for environmental monitoring.',
-    faq_q2: 'How does the threat level work?', faq_a2: 'Each sensor reading is normalized to 0–100, then combined with weights. The sum determines GREEN (safe), YELLOW (caution), or RED (alert).',
-    faq_q3: 'Can I customize the threat thresholds?', faq_a3: 'Yes! Open the Lab section and use the rules editor to define custom threat conditions and adjust sensor weights.',
-    faq_q4: 'Is my data private?', faq_a4: 'Yes. Everything runs locally in your browser. No data is sent anywhere.',
     howto_1: 'Press "Start Scan" on the main card to begin polling all sensors simultaneously.',
     howto_2: 'Watch the gauges update in real time and observe the threat level change based on readings.',
     howto_3: 'Open the Lab to manually adjust sensor values and experiment with custom threat rules.',
@@ -117,8 +113,7 @@ const LANG = {
     scanStopped: '🛑 Scan stopped',
     intruderDetected: '🚨 INTRUDER DETECTED — motion spike!',
     rulesApplied: '✅ Custom threat rules applied',
-    threatAssessment: 'Threat',
-  ,step1Title:'Configure',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Process',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmit',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Verify',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'Device Code'},
+    threatAssessment: 'Threat',step1Title:'Configure',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Process',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmit',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Verify',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'Device Code',faq_q1:'What does this app do?',faq_a1:'It\'s like a spy gadget simulator! 🕵️ You get to play with real encryption, secret messages, and covert communication — the same tech real spies use.',faq_q2:'How does it work?',faq_a2:'The simulation runs right in your browser. It shows you step by step how secret agents protect their messages using math and radio signals.',faq_q3:'What should I try first?',faq_a3:'Hit the main button and watch what happens! 🎯 Then try changing the settings to see how it affects the results.',faq_q4:'What\'s the real science?',faq_a4:'This uses real cryptography — the same math that protects your WhatsApp messages and bank passwords! 🔐',faq_q5:'Can I break it?',faq_a5:'Try the Lab section! See if you can crack the code or intercept the message. That\'s how real security researchers think! 💪',faq_q6:'What hardware do I need?',faq_a6:'For the real version, you\'ll need BBC micro:bit V2. Check the 📦 Device Code section for ready-to-use firmware!',faq_q7:'Is it safe to use?',faq_a7:'100% safe! 🛡️ Everything runs locally in your browser. No internet needed, no data leaves your device.',faq_q8:'What should I try next?',faq_a8:'Try Bit Micro Wire and Bit Invisible Ink! Each teaches something different. 🚀'},
   fr: {
     title: 'bit-field-scanner', subtitle: '📡 scanner · 🔐 évaluer · 🛡️ protéger',
     disconnected: 'Déconnecté', connected: 'Connecté',
@@ -129,10 +124,6 @@ const LANG = {
     settings: '⚙️ Paramètres', language: 'Langue',
     helpSettings: '❓ Aide & Paramètres', settingsTab: '⚙️',
     help: '❓ Aide', faq: 'FAQ', howto: 'Guide', wiki: 'Wiki',
-    faq_q1: 'Qu\'est-ce que le Scanner de Terrain ?', faq_a1: 'Un HUD multi-capteurs qui combine tous les capteurs du micro:bit en un seul tableau de bord de surveillance environnementale.',
-    faq_q2: 'Comment fonctionne le niveau de menace ?', faq_a2: 'Chaque lecture de capteur est normalisée à 0–100, puis combinée avec des poids. La somme détermine VERT (sûr), JAUNE (prudence) ou ROUGE (alerte).',
-    faq_q3: 'Puis-je personnaliser les seuils ?', faq_a3: 'Oui ! Ouvre la section Labo et utilise l\'éditeur de règles pour définir des conditions de menace personnalisées.',
-    faq_q4: 'Mes données sont privées ?', faq_a4: 'Oui. Tout fonctionne localement dans ton navigateur. Rien n\'est envoyé nulle part.',
     howto_1: 'Appuie sur "Démarrer Scan" pour commencer à interroger tous les capteurs simultanément.',
     howto_2: 'Observe les jauges se mettre à jour en temps réel et le niveau de menace changer.',
     howto_3: 'Ouvre le Labo pour ajuster manuellement les valeurs et expérimenter avec les règles personnalisées.',
@@ -174,8 +165,7 @@ const LANG = {
     scanStopped: '🛑 Scan arrêté',
     intruderDetected: '🚨 INTRUS DÉTECTÉ — pic de mouvement !',
     rulesApplied: '✅ Règles de menace personnalisées appliquées',
-    threatAssessment: 'Menace',
-  ,step1Title:'Configurer',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Traiter',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmettre',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Vérifier',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'Code Appareil'},
+    threatAssessment: 'Menace',step1Title:'Configurer',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'Traiter',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'Transmettre',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'Vérifier',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'Code Appareil',faq_q1:'Que fait cette appli ?',faq_a1:'C\'est comme un simulateur de gadget d\'espion ! 🕵️ Tu peux jouer avec du vrai chiffrement et des messages secrets.',faq_q2:'Comment ça marche ?',faq_a2:'La simulation tourne dans ton navigateur. Elle te montre étape par étape comment les agents secrets protègent leurs messages.',faq_q3:'Que dois-je essayer d\'abord ?',faq_a3:'Clique sur le bouton principal et regarde ! 🎯 Puis change les réglages pour voir l\'effet.',faq_q4:'C\'est quoi la vraie science ?',faq_a4:'Ça utilise de la vraie cryptographie — les mêmes maths qui protègent tes messages WhatsApp ! 🔐',faq_q5:'Je peux le casser ?',faq_a5:'Essaie la section Labo ! Vois si tu peux craquer le code. C\'est comme ça que pensent les vrais chercheurs ! 💪',faq_q6:'Quel matériel me faut-il ?',faq_a6:'Pour la version réelle, il te faut BBC micro:bit V2. Regarde 📦 Code Appareil !',faq_q7:'C\'est sûr ?',faq_a7:'100% sûr ! 🛡️ Tout tourne localement dans ton navigateur. Pas besoin d\'internet.',faq_q8:'Que faire ensuite ?',faq_a8:'Essaie Bit Micro Wire and Bit Invisible Ink ! Chacune enseigne quelque chose de différent. 🚀'},
   ar: {
     title: 'bit-field-scanner', subtitle: '📡 مسح · 🔐 تقييم · 🛡️ حماية',
     disconnected: 'غير متصل', connected: 'متصل',
@@ -186,10 +176,6 @@ const LANG = {
     settings: '⚙️ الإعدادات', language: 'اللغة',
     helpSettings: '❓ مساعدة وإعدادات', settingsTab: '⚙️',
     help: '❓ مساعدة', faq: 'أسئلة شائعة', howto: 'كيف تستخدم', wiki: 'ويكي',
-    faq_q1: 'ما هو ماسح الميدان؟', faq_a1: 'شاشة عرض متعددة المستشعرات تجمع كل مستشعرات micro:bit في لوحة واحدة لمراقبة البيئة.',
-    faq_q2: 'كيف يعمل مستوى التهديد؟', faq_a2: 'يتم تطبيع كل قراءة إلى 0–100، ثم دمجها بأوزان. المجموع يحدد أخضر (آمن)، أصفر (حذر) أو أحمر (تنبيه).',
-    faq_q3: 'هل يمكنني تخصيص الحدود؟', faq_a3: 'نعم! افتح قسم المختبر واستخدم محرر القواعد لتحديد شروط تهديد مخصصة.',
-    faq_q4: 'هل بياناتي خاصة؟', faq_a4: 'نعم. كل شيء يعمل محليًا في متصفحك. لا يتم إرسال أي بيانات.',
     howto_1: 'اضغط "بدء المسح" لبدء استطلاع جميع المستشعرات في وقت واحد.',
     howto_2: 'راقب المقاييس تتحدث في الوقت الحقيقي ولاحظ تغير مستوى التهديد.',
     howto_3: 'افتح المختبر لضبط القيم يدويًا وتجربة قواعد التهديد المخصصة.',
@@ -231,8 +217,7 @@ const LANG = {
     scanStopped: '🛑 توقف المسح',
     intruderDetected: '🚨 تم اكتشاف دخيل — ذروة حركة!',
     rulesApplied: '✅ تم تطبيق قواعد التهديد المخصصة',
-    threatAssessment: 'التهديد',
-  ,step1Title:'تكوين',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'معالجة',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'إرسال',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'تحقق',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'كود الجهاز'}
+    threatAssessment: 'التهديد',step1Title:'تكوين',step1Desc:'All five sensors (light, temperature, accelerometer, compass, microphone) are polled simultaneously every scan cycle.',step2Title:'معالجة',step2Desc:'Each raw reading is normalized to a 0–100 scale for consistent comparison across different sensor ranges.',step3Title:'إرسال',step3Desc:'The threat algorithm combines all normalized readings using configurable weights to produce a single composite score.',step4Title:'تحقق',step4Desc:'The composite score determines the alert level: GREEN (below 30), YELLOW (30–70), or RED (above 70).',sectionCode:'كود الجهاز',faq_q1:'ماذا يفعل هذا التطبيق؟',faq_a1:'إنه مثل محاكي أدوات التجسس! 🕵️ يمكنك اللعب بتشفير حقيقي ورسائل سرية.',faq_q2:'كيف يعمل؟',faq_a2:'المحاكاة تعمل في متصفحك. تُظهر لك خطوة بخطوة كيف يحمي العملاء السريون رسائلهم.',faq_q3:'ماذا أجرب أولاً؟',faq_a3:'اضغط على الزر الرئيسي وشاهد! 🎯 ثم غيّر الإعدادات لترى التأثير.',faq_q4:'ما العلم الحقيقي؟',faq_a4:'يستخدم تشفيراً حقيقياً — نفس الرياضيات التي تحمي رسائل WhatsApp! 🔐',faq_q5:'هل يمكنني كسره؟',faq_a5:'جرب قسم المختبر! حاول كسر الشيفرة. هكذا يفكر الباحثون الأمنيون! 💪',faq_q6:'ما العتاد المطلوب؟',faq_a6:'للنسخة الحقيقية تحتاج BBC micro:bit V2. تفقد 📦 كود الجهاز!',faq_q7:'هل هو آمن؟',faq_a7:'آمن 100%! 🛡️ كل شيء يعمل محلياً في متصفحك. لا حاجة للإنترنت.',faq_q8:'ماذا أجرب بعد ذلك؟',faq_a8:'جرب Bit Micro Wire and Bit Invisible Ink! كل واحد يعلّم شيئاً مختلفاً. 🚀'}
 };
 
 let currentLang = 'en';
