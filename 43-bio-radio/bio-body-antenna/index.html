@@ -128,6 +128,8 @@
         </div>
       </div>
 <div class="sonify-panel" id="sonifyPanel" style="display:none;"></div>
+<div id="labRecorderPanel" style="margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.06);border:1px solid rgba(var(--accent-rgb,212,175,55),0.15);"><h3 data-i18n="labTitle" style="margin:0 0 0.5rem;">ð Lab Notebook</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.5rem;"><button class="btn-sm" id="labGenBtn" data-i18n="labGenerate" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">ð Lab Report</button><button class="btn-sm" id="labExpBtn" data-i18n="labExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export Report</button></div><pre id="labReportBox" style="display:none;max-height:200px;overflow:auto;padding:0.6rem;border-radius:8px;background:var(--bg,#000);color:var(--accent,#33ff33);font-size:0.72rem;white-space:pre-wrap;border:1px solid var(--border,#222);margin-bottom:0.8rem;"></pre><h3 data-i18n="recorderTitle" style="margin:0.8rem 0 0.4rem;">âº Data Recorder</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;margin-bottom:0.4rem;"><button class="btn-sm" id="recStartBtn" data-i18n="recorderStart" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">âº Record</button><button class="btn-sm" id="recClearBtn" data-i18n="recorderClear" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Clear</button><button class="btn-sm" id="recExpBtn" data-i18n="recorderExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export CSV</button><span id="recStatus" style="font-size:0.75rem;opacity:0.7;"></span></div><canvas id="recCanvas" width="200" height="80" style="width:100%;max-width:200px;border-radius:8px;background:#0a0a1a;border:1px solid var(--border,#222);"></canvas></div>
+
 <details class="collapsible" open>
         <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
         <div class="card">
@@ -264,7 +266,9 @@
 <div class="related-app"><a id="related3Link" href="#"><strong data-i18n="related3_name">App</strong></a><p data-i18n="related3_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div></div>
 <div class="wiki-entry" id="pathBlock"><h3 data-i18n="pathTitle">🛤️ Learning Path</h3>
 <p id="pathPrevP" style="margin:0.3rem 0;"><span style="opacity:0.6;">← Previous:</span> <a id="pathPrevLink" href="#" data-i18n="pathPrev_name">...</a></p>
-<p id="pathNextP" style="margin:0.3rem 0;"><span style="opacity:0.6;">Next →</span> <a id="pathNextLink" href="#" data-i18n="pathNext_name">...</a></p></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span><button onclick="printWorksheet()" class="btn-sm" style="margin-left:0.5rem;" data-i18n="printBtn">🖨️ Print</button></div>
+<p id="pathNextP" style="margin:0.3rem 0;"><span style="opacity:0.6;">Next →</span> <a id="pathNextLink" href="#" data-i18n="pathNext_name">...</a></p></div>
+<div id="spacedPanel"></div>
+<div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span><button onclick="printWorksheet()" class="btn-sm" style="margin-left:0.5rem;" data-i18n="printBtn">🖨️ Print</button></div>
   </aside>
 
   <div class="sidebar-overlay" id="settingsOverlay"></div>
@@ -290,7 +294,8 @@
   </aside>
 
   <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working&hellip;</div></div></div>
-  <div class="daily-challenge" id="dailyChallenge" style="margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.08);border:1px solid rgba(var(--accent-rgb,212,175,55),0.2);"></div><div class="mentor-overlay" id="mentorOverlay" style="display:none;"></div><button id="mentorTriggerBtn" class="btn-sm" style="margin:0.5rem 0.3rem;padding:0.4rem 0.8rem;border-radius:20px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.8rem;color:inherit;" data-i18n="mentorStart">🎓 Tutorial</button><script src="script.js"></script>
+  <div class="daily-challenge" id="dailyChallenge" style="margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.08);border:1px solid rgba(var(--accent-rgb,212,175,55),0.2);"></div><div class="mentor-overlay" id="mentorOverlay" style="display:none;"></div><button id="mentorTriggerBtn" class="btn-sm" style="margin:0.5rem 0.3rem;padding:0.4rem 0.8rem;border-radius:20px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.8rem;color:inherit;" data-i18n="mentorStart">🎓 Tutorial</button><div id="peerModePanel"></div><div id="activityHeatmap"></div>
+<script src="script.js"></script>
 <div class="tooltip-float" id="tooltipFloat" style="display:none;position:fixed;z-index:9999;background:#1a1a2e;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:250px;pointer-events:none;transition:opacity 0.2s"></div>
 
 
