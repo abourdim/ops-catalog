@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Periodic Table of Apps — Workshop DIY</title>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Orbitron:wght@400;700&family=Share+Tech+Mono&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100vh;background:#06080f;font-family:'Share Tech Mono',monospace;color:#e0d8c8}
+#topBar{position:sticky;top:0;z-index:100;background:rgba(6,8,15,0.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(200,168,78,0.2)}
+#topBar h1{font-family:'Righteous',sans-serif;color:#c8a84e;font-size:18px;letter-spacing:2px}
+#controls{display:flex;gap:10px;align-items:center}
+#searchBox{background:rgba(255,255,255,0.06);border:1px solid rgba(200,168,78,0.3);border-radius:6px;padding:6px 12px;color:#e0d8c8;font-family:'Share Tech Mono',monospace;font-size:13px;width:200px}
+#searchBox::placeholder{color:#888}
+#langBtns button{background:transparent;border:1px solid transparent;color:#c8a84e88;font-family:'Orbitron',sans-serif;font-size:10px;padding:3px 8px;border-radius:4px;cursor:pointer;transition:.2s}
+#langBtns button.active{border-color:#c8a84e;color:#c8a84e;background:rgba(200,168,78,0.12)}
+#legend{display:flex;flex-wrap:wrap;gap:6px;padding:10px 20px;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#aaa}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+#grid{display:flex;flex-wrap:wrap;gap:6px;padding:20px;justify-content:center;max-width:1600px;margin:0 auto}
+.element{width:80px;height:90px;border-radius:6px;padding:5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;position:relative;border:1px solid rgba(255,255,255,0.08);overflow:hidden}
+.element:hover{transform:scale(1.15);box-shadow:0 0 20px rgba(200,168,78,0.4);z-index:10}
+.element .atomic{font-family:'Orbitron',sans-serif;font-size:9px;color:rgba(255,255,255,0.5);position:absolute;top:3px;left:5px}
+.element .symbol{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#fff;text-shadow:0 0 8px rgba(255,255,255,0.2)}
+.element .elname{font-size:8px;color:rgba(255,255,255,0.7);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;margin-top:2px}
+.element.hidden{display:none}
+#popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0b0d24;border:2px solid #c8a84e;border-radius:14px;padding:24px;z-index:200;max-width:400px;width:90%;text-align:center}
+#popupOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:199}
+#popup h3{font-family:'Righteous',sans-serif;color:#c8a84e;margin-bottom:6px;font-size:20px}
+#popup .cat{font-family:'Orbitron',sans-serif;font-size:11px;color:#888;margin-bottom:8px}
+#popup .desc{font-size:13px;color:#bbb;line-height:1.5;margin-bottom:14px}
+#popup .openBtn{display:inline-block;background:#c8a84e;color:#06080f;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;padding:8px 24px;border-radius:6px;text-decoration:none;border:none;cursor:pointer;transition:.2s}
+#popup .openBtn:hover{background:#e0c06e;transform:scale(1.05)}
+#popup .closeBtn{position:absolute;top:10px;right:14px;background:none;border:none;color:#888;font-size:18px;cursor:pointer}
+#count{text-align:center;padding:8px;font-size:12px;color:#888}
+</style>
+</head>
+<body>
+<div id="topBar">
+ <h1 id="pageTitle">Periodic Table of Apps</h1>
+ <div id="controls">
+  <input type="text" id="searchBox" placeholder="Search apps...">
+  <div id="langBtns">
+   <button class="active" data-lang="en">EN</button>
+   <button data-lang="fr">FR</button>
+   <button data-lang="ar">AR</button>
+  </div>
+ </div>
+</div>
+<div id="legend"></div>
+<div id="count"></div>
+<div id="grid"></div>
+<div id="popupOverlay" onclick="closePopup()"></div>
+<div id="popup">
+ <button class="closeBtn" onclick="closePopup()">&times;</button>
+ <h3 id="popTitle"></h3>
+ <div class="cat" id="popCat"></div>
+ <div class="desc" id="popDesc"></div>
+ <a class="openBtn" id="popOpen" href="#">Open App</a>
+</div>
+<script>
+var TITLES={
+ en:{pageTitle:'Periodic Table of Apps',search:'Search apps...',open:'Open App'},
+ fr:{pageTitle:'Tableau P\u00e9riodique des Apps',search:'Chercher des apps...',open:'Ouvrir'},
+ ar:{pageTitle:'\u0627\u0644\u062c\u062f\u0648\u0644 \u0627\u0644\u062f\u0648\u0631\u064a \u0644\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a',search:'\u0628\u062d\u062b...',open:'\u0641\u062a\u062d'}
+};
+var COLORS=['#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c','#3498db','#9b59b6','#e84393','#00cec9','#6c5ce7','#fd79a8','#00b894','#fdcb6e','#74b9ff','#a29bfe','#fab1a0','#55efc4','#81ecec','#dfe6e9','#636e72','#2d3436','#b2bec3','#d63031','#0984e3','#6c5ce7'];
+var apps=[];var categories=[];var catColors={};var currentLang='en';
+
+function makeSymbol(title){
+ var w=title.replace(/[^a-zA-Z0-9]/g,'');
+ if(w.length===0)w='Xx';
+ if(w.length===1)return w.toUpperCase();
+ return w[0].toUpperCase()+w[1].toLowerCase();
+}
+
+function loadApps(){
+ fetch('search-index.json').then(function(r){return r.json();}).then(function(data){
+  apps=data;
+  var catSet={};
+  apps.forEach(function(a){if(!catSet[a.cat]){catSet[a.cat]=true;categories.push(a.cat);}});
+  categories.sort();
+  categories.forEach(function(c,i){catColors[c]=COLORS[i%COLORS.length];});
+  renderLegend();renderGrid();updateCount();
+ }).catch(function(err){
+  document.getElementById('grid').innerHTML='<p style="color:#e74c3c;padding:40px;">Failed to load search-index.json. Make sure this file is served over HTTP or place it alongside this page.</p>';
+ });
+}
+
+function renderLegend(){
+ var el=document.getElementById('legend');el.innerHTML='';
+ categories.forEach(function(c){
+  var d=document.createElement('div');d.className='legend-item';
+  d.innerHTML='<span class="legend-dot" style="background:'+catColors[c]+'"></span>'+c;
+  el.appendChild(d);
+ });
+}
+
+function renderGrid(){
+ var g=document.getElementById('grid');g.innerHTML='';
+ apps.forEach(function(a,idx){
+  var el=document.createElement('div');el.className='element';
+  el.style.background='linear-gradient(135deg,'+catColors[a.cat]+'22,'+catColors[a.cat]+'08)';
+  el.style.borderColor=catColors[a.cat]+'44';
+  el.setAttribute('data-title',(a.title||'').toLowerCase());
+  el.setAttribute('data-keywords',(a.keywords||'').toLowerCase());
+  el.setAttribute('data-cat',(a.cat||'').toLowerCase());
+  el.setAttribute('data-idx',idx);
+  el.innerHTML='<span class="atomic">'+(idx+1)+'</span><span class="symbol" style="color:'+catColors[a.cat]+'">'+makeSymbol(a.title)+'</span><span class="elname">'+truncate(a.title,10)+'</span>';
+  el.title=a.title+' \u2014 '+a.desc;
+  el.onclick=function(){showPopup(idx);};
+  g.appendChild(el);
+ });
+}
+
+function truncate(s,n){return s.length>n?s.substring(0,n)+'\u2026':s;}
+
+function showPopup(idx){
+ var a=apps[idx];if(!a)return;
+ var T=TITLES[currentLang]||TITLES.en;
+ document.getElementById('popTitle').textContent=a.title;
+ document.getElementById('popCat').textContent=a.cat;
+ document.getElementById('popDesc').textContent=a.desc;
+ document.getElementById('popOpen').textContent=T.open;
+ document.getElementById('popOpen').href=a.path;
+ document.getElementById('popup').style.display='block';
+ document.getElementById('popupOverlay').style.display='block';
+}
+function closePopup(){
+ document.getElementById('popup').style.display='none';
+ document.getElementById('popupOverlay').style.display='none';
+}
+
+function updateCount(){
+ var visible=document.querySelectorAll('.element:not(.hidden)').length;
+ document.getElementById('count').textContent=visible+' / '+apps.length+' apps';
+}
+
+document.getElementById('searchBox').addEventListener('input',function(){
+ var q=this.value.toLowerCase().trim();
+ document.querySelectorAll('.element').forEach(function(el){
+  if(!q){el.classList.remove('hidden');return;}
+  var t=el.getAttribute('data-title')+' '+el.getAttribute('data-keywords')+' '+el.getAttribute('data-cat');
+  el.classList.toggle('hidden',t.indexOf(q)===-1);
+ });
+ updateCount();
+});
+
+document.querySelectorAll('#langBtns button').forEach(function(btn){
+ btn.onclick=function(){
+  currentLang=btn.getAttribute('data-lang');
+  document.querySelectorAll('#langBtns button').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var T=TITLES[currentLang]||TITLES.en;
+  document.getElementById('pageTitle').textContent=T.pageTitle;
+  document.getElementById('searchBox').placeholder=T.search;
+  if(currentLang==='ar'){document.documentElement.dir='rtl';document.documentElement.lang='ar';}
+  else{document.documentElement.dir='ltr';document.documentElement.lang=currentLang;}
+ };
+});
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup();});
+loadApps();
+</script>
+</body>
+</html>

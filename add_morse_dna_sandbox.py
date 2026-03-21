@@ -420,11 +420,29 @@ def process_file(filepath):
     ar_pattern = '...LANG_BASE.ar,'
 
     if en_pattern in content:
+        # Old format: LANG_BASE spread
         content = content.replace(en_pattern, en_pattern + lang_en, 1)
-    if fr_pattern in content:
-        content = content.replace(fr_pattern, fr_pattern + lang_fr, 1)
-    if ar_pattern in content:
-        content = content.replace(ar_pattern, ar_pattern + lang_ar, 1)
+        if fr_pattern in content:
+            content = content.replace(fr_pattern, fr_pattern + lang_fr, 1)
+        if ar_pattern in content:
+            content = content.replace(ar_pattern, ar_pattern + lang_ar, 1)
+    else:
+        # New format: inline LANG without LANG_BASE
+        # Inject after en:{ or en: {
+        en_match = re.search(r'(en\s*:\s*\{)', content[content.find('const LANG'):])
+        if en_match:
+            ins_pos = content.find('const LANG') + en_match.end()
+            content = content[:ins_pos] + lang_en + content[ins_pos:]
+        # Inject into fr block
+        fr_match = re.search(r'(\},\s*\n?\s*fr\s*:\s*\{)', content)
+        if fr_match:
+            ins_pos = fr_match.end()
+            content = content[:ins_pos] + lang_fr + content[ins_pos:]
+        # Inject into ar block
+        ar_match = re.search(r'(\},\s*\n?\s*ar\s*:\s*\{)', content)
+        if ar_match:
+            ins_pos = ar_match.end()
+            content = content[:ins_pos] + lang_ar + content[ins_pos:]
 
     # Find the LANG block closing }; using brace counting
     lang_start = content.find('const LANG')

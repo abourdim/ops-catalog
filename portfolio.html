@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Student Portfolio — Workshop DIY</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0a0a1a;--card:#141428;--accent:#e94560;--accent2:#0f3460;--text:#eaeaea;--text2:#999;--border:rgba(255,255,255,0.08);}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0;}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(10,10,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 24px;}
+.topbar h1{font-size:1.3rem;color:var(--accent);}
+.topbar-actions{display:flex;gap:8px;align-items:center;}
+.topbar-actions button,.topbar-actions select{padding:6px 14px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;font-size:0.85rem;}
+.topbar-actions button:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.container{max-width:1100px;margin:0 auto;padding:24px;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.section h2{font-size:1.15rem;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+.profile-stat{background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;text-align:center;}
+.profile-stat .val{font-size:2rem;font-weight:700;color:var(--accent);}
+.profile-stat .lbl{font-size:0.8rem;color:var(--text2);margin-top:4px;}
+.badge-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.badge-item{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.3);border-radius:10px;padding:8px 14px;font-size:0.85rem;display:flex;align-items:center;gap:6px;}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.cert-card{background:linear-gradient(135deg,#1a1a3e,#0f3460);border:2px solid var(--accent);border-radius:12px;padding:20px;text-align:center;position:relative;overflow:hidden;}
+.cert-card::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;background:var(--accent);opacity:0.1;border-radius:50%;}
+.cert-card h3{font-size:1rem;margin-bottom:6px;}
+.cert-card p{font-size:0.8rem;color:var(--text2);}
+.rating-list,.log-list,.quiz-list,.collection-list{display:flex;flex-direction:column;gap:8px;}
+.rating-item,.log-item,.quiz-item,.collection-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;font-size:0.88rem;}
+.stars{color:#f1c40f;}
+.heatmap{display:grid;grid-template-columns:repeat(52,1fr);gap:2px;margin-bottom:16px;}
+.heatmap-cell{width:100%;aspect-ratio:1;border-radius:2px;background:rgba(255,255,255,0.05);}
+.heatmap-cell.l1{background:rgba(233,69,96,0.2);}
+.heatmap-cell.l2{background:rgba(233,69,96,0.4);}
+.heatmap-cell.l3{background:rgba(233,69,96,0.6);}
+.heatmap-cell.l4{background:rgba(233,69,96,0.9);}
+.timeline-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto;}
+.timeline-item{font-size:0.82rem;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;border-left:3px solid var(--accent);}
+.empty{text-align:center;color:var(--text2);padding:20px;font-size:0.9rem;}
+@media print{.topbar{position:static;}.topbar-actions{display:none;}.section{break-inside:avoid;}body{background:#fff;color:#222;}.section{background:#f9f9f9;border-color:#ddd;}.section h2{color:#c0392b;}.profile-stat .val{color:#c0392b;}}
+[dir="rtl"] .timeline-item{border-left:none;border-right:3px solid var(--accent);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1 id="pageTitle">&#x1F393; Student Portfolio</h1>
+  <div class="topbar-actions">
+    <select id="langToggle" onchange="switchLang(this.value)">
+      <option value="en">&#x1F1EC;&#x1F1E7; EN</option>
+      <option value="fr">&#x1F1EB;&#x1F1F7; FR</option>
+      <option value="ar">&#x1F1E9;&#x1F1FF; AR</option>
+    </select>
+    <button onclick="exportHTML()">&#x1F4E5; Export</button>
+    <button onclick="window.print()">&#x1F5A8;&#xFE0F; Print</button>
+  </div>
+</div>
+<div class="container" id="content">
+  <div class="section" id="profileSection">
+    <h2 data-i18n="profile">&#x1F575;&#xFE0F; Profile</h2>
+    <div class="profile-grid" id="profileGrid"></div>
+  </div>
+  <div class="section" id="achieveSection">
+    <h2 data-i18n="achievements">&#x1F3C6; Achievements</h2>
+    <div class="badge-grid" id="badgeGrid"></div>
+  </div>
+  <div class="section" id="certSection">
+    <h2 data-i18n="certificates">&#x1F4DC; Certificates</h2>
+    <div class="cert-grid" id="certGrid"></div>
+  </div>
+  <div class="section" id="ratingSection">
+    <h2 data-i18n="topRatings">&#x2B50; Top Ratings</h2>
+    <div class="rating-list" id="ratingList"></div>
+  </div>
+  <div class="section" id="logSection">
+    <h2 data-i18n="expLogs">&#x1F9EA; Experiment Logs</h2>
+    <div class="log-list" id="logList"></div>
+  </div>
+  <div class="section" id="quizSection">
+    <h2 data-i18n="quizScores">&#x1F4DD; Quiz Scores</h2>
+    <div class="quiz-list" id="quizList"></div>
+  </div>
+  <div class="section" id="collectSection">
+    <h2 data-i18n="collections">&#x1F4DA; Collections</h2>
+    <div class="collection-list" id="collectList"></div>
+  </div>
+  <div class="section" id="timelineSection">
+    <h2 data-i18n="timeline">&#x1F4C5; Activity Timeline</h2>
+    <div class="heatmap" id="heatmap"></div>
+    <div class="timeline-list" id="timelineList"></div>
+  </div>
+</div>
+<script>
+var PLANG={
+  en:{profile:'&#x1F575;&#xFE0F; Profile',achievements:'&#x1F3C6; Achievements',certificates:'&#x1F4DC; Certificates',topRatings:'&#x2B50; Top Ratings',expLogs:'&#x1F9EA; Experiment Logs',quizScores:'&#x1F4DD; Quiz Scores',collections:'&#x1F4DA; Collections',timeline:'&#x1F4C5; Activity Timeline',title:'&#x1F393; Student Portfolio',rank:'Spy Rank',xp:'Total XP',since:'Member Since',noData:'No data yet',sessions:'Pomodoro Sessions'},
+  fr:{profile:'&#x1F575;&#xFE0F; Profil',achievements:'&#x1F3C6; Succ\u00e8s',certificates:'&#x1F4DC; Certificats',topRatings:'&#x2B50; Meilleures Notes',expLogs:'&#x1F9EA; Journaux',quizScores:'&#x1F4DD; Scores Quiz',collections:'&#x1F4DA; Collections',timeline:'&#x1F4C5; Chronologie',title:'&#x1F393; Portfolio \u00c9tudiant',rank:'Rang Espion',xp:'XP Total',since:'Membre Depuis',noData:'Pas de donn\u00e9es',sessions:'Sessions Pomodoro'},
+  ar:{profile:'&#x1F575;&#xFE0F; \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0634\u062e\u0635\u064a',achievements:'&#x1F3C6; \u0627\u0644\u0625\u0646\u062c\u0627\u0632\u0627\u062a',certificates:'&#x1F4DC; \u0627\u0644\u0634\u0647\u0627\u062f\u0627\u062a',topRatings:'&#x2B50; \u0623\u0641\u0636\u0644 \u0627\u0644\u062a\u0642\u064a\u064a\u0645\u0627\u062a',expLogs:'&#x1F9EA; \u0633\u062c\u0644\u0627\u062a',quizScores:'&#x1F4DD; \u0646\u062a\u0627\u0626\u062c',collections:'&#x1F4DA; \u0627\u0644\u0645\u062c\u0645\u0648\u0639\u0627\u062a',timeline:'&#x1F4C5; \u0627\u0644\u062c\u062f\u0648\u0644 \u0627\u0644\u0632\u0645\u0646\u064a',title:'&#x1F393; \u0645\u0644\u0641 \u0627\u0644\u0637\u0627\u0644\u0628',rank:'\u0627\u0644\u0631\u062a\u0628\u0629',xp:'XP',since:'\u0639\u0636\u0648 \u0645\u0646\u0630',noData:'\u0644\u0627 \u062a\u0648\u062c\u062f \u0628\u064a\u0627\u0646\u0627\u062a',sessions:'\u062c\u0644\u0633\u0627\u062a \u0628\u0648\u0645\u0648\u062f\u0648\u0631\u0648'}
+};
+var curLang='en';
+function switchLang(l){
+  curLang=l;
+  document.documentElement.lang=l;
+  document.documentElement.dir=l==='ar'?'rtl':'ltr';
+  document.getElementById('pageTitle').innerHTML=PLANG[l].title;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');if(PLANG[l][k])el.innerHTML=PLANG[l][k];
+  });
+  buildAll();
+}
+function getAllLS(){
+  var data={};
+  try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);data[k]=localStorage.getItem(k);}}catch(e){}
+  return data;
+}
+function getRanks(){return[{min:0,name:'Recruit'},{min:100,name:'Field Agent'},{min:500,name:'Operative'},{min:1500,name:'Handler'},{min:5000,name:'Station Chief'},{min:15000,name:'Director'}];}
+function getRank(xp){var ranks=getRanks();var r=ranks[0].name;for(var i=0;i<ranks.length;i++){if(xp>=ranks[i].min)r=ranks[i].name;}return r;}
+function buildAll(){
+  var ls=getAllLS();var L=PLANG[curLang];
+  // Profile
+  var xp=0,earliest=Date.now(),pomSessions=0;
+  Object.keys(ls).forEach(function(k){
+    if(k.indexOf('pomodoro_')===0){try{var arr=JSON.parse(ls[k]);pomSessions+=arr.length;arr.forEach(function(s){if(s.ts<earliest)earliest=s.ts;});}catch(e){}}
+    if(k.indexOf('apptime_')===0){xp+=Math.floor(parseInt(ls[k]||'0')/60);}
+    if(k.indexOf('quizScore_')===0){xp+=parseInt(ls[k]||'0');}
+  });
+  var pg=document.getElementById('profileGrid');
+  pg.innerHTML='<div class="profile-stat"><div class="val">'+getRank(xp)+'</div><div class="lbl">'+L.rank+'</div></div>'
+    +'<div class="profile-stat"><div class="val">'+xp+'</div><div class="lbl">'+L.xp+'</div></div>'
+    +'<div class="profile-stat"><div class="val">'+new Date(earliest).toLocaleDateString()+'</div><div class="lbl">'+L.since+'</div></div>'
+    +'<div class="profile-stat"><div class="val">'+pomSessions+'</div><div class="lbl">'+L.sessions+'</div></div>';
+  // Achievements
+  var badges=[];
+  Object.keys(ls).forEach(function(k){if(k.indexOf('badge_')===0)badges.push(k.replace('badge_',''));});
+  var bg=document.getElementById('badgeGrid');
+  bg.innerHTML=badges.length?badges.map(function(b){return'<div class="badge-item">\u{1F3C5} '+b+'</div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+  // Certificates
+  var cats={};
+  Object.keys(ls).forEach(function(k){if(k.indexOf('apptime_')===0){var parts=k.replace('apptime_','').split('/');if(parts.length>0)cats[parts[0]]=(cats[parts[0]]||0)+parseInt(ls[k]||'0');}});
+  var cg=document.getElementById('certGrid');
+  var catKeys=Object.keys(cats).filter(function(c){return cats[c]>600;});
+  cg.innerHTML=catKeys.length?catKeys.map(function(c){return'<div class="cert-card"><h3>\u{1F4DC} '+c+'</h3><p>'+Math.floor(cats[c]/60)+' min completed</p></div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+  // Top Ratings
+  var ratings=[];
+  Object.keys(ls).forEach(function(k){if(k.indexOf('rating_')===0){var v=parseInt(ls[k]||'0');if(v>=4)ratings.push({app:k.replace('rating_',''),stars:v});}});
+  ratings.sort(function(a,b){return b.stars-a.stars;});
+  var rl=document.getElementById('ratingList');
+  rl.innerHTML=ratings.length?ratings.slice(0,20).map(function(r){return'<div class="rating-item"><span>'+r.app+'</span><span class="stars">'+'\u2B50'.repeat(r.stars)+'</span></div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+  // Experiment Logs
+  var logs=[];
+  Object.keys(ls).forEach(function(k){if(k.indexOf('lablog_')===0){try{var arr=JSON.parse(ls[k]);arr.forEach(function(e){e._app=k.replace('lablog_','');logs.push(e);});}catch(e){}}});
+  logs.sort(function(a,b){return(b.ts||0)-(a.ts||0);});
+  var ll=document.getElementById('logList');
+  ll.innerHTML=logs.length?logs.slice(0,30).map(function(l){return'<div class="log-item"><span>'+l._app+'</span><span>'+(l.note||'')+'</span></div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+  // Quiz Scores
+  var quizzes=[];
+  Object.keys(ls).forEach(function(k){if(k.indexOf('quizScore_')===0)quizzes.push({app:k.replace('quizScore_',''),score:parseInt(ls[k]||'0')});});
+  quizzes.sort(function(a,b){return b.score-a.score;});
+  var ql=document.getElementById('quizList');
+  ql.innerHTML=quizzes.length?quizzes.slice(0,30).map(function(q){return'<div class="quiz-item"><span>'+q.app+'</span><span>'+q.score+'%</span></div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+  // Collections
+  var colls=[];
+  Object.keys(ls).forEach(function(k){if(k.indexOf('bookmark_')===0||k.indexOf('collection_')===0)colls.push(k);});
+  var cl=document.getElementById('collectList');
+  cl.innerHTML=colls.length?colls.map(function(c){return'<div class="collection-item"><span>'+c+'</span></div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+  // Timeline heatmap
+  var hm=document.getElementById('heatmap');
+  var dayCounts={};
+  Object.keys(ls).forEach(function(k){
+    if(k.indexOf('pomodoro_')===0){try{JSON.parse(ls[k]).forEach(function(s){var d=new Date(s.ts).toISOString().slice(0,10);dayCounts[d]=(dayCounts[d]||0)+1;});}catch(e){}}
+  });
+  var cells='';var now=new Date();
+  for(var i=364;i>=0;i--){var d=new Date(now);d.setDate(d.getDate()-i);var dk=d.toISOString().slice(0,10);var c=dayCounts[dk]||0;var lvl=c===0?'':c<2?'l1':c<4?'l2':c<7?'l3':'l4';cells+='<div class="heatmap-cell '+lvl+'" title="'+dk+': '+c+'"></div>';}
+  hm.innerHTML=cells;
+  // Session history
+  var sessions=[];
+  Object.keys(ls).forEach(function(k){
+    if(k.indexOf('pomodoro_')===0){try{JSON.parse(ls[k]).forEach(function(s){s._app=k.replace('pomodoro_','');sessions.push(s);});}catch(e){}}
+  });
+  sessions.sort(function(a,b){return(b.ts||0)-(a.ts||0);});
+  var tl=document.getElementById('timelineList');
+  tl.innerHTML=sessions.length?sessions.slice(0,50).map(function(s){return'<div class="timeline-item"><strong>'+s._app+'</strong> &mdash; '+new Date(s.ts).toLocaleString()+'</div>';}).join(''):'<div class="empty">'+L.noData+'</div>';
+}
+function exportHTML(){
+  var ls=getAllLS();
+  var clone=document.documentElement.cloneNode(true);
+  var script=clone.querySelector('script')||document.createElement('script');
+  var inject=document.createElement('script');
+  inject.textContent='(function(){var d='+JSON.stringify(ls)+';Object.keys(d).forEach(function(k){try{localStorage.setItem(k,d[k]);}catch(e){}});})();';
+  clone.querySelector('head').appendChild(inject);
+  var blob=new Blob(['<!DOCTYPE html>'+clone.outerHTML],{type:'text/html'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='portfolio-export.html';a.click();URL.revokeObjectURL(a.href);
+}
+buildAll();
+</script>
+</body>
+</html>
