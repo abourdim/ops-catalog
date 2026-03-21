@@ -32,7 +32,7 @@ const LANG_BASE = {
  achieveScientist:'Scientist — revealed 2+ challenge answers',
  achieveExperimenter:'Experimenter — changed 5+ parameters'
  },
- fr: {
+ fr: {kidsMode:'Mode Enfant',kidsMascotHi:'Salut, Agent!',kidsMission:'Chrono Mission',kidsMissionDone:'Mission Accomplie!',kidsStickers:'Autocollants',
  copied:'Copié !',
  demoNext:'Suiv',
  demoPause:'Pause',
@@ -47,7 +47,7 @@ const LANG_BASE = {
  sectionLearn:'Ce que tu vas apprendre',
  splashHint:'appuyer pour passer'
  },
- ar: {
+ ar: {kidsMode:'\u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644',kidsMascotHi:'\u0645\u0631\u062d\u0628\u0627 \u0623\u064a\u0647\u0627 \u0627\u0644\u0639\u0645\u064a\u0644!',kidsMission:'\u0645\u0624\u0642\u062a \u0627\u0644\u0645\u0647\u0645\u0629',kidsMissionDone:'!\u0627\u0644\u0645\u0647\u0645\u0629 \u0645\u0643\u062a\u0645\u0644\u0629',kidsStickers:'\u0645\u0644\u0635\u0642\u0627\u062a',
  copied:'تم النسخ!',
  demoNext:'التالي',
  demoPause:'إيقاف',
@@ -64,8 +64,10 @@ const LANG_BASE = {
  }
 };
 
+
+
 const LANG={
- en:{
+ en:{kidsMode:'Kids Mode',kidsMascotHi:'Hi there, Agent!',kidsMission:'Mission Timer',kidsMissionDone:'Mission Complete!',kidsStickers:'Stickers',
  ...LANG_BASE.en,
  diffTitle:'Difficulty',diffBeginner:'🟢 Beginner',diffIntermediate:'🟡 Intermediate',diffExpert:'🔴 Expert',diffInfo:'Choose your complexity level',spacedTitle:'📅 Spaced Review',spacedReview:'Review',spacedNext:'Next review',spacedMastered:'Mastered',spacedNew:'New — not yet studied',spacedDue:'Due for review!',spacedInfo:'Smart review reminders based on the forgetting curve',
  
@@ -183,6 +185,242 @@ const LANG={
  glossTitle: '📚 مصطلحات أساسية',learnAge:'العمر:',relatedTitle:'\ud83d\udd17 تطبيقات ذات صلة',related1_name:'Packet Storm — مولّد حركة مرور',related1_desc:'ولّد حركة شبكة مزيفة مع تصور سايبربانك',related1_path:'../../05-net-esp32/esp-packet-storm/index.html',related2_name:'مختبر البوابة الأسيرة — مصمم تسجيل WiFi',related2_desc:'صمّم بوابات أسيرة مثل WiFi الفندق',related2_path:'../../05-net-esp32/esp-captive-portal/index.html',related3_name:'بروتوكول الثرثرة — انتشار وبائي',related3_desc:'البيانات تنتشر كالعدوى عبر الشبكة',related3_path:'../../08-net-multi/esp-gossip-protocol/index.html',pathTitle:'\ud83d\udee4\ufe0f مسار التعلم',pathPrev_name:'سلسلة الكتل',pathPrev_path:'../../06-net-browser/web-blockchain-messenger/index.html',pathNext_name:'سلسلة الشهادات',pathNext_path:'../../06-net-browser/web-certificate-inspector/index.html',
  printBtn: '🖨️ طباعة',realworldTitle:'🌍 قصص واقعية',realworld1:'في عام 2017 جعل انتحال GPS في البحر الأسود أكثر من 20 سفينة تعتقد أنها على بعد 25 ميلاً داخل البر في مطار.',realworld2:'في عام 2015 أثبت باحثون أن جهاز SDR بقيمة 20 دولارًا يمكنه تتبع كل طائرة في النطاق عبر فك تشفير إشارات ADS-B غير المشفرة.',realworld3:'دمرت دودة ستكسنت (2010) ألف جهاز طرد مركزي نووي إيراني من خلال التلاعب بوحدات التحكم المنطقية عبر أقراص USB مصابة.',experimentTitle:'🔬 تجارب',experiment_1_title:'القياس المرجعي',experiment_1:'اضبط جميع عناصر التحكم على القيم الافتراضية وسجّل القراءات الأولية. هذه هي قياساتك المرجعية. يقوم العالم الجيد دائمًا بتحديد خط الأساس قبل تغيير المتغيرات — فهو يمنحك نقطة مرجعية لقياس جميع التغييرات المستقبلية.',experiment_2_title:'تحليل الحساسية',experiment_2:'غيّر معلمة واحدة إلى قيمتها الدنيا وسجّل النتيجة ثم اضبطها على الحد الأقصى. يكشف الفرق عن حساسية النظام لهذا المتغير. في اعتراض الإشارات معرفة المعلمات الأكثر أهمية تساعدك على تركيز جهودك بكفاءة.',experiment_3_title:'تأثيرات التفاعل',experiment_3:'بعد اختبار المعلمات بشكل فردي غيّر اثنتين في وقت واحد. هل التأثير المشترك يساوي مجموع التأثيرات الفردية؟ التفاعلات غير الخطية شائعة في اعتراض الإشارات وتكشف التعقيد الخفي تحت أنظمة تبدو بسيطة.',wiki_concept_title:'💡 المفهوم الأساسي',wiki_concept:'Botnet Defense يوضح مفهومًا أساسيًا في اعتراض الإشارات. تحاكي هذه المحاكاة كيفية معالجة الأنظمة الحقيقية للإشارات والبيانات أو الظواهر الفيزيائية. الفكرة الرئيسية هي أن السلوكيات المعقدة تنشأ من قواعد بسيطة تُطبق بشكل متكرر.',wiki_realworld_title:'🌐 التطبيقات الواقعية',wiki_realworld:'المبادئ المعروضة في Botnet Defense لها تطبيقات مباشرة في العالم الحقيقي. يستخدم المحترفون في اعتراض الإشارات هذه المفاهيم نفسها يوميًا. في الصناعة يُنفذ HackRF وأجهزة مماثلة هذه الخوارزميات في أنظمة مدمجة.',wiki_safety_title:'⚠️ السلامة والمسؤولية',wiki_safety:'العمل في مجال اعتراض الإشارات يحمل مسؤوليات مهمة. تعمل دائمًا ضمن الحدود القانونية. هذه المحاكاة مصممة للاستخدام التعليمي الآمن — لا ترسل إشارات حقيقية ولا تصل إلى شبكات حقيقية.',voiceTitle:'🎤 صوت',voiceOn:'الصوت مفعل',voiceOff:'الصوت معطل',voiceListening:'جاري الاستماع...',voiceCmd:'تم التعرف على الأمر',voiceHelp:'قل: ابدأ، توقف، مساعدة',voice_cmds:'ابدأ / توقف / مساعدة',shareTitle:'📤 مشاركة',shareBtn:'📤 مشاركة',shareCopied:'تم النسخ!',shareGenerate:'إنشاء ملخص',shareExport:'تصدير JSON',peerTitle:'👥 \u0648\u0636\u0639 \u0627\u0644\u0646\u0638\u064a\u0631',peerConnect:'\u0627\u062a\u0635\u0627\u0644',peerDisconnect:'\u0642\u0637\u0639',peerStatus:'\u062d\u0627\u0644\u0629 \u0627\u0644\u0646\u0638\u064a\u0631',peerSend:'\u0623\u0631\u0633\u0644',peerReceive:'\u0627\u0633\u062a\u0644\u0645',peerInfo:'\u0627\u0641\u062a\u062d \u0647\u0630\u0627 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0641\u064a \u062a\u0628\u0648\u064a\u0628\u064a\u0646 \u0644\u0644\u0645\u0632\u0627\u0645\u0646\u0629',heatmapTitle:'📅 \u062e\u0631\u064a\u0637\u0629 \u0627\u0644\u0646\u0634\u0627\u0637',heatmapToday:'\u0627\u0644\u064a\u0648\u0645',heatmapStreak:'\u0633\u0644\u0633\u0644\u0629',heatmapTotal:'\u0627\u0644\u0645\u062c\u0645\u0648\u0639',heatmapLegend:'\u0623\u0642\u0644 \u2192 \u0623\u0643\u062b\u0631',missionTitle:'\u0625\u062D\u0627\u0637\u0629 \u0627\u0644\u0645\u0647\u0645\u0629',missionClassified:'\u0633\u0631\u064A',missionObjective:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0647\u0645\u0629:',missionAgent:'AGENT-45F0D8',missionSkip:'\u062A\u062E\u0637\u064A',missionGo:'\u0642\u0628\u0648\u0644 \u0627\u0644\u0645\u0647\u0645\u0629',mission_obj:'\u0627\u0633\u062A\u0643\u0634\u0641 \u0648\u0623\u062A\u0642\u0646 \u0647\u0630\u0627 \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u2014 \u062D\u0644\u0644 \u0648\u062C\u0631\u0628 \u0648\u0623\u0643\u0645\u0644 \u062C\u0645\u064A\u0639 \u0627\u0644\u062A\u062D\u062F\u064A\u0627\u062A.',nightVisionTitle:'\u0648\u0636\u0639 \u0627\u0644\u0631\u0624\u064A\u0629 \u0627\u0644\u0644\u064A\u0644\u064A\u0629',nightVisionOn:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 ON',nightVisionOff:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 OFF',nightVisionAuto:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 \u062A\u0644\u0642\u0627\u0626\u064A',}
 };
+
+/* ═══════ Kids Mode ═══════ */
+function initKidsMode(){
+ if(document.getElementById('kidsToggleBtn'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var STICKER_SET=['🚀','🔬','🛸','🤖','🔭','🧪','🕵️','🧲','💡','⚡','🌟','🧬','📡','🔮','🛰️','🎯','🧠','💎','🔑','🗝️'];
+
+ /* ── CSS injection ── */
+ var style=document.createElement('style');
+ style.textContent='.kids-mode .card,.kids-mode .sidebar-body,.kids-mode .help-content{font-size:115%!important;letter-spacing:0.3px!important}'
+  +'.kids-mode .expert-only,.kids-mode .advanced{display:none!important}'
+  +'.kids-mascot{position:fixed;bottom:12px;left:12px;width:40px;height:40px;z-index:9999;pointer-events:none;display:none}'
+  +'.kids-mode .kids-mascot{display:block}'
+  +'@keyframes kmBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'
+  +'@keyframes kmHappy{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}'
+  +'.kids-mascot svg{animation:kmBounce 1.5s ease-in-out infinite}'
+  +'.kids-mascot.km-happy svg{animation:kmHappy 0.4s ease-in-out}'
+  +'.kids-mascot .km-thought{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:16px;display:none}'
+  +'.kids-mascot.km-thinking .km-thought{display:block}'
+  +'.km-mission-timer{position:fixed;top:10px;right:10px;background:rgba(0,0,0,0.75);color:#0f0;padding:6px 14px;border-radius:8px;font-family:monospace;font-size:15px;z-index:9998;display:none}'
+  +'.kids-mode .km-mission-timer.km-active{display:block}'
+  +'.km-confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0;transition:opacity 0.3s}'
+  +'.km-confetti.km-show{opacity:1}'
+  +'.kids-read-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 4px;opacity:0.7}'
+  +'.kids-read-btn:hover{opacity:1}'
+  +'.km-sticker-badge{position:absolute;top:-4px;right:-4px;background:#e74c3c;color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;pointer-events:none}';
+ document.head.appendChild(style);
+
+ /* ── Toggle button ── */
+ var hdr=document.querySelector('.header-buttons');
+ if(!hdr)return;
+ var btn=document.createElement('button');
+ btn.id='kidsToggleBtn';
+ btn.className='btn-icon-only';
+ btn.style.position='relative';
+ btn.textContent='\uD83D\uDE80 '+(L.kidsMode||'Kids');
+ hdr.appendChild(btn);
+
+ var badge=document.createElement('span');
+ badge.className='km-sticker-badge';
+ badge.style.display='none';
+ btn.appendChild(badge);
+
+ /* ── Mascot ── */
+ var mascotDiv=document.createElement('div');
+ mascotDiv.className='kids-mascot';
+ mascotDiv.innerHTML='<span class="km-thought">❓</span>'
+  +'<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">'
+  +'<rect x="8" y="10" width="24" height="20" rx="4" fill="#4fc3f7"/>'
+  +'<rect x="6" y="6" width="28" height="6" rx="3" fill="#29b6f6"/>'
+  +'<circle class="km-eye-l" cx="15" cy="20" r="3" fill="#fff"/>'
+  +'<circle class="km-eye-r" cx="25" cy="20" r="3" fill="#fff"/>'
+  +'<circle cx="15" cy="20" r="1.5" fill="#333"/>'
+  +'<circle cx="25" cy="20" r="1.5" fill="#333"/>'
+  +'<rect x="13" y="26" width="14" height="2" rx="1" fill="#fff"/>'
+  +'<rect x="12" y="32" width="6" height="6" rx="2" fill="#4fc3f7"/>'
+  +'<rect x="22" y="32" width="6" height="6" rx="2" fill="#4fc3f7"/>'
+  +'<line x1="20" y1="2" x2="20" y2="6" stroke="#ffd54f" stroke-width="2" stroke-linecap="round"/>'
+  +'<circle cx="20" cy="1" r="2" fill="#ffd54f"/>'
+  +'</svg>';
+ document.body.appendChild(mascotDiv);
+
+ /* ── Mission timer ── */
+ var timerDiv=document.createElement('div');
+ timerDiv.className='km-mission-timer';
+ timerDiv.textContent=(L.kidsMission||'Mission Timer')+': 60s';
+ document.body.appendChild(timerDiv);
+
+ /* ── Confetti overlay ── */
+ var confettiDiv=document.createElement('div');
+ confettiDiv.className='km-confetti';
+ document.body.appendChild(confettiDiv);
+
+ /* ── Audio helper ── */
+ var KAudioCtx=window.AudioContext||window.webkitAudioContext;
+ var kAudioCtx;
+ function playTone(freq,duration,type){
+  if(!document.body.classList.contains('kids-mode'))return;
+  try{
+   if(!kAudioCtx)kAudioCtx=new KAudioCtx();
+   var osc=kAudioCtx.createOscillator();
+   var g=kAudioCtx.createGain();
+   osc.type=type||'sine';
+   osc.frequency.value=freq;
+   g.gain.value=0.08;
+   osc.connect(g);g.connect(kAudioCtx.destination);
+   osc.start();
+   g.gain.exponentialRampToValueAtTime(0.001,kAudioCtx.currentTime+duration/1000);
+   osc.stop(kAudioCtx.currentTime+duration/1000);
+  }catch(e){}
+ }
+ function playChord(freqs,dur){
+  for(var i=0;i<freqs.length;i++)playTone(freqs[i],dur,'sine');
+ }
+
+ /* ── Sticker system ── */
+ var stickersKey='kidsStickers';
+ function getStickers(){try{return JSON.parse(localStorage.getItem(stickersKey))||[];}catch(e){return[];}}
+ function addSticker(){
+  var s=getStickers();
+  s.push(STICKER_SET[Math.floor(Math.random()*STICKER_SET.length)]);
+  localStorage.setItem(stickersKey,JSON.stringify(s));
+  updateBadge();
+  setMascotState('happy');
+ }
+ function updateBadge(){
+  var s=getStickers();
+  if(s.length>0){badge.textContent=s.length;badge.style.display='flex';}
+  else{badge.style.display='none';}
+ }
+
+ /* ── Mascot states ── */
+ function setMascotState(state){
+  mascotDiv.classList.remove('km-happy','km-thinking');
+  if(state==='happy'){
+   mascotDiv.classList.add('km-happy');
+   var eyeL=mascotDiv.querySelector('.km-eye-l');
+   var eyeR=mascotDiv.querySelector('.km-eye-r');
+   if(eyeL)eyeL.textContent='\u2B50';
+   if(eyeR)eyeR.textContent='\u2B50';
+   setTimeout(function(){
+    mascotDiv.classList.remove('km-happy');
+    if(eyeL)eyeL.textContent='';
+    if(eyeR)eyeR.textContent='';
+   },800);
+  }else if(state==='thinking'){
+   mascotDiv.classList.add('km-thinking');
+  }
+ }
+
+ /* ── Help panel observer for thinking state ── */
+ var helpObs=new MutationObserver(function(){
+  var helpOpen=document.querySelector('.help-panel.open,.help-panel.active,.help-panel[style*="display: block"],.help-panel.show');
+  if(helpOpen&&document.body.classList.contains('kids-mode')){setMascotState('thinking');}
+  else{mascotDiv.classList.remove('km-thinking');}
+ });
+ helpObs.observe(document.body,{attributes:true,subtree:true,childList:true});
+
+ /* ── Read-aloud buttons ── */
+ function addReadButtons(){
+  document.querySelectorAll('.kids-read-btn').forEach(function(b){b.remove();});
+  if(!document.body.classList.contains('kids-mode'))return;
+  document.querySelectorAll('.sidebar p[data-i18n],.sidebar-body p[data-i18n]').forEach(function(p){
+   var rb=document.createElement('button');
+   rb.className='kids-read-btn';
+   rb.textContent='\uD83D\uDD0A';
+   rb.title='Read aloud';
+   rb.addEventListener('click',function(e){
+    e.stopPropagation();
+    var u=new SpeechSynthesisUtterance(p.textContent);
+    u.rate=0.9;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+   });
+   p.parentNode.insertBefore(rb,p.nextSibling);
+  });
+ }
+
+ /* ── Mission timer logic ── */
+ var missionInterval=null;
+ function startMission(){
+  if(!document.body.classList.contains('kids-mode'))return;
+  if(missionInterval)clearInterval(missionInterval);
+  var secs=60;
+  timerDiv.classList.add('km-active');
+  timerDiv.textContent=(L.kidsMission||'Mission Timer')+': '+secs+'s';
+  missionInterval=setInterval(function(){
+   secs--;
+   if(secs<=0){
+    clearInterval(missionInterval);
+    missionInterval=null;
+    timerDiv.textContent=(L.kidsMissionDone||'Mission Complete!');
+    showConfetti();
+    setTimeout(function(){timerDiv.classList.remove('km-active');},3000);
+   }else{
+    timerDiv.textContent=(L.kidsMission||'Mission Timer')+': '+secs+'s';
+   }
+  },1000);
+ }
+
+ function showConfetti(){
+  var burst=['🎉','🎊','⭐','🌟','🚀','💫','✨','🎆','🏆','🥇'];
+  var txt='';
+  for(var i=0;i<15;i++)txt+=burst[Math.floor(Math.random()*burst.length)];
+  confettiDiv.textContent=txt;
+  confettiDiv.classList.add('km-show');
+  setTimeout(function(){confettiDiv.classList.remove('km-show');},2500);
+ }
+
+ /* ── Sound hooks ── */
+ function hookSounds(){
+  var startBtn=document.getElementById('startBtn')||document.querySelector('[data-action="start"]');
+  var stopBtn=document.getElementById('stopBtn')||document.querySelector('[data-action="stop"]');
+  var resetBtn=document.getElementById('resetBtn')||document.querySelector('[data-action="reset"]');
+  if(startBtn)startBtn.addEventListener('click',function(){
+   playTone(440,200,'sine');setTimeout(function(){playTone(880,200,'sine');},50);
+   startMission();
+   setMascotState('happy');
+  });
+  if(stopBtn)stopBtn.addEventListener('click',function(){
+   playTone(880,200,'sine');setTimeout(function(){playTone(440,200,'sine');},50);
+  });
+  if(resetBtn)resetBtn.addEventListener('click',function(){playTone(660,100,'square');});
+
+  document.addEventListener('click',function(e){
+   var t=e.target;
+   if(t&&t.classList&&t.classList.contains('quiz-option')){
+    setTimeout(function(){
+     if(t.classList.contains('correct')){playChord([523.25,659.25,783.99],300);}
+     else if(t.classList.contains('wrong')){playTone(300,200,'sawtooth');}
+    },100);
+   }
+  });
+ }
+
+ /* ── Toggle logic ── */
+ var saved=localStorage.getItem('kidsMode');
+ if(saved==='on')document.body.classList.add('kids-mode');
+
+ function toggleKids(){
+  document.body.classList.toggle('kids-mode');
+  var on=document.body.classList.contains('kids-mode');
+  localStorage.setItem('kidsMode',on?'on':'off');
+  if(on){addReadButtons();addSticker();}
+  else{document.querySelectorAll('.kids-read-btn').forEach(function(b){b.remove();});}
+ }
+ btn.addEventListener('click',toggleKids);
+
+ /* ── Init ── */
+ updateBadge();
+ hookSounds();
+ if(document.body.classList.contains('kids-mode')){addReadButtons();addSticker();}
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initKidsMode);}
+else{initKidsMode();}
+
 
 /* ═══════ Difficulty Levels ═══════ */
 function initDifficultyLevels(){
