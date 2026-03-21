@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Teacher Dashboard — Workshop DIY</title>
+<style>
+/* ═══════ RESET ═══════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ═══════ FONTS ═══════ */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Tajawal:wght@400;500;700&family=Orbitron:wght@500;700&display=swap');
+
+/* ═══════ THEME ═══════ */
+:root{
+  --bg:#08091a;
+  --panel:#0b0d24;
+  --card:#0f1130;
+  --accent:#d4a03c;
+  --accent2:#0ea5e9;
+  --glow:rgba(212,160,60,.15);
+  --text:#e4ddd0;
+  --text-muted:#8a7e6e;
+  --border:rgba(212,160,60,.18);
+  --green:#4ade80;
+  --red:#f87171;
+  --purple:#c084fc;
+  --font-h:'Righteous','Tajawal',sans-serif;
+  --font-b:'Tajawal',system-ui,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-b);
+  line-height:1.6;
+  padding:0;
+}
+
+/* ═══════ HEADER ═══════ */
+.dash-header{
+  background:linear-gradient(135deg,var(--panel),var(--bg));
+  border-bottom:2px solid var(--border);
+  padding:1.5rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.dash-header h1{
+  font-family:var(--font-h);
+  font-size:1.8rem;
+  color:var(--accent);
+  letter-spacing:2px;
+}
+.dash-header .subtitle{
+  font-size:0.85rem;
+  color:var(--text-muted);
+  margin-top:2px;
+}
+.lang-toggle{
+  display:flex;
+  gap:4px;
+}
+.lang-toggle button{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text-muted);
+  padding:6px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-family:var(--font-b);
+  font-size:0.85rem;
+  transition:all 0.2s;
+}
+.lang-toggle button.active{
+  background:var(--accent);
+  color:#000;
+  border-color:var(--accent);
+  font-weight:700;
+}
+.lang-toggle button:hover{
+  border-color:var(--accent);
+}
+
+/* ═══════ CONTAINER ═══════ */
+.dash-container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:1.5rem;
+}
+
+/* ═══════ STAT CARDS ═══════ */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1rem;
+  margin-bottom:2rem;
+}
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.2rem;
+  position:relative;
+  overflow:hidden;
+}
+.stat-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+.stat-card .stat-icon{
+  font-size:2rem;
+  margin-bottom:0.5rem;
+}
+.stat-card .stat-value{
+  font-family:'Orbitron',monospace;
+  font-size:2rem;
+  font-weight:700;
+  color:var(--accent);
+}
+.stat-card .stat-label{
+  font-size:0.8rem;
+  color:var(--text-muted);
+  margin-top:2px;
+}
+
+/* ═══════ SECTIONS ═══════ */
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+}
+.section h2{
+  font-family:var(--font-h);
+  font-size:1.2rem;
+  color:var(--accent);
+  margin-bottom:1rem;
+  letter-spacing:1px;
+}
+
+/* ═══════ TABLE ═══════ */
+.table-wrap{
+  overflow-x:auto;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.85rem;
+}
+th,td{
+  text-align:left;
+  padding:8px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+th{
+  color:var(--accent);
+  font-family:'Orbitron',monospace;
+  font-size:0.7rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+}
+th:hover{
+  color:#fff;
+}
+th .sort-arrow{
+  margin-left:4px;
+  font-size:0.6rem;
+}
+tr:hover td{
+  background:rgba(212,160,60,0.04);
+}
+.score-bar{
+  display:inline-block;
+  height:6px;
+  border-radius:3px;
+  background:var(--accent);
+  vertical-align:middle;
+  margin-left:6px;
+}
+
+/* ═══════ CATEGORY CHART ═══════ */
+.cat-bar-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:4px 0;
+}
+.cat-label{
+  font-size:0.75rem;
+  min-width:140px;
+  color:var(--text-muted);
+  text-align:right;
+}
+.cat-bar{
+  flex:1;
+  height:18px;
+  border-radius:4px;
+  background:rgba(212,160,60,0.15);
+  position:relative;
+  overflow:hidden;
+}
+.cat-bar-fill{
+  height:100%;
+  border-radius:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width 0.5s;
+}
+.cat-bar-count{
+  font-size:0.7rem;
+  color:var(--text-muted);
+  min-width:30px;
+}
+
+/* ═══════ HEATMAP ═══════ */
+.heatmap-grid{
+  display:flex;
+  gap:2px;
+  flex-wrap:wrap;
+  margin-top:0.5rem;
+}
+.hm-cell{
+  width:12px;
+  height:12px;
+  border-radius:2px;
+  background:#161b22;
+}
+
+/* ═══════ BUTTONS ═══════ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 20px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--card);
+  color:var(--text);
+  font-family:var(--font-b);
+  font-size:0.9rem;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.btn:hover{
+  border-color:var(--accent);
+  background:rgba(212,160,60,0.1);
+}
+.btn-accent{
+  background:var(--accent);
+  color:#000;
+  border-color:var(--accent);
+  font-weight:700;
+}
+.btn-accent:hover{
+  background:#e8b44a;
+}
+.btn-danger{
+  border-color:var(--red);
+  color:var(--red);
+}
+.btn-danger:hover{
+  background:rgba(248,113,113,0.1);
+}
+.actions-row{
+  display:flex;
+  gap:0.8rem;
+  flex-wrap:wrap;
+  margin-top:1rem;
+}
+
+/* ═══════ SEARCH ═══════ */
+.search-input{
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:0.85rem;
+  width:100%;
+  max-width:300px;
+  margin-bottom:1rem;
+  font-family:var(--font-b);
+}
+.search-input:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+
+/* ═══════ SPY RANK ═══════ */
+.rank-badge{
+  display:inline-block;
+  padding:4px 12px;
+  border-radius:6px;
+  font-family:'Orbitron',monospace;
+  font-size:0.75rem;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:rgba(212,160,60,0.15);
+  color:var(--accent);
+  border:1px solid var(--border);
+}
+
+/* ═══════ PRINT ═══════ */
+@media print{
+  body{background:#fff;color:#000;}
+  .dash-header{background:#f5f5f5;border-bottom:2px solid #ccc;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .dash-header h1{color:#333;}
+  .stat-card{background:#f9f9f9;border:1px solid #ddd;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .stat-card .stat-value{color:#333;}
+  .section{background:#f9f9f9;border:1px solid #ddd;}
+  .section h2{color:#333;}
+  th{color:#333;}
+  td{color:#222;}
+  .btn,.lang-toggle,.search-input{display:none !important;}
+  .cat-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cat-bar-fill{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .hm-cell{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:600px){
+  .dash-header{padding:1rem;flex-direction:column;align-items:flex-start;}
+  .dash-header h1{font-size:1.3rem;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-card .stat-value{font-size:1.4rem;}
+  .dash-container{padding:0.8rem;}
+}
+
+/* RTL */
+[dir="rtl"] .cat-label{text-align:left;}
+[dir="rtl"] th{text-align:right;}
+[dir="rtl"] td{text-align:right;}
+</style>
+</head>
+<body>
+
+<div class="dash-header">
+  <div>
+    <h1 id="dashTitle">Teacher Dashboard</h1>
+    <div class="subtitle" id="dashSubtitle">Workshop DIY — Student Progress Overview</div>
+  </div>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('fr')">FR</button>
+    <button onclick="setLang('ar')">AR</button>
+  </div>
+</div>
+
+<div class="dash-container">
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">&#128269;</div>
+      <div class="stat-value" id="statApps">0</div>
+      <div class="stat-label" id="lblApps">Apps Visited</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#127942;</div>
+      <div class="stat-value" id="statQuiz">0%</div>
+      <div class="stat-label" id="lblQuiz">Avg Quiz Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#11088;</div>
+      <div class="stat-value" id="statAchieve">0</div>
+      <div class="stat-label" id="lblAchieve">Achievements</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#127775;</div>
+      <div class="stat-value" id="statStickers">0</div>
+      <div class="stat-label" id="lblStickers">Stickers Earned</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#128373;</div>
+      <div class="stat-value" id="statRank">—</div>
+      <div class="stat-label" id="lblRank">Spy Rank</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#128274;</div>
+      <div class="stat-value" id="statCodes">0</div>
+      <div class="stat-label" id="lblCodes">Secret Codes</div>
+    </div>
+  </div>
+
+  <!-- SPY RANK DETAIL -->
+  <div class="section">
+    <h2 id="secRank">Spy Rank Detail</h2>
+    <div id="rankDetail" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <span class="rank-badge" id="rankBadge">—</span>
+      <span style="font-size:0.85rem;color:var(--text-muted);" id="rankXP">XP: 0</span>
+      <span style="font-size:0.85rem;color:var(--text-muted);" id="rankNext">Next rank: —</span>
+    </div>
+  </div>
+
+  <!-- CATEGORY DISTRIBUTION -->
+  <div class="section">
+    <h2 id="secCat">Category Distribution</h2>
+    <div id="catChart"></div>
+  </div>
+
+  <!-- ACTIVITY HEATMAP -->
+  <div class="section">
+    <h2 id="secHeat">Activity Heatmap</h2>
+    <div id="heatmapArea"></div>
+    <div style="font-size:0.65rem;color:var(--text-muted);margin-top:6px;">
+      <span id="heatLegend">Less &rarr; More</span>
+      <span style="display:inline-block;width:10px;height:10px;background:#161b22;border-radius:2px;margin:0 1px;vertical-align:middle;"></span>
+      <span style="display:inline-block;width:10px;height:10px;background:#0e4429;border-radius:2px;margin:0 1px;vertical-align:middle;"></span>
+      <span style="display:inline-block;width:10px;height:10px;background:#006d32;border-radius:2px;margin:0 1px;vertical-align:middle;"></span>
+      <span style="display:inline-block;width:10px;height:10px;background:#26a641;border-radius:2px;margin:0 1px;vertical-align:middle;"></span>
+      <span style="display:inline-block;width:10px;height:10px;background:#39d353;border-radius:2px;margin:0 1px;vertical-align:middle;"></span>
+    </div>
+  </div>
+
+  <!-- APP BREAKDOWN TABLE -->
+  <div class="section">
+    <h2 id="secTable">Per-App Breakdown</h2>
+    <input class="search-input" type="text" id="tableSearch" placeholder="Search apps..." oninput="filterTable()"/>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)" id="thName">App <span class="sort-arrow">&#9650;</span></th>
+            <th onclick="sortTable(1)" id="thCategory">Category <span class="sort-arrow"></span></th>
+            <th onclick="sortTable(2)" id="thVisits">Visits <span class="sort-arrow"></span></th>
+            <th onclick="sortTable(3)" id="thScore">Quiz Score <span class="sort-arrow"></span></th>
+            <th onclick="sortTable(4)" id="thAchieve">Achievements <span class="sort-arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody id="appTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions-row">
+    <button class="btn btn-accent" onclick="exportJSON()" id="btnExport">&#128229; Export as JSON</button>
+    <button class="btn btn-danger" onclick="resetAll()" id="btnReset">&#128465; Reset All Progress</button>
+    <button class="btn" onclick="window.print()" id="btnPrint">&#128424; Print Report</button>
+  </div>
+
+</div>
+
+<script>
+/* ═══════ TRANSLATIONS ═══════ */
+var T = {
+  en: {
+    dashTitle: 'Teacher Dashboard',
+    dashSubtitle: 'Workshop DIY \u2014 Student Progress Overview',
+    lblApps: 'Apps Visited',
+    lblQuiz: 'Avg Quiz Score',
+    lblAchieve: 'Achievements',
+    lblStickers: 'Stickers Earned',
+    lblRank: 'Spy Rank',
+    lblCodes: 'Secret Codes',
+    secRank: 'Spy Rank Detail',
+    secCat: 'Category Distribution',
+    secHeat: 'Activity Heatmap',
+    secTable: 'Per-App Breakdown',
+    thName: 'App',
+    thCategory: 'Category',
+    thVisits: 'Visits',
+    thScore: 'Quiz Score',
+    thAchieve: 'Achievements',
+    btnExport: '\ud83d\udce5 Export as JSON',
+    btnReset: '\ud83d\uddd1 Reset All Progress',
+    btnPrint: '\ud83d\udda8 Print Report',
+    heatLegend: 'Less \u2192 More',
+    searchPlaceholder: 'Search apps...',
+    rankNext: 'Next rank',
+    confirmReset: 'Are you sure you want to reset ALL student progress? This cannot be undone.',
+    noData: 'No data found in localStorage.'
+  },
+  fr: {
+    dashTitle: 'Tableau de Bord Enseignant',
+    dashSubtitle: 'Workshop DIY \u2014 Vue d\x27ensemble des progr\x27s',
+    lblApps: 'Apps visit\x27es',
+    lblQuiz: 'Score moyen Quiz',
+    lblAchieve: 'R\x27alisations',
+    lblStickers: 'Autocollants gagn\x27s',
+    lblRank: 'Rang Espion',
+    lblCodes: 'Codes Secrets',
+    secRank: 'D\x27tail du Rang',
+    secCat: 'Distribution par Cat\x27gorie',
+    secHeat: 'Carte d\x27activit\x27',
+    secTable: 'D\x27tail par Application',
+    thName: 'Application',
+    thCategory: 'Cat\x27gorie',
+    thVisits: 'Visites',
+    thScore: 'Score Quiz',
+    thAchieve: 'R\x27alisations',
+    btnExport: '\ud83d\udce5 Exporter en JSON',
+    btnReset: '\ud83d\uddd1 R\x27initialiser tout',
+    btnPrint: '\ud83d\udda8 Imprimer le rapport',
+    heatLegend: 'Moins \u2192 Plus',
+    searchPlaceholder: 'Rechercher...',
+    rankNext: 'Rang suivant',
+    confirmReset: '\x27tes-vous s\x27r de vouloir r\x27initialiser TOUS les progr\x27s? Cette action est irr\x27versible.',
+    noData: 'Aucune donn\x27e trouv\x27e.'
+  },
+  ar: {
+    dashTitle: '\u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0639\u0644\u0645',
+    dashSubtitle: 'Workshop DIY \u2014 \u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629 \u0639\u0644\u0649 \u062a\u0642\u062f\u0645 \u0627\u0644\u0637\u0627\u0644\u0628',
+    lblApps: '\u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0632\u0627\u0631\u0629',
+    lblQuiz: '\u0645\u062a\u0648\u0633\u0637 \u0646\u062a\u064a\u062c\u0629 \u0627\u0644\u0627\u062e\u062a\u0628\u0627\u0631',
+    lblAchieve: '\u0627\u0644\u0625\u0646\u062c\u0627\u0632\u0627\u062a',
+    lblStickers: '\u0627\u0644\u0645\u0644\u0635\u0642\u0627\u062a',
+    lblRank: '\u0631\u062a\u0628\u0629 \u0627\u0644\u062c\u0627\u0633\u0648\u0633',
+    lblCodes: '\u0627\u0644\u0631\u0645\u0648\u0632 \u0627\u0644\u0633\u0631\u064a\u0629',
+    secRank: '\u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0631\u062a\u0628\u0629',
+    secCat: '\u0627\u0644\u062a\u0648\u0632\u064a\u0639 \u062d\u0633\u0628 \u0627\u0644\u0641\u0626\u0629',
+    secHeat: '\u062e\u0631\u064a\u0637\u0629 \u0627\u0644\u0646\u0634\u0627\u0637',
+    secTable: '\u062a\u0641\u0635\u064a\u0644 \u0644\u0643\u0644 \u062a\u0637\u0628\u064a\u0642',
+    thName: '\u0627\u0644\u062a\u0637\u0628\u064a\u0642',
+    thCategory: '\u0627\u0644\u0641\u0626\u0629',
+    thVisits: '\u0627\u0644\u0632\u064a\u0627\u0631\u0627\u062a',
+    thScore: '\u0646\u062a\u064a\u062c\u0629 \u0627\u0644\u0627\u062e\u062a\u0628\u0627\u0631',
+    thAchieve: '\u0627\u0644\u0625\u0646\u062c\u0627\u0632\u0627\u062a',
+    btnExport: '\ud83d\udce5 \u062a\u0635\u062f\u064a\u0631 JSON',
+    btnReset: '\ud83d\uddd1 \u0625\u0639\u0627\u062f\u0629 \u0636\u0628\u0637 \u0627\u0644\u0643\u0644',
+    btnPrint: '\ud83d\udda8 \u0637\u0628\u0627\u0639\u0629 \u0627\u0644\u062a\u0642\u0631\u064a\u0631',
+    heatLegend: '\u0623\u0642\u0644 \u2192 \u0623\u0643\u062b\u0631',
+    searchPlaceholder: '...\u0628\u062d\u062b',
+    rankNext: '\u0627\u0644\u0631\u062a\u0628\u0629 \u0627\u0644\u062a\u0627\u0644\u064a\u0629',
+    confirmReset: '\u0647\u0644 \u0623\u0646\u062a \u0645\u062a\u0623\u0643\u062f \u0645\u0646 \u0625\u0639\u0627\u062f\u0629 \u0636\u0628\u0637 \u062c\u0645\u064a\u0639 \u0627\u0644\u062a\u0642\u062f\u0645\u061f \u0644\u0627 \u064a\u0645\u0643\u0646 \u0627\u0644\u062a\u0631\u0627\u062c\u0639.',
+    noData: '\u0644\u0645 \u064a\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u0628\u064a\u0627\u0646\u0627\u062a.'
+  }
+};
+
+var curLang = 'en';
+
+function setLang(lang) {
+  curLang = lang;
+  var dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = dir;
+  var L = T[lang];
+  var btns = document.querySelectorAll('.lang-toggle button');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btns.forEach(function(b) { if (b.textContent.toLowerCase().indexOf(lang) !== -1 || (lang === 'en' && b.textContent === 'EN') || (lang === 'fr' && b.textContent === 'FR') || (lang === 'ar' && b.textContent === 'AR')) b.classList.add('active'); });
+
+  var ids = ['dashTitle','dashSubtitle','lblApps','lblQuiz','lblAchieve','lblStickers','lblRank','lblCodes',
+             'secRank','secCat','secHeat','secTable','heatLegend','btnExport','btnReset','btnPrint'];
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && L[id]) el.textContent = L[id];
+  });
+  var ths = ['thName','thCategory','thVisits','thScore','thAchieve'];
+  ths.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && L[id]) {
+      var arrow = el.querySelector('.sort-arrow');
+      el.textContent = L[id] + ' ';
+      if (arrow) el.appendChild(arrow);
+      else { var sp = document.createElement('span'); sp.className = 'sort-arrow'; el.appendChild(sp); }
+    }
+  });
+  document.getElementById('tableSearch').placeholder = L.searchPlaceholder || '';
+  refreshDashboard();
+}
+
+/* ═══════ SPY RANKS ═══════ */
+var SPY_RANKS = [
+  { name: 'Recruit', xp: 0 },
+  { name: 'Observer', xp: 50 },
+  { name: 'Field Agent', xp: 150 },
+  { name: 'Operative', xp: 300 },
+  { name: 'Senior Agent', xp: 500 },
+  { name: 'Special Ops', xp: 800 },
+  { name: 'Ghost', xp: 1200 },
+  { name: 'Shadow Master', xp: 2000 },
+  { name: 'Director', xp: 3500 },
+  { name: 'Legend', xp: 5000 }
+];
+
+function calcSpyRank(xp) {
+  var rank = SPY_RANKS[0];
+  for (var i = SPY_RANKS.length - 1; i >= 0; i--) {
+    if (xp >= SPY_RANKS[i].xp) { rank = SPY_RANKS[i]; break; }
+  }
+  var nextIdx = SPY_RANKS.indexOf(rank) + 1;
+  var next = nextIdx < SPY_RANKS.length ? SPY_RANKS[nextIdx] : null;
+  return { rank: rank.name, next: next ? next.name : 'MAX', nextXP: next ? next.xp : rank.xp };
+}
+
+/* ═══════ DATA COLLECTION ═══════ */
+function collectData() {
+  var data = {
+    visited: [],
+    quizScores: {},
+    achievements: [],
+    stickers: 0,
+    secretCodes: [],
+    heatmap: {},
+    categories: {},
+    appDetails: {},
+    totalXP: 0
+  };
+
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var val = localStorage.getItem(key);
+
+    // Visited apps: rank_visited_* or activity_*
+    if (key.indexOf('activity_') === 0) {
+      var appName = key.replace('activity_', '');
+      data.visited.push(appName);
+      try {
+        var actData = JSON.parse(val);
+        if (actData && actData.dates) {
+          var totalVisits = 0;
+          Object.keys(actData.dates).forEach(function(d) { totalVisits += actData.dates[d]; });
+          if (!data.appDetails[appName]) data.appDetails[appName] = {};
+          data.appDetails[appName].visits = totalVisits;
+          data.appDetails[appName].heatDates = actData.dates;
+          // Merge into global heatmap
+          Object.keys(actData.dates).forEach(function(d) {
+            data.heatmap[d] = (data.heatmap[d] || 0) + actData.dates[d];
+          });
+        }
+      } catch (e) {}
+      // Extract category from app name
+      var parts = appName.split('-');
+      var cat = parts.length > 1 ? parts[0] : 'other';
+      data.categories[cat] = (data.categories[cat] || 0) + 1;
+    }
+
+    // Quiz scores
+    if (key.indexOf('quiz_score_') === 0 || key.indexOf('_quiz') !== -1) {
+      try {
+        var score = parseFloat(val);
+        if (!isNaN(score)) {
+          var qApp = key.replace('quiz_score_', '').replace('_quiz', '');
+          data.quizScores[qApp] = score;
+          if (data.appDetails[qApp]) data.appDetails[qApp].score = score;
+          else { data.appDetails[qApp] = { score: score }; }
+        }
+      } catch (e) {}
+    }
+
+    // Achievements
+    if (key.indexOf('achieve_') === 0) {
+      data.achievements.push(key);
+      data.totalXP += 10;
+    }
+
+    // Stickers
+    if (key === 'kidsStickers') {
+      try {
+        var s = JSON.parse(val);
+        if (Array.isArray(s)) data.stickers = s.length;
+        else if (typeof s === 'number') data.stickers = s;
+      } catch (e) {
+        var sn = parseInt(val);
+        if (!isNaN(sn)) data.stickers = sn;
+      }
+    }
+
+    // Secret codes
+    if (key.indexOf('secret_') === 0) {
+      data.secretCodes.push(key.replace('secret_', ''));
+    }
+
+    // Rank visited
+    if (key.indexOf('rank_visited_') === 0) {
+      var rvApp = key.replace('rank_visited_', '');
+      if (data.visited.indexOf(rvApp) === -1) data.visited.push(rvApp);
+      data.totalXP += 5;
+    }
+
+    // Streak/mentor completions add XP
+    if (key.indexOf('_streak') !== -1 && key.indexOf('_date') === -1) {
+      var streakVal = parseInt(val);
+      if (!isNaN(streakVal)) data.totalXP += streakVal * 2;
+    }
+    if (key.indexOf('_mentor_done') !== -1) {
+      data.totalXP += 15;
+    }
+  }
+
+  // XP from visits and quizzes
+  data.totalXP += data.visited.length * 5;
+  var quizKeys = Object.keys(data.quizScores);
+  quizKeys.forEach(function(k) { data.totalXP += Math.round(data.quizScores[k] * 0.5); });
+
+  return data;
+}
+
+/* ═══════ RENDER ═══════ */
+var sortCol = 0;
+var sortAsc = true;
+var tableData = [];
+
+function refreshDashboard() {
+  var d = collectData();
+
+  // Stats
+  document.getElementById('statApps').textContent = d.visited.length;
+  var quizKeys = Object.keys(d.quizScores);
+  if (quizKeys.length > 0) {
+    var sum = 0;
+    quizKeys.forEach(function(k) { sum += d.quizScores[k]; });
+    document.getElementById('statQuiz').textContent = Math.round(sum / quizKeys.length) + '%';
+  } else {
+    document.getElementById('statQuiz').textContent = '—';
+  }
+  document.getElementById('statAchieve').textContent = d.achievements.length;
+  document.getElementById('statStickers').textContent = d.stickers;
+  document.getElementById('statCodes').textContent = d.secretCodes.length + '/488';
+
+  // Spy rank
+  var rank = calcSpyRank(d.totalXP);
+  document.getElementById('statRank').textContent = rank.rank;
+  document.getElementById('rankBadge').textContent = rank.rank;
+  document.getElementById('rankXP').textContent = 'XP: ' + d.totalXP;
+  var L = T[curLang];
+  document.getElementById('rankNext').textContent = (L.rankNext || 'Next rank') + ': ' + rank.next + (rank.next !== 'MAX' ? ' (' + rank.nextXP + ' XP)' : '');
+
+  // Category chart
+  var catDiv = document.getElementById('catChart');
+  catDiv.innerHTML = '';
+  var catKeys = Object.keys(d.categories).sort(function(a, b) { return d.categories[b] - d.categories[a]; });
+  var maxCat = catKeys.length > 0 ? d.categories[catKeys[0]] : 1;
+  catKeys.forEach(function(cat) {
+    var pct = Math.round(d.categories[cat] / maxCat * 100);
+    var row = document.createElement('div');
+    row.className = 'cat-bar-wrap';
+    row.innerHTML = '<span class="cat-label">' + cat + '</span>' +
+      '<div class="cat-bar"><div class="cat-bar-fill" style="width:' + pct + '%"></div></div>' +
+      '<span class="cat-bar-count">' + d.categories[cat] + '</span>';
+    catDiv.appendChild(row);
+  });
+
+  // Heatmap
+  var hmDiv = document.getElementById('heatmapArea');
+  hmDiv.innerHTML = '';
+  var hmColors = ['#161b22','#0e4429','#006d32','#26a641','#39d353'];
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var grid = document.createElement('div');
+  grid.className = 'heatmap-grid';
+  for (var w = 51; w >= 0; w--) {
+    for (var day = 0; day < 7; day++) {
+      var dt = new Date(today);
+      dt.setDate(dt.getDate() - (w * 7 + (6 - day)));
+      var ds = dt.toISOString().slice(0, 10);
+      var count = d.heatmap[ds] || 0;
+      var cell = document.createElement('div');
+      cell.className = 'hm-cell';
+      var ci = count === 0 ? 0 : count <= 1 ? 1 : count <= 3 ? 2 : count <= 5 ? 3 : 4;
+      cell.style.background = hmColors[ci];
+      cell.title = ds + ': ' + count;
+      grid.appendChild(cell);
+    }
+  }
+  hmDiv.appendChild(grid);
+
+  // Table
+  tableData = [];
+  var allApps = Object.keys(d.appDetails);
+  d.visited.forEach(function(a) { if (allApps.indexOf(a) === -1) allApps.push(a); });
+  allApps.forEach(function(app) {
+    var det = d.appDetails[app] || {};
+    var parts = app.split('-');
+    var cat = parts.length > 1 ? parts[0] : 'other';
+    var achCount = 0;
+    d.achievements.forEach(function(a) { if (a.indexOf(app) !== -1) achCount++; });
+    tableData.push({
+      name: app,
+      category: cat,
+      visits: det.visits || 0,
+      score: det.score !== undefined ? det.score : -1,
+      achievements: achCount
+    });
+  });
+  renderTable();
+}
+
+function renderTable() {
+  tableData.sort(function(a, b) {
+    var va, vb;
+    switch (sortCol) {
+      case 0: va = a.name; vb = b.name; break;
+      case 1: va = a.category; vb = b.category; break;
+      case 2: va = a.visits; vb = b.visits; break;
+      case 3: va = a.score; vb = b.score; break;
+      case 4: va = a.achievements; vb = b.achievements; break;
+      default: va = a.name; vb = b.name;
+    }
+    if (typeof va === 'string') {
+      var cmp = va.localeCompare(vb);
+      return sortAsc ? cmp : -cmp;
+    }
+    return sortAsc ? va - vb : vb - va;
+  });
+
+  var filter = document.getElementById('tableSearch').value.toLowerCase();
+  var tbody = document.getElementById('appTableBody');
+  tbody.innerHTML = '';
+  tableData.forEach(function(row) {
+    if (filter && row.name.toLowerCase().indexOf(filter) === -1 && row.category.toLowerCase().indexOf(filter) === -1) return;
+    var tr = document.createElement('tr');
+    var scoreTxt = row.score >= 0 ? row.score + '%' : '—';
+    var barW = row.score >= 0 ? Math.min(row.score, 100) : 0;
+    tr.innerHTML = '<td>' + row.name + '</td>' +
+      '<td>' + row.category + '</td>' +
+      '<td>' + row.visits + '</td>' +
+      '<td>' + scoreTxt + (barW > 0 ? '<span class="score-bar" style="width:' + barW + 'px"></span>' : '') + '</td>' +
+      '<td>' + row.achievements + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  // Update sort arrows
+  var ths = document.querySelectorAll('th');
+  ths.forEach(function(th, idx) {
+    var arrow = th.querySelector('.sort-arrow');
+    if (!arrow) { arrow = document.createElement('span'); arrow.className = 'sort-arrow'; th.appendChild(arrow); }
+    if (idx === sortCol) {
+      arrow.innerHTML = sortAsc ? '&#9650;' : '&#9660;';
+    } else {
+      arrow.innerHTML = '';
+    }
+  });
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortAsc = !sortAsc;
+  else { sortCol = col; sortAsc = true; }
+  renderTable();
+}
+
+function filterTable() {
+  renderTable();
+}
+
+/* ═══════ EXPORT ═══════ */
+function exportJSON() {
+  var all = {};
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var val = localStorage.getItem(key);
+    try { all[key] = JSON.parse(val); } catch (e) { all[key] = val; }
+  }
+  var blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'workshop-diy-progress-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ═══════ RESET ═══════ */
+function resetAll() {
+  var L = T[curLang];
+  if (!confirm(L.confirmReset)) return;
+  localStorage.clear();
+  refreshDashboard();
+}
+
+/* ═══════ INIT ═══════ */
+document.addEventListener('DOMContentLoaded', function() {
+  refreshDashboard();
+});
+</script>
+</body>
+</html>

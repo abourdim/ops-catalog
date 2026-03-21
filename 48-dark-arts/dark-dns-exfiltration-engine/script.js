@@ -115,12 +115,120 @@ const LANG_BASE = {
  splashHint:'انقر للتخطي'
  }
 };
+/* === SECRET CODE SYSTEM === */
+function initSecretCode(){var CODE='9404';var appDir=location.pathname.split('/').filter(Boolean).slice(-2,-1)[0]||'app';var storageKey='secret_'+appDir;var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};if(!L.secretTitle)return;var found=localStorage.getItem(storageKey);function countCodes(){var c=0;for(var i=0;i<localStorage.length;i++){if(localStorage.key(i).indexOf('secret_')===0&&localStorage.getItem(localStorage.key(i)).length===4)c++;}return c;}var lockBtn=document.createElement('button');lockBtn.className='btn-icon-only';lockBtn.textContent='\uD83D\uDD12';lockBtn.title=L.secretTitle||'Secret Vault';lockBtn.style.cssText='cursor:pointer;font-size:1rem;';lockBtn.onclick=function(){var cc=countCodes();var codes=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf('secret_')===0){var v=localStorage.getItem(k);if(v&&v.length===4)codes.push(k.replace('secret_','')+': '+v);}}var ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;';var box=document.createElement('div');box.style.cssText='background:var(--panel,#0b0d24);border:2px solid var(--accent,#d4a03c);border-radius:14px;padding:1.5rem;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;color:var(--text,#e4ddd0);text-align:center;';box.innerHTML='<h3 style="color:var(--accent,#d4a03c);margin-bottom:0.8rem;font-family:Orbitron,monospace;">'+(L.secretTitle||'Secret Vault')+'</h3><p style="font-size:1.2rem;margin:0.5rem 0;">'+(L.secretCount||'Codes collected')+': <strong>'+cc+'/488</strong></p><div style="margin:0.8rem 0;text-align:left;font-family:monospace;font-size:0.75rem;max-height:200px;overflow-y:auto;background:rgba(0,0,0,0.3);padding:0.5rem;border-radius:8px;">'+((codes.length>0)?codes.join('<br>'):'<em>'+L.secretHint+'</em>')+'</div><button style="background:var(--accent,#d4a03c);color:#000;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-weight:700;" onclick="this.parentElement.parentElement.remove();">OK</button>';ov.appendChild(box);ov.onclick=function(e){if(e.target===ov)ov.remove();};document.body.appendChild(ov);};var hdr=document.querySelector('.header-buttons')||document.querySelector('.top-buttons')||document.querySelector('header');if(hdr)hdr.appendChild(lockBtn);else{lockBtn.style.cssText+='position:fixed;top:0.5rem;right:3rem;z-index:9999;';document.body.appendChild(lockBtn);}function checkSliders(){var sliders=document.querySelectorAll('input[type="range"]');if(sliders.length===0)return false;var allMid=true;sliders.forEach(function(s){var min=parseFloat(s.min)||0;var max=parseFloat(s.max)||100;var mid=(min+max)/2;var range=max-min;var tolerance=range*0.05;var val=parseFloat(s.value);if(Math.abs(val-mid)>tolerance)allMid=false;});return allMid;}function onSliderInput(){if(found)return;if(!checkSliders())return;found=CODE;localStorage.setItem(storageKey,CODE);lockBtn.textContent='\uD83D\uDD13';var cc=countCodes();var popup=document.createElement('div');popup.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;';var inner=document.createElement('div');inner.style.cssText='background:var(--panel,#0b0d24);border:3px solid #ffd700;border-radius:14px;padding:2rem;max-width:350px;width:90%;text-align:center;color:var(--text,#e4ddd0);animation:secretGlow 1.5s ease-in-out infinite alternate;';inner.innerHTML='<div style="font-size:3rem;margin-bottom:0.5rem;">&#127775;</div><h3 style="color:#ffd700;font-family:Orbitron,monospace;">'+(L.secretFound||'Code Found!')+'</h3><div style="font-family:Orbitron,monospace;font-size:2rem;color:#ffd700;margin:1rem 0;letter-spacing:6px;">'+CODE+'</div><p style="font-size:0.9rem;opacity:0.8;">'+(L.secretCount||'Codes collected')+': '+cc+'/488</p><button style="background:#ffd700;color:#000;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-weight:700;margin-top:1rem;" onclick="this.parentElement.parentElement.remove();">OK</button>';popup.appendChild(inner);popup.onclick=function(e){if(e.target===popup)popup.remove();};document.body.appendChild(popup);var glowStyle=document.createElement('style');glowStyle.textContent='@keyframes secretGlow{from{box-shadow:0 0 20px rgba(255,215,0,0.3);}to{box-shadow:0 0 40px rgba(255,215,0,0.7),0 0 80px rgba(255,215,0,0.3);}}';document.head.appendChild(glowStyle);}if(found){lockBtn.textContent='\uD83D\uDD13';}document.querySelectorAll('input[type="range"]').forEach(function(s){s.addEventListener('input',onSliderInput);});}
+document.addEventListener('DOMContentLoaded',function(){try{initSecretCode();}catch(e){console.warn('SecretCode init:',e);}});
+
+/* ═══════ Signal Visualizer Themes ═══════ */
+function initSignalThemes(){
+ if(document.getElementById('vizThemeSelect'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var themes={
+  default:{filter:'',cls:''},
+  oscilloscope:{filter:'hue-rotate(120deg) saturate(2) brightness(1.2)',cls:'viz-oscilloscope'},
+  thermal:{filter:'hue-rotate(-30deg) saturate(3) contrast(1.3)',cls:'viz-thermal'},
+  nightvision:{filter:'brightness(1.5) contrast(1.5) sepia(1) hue-rotate(70deg) saturate(5)',cls:'viz-nightvision'},
+  radar:{filter:'grayscale(0.5) brightness(1.3) contrast(1.5)',cls:'viz-radar'},
+  matrix:{filter:'brightness(1.2) contrast(2) saturate(0)',cls:'viz-matrix'}
+ };
+ var labels={
+  default:L.vizDefault||'Default',
+  oscilloscope:L.vizOscilloscope||'Oscilloscope',
+  thermal:L.vizThermal||'Thermal',
+  nightvision:L.vizNightVision||'Night Vision',
+  radar:L.vizRadar||'Radar',
+  matrix:L.vizMatrix||'Matrix'
+ };
+ var style=document.createElement('style');
+ style.textContent='.viz-theme-wrap{position:relative;display:inline-block;margin:6px 0;}'
+  +'.viz-theme-wrap select{padding:6px 28px 6px 10px;border-radius:8px;border:1px solid var(--border,#444);background:var(--bg2,#23272e);color:var(--fg,#e0e0e0);font-size:.85rem;cursor:pointer;appearance:none;-webkit-appearance:none;}'
+  +'.viz-theme-wrap::after{content:"";position:absolute;right:10px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-top-color:var(--fg,#e0e0e0);pointer-events:none;}'
+  +'.viz-overlay{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;border-radius:inherit;}'
+  +'.viz-oscilloscope .viz-overlay{background:rgba(0,255,0,0.07);}'
+  +'.viz-radar .viz-overlay{background:conic-gradient(from 0deg,transparent 0%,rgba(0,255,0,0.12) 10%,transparent 20%);animation:vizSweep 3s linear infinite;}'
+  +'@keyframes vizSweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}'
+  +'.viz-matrix .viz-overlay{background:rgba(0,255,0,0.1);}';
+ document.head.appendChild(style);
+ var mc=document.getElementById('mainCard');
+ if(!mc)return;
+ var wrap=document.createElement('div');
+ wrap.style.cssText='padding:0 16px 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
+ var lbl=document.createElement('label');
+ lbl.textContent=(L.vizThemeTitle||'Visual Theme')+': ';
+ lbl.style.cssText='font-size:.85rem;font-weight:600;';
+ lbl.setAttribute('for','vizThemeSelect');
+ var sw=document.createElement('div');
+ sw.className='viz-theme-wrap';
+ var sel=document.createElement('select');
+ sel.id='vizThemeSelect';
+ var keys=['default','oscilloscope','thermal','nightvision','radar','matrix'];
+ keys.forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=labels[k];sel.appendChild(o);});
+ sw.appendChild(sel);
+ wrap.appendChild(lbl);
+ wrap.appendChild(sw);
+ var canvas=document.getElementById('simCanvas');
+ var parent=canvas?canvas.parentElement:null;
+ if(parent){
+  var overlay=document.createElement('div');
+  overlay.className='viz-overlay';
+  parent.style.position='relative';
+  parent.appendChild(overlay);
+ }
+ var saved=localStorage.getItem('vizTheme');
+ if(saved&&themes[saved]){sel.value=saved;}
+ function apply(t){
+  var th=themes[t]||themes['default'];
+  if(canvas)canvas.style.filter=th.filter;
+  if(parent){
+   keys.forEach(function(k){if(themes[k].cls)parent.classList.remove(themes[k].cls);});
+   if(th.cls)parent.classList.add(th.cls);
+  }
+  localStorage.setItem('vizTheme',t);
+ }
+ sel.addEventListener('change',function(){apply(sel.value);});
+ apply(sel.value);
+ var sections=mc.querySelectorAll('.collapsible, details, [class*=section]');
+ if(sections.length>0){mc.insertBefore(wrap,sections[0]);}
+ else{mc.appendChild(wrap);}
+}
+document.addEventListener('DOMContentLoaded',function(){try{initSignalThemes();}catch(e){console.warn('SignalThemes init:',e);}});
+
+/* ═══════ Hologram Effect ═══════ */
+function initHologramEffect(){
+ if(!window.matchMedia('(hover: hover)').matches)return;
+ var mc=document.getElementById('mainCard');
+ if(!mc)return;
+ mc.style.transition='transform 0.1s ease-out';
+ mc.style.transformStyle='preserve-3d';
+ var sheen=document.createElement('div');
+ sheen.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;border-radius:inherit;opacity:0;transition:opacity 0.3s;';
+ mc.style.position=mc.style.position||'relative';
+ mc.appendChild(sheen);
+ mc.addEventListener('mousemove',function(e){
+  var r=mc.getBoundingClientRect();
+  var cx=r.left+r.width/2;
+  var cy=r.top+r.height/2;
+  var dx=(e.clientX-cx)/(r.width/2);
+  var dy=(e.clientY-cy)/(r.height/2);
+  var rotY=dx*5;
+  var rotX=-dy*5;
+  mc.style.transform='perspective(800px) rotateY('+rotY+'deg) rotateX('+rotX+'deg)';
+  sheen.style.opacity='0.12';
+  sheen.style.background='radial-gradient(circle at '+((dx+1)*50)+'% '+((dy+1)*50)+'%, rgba(255,255,255,0.25), transparent 60%)';
+ });
+ mc.addEventListener('mouseleave',function(){
+  mc.style.transform='perspective(800px) rotateY(0deg) rotateX(0deg)';
+  sheen.style.opacity='0';
+ });
+}
+document.addEventListener('DOMContentLoaded',function(){try{initHologramEffect();}catch(e){console.warn('Hologram init:',e);}});
+
 
 
 
 const LANG = {
  en: {
- ...LANG_BASE.en,kidsMode:'Kids Mode',kidsMascotHi:'Hi there, Agent!',kidsMission:'Mission Timer',kidsMissionDone:'Mission Complete!',kidsStickers:'Stickers',
+ ...LANG_BASE.en,dossierTitle:'Classified Dossier',dossierStamp:'TOP SECRET',dossierAgent:'Agent Designation',dossierMission:'Mission Briefing',dossierRedacted:'[REDACTED]',dossierDownload:'Download Dossier',leaderTitle:'Personal Records',leaderApps:'Apps Explored',leaderAccuracy:'Quiz Accuracy',leaderStreak:'Best Streak',leaderCategory:'Category Breakdown',secretTitle:'Secret Vault',secretFound:'Code Found!',secretHint:'Set all sliders to center...',secretCount:'Codes collected',secretReveal:'Reveal Code',rankTitle:'Spy Rank',rankRecruit:'Recruit',rankAgent:'Agent',rankSpecial:'Special Agent',rankCommander:'Commander',rankDirector:'Director',rankStats:'Your Stats',rankNext:'Points to next rank',narratorTitle:'Auto Narrator',narratorScanning:'Scanning for signals...',narratorDetected:'Signal detected! Activity: HIGH',narratorProcessing:'Processing data streams...',narratorWarning:'Warning: anomaly detected',narratorAcquired:'Signal acquired successfully',whatifTitle:'What If?',whatifIncrease:'Increasing',whatifDecrease:'Decreasing',missionCardTitle:'Share Mission',missionCardChallenge:'Can you match this signal?',missionCardDownload:'Download Card',mistakeTitle:'Tip',mistakeMin:'Setting to minimum may produce no output',mistakeMax:'Maximum may cause signal clipping',mistakeCombo:'Extreme combination detected',vizThemeTitle:'Visual Theme',vizDefault:'Default',vizOscilloscope:'Oscilloscope',vizThermal:'Thermal',vizNightVision:'Night Vision',vizRadar:'Radar',vizMatrix:'Matrix',hologramTitle:'Hologram',kidsMode:'Kids Mode',kidsMascotHi:'Hi there, Agent!',kidsMission:'Mission Timer',kidsMissionDone:'Mission Complete!',kidsStickers:'Stickers',
  diffTitle:'Difficulty',diffBeginner:'🟢 Beginner',diffIntermediate:'🟡 Intermediate',diffExpert:'🔴 Expert',diffInfo:'Choose your complexity level',spacedTitle:'📅 Spaced Review',spacedReview:'Review',spacedNext:'Next review',spacedMastered:'Mastered',spacedNew:'New — not yet studied',spacedDue:'Due for review!',spacedInfo:'Smart review reminders based on the forgetting curve',
  
  missionTitle:'MISSION BRIEFING',missionClassified:'CLASSIFIED',missionObjective:'Your mission objective:',missionAgent:'AGENT-94AE7D',missionSkip:'Skip',missionGo:'ACCEPT MISSION',mission_obj:'Explore and master Dns Exfiltration Engine \u2014 analyze, experiment, and complete all challenges.',nightVisionTitle:'Night Vision Mode',nightVisionOn:'NV ON',nightVisionOff:'NV OFF',nightVisionAuto:'Auto NV',
@@ -229,7 +337,7 @@ const LANG = {
  glossTitle: '📚 Key Terms',
  fr: {
  
- ...LANG_BASE.fr,kidsMode:'Mode Enfant',kidsMascotHi:'Salut, Agent!',kidsMission:'Chrono Mission',kidsMissionDone:'Mission Accomplie!',kidsStickers:'Autocollants',
+ ...LANG_BASE.fr,dossierTitle:'Dossier Classifi\x27',dossierStamp:'ULTRA SECRET',dossierAgent:'D\x27signation Agent',dossierMission:'Briefing Mission',dossierRedacted:'[CENSUR\x27]',dossierDownload:'T\x27l\x27charger Dossier',leaderTitle:'Records Personnels',leaderApps:'Apps Explor\x27es',leaderAccuracy:'Pr\x27cision Quiz',leaderStreak:'Meilleure S\x27rie',leaderCategory:'R\x27partition Cat\x27gories',secretTitle:'Coffre Secret',secretFound:'Code Trouv\x27!',secretHint:'Mettez tous les curseurs au centre...',secretCount:'Codes collect\x27s',secretReveal:'R\x27v\x27ler Code',rankTitle:'Rang d\x27Espion',rankRecruit:'Recrue',rankAgent:'Agent',rankSpecial:'Agent Sp\x27cial',rankCommander:'Commandant',rankDirector:'Directeur',rankStats:'Vos Statistiques',rankNext:'Points au prochain rang',narratorTitle:'Narrateur Auto',narratorScanning:'Recherche de signaux...',narratorDetected:'Signal d\x27tect\x27! Activit\x27: HAUTE',narratorProcessing:'Traitement des donn\x27es...',narratorWarning:'Alerte: anomalie d\x27tect\x27e',narratorAcquired:'Signal acquis avec succ\x27s',whatifTitle:'Et si?',whatifIncrease:'Augmenter',whatifDecrease:'Diminuer',missionCardTitle:'Partager Mission',missionCardChallenge:'Pouvez-vous reproduire ce signal?',missionCardDownload:'T\x27l\x27charger Carte',mistakeTitle:'Conseil',mistakeMin:'Le minimum peut ne produire aucun r\x27sultat',mistakeMax:'Le maximum peut causer un \x27cr\x27tage',mistakeCombo:'Combinaison extr\x27me d\x27tect\x27e',vizThemeTitle:'Th\x27me Visuel',vizDefault:'D\x27faut',vizOscilloscope:'Oscilloscope',vizThermal:'Thermique',vizNightVision:'Vision Nocturne',vizRadar:'Radar',vizMatrix:'Matrice',hologramTitle:'Hologramme',kidsMode:'Mode Enfant',kidsMascotHi:'Salut, Agent!',kidsMission:'Chrono Mission',kidsMissionDone:'Mission Accomplie!',kidsStickers:'Autocollants',
  diffTitle:'Difficulté',diffBeginner:'🟢 Débutant',diffIntermediate:'🟡 Intermédiaire',diffExpert:'🔴 Expert',diffInfo:'Choisissez votre niveau de complexité',spacedTitle:'📅 Révision espacée',spacedReview:'Réviser',spacedNext:'Prochaine révision',spacedMastered:'Maîtrisé',spacedNew:'Nouveau — pas encore étudié',spacedDue:'Révision nécessaire !',spacedInfo:'Rappels intelligents basés sur la courbe de l\x27oubli',
  
  missionTitle:'BRIEFING DE MISSION',missionClassified:'CLASSIFI\xc9',missionObjective:'Objectif de mission :',missionAgent:'AGENT-94AE7D',missionSkip:'Passer',missionGo:'ACCEPTER LA MISSION',mission_obj:'Explorer et ma\xeetrisez Dns Exfiltration Engine \u2014 analysez, exp\xe9rimentez et compl\xe9tez tous les d\xe9fis.',nightVisionTitle:'Mode Vision Nocturne',nightVisionOn:'VN ON',nightVisionOff:'VN OFF',nightVisionAuto:'VN Auto',
@@ -332,7 +440,7 @@ const LANG = {
  glossTitle: '📚 Termes clés',
  ar: {
  
- ...LANG_BASE.ar,kidsMode:'\u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644',kidsMascotHi:'\u0645\u0631\u062d\u0628\u0627 \u0623\u064a\u0647\u0627 \u0627\u0644\u0639\u0645\u064a\u0644!',kidsMission:'\u0645\u0624\u0642\u062a \u0627\u0644\u0645\u0647\u0645\u0629',kidsMissionDone:'!\u0627\u0644\u0645\u0647\u0645\u0629 \u0645\u0643\u062a\u0645\u0644\u0629',kidsStickers:'\u0645\u0644\u0635\u0642\u0627\u062a',
+ ...LANG_BASE.ar,dossierTitle:'ملف سري',dossierStamp:'سري للغاية',dossierAgent:'تعيين العميل',dossierMission:'إحاطة المهمة',dossierRedacted:'[محجوب]',dossierDownload:'تحميل الملف',leaderTitle:'السجلات الشخصية',leaderApps:'التطبيقات المستكشفة',leaderAccuracy:'دقة الاختبار',leaderStreak:'أفضل سلسلة',leaderCategory:'توزيع الفئات',secretTitle:'\u0627\u0644\u062e\u0632\u0646\u0629 \u0627\u0644\u0633\u0631\u064a\u0629',secretFound:'!\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u0627\u0644\u0631\u0645\u0632',secretHint:'...\u0627\u0636\u0628\u0637 \u062c\u0645\u064a\u0639 \u0627\u0644\u0645\u0646\u0632\u0644\u0642\u0627\u062a \u0639\u0644\u0649 \u0627\u0644\u0648\u0633\u0637',secretCount:'\u0627\u0644\u0631\u0645\u0648\u0632 \u0627\u0644\u0645\u062c\u0645\u0639\u0629',secretReveal:'\u0643\u0634\u0641 \u0627\u0644\u0631\u0645\u0632',rankTitle:'رتبة الجاسوس',rankRecruit:'مجند',rankAgent:'عميل',rankSpecial:'عميل خاص',rankCommander:'قائد',rankDirector:'مدير',rankStats:'إحصائياتك',rankNext:'نقاط للرتبة التالية',narratorTitle:'الراوي التلقائي',narratorScanning:'...جاري البحث عن إشارات',narratorDetected:'!تم اكتشاف إشارة',narratorProcessing:'...معالجة البيانات',narratorWarning:'تحذير: تم اكتشاف شذوذ',narratorAcquired:'تم الحصول على الإشارة بنجاح',whatifTitle:'ماذا لو؟',whatifIncrease:'زيادة',whatifDecrease:'تقليل',missionCardTitle:'مشاركة المهمة',missionCardChallenge:'هل يمكنك مطابقة هذه الإشارة؟',missionCardDownload:'تحميل البطاقة',mistakeTitle:'نصيحة',mistakeMin:'قد لا ينتج الحد الأدنى أي نتيجة',mistakeMax:'قد يسبب الحد الأقصى قطع الإشارة',mistakeCombo:'تم اكتشاف تركيبة متطرفة',vizThemeTitle:'\u0627\u0644\u0633\u0645\u0629 \u0627\u0644\u0628\u0635\u0631\u064A\u0629',vizDefault:'\u0627\u0641\u062A\u0631\u0627\u0636\u064A',vizOscilloscope:'\u0631\u0627\u0633\u0645 \u0627\u0644\u0630\u0628\u0630\u0628\u0627\u062A',vizThermal:'\u062D\u0631\u0627\u0631\u064A',vizNightVision:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629',vizRadar:'\u0631\u0627\u062F\u0627\u0631',vizMatrix:'\u0645\u0635\u0641\u0648\u0641\u0629',hologramTitle:'\u0647\u0648\u0644\u0648\u063A\u0631\u0627\u0645',kidsMode:'\u0648\u0636\u0639 \u0627\u0644\u0623\u0637\u0641\u0627\u0644',kidsMascotHi:'\u0645\u0631\u062d\u0628\u0627 \u0623\u064a\u0647\u0627 \u0627\u0644\u0639\u0645\u064a\u0644!',kidsMission:'\u0645\u0624\u0642\u062a \u0627\u0644\u0645\u0647\u0645\u0629',kidsMissionDone:'!\u0627\u0644\u0645\u0647\u0645\u0629 \u0645\u0643\u062a\u0645\u0644\u0629',kidsStickers:'\u0645\u0644\u0635\u0642\u0627\u062a',
  diffTitle:'المستوى',diffBeginner:'🟢 مبتدئ',diffIntermediate:'🟡 متوسط',diffExpert:'🔴 خبير',diffInfo:'اختر مستوى التعقيد',spacedTitle:'📅 المراجعة المتباعدة',spacedReview:'مراجعة',spacedNext:'المراجعة التالية',spacedMastered:'مُتقَن',spacedNew:'جديد — لم يُدرَس بعد',spacedDue:'حان وقت المراجعة!',spacedInfo:'تذكيرات ذكية بناءً على منحنى النسيان',
  
  missionTitle:'\u0625\u062D\u0627\u0637\u0629 \u0627\u0644\u0645\u0647\u0645\u0629',missionClassified:'\u0633\u0631\u064A',missionObjective:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0647\u0645\u0629:',missionAgent:'AGENT-94AE7D',missionSkip:'\u062A\u062E\u0637\u064A',missionGo:'\u0642\u0628\u0648\u0644 \u0627\u0644\u0645\u0647\u0645\u0629',mission_obj:'\u0627\u0633\u062A\u0643\u0634\u0641 \u0648\u0623\u062A\u0642\u0646 \u0647\u0630\u0627 \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u2014 \u062D\u0644\u0644 \u0648\u062C\u0631\u0628 \u0648\u0623\u0643\u0645\u0644 \u062C\u0645\u064A\u0639 \u0627\u0644\u062A\u062D\u062F\u064A\u0627\u062A.',nightVisionTitle:'\u0648\u0636\u0639 \u0627\u0644\u0631\u0624\u064A\u0629 \u0627\u0644\u0644\u064A\u0644\u064A\u0629',nightVisionOn:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 ON',nightVisionOff:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 OFF',nightVisionAuto:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 \u062A\u0644\u0642\u0627\u0626\u064A',
@@ -435,6 +543,548 @@ const LANG = {
  printBtn: '🖨️ طباعة',quizTab:'اختبار',quizTitle:'اختبر معلوماتك',quizRetry:'إعادة',quizCorrect:'صحيح!',quizWrong:'خطأ!',quizScore:'النتيجة',quiz_q1:'من اخترع شيفرة مورس؟',quiz_q1a:'تسلا',quiz_q1b:'صامويل مورس',quiz_q1c:'إديسون',quiz_q1d:'بيل',quiz_q1_answer:'1',quiz_q2:'في شيفرة مورس، ما يمثل الحرف E؟',quiz_q2a:'شرطة',quiz_q2b:'نقطة واحدة',quiz_q2c:'نقطتان',quiz_q2d:'نقطة-شرطة',quiz_q2_answer:'1',quiz_q3:'كيف تبدو SOS بشيفرة مورس؟',quiz_q3a:'---...---',quiz_q3b:'...---...',quiz_q3c:'...-...-',quiz_q3d:'-.-.-.',quiz_q3_answer:'1',quiz_q4:'ما هي الشبكة العصبية؟',quiz_q4a:'أسلاك مادية',quiz_q4b:'نظام حوسبة مستوحى من الخلايا العصبية',quiz_q4c:'شبكة اجتماعية',quiz_q4d:'شبكة راديو',quiz_q4_answer:'1',quiz_q5:'ما هو التعلم الآلي؟',quiz_q5a:'برمجة الروبوتات',quiz_q5b:'أنظمة تتعلم من البيانات',quiz_q5c:'حساب يدوي',quiz_q5d:'تصميم العتاد',quiz_q5_answer:'1',realworldTitle:'🌍 قصص واقعية',realworld1:'يتواصل المسبار فويجر 1 الذي أُطلق عام 1977 من مسافة 24 مليار كم باستخدام مرسل بقدرة 23 واط. تستغرق الإشارات أكثر من 22 ساعة في كل اتجاه.',realworld2:'يولد مصادم الهادرونات الكبير في سيرن 1 بيتابايت في الثانية أثناء التصادمات. في عام 2012 أكد بوزون هيغز مكملاً النموذج القياسي للفيزياء.',realworld3:'رصد مرصد ليغو موجات الجاذبية عام 2015 مؤكدًا تنبؤ أينشتاين قبل 100 عام. قاست المستشعرات تشوهات في الزمكان بمقدار 10⁻²¹ متر.',experimentTitle:'🔬 تجارب',experiment_1_title:'القياس المرجعي',experiment_1:'اضبط جميع عناصر التحكم على القيم الافتراضية وسجّل القراءات الأولية. هذه هي قياساتك المرجعية. يقوم العالم الجيد دائمًا بتحديد خط الأساس قبل تغيير المتغيرات — فهو يمنحك نقطة مرجعية لقياس جميع التغييرات المستقبلية.',experiment_2_title:'تحليل الحساسية',experiment_2:'غيّر معلمة واحدة إلى قيمتها الدنيا وسجّل النتيجة ثم اضبطها على الحد الأقصى. يكشف الفرق عن حساسية النظام لهذا المتغير. في اتصالات متطرفة معرفة المعلمات الأكثر أهمية تساعدك على تركيز جهودك بكفاءة.',experiment_3_title:'تأثيرات التفاعل',experiment_3:'بعد اختبار المعلمات بشكل فردي غيّر اثنتين في وقت واحد. هل التأثير المشترك يساوي مجموع التأثيرات الفردية؟ التفاعلات غير الخطية شائعة في اتصالات متطرفة وتكشف التعقيد الخفي تحت أنظمة تبدو بسيطة.',wiki_concept_title:'💡 المفهوم الأساسي',wiki_concept:'Dns Exfiltration Engine يوضح مفهومًا أساسيًا في اتصالات متطرفة. تحاكي هذه المحاكاة كيفية معالجة الأنظمة الحقيقية للإشارات والبيانات أو الظواهر الفيزيائية. الفكرة الرئيسية هي أن السلوكيات المعقدة تنشأ من قواعد بسيطة تُطبق بشكل متكرر.',wiki_realworld_title:'🌐 التطبيقات الواقعية',wiki_realworld:'المبادئ المعروضة في Dns Exfiltration Engine لها تطبيقات مباشرة في العالم الحقيقي. يستخدم المحترفون في اتصالات متطرفة هذه المفاهيم نفسها يوميًا. في الصناعة يُنفذ ESP32 وأجهزة مماثلة هذه الخوارزميات في أنظمة مدمجة.',wiki_safety_title:'⚠️ السلامة والمسؤولية',wiki_safety:'العمل في مجال اتصالات متطرفة يحمل مسؤوليات مهمة. تعمل دائمًا ضمن الحدود القانونية. هذه المحاكاة مصممة للاستخدام التعليمي الآمن — لا ترسل إشارات حقيقية ولا تصل إلى شبكات حقيقية.',proTipTitle:'💡 نصائح احترافية',proTip1:'استخدم التنقل بين القنوات (1، 6، 11) لمسح الواي فاي — هذه هي القنوات غير المتداخلة الوحيدة في نطاق 2.4 جيجاهرتز وتلتقط 90% من حركة المرور.',proTip2:'أضف مكثفًا بسعة 10 ميكروفاراد عبر دبابيس الطاقة في ESP32. يسبب إرسال الواي فاي ذروات تيار يمكن أن تتسبب في تعطل اللوحة.',funFactTitle:'🎯 هل تعلم؟',funFact:'النجم النيوتروني كثيف لدرجة أن ملعقة صغيرة من مادته ستزن حوالي 6 مليارات طن على الأرض.',mistakeTitle:'⚠️ أخطاء شائعة',mistake1:'تغيير عدة معلمات في وقت واحد يجعل من المستحيل عزل السبب والنتيجة. غيّر دائمًا متغيرًا واحدًا فقط في كل مرة.',mistake2:'تخطي القياس المرجعي. بدون معرفة السلوك الافتراضي لا يمكنك قياس تأثير تغييراتك على النظام.',peerTitle:'👥 \u0648\u0636\u0639 \u0627\u0644\u0646\u0638\u064a\u0631',peerConnect:'\u0627\u062a\u0635\u0627\u0644',peerDisconnect:'\u0642\u0637\u0639',peerStatus:'\u062d\u0627\u0644\u0629 \u0627\u0644\u0646\u0638\u064a\u0631',peerSend:'\u0623\u0631\u0633\u0644',peerReceive:'\u0627\u0633\u062a\u0644\u0645',peerInfo:'\u0627\u0641\u062a\u062d \u0647\u0630\u0627 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0641\u064a \u062a\u0628\u0648\u064a\u0628\u064a\u0646 \u0644\u0644\u0645\u0632\u0627\u0645\u0646\u0629',heatmapTitle:'📅 \u062e\u0631\u064a\u0637\u0629 \u0627\u0644\u0646\u0634\u0627\u0637',heatmapToday:'\u0627\u0644\u064a\u0648\u0645',heatmapStreak:'\u0633\u0644\u0633\u0644\u0629',heatmapTotal:'\u0627\u0644\u0645\u062c\u0645\u0648\u0639',heatmapLegend:'\u0623\u0642\u0644 \u2192 \u0623\u0643\u062b\u0631',mistake3:'تجاهل سجل النشاط. يسجل كل حدث مع طوابع زمنية — ضروري لفهم التسلسلات وتصحيح النتائج غير المتوقعة.'}
 
 };
+/* ═══════ Spy Dossier ═══════ */
+function initSpyDossier(){
+ if(document.getElementById('dossierBtn'))return;
+ var style=document.createElement('style');
+ style.textContent='.dossier-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:20px;box-sizing:border-box;}'
+  +'.dossier-doc{background:linear-gradient(135deg,#2c2416 0%,#3d3222 25%,#2c2416 50%,#3d3222 75%,#2c2416 100%);color:#d4c5a0;border:3px double #8b7355;border-radius:4px;padding:32px 28px;max-width:600px;width:95%;font-family:Courier New,monospace;position:relative;box-shadow:0 0 40px rgba(0,0,0,0.8);}'
+  +'.dossier-doc .stamp{position:absolute;top:40px;right:30px;font-size:2.2em;font-weight:bold;color:rgba(200,30,30,0.45);transform:rotate(-15deg);border:4px solid rgba(200,30,30,0.45);padding:4px 18px;pointer-events:none;animation:stampIn 0.5s ease-out;}'
+  +'@keyframes stampIn{0%{transform:rotate(-15deg) scale(3);opacity:0;}70%{transform:rotate(-15deg) scale(0.95);opacity:1;}100%{transform:rotate(-15deg) scale(1);opacity:1;}}'
+  +'.dossier-doc h2{text-align:center;border-bottom:2px solid #8b7355;padding-bottom:10px;margin-bottom:16px;letter-spacing:2px;animation:typeIn 0.8s steps(30);overflow:hidden;white-space:nowrap;}'
+  +'@keyframes typeIn{from{width:0;}to{width:100%;}}'
+  +'.dossier-doc .d-section{margin:14px 0;padding:10px;border:1px solid #5a4a32;background:rgba(0,0,0,0.15);border-radius:3px;}'
+  +'.dossier-doc .d-section h3{margin:0 0 6px;font-size:0.95em;color:#c8a96e;text-transform:uppercase;letter-spacing:1px;}'
+  +'.dossier-doc .d-section p{margin:4px 0;font-size:0.88em;line-height:1.5;}'
+  +'.dossier-doc .d-redacted{background:#111;color:#111;padding:3px 12px;cursor:pointer;border-radius:2px;margin:6px 0;display:block;transition:color 0.3s;user-select:none;font-size:0.88em;}'
+  +'.dossier-doc .d-redacted.revealed{color:#d4c5a0;background:#222;}'
+  +'.dossier-doc .d-footer{text-align:center;margin-top:18px;padding-top:10px;border-top:2px solid #8b7355;font-size:0.8em;color:#8b7355;}'
+  +'.dossier-doc .d-close{position:absolute;top:8px;right:12px;background:none;border:none;color:#d4c5a0;font-size:1.5em;cursor:pointer;z-index:2;}'
+  +'.dossier-doc .d-download{display:block;margin:12px auto 0;background:#5a4a32;color:#d4c5a0;border:1px solid #8b7355;padding:8px 20px;cursor:pointer;border-radius:3px;font-family:inherit;}';
+ document.head.appendChild(style);
+ function t(k){try{var L=typeof LANG!=='undefined'?LANG:null;if(!L)return k;var c=document.documentElement.lang||localStorage.getItem('lang')||'en';if(L[c]&&L[c][k])return L[c][k];if(L.en&&L.en[k])return L.en[k];return k;}catch(e){return k;}}
+ function getAppTitle(){var el=document.querySelector('.main-title')||document.querySelector('h1');if(el)return el.textContent.trim();var tK=t('title');if(tK!=='title')return tK;return document.title||'Unknown App';}
+ function getAgentHash(){var p=location.pathname.replace(/[^a-zA-Z0-9]/g,'');var h=0;for(var i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h=h&h;}return 'AGENT-'+Math.abs(h).toString(16).toUpperCase().substring(0,6);}
+ function getMainDesc(){var el=document.querySelector('.main-desc')||document.querySelector('[data-i18n="mainDesc"]');if(el)return el.textContent.trim();var d=t('mainDesc');if(d!=='mainDesc')return d;return 'Mission parameters classified.';}
+ function getSliderValues(){var sliders=document.querySelectorAll('input[type=range]');var result=[];for(var i=0;i<sliders.length;i++){var s=sliders[i];var label=s.getAttribute('aria-label')||s.id||('Param-'+(i+1));result.push(label+': '+s.value);}return result;}
+ function getNumericDisplays(){var result=[];var els=document.querySelectorAll('.metric-value, .stat-value, [data-metric]');for(var i=0;i<Math.min(els.length,5);i++){result.push(els[i].textContent.trim());}return result;}
+ function isSimRunning(){var statusEl=document.querySelector('.status-dot, .status-indicator');if(statusEl){var cls=statusEl.className||'';if(cls.indexOf('active')>=0||cls.indexOf('running')>=0||cls.indexOf('green')>=0)return true;}return false;}
+ var spyPhrases=['The owl flies at midnight.','Trust no one.','The fox is in the henhouse.','Rendezvous at coordinates 51.5074 N, 0.1278 W.','Package delivered to dead drop.','Sweep for bugs before proceeding.','Use one-time pad for next transmission.','The eagle has landed.','Maintain radio silence until 0600.'];
+ function showDossier(){
+  var overlay=document.createElement('div');overlay.className='dossier-overlay';
+  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+  var doc=document.createElement('div');doc.className='dossier-doc';
+  var closeBtn=document.createElement('button');closeBtn.className='d-close';closeBtn.textContent='\u00D7';closeBtn.onclick=function(){overlay.remove();};
+  doc.appendChild(closeBtn);
+  var stamp=document.createElement('div');stamp.className='stamp';stamp.textContent=t('dossierStamp');doc.appendChild(stamp);
+  var title=document.createElement('h2');title.textContent=t('dossierTitle')+' \u2014 '+getAppTitle();doc.appendChild(title);
+  var secAgent=document.createElement('div');secAgent.className='d-section';
+  var hAgent=document.createElement('h3');hAgent.textContent=t('dossierAgent');secAgent.appendChild(hAgent);
+  var pAgent=document.createElement('p');pAgent.textContent=getAgentHash();secAgent.appendChild(pAgent);doc.appendChild(secAgent);
+  var secMission=document.createElement('div');secMission.className='d-section';
+  var hMission=document.createElement('h3');hMission.textContent=t('dossierMission');secMission.appendChild(hMission);
+  var pMission=document.createElement('p');pMission.textContent=getMainDesc();secMission.appendChild(pMission);doc.appendChild(secMission);
+  var sliders=getSliderValues();
+  if(sliders.length>0){
+   var secParams=document.createElement('div');secParams.className='d-section';
+   var hParams=document.createElement('h3');hParams.textContent='Parameters Log';secParams.appendChild(hParams);
+   for(var i=0;i<sliders.length;i++){var pp=document.createElement('p');pp.textContent='\u25B8 '+sliders[i];secParams.appendChild(pp);}
+   doc.appendChild(secParams);
+  }
+  var obs=getNumericDisplays();
+  if(obs.length>0){
+   var secObs=document.createElement('div');secObs.className='d-section';
+   var hObs=document.createElement('h3');hObs.textContent='Observations';secObs.appendChild(hObs);
+   for(var i=0;i<obs.length;i++){var po=document.createElement('p');po.textContent='\u25C6 '+obs[i];secObs.appendChild(po);}
+   doc.appendChild(secObs);
+  }
+  var secStatus=document.createElement('div');secStatus.className='d-section';
+  var hStatus=document.createElement('h3');hStatus.textContent='Status';secStatus.appendChild(hStatus);
+  var pStatus=document.createElement('p');pStatus.textContent=isSimRunning()?'MISSION ACTIVE \u25C9':'MISSION COMPLETE \u2713';pStatus.style.fontWeight='bold';pStatus.style.color=isSimRunning()?'#66cc66':'#ccaa44';secStatus.appendChild(pStatus);doc.appendChild(secStatus);
+  var secRedacted=document.createElement('div');secRedacted.className='d-section';
+  var hRedacted=document.createElement('h3');hRedacted.textContent='Classified Intel';secRedacted.appendChild(hRedacted);
+  for(var r=0;r<3;r++){
+   var bar=document.createElement('span');bar.className='d-redacted';
+   var hidden=spyPhrases[Math.floor(Math.random()*spyPhrases.length)];
+   try{var fk=t('funFact');if(fk!=='funFact'&&r===0)hidden=fk;}catch(e){}
+   bar.textContent=t('dossierRedacted');bar.setAttribute('data-hidden',hidden);
+   bar.onclick=function(){if(this.classList.contains('revealed')){this.classList.remove('revealed');this.textContent=t('dossierRedacted');}else{this.classList.add('revealed');this.textContent=this.getAttribute('data-hidden');}};
+   secRedacted.appendChild(bar);
+  }
+  doc.appendChild(secRedacted);
+  var footer=document.createElement('div');footer.className='d-footer';
+  var now=new Date();footer.textContent='Workshop-DIY \u2014 Eyes Only \u2014 '+now.toISOString().split('T')[0];doc.appendChild(footer);
+  var dlBtn=document.createElement('button');dlBtn.className='d-download';dlBtn.textContent=t('dossierDownload');
+  dlBtn.onclick=function(){var pw=window.open('','_blank');if(!pw)return;pw.document.write('<!DOCTYPE html><html><head><title>Dossier</title><style>body{background:#2c2416;color:#d4c5a0;font-family:Courier New,monospace;padding:40px;}h2{text-align:center;border-bottom:2px solid #8b7355;padding-bottom:10px;}.stamp{color:rgba(200,30,30,0.5);font-size:2em;font-weight:bold;text-align:center;transform:rotate(-15deg);margin:20px;}.section{margin:14px 0;padding:10px;border:1px solid #5a4a32;}.footer{text-align:center;margin-top:20px;border-top:2px solid #8b7355;padding-top:10px;font-size:0.8em;color:#8b7355;}@media print{body{background:#fff;color:#333;}.stamp{color:rgba(200,30,30,0.3);}}</style></head><body>');pw.document.write(doc.innerHTML);pw.document.write('</body></html>');pw.document.close();setTimeout(function(){pw.print();},300);};
+  doc.appendChild(dlBtn);
+  overlay.appendChild(doc);document.body.appendChild(overlay);
+ }
+ var btn=document.createElement('button');btn.id='dossierBtn';btn.className='btn-icon-only';
+ btn.title=t('dossierTitle');btn.textContent='\uD83D\uDCC4';
+ btn.onclick=showDossier;
+ var hdr=document.querySelector('.header-buttons');if(hdr)hdr.appendChild(btn);
+}
+initSpyDossier();
+
+/* ═══════ Personal Leaderboard ═══════ */
+function initLeaderboard(){
+ if(document.getElementById('leaderboardBtn'))return;
+ var style=document.createElement('style');
+ style.textContent='.leader-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:20px;box-sizing:border-box;}'
+  +'.leader-popup{background:#1a1a2e;color:#e0e0e0;border-radius:16px;padding:28px 26px;max-width:420px;width:95%;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:inherit;position:relative;}'
+  +'.leader-popup h2{margin:0 0 16px;font-size:1.3em;text-align:center;}'
+  +'.leader-popup .lr-close{position:absolute;top:8px;right:14px;background:none;border:none;color:#e0e0e0;font-size:1.4em;cursor:pointer;}'
+  +'.leader-popup .lr-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #2a2a4a;}'
+  +'.leader-popup .lr-stat .lr-label{color:#aaa;}'
+  +'.leader-popup .lr-stat .lr-value{font-weight:bold;color:#66ccff;}'
+  +'.leader-popup .lr-rank-bar{margin:14px 0;}'
+  +'.leader-popup .lr-rank-bar .lr-bar-bg{height:10px;background:#2a2a4a;border-radius:5px;overflow:hidden;margin-top:4px;}'
+  +'.leader-popup .lr-rank-bar .lr-bar-fill{height:100%;background:linear-gradient(90deg,#4488cc,#66ccff);border-radius:5px;transition:width 0.5s;}'
+  +'.leader-popup .lr-section-title{margin:14px 0 8px;font-size:0.95em;color:#8888cc;}'
+  +'.leader-popup .lr-records{font-size:0.85em;padding:6px 0;}'
+  +'.leader-popup .lr-records div{padding:3px 0;}';
+ document.head.appendChild(style);
+ function t(k){try{var L=typeof LANG!=='undefined'?LANG:null;if(!L)return k;var c=document.documentElement.lang||localStorage.getItem('lang')||'en';if(L[c]&&L[c][k])return L[c][k];if(L.en&&L.en[k])return L.en[k];return k;}catch(e){return k;}}
+ function gatherStats(){
+  var visited=0,quizTotal=0,quizCount=0,fastest=Infinity,streak=0,stickers=0,cats={};
+  try{
+   for(var i=0;i<localStorage.length;i++){
+    var key=localStorage.key(i);
+    if(key.indexOf('rank_visited_')===0){visited++;var parts=key.split('_');if(parts.length>=3){var cat=parts[2]||'other';cats[cat]=(cats[cat]||0)+1;}}
+    if(key.indexOf('quiz_score_')===0){quizCount++;quizTotal+=parseInt(localStorage.getItem(key))||0;}
+    if(key.indexOf('mission_time_')===0){var mt=parseInt(localStorage.getItem(key))||0;if(mt>0&&mt<fastest)fastest=mt;}
+   }
+   streak=parseInt(localStorage.getItem('daily_streak'))||0;
+   stickers=parseInt(localStorage.getItem('kidsStickers'))||0;
+  }catch(e){}
+  if(fastest===Infinity)fastest=0;
+  var accuracy=quizCount>0?Math.round(quizTotal/quizCount)+'%':'N/A';
+  return{visited:visited,accuracy:accuracy,fastest:fastest,streak:streak,stickers:stickers,cats:cats};
+ }
+ function getRank(visited){
+  var ranks=[{name:'Recruit',emoji:'\uD83D\uDD30',min:0},{name:'Agent',emoji:'\uD83D\uDD75\uFE0F',min:5},{name:'Special Agent',emoji:'\u2B50',min:15},{name:'Commander',emoji:'\uD83C\uDF96\uFE0F',min:30},{name:'Director',emoji:'\uD83D\uDC51',min:50}];
+  var current=ranks[0];var next=ranks[1];
+  for(var i=ranks.length-1;i>=0;i--){if(visited>=ranks[i].min){current=ranks[i];next=ranks[i+1]||null;break;}}
+  return{current:current,next:next};
+ }
+ function drawPie(canvas,cats){
+  var ctx=canvas.getContext('2d');var w=canvas.width;var h=canvas.height;var cx=w/2;var cy=h/2;var r=Math.min(cx,cy)-10;
+  var keys=Object.keys(cats);if(keys.length===0){ctx.fillStyle='#444';ctx.font='14px sans-serif';ctx.textAlign='center';ctx.fillText('No data yet',cx,cy);return;}
+  var total=0;for(var i=0;i<keys.length;i++)total+=cats[keys[i]];
+  var colors=['#4488cc','#cc6644','#44cc66','#cc44aa','#cccc44','#44cccc','#8866cc','#cc8844','#6688cc','#88cc44'];
+  var startAngle=-Math.PI/2;
+  for(var i=0;i<keys.length;i++){
+   var slice=cats[keys[i]]/total*Math.PI*2;
+   ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,startAngle,startAngle+slice);ctx.closePath();
+   ctx.fillStyle=colors[i%colors.length];ctx.fill();
+   var mid=startAngle+slice/2;var lx=cx+Math.cos(mid)*(r*0.65);var ly=cy+Math.sin(mid)*(r*0.65);
+   if(slice>0.3){ctx.fillStyle='#fff';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText(keys[i].substring(0,8),lx,ly);}
+   startAngle+=slice;
+  }
+ }
+ function showLeaderboard(){
+  var stats=gatherStats();var rank=getRank(stats.visited);
+  var overlay=document.createElement('div');overlay.className='leader-overlay';
+  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+  var popup=document.createElement('div');popup.className='leader-popup';
+  var closeBtn=document.createElement('button');closeBtn.className='lr-close';closeBtn.textContent='\u00D7';closeBtn.onclick=function(){overlay.remove();};
+  popup.appendChild(closeBtn);
+  var titleEl=document.createElement('h2');titleEl.textContent='\uD83C\uDFC6 '+t('leaderTitle');popup.appendChild(titleEl);
+  var rows=[
+   [t('leaderApps'),stats.visited],
+   [t('leaderAccuracy'),stats.accuracy],
+   ['Fastest Mission',stats.fastest>0?stats.fastest+'s':'\u2014'],
+   [t('leaderStreak'),stats.streak],
+   ['Total Stickers',stats.stickers]
+  ];
+  for(var i=0;i<rows.length;i++){
+   var row=document.createElement('div');row.className='lr-stat';
+   var lbl=document.createElement('span');lbl.className='lr-label';lbl.textContent=rows[i][0];
+   var val=document.createElement('span');val.className='lr-value';val.textContent=rows[i][1];
+   row.appendChild(lbl);row.appendChild(val);popup.appendChild(row);
+  }
+  var rankDiv=document.createElement('div');rankDiv.className='lr-rank-bar';
+  var rankLabel=document.createElement('div');rankLabel.textContent=rank.current.emoji+' '+rank.current.name+(rank.next?' \u2192 '+rank.next.emoji+' '+rank.next.name:'');rankLabel.style.fontSize='0.9em';
+  rankDiv.appendChild(rankLabel);
+  var barBg=document.createElement('div');barBg.className='lr-bar-bg';
+  var barFill=document.createElement('div');barFill.className='lr-bar-fill';
+  var pct=0;
+  if(rank.next){pct=Math.min(100,Math.round((stats.visited-rank.current.min)/(rank.next.min-rank.current.min)*100));}else{pct=100;}
+  barFill.style.width=pct+'%';barBg.appendChild(barFill);rankDiv.appendChild(barBg);popup.appendChild(rankDiv);
+  var catTitle=document.createElement('div');catTitle.className='lr-section-title';catTitle.textContent=t('leaderCategory');popup.appendChild(catTitle);
+  var canvas=document.createElement('canvas');canvas.width=300;canvas.height=200;canvas.style.cssText='display:block;margin:0 auto;';
+  popup.appendChild(canvas);
+  drawPie(canvas,stats.cats);
+  var recTitle=document.createElement('div');recTitle.className='lr-section-title';recTitle.textContent='Personal Best';popup.appendChild(recTitle);
+  var recDiv=document.createElement('div');recDiv.className='lr-records';
+  var recItems=['\u2605 Apps: '+stats.visited,'\u2605 Streak: '+stats.streak,'\u2605 Stickers: '+stats.stickers];
+  for(var i=0;i<recItems.length;i++){var rd=document.createElement('div');rd.textContent=recItems[i];recDiv.appendChild(rd);}
+  popup.appendChild(recDiv);
+  overlay.appendChild(popup);document.body.appendChild(overlay);
+ }
+ var btn=document.createElement('button');btn.id='leaderboardBtn';btn.className='btn-icon-only';
+ btn.title=t('leaderTitle');btn.textContent='\uD83C\uDFC6';
+ btn.onclick=showLeaderboard;
+ var hdr=document.querySelector('.header-buttons');if(hdr)hdr.appendChild(btn);
+}
+initLeaderboard();
+
+/* ═══════ Spy Rank ═══════ */
+function initSpyRank(){
+ if(document.getElementById('spyRankBtn'))return;
+ var appId=location.pathname.replace(/[^a-zA-Z0-9]/g,'_');
+ try{localStorage.setItem('rank_visited_'+appId,'1');}catch(e){}
+ var style=document.createElement('style');
+ style.textContent='.spy-rank-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;}.spy-rank-popup{background:#1a1a2e;color:#e0e0e0;border-radius:16px;padding:28px 32px;max-width:370px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:inherit;position:relative;}.spy-rank-popup h2{margin:0 0 16px;font-size:1.3em;text-align:center;}.spy-rank-popup .sr-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2a2a4a;}.spy-rank-popup .sr-close{position:absolute;top:8px;right:14px;background:none;border:none;color:#e0e0e0;font-size:1.4em;cursor:pointer;}.spy-rank-popup .sr-badge{text-align:center;font-size:2em;margin-bottom:8px;}';
+ document.head.appendChild(style);
+ function t(k){try{var L=typeof LANG!=='undefined'?LANG:null;if(!L)return k;var c=document.documentElement.lang||localStorage.getItem('lang')||'en';if(L[c]&&L[c][k])return L[c][k];if(L.en&&L.en[k])return L.en[k];return k;}catch(e){return k;}}
+ function calcScore(){
+  var visited=0,quizScore=0,quizCount=0,achieve=0,stickers=0;
+  try{
+   for(var i=0;i<localStorage.length;i++){
+    var key=localStorage.key(i);
+    if(key.indexOf('rank_visited_')===0)visited++;
+    if(key.indexOf('quiz_score_')===0){quizCount++;quizScore+=parseInt(localStorage.getItem(key))||0;}
+    if(key.indexOf('achieve_')===0)achieve++;
+   }
+   stickers=parseInt(localStorage.getItem('kidsStickers'))||0;
+  }catch(e){}
+  var total=visited+quizScore+achieve+stickers;
+  return{visited:visited,quizScore:quizScore,quizCount:quizCount,achieve:achieve,stickers:stickers,total:total};
+ }
+ function getRank(total){
+  if(total>=51)return{name:t('rankDirector'),emoji:'\uD83D\uDC51',min:51,next:null};
+  if(total>=31)return{name:t('rankCommander'),emoji:'\uD83C\uDF96\uFE0F',min:31,next:51};
+  if(total>=16)return{name:t('rankSpecial'),emoji:'\u2B50',min:16,next:31};
+  if(total>=6)return{name:t('rankAgent'),emoji:'\uD83D\uDD75\uFE0F',min:6,next:16};
+  return{name:t('rankRecruit'),emoji:'\uD83D\uDD30',min:0,next:6};
+ }
+ function showPopup(){
+  var s=calcScore();var r=getRank(s.total);
+  var overlay=document.createElement('div');overlay.className='spy-rank-overlay';
+  var popup=document.createElement('div');popup.className='spy-rank-popup';
+  var closeBtn=document.createElement('button');closeBtn.className='sr-close';closeBtn.textContent='\u00D7';
+  closeBtn.onclick=function(){overlay.remove();};
+  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+  var badge=document.createElement('div');badge.className='sr-badge';badge.textContent=r.emoji;
+  var title=document.createElement('h2');title.textContent=t('rankTitle')+' \u2014 '+r.name;
+  var statsTitle=document.createElement('h3');statsTitle.textContent=t('rankStats');statsTitle.style.cssText='margin:12px 0 8px;font-size:1em;color:#8888cc;';
+  popup.appendChild(closeBtn);popup.appendChild(badge);popup.appendChild(title);popup.appendChild(statsTitle);
+  var rows=[
+   ['\uD83D\uDCF1 Apps',s.visited],
+   ['\uD83C\uDFAF Quiz',s.quizScore+(s.quizCount?' ('+s.quizCount+')':'')],
+   ['\uD83C\uDF1F Missions',s.achieve],
+   ['\uD83C\uDF1F Stickers',s.stickers],
+   ['\uD83D\uDCCA Total',s.total]
+  ];
+  for(var i=0;i<rows.length;i++){
+   var row=document.createElement('div');row.className='sr-row';
+   var lbl=document.createElement('span');lbl.textContent=rows[i][0];
+   var val=document.createElement('strong');val.textContent=rows[i][1];
+   row.appendChild(lbl);row.appendChild(val);popup.appendChild(row);
+  }
+  if(r.next!==null){
+   var nxt=document.createElement('div');nxt.style.cssText='text-align:center;margin-top:14px;color:#8888cc;font-size:0.9em;';
+   nxt.textContent=t('rankNext')+': '+(r.next-s.total);
+   popup.appendChild(nxt);
+  }
+  overlay.appendChild(popup);document.body.appendChild(overlay);
+ }
+ var score=calcScore();var rank=getRank(score.total);
+ var btn=document.createElement('button');btn.id='spyRankBtn';btn.className='btn-icon-only';
+ btn.title=t('rankTitle')+' \u2014 '+rank.name;btn.textContent=rank.emoji;
+ btn.onclick=showPopup;
+ var hdr=document.querySelector('.header-buttons');if(hdr)hdr.appendChild(btn);
+}
+initSpyRank();
+
+
+/* ═══════ Auto-Narrator ═══════ */
+function initAutoNarrator(){
+ if(document.getElementById('narratorBox'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var box=document.createElement('div');
+ box.id='narratorBox';
+ box.style.cssText='position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:300px;background:rgba(0,0,0,0.78);color:#0f0;font-family:monospace;font-size:13px;padding:10px 16px;border-radius:10px;z-index:9999;text-align:center;pointer-events:none;opacity:0;transition:opacity 0.4s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+ document.body.appendChild(box);
+ var hideTimer=null;
+ var running=false;
+ var lastText='';
+ function showNarration(txt){
+  if(txt===lastText)return;
+  lastText=txt;
+  box.textContent=txt;
+  box.style.opacity='1';
+  if(hideTimer)clearTimeout(hideTimer);
+  hideTimer=setTimeout(function(){box.style.opacity='0';},3000);
+ }
+ var startBtn=document.getElementById('startBtn');
+ if(startBtn){
+  startBtn.addEventListener('click',function(){running=true;});
+ }
+ var stopBtn=document.getElementById('stopBtn');
+ if(stopBtn){
+  stopBtn.addEventListener('click',function(){running=false;});
+ }
+ var resetBtn=document.getElementById('resetBtn');
+ if(resetBtn){
+  resetBtn.addEventListener('click',function(){running=false;});
+ }
+ var canvas=document.getElementById('simCanvas');
+ if(canvas){
+  var ctx=null;
+  try{ctx=canvas.getContext('2d',{willReadFrequently:true});}catch(e){}
+  if(ctx){
+   setInterval(function(){
+    if(!running)return;
+    try{
+     var w=canvas.width||300;
+     var h=canvas.height||150;
+     var data=ctx.getImageData(0,0,Math.min(w,100),Math.min(h,100)).data;
+     var rSum=0,gSum=0,bSum=0,total=0;
+     for(var i=0;i<data.length;i+=16){
+      rSum+=data[i];gSum+=data[i+1];bSum+=data[i+2];total++;
+     }
+     if(total===0)return;
+     var rAvg=rSum/total,gAvg=gSum/total,bAvg=bSum/total;
+     var brightness=(rAvg+gAvg+bAvg)/3;
+     if(rAvg>gAvg*1.5&&rAvg>bAvg*1.5){
+      showNarration(L.narratorWarning||'Warning: anomaly detected');
+     }else if(gAvg>rAvg*1.3&&gAvg>bAvg*1.3){
+      showNarration(L.narratorAcquired||'Signal acquired successfully');
+     }else if(brightness>170){
+      showNarration(L.narratorDetected||'Signal detected! Activity: HIGH');
+     }else if(brightness<50){
+      showNarration(L.narratorScanning||'Scanning for signals...');
+     }else{
+      showNarration(L.narratorProcessing||'Processing data streams...');
+     }
+    }catch(e){}
+   },500);
+  }
+ }
+ var sliders=document.querySelectorAll('input[type=range]');
+ for(var s=0;s<sliders.length;s++){
+  (function(sl){
+   sl.addEventListener('input',function(){
+    if(!running)return;
+    var label='parameter';
+    var lbl=sl.previousElementSibling;
+    if(lbl&&lbl.textContent)label=lbl.textContent.replace(/[:\s]+$/,'');
+    showNarration('Adjusting '+label+' to '+sl.value+'...');
+   });
+  })(sliders[s]);
+ }
+ var hdr=document.querySelector('.header-buttons')||document.querySelector('header');
+ if(hdr){
+  var btn=document.createElement('button');
+  btn.className='btn-icon-only';
+  btn.textContent='\ud83d\udce1';
+  btn.title=L.narratorTitle||'Auto Narrator';
+  btn.style.cssText='background:none;border:1px solid currentColor;border-radius:6px;cursor:pointer;font-size:18px;padding:4px 8px;margin-left:4px;';
+  var vis=true;
+  btn.addEventListener('click',function(){
+   vis=!vis;
+   box.style.display=vis?'block':'none';
+  });
+  hdr.appendChild(btn);
+ }
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAutoNarrator);}
+else{initAutoNarrator();}
+
+/* ═══════ What-If Engine ═══════ */
+function initWhatIfEngine(){
+ if(document.querySelector('.whatif-btn'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var kwMap={frequency:'oscillation speed',power:'signal strength',range:'detection distance',sensitivity:'noise threshold',speed:'processing rate',gain:'amplification level',threshold:'trigger point',delay:'response time'};
+ var sliders=document.querySelectorAll('input[type=range]');
+ for(var s=0;s<sliders.length;s++){
+  (function(sl){
+   var btn=document.createElement('button');
+   btn.className='whatif-btn';
+   btn.textContent='?';
+   btn.title=L.whatifTitle||'What If?';
+   btn.style.cssText='background:rgba(0,0,0,0.6);color:#0ff;border:1px solid #0ff;border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;margin-left:6px;padding:0;line-height:20px;text-align:center;vertical-align:middle;flex-shrink:0;';
+   sl.parentNode.insertBefore(btn,sl.nextSibling);
+   btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var existing=document.querySelector('.whatif-popup');
+    if(existing)existing.remove();
+    var label='parameter';
+    var lbl=sl.previousElementSibling;
+    if(lbl&&lbl.textContent)label=lbl.textContent.replace(/[:\s]+$/,'').toLowerCase();
+    var val=parseInt(sl.value,10);
+    var min=parseInt(sl.min||'0',10);
+    var max=parseInt(sl.max||'100',10);
+    var mid=(min+max)/2;
+    var pct=max>min?Math.round(((val-min)/(max-min))*100):50;
+    var kw='behavior';
+    for(var k in kwMap){
+     if(label.indexOf(k)!==-1){kw=kwMap[k];break;}
+    }
+    var incWord=L.whatifIncrease||'Increasing';
+    var decWord=L.whatifDecrease||'Decreasing';
+    var txt=incWord+' '+label+' will increase '+kw+', potentially revealing hidden patterns. '+decWord+' it will reduce '+kw+'. Currently at '+pct+'%.';
+    var popup=document.createElement('div');
+    popup.className='whatif-popup';
+    popup.style.cssText='position:absolute;background:rgba(0,0,20,0.92);color:#0ff;font-size:12px;padding:10px 14px;border-radius:8px;border:1px solid #0ff;max-width:260px;z-index:10000;box-shadow:0 4px 16px rgba(0,255,255,0.15);line-height:1.5;';
+    popup.textContent=txt;
+    document.body.appendChild(popup);
+    var rect=sl.getBoundingClientRect();
+    popup.style.left=Math.max(4,rect.left+window.scrollX)+'px';
+    popup.style.top=(rect.bottom+window.scrollY+6)+'px';
+    function closePopup(){popup.remove();document.removeEventListener('click',closePopup);}
+    setTimeout(function(){document.addEventListener('click',closePopup);},10);
+   });
+  })(sliders[s]);
+ }
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initWhatIfEngine);}
+else{initWhatIfEngine();}
+
+/* ═══════ Mission Cards ═══════ */
+function initMissionCards(){
+ if(document.getElementById('missionCardBtn'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var hdr=document.querySelector('.header-buttons')||document.querySelector('.sim-controls')||document.querySelector('.card');
+ if(!hdr)return;
+ var btn=document.createElement('button');
+ btn.id='missionCardBtn';
+ btn.className='btn-icon-only';
+ btn.textContent='\ud83d\udccb';
+ btn.title=L.missionCardTitle||'Share Mission';
+ btn.onclick=function(){
+  var canvas=document.createElement('canvas');
+  canvas.width=400;canvas.height=250;
+  var ctx=canvas.getContext('2d');
+  /* background */
+  ctx.fillStyle='#1a1a2e';
+  ctx.fillRect(0,0,400,250);
+  /* gradient border */
+  var grad=ctx.createLinearGradient(0,0,400,250);
+  grad.addColorStop(0,'#00ff88');grad.addColorStop(1,'#0088ff');
+  ctx.strokeStyle=grad;ctx.lineWidth=4;
+  ctx.strokeRect(2,2,396,246);
+  /* title */
+  var titleEl=document.querySelector('.app-title')||document.querySelector('h1')||document.querySelector('.card-title');
+  var appTitle=titleEl?titleEl.textContent.trim():'Workshop-DIY';
+  ctx.fillStyle='#00ff88';ctx.font='bold 20px monospace';
+  ctx.textAlign='center';
+  ctx.fillText(appTitle,200,40);
+  /* subtitle */
+  ctx.fillStyle='#ff6600';ctx.font='bold 14px monospace';
+  ctx.fillText('MISSION CHALLENGE',200,65);
+  /* slider values */
+  var sliders=document.querySelectorAll('input[type=range]');
+  var params=[];
+  sliders.forEach(function(s){
+   var lbl=s.previousElementSibling||s.parentElement;
+   var name=s.id||s.name||(lbl?lbl.textContent.trim().substring(0,10):'param');
+   params.push(name.replace(/[^a-zA-Z0-9]/g,'').substring(0,8)+'='+s.value);
+  });
+  var paramStr=params.slice(0,4).join(', ');
+  ctx.fillStyle='#aaaacc';ctx.font='12px monospace';
+  ctx.fillText('Parameters: '+(paramStr||'default'),200,95);
+  /* challenge text */
+  var challengeText=L.missionCardChallenge||'Can you match this signal?';
+  ctx.fillStyle='#ffffff';ctx.font='italic 13px monospace';
+  ctx.fillText(challengeText,200,130);
+  /* QR-style decorative corners */
+  ctx.fillStyle='#00ff88';
+  var cs=18;
+  ctx.fillRect(15,15,cs,cs);ctx.fillRect(15,18,6,12);ctx.fillRect(18,15,12,6);
+  ctx.fillRect(400-15-cs,15,cs,cs);ctx.fillRect(400-15-6,18,6,12);ctx.fillRect(400-15-cs,15,12,6);
+  ctx.fillRect(15,250-15-cs,cs,cs);ctx.fillRect(15,250-15-cs,6,12);ctx.fillRect(18,250-15-6,12,6);
+  ctx.fillRect(400-15-cs,250-15-cs,cs,cs);ctx.fillRect(400-15-6,250-15-cs,6,12);ctx.fillRect(400-15-cs,250-15-6,12,6);
+  /* watermark */
+  ctx.fillStyle='rgba(255,255,255,0.15)';ctx.font='10px monospace';
+  ctx.fillText('Workshop-DIY',200,240);
+  /* download */
+  canvas.toBlob(function(blob){
+   var url=URL.createObjectURL(blob);
+   var a=document.createElement('a');
+   a.href=url;a.download='mission-card.png';
+   document.body.appendChild(a);a.click();
+   document.body.removeChild(a);
+   URL.revokeObjectURL(url);
+  },'image/png');
+  /* copy challenge to clipboard */
+  var clipText=appTitle+' - MISSION CHALLENGE\nParameters: '+(paramStr||'default')+'\n'+challengeText;
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(clipText).catch(function(){});}
+ };
+ hdr.appendChild(btn);
+}
+
+/* ═══════ Mistake Detector ═══════ */
+function initMistakeDetector(){
+ if(document.getElementById('mistakeDetectorStyle'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var style=document.createElement('style');
+ style.id='mistakeDetectorStyle';
+ style.textContent='.mistake-banner{position:relative;background:#443300;color:#ffdd57;border:1px solid #ffdd57;border-radius:6px;padding:8px 28px 8px 12px;margin:8px auto;max-width:600px;font-size:13px;z-index:90;animation:mistakeFadeIn .3s}'
+  +'.mistake-banner .mistake-x{position:absolute;right:6px;top:4px;cursor:pointer;background:none;border:none;color:#ffdd57;font-size:16px;line-height:1}'
+  +'@keyframes mistakeFadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}';
+ document.head.appendChild(style);
+ var currentBanner=null;
+ var dismissTimer=null;
+ function showWarning(msg){
+  if(currentBanner&&currentBanner.parentNode)currentBanner.parentNode.removeChild(currentBanner);
+  if(dismissTimer)clearTimeout(dismissTimer);
+  var mc=document.querySelector('.mainCard')||document.querySelector('.card')||document.querySelector('.sim-controls');
+  if(!mc)return;
+  var div=document.createElement('div');
+  div.className='mistake-banner';
+  var title=L.mistakeTitle||'Tip';
+  div.innerHTML='<strong>'+title+':</strong> '+msg+'<button class="mistake-x" aria-label="close">\u00d7</button>';
+  div.querySelector('.mistake-x').onclick=function(){if(div.parentNode)div.parentNode.removeChild(div);currentBanner=null;};
+  mc.parentNode.insertBefore(div,mc.nextSibling);
+  currentBanner=div;
+  dismissTimer=setTimeout(function(){if(div.parentNode)div.parentNode.removeChild(div);if(currentBanner===div)currentBanner=null;},5000);
+ }
+ var relatedPairs=[['frequency','power'],['freq','power'],['gain','sensitivity']];
+ function checkSliders(){
+  var sliders=document.querySelectorAll('input[type=range]');
+  sliders.forEach(function(s){
+   var min=parseFloat(s.min)||0;
+   var max=parseFloat(s.max)||100;
+   var val=parseFloat(s.value);
+   var lbl=s.previousElementSibling;
+   var label=s.id||s.name||(lbl?lbl.textContent.trim():'parameter');
+   if(val<=min){
+    showWarning((L.mistakeMin||'Setting to minimum may produce no output')+' ('+label+')');
+    return;
+   }
+   if(val>=max){
+    showWarning((L.mistakeMax||'Maximum may cause signal clipping')+' ('+label+')');
+    return;
+   }
+  });
+  /* check related pairs */
+  var sliderMap={};
+  sliders.forEach(function(s){
+   var lbl=((s.id||s.name||'')+' '+(s.previousElementSibling?s.previousElementSibling.textContent:'')).toLowerCase();
+   var min=parseFloat(s.min)||0;var max=parseFloat(s.max)||100;var val=parseFloat(s.value);
+   var pct=(val-min)/(max-min||1);
+   relatedPairs.forEach(function(pair){
+    pair.forEach(function(kw){if(lbl.indexOf(kw)>=0)sliderMap[kw]=pct;});
+   });
+  });
+  relatedPairs.forEach(function(pair){
+   var a=sliderMap[pair[0]],b=sliderMap[pair[1]];
+   if(a!==undefined&&b!==undefined&&((a<0.05&&b<0.05)||(a>0.95&&b>0.95)||(a<0.05&&b>0.95)||(a>0.95&&b<0.05))){
+    showWarning(L.mistakeCombo||'Extreme combination detected');
+   }
+  });
+ }
+ document.addEventListener('input',function(e){
+  if(e.target&&e.target.type==='range')checkSliders();
+ });
+}
+
+try{initMissionCards();}catch(e){}
+try{initMistakeDetector();}catch(e){}
+
 
 /* ═══════ Kids Mode ═══════ */
 function initKidsMode(){
