@@ -1304,8 +1304,8 @@ body.log-open .app {
           </div>
         </div>
       </div>
-
-      <details class="collapsible" open>
+<div class="sonify-panel" id="sonifyPanel" style="display:none;"></div>
+<details class="collapsible" open>
         <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
         <div class="card">
           <div class="learn-grid">
@@ -1536,6 +1536,15 @@ S ... &nbsp; T - &nbsp; U ..- &nbsp; V ...- &nbsp; W .-- &nbsp; X -..-
     <div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div>
   </div>
 
-  <script src="script.js"></script>
+  <div class="daily-challenge" id="dailyChallenge" style="margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.08);border:1px solid rgba(var(--accent-rgb,212,175,55),0.2);"></div><div class="mentor-overlay" id="mentorOverlay" style="display:none;"></div><button id="mentorTriggerBtn" class="btn-sm" style="margin:0.5rem 0.3rem;padding:0.4rem 0.8rem;border-radius:20px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.8rem;color:inherit;" data-i18n="mentorStart">🎓 Tutorial</button><script src="script.js"></script>
+<div class="tooltip-float" id="tooltipFloat" style="display:none;position:fixed;z-index:9999;background:#1a1a2e;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:250px;pointer-events:none;transition:opacity 0.2s"></div>
+
+
+
+
+
+<button class="voice-btn" id="voiceBtn" style="display:none" data-i18n="voiceTitle">🎤 Voice</button>
+<div class="voice-indicator" id="voiceIndicator" style="display:none;position:fixed;top:10px;right:10px;width:12px;height:12px;background:red;border-radius:50%;z-index:9999"></div>
+<button class="share-btn" id="shareBtn" data-i18n="shareBtn">📤 Share</button>
 </body>
 </html>
