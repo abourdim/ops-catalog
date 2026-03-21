@@ -1,215 +1,215 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="mosque-gold">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Packet Radio — Workshop DIY</title>
-  <meta name="description" content="Packet Radio — A Workshop-DIY ham radio educational web app." />
-  <meta name="author" content="Workshop-DIY — abourdim" />
-  <meta property="og:title" content="Packet Radio — Workshop DIY" />
-  <meta property="og:description" content="Packet Radio — ham radio educational app" />
-  <meta property="og:type" content="website" />
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#08091a" />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
-  <style>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Packet Radio — Workshop DIY</title>
+ <meta name="description" content="Packet Radio — A Workshop-DIY ham radio educational web app." />
+ <meta name="author" content="Workshop-DIY — abourdim" />
+ <meta property="og:title" content="Packet Radio — Workshop DIY" />
+ <meta property="og:description" content="Packet Radio — ham radio educational app" />
+ <meta property="og:type" content="website" />
+ <link rel="manifest" href="manifest.json" />
+ <meta name="theme-color" content="#08091a" />
+ <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+ <style>
 /* ═══════════════════════════════════════════════════════════════════
-   WORKSHOP DIY — Multi-Theme Template
-   8 themes (6 dark + 2 light) via [data-theme] on <html>
-   ═══════════════════════════════════════════════════════════════════ */
+ WORKSHOP DIY — Multi-Theme Template
+ 8 themes (6 dark + 2 light) via [data-theme] on <html>
+ ═══════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap');
 
 /* ═══════════════════════════════════════════════════════════════════
-   THEME DEFINITIONS
-   ═══════════════════════════════════════════════════════════════════ */
+ THEME DEFINITIONS
+ ═══════════════════════════════════════════════════════════════════ */
 
 /* ── 1. Mosque Gold ── */
 [data-theme="mosque-gold"] {
-  --bg: #08091a;
-  --panel: #0b0d24;
-  --accent: #d4a03c;
-  --accent2: #0ea5e9;
-  --glow: rgba(212,160,60,.15);
-  --glow2: rgba(14,165,233,.1);
-  --text: #e4ddd0;
-  --text-muted: #8a7e6e;
-  --border: rgba(212,160,60,.18);
-  --band1: #d4a03c; --band2: #c08c2e; --band3: #f0c96e;
-  --font-h: 'Righteous', 'Tajawal', sans-serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "✦";
-  --summary-marker: "◆";
-  --bism-color: #d4a03c;
+ --bg: #08091a;
+ --panel: #0b0d24;
+ --accent: #d4a03c;
+ --accent2: #0ea5e9;
+ --glow: rgba(212,160,60,.15);
+ --glow2: rgba(14,165,233,.1);
+ --text: #e4ddd0;
+ --text-muted: #8a7e6e;
+ --border: rgba(212,160,60,.18);
+ --band1: #d4a03c; --band2: #c08c2e; --band3: #f0c96e;
+ --font-h: 'Righteous', 'Tajawal', sans-serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "✦";
+ --summary-marker: "◆";
+ --bism-color: #d4a03c;
 }
 
 /* ── 2. Zellige Blue ── */
 [data-theme="zellige"] {
-  --bg: #041c2c;
-  --panel: #06253a;
-  --accent: #38bdf8;
-  --accent2: #f0abfc;
-  --glow: rgba(56,189,248,.12);
-  --glow2: rgba(240,171,252,.08);
-  --text: #d6eaf8;
-  --text-muted: #6b9cc0;
-  --border: rgba(56,189,248,.18);
-  --band1: #38bdf8; --band2: #0284c7; --band3: #7dd3fc;
-  --font-h: 'Righteous', 'Tajawal', sans-serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "✧";
-  --summary-marker: "◇";
-  --bism-color: #7dd3fc;
+ --bg: #041c2c;
+ --panel: #06253a;
+ --accent: #38bdf8;
+ --accent2: #f0abfc;
+ --glow: rgba(56,189,248,.12);
+ --glow2: rgba(240,171,252,.08);
+ --text: #d6eaf8;
+ --text-muted: #6b9cc0;
+ --border: rgba(56,189,248,.18);
+ --band1: #38bdf8; --band2: #0284c7; --band3: #7dd3fc;
+ --font-h: 'Righteous', 'Tajawal', sans-serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "✧";
+ --summary-marker: "◇";
+ --bism-color: #7dd3fc;
 }
 
 /* ── 3. Andalus Green ── */
 [data-theme="andalus"] {
-  --bg: #0a1a0a;
-  --panel: #0d200e;
-  --accent: #4ade80;
-  --accent2: #fbbf24;
-  --glow: rgba(74,222,128,.12);
-  --glow2: rgba(251,191,36,.08);
-  --text: #d5eed5;
-  --text-muted: #6b9e6b;
-  --border: rgba(74,222,128,.18);
-  --band1: #4ade80; --band2: #16a34a; --band3: #fbbf24;
-  --font-h: 'Righteous', 'Tajawal', sans-serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "❋";
-  --summary-marker: "✿";
-  --bism-color: #86efac;
+ --bg: #0a1a0a;
+ --panel: #0d200e;
+ --accent: #4ade80;
+ --accent2: #fbbf24;
+ --glow: rgba(74,222,128,.12);
+ --glow2: rgba(251,191,36,.08);
+ --text: #d5eed5;
+ --text-muted: #6b9e6b;
+ --border: rgba(74,222,128,.18);
+ --band1: #4ade80; --band2: #16a34a; --band3: #fbbf24;
+ --font-h: 'Righteous', 'Tajawal', sans-serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "❋";
+ --summary-marker: "✿";
+ --bism-color: #86efac;
 }
 
 /* ── 4. Space Explorer ── */
 [data-theme="space"] {
-  --bg: #0c0020;
-  --panel: #110030;
-  --accent: #c084fc;
-  --accent2: #22d3ee;
-  --glow: rgba(192,132,252,.15);
-  --glow2: rgba(34,211,238,.1);
-  --text: #e8dff8;
-  --text-muted: #8b7aad;
-  --border: rgba(192,132,252,.2);
-  --band1: #c084fc; --band2: #7c3aed; --band3: #22d3ee;
-  --font-h: 'Orbitron', 'Righteous', sans-serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "⚡";
-  --summary-marker: "▸";
-  --bism-color: #c084fc;
+ --bg: #0c0020;
+ --panel: #110030;
+ --accent: #c084fc;
+ --accent2: #22d3ee;
+ --glow: rgba(192,132,252,.15);
+ --glow2: rgba(34,211,238,.1);
+ --text: #e8dff8;
+ --text-muted: #8b7aad;
+ --border: rgba(192,132,252,.2);
+ --band1: #c084fc; --band2: #7c3aed; --band3: #22d3ee;
+ --font-h: 'Orbitron', 'Righteous', sans-serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "⚡";
+ --summary-marker: "▸";
+ --bism-color: #c084fc;
 }
 
 /* ── 5. Jungle Quest ── */
 [data-theme="jungle"] {
-  --bg: #071407;
-  --panel: #0c1f0a;
-  --accent: #a3e635;
-  --accent2: #fb923c;
-  --glow: rgba(163,230,53,.12);
-  --glow2: rgba(251,146,60,.08);
-  --text: #e2f0d0;
-  --text-muted: #7a9e5c;
-  --border: rgba(163,230,53,.2);
-  --band1: #a3e635; --band2: #65a30d; --band3: #fb923c;
-  --font-h: 'Bangers', 'Righteous', sans-serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "🌿";
-  --summary-marker: "▸";
-  --bism-color: #a3e635;
+ --bg: #071407;
+ --panel: #0c1f0a;
+ --accent: #a3e635;
+ --accent2: #fb923c;
+ --glow: rgba(163,230,53,.12);
+ --glow2: rgba(251,146,60,.08);
+ --text: #e2f0d0;
+ --text-muted: #7a9e5c;
+ --border: rgba(163,230,53,.2);
+ --band1: #a3e635; --band2: #65a30d; --band3: #fb923c;
+ --font-h: 'Bangers', 'Righteous', sans-serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "🌿";
+ --summary-marker: "▸";
+ --bism-color: #a3e635;
 }
 
 /* ── 6. Robot Lab ── */
 [data-theme="robot"] {
-  --bg: #0a0f1e;
-  --panel: #0e1529;
-  --accent: #3b82f6;
-  --accent2: #f97316;
-  --glow: rgba(59,130,246,.12);
-  --glow2: rgba(249,115,22,.08);
-  --text: #d0ddf0;
-  --text-muted: #5e7499;
-  --border: rgba(59,130,246,.2);
-  --band1: #3b82f6; --band2: #1d4ed8; --band3: #f97316;
-  --font-h: 'Orbitron', 'Righteous', sans-serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "⚙";
-  --summary-marker: "▹";
-  --bism-color: #60a5fa;
+ --bg: #0a0f1e;
+ --panel: #0e1529;
+ --accent: #3b82f6;
+ --accent2: #f97316;
+ --glow: rgba(59,130,246,.12);
+ --glow2: rgba(249,115,22,.08);
+ --text: #d0ddf0;
+ --text-muted: #5e7499;
+ --border: rgba(59,130,246,.2);
+ --band1: #3b82f6; --band2: #1d4ed8; --band3: #f97316;
+ --font-h: 'Orbitron', 'Righteous', sans-serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "⚙";
+ --summary-marker: "▹";
+ --bism-color: #60a5fa;
 }
 
 /* ── 7. Riad — warm ivory & terracotta (light) ── */
 [data-theme="riad"] {
-  --bg: #faf5ed;
-  --panel: #ffffff;
-  --accent: #c2703e;
-  --accent2: #1a7a5a;
-  --glow: rgba(194,112,62,.1);
-  --glow2: rgba(26,122,90,.06);
-  --text: #2c1e10;
-  --text-muted: #8c7560;
-  --border: rgba(194,112,62,.2);
-  --band1: #c2703e; --band2: #a65a2e; --band3: #1a7a5a;
-  --font-h: 'Amiri', 'Tajawal', serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "۞";
-  --summary-marker: "❧";
-  --bism-color: #a65a2e;
+ --bg: #faf5ed;
+ --panel: #ffffff;
+ --accent: #c2703e;
+ --accent2: #1a7a5a;
+ --glow: rgba(194,112,62,.1);
+ --glow2: rgba(26,122,90,.06);
+ --text: #2c1e10;
+ --text-muted: #8c7560;
+ --border: rgba(194,112,62,.2);
+ --band1: #c2703e; --band2: #a65a2e; --band3: #1a7a5a;
+ --font-h: 'Amiri', 'Tajawal', serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "۞";
+ --summary-marker: "❧";
+ --bism-color: #a65a2e;
 }
 
 /* ── 8. Medina — cool pearl & deep teal (light) ── */
 [data-theme="medina"] {
-  --bg: #f0f4f8;
-  --panel: #ffffff;
-  --accent: #0e7c6b;
-  --accent2: #b8860b;
-  --glow: rgba(14,124,107,.08);
-  --glow2: rgba(184,134,11,.06);
-  --text: #1a2a2a;
-  --text-muted: #5e7d7d;
-  --border: rgba(14,124,107,.18);
-  --band1: #0e7c6b; --band2: #065e50; --band3: #b8860b;
-  --font-h: 'Amiri', 'Tajawal', serif;
-  --font-b: 'Tajawal', system-ui, sans-serif;
-  --card-ornament: "﷽";
-  --summary-marker: "◈";
-  --bism-color: #065e50;
+ --bg: #f0f4f8;
+ --panel: #ffffff;
+ --accent: #0e7c6b;
+ --accent2: #b8860b;
+ --glow: rgba(14,124,107,.08);
+ --glow2: rgba(184,134,11,.06);
+ --text: #1a2a2a;
+ --text-muted: #5e7d7d;
+ --border: rgba(14,124,107,.18);
+ --band1: #0e7c6b; --band2: #065e50; --band3: #b8860b;
+ --font-h: 'Amiri', 'Tajawal', serif;
+ --font-b: 'Tajawal', system-ui, sans-serif;
+ --card-ornament: "﷽";
+ --summary-marker: "◈";
+ --bism-color: #065e50;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   RESET & BASE
-   ═══════════════════════════════════════════════════════════════════ */
+ RESET & BASE
+ ═══════════════════════════════════════════════════════════════════ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-b);
-  display: flex; align-items: stretch; justify-content: center;
-  padding: 16px;
-  overflow-x: hidden;
-  transition: background .4s ease;
+ min-height: 100vh;
+ background: var(--bg);
+ color: var(--text);
+ font-family: var(--font-b);
+ display: flex; align-items: stretch; justify-content: center;
+ padding: 16px;
+ overflow-x: hidden;
+ transition: background .4s ease;
 }
 
 [dir="rtl"] { font-family: 'Tajawal', 'Amiri', sans-serif; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   APP SHELL
-   ═══════════════════════════════════════════════════════════════════ */
+ APP SHELL
+ ═══════════════════════════════════════════════════════════════════ */
 
 .app {
-  display: flex; flex-direction: column;
-  max-width: 820px; width: 100%;
-  background:
-    radial-gradient(ellipse at top, var(--glow), transparent 55%),
-    radial-gradient(ellipse at bottom right, var(--glow2), transparent 55%),
-    var(--panel);
-  border-radius: 18px;
-  box-shadow: 0 0 0 1px var(--border), 0 30px 60px rgba(0,0,0,.5);
-  position: relative; z-index: 1; overflow: hidden;
-  transition: background .4s ease, box-shadow .4s ease, margin .35s cubic-bezier(.4,0,.2,1);
+ display: flex; flex-direction: column;
+ max-width: 820px; width: 100%;
+ background:
+ radial-gradient(ellipse at top, var(--glow), transparent 55%),
+ radial-gradient(ellipse at bottom right, var(--glow2), transparent 55%),
+ var(--panel);
+ border-radius: 18px;
+ box-shadow: 0 0 0 1px var(--border), 0 30px 60px rgba(0,0,0,.5);
+ position: relative; z-index: 1; overflow: hidden;
+ transition: background .4s ease, box-shadow .4s ease, margin .35s cubic-bezier(.4,0,.2,1);
 }
 
 .rows-container { position: relative; z-index: 1; padding: 0 4px; }
@@ -217,28 +217,28 @@ body {
 /* ── Decorative Bands ── */
 
 .deco-band {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), var(--accent), transparent);
-  opacity: .5;
-  transition: background .4s ease;
+ height: 2px;
+ background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), var(--accent), transparent);
+ opacity: .5;
+ transition: background .4s ease;
 }
 .bottom-band { margin-top: auto; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   HEADER
-   ═══════════════════════════════════════════════════════════════════ */
+ HEADER
+ ═══════════════════════════════════════════════════════════════════ */
 
 .header {
-  position: relative;
-  padding: 14px 16px 6px;
-  display: flex; align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+ position: relative;
+ padding: 14px 16px 6px;
+ display: flex; align-items: center;
+ justify-content: space-between;
+ gap: 10px;
 }
 
 .header-right {
-  display: flex; flex-direction: column;
-  align-items: flex-end; gap: 6px;
+ display: flex; flex-direction: column;
+ align-items: flex-end; gap: 6px;
 }
 [dir="rtl"] .header-right { align-items: flex-start; }
 
@@ -247,31 +247,31 @@ body {
 .logo-wrap svg { width: 100%; height: 100%; }
 
 .title-block h1 {
-  font-family: var(--font-h);
-  font-size: 1.3rem;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent));
-  background-size: 200% 200%;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradShift 5s ease infinite;
-  transition: font-family .2s;
+ font-family: var(--font-h);
+ font-size: 1.3rem;
+ letter-spacing: .06em;
+ text-transform: uppercase;
+ background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent));
+ background-size: 200% 200%;
+ -webkit-background-clip: text; background-clip: text;
+ -webkit-text-fill-color: transparent;
+ animation: gradShift 5s ease infinite;
+ transition: font-family .2s;
 }
 [dir="rtl"] .title-block h1 { font-family: 'Tajawal', sans-serif; letter-spacing: 0; }
 
 @keyframes gradShift {
-  0%,100% { background-position: 0% 50%; }
-  50%     { background-position: 100% 50%; }
+ 0%,100% { background-position: 0% 50%; }
+ 50% { background-position: 100% 50%; }
 }
 
 .title-block .subtitle {
-  font-size: .78rem; color: var(--text-muted);
-  margin-top: 2px; letter-spacing: .04em;
-  animation: subtitlePulse 4s ease infinite;
+ font-size: .78rem; color: var(--text-muted);
+ margin-top: 2px; letter-spacing: .04em;
+ animation: subtitlePulse 4s ease infinite;
 }
 @keyframes subtitlePulse {
-  0%,100% { opacity: .7; } 50% { opacity: 1; }
+ 0%,100% { opacity: .7; } 50% { opacity: 1; }
 }
 
 .version-tag { opacity: .3; margin-inline-start: 10px; font-size: .7em; }
@@ -279,136 +279,136 @@ body {
 /* ── Bismillah ── */
 
 .bismillah {
-  position: absolute; top: 3px; inset-inline: 0;
-  display: flex; justify-content: center; align-items: center; gap: 6px;
-  font-family: 'Amiri', serif; font-size: 13px; font-weight: 700;
-  color: var(--bism-color); opacity: .45;
-  pointer-events: none;
-  text-shadow: 0 0 16px currentColor;
-  transition: color .4s;
+ position: absolute; top: 3px; inset-inline: 0;
+ display: flex; justify-content: center; align-items: center; gap: 6px;
+ font-family: 'Amiri', serif; font-size: 13px; font-weight: 700;
+ color: var(--bism-color); opacity: .45;
+ pointer-events: none;
+ text-shadow: 0 0 16px currentColor;
+ transition: color .4s;
 }
 .bism-ornament {
-  font-size: 7px; opacity: .5;
-  animation: twinkle 3s ease-in-out infinite;
+ font-size: 7px; opacity: .5;
+ animation: twinkle 3s ease-in-out infinite;
 }
 .bism-ornament:last-child { animation-delay: 1.5s; }
 @keyframes twinkle {
-  0%,100% { opacity: .2; transform: scale(.7); }
-  50%     { opacity: 1; transform: scale(1.3); }
+ 0%,100% { opacity: .2; transform: scale(.7); }
+ 50% { opacity: 1; transform: scale(1.3); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SETTINGS BUTTON
-   ═══════════════════════════════════════════════════════════════════ */
+ SETTINGS BUTTON
+ ═══════════════════════════════════════════════════════════════════ */
 
 .btn-icon-only {
-  width: 32px; height: 32px; padding: 0;
-  border-radius: 10px;
-  font-size: 1rem; line-height: 1;
-  display: inline-flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,.3); color: var(--text);
-  border: 1px solid var(--border);
-  cursor: pointer; transition: all .25s;
+ width: 32px; height: 32px; padding: 0;
+ border-radius: 10px;
+ font-size: 1rem; line-height: 1;
+ display: inline-flex; align-items: center; justify-content: center;
+ background: rgba(0,0,0,.3); color: var(--text);
+ border: 1px solid var(--border);
+ cursor: pointer; transition: all .25s;
 }
 .btn-icon-only:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 12px var(--glow);
-  transform: rotate(30deg);
+ border-color: var(--accent);
+ box-shadow: 0 0 12px var(--glow);
+ transform: rotate(30deg);
 }
 /* No rotate on sidebar close button */
 .sidebar-header .btn-icon-only:hover { transform: scale(1.1); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SIDEBAR OVERLAY + PANEL
-   ═══════════════════════════════════════════════════════════════════ */
+ SIDEBAR OVERLAY + PANEL
+ ═══════════════════════════════════════════════════════════════════ */
 
 .sidebar-overlay {
-  position: fixed; inset: 0; z-index: 900;
-  background: rgba(0,0,0,.45);
-  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s ease;
+ position: fixed; inset: 0; z-index: 900;
+ background: rgba(0,0,0,.45);
+ backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+ opacity: 0; pointer-events: none;
+ transition: opacity .3s ease;
 }
 .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
 
 .sidebar {
-  position: fixed; top: 0; bottom: 0;
-  inset-inline-end: 0;
-  width: 280px; max-width: 80vw;
-  z-index: 950;
-  display: flex; flex-direction: column;
-  background:
-    radial-gradient(ellipse at top right, var(--glow), transparent 60%),
-    var(--panel);
-  border-inline-start: 1px solid var(--border);
-  box-shadow: -4px 0 24px rgba(0,0,0,.35);
-  transform: translateX(105%);
-  transition: transform .35s cubic-bezier(.4,0,.2,1);
-  overflow: hidden;
+ position: fixed; top: 0; bottom: 0;
+ inset-inline-end: 0;
+ width: 280px; max-width: 80vw;
+ z-index: 950;
+ display: flex; flex-direction: column;
+ background:
+ radial-gradient(ellipse at top right, var(--glow), transparent 60%),
+ var(--panel);
+ border-inline-start: 1px solid var(--border);
+ box-shadow: -4px 0 24px rgba(0,0,0,.35);
+ transform: translateX(105%);
+ transition: transform .35s cubic-bezier(.4,0,.2,1);
+ overflow: hidden;
 }
 [dir="rtl"] .sidebar {
-  transform: translateX(-105%);
+ transform: translateX(-105%);
 }
 .sidebar.open {
-  transform: translateX(0);
+ transform: translateX(0);
 }
 
 .sidebar-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 16px 12px;
-  border-bottom: 1px solid var(--border);
-  gap: 8px; flex-wrap: wrap;
+ display: flex; align-items: center; justify-content: space-between;
+ padding: 18px 16px 12px;
+ border-bottom: 1px solid var(--border);
+ gap: 8px; flex-wrap: wrap;
 }
 .sidebar-title {
-  font-family: var(--font-h); font-size: .95rem;
-  letter-spacing: .06em; text-transform: uppercase;
-  color: var(--text); white-space: nowrap;
+ font-family: var(--font-h); font-size: .95rem;
+ letter-spacing: .06em; text-transform: uppercase;
+ color: var(--text); white-space: nowrap;
 }
 [dir="rtl"] .sidebar-title { font-family: 'Tajawal', sans-serif; letter-spacing: 0; }
 
 .sidebar-body {
-  flex: 1; overflow-y: auto;
-  padding: 20px 16px;
-  display: flex; flex-direction: column; gap: 20px;
+ flex: 1; overflow-y: auto;
+ padding: 20px 16px;
+ display: flex; flex-direction: column; gap: 20px;
 }
 
 .sidebar-group { display: flex; flex-direction: column; gap: 6px; }
 
 .sidebar-label {
-  font-size: .75rem; font-weight: 600;
-  color: var(--text-muted); text-transform: uppercase;
-  letter-spacing: .06em;
+ font-size: .75rem; font-weight: 600;
+ color: var(--text-muted); text-transform: uppercase;
+ letter-spacing: .06em;
 }
 
 .sidebar-select {
-  width: 100%; padding: 10px 12px;
-  border-radius: 10px;
-  font-size: .82rem; font-weight: 500;
-  font-family: var(--font-b);
-  background: rgba(0,0,0,.3); color: var(--text);
-  border: 1px solid var(--border);
-  cursor: pointer; transition: all .2s;
-  outline: none;
-  -webkit-appearance: none; appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 30px;
+ width: 100%; padding: 10px 12px;
+ border-radius: 10px;
+ font-size: .82rem; font-weight: 500;
+ font-family: var(--font-b);
+ background: rgba(0,0,0,.3); color: var(--text);
+ border: 1px solid var(--border);
+ cursor: pointer; transition: all .2s;
+ outline: none;
+ -webkit-appearance: none; appearance: none;
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right 12px center;
+ padding-right: 30px;
 }
 [dir="rtl"] .sidebar-select {
-  background-position: left 12px center;
-  padding-right: 12px; padding-left: 30px;
+ background-position: left 12px center;
+ padding-right: 12px; padding-left: 30px;
 }
 .sidebar-select:hover { border-color: var(--accent); }
 .sidebar-select:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--glow); }
 .sidebar-select option { background: var(--panel); color: var(--text); }
 
 .sidebar-footer {
-  padding: 12px 16px;
-  border-top: 1px solid var(--border);
-  font-size: .68rem; color: var(--text-muted);
-  display: flex; align-items: center; justify-content: space-between;
-  opacity: .5;
+ padding: 12px 16px;
+ border-top: 1px solid var(--border);
+ font-size: .68rem; color: var(--text-muted);
+ display: flex; align-items: center; justify-content: space-between;
+ opacity: .5;
 }
 
 /* ── Header buttons row ── */
@@ -416,43 +416,43 @@ body {
 
 /* ── Left-side sidebar (Help) ── */
 .sidebar-left {
-  inset-inline-start: 0;
-  inset-inline-end: auto;
-  border-inline-start: none;
-  border-inline-end: 1px solid var(--border);
-  box-shadow: 4px 0 24px rgba(0,0,0,.35);
-  transform: translateX(-105%);
-  background:
-    radial-gradient(ellipse at top left, var(--glow), transparent 60%),
-    var(--panel);
+ inset-inline-start: 0;
+ inset-inline-end: auto;
+ border-inline-start: none;
+ border-inline-end: 1px solid var(--border);
+ box-shadow: 4px 0 24px rgba(0,0,0,.35);
+ transform: translateX(-105%);
+ background:
+ radial-gradient(ellipse at top left, var(--glow), transparent 60%),
+ var(--panel);
 }
 [dir="rtl"] .sidebar-left {
-  transform: translateX(105%);
+ transform: translateX(105%);
 }
 .sidebar-left.open {
-  transform: translateX(0);
+ transform: translateX(0);
 }
 
 /* ── Help Tabs ── */
 .help-tabs {
-  display: flex; border-bottom: 1px solid var(--border);
-  padding: 0 16px;
+ display: flex; border-bottom: 1px solid var(--border);
+ padding: 0 16px;
 }
 .help-tab {
-  flex: 1; padding: 10px 6px;
-  border: none; border-radius: 0;
-  background: transparent; color: var(--text-muted);
-  font-family: var(--font-h); font-size: .72rem;
-  font-weight: 600; text-transform: uppercase;
-  letter-spacing: .05em; cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all .2s;
+ flex: 1; padding: 10px 6px;
+ border: none; border-radius: 0;
+ background: transparent; color: var(--text-muted);
+ font-family: var(--font-h); font-size: .72rem;
+ font-weight: 600; text-transform: uppercase;
+ letter-spacing: .05em; cursor: pointer;
+ border-bottom: 2px solid transparent;
+ transition: all .2s;
 }
 [dir="rtl"] .help-tab { font-family: 'Tajawal', sans-serif; letter-spacing: 0; }
 .help-tab:hover { color: var(--text); }
 .help-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+ color: var(--accent);
+ border-bottom-color: var(--accent);
 }
 
 /* ── Help Content ── */
@@ -462,97 +462,97 @@ body {
 /* FAQ items */
 .help-item { margin-bottom: 8px; }
 .help-item summary {
-  cursor: pointer; font-size: .8rem; font-weight: 600;
-  color: var(--text); padding: 8px 0;
-  list-style: none; display: flex; align-items: center; gap: 6px;
+ cursor: pointer; font-size: .8rem; font-weight: 600;
+ color: var(--text); padding: 8px 0;
+ list-style: none; display: flex; align-items: center; gap: 6px;
 }
 .help-item summary::before {
-  content: "▸"; color: var(--accent); font-size: .7rem;
-  transition: transform .2s;
+ content: "▸"; color: var(--accent); font-size: .7rem;
+ transition: transform .2s;
 }
 .help-item[open] summary::before { transform: rotate(90deg); }
 .help-item p {
-  font-size: .78rem; color: var(--text-muted);
-  padding: 0 0 8px 16px; line-height: 1.5;
+ font-size: .78rem; color: var(--text-muted);
+ padding: 0 0 8px 16px; line-height: 1.5;
 }
 
 /* How-To steps */
 .help-step {
-  display: flex; align-items: flex-start; gap: 12px;
-  margin-bottom: 14px;
+ display: flex; align-items: flex-start; gap: 12px;
+ margin-bottom: 14px;
 }
 .help-step-num {
-  width: 26px; height: 26px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--band2));
-  color: var(--bg); font-weight: 700; font-size: .75rem;
+ width: 26px; height: 26px; flex-shrink: 0;
+ display: flex; align-items: center; justify-content: center;
+ border-radius: 50%;
+ background: linear-gradient(135deg, var(--accent), var(--band2));
+ color: var(--bg); font-weight: 700; font-size: .75rem;
 }
 .help-step p {
-  font-size: .8rem; color: var(--text); line-height: 1.5;
-  padding-top: 3px;
+ font-size: .8rem; color: var(--text); line-height: 1.5;
+ padding-top: 3px;
 }
 
 /* Wiki entries */
 .wiki-entry { margin-bottom: 16px; }
 .wiki-entry h3 {
-  font-size: .82rem; color: var(--text); margin-bottom: 4px;
+ font-size: .82rem; color: var(--text); margin-bottom: 4px;
 }
 .wiki-entry p {
-  font-size: .78rem; color: var(--text-muted); line-height: 1.5;
+ font-size: .78rem; color: var(--text-muted); line-height: 1.5;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   STATUS PILL
-   ═══════════════════════════════════════════════════════════════════ */
+ STATUS PILL
+ ═══════════════════════════════════════════════════════════════════ */
 
 .status-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 3px 8px; border-radius: 999px;
-  font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
-  border: 1px solid rgba(255,255,255,.12);
-  color: var(--text); background: rgba(0,0,0,.5);
+ display: inline-flex; align-items: center; gap: 5px;
+ padding: 3px 8px; border-radius: 999px;
+ font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
+ border: 1px solid rgba(255,255,255,.12);
+ color: var(--text); background: rgba(0,0,0,.5);
 }
 .status-dot {
-  width: 7px; height: 7px; border-radius: 999px;
-  background: #f87171;
-  box-shadow: 0 0 6px rgba(248,113,113,.6);
+ width: 7px; height: 7px; border-radius: 999px;
+ background: #f87171;
+ box-shadow: 0 0 6px rgba(248,113,113,.6);
 }
 .status-pill.connected { border-color: rgba(34,197,94,.6); }
 .status-pill.connected .status-dot {
-  background: #22c55e;
-  box-shadow: 0 0 6px rgba(34,197,94,.6);
+ background: #22c55e;
+ box-shadow: 0 0 6px rgba(34,197,94,.6);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CARD
-   ═══════════════════════════════════════════════════════════════════ */
+ CARD
+ ═══════════════════════════════════════════════════════════════════ */
 
 .card {
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  position: relative; overflow: hidden;
-  transition: background .4s, border-color .4s;
+ border-radius: 14px;
+ border: 1px solid var(--border);
+ background: var(--panel);
+ padding: 12px 14px;
+ margin-bottom: 10px;
+ position: relative; overflow: hidden;
+ transition: background .4s, border-color .4s;
 }
 .card::before {
-  content: var(--card-ornament);
-  position: absolute; top: 6px; inset-inline-end: 10px;
-  font-size: 10px; color: var(--accent); opacity: .18;
-  pointer-events: none;
+ content: var(--card-ornament);
+ position: absolute; top: 6px; inset-inline-end: 10px;
+ font-size: 10px; color: var(--accent); opacity: .18;
+ pointer-events: none;
 }
 
 .card-header {
-  display: flex; align-items: center;
-  justify-content: space-between; margin-bottom: 8px; gap: 6px;
+ display: flex; align-items: center;
+ justify-content: space-between; margin-bottom: 8px; gap: 6px;
 }
 .card-title {
-  font-family: var(--font-h);
-  font-size: .88rem; letter-spacing: .06em;
-  font-weight: 600; text-transform: uppercase;
-  display: flex; align-items: center; gap: 6px;
+ font-family: var(--font-h);
+ font-size: .88rem; letter-spacing: .06em;
+ font-weight: 600; text-transform: uppercase;
+ display: flex; align-items: center; gap: 6px;
 }
 [dir="rtl"] .card-title { font-family: 'Tajawal', sans-serif; letter-spacing: 0; }
 .card-title .icon { font-size: 1.05rem; }
@@ -563,173 +563,173 @@ body {
 .badge strong { color: var(--accent); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   BUTTONS
-   ═══════════════════════════════════════════════════════════════════ */
+ BUTTONS
+ ═══════════════════════════════════════════════════════════════════ */
 
 button {
-  border: none; border-radius: 999px;
-  padding: 6px 11px; font-size: .75rem;
-  font-family: var(--font-b); cursor: pointer;
-  display: inline-flex; align-items: center;
-  justify-content: center; gap: 5px;
-  background: rgba(0,0,0,.4); color: var(--text);
-  border: 1px solid rgba(255,255,255,.1);
-  transition: all .2s;
+ border: none; border-radius: 999px;
+ padding: 6px 11px; font-size: .75rem;
+ font-family: var(--font-b); cursor: pointer;
+ display: inline-flex; align-items: center;
+ justify-content: center; gap: 5px;
+ background: rgba(0,0,0,.4); color: var(--text);
+ border: 1px solid rgba(255,255,255,.1);
+ transition: all .2s;
 }
 button .btn-icon { font-size: .95rem; }
 button:hover:not(:disabled) {
-  border-color: var(--accent);
-  box-shadow: 0 0 12px var(--glow);
-  transform: translateY(-1px);
+ border-color: var(--accent);
+ box-shadow: 0 0 12px var(--glow);
+ transform: translateY(-1px);
 }
 button:disabled { opacity: .4; cursor: default; }
 
 button.primary {
-  background: linear-gradient(135deg, var(--accent), var(--band2));
-  color: var(--bg); font-weight: 700;
-  border-color: var(--accent);
-  box-shadow: 0 6px 20px var(--glow);
+ background: linear-gradient(135deg, var(--accent), var(--band2));
+ color: var(--bg); font-weight: 700;
+ border-color: var(--accent);
+ box-shadow: 0 6px 20px var(--glow);
 }
 .btn-sm { padding: 4px 9px; font-size: .7rem; }
 
 button.fire-btn {
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  color: white; border-color: rgba(239,68,68,.5);
+ background: linear-gradient(135deg, #ef4444, #f97316);
+ color: white; border-color: rgba(239,68,68,.5);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   FORM CONTROLS
-   ═══════════════════════════════════════════════════════════════════ */
+ FORM CONTROLS
+ ═══════════════════════════════════════════════════════════════════ */
 
-.ctrl-label   { display: block; font-size: .75rem; color: var(--text-muted); margin-bottom: 6px; }
-.select-ctrl  { width: 100%; padding: 6px; background: rgba(0,0,0,.4); color: var(--text); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-family: var(--font-b); }
-.range-ctrl   { width: 100%; height: 6px; accent-color: var(--accent); }
+.ctrl-label { display: block; font-size: .75rem; color: var(--text-muted); margin-bottom: 6px; }
+.select-ctrl { width: 100%; padding: 6px; background: rgba(0,0,0,.4); color: var(--text); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-family: var(--font-b); }
+.range-ctrl { width: 100%; height: 6px; accent-color: var(--accent); }
 .checkbox-ctrl{ width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
-.toggle-ctrl  { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: .75rem; color: var(--text-muted); }
+.toggle-ctrl { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: .75rem; color: var(--text-muted); }
 
 input[type="text"] {
-  border-radius: 999px; border: 1px solid var(--border);
-  background: rgba(0,0,0,.4); color: var(--text);
-  padding: 8px 12px; font-size: .8rem; font-family: var(--font-b); flex: 1;
+ border-radius: 999px; border: 1px solid var(--border);
+ background: rgba(0,0,0,.4); color: var(--text);
+ padding: 8px 12px; font-size: .8rem; font-family: var(--font-b); flex: 1;
 }
 
 /* ─── Control Section ─── */
 .control-section {
-  border-radius: 12px; border: 1px solid var(--border);
-  padding: 12px; background: rgba(0,0,0,.2);
+ border-radius: 12px; border: 1px solid var(--border);
+ padding: 12px; background: rgba(0,0,0,.2);
 }
-.section-header  { margin-bottom: 8px; }
-.section-title   { font-family: var(--font-h); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 6px; }
+.section-header { margin-bottom: 8px; }
+.section-title { font-family: var(--font-h); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 6px; }
 [dir="rtl"] .section-title { font-family: 'Tajawal', sans-serif; letter-spacing: 0; }
 .section-subtitle{ font-size: .74rem; color: var(--text-muted); margin-top: 2px; }
 
 .hint { font-size: .74rem; color: var(--text-muted); margin-top: 3px; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   COLLAPSIBLE
-   ═══════════════════════════════════════════════════════════════════ */
+ COLLAPSIBLE
+ ═══════════════════════════════════════════════════════════════════ */
 
 details.collapsible { margin-bottom: 10px; }
 
 details.collapsible > summary {
-  cursor: pointer; list-style: none;
-  padding: 10px 14px;
-  font-family: var(--font-h); font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase; font-size: .8rem;
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(0,0,0,.3);
-  border: 1px solid var(--border); border-radius: 14px;
-  color: var(--text); transition: all .2s;
+ cursor: pointer; list-style: none;
+ padding: 10px 14px;
+ font-family: var(--font-h); font-weight: 700;
+ letter-spacing: .06em; text-transform: uppercase; font-size: .8rem;
+ display: flex; align-items: center; gap: 8px;
+ background: rgba(0,0,0,.3);
+ border: 1px solid var(--border); border-radius: 14px;
+ color: var(--text); transition: all .2s;
 }
 [dir="rtl"] details.collapsible > summary { font-family: 'Tajawal', sans-serif; letter-spacing: 0; }
 details.collapsible > summary:hover { border-color: var(--accent); box-shadow: 0 0 12px var(--glow); }
 details.collapsible > summary::-webkit-details-marker { display: none; }
 details.collapsible > summary::before {
-  content: var(--summary-marker);
-  font-size: .7rem; color: var(--accent);
-  transition: transform .25s ease;
+ content: var(--summary-marker);
+ font-size: .7rem; color: var(--accent);
+ transition: transform .25s ease;
 }
 details.collapsible[open] > summary::before { transform: rotate(90deg); }
 details.collapsible > .card { margin-top: 8px; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LOG
-   ═══════════════════════════════════════════════════════════════════ */
+ LOG
+ ═══════════════════════════════════════════════════════════════════ */
 
 .log-controls { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
 
 .log-body { padding: 0; }
 .log-body .log {
-  border: none; border-radius: 0;
-  max-height: none; height: 100%;
+ border: none; border-radius: 0;
+ max-height: none; height: 100%;
 }
 
 .log {
-  padding: 8px 10px; overflow-y: auto; max-height: 260px;
-  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-  font-size: .76rem; line-height: 1.3;
-  border-radius: 10px; border: 1px solid var(--border);
-  background: rgba(0,0,0,.4);
+ padding: 8px 10px; overflow-y: auto; max-height: 260px;
+ font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+ font-size: .76rem; line-height: 1.3;
+ border-radius: 10px; border: 1px solid var(--border);
+ background: rgba(0,0,0,.4);
 }
-.log-line         { margin-bottom: 2px; white-space: pre-wrap; word-break: break-word; }
-.log-line.info    { color: var(--text-muted); }
+.log-line { margin-bottom: 2px; white-space: pre-wrap; word-break: break-word; }
+.log-line.info { color: var(--text-muted); }
 .log-line.success { color: #86efac; }
-.log-line.error   { color: #fca5a5; }
-.log-line.tx      { color: #93c5fd; }
-.log-line.rx      { color: #67e8f9; }
+.log-line.error { color: #fca5a5; }
+.log-line.tx { color: #93c5fd; }
+.log-line.rx { color: #67e8f9; }
 
 .log-footer { padding-top: 5px; font-size: .68rem; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; opacity: .5; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   TOAST
-   ═══════════════════════════════════════════════════════════════════ */
+ TOAST
+ ═══════════════════════════════════════════════════════════════════ */
 
 .toast-indicator {
-  display: none; position: fixed; bottom: 20px; inset-inline-end: 20px;
-  background: linear-gradient(135deg, var(--accent), var(--band2));
-  padding: 10px 18px; border-radius: 50px;
-  box-shadow: 0 4px 16px var(--glow); z-index: 9999;
-  animation: slideIn .3s ease-out;
+ display: none; position: fixed; bottom: 20px; inset-inline-end: 20px;
+ background: linear-gradient(135deg, var(--accent), var(--band2));
+ padding: 10px 18px; border-radius: 50px;
+ box-shadow: 0 4px 16px var(--glow); z-index: 9999;
+ animation: slideIn .3s ease-out;
 }
 .toast-inner { display: flex; align-items: center; gap: 8px; }
 .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(0,0,0,.2); border-top-color: var(--bg); border-radius: 50%; animation: spin .8s linear infinite; }
 .toast-text { color: var(--bg); font-weight: 700; font-size: .85rem; }
 
-@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes spin { to { transform: rotate(360deg); } }
 @keyframes slideIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
 /* ═══════════════════════════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════════════════════════ */
+ FOOTER
+ ═══════════════════════════════════════════════════════════════════ */
 
 .app-footer {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 12px 16px;
-  opacity: .45;
-  transition: opacity .3s;
+ display: flex; align-items: center; justify-content: center; gap: 10px;
+ padding: 12px 16px;
+ opacity: .45;
+ transition: opacity .3s;
 }
 .app-footer:hover { opacity: .75; }
 
 .footer-text {
-  font-size: .68rem; color: var(--text-muted);
-  letter-spacing: .03em;
+ font-size: .68rem; color: var(--text-muted);
+ letter-spacing: .03em;
 }
 .footer-text a {
-  color: var(--accent); text-decoration: none;
-  transition: opacity .2s;
+ color: var(--accent); text-decoration: none;
+ transition: opacity .2s;
 }
 .footer-text a:hover { opacity: .7; text-decoration: underline; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SPLASH SCREEN
-   ═══════════════════════════════════════════════════════════════════ */
+ SPLASH SCREEN
+ ═══════════════════════════════════════════════════════════════════ */
 
 .splash {
-  position: fixed; inset: 0; z-index: 10000;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--bg);
-  cursor: pointer;
-  transition: opacity .5s ease;
+ position: fixed; inset: 0; z-index: 10000;
+ display: flex; align-items: center; justify-content: center;
+ background: var(--bg);
+ cursor: pointer;
+ transition: opacity .5s ease;
 }
 .splash.hidden { opacity: 0; pointer-events: none; }
 
@@ -739,135 +739,135 @@ details.collapsible > .card { margin-top: 8px; }
 .splash-logo svg { width: 100%; height: 100%; }
 
 .splash-title {
-  font-family: var(--font-h); font-size: 1.8rem;
-  letter-spacing: .08em; text-transform: uppercase;
-  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent));
-  background-size: 200% 200%;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradShift 3s ease infinite;
+ font-family: var(--font-h); font-size: 1.8rem;
+ letter-spacing: .08em; text-transform: uppercase;
+ background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent));
+ background-size: 200% 200%;
+ -webkit-background-clip: text; background-clip: text;
+ -webkit-text-fill-color: transparent;
+ animation: gradShift 3s ease infinite;
 }
 
 .splash-sub {
-  font-size: .85rem; color: var(--text-muted);
-  margin-top: 6px; letter-spacing: .04em;
+ font-size: .85rem; color: var(--text-muted);
+ margin-top: 6px; letter-spacing: .04em;
 }
 
 .splash-hint {
-  font-size: .65rem; color: var(--text-muted); opacity: .4;
-  margin-top: 24px; letter-spacing: .1em; text-transform: uppercase;
-  animation: splashPulse 2s ease infinite;
+ font-size: .65rem; color: var(--text-muted); opacity: .4;
+ margin-top: 24px; letter-spacing: .1em; text-transform: uppercase;
+ animation: splashPulse 2s ease infinite;
 }
 
 @keyframes splashFadeIn {
-  from { opacity: 0; transform: scale(.9) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+ from { opacity: 0; transform: scale(.9) translateY(10px); }
+ to { opacity: 1; transform: scale(1) translateY(0); }
 }
 @keyframes splashPulse {
-  0%,100% { opacity: .3; } 50% { opacity: .7; }
+ 0%,100% { opacity: .3; } 50% { opacity: .7; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LOG FILTERS
-   ═══════════════════════════════════════════════════════════════════ */
+ LOG FILTERS
+ ═══════════════════════════════════════════════════════════════════ */
 
 .log-filters {
-  display: flex; gap: 4px; padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
+ display: flex; gap: 4px; padding: 8px 12px;
+ border-bottom: 1px solid var(--border);
 }
 
 .log-filter {
-  flex: 1; padding: 4px 2px;
-  border: 1px solid var(--border); border-radius: 8px;
-  background: transparent; color: var(--text-muted);
-  font-size: .65rem; font-weight: 600; text-transform: uppercase;
-  cursor: pointer; transition: all .2s;
+ flex: 1; padding: 4px 2px;
+ border: 1px solid var(--border); border-radius: 8px;
+ background: transparent; color: var(--text-muted);
+ font-size: .65rem; font-weight: 600; text-transform: uppercase;
+ cursor: pointer; transition: all .2s;
 }
 .log-filter:hover { border-color: var(--accent); color: var(--text); transform: none; }
 .log-filter.active {
-  background: var(--accent); color: var(--bg);
-  border-color: var(--accent); font-weight: 700;
+ background: var(--accent); color: var(--bg);
+ border-color: var(--accent); font-weight: 700;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VERSION BADGE
-   ═══════════════════════════════════════════════════════════════════ */
+ VERSION BADGE
+ ═══════════════════════════════════════════════════════════════════ */
 
 .version-update {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 2px 8px; border-radius: 999px;
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  color: white; font-size: .6rem; font-weight: 700;
-  letter-spacing: .05em; text-transform: uppercase;
-  animation: pulseBadge 2s ease infinite;
+ display: inline-flex; align-items: center; gap: 4px;
+ padding: 2px 8px; border-radius: 999px;
+ background: linear-gradient(135deg, #ef4444, #f97316);
+ color: white; font-size: .6rem; font-weight: 700;
+ letter-spacing: .05em; text-transform: uppercase;
+ animation: pulseBadge 2s ease infinite;
 }
 @keyframes pulseBadge {
-  0%,100% { transform: scale(1); } 50% { transform: scale(1.05); }
+ 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ANIMATED THEME TRANSITIONS
-   ═══════════════════════════════════════════════════════════════════ */
+ ANIMATED THEME TRANSITIONS
+ ═══════════════════════════════════════════════════════════════════ */
 
 .app, .card, .sidebar, button, details.collapsible > summary,
 input[type="text"], .select-ctrl, .control-section, .status-pill,
 .log, .btn-icon-only, .sidebar-select, .log-filter, .help-tab {
-  transition: background .4s ease, color .4s ease, border-color .4s ease, box-shadow .4s ease;
+ transition: background .4s ease, color .4s ease, border-color .4s ease, box-shadow .4s ease;
 }
 
 /* ─── Scrollbar ─── */
-::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LIGHT THEME OVERRIDES (shared via .light-theme on <html>)
-   ═══════════════════════════════════════════════════════════════════ */
+ LIGHT THEME OVERRIDES (shared via .light-theme on <html>)
+ ═══════════════════════════════════════════════════════════════════ */
 
 .light-theme .app {
-  box-shadow: 0 0 0 1px var(--border), 0 20px 50px rgba(0,0,0,.1);
+ box-shadow: 0 0 0 1px var(--border), 0 20px 50px rgba(0,0,0,.1);
 }
 
 .light-theme .status-pill {
-  background: rgba(0,0,0,.04);
-  border-color: var(--border);
+ background: rgba(0,0,0,.04);
+ border-color: var(--border);
 }
 
 .light-theme button {
-  background: rgba(0,0,0,.05);
-  color: var(--text);
-  border-color: var(--border);
+ background: rgba(0,0,0,.05);
+ color: var(--text);
+ border-color: var(--border);
 }
 
 .light-theme .btn-icon-only {
-  background: rgba(0,0,0,.05);
+ background: rgba(0,0,0,.05);
 }
 
 .light-theme details.collapsible > summary {
-  background: rgba(0,0,0,.03);
+ background: rgba(0,0,0,.03);
 }
 
 .light-theme .log {
-  background: rgba(0,0,0,.03);
+ background: rgba(0,0,0,.03);
 }
 
 .light-theme .log-line.success { color: #15803d; }
-.light-theme .log-line.error   { color: #dc2626; }
-.light-theme .log-line.tx      { color: #1d4ed8; }
-.light-theme .log-line.rx      { color: #0e7490; }
+.light-theme .log-line.error { color: #dc2626; }
+.light-theme .log-line.tx { color: #1d4ed8; }
+.light-theme .log-line.rx { color: #0e7490; }
 
 .light-theme input[type="text"],
 .light-theme .select-ctrl {
-  background: rgba(0,0,0,.04);
+ background: rgba(0,0,0,.04);
 }
 
 .light-theme .control-section {
-  background: rgba(0,0,0,.02);
+ background: rgba(0,0,0,.02);
 }
 
 .light-theme .card {
-  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+ box-shadow: 0 1px 4px rgba(0,0,0,.06);
 }
 
 .light-theme .deco-band { opacity: .7; }
@@ -875,97 +875,97 @@ input[type="text"], .select-ctrl, .control-section, .status-pill,
 .light-theme .bismillah { text-shadow: none; }
 
 .light-theme .sidebar-overlay {
-  background: rgba(0,0,0,.2);
+ background: rgba(0,0,0,.2);
 }
 
 .light-theme .sidebar {
-  box-shadow: -4px 0 24px rgba(0,0,0,.1);
+ box-shadow: -4px 0 24px rgba(0,0,0,.1);
 }
 
 .light-theme .sidebar-select {
-  background: rgba(0,0,0,.04);
+ background: rgba(0,0,0,.04);
 }
 
 .light-theme .sidebar-left {
-  box-shadow: 4px 0 24px rgba(0,0,0,.1);
+ box-shadow: 4px 0 24px rgba(0,0,0,.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   DOCKED LOG PANEL (pushes content, no overlay)
-   ═══════════════════════════════════════════════════════════════════ */
+ DOCKED LOG PANEL (pushes content, no overlay)
+ ═══════════════════════════════════════════════════════════════════ */
 
 #logPanel { z-index: 940; width: var(--log-width, 280px); max-width: 60vw; min-width: 200px; }
 #settingsPanel { z-index: 960; }
 
 /* ── Resize handle ── */
 .resize-handle {
-  position: absolute; top: 0; bottom: 0;
-  inset-inline-start: 0;
-  width: 5px; cursor: col-resize;
-  background: transparent;
-  z-index: 10;
-  transition: background .2s;
+ position: absolute; top: 0; bottom: 0;
+ inset-inline-start: 0;
+ width: 5px; cursor: col-resize;
+ background: transparent;
+ z-index: 10;
+ transition: background .2s;
 }
 .resize-handle:hover,
 .resize-handle.active {
-  background: var(--accent);
-  opacity: .5;
+ background: var(--accent);
+ opacity: .5;
 }
 
 body.log-open .app {
-  margin-inline-end: var(--log-width, 280px);
-  transition: margin .35s cubic-bezier(.4,0,.2,1);
+ margin-inline-end: var(--log-width, 280px);
+ transition: margin .35s cubic-bezier(.4,0,.2,1);
 }
 
 @media (max-width: 700px) {
-  /* On small screens, log stays overlay (not enough room to dock) */
-  body.log-open .app { margin-inline-end: 0; }
+ /* On small screens, log stays overlay (not enough room to dock) */
+ body.log-open .app { margin-inline-end: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   KONAMI RETRO THEME
-   ═══════════════════════════════════════════════════════════════════ */
+ KONAMI RETRO THEME
+ ═══════════════════════════════════════════════════════════════════ */
 
 [data-theme="retro"] {
-  --bg: #0a0a0a;
-  --panel: #0d0d0d;
-  --accent: #33ff33;
-  --accent2: #33ff33;
-  --glow: rgba(51,255,51,.15);
-  --glow2: rgba(51,255,51,.08);
-  --text: #33ff33;
-  --text-muted: #1a9e1a;
-  --border: rgba(51,255,51,.2);
-  --band1: #33ff33; --band2: #1a9e1a; --band3: #33ff33;
-  --font-h: 'Courier New', monospace;
-  --font-b: 'Courier New', monospace;
-  --card-ornament: ">";
-  --summary-marker: ">";
-  --bism-color: #33ff33;
+ --bg: #0a0a0a;
+ --panel: #0d0d0d;
+ --accent: #33ff33;
+ --accent2: #33ff33;
+ --glow: rgba(51,255,51,.15);
+ --glow2: rgba(51,255,51,.08);
+ --text: #33ff33;
+ --text-muted: #1a9e1a;
+ --border: rgba(51,255,51,.2);
+ --band1: #33ff33; --band2: #1a9e1a; --band3: #33ff33;
+ --font-h: 'Courier New', monospace;
+ --font-b: 'Courier New', monospace;
+ --card-ornament: ">";
+ --summary-marker: ">";
+ --bism-color: #33ff33;
 }
 
 [data-theme="retro"] .app {
-  border-radius: 0;
-  box-shadow: 0 0 0 2px #33ff33, 0 0 30px rgba(51,255,51,.2);
+ border-radius: 0;
+ box-shadow: 0 0 0 2px #33ff33, 0 0 30px rgba(51,255,51,.2);
 }
 
 [data-theme="retro"] .app::after {
-  content: '';
-  position: absolute; inset: 0; z-index: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,.15) 2px,
-    rgba(0,0,0,.15) 4px
-  );
-  pointer-events: none;
-  animation: crtFlicker 0.05s infinite;
+ content: '';
+ position: absolute; inset: 0; z-index: 0;
+ background: repeating-linear-gradient(
+ 0deg,
+ transparent,
+ transparent 2px,
+ rgba(0,0,0,.15) 2px,
+ rgba(0,0,0,.15) 4px
+ );
+ pointer-events: none;
+ animation: crtFlicker 0.05s infinite;
 }
 
 @keyframes crtFlicker {
-  0%,100% { opacity: 1; }
-  50% { opacity: .97; }
+ 0%,100% { opacity: 1; }
+ 50% { opacity: .97; }
 }
 
 [data-theme="retro"] .card { border-radius: 0; }
@@ -974,407 +974,403 @@ body.log-open .app {
 [data-theme="retro"] .sidebar { border-radius: 0; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   BISMILLAH HEARTBEAT
-   ═══════════════════════════════════════════════════════════════════ */
+ BISMILLAH HEARTBEAT
+ ═══════════════════════════════════════════════════════════════════ */
 
 .bismillah.pulse-success {
-  animation: bismHeartSuccess .6s ease;
+ animation: bismHeartSuccess .6s ease;
 }
 .bismillah.pulse-error {
-  animation: bismHeartError .6s ease;
+ animation: bismHeartError .6s ease;
 }
 
 @keyframes bismHeartSuccess {
-  0% { opacity: .45; filter: brightness(1); }
-  30% { opacity: 1; filter: brightness(1.8); text-shadow: 0 0 24px var(--accent); }
-  100% { opacity: .45; filter: brightness(1); }
+ 0% { opacity: .45; filter: brightness(1); }
+ 30% { opacity: 1; filter: brightness(1.8); text-shadow: 0 0 24px var(--accent); }
+ 100% { opacity: .45; filter: brightness(1); }
 }
 @keyframes bismHeartError {
-  0% { opacity: .45; }
-  30% { opacity: .15; filter: brightness(.5); }
-  100% { opacity: .45; filter: brightness(1); }
+ 0% { opacity: .45; }
+ 30% { opacity: .15; filter: brightness(.5); }
+ 100% { opacity: .45; filter: brightness(1); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   MATRIX RAIN CANVAS
-   ═══════════════════════════════════════════════════════════════════ */
+ MATRIX RAIN CANVAS
+ ═══════════════════════════════════════════════════════════════════ */
 
 .matrix-canvas {
-  position: fixed; inset: 0; z-index: 0;
-  pointer-events: none;
-  display: none;
+ position: fixed; inset: 0; z-index: 0;
+ pointer-events: none;
+ display: none;
 }
 .matrix-canvas.active {
-  display: block;
+ display: block;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   DEBUG PANEL
-   ═══════════════════════════════════════════════════════════════════ */
+ DEBUG PANEL
+ ═══════════════════════════════════════════════════════════════════ */
 
 .debug-panel {
-  display: none;
-  position: fixed; top: 4px; inset-inline-start: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  background: rgba(0,0,0,.7); color: #33ff33;
-  font-family: 'Courier New', monospace; font-size: .65rem;
-  padding: 2px 10px; border-radius: 4px;
-  gap: 12px;
+ display: none;
+ position: fixed; top: 4px; inset-inline-start: 50%;
+ transform: translateX(-50%);
+ z-index: 9999;
+ background: rgba(0,0,0,.7); color: #33ff33;
+ font-family: 'Courier New', monospace; font-size: .65rem;
+ padding: 2px 10px; border-radius: 4px;
+ gap: 12px;
 }
 .debug-panel.active {
-  display: inline-flex;
+ display: inline-flex;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   HIJRI DATE
-   ═══════════════════════════════════════════════════════════════════ */
+ HIJRI DATE
+ ═══════════════════════════════════════════════════════════════════ */
 
 .hijri-date {
-  font-family: 'Amiri', serif;
-  font-size: .65rem;
-  color: var(--text-muted);
-  opacity: .6;
-  direction: rtl;
+ font-family: 'Amiri', serif;
+ font-size: .65rem;
+ color: var(--text-muted);
+ opacity: .6;
+ direction: rtl;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   TYPEWRITER LOG MODE
-   ═══════════════════════════════════════════════════════════════════ */
+ TYPEWRITER LOG MODE
+ ═══════════════════════════════════════════════════════════════════ */
 
 .log-line.typing::after {
-  content: '▌';
-  animation: cursorBlink .6s step-end infinite;
-  color: var(--accent);
+ content: '▌';
+ animation: cursorBlink .6s step-end infinite;
+ color: var(--accent);
 }
 @keyframes cursorBlink {
-  0%,100% { opacity: 1; } 50% { opacity: 0; }
+ 0%,100% { opacity: 1; } 50% { opacity: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ANIMATED MASCOT (Workshop-DIY Logo)
-   ═══════════════════════════════════════════════════════════════════ */
+ ANIMATED MASCOT (Workshop-DIY Logo)
+ ═══════════════════════════════════════════════════════════════════ */
 
 .pixel-pet {
-  width: 32px; height: 32px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-  position: relative;
+ width: 32px; height: 32px;
+ cursor: pointer;
+ user-select: none;
+ flex-shrink: 0;
+ position: relative;
 }
 .pixel-pet img {
-  width: 100%; height: 100%;
-  object-fit: contain;
-  filter: invert(1);
-  transition: filter .3s;
+ width: 100%; height: 100%;
+ object-fit: contain;
+ filter: invert(1);
+ transition: filter .3s;
 }
 .light-theme .pixel-pet img { filter: invert(0); }
 
 /* Idle: gentle floating + breathing glow */
 .pet-idle img {
-  animation: petFloat 3s ease-in-out infinite, petGlow 4s ease-in-out infinite;
+ animation: petFloat 3s ease-in-out infinite, petGlow 4s ease-in-out infinite;
 }
 @keyframes petFloat {
-  0%,100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-3px) rotate(2deg); }
-  75% { transform: translateY(1px) rotate(-1deg); }
+ 0%,100% { transform: translateY(0) rotate(0deg); }
+ 25% { transform: translateY(-3px) rotate(2deg); }
+ 75% { transform: translateY(1px) rotate(-1deg); }
 }
 @keyframes petGlow {
-  0%,100% { filter: invert(1) drop-shadow(0 0 0px transparent); }
-  50% { filter: invert(1) drop-shadow(0 0 4px var(--accent)); }
+ 0%,100% { filter: invert(1) drop-shadow(0 0 0px transparent); }
+ 50% { filter: invert(1) drop-shadow(0 0 4px var(--accent)); }
 }
 .light-theme .pet-idle img {
-  animation: petFloat 3s ease-in-out infinite, petGlowLight 4s ease-in-out infinite;
+ animation: petFloat 3s ease-in-out infinite, petGlowLight 4s ease-in-out infinite;
 }
 @keyframes petGlowLight {
-  0%,100% { filter: invert(0) drop-shadow(0 0 0px transparent); }
-  50% { filter: invert(0) drop-shadow(0 0 4px var(--accent)); }
+ 0%,100% { filter: invert(0) drop-shadow(0 0 0px transparent); }
+ 50% { filter: invert(0) drop-shadow(0 0 4px var(--accent)); }
 }
 
 /* Happy: rocket launch + orbit + accent glow burst */
 .pet-happy img {
-  animation: petRocket 1s cubic-bezier(.2,0,.3,1) forwards, petOrbit 1s ease-in-out .9s 2;
+ animation: petRocket 1s cubic-bezier(.2,0,.3,1) forwards, petOrbit 1s ease-in-out .9s 2;
 }
 @keyframes petRocket {
-  0% { transform: translateY(0) scale(1); }
-  40% { transform: translateY(-12px) scale(1.15) rotate(-10deg); }
-  60% { transform: translateY(-8px) scale(1.1) rotate(5deg); }
-  100% { transform: translateY(0) scale(1) rotate(0deg); }
+ 0% { transform: translateY(0) scale(1); }
+ 40% { transform: translateY(-12px) scale(1.15) rotate(-10deg); }
+ 60% { transform: translateY(-8px) scale(1.1) rotate(5deg); }
+ 100% { transform: translateY(0) scale(1) rotate(0deg); }
 }
 @keyframes petOrbit {
-  0% { transform: rotate(0deg) scale(1); filter: invert(1) drop-shadow(0 0 8px var(--accent)); }
-  25% { transform: rotate(90deg) scale(1.1); }
-  50% { transform: rotate(180deg) scale(1); filter: invert(1) drop-shadow(0 0 12px var(--accent2)); }
-  75% { transform: rotate(270deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1); filter: invert(1) drop-shadow(0 0 8px var(--accent)); }
+ 0% { transform: rotate(0deg) scale(1); filter: invert(1) drop-shadow(0 0 8px var(--accent)); }
+ 25% { transform: rotate(90deg) scale(1.1); }
+ 50% { transform: rotate(180deg) scale(1); filter: invert(1) drop-shadow(0 0 12px var(--accent2)); }
+ 75% { transform: rotate(270deg) scale(1.1); }
+ 100% { transform: rotate(360deg) scale(1); filter: invert(1) drop-shadow(0 0 8px var(--accent)); }
 }
 
 /* Sad: glitch effect */
 .pet-sad img {
-  animation: petGlitch .15s ease-in-out infinite alternate;
-  opacity: .5;
+ animation: petGlitch .15s ease-in-out infinite alternate;
+ opacity: .5;
 }
 @keyframes petGlitch {
-  0% { transform: translate(0,0) skewX(0deg); filter: invert(1) hue-rotate(0deg); }
-  20% { transform: translate(-2px,1px) skewX(2deg); }
-  40% { transform: translate(1px,-1px) skewX(-1deg); filter: invert(1) hue-rotate(90deg); }
-  60% { transform: translate(-1px,2px) skewX(1deg); }
-  80% { transform: translate(2px,0) skewX(-2deg); filter: invert(1) hue-rotate(180deg); }
-  100% { transform: translate(0,-1px) skewX(0deg); filter: invert(1) hue-rotate(0deg); }
+ 0% { transform: translate(0,0) skewX(0deg); filter: invert(1) hue-rotate(0deg); }
+ 20% { transform: translate(-2px,1px) skewX(2deg); }
+ 40% { transform: translate(1px,-1px) skewX(-1deg); filter: invert(1) hue-rotate(90deg); }
+ 60% { transform: translate(-1px,2px) skewX(1deg); }
+ 80% { transform: translate(2px,0) skewX(-2deg); filter: invert(1) hue-rotate(180deg); }
+ 100% { transform: translate(0,-1px) skewX(0deg); filter: invert(1) hue-rotate(0deg); }
 }
 
 /* Sleep: slow tilt back and forth + very dim */
 .pet-sleep img {
-  animation: petSleep 6s ease-in-out infinite;
-  opacity: .15;
+ animation: petSleep 6s ease-in-out infinite;
+ opacity: .15;
 }
 @keyframes petSleep {
-  0%,100% { transform: rotate(-8deg) scale(.9); }
-  50% { transform: rotate(8deg) scale(.92); }
+ 0%,100% { transform: rotate(-8deg) scale(.9); }
+ 50% { transform: rotate(8deg) scale(.92); }
 }
 
 /* Hover: subtle lift */
 .pixel-pet:hover img {
-  transform: scale(1.15);
-  transition: transform .15s ease;
+ transform: scale(1.15);
+ transition: transform .15s ease;
 }
 
 /* Click feedback */
 .pixel-pet:active img {
-  transform: scale(.85);
-  transition: transform .05s ease;
+ transform: scale(.85);
+ transition: transform .05s ease;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   BREATHING GUIDE
-   ═══════════════════════════════════════════════════════════════════ */
+ BREATHING GUIDE
+ ═══════════════════════════════════════════════════════════════════ */
 
 .deco-band.breathing {
-  height: 4px;
-  animation: breathe 8s ease-in-out infinite;
-  opacity: 1;
+ height: 4px;
+ animation: breathe 8s ease-in-out infinite;
+ opacity: 1;
 }
 
 @keyframes breathe {
-  0%,100% { opacity: .3; height: 2px; }
-  25% { opacity: 1; height: 6px; }    /* inhale peak */
-  50% { opacity: 1; height: 6px; }    /* hold */
-  75% { opacity: .3; height: 2px; }   /* exhale */
+ 0%,100% { opacity: .3; height: 2px; }
+ 25% { opacity: 1; height: 6px; } /* inhale peak */
+ 50% { opacity: 1; height: 6px; } /* hold */
+ 75% { opacity: .3; height: 2px; } /* exhale */
 }
 
 /* ── Dhikr display ── */
 .dhikr-display {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px; margin-top: 8px;
-  border-radius: 10px; border: 1px solid var(--border);
-  background: rgba(0,0,0,.2);
+ display: flex; align-items: center; gap: 10px;
+ padding: 10px; margin-top: 8px;
+ border-radius: 10px; border: 1px solid var(--border);
+ background: rgba(0,0,0,.2);
 }
 .dhikr-label {
-  font-family: 'Amiri', serif; font-size: 1rem;
-  color: var(--accent);
+ font-family: 'Amiri', serif; font-size: 1rem;
+ color: var(--accent);
 }
 .dhikr-count {
-  font-family: var(--font-h); font-size: 1.4rem;
-  color: var(--text); font-weight: 700;
-  min-width: 30px; text-align: center;
+ font-family: var(--font-h); font-size: 1.4rem;
+ color: var(--text); font-weight: 700;
+ min-width: 30px; text-align: center;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   AI CHAT INPUT
-   ═══════════════════════════════════════════════════════════════════ */
+ AI CHAT INPUT
+ ═══════════════════════════════════════════════════════════════════ */
 
 .chat-input-row {
-  display: flex; gap: 6px;
-  padding: 8px 12px;
-  border-top: 1px solid var(--border);
+ display: flex; gap: 6px;
+ padding: 8px 12px;
+ border-top: 1px solid var(--border);
 }
 .chat-input {
-  flex: 1; padding: 8px 12px;
-  border-radius: 999px; border: 1px solid var(--border);
-  background: rgba(0,0,0,.3); color: var(--text);
-  font-size: .78rem; font-family: var(--font-b);
-  outline: none;
+ flex: 1; padding: 8px 12px;
+ border-radius: 999px; border: 1px solid var(--border);
+ background: rgba(0,0,0,.3); color: var(--text);
+ font-size: .78rem; font-family: var(--font-b);
+ outline: none;
 }
 .chat-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 8px var(--glow);
+ border-color: var(--accent);
+ box-shadow: 0 0 8px var(--glow);
 }
 .chat-input::placeholder { color: var(--text-muted); opacity: .6; }
 .light-theme .chat-input { background: rgba(0,0,0,.04); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LOGO TRACKER (3D perspective)
-   ═══════════════════════════════════════════════════════════════════ */
+ LOGO TRACKER (3D perspective)
+ ═══════════════════════════════════════════════════════════════════ */
 
 .logo-wrap {
-  width: 100px; height: 54px; flex-shrink: 0; color: var(--accent);
-  transition: transform .08s ease-out;
-  transform-style: preserve-3d;
+ width: 100px; height: 54px; flex-shrink: 0; color: var(--accent);
+ transition: transform .08s ease-out;
+ transform-style: preserve-3d;
 }
 
 /* ─── Responsive ─── */
 @media (max-width: 600px) {
-  .header { flex-wrap: wrap; gap: 6px; }
-  .logo-wrap { width: 72px; height: 39px; }
-  .title-block h1 { font-size: 1rem; }
+ .header { flex-wrap: wrap; gap: 6px; }
+ .logo-wrap { width: 72px; height: 39px; }
+ .title-block h1 { font-size: 1rem; }
 }
 
-  
-    /* Step cards */
-    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
-    .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
-    .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-    .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
-    .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
-    .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+ 
+ /* Step cards */
+ .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+ .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+ .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+ .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
+ .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
+ .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
 
-    /* Code tabs */
-    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
-    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
-    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
-    .code-display.hidden { display: none; }
+ /* Code tabs */
+ .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+ .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+ .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+ .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+ .code-display.hidden { display: none; }
 
-    /* Demo player */
-    .demo-player { padding: 0.5rem; }
-    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
-    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
-    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
-    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
-    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
-    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+ /* Demo player */
+ .demo-player { padding: 0.5rem; }
+ .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+ .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+ .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+ .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+ .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+ .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 
-    /* Learn section */
-    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
-    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
-    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
-    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
-    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
-    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
-    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
-    .learn-badge { font-weight: 600; }
+ /* Learn section */
+ .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+ .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+ .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+ .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+ .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+ .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+ .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+ .learn-badge { font-weight: 600; }
 </style>
-  <link rel="stylesheet" href="style.css">
+ <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="splash" id="splash" onclick="dismissSplash()">
-    <div class="splash-inner">
-      <div class="splash-logo" id="splashLogo"></div>
-      <div class="splash-title">Workshop DIY</div>
-      <div class="splash-sub" data-i18n="subtitle">📟 Packet Radio</div><p class="purpose-text" data-i18n="purpose" style="font-size:.75rem;opacity:.8;margin-top:.3rem;max-width:600px"></p>
-      <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
-    </div>
-  </div>
+ <div class="splash" id="splash" onclick="dismissSplash()">
+ <div class="splash-inner">
+ <div class="splash-logo" id="splashLogo"></div>
+ <div class="splash-title">Workshop DIY</div>
+ <div class="splash-sub" data-i18n="subtitle">📟 Packet Radio</div><p class="purpose-text" data-i18n="purpose" style="font-size:.75rem;opacity:.8;margin-top:.3rem;max-width:600px"></p>
+ <div class="splash-hint" data-i18n="splashHint">tap to skip</div>
+ </div>
+ </div>
 
-  <div class="app">
-    <div class="deco-band top-band" aria-hidden="true"></div>
-    <div class="rows-container">
+ <div class="app">
+ <div class="deco-band top-band" aria-hidden="true"></div>
+ <div class="rows-container">
 
-      <div class="header">
-        <div class="bismillah" aria-hidden="true">
-          <span class="bism-ornament">&#x2726;</span>
-          بِسْمِ ٱللَّـهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
-          <span class="bism-ornament">&#x2726;</span>
-        </div>
-        <div class="title-block">
-          <div class="logo-wrap" id="logoWrap"></div>
-          <div>
-            <h1 data-i18n="title">Packet Radio</h1>
-            <div class="subtitle" data-i18n="subtitle">📟 Packet Radio</div>
-          </div>
-        </div>
-        <div class="header-right">
-          <div class="header-buttons">
-            <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
-            <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
-            <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
-          </div>
-          <div class="status-pill" id="statusPill">
-            <span class="status-dot" id="statusDot"></span>
-            <span id="statusText" data-i18n="disconnected">Disconnected</span>
-          </div>
-        </div>
-      </div>
+ <div class="header">
+ <div class="bismillah" aria-hidden="true">
+ <span class="bism-ornament">&#x2726;</span>
+ بِسْمِ ٱللَّـهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+ <span class="bism-ornament">&#x2726;</span>
+ </div>
+ <div class="title-block">
+ <div class="logo-wrap" id="logoWrap"></div>
+ <div>
+ <h1 data-i18n="title">Packet Radio</h1>
+ <div class="subtitle" data-i18n="subtitle">📟 Packet Radio</div>
+ </div>
+ </div>
+ <div class="header-right">
+ <div class="header-buttons">
+ <button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button>
+ <button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button>
+ <button id="logBtn" class="btn-icon-only" aria-label="Activity Log">📜</button>
+ </div>
+ <div class="status-pill" id="statusPill">
+ <span class="status-dot" id="statusDot"></span>
+ <span id="statusText" data-i18n="disconnected">Disconnected</span>
+ </div>
+ </div>
+ </div>
 
-      <div class="card" id="mainCard">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">📟</span> <span data-i18n="mainSection">Packet Radio</span></div>
-            <div class="card-subtitle"><span data-i18n="mainDesc">Packet Radio simulation</span> <span class="version-tag">v1.0</span></div>
-          </div>
-        </div>
-      </div>
-<div class="sonify-panel" id="sonifyPanel" style="display:none;"></div>
-<div id="labRecorderPanel" style="display:none;margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.06);border:1px solid rgba(var(--accent-rgb,212,175,55),0.15);"><h3 data-i18n="labTitle" style="margin:0 0 0.5rem;">ð Lab Notebook</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.5rem;"><button class="btn-sm" id="labGenBtn" data-i18n="labGenerate" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">ð Lab Report</button><button class="btn-sm" id="labExpBtn" data-i18n="labExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export Report</button></div><pre id="labReportBox" style="display:none;max-height:200px;overflow:auto;padding:0.6rem;border-radius:8px;background:var(--bg,#000);color:var(--accent,#33ff33);font-size:0.72rem;white-space:pre-wrap;border:1px solid var(--border,#222);margin-bottom:0.8rem;"></pre><h3 data-i18n="recorderTitle" style="margin:0.8rem 0 0.4rem;">âº Data Recorder</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;margin-bottom:0.4rem;"><button class="btn-sm" id="recStartBtn" data-i18n="recorderStart" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">âº Record</button><button class="btn-sm" id="recClearBtn" data-i18n="recorderClear" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Clear</button><button class="btn-sm" id="recExpBtn" data-i18n="recorderExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export CSV</button><span id="recStatus" style="font-size:0.75rem;opacity:0.7;"></span></div><canvas id="recCanvas" width="200" height="80" style="width:100%;max-width:200px;border-radius:8px;background:#0a0a1a;border:1px solid var(--border,#222);"></canvas></div>
-
+ <div class="card" id="mainCard">
+ <div class="card-header">
+ <div>
+ <div class="card-title"><span class="icon">📟</span> <span data-i18n="mainSection">Packet Radio</span></div>
+ <div class="card-subtitle"><span data-i18n="mainDesc">Packet Radio simulation</span> <span class="version-tag">v1.0</span></div>
+ </div>
+ </div>
+ </div>
 <details class="collapsible" open>
-        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
-        <div class="card">
-          <div class="learn-grid">
-            <div class="learn-item">
-              <div class="learn-icon">📻</div>
-              <div class="learn-title" data-i18n="learn1Title">Radio Bands</div>
-              <div class="learn-desc" data-i18n="learn1Desc">How different frequencies carry different signals</div>
-              <div class="learn-tag" data-i18n="learn1Tag">Radio</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">🔤</div>
-              <div class="learn-title" data-i18n="learn2Title">Digital Modes</div>
-              <div class="learn-desc" data-i18n="learn2Desc">How computers encode messages into radio signals</div>
-              <div class="learn-tag" data-i18n="learn2Tag">Digital</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">🌍</div>
-              <div class="learn-title" data-i18n="learn3Title">Propagation</div>
-              <div class="learn-desc" data-i18n="learn3Desc">How radio waves bounce off the atmosphere to travel far</div>
-              <div class="learn-tag" data-i18n="learn3Tag">Physics</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">📝</div>
-              <div class="learn-title" data-i18n="learn4Title">QSO Logging</div>
-              <div class="learn-desc" data-i18n="learn4Desc">How ham operators record contacts around the world</div>
-              <div class="learn-tag" data-i18n="learn4Tag">Communication</div>
-            </div>
-          </div>
-          <div class="learn-meta">
-            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Intermediate 🟡</span>
-            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">20 min ⏱</span>
-            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">12+ 🧒</span>
-          </div>
-        </div>
-      </details>
+ <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+ <div class="card">
+ <div class="learn-grid">
+ <div class="learn-item">
+ <div class="learn-icon">📻</div>
+ <div class="learn-title" data-i18n="learn1Title">Radio Bands</div>
+ <div class="learn-desc" data-i18n="learn1Desc">How different frequencies carry different signals</div>
+ <div class="learn-tag" data-i18n="learn1Tag">Radio</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">🔤</div>
+ <div class="learn-title" data-i18n="learn2Title">Digital Modes</div>
+ <div class="learn-desc" data-i18n="learn2Desc">How computers encode messages into radio signals</div>
+ <div class="learn-tag" data-i18n="learn2Tag">Digital</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">🌍</div>
+ <div class="learn-title" data-i18n="learn3Title">Propagation</div>
+ <div class="learn-desc" data-i18n="learn3Desc">How radio waves bounce off the atmosphere to travel far</div>
+ <div class="learn-tag" data-i18n="learn3Tag">Physics</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">📝</div>
+ <div class="learn-title" data-i18n="learn4Title">QSO Logging</div>
+ <div class="learn-desc" data-i18n="learn4Desc">How ham operators record contacts around the world</div>
+ <div class="learn-tag" data-i18n="learn4Tag">Communication</div>
+ </div>
+ </div>
+ <div class="learn-meta">
+ <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Intermediate 🟡</span>
+ <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">20 min ⏱</span>
+ <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">12+ 🧒</span>
+ </div>
+ </div>
+ </details>
 
+ 
+ <details class="collapsible">
+ <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+ <div class="card">
+ <div class="demo-player">
+ <div class="demo-step-display">
+ <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+ <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+ </div>
+ <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+ <div class="demo-controls">
+ <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+ <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+ <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+ </div>
+ </div>
+ </div>
+ </details>
 
-      
-      <details class="collapsible">
-        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
-        <div class="card">
-          <div class="demo-player">
-            <div class="demo-step-display">
-              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
-              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
-            </div>
-            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
-            <div class="demo-controls">
-              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
-              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
-              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
-            </div>
-          </div>
-        </div>
-      </details>
-
-      <details class="collapsible">
-        <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
-        <div class="card">
+ <details class="collapsible">
+ <summary><span class="icon">📚</span> <span data-i18n="sectionA">Theory</span></summary>
+ <div class="card">
 <h3 data-i18n="theoryTitle">Packet Radio Terminal Theory</h3>
 <p data-i18n="theoryDesc">AX.25 packet radio terminal with connect, send, and receive simulation.</p>
 </div>
-      </details>
+ </details>
 
-      <details class="collapsible">
-        <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Controls</span></summary>
-        <div class="card"><div class="control-section">
+ <details class="collapsible">
+ <summary><span class="icon">🎬</span> <span data-i18n="sectionB">Controls</span></summary>
+ <div class="card"><div class="control-section">
 <label class="sidebar-label" data-i18n="inputLabel">Message</label>
 <input type="text" id="msgInput" class="sidebar-select" placeholder="Type message..." style="font-family:monospace">
 <div style="margin-top:10px;display:flex;gap:8px">
@@ -1382,166 +1378,151 @@ body.log-open .app {
 <button id="startBtn" class="btn-sm" style="flex:1"><span data-i18n="start">Connect</span></button>
 <button id="stopBtn" class="btn-sm" style="flex:1"><span data-i18n="stop">Disconnect</span></button>
 </div></div></div>
-      </details>
+ </details>
 
-      <details class="collapsible" open>
-        <summary><span class="icon">📡</span> <span data-i18n="sectionC">Simulation</span></summary>
-        <div class="card">
+ <details class="collapsible" open>
+ <summary><span class="icon">📡</span> <span data-i18n="sectionC">Simulation</span></summary>
+ <div class="card">
 <div id="termOutput" style="height:250px;overflow-y:auto;font-family:monospace;font-size:.85rem;color:var(--accent);background:#000;padding:8px;border-radius:8px;white-space:pre-wrap"></div>
 <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:.8rem;color:var(--text-muted)">
 <span id="connStatus" data-i18n="disconnected">Disconnected</span><span id="pktCount">0 packets</span>
 </div></div>
-      </details>
+ </details>
 
-      <details class="collapsible">
-        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
-        <div class="card">
-          <div class="code-tabs" id="codeTabs">
-            <button class="code-tab active" data-codetarget="python">Python</button>
-            <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
-          </div>
-            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
-            <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
-        <div class="code-inline" id="inlineCode"><h4 data-i18n="codeTitle">Starter Code</h4><p class="code-lang" data-i18n="codeLang">Code</p><pre class="code-block"><code data-i18n="codeSnippet">// Loading...</code></pre><p class="code-explain" data-i18n="codeExplain">Explanation loading...</p></div></div>
-      </details>
+ <details class="collapsible">
+ <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+ <div class="card">
+ <div class="code-tabs" id="codeTabs">
+ <button class="code-tab active" data-codetarget="python">Python</button>
+ <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
+ </div>
+ <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+ <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
+ <div class="code-inline" id="inlineCode"><h4 data-i18n="codeTitle">Starter Code</h4><p class="code-lang" data-i18n="codeLang">Code</p><pre class="code-block"><code data-i18n="codeSnippet">// Loading...</code></pre><p class="code-explain" data-i18n="codeExplain">Explanation loading...</p></div></div>
+ </details>
 
+ </div>
 
-    </div>
+ <footer class="app-footer">
+ <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
+ <span class="hijri-date" id="hijriDate"></span>
+ </footer>
+ <div class="deco-band bottom-band" aria-hidden="true"></div>
+ </div>
 
-    <footer class="app-footer">
-      <span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span>
-      <span class="hijri-date" id="hijriDate"></span>
-    </footer>
-    <div class="deco-band bottom-band" aria-hidden="true"></div>
-  </div>
+ <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+ <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
 
-  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
-  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
-
-  <div class="sidebar-overlay" id="helpOverlay"></div>
-  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="help">❓ Help</span>
-      <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
-    </div>
-    <div class="help-tabs">
-      <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
-      <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
-      <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button><button class="help-tab" data-tab="quiz" data-i18n="quizTab">Quiz</button>
-    </div>
-    <div class="sidebar-body">
-      <div class="help-content active" id="helpFaq">
-                <details class="help-item"><summary data-i18n="faq_q1">What does this app do?</summary><p data-i18n="faq_a1">It simulates ham radio! 🔬 You get to experiment with radio signals in a safe sandbox.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">How does it work?</summary><p data-i18n="faq_a2">The simulation runs in your browser. It models real radio signals so you can see what happens step by step.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">What should I try first?</summary><p data-i18n="faq_a3">Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">What's the real science?</summary><p data-i18n="faq_a4">This is real amateur radio communication! The same principles are used by professionals in the field. 🧪</p></details>
-        <details class="help-item"><summary data-i18n="faq_q5">Can I break it?</summary><p data-i18n="faq_a5">Try the Lab section! Push the parameters to extremes and see what happens. That's how scientists discover new things! 💡</p></details>
-        <details class="help-item"><summary data-i18n="faq_q6">What hardware do I need?</summary><p data-i18n="faq_a6">For the real version, you'll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!</p></details>
-        <details class="help-item"><summary data-i18n="faq_q7">Is it safe to use?</summary><p data-i18n="faq_a7">Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q8">What should I try next?</summary><p data-i18n="faq_a8">Try Ham Ft8 Station and Ham Aprs Tracker! Each teaches something different. 🚀</p></details>
-      </div>
-      <div class="help-content" id="helpGuide"><h3 data-i18n="guideTitle">What Am I Looking At?</h3><div class="guide-item"><p data-i18n="guideCanvas">The main area shows a live visualization.</p></div><div class="guide-item"><p data-i18n="guideControls">The buttons control the simulation.</p></div><div class="guide-item"><p data-i18n="guideSections">Below the main card, sections show detailed data.</p></div><div class="guide-item"><p data-i18n="guideStatus">The colored dot shows connection status.</p><div class="guide-item" id="theoryBlock"><h3 data-i18n="theoryTitle">📖 Theory & Background</h3><p data-i18n="theory" style="line-height:1.6;font-size:0.85rem;">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="realworldTitle">Real-World Stories</h4><p data-i18n="realworld1"></p><p data-i18n="realworld2"></p><p data-i18n="realworld3"></p></div><div class="wiki-entry"><h4 data-i18n="experimentTitle">Experiments</h4><h5 data-i18n="experiment_1_title"></h5><p data-i18n="experiment_1"></p><h5 data-i18n="experiment_2_title"></h5><p data-i18n="experiment_2"></p><h5 data-i18n="experiment_3_title"></h5><p data-i18n="experiment_3"></p></div><div class="guide-item" id="shortcutsBlock"><h3 data-i18n="shortcutsTitle">⌨️ Keyboard Shortcuts</h3><p data-i18n="shortcutsInfo" style="font-size:0.85rem;">? = Help, Esc = Close, S = Start, R = Reset, 1-9 = Tabs</p></div><div class="guide-item" id="achieveBlock"><h3 data-i18n="achieveTitle">🏆 Achievements</h3><div id="achievementBadges" style="font-size:1.5rem;margin:0.5rem 0;"></div><p data-i18n="achieveExplorer" style="font-size:0.8rem;margin:0.2rem 0;">🗺️ Explorer</p><p data-i18n="achieveScientist" style="font-size:0.8rem;margin:0.2rem 0;">🔬 Scientist</p><p data-i18n="achieveExperimenter" style="font-size:0.8rem;margin:0.2rem 0;">⚗️ Experimenter</p></div></div></div><div class="help-content" id="helpHowto">
-        <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Open Section A to learn the theory.</p></div>
-        <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Configure controls in Section B.</p></div>
-        <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Start the simulation in Section C.</p></div>
-        <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Watch the Activity Log for decoded data.</p></div>
-      </div>
-      <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_concept_title">🔬 Topic</h3><p data-i18n="wiki_concept">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_howworks_title">⚙️ Topic</h3><p data-i18n="wiki_howworks">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_realworld_title">🌍 Topic</h3><p data-i18n="wiki_realworld">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_safety_title">🛡️ Topic</h3><p data-i18n="wiki_safety">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="proTipTitle">Pro Tips</h4><p data-i18n="proTip1"></p><p data-i18n="proTip2"></p></div><div class="wiki-entry"><h4 data-i18n="funFactTitle">Did You Know?</h4><p data-i18n="funFact"></p></div><div class="wiki-entry"><h4 data-i18n="mistakeTitle">Common Mistakes</h4><p data-i18n="mistake1"></p><p data-i18n="mistake2"></p><p data-i18n="mistake3"></p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual: EN/FR/AR with RTL.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_log_title">📜 Activity Log</h3><p data-i18n="wiki_log">Timestamped, color-coded log.</p></div>
-        <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">Local-first. No data sent anywhere.</p></div>
-      </div>
-    </div>
-    <div class="help-content" id="helpKids"><h3 data-i18n="kidTitle">For Young Explorers</h3><div class="kids-item"><p data-i18n="kidIntro">This app shows you how it works by letting you play.</p></div><div class="kids-item"><h4>Is it safe?</h4><p data-i18n="kidSafe">Completely safe!</p></div><div class="kids-item"><h4>Try this first!</h4><p data-i18n="kidTry">Press Start and watch.</p></div><div class="kids-item"><h4>For parents & teachers</h4><p data-i18n="kidParent">Suitable for STEM education.</p></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="wiki-entry" id="relatedBlock"><h3 data-i18n="relatedTitle">🔗 Related Apps</h3>
-<div class="related-app"><a id="related1Link" href="#"><strong data-i18n="related1_name">App</strong></a><p data-i18n="related1_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
-<div class="related-app"><a id="related2Link" href="#"><strong data-i18n="related2_name">App</strong></a><p data-i18n="related2_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
+ <div class="sidebar-overlay" id="helpOverlay"></div>
+ <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true">
+ <div class="sidebar-header">
+ <span class="sidebar-title" data-i18n="help">❓ Help</span>
+ <button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+ </div>
+ <div class="help-tabs">
+ <button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button>
+ <button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button>
+ <button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button><button class="help-tab" data-tab="quiz" data-i18n="quizTab">Quiz</button><button class="help-tab" data-tab="tools" data-i18n="toolsTab">Tools</button>
+ </div>
+ <div class="sidebar-body">
+ <div class="help-content active" id="helpFaq">
+ <details class="help-item"><summary data-i18n="faq_q1">What does this app do?</summary><p data-i18n="faq_a1">It simulates ham radio! 🔬 You get to experiment with radio signals in a safe sandbox.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q2">How does it work?</summary><p data-i18n="faq_a2">The simulation runs in your browser. It models real radio signals so you can see what happens step by step.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q3">What should I try first?</summary><p data-i18n="faq_a3">Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q4">What's the real science?</summary><p data-i18n="faq_a4">This is real amateur radio communication! The same principles are used by professionals in the field. 🧪</p></details>
+ <details class="help-item"><summary data-i18n="faq_q5">Can I break it?</summary><p data-i18n="faq_a5">Try the Lab section! Push the parameters to extremes and see what happens. That's how scientists discover new things! 💡</p></details>
+ <details class="help-item"><summary data-i18n="faq_q6">What hardware do I need?</summary><p data-i18n="faq_a6">For the real version, you'll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!</p></details>
+ <details class="help-item"><summary data-i18n="faq_q7">Is it safe to use?</summary><p data-i18n="faq_a7">Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q8">What should I try next?</summary><p data-i18n="faq_a8">Try Ham Ft8 Station and Ham Aprs Tracker! Each teaches something different. 🚀</p></details>
+ </div>
+ <div class="help-content" id="helpGuide"><h3 data-i18n="guideTitle">What Am I Looking At?</h3><div class="guide-item"><p data-i18n="guideCanvas">The main area shows a live visualization.</p></div><div class="guide-item"><p data-i18n="guideControls">The buttons control the simulation.</p></div><div class="guide-item"><p data-i18n="guideSections">Below the main card, sections show detailed data.</p></div><div class="guide-item"><p data-i18n="guideStatus">The colored dot shows connection status.</p><div class="guide-item" id="theoryBlock"><h3 data-i18n="theoryTitle">📖 Theory & Background</h3><p data-i18n="theory" style="line-height:1.6;font-size:0.85rem;">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="realworldTitle">Real-World Stories</h4><p data-i18n="realworld1"></p><p data-i18n="realworld2"></p><p data-i18n="realworld3"></p></div><div class="wiki-entry"><h4 data-i18n="experimentTitle">Experiments</h4><h5 data-i18n="experiment_1_title"></h5><p data-i18n="experiment_1"></p><h5 data-i18n="experiment_2_title"></h5><p data-i18n="experiment_2"></p><h5 data-i18n="experiment_3_title"></h5><p data-i18n="experiment_3"></p></div><div class="guide-item" id="shortcutsBlock"><h3 data-i18n="shortcutsTitle">⌨️ Keyboard Shortcuts</h3><p data-i18n="shortcutsInfo" style="font-size:0.85rem;">? = Help, Esc = Close, S = Start, R = Reset, 1-9 = Tabs</p></div><div class="guide-item" id="achieveBlock"><h3 data-i18n="achieveTitle">🏆 Achievements</h3><div id="achievementBadges" style="font-size:1.5rem;margin:0.5rem 0;"></div><p data-i18n="achieveExplorer" style="font-size:0.8rem;margin:0.2rem 0;">🗺️ Explorer</p><p data-i18n="achieveScientist" style="font-size:0.8rem;margin:0.2rem 0;">🔬 Scientist</p><p data-i18n="achieveExperimenter" style="font-size:0.8rem;margin:0.2rem 0;">⚗️ Experimenter</p></div></div></div><div class="help-content" id="helpHowto">
+ <div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Open Section A to learn the theory.</p></div>
+ <div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Configure controls in Section B.</p></div>
+ <div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Start the simulation in Section C.</p></div>
+ <div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Watch the Activity Log for decoded data.</p></div>
+ </div>
+ <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_concept_title">🔬 Topic</h3><p data-i18n="wiki_concept">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_howworks_title">⚙️ Topic</h3><p data-i18n="wiki_howworks">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_realworld_title">🌍 Topic</h3><p data-i18n="wiki_realworld">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_safety_title">🛡️ Topic</h3><p data-i18n="wiki_safety">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="proTipTitle">Pro Tips</h4><p data-i18n="proTip1"></p><p data-i18n="proTip2"></p></div><div class="wiki-entry"><h4 data-i18n="funFactTitle">Did You Know?</h4><p data-i18n="funFact"></p></div><div class="wiki-entry"><h4 data-i18n="mistakeTitle">Common Mistakes</h4><p data-i18n="mistake1"></p><p data-i18n="mistake2"></p><p data-i18n="mistake3"></p></div>
+ <div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div>
+ <div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual: EN/FR/AR with RTL.</p></div>
+ <div class="wiki-entry"><h3 data-i18n="wiki_log_title">📜 Activity Log</h3><p data-i18n="wiki_log">Timestamped, color-coded log.</p></div>
+ <div class="wiki-entry"><h3 data-i18n="wiki_privacy_title">🔒 Privacy</h3><p data-i18n="wiki_privacy">Local-first. No data sent anywhere.</p></div>
+ </div>
+ </div>
+ <div class="help-content" id="helpTools"><div class="wiki-entry"><h3 data-i18n="toolsTitle">Toolbox</h3><div id="toolsDailySlot"></div><div id="toolsCompareSlot"></div><div id="toolsLabSlot"></div><div id="toolsPeerSlot"></div><div id="toolsHeatmapSlot"></div><div id="toolsDiffSlot"></div></div></div><div class="help-content" id="helpKids"><h3 data-i18n="kidTitle">For Young Explorers</h3><div class="kids-item"><p data-i18n="kidIntro">This app shows you how it works by letting you play.</p></div><div class="kids-item"><h4>Is it safe?</h4><p data-i18n="kidSafe">Completely safe!</p></div><div class="kids-item"><h4>Try this first!</h4><p data-i18n="kidTry">Press Start and watch.</p></div><div class="kids-item"><h4>For parents & teachers</h4><p data-i18n="kidParent">Suitable for STEM education.</p></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="related-app"><a id="related2Link" href="#"><strong data-i18n="related2_name">App</strong></a><p data-i18n="related2_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
 <div class="related-app"><a id="related3Link" href="#"><strong data-i18n="related3_name">App</strong></a><p data-i18n="related3_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div></div>
-<div class="wiki-entry" id="pathBlock"><h3 data-i18n="pathTitle">🛤️ Learning Path</h3>
-<p id="pathPrevP" style="margin:0.3rem 0;"><span style="opacity:0.6;">← Previous:</span> <a id="pathPrevLink" href="#" data-i18n="pathPrev_name">...</a></p>
-<p id="pathNextP" style="margin:0.3rem 0;"><span style="opacity:0.6;">Next →</span> <a id="pathNextLink" href="#" data-i18n="pathNext_name">...</a></p></div>
-<div style="display:none" id="spacedPanel"></div>
 <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span><button onclick="printWorksheet()" class="btn-sm" style="margin-left:0.5rem;" data-i18n="printBtn">🖨️ Print</button></div>
-  </aside>
+ </aside>
 
-  <div class="sidebar-overlay" id="settingsOverlay"></div>
-  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
-      <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
-    </div>
-    <div class="sidebar-body">
-      <div class="sidebar-group">
-        <label class="sidebar-label" data-i18n="language">Language</label>
-        <select id="langSelect" class="sidebar-select" aria-label="Language">
-          <option value="en" selected>🇬🇧 EN</option>
-          <option value="fr">🇫🇷 FR</option>
-          <option value="ar">🇩🇿 عربي</option>
-        </select>
-      </div>
-      <div class="sidebar-group">
-        <label class="sidebar-label" data-i18n="theme">Theme</label>
-        <select id="themeSelect" class="sidebar-select" aria-label="Theme">
-          <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
-          <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
-          <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
-          <option value="riad" data-i18n-opt="t_riad">Riad</option>
-          <option value="medina" data-i18n-opt="t_medina">Medina</option>
-          <option value="space" data-i18n-opt="t_space">Space</option>
-          <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
-          <option value="robot" data-i18n-opt="t_robot">Robot</option>
-        </select>
-      </div>
-      <div class="sidebar-group">
-        <label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label>
-      </div>
-      <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
-      <div class="sidebar-group">
-        <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🪱</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
-        <div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div>
-      </div>
-      <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
-    </div>
-    <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
-  </aside>
+ <div class="sidebar-overlay" id="settingsOverlay"></div>
+ <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true">
+ <div class="sidebar-header">
+ <span class="sidebar-title" data-i18n="settings">⚙️ Settings</span>
+ <button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+ </div>
+ <div class="sidebar-body">
+ <div class="sidebar-group">
+ <label class="sidebar-label" data-i18n="language">Language</label>
+ <select id="langSelect" class="sidebar-select" aria-label="Language">
+ <option value="en" selected>🇬🇧 EN</option>
+ <option value="fr">🇫🇷 FR</option>
+ <option value="ar">🇩🇿 عربي</option>
+ </select>
+ </div>
+ <div class="sidebar-group">
+ <label class="sidebar-label" data-i18n="theme">Theme</label>
+ <select id="themeSelect" class="sidebar-select" aria-label="Theme">
+ <option value="mosque-gold" data-i18n-opt="t_mosque">Mosque</option>
+ <option value="zellige" data-i18n-opt="t_zellige">Zellige</option>
+ <option value="andalus" data-i18n-opt="t_andalus">Andalus</option>
+ <option value="riad" data-i18n-opt="t_riad">Riad</option>
+ <option value="medina" data-i18n-opt="t_medina">Medina</option>
+ <option value="space" data-i18n-opt="t_space">Space</option>
+ <option value="jungle" data-i18n-opt="t_jungle">Jungle</option>
+ <option value="robot" data-i18n-opt="t_robot">Robot</option>
+ </select>
+ </div>
+ <div class="sidebar-group">
+ <label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl" /><span data-i18n="soundEffects">🔊 Sound effects</span></label>
+ </div>
+ <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎤</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+ <div class="sidebar-group">
+ <button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🪱</span> <span data-i18n="breathingGuide">Breathing guide</span></button>
+ <div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">سبحان الله</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div>
+ </div>
+ <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">🎵</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+ </div>
+ <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div>
+ </aside>
 
-  <aside class="sidebar" id="logPanel" aria-label="Activity Log">
-    <div class="resize-handle" id="logResizeHandle"></div>
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
-      <div class="log-controls">
-        <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
-        <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
-        <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
-        <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
-      </div>
-    </div>
-    <div class="log-filters" id="logFilters">
-      <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
-      <button class="log-filter" data-filter="info">Info</button>
-      <button class="log-filter" data-filter="success">✓</button>
-      <button class="log-filter" data-filter="error">✗</button>
-      <button class="log-filter" data-filter="tx">TX</button>
-      <button class="log-filter" data-filter="rx">RX</button>
-    </div>
-    <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
-    <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
-  </aside>
+ <aside class="sidebar" id="logPanel" aria-label="Activity Log">
+ <div class="resize-handle" id="logResizeHandle"></div>
+ <div class="sidebar-header">
+ <span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span>
+ <div class="log-controls">
+ <button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button>
+ <button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button>
+ <button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button>
+ <button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button>
+ </div>
+ </div>
+ <div class="log-filters" id="logFilters">
+ <button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button>
+ <button class="log-filter" data-filter="info">Info</button>
+ <button class="log-filter" data-filter="success">✓</button>
+ <button class="log-filter" data-filter="error">✗</button>
+ <button class="log-filter" data-filter="tx">TX</button>
+ <button class="log-filter" data-filter="rx">RX</button>
+ </div>
+ <div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div>
+ <div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div>
+ </aside>
 
-  <div id="toastIndicator" class="toast-indicator">
-    <div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div>
-  </div>
+ <div id="toastIndicator" class="toast-indicator">
+ <div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div>
+ </div>
 
-  <div class="daily-challenge" id="dailyChallenge" style="display:none;margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.08);border:1px solid rgba(var(--accent-rgb,212,175,55),0.2);"></div><div class="mentor-overlay" id="mentorOverlay" style="display:none;"></div><button id="mentorTriggerBtn" class="btn-sm" style="margin:0.5rem 0.3rem;padding:0.4rem 0.8rem;border-radius:20px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.8rem;color:inherit;" data-i18n="mentorStart">🎓 Tutorial</button><div style="display:none" id="peerModePanel"></div><div style="display:none" id="activityHeatmap"></div>
+ 
 <script src="script.js"></script>
-<div class="tooltip-float" id="tooltipFloat" style="display:none;position:fixed;z-index:9999;background:#1a1a2e;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:250px;pointer-events:none;transition:opacity 0.2s"></div>
 
-
-
-
-
-<button class="voice-btn" id="voiceBtn" style="display:none" data-i18n="voiceTitle">🎤 Voice</button>
-<div class="voice-indicator" id="voiceIndicator" style="display:none;position:fixed;top:10px;right:10px;width:12px;height:12px;background:red;border-radius:50%;z-index:9999"></div>
-<button class="share-btn" id="shareBtn" data-i18n="shareBtn">📤 Share</button>
 </body>
 </html>

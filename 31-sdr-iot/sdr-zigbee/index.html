@@ -1,200 +1,189 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="mosque-gold">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>SDR Zigbee Sniffer — Workshop DIY</title>
-  <meta name="description" content="Zigbee sniffer. Decode Zigbee IoT device communications."/>
-  <meta name="author" content="Workshop-DIY — abourdim"/>
-  <meta property="og:title" content="SDR Zigbee Sniffer — Workshop DIY"/><meta property="og:type" content="website"/>
-  <link rel="manifest" href="manifest.json"/><meta name="theme-color" content="#08091a"/>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
-  <style>
-    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
-    .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
-    .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-    .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
-    .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
-    .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
-  
-    /* Code tabs */
-    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
-    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
-    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
-    .code-display.hidden { display: none; }
+ <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <title>SDR Zigbee Sniffer — Workshop DIY</title>
+ <meta name="description" content="Zigbee sniffer. Decode Zigbee IoT device communications."/>
+ <meta name="author" content="Workshop-DIY — abourdim"/>
+ <meta property="og:title" content="SDR Zigbee Sniffer — Workshop DIY"/><meta property="og:type" content="website"/>
+ <link rel="manifest" href="manifest.json"/><meta name="theme-color" content="#08091a"/>
+ <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+ <link rel="stylesheet" href="style.css"/>
+ <style>
+ .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+ .step-card { background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 10px; padding: 1rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+ .step-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+ .step-card .step-num { position: absolute; top: -10px; left: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--bg, #08091a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
+ .step-card .step-title, .step-card h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; margin-top: 0.5rem; }
+ .step-card .step-desc, .step-card p { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; margin: 0; }
+ 
+ /* Code tabs */
+ .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+ .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+ .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+ .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+ .code-display.hidden { display: none; }
 
-    /* Demo player */
-    .demo-player { padding: 0.5rem; }
-    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
-    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
-    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
-    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
-    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
-    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+ /* Demo player */
+ .demo-player { padding: 0.5rem; }
+ .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+ .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+ .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+ .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+ .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+ .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 
-    /* Learn section */
-    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
-    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
-    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
-    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
-    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
-    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
-    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
-    .learn-badge { font-weight: 600; }
+ /* Learn section */
+ .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+ .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+ .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+ .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+ .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+ .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+ .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+ .learn-badge { font-weight: 600; }
 </style>
 </head>
 <body>
-  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">🐝 Zigbee Sniffer — IoT Protocol Decoder</div><p class="purpose-text" data-i18n="purpose" style="font-size:.75rem;opacity:.8;margin-top:.3rem;max-width:600px"></p><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
-  <div class="app"><div class="deco-band top-band" aria-hidden="true"></div>
-    <div class="rows-container">
-      <div class="header">
-        <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
-        <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">SDR Zigbee Sniffer</h1><div class="subtitle" data-i18n="subtitle">🐝 Zigbee Sniffer — IoT Protocol Decoder</div></div></div>
-        <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
-      </div>
-      <div class="card" id="mainCard">
-        <div class="card-header"><div><div class="card-title"><span class="icon">🐝</span> <span data-i18n="mainSection">Zigbee Sniffer</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Decode Zigbee IoT device communications</span> <span class="version-tag">v1.0</span></div></div></div>
-        <canvas id="zigbeeCanvas" width="700" height="220" style="width:100%;border-radius:8px;background:#0a0a1a;"></canvas>
-        <canvas id="networkCanvas" width="700" height="150" style="width:100%;border-radius:8px;margin-top:4px;background:#0a0a1a;"></canvas>
-        <div class="control-section" style="margin-top:8px;">
-          <label data-i18n="channelLabel">Channel</label>
-          <select id="channelSelect" class="sidebar-select"><option value="11">Ch 11 (2405 MHz)</option><option value="15">Ch 15 (2425 MHz)</option><option value="20">Ch 20 (2450 MHz)</option><option value="25">Ch 25 (2475 MHz)</option></select>
-          <label data-i18n="filterLabel">Packet Filter</label>
-          <select id="filterSelect" class="sidebar-select"><option value="all">All</option><option value="beacon">Beacons</option><option value="data">Data</option><option value="cmd">Commands</option></select>
-          <div style="margin-top:8px;display:flex;gap:8px;">
-            <button class="btn-sm primary" id="startBtn" data-i18n="startSniff">▶ Start Sniff</button>
-            <button class="btn-sm" id="stopBtn" data-i18n="stopSniff">⏹ Stop</button>
-          </div>
-        </div>
-      </div>
-<div class="sonify-panel" id="sonifyPanel" style="display:none;"></div>
-<div id="labRecorderPanel" style="display:none;margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.06);border:1px solid rgba(var(--accent-rgb,212,175,55),0.15);"><h3 data-i18n="labTitle" style="margin:0 0 0.5rem;">ð Lab Notebook</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.5rem;"><button class="btn-sm" id="labGenBtn" data-i18n="labGenerate" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">ð Lab Report</button><button class="btn-sm" id="labExpBtn" data-i18n="labExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export Report</button></div><pre id="labReportBox" style="display:none;max-height:200px;overflow:auto;padding:0.6rem;border-radius:8px;background:var(--bg,#000);color:var(--accent,#33ff33);font-size:0.72rem;white-space:pre-wrap;border:1px solid var(--border,#222);margin-bottom:0.8rem;"></pre><h3 data-i18n="recorderTitle" style="margin:0.8rem 0 0.4rem;">âº Data Recorder</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;margin-bottom:0.4rem;"><button class="btn-sm" id="recStartBtn" data-i18n="recorderStart" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">âº Record</button><button class="btn-sm" id="recClearBtn" data-i18n="recorderClear" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Clear</button><button class="btn-sm" id="recExpBtn" data-i18n="recorderExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export CSV</button><span id="recStatus" style="font-size:0.75rem;opacity:0.7;"></span></div><canvas id="recCanvas" width="200" height="80" style="width:100%;max-width:200px;border-radius:8px;background:#0a0a1a;border:1px solid var(--border,#222);"></canvas></div>
-
+ <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">🐝 Zigbee Sniffer — IoT Protocol Decoder</div><p class="purpose-text" data-i18n="purpose" style="font-size:.75rem;opacity:.8;margin-top:.3rem;max-width:600px"></p><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+ <div class="app"><div class="deco-band top-band" aria-hidden="true"></div>
+ <div class="rows-container">
+ <div class="header">
+ <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span>بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<span class="bism-ornament">&#x2726;</span></div>
+ <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">SDR Zigbee Sniffer</h1><div class="subtitle" data-i18n="subtitle">🐝 Zigbee Sniffer — IoT Protocol Decoder</div></div></div>
+ <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">❓</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">⚙️</button><button id="logBtn" class="btn-icon-only" aria-label="Log">📜</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+ </div>
+ <div class="card" id="mainCard">
+ <div class="card-header"><div><div class="card-title"><span class="icon">🐝</span> <span data-i18n="mainSection">Zigbee Sniffer</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Decode Zigbee IoT device communications</span> <span class="version-tag">v1.0</span></div></div></div>
+ <canvas id="zigbeeCanvas" width="700" height="220" style="width:100%;border-radius:8px;background:#0a0a1a;"></canvas>
+ <canvas id="networkCanvas" width="700" height="150" style="width:100%;border-radius:8px;margin-top:4px;background:#0a0a1a;"></canvas>
+ <div class="control-section" style="margin-top:8px;">
+ <label data-i18n="channelLabel">Channel</label>
+ <select id="channelSelect" class="sidebar-select"><option value="11">Ch 11 (2405 MHz)</option><option value="15">Ch 15 (2425 MHz)</option><option value="20">Ch 20 (2450 MHz)</option><option value="25">Ch 25 (2475 MHz)</option></select>
+ <label data-i18n="filterLabel">Packet Filter</label>
+ <select id="filterSelect" class="sidebar-select"><option value="all">All</option><option value="beacon">Beacons</option><option value="data">Data</option><option value="cmd">Commands</option></select>
+ <div style="margin-top:8px;display:flex;gap:8px;">
+ <button class="btn-sm primary" id="startBtn" data-i18n="startSniff">▶ Start Sniff</button>
+ <button class="btn-sm" id="stopBtn" data-i18n="stopSniff">⏹ Stop</button>
+ </div>
+ </div>
+ </div>
 <details class="collapsible" open>
-        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
-        <div class="card">
-          <div class="learn-grid">
-            <div class="learn-item">
-              <div class="learn-icon">📡</div>
-              <div class="learn-title" data-i18n="learn1Title">SDR Basics</div>
-              <div class="learn-desc" data-i18n="learn1Desc">How software turns radio waves into digital data</div>
-              <div class="learn-tag" data-i18n="learn1Tag">SDR</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">📊</div>
-              <div class="learn-title" data-i18n="learn2Title">DSP Fundamentals</div>
-              <div class="learn-desc" data-i18n="learn2Desc">How math filters and transforms radio signals</div>
-              <div class="learn-tag" data-i18n="learn2Tag">DSP</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">🎵</div>
-              <div class="learn-title" data-i18n="learn3Title">Modulation</div>
-              <div class="learn-desc" data-i18n="learn3Desc">How information rides on radio carrier waves</div>
-              <div class="learn-tag" data-i18n="learn3Tag">Signals</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">🌊</div>
-              <div class="learn-title" data-i18n="learn4Title">Spectrum Analysis</div>
-              <div class="learn-desc" data-i18n="learn4Desc">How to read the waterfall and frequency displays</div>
-              <div class="learn-tag" data-i18n="learn4Tag">Analysis</div>
-            </div>
-          </div>
-          <div class="learn-meta">
-            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Advanced 🔴</span>
-            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">30 min ⏱</span>
-            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">14+ 🧒</span>
-          </div>
-        </div>
-      </details>
+ <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+ <div class="card">
+ <div class="learn-grid">
+ <div class="learn-item">
+ <div class="learn-icon">📡</div>
+ <div class="learn-title" data-i18n="learn1Title">SDR Basics</div>
+ <div class="learn-desc" data-i18n="learn1Desc">How software turns radio waves into digital data</div>
+ <div class="learn-tag" data-i18n="learn1Tag">SDR</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">📊</div>
+ <div class="learn-title" data-i18n="learn2Title">DSP Fundamentals</div>
+ <div class="learn-desc" data-i18n="learn2Desc">How math filters and transforms radio signals</div>
+ <div class="learn-tag" data-i18n="learn2Tag">DSP</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">🎵</div>
+ <div class="learn-title" data-i18n="learn3Title">Modulation</div>
+ <div class="learn-desc" data-i18n="learn3Desc">How information rides on radio carrier waves</div>
+ <div class="learn-tag" data-i18n="learn3Tag">Signals</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">🌊</div>
+ <div class="learn-title" data-i18n="learn4Title">Spectrum Analysis</div>
+ <div class="learn-desc" data-i18n="learn4Desc">How to read the waterfall and frequency displays</div>
+ <div class="learn-tag" data-i18n="learn4Tag">Analysis</div>
+ </div>
+ </div>
+ <div class="learn-meta">
+ <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Advanced 🔴</span>
+ <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">30 min ⏱</span>
+ <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">14+ 🧒</span>
+ </div>
+ </div>
+ </details>
 
-      
-      <details class="collapsible">
-        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
-        <div class="card">
-          <div class="demo-player">
-            <div class="demo-step-display">
-              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
-              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
-            </div>
-            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
-            <div class="demo-controls">
-              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
-              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
-              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
-            </div>
-          </div>
-        </div>
-      </details>
+ 
+ <details class="collapsible">
+ <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+ <div class="card">
+ <div class="demo-player">
+ <div class="demo-step-display">
+ <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+ <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+ </div>
+ <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+ <div class="demo-controls">
+ <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+ <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+ <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+ </div>
+ </div>
+ </div>
+ </details>
 
-      <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionA">Network Analysis</span></summary>
-        <div class="card"><div style="font-family:monospace;font-size:13px;line-height:1.8;">
-          <div><span data-i18n="pktCount">Packets:</span> <strong id="pktCountVal">0</strong></div>
-          <div><span data-i18n="panId">PAN ID:</span> <strong id="panIdVal">--</strong></div>
-          <div><span data-i18n="nodeCount">Nodes:</span> <strong id="nodeCountVal">0</strong></div>
-          <div><span data-i18n="channelAct">Activity:</span> <strong id="channelActVal">-- %</strong></div>
-        </div></div>
-      </details>
-      <details class="collapsible"><summary><span class="icon">📖</span> <span data-i18n="sectionB">Zigbee Theory</span></summary>
-        <div class="card"><p data-i18n="theoryIntro">Zigbee is a low-power mesh protocol:</p>
-          <ul style="margin:8px 0;padding-left:20px;line-height:1.8;">
-            <li data-i18n="theory1">IEEE 802.15.4 at 2.4 GHz</li>
-            <li data-i18n="theory2">16 channels (11-26)</li>
-            <li data-i18n="theory3">Mesh topology with coordinator/routers</li>
-            <li data-i18n="theory4">250 kbps with DSSS</li>
-            <li data-i18n="theory5">AES-128 encryption</li>
-          </ul></div>
-      </details>
+ <details class="collapsible"><summary><span class="icon">📊</span> <span data-i18n="sectionA">Network Analysis</span></summary>
+ <div class="card"><div style="font-family:monospace;font-size:13px;line-height:1.8;">
+ <div><span data-i18n="pktCount">Packets:</span> <strong id="pktCountVal">0</strong></div>
+ <div><span data-i18n="panId">PAN ID:</span> <strong id="panIdVal">--</strong></div>
+ <div><span data-i18n="nodeCount">Nodes:</span> <strong id="nodeCountVal">0</strong></div>
+ <div><span data-i18n="channelAct">Activity:</span> <strong id="channelActVal">-- %</strong></div>
+ </div></div>
+ </details>
+ <details class="collapsible"><summary><span class="icon">📖</span> <span data-i18n="sectionB">Zigbee Theory</span></summary>
+ <div class="card"><p data-i18n="theoryIntro">Zigbee is a low-power mesh protocol:</p>
+ <ul style="margin:8px 0;padding-left:20px;line-height:1.8;">
+ <li data-i18n="theory1">IEEE 802.15.4 at 2.4 GHz</li>
+ <li data-i18n="theory2">16 channels (11-26)</li>
+ <li data-i18n="theory3">Mesh topology with coordinator/routers</li>
+ <li data-i18n="theory4">250 kbps with DSSS</li>
+ <li data-i18n="theory5">AES-128 encryption</li>
+ </ul></div>
+ </details>
 
-      <details class="collapsible">
-        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
-        <div class="card">
-          <div class="code-tabs" id="codeTabs">
-            <button class="code-tab active" data-codetarget="python">Python</button>
-            <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
-          </div>
-            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
-            <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
-        <div class="code-inline" id="inlineCode"><h4 data-i18n="codeTitle">Starter Code</h4><p class="code-lang" data-i18n="codeLang">Code</p><pre class="code-block"><code data-i18n="codeSnippet">// Loading...</code></pre><p class="code-explain" data-i18n="codeExplain">Explanation loading...</p></div></div>
-      </details>
+ <details class="collapsible">
+ <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+ <div class="card">
+ <div class="code-tabs" id="codeTabs">
+ <button class="code-tab active" data-codetarget="python">Python</button>
+ <button class="code-tab" data-codetarget="gnuradio">GNURadio</button>
+ </div>
+ <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+ <div class="code-display hidden" id="code-gnuradio"><p>📄 <a href="code/gnuradio/main.grc" target="_blank">code/gnuradio/main.grc</a></p><button class="btn-sm" onclick="window.open('code/gnuradio/main.grc')">⬇ Download</button></div>
+ <div class="code-inline" id="inlineCode"><h4 data-i18n="codeTitle">Starter Code</h4><p class="code-lang" data-i18n="codeLang">Code</p><pre class="code-block"><code data-i18n="codeSnippet">// Loading...</code></pre><p class="code-explain" data-i18n="codeExplain">Explanation loading...</p></div></div>
+ </details>
 
-    </div>
-    <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
-    <div class="deco-band bottom-band" aria-hidden="true"></div>
-  </div>
-  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
-  <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
-  <div class="sidebar-overlay" id="helpOverlay"></div>
-  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button><button class="help-tab" data-tab="quiz" data-i18n="quizTab">Quiz</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq">        <details class="help-item"><summary data-i18n="faq_q1">What does this app do?</summary><p data-i18n="faq_a1">It simulates software-defined radio! 🔬 You get to experiment with radio signals in a safe sandbox.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">How does it work?</summary><p data-i18n="faq_a2">The simulation runs in your browser. It models real radio signals so you can see what happens step by step.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">What should I try first?</summary><p data-i18n="faq_a3">Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">What's the real science?</summary><p data-i18n="faq_a4">This is real digital signal processing! The same principles are used by professionals in the field. 🧪</p></details>
-        <details class="help-item"><summary data-i18n="faq_q5">Can I break it?</summary><p data-i18n="faq_a5">Try the Lab section! Push the parameters to extremes and see what happens. That's how scientists discover new things! 💡</p></details>
-        <details class="help-item"><summary data-i18n="faq_q6">What hardware do I need?</summary><p data-i18n="faq_a6">For the real version, you'll need RTL-SDR. Check the 📦 Device Code section for ready-to-use firmware!</p></details>
-        <details class="help-item"><summary data-i18n="faq_q7">Is it safe to use?</summary><p data-i18n="faq_a7">Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q8">What should I try next?</summary><p data-i18n="faq_a8">Try Sdr Smart Meter and Sdr Tpms! Each teaches something different. 🚀</p></details></div><div class="help-content" id="helpGuide"><h3 data-i18n="guideTitle">What Am I Looking At?</h3><div class="guide-item"><p data-i18n="guideCanvas">The main area shows a live visualization.</p></div><div class="guide-item"><p data-i18n="guideControls">The buttons control the simulation.</p></div><div class="guide-item"><p data-i18n="guideSections">Below the main card, sections show detailed data.</p></div><div class="guide-item"><p data-i18n="guideStatus">The colored dot shows connection status.</p><div class="guide-item" id="theoryBlock"><h3 data-i18n="theoryTitle">📖 Theory & Background</h3><p data-i18n="theory" style="line-height:1.6;font-size:0.85rem;">Loading...</p></div><div class="guide-item" id="shortcutsBlock"><h3 data-i18n="shortcutsTitle">⌨️ Keyboard Shortcuts</h3><p data-i18n="shortcutsInfo" style="font-size:0.85rem;">? = Help, Esc = Close, S = Start, R = Reset, 1-9 = Tabs</p></div><div class="guide-item" id="achieveBlock"><h3 data-i18n="achieveTitle">🏆 Achievements</h3><div id="achievementBadges" style="font-size:1.5rem;margin:0.5rem 0;"></div><p data-i18n="achieveExplorer" style="font-size:0.8rem;margin:0.2rem 0;">🗺️ Explorer</p><p data-i18n="achieveScientist" style="font-size:0.8rem;margin:0.2rem 0;">🔬 Scientist</p><p data-i18n="achieveExperimenter" style="font-size:0.8rem;margin:0.2rem 0;">⚗️ Experimenter</p></div></div></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select channel.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Choose filter.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Start sniffing.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Analyze network.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_concept_title">🔬 Topic</h3><p data-i18n="wiki_concept">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_howworks_title">⚙️ Topic</h3><p data-i18n="wiki_howworks">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_realworld_title">🌍 Topic</h3><p data-i18n="wiki_realworld">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_safety_title">🛡️ Topic</h3><p data-i18n="wiki_safety">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="proTipTitle">Pro Tips</h4><p data-i18n="proTip1"></p><p data-i18n="proTip2"></p></div><div class="wiki-entry"><h4 data-i18n="funFactTitle">Did You Know?</h4><p data-i18n="funFact"></p></div><div class="wiki-entry"><h4 data-i18n="mistakeTitle">Common Mistakes</h4><p data-i18n="mistake1"></p><p data-i18n="mistake2"></p><p data-i18n="mistake3"></p></div><div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual with RTL.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_history_title">📜 History</h3><p data-i18n="wiki_history">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_math_title">📐 Mathematics</h3><p data-i18n="wiki_math">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_advanced_title">🔬 Advanced</h3><p data-i18n="wiki_advanced">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_compare_title">⚖️ Comparing</h3><p data-i18n="wiki_compare">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_debug_title">🔧 Troubleshooting</h3><p data-i18n="wiki_debug">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_ethics_title">⚖️ Ethics</h3><p data-i18n="wiki_ethics">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="realworldTitle">Real-World Stories</h4><p data-i18n="realworld1"></p><p data-i18n="realworld2"></p><p data-i18n="realworld3"></p></div><div class="wiki-entry"><h4 data-i18n="experimentTitle">Experiments</h4><h5 data-i18n="experiment_1_title"></h5><p data-i18n="experiment_1"></p><h5 data-i18n="experiment_2_title"></h5><p data-i18n="experiment_2"></p><h5 data-i18n="experiment_3_title"></h5><p data-i18n="experiment_3"></p></div><div class="wiki-entry" id="glossBlock"><h3 data-i18n="glossTitle">📚 Key Terms</h3><p><strong data-i18n="gloss1_term">Term</strong>: <span data-i18n="gloss1_def">Definition</span></p><p><strong data-i18n="gloss2_term">Term</strong>: <span data-i18n="gloss2_def">Definition</span></p><p><strong data-i18n="gloss3_term">Term</strong>: <span data-i18n="gloss3_def">Definition</span></p><p><strong data-i18n="gloss4_term">Term</strong>: <span data-i18n="gloss4_def">Definition</span></p><p><strong data-i18n="gloss5_term">Term</strong>: <span data-i18n="gloss5_def">Definition</span></p><p><strong data-i18n="gloss6_term">Term</strong>: <span data-i18n="gloss6_def">Definition</span></p></div></div></div><div class="help-content" id="helpKids"><h3 data-i18n="kidTitle">For Young Explorers</h3><div class="kids-item"><p data-i18n="kidIntro">This app shows you how it works by letting you play.</p></div><div class="kids-item"><h4>Is it safe?</h4><p data-i18n="kidSafe">Completely safe!</p></div><div class="kids-item"><h4>Try this first!</h4><p data-i18n="kidTry">Press Start and watch.</p></div><div class="kids-item"><h4>For parents & teachers</h4><p data-i18n="kidParent">Suitable for STEM education.</p></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="wiki-entry" id="relatedBlock"><h3 data-i18n="relatedTitle">🔗 Related Apps</h3>
+ </div>
+ <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer>
+ <div class="deco-band bottom-band" aria-hidden="true"></div>
+ </div>
+ <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+ <div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+ <div class="sidebar-overlay" id="helpOverlay"></div>
+ <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">❓ Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button><button class="help-tab" data-tab="quiz" data-i18n="quizTab">Quiz</button><button class="help-tab" data-tab="tools" data-i18n="toolsTab">Tools</button></div><div class="sidebar-body"><div class="help-content active" id="helpFaq"> <details class="help-item"><summary data-i18n="faq_q1">What does this app do?</summary><p data-i18n="faq_a1">It simulates software-defined radio! 🔬 You get to experiment with radio signals in a safe sandbox.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q2">How does it work?</summary><p data-i18n="faq_a2">The simulation runs in your browser. It models real radio signals so you can see what happens step by step.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q3">What should I try first?</summary><p data-i18n="faq_a3">Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q4">What's the real science?</summary><p data-i18n="faq_a4">This is real digital signal processing! The same principles are used by professionals in the field. 🧪</p></details>
+ <details class="help-item"><summary data-i18n="faq_q5">Can I break it?</summary><p data-i18n="faq_a5">Try the Lab section! Push the parameters to extremes and see what happens. That's how scientists discover new things! 💡</p></details>
+ <details class="help-item"><summary data-i18n="faq_q6">What hardware do I need?</summary><p data-i18n="faq_a6">For the real version, you'll need RTL-SDR. Check the 📦 Device Code section for ready-to-use firmware!</p></details>
+ <details class="help-item"><summary data-i18n="faq_q7">Is it safe to use?</summary><p data-i18n="faq_a7">Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q8">What should I try next?</summary><p data-i18n="faq_a8">Try Sdr Smart Meter and Sdr Tpms! Each teaches something different. 🚀</p></details></div><div class="help-content" id="helpGuide"><h3 data-i18n="guideTitle">What Am I Looking At?</h3><div class="guide-item"><p data-i18n="guideCanvas">The main area shows a live visualization.</p></div><div class="guide-item"><p data-i18n="guideControls">The buttons control the simulation.</p></div><div class="guide-item"><p data-i18n="guideSections">Below the main card, sections show detailed data.</p></div><div class="guide-item"><p data-i18n="guideStatus">The colored dot shows connection status.</p><div class="guide-item" id="theoryBlock"><h3 data-i18n="theoryTitle">📖 Theory & Background</h3><p data-i18n="theory" style="line-height:1.6;font-size:0.85rem;">Loading...</p></div><div class="guide-item" id="shortcutsBlock"><h3 data-i18n="shortcutsTitle">⌨️ Keyboard Shortcuts</h3><p data-i18n="shortcutsInfo" style="font-size:0.85rem;">? = Help, Esc = Close, S = Start, R = Reset, 1-9 = Tabs</p></div><div class="guide-item" id="achieveBlock"><h3 data-i18n="achieveTitle">🏆 Achievements</h3><div id="achievementBadges" style="font-size:1.5rem;margin:0.5rem 0;"></div><p data-i18n="achieveExplorer" style="font-size:0.8rem;margin:0.2rem 0;">🗺️ Explorer</p><p data-i18n="achieveScientist" style="font-size:0.8rem;margin:0.2rem 0;">🔬 Scientist</p><p data-i18n="achieveExperimenter" style="font-size:0.8rem;margin:0.2rem 0;">⚗️ Experimenter</p></div></div></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Select channel.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Choose filter.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Start sniffing.</p></div><div class="help-step"><span class="help-step-num">4</span><p data-i18n="howto_4">Analyze network.</p></div></div><div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_concept_title">🔬 Topic</h3><p data-i18n="wiki_concept">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_howworks_title">⚙️ Topic</h3><p data-i18n="wiki_howworks">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_realworld_title">🌍 Topic</h3><p data-i18n="wiki_realworld">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_safety_title">🛡️ Topic</h3><p data-i18n="wiki_safety">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="proTipTitle">Pro Tips</h4><p data-i18n="proTip1"></p><p data-i18n="proTip2"></p></div><div class="wiki-entry"><h4 data-i18n="funFactTitle">Did You Know?</h4><p data-i18n="funFact"></p></div><div class="wiki-entry"><h4 data-i18n="mistakeTitle">Common Mistakes</h4><p data-i18n="mistake1"></p><p data-i18n="mistake2"></p><p data-i18n="mistake3"></p></div><div class="wiki-entry"><h3 data-i18n="wiki_themes_title">🎨 Themes</h3><p data-i18n="wiki_themes">8 built-in themes.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_i18n_title">🌐 Languages</h3><p data-i18n="wiki_i18n">Trilingual with RTL.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_history_title">📜 History</h3><p data-i18n="wiki_history">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_math_title">📐 Mathematics</h3><p data-i18n="wiki_math">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_advanced_title">🔬 Advanced</h3><p data-i18n="wiki_advanced">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_compare_title">⚖️ Comparing</h3><p data-i18n="wiki_compare">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_debug_title">🔧 Troubleshooting</h3><p data-i18n="wiki_debug">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_ethics_title">⚖️ Ethics</h3><p data-i18n="wiki_ethics">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="realworldTitle">Real-World Stories</h4><p data-i18n="realworld1"></p><p data-i18n="realworld2"></p><p data-i18n="realworld3"></p></div><div class="wiki-entry"><h4 data-i18n="experimentTitle">Experiments</h4><h5 data-i18n="experiment_1_title"></h5><p data-i18n="experiment_1"></p><h5 data-i18n="experiment_2_title"></h5><p data-i18n="experiment_2"></p><h5 data-i18n="experiment_3_title"></h5><p data-i18n="experiment_3"></p></div><div class="wiki-entry" id="glossBlock"><h3 data-i18n="glossTitle">📚 Key Terms</h3><p><strong data-i18n="gloss1_term">Term</strong>: <span data-i18n="gloss1_def">Definition</span></p><p><strong data-i18n="gloss2_term">Term</strong>: <span data-i18n="gloss2_def">Definition</span></p><p><strong data-i18n="gloss3_term">Term</strong>: <span data-i18n="gloss3_def">Definition</span></p><p><strong data-i18n="gloss4_term">Term</strong>: <span data-i18n="gloss4_def">Definition</span></p><p><strong data-i18n="gloss5_term">Term</strong>: <span data-i18n="gloss5_def">Definition</span></p><p><strong data-i18n="gloss6_term">Term</strong>: <span data-i18n="gloss6_def">Definition</span></p></div></div><div class="wiki-entry" id="relatedBlock"><h3 data-i18n="relatedTitle">🔗 Related Apps</h3>
 <div class="related-app"><a id="related1Link" href="#"><strong data-i18n="related1_name">App</strong></a><p data-i18n="related1_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
-<div class="related-app"><a id="related2Link" href="#"><strong data-i18n="related2_name">App</strong></a><p data-i18n="related2_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
-<div class="related-app"><a id="related3Link" href="#"><strong data-i18n="related3_name">App</strong></a><p data-i18n="related3_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div></div>
 <div class="wiki-entry" id="pathBlock"><h3 data-i18n="pathTitle">🛤️ Learning Path</h3>
 <p id="pathPrevP" style="margin:0.3rem 0;"><span style="opacity:0.6;">← Previous:</span> <a id="pathPrevLink" href="#" data-i18n="pathPrev_name">...</a></p>
 <p id="pathNextP" style="margin:0.3rem 0;"><span style="opacity:0.6;">Next →</span> <a id="pathNextLink" href="#" data-i18n="pathNext_name">...</a></p></div>
-<div style="display:none" id="spacedPanel"></div>
+
+</div><div class="help-content" id="helpTools"><div class="wiki-entry"><h3 data-i18n="toolsTitle">Toolbox</h3><div id="toolsDailySlot"></div><div id="toolsCompareSlot"></div><div id="toolsLabSlot"></div><div id="toolsPeerSlot"></div><div id="toolsHeatmapSlot"></div><div id="toolsDiffSlot"></div></div></div><div class="help-content" id="helpKids"><h3 data-i18n="kidTitle">For Young Explorers</h3><div class="kids-item"><p data-i18n="kidIntro">This app shows you how it works by letting you play.</p></div><div class="kids-item"><h4>Is it safe?</h4><p data-i18n="kidSafe">Completely safe!</p></div><div class="kids-item"><h4>Try this first!</h4><p data-i18n="kidTry">Press Start and watch.</p></div><div class="kids-item"><h4>For parents & teachers</h4><p data-i18n="kidParent">Suitable for STEM education.</p></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="related-app"><a id="related2Link" href="#"><strong data-i18n="related2_name">App</strong></a><p data-i18n="related2_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
+<div class="related-app"><a id="related3Link" href="#"><strong data-i18n="related3_name">App</strong></a><p data-i18n="related3_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div></div>
 <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span><button onclick="printWorksheet()" class="btn-sm" style="margin-left:0.5rem;" data-i18n="printBtn">🖨️ Print</button></div></aside>
-  <div class="sidebar-overlay" id="settingsOverlay"></div>
-  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">عربي</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">Sound effects</span></label></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
-  <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div></aside>
-  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
-  <div class="daily-challenge" id="dailyChallenge" style="display:none;margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.08);border:1px solid rgba(var(--accent-rgb,212,175,55),0.2);"></div><div class="mentor-overlay" id="mentorOverlay" style="display:none;"></div><button id="mentorTriggerBtn" class="btn-sm" style="margin:0.5rem 0.3rem;padding:0.4rem 0.8rem;border-radius:20px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.8rem;color:inherit;" data-i18n="mentorStart">🎓 Tutorial</button><div style="display:none" id="peerModePanel"></div><div style="display:none" id="activityHeatmap"></div>
+ <div class="sidebar-overlay" id="settingsOverlay"></div>
+ <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">⚙️ Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div><div class="sidebar-body"><div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>EN</option><option value="fr">FR</option><option value="ar">عربي</option></select></div><div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div><div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">Sound effects</span></label></div></div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+ <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">📜 Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">🧹</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">📋</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">💾</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">✕</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">✓</button><button class="log-filter" data-filter="error">✗</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+ <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working…</div></div></div>
+ 
 <script src="script.js"></script>
-<div class="tooltip-float" id="tooltipFloat" style="display:none;position:fixed;z-index:9999;background:#1a1a2e;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:250px;pointer-events:none;transition:opacity 0.2s"></div>
 
-
-
-
-
-<button class="voice-btn" id="voiceBtn" style="display:none" data-i18n="voiceTitle">🎤 Voice</button>
-<div class="voice-indicator" id="voiceIndicator" style="display:none;position:fixed;top:10px;right:10px;width:12px;height:12px;background:red;border-radius:50%;z-index:9999"></div>
-<button class="share-btn" id="shareBtn" data-i18n="shareBtn">📤 Share</button>
 </body>
 </html>

@@ -1,209 +1,198 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="mosque-gold">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bio Muscle Telegraph — Workshop DIY</title>
-  <meta name="description" content="EMG to Morse code transmission via micro:bit" />
-  <meta name="author" content="Workshop-DIY — abourdim" />
-  <meta property="og:title" content="Bio Muscle Telegraph — Workshop DIY" />
-  <meta property="og:description" content="EMG to Morse code" />
-  <meta property="og:type" content="website" />
-  <link rel="manifest" href="manifest.json" /><meta name="theme-color" content="#08091a" />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    #emgCanvas{width:100%;height:340px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.35);cursor:crosshair;display:block}
-    .sim-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.sim-controls button{flex:1;min-width:100px}
-    .stats-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.stat-badge{font-size:.7rem;padding:3px 10px;border-radius:999px;border:1px solid var(--border);color:var(--text-muted);background:rgba(0,0,0,.2)}.stat-badge strong{color:var(--accent)}
-    .morse-display{font-family:'Orbitron',monospace;font-size:1.2rem;text-align:center;color:#ffcc00;margin:8px 0;min-height:2.5em;padding:.6rem;border:1px dashed var(--border);border-radius:8px;background:rgba(0,0,0,.2)}
-    .msg-row{display:flex;gap:6px;margin-top:10px}.msg-row input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-family:'Orbitron',monospace;font-size:.8rem}
-    .emg-bar{width:100%;height:24px;border-radius:8px;background:rgba(0,0,0,.3);border:1px solid var(--border);margin-top:8px;overflow:hidden;position:relative}
-    .emg-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#33ff33,#ffcc00,#ff6633);transition:width .1s}
-    .emg-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.6)}
-    .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.step-card{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;text-align:center}.step-card .step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.75rem;margin-bottom:6px}.step-card .step-icon{font-size:1.6rem;display:block;margin-bottom:4px}.step-card h4{font-size:.76rem;margin:4px 0 2px;color:var(--text)}.step-card p{font-size:.7rem;color:var(--text-muted);line-height:1.4}
-    .challenge-list{display:flex;flex-direction:column;gap:8px}.challenge-item{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;display:flex;align-items:flex-start;gap:10px}.challenge-item .ch-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-weight:700;font-size:.72rem;flex-shrink:0}.challenge-item h4{font-size:.78rem;color:var(--text);margin-bottom:2px}.challenge-item p{font-size:.72rem;color:var(--text-muted);line-height:1.4}
-  
-    /* Code tabs */
-    .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-    .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
-    .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
-    .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
-    .code-display.hidden { display: none; }
+ <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Bio Muscle Telegraph — Workshop DIY</title>
+ <meta name="description" content="EMG to Morse code transmission via micro:bit" />
+ <meta name="author" content="Workshop-DIY — abourdim" />
+ <meta property="og:title" content="Bio Muscle Telegraph — Workshop DIY" />
+ <meta property="og:description" content="EMG to Morse code" />
+ <meta property="og:type" content="website" />
+ <link rel="manifest" href="manifest.json" /><meta name="theme-color" content="#08091a" />
+ <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Righteous&family=Tajawal:wght@400;500;700&family=Bangers&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+ <link rel="stylesheet" href="style.css" />
+ <style>
+ #emgCanvas{width:100%;height:340px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.35);cursor:crosshair;display:block}
+ .sim-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.sim-controls button{flex:1;min-width:100px}
+ .stats-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.stat-badge{font-size:.7rem;padding:3px 10px;border-radius:999px;border:1px solid var(--border);color:var(--text-muted);background:rgba(0,0,0,.2)}.stat-badge strong{color:var(--accent)}
+ .morse-display{font-family:'Orbitron',monospace;font-size:1.2rem;text-align:center;color:#ffcc00;margin:8px 0;min-height:2.5em;padding:.6rem;border:1px dashed var(--border);border-radius:8px;background:rgba(0,0,0,.2)}
+ .msg-row{display:flex;gap:6px;margin-top:10px}.msg-row input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-family:'Orbitron',monospace;font-size:.8rem}
+ .emg-bar{width:100%;height:24px;border-radius:8px;background:rgba(0,0,0,.3);border:1px solid var(--border);margin-top:8px;overflow:hidden;position:relative}
+ .emg-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#33ff33,#ffcc00,#ff6633);transition:width .1s}
+ .emg-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+ .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.step-card{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;text-align:center}.step-card .step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--band2));color:var(--bg);font-weight:700;font-size:.75rem;margin-bottom:6px}.step-card .step-icon{font-size:1.6rem;display:block;margin-bottom:4px}.step-card h4{font-size:.76rem;margin:4px 0 2px;color:var(--text)}.step-card p{font-size:.7rem;color:var(--text-muted);line-height:1.4}
+ .challenge-list{display:flex;flex-direction:column;gap:8px}.challenge-item{border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.2);padding:10px;display:flex;align-items:flex-start;gap:10px}.challenge-item .ch-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-weight:700;font-size:.72rem;flex-shrink:0}.challenge-item h4{font-size:.78rem;color:var(--text);margin-bottom:2px}.challenge-item p{font-size:.72rem;color:var(--text-muted);line-height:1.4}
+ 
+ /* Code tabs */
+ .code-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+ .code-tab { padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.2); color: inherit; transition: all 0.2s; }
+ .code-tab.active { background: var(--accent); color: var(--bg, #08091a); }
+ .code-display { padding: 0.5rem; border-radius: 6px; background: rgba(0,0,0,0.2); }
+ .code-display.hidden { display: none; }
 
-    /* Demo player */
-    .demo-player { padding: 0.5rem; }
-    .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
-    .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
-    .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
-    .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
-    .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
-    .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
+ /* Demo player */
+ .demo-player { padding: 0.5rem; }
+ .demo-step-display { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+ .demo-step-num { font-size: 0.8rem; opacity: 0.6; white-space: nowrap; padding-top: 0.2rem; }
+ .demo-narration { font-size: 0.95rem; line-height: 1.5; min-height: 2.5em; }
+ .demo-progress { height: 4px; background: rgba(var(--accent-rgb), 0.15); border-radius: 2px; margin-bottom: 0.8rem; }
+ .demo-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+ .demo-controls { display: flex; gap: 0.5rem; justify-content: center; }
 
-    /* Learn section */
-    .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
-    .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
-    .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
-    .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
-    .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
-    .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
-    .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
-    .learn-badge { font-weight: 600; }
+ /* Learn section */
+ .learn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.8rem; }
+ .learn-item { padding: 0.7rem; border-radius: 8px; background: rgba(var(--accent-rgb), 0.06); border-left: 3px solid var(--accent); }
+ .learn-icon { font-size: 1.3rem; margin-bottom: 0.2rem; }
+ .learn-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+ .learn-desc { font-size: 0.75rem; opacity: 0.75; line-height: 1.3; margin-bottom: 0.3rem; }
+ .learn-tag { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 8px; background: rgba(var(--accent-rgb), 0.12); color: var(--accent); }
+ .learn-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid rgba(var(--accent-rgb), 0.12); font-size: 0.8rem; }
+ .learn-badge { font-weight: 600; }
 </style>
 </head>
 <body>
-  <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Muscles tap Morse code</div><p class="purpose-text" data-i18n="purpose" style="font-size:.75rem;opacity:.8;margin-top:.3rem;max-width:600px"></p><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
-  <div class="app"><div class="deco-band top-band" aria-hidden="true"></div><div class="rows-container">
-    <div class="header">
-      <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#x0628;&#x0650;&#x0633;&#x0652;&#x0645;&#x0650; &#x0671;&#x0644;&#x0644;&#x0651;&#x064e;&#x0647;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064e;&#x062d;&#x0652;&#x0645;&#x064e;&#x0640;&#x0670;&#x0646;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064e;&#x062d;&#x0650;&#x064a;&#x0645;&#x0650; <span class="bism-ornament">&#x2726;</span></div>
-      <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Bio Muscle Telegraph</h1><div class="subtitle" data-i18n="subtitle">Muscles tap Morse code</div></div></div>
-      <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button><button id="logBtn" class="btn-icon-only" aria-label="Log">&#x1F4DC;</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
-    </div>
-    <div class="card" id="mainCard">
-      <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F4AA;</span> <span data-i18n="mainSection">Muscle Telegraph — EMG to Morse</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Muscle contractions converted to Morse code via EMG signals</span> <span class="version-tag">v1.0</span></div></div></div>
-      <canvas id="emgCanvas" width="760" height="340"></canvas>
-      <div class="emg-bar"><div class="emg-fill" id="emgFill" style="width:5%"></div><div class="emg-label" id="emgLabel">EMG: 15 &#x00B5;V</div></div>
-      <div class="morse-display" id="morseDisplay">... --- ...</div>
-      <div class="stats-row">
-        <span class="stat-badge"><strong id="statEMG">15</strong> &#x00B5;V <span data-i18n="statEMG">EMG</span></span>
-        <span class="stat-badge"><strong id="statChars">0</strong> <span data-i18n="statChars">chars</span></span>
-        <span class="stat-badge"><strong id="statWPM">0</strong> <span data-i18n="statWPM">WPM</span></span>
-        <span class="stat-badge"><strong id="statDots">0</strong> <span data-i18n="statDots">dots</span></span>
-      </div>
-      <div class="sim-controls">
-        <button id="startBtn" class="primary"><span class="btn-icon">&#x1F4AA;</span> <span data-i18n="startEMG">Start EMG</span></button>
-        <button id="flexBtn"><span class="btn-icon">&#x26AA;</span> <span data-i18n="flexBtn">Dot (.)</span></button>
-        <button id="holdBtn"><span class="btn-icon">&#x2796;</span> <span data-i18n="holdBtn">Dash (-)</span></button>
-        <button id="spaceBtn"><span class="btn-icon">&#x2423;</span> <span data-i18n="spaceBtn">Space</span></button>
-        <button id="decodeBtn" class="fire-btn"><span class="btn-icon">&#x1F50D;</span> <span data-i18n="decodeBtn">Decode</span></button>
-      </div>
-      <div class="msg-row"><input type="text" id="msgInput" placeholder="Type message to encode..." maxlength="40" data-i18n-placeholder="msgPlaceholder"/><button id="encodeBtn"><span class="btn-icon">&#x1F4E4;</span> <span data-i18n="encodeBtn">Encode</span></button></div>
-    </div>
-<div class="sonify-panel" id="sonifyPanel" style="display:none;"></div>
-<div id="labRecorderPanel" style="display:none;margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.06);border:1px solid rgba(var(--accent-rgb,212,175,55),0.15);"><h3 data-i18n="labTitle" style="margin:0 0 0.5rem;">ð Lab Notebook</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.5rem;"><button class="btn-sm" id="labGenBtn" data-i18n="labGenerate" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">ð Lab Report</button><button class="btn-sm" id="labExpBtn" data-i18n="labExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export Report</button></div><pre id="labReportBox" style="display:none;max-height:200px;overflow:auto;padding:0.6rem;border-radius:8px;background:var(--bg,#000);color:var(--accent,#33ff33);font-size:0.72rem;white-space:pre-wrap;border:1px solid var(--border,#222);margin-bottom:0.8rem;"></pre><h3 data-i18n="recorderTitle" style="margin:0.8rem 0 0.4rem;">âº Data Recorder</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;margin-bottom:0.4rem;"><button class="btn-sm" id="recStartBtn" data-i18n="recorderStart" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">âº Record</button><button class="btn-sm" id="recClearBtn" data-i18n="recorderClear" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Clear</button><button class="btn-sm" id="recExpBtn" data-i18n="recorderExport" style="padding:0.3rem 0.7rem;border-radius:16px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.78rem;color:inherit;">Export CSV</button><span id="recStatus" style="font-size:0.75rem;opacity:0.7;"></span></div><canvas id="recCanvas" width="200" height="80" style="width:100%;max-width:200px;border-radius:8px;background:#0a0a1a;border:1px solid var(--border,#222);"></canvas></div>
-
+ <div class="splash" id="splash" onclick="dismissSplash()"><div class="splash-inner"><div class="splash-logo" id="splashLogo"></div><div class="splash-title">Workshop DIY</div><div class="splash-sub" data-i18n="subtitle">Muscles tap Morse code</div><p class="purpose-text" data-i18n="purpose" style="font-size:.75rem;opacity:.8;margin-top:.3rem;max-width:600px"></p><div class="splash-hint" data-i18n="splashHint">tap to skip</div></div></div>
+ <div class="app"><div class="deco-band top-band" aria-hidden="true"></div><div class="rows-container">
+ <div class="header">
+ <div class="bismillah" aria-hidden="true"><span class="bism-ornament">&#x2726;</span> &#x0628;&#x0650;&#x0633;&#x0652;&#x0645;&#x0650; &#x0671;&#x0644;&#x0644;&#x0651;&#x064e;&#x0647;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064e;&#x062d;&#x0652;&#x0645;&#x064e;&#x0640;&#x0670;&#x0646;&#x0650; &#x0671;&#x0644;&#x0631;&#x0651;&#x064e;&#x062d;&#x0650;&#x064a;&#x0645;&#x0650; <span class="bism-ornament">&#x2726;</span></div>
+ <div class="title-block"><div class="logo-wrap" id="logoWrap"></div><div><h1 data-i18n="title">Bio Muscle Telegraph</h1><div class="subtitle" data-i18n="subtitle">Muscles tap Morse code</div></div></div>
+ <div class="header-right"><div class="header-buttons"><button id="helpBtn" class="btn-icon-only" aria-label="Help">&#x2753;</button><button id="settingsBtn" class="btn-icon-only" aria-label="Settings">&#x2699;&#xFE0F;</button><button id="logBtn" class="btn-icon-only" aria-label="Log">&#x1F4DC;</button></div><div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText" data-i18n="disconnected">Disconnected</span></div></div>
+ </div>
+ <div class="card" id="mainCard">
+ <div class="card-header"><div><div class="card-title"><span class="icon">&#x1F4AA;</span> <span data-i18n="mainSection">Muscle Telegraph — EMG to Morse</span></div><div class="card-subtitle"><span data-i18n="mainDesc">Muscle contractions converted to Morse code via EMG signals</span> <span class="version-tag">v1.0</span></div></div></div>
+ <canvas id="emgCanvas" width="760" height="340"></canvas>
+ <div class="emg-bar"><div class="emg-fill" id="emgFill" style="width:5%"></div><div class="emg-label" id="emgLabel">EMG: 15 &#x00B5;V</div></div>
+ <div class="morse-display" id="morseDisplay">... --- ...</div>
+ <div class="stats-row">
+ <span class="stat-badge"><strong id="statEMG">15</strong> &#x00B5;V <span data-i18n="statEMG">EMG</span></span>
+ <span class="stat-badge"><strong id="statChars">0</strong> <span data-i18n="statChars">chars</span></span>
+ <span class="stat-badge"><strong id="statWPM">0</strong> <span data-i18n="statWPM">WPM</span></span>
+ <span class="stat-badge"><strong id="statDots">0</strong> <span data-i18n="statDots">dots</span></span>
+ </div>
+ <div class="sim-controls">
+ <button id="startBtn" class="primary"><span class="btn-icon">&#x1F4AA;</span> <span data-i18n="startEMG">Start EMG</span></button>
+ <button id="flexBtn"><span class="btn-icon">&#x26AA;</span> <span data-i18n="flexBtn">Dot (.)</span></button>
+ <button id="holdBtn"><span class="btn-icon">&#x2796;</span> <span data-i18n="holdBtn">Dash (-)</span></button>
+ <button id="spaceBtn"><span class="btn-icon">&#x2423;</span> <span data-i18n="spaceBtn">Space</span></button>
+ <button id="decodeBtn" class="fire-btn"><span class="btn-icon">&#x1F50D;</span> <span data-i18n="decodeBtn">Decode</span></button>
+ </div>
+ <div class="msg-row"><input type="text" id="msgInput" placeholder="Type message to encode..." maxlength="40" data-i18n-placeholder="msgPlaceholder"/><button id="encodeBtn"><span class="btn-icon">&#x1F4E4;</span> <span data-i18n="encodeBtn">Encode</span></button></div>
+ </div>
 <details class="collapsible" open>
-        <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
-        <div class="card">
-          <div class="learn-grid">
-            <div class="learn-item">
-              <div class="learn-icon">❤️</div>
-              <div class="learn-title" data-i18n="learn1Title">Biosignals</div>
-              <div class="learn-desc" data-i18n="learn1Desc">How your body generates electrical signals</div>
-              <div class="learn-tag" data-i18n="learn1Tag">Biology</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">📡</div>
-              <div class="learn-title" data-i18n="learn2Title">Bio-Radio</div>
-              <div class="learn-desc" data-i18n="learn2Desc">How body signals can be converted to radio waves</div>
-              <div class="learn-tag" data-i18n="learn2Tag">RF</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">🧠</div>
-              <div class="learn-title" data-i18n="learn3Title">Neural Signals</div>
-              <div class="learn-desc" data-i18n="learn3Desc">How nerves transmit electrical impulses</div>
-              <div class="learn-tag" data-i18n="learn3Tag">Neuroscience</div>
-            </div>
-            <div class="learn-item">
-              <div class="learn-icon">🔬</div>
-              <div class="learn-title" data-i18n="learn4Title">Biometric ID</div>
-              <div class="learn-desc" data-i18n="learn4Desc">How unique body patterns identify individuals</div>
-              <div class="learn-tag" data-i18n="learn4Tag">Biometrics</div>
-            </div>
-          </div>
-          <div class="learn-meta">
-            <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Intermediate 🟡</span>
-            <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">20 min ⏱</span>
-            <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">12+ 🧒</span>
-          </div>
-        </div>
-      </details>
+ <summary><span class="icon">🎯</span> <span data-i18n="sectionLearn">What You Shall Learn</span></summary>
+ <div class="card">
+ <div class="learn-grid">
+ <div class="learn-item">
+ <div class="learn-icon">❤️</div>
+ <div class="learn-title" data-i18n="learn1Title">Biosignals</div>
+ <div class="learn-desc" data-i18n="learn1Desc">How your body generates electrical signals</div>
+ <div class="learn-tag" data-i18n="learn1Tag">Biology</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">📡</div>
+ <div class="learn-title" data-i18n="learn2Title">Bio-Radio</div>
+ <div class="learn-desc" data-i18n="learn2Desc">How body signals can be converted to radio waves</div>
+ <div class="learn-tag" data-i18n="learn2Tag">RF</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">🧠</div>
+ <div class="learn-title" data-i18n="learn3Title">Neural Signals</div>
+ <div class="learn-desc" data-i18n="learn3Desc">How nerves transmit electrical impulses</div>
+ <div class="learn-tag" data-i18n="learn3Tag">Neuroscience</div>
+ </div>
+ <div class="learn-item">
+ <div class="learn-icon">🔬</div>
+ <div class="learn-title" data-i18n="learn4Title">Biometric ID</div>
+ <div class="learn-desc" data-i18n="learn4Desc">How unique body patterns identify individuals</div>
+ <div class="learn-tag" data-i18n="learn4Tag">Biometrics</div>
+ </div>
+ </div>
+ <div class="learn-meta">
+ <span data-i18n="learnLevel">Level:</span> <span class="learn-badge" data-i18n="learnLevelVal">Intermediate 🟡</span>
+ <span data-i18n="learnTime">Time:</span> <span class="learn-badge" data-i18n="learnTimeVal">20 min ⏱</span>
+ <span data-i18n="learnAge">Ages:</span> <span class="learn-badge" data-i18n="learnAgeVal">12+ 🧒</span>
+ </div>
+ </div>
+ </details>
 
-    
-      <details class="collapsible">
-        <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
-        <div class="card">
-          <div class="demo-player">
-            <div class="demo-step-display">
-              <div class="demo-step-num" id="demoCurrentStep">1/5</div>
-              <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
-            </div>
-            <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
-            <div class="demo-controls">
-              <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
-              <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
-              <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
-            </div>
-          </div>
-        </div>
-      </details>
+ 
+ <details class="collapsible">
+ <summary><span class="icon">▶️</span> <span data-i18n="sectionDemo">Watch Demo</span></summary>
+ <div class="card">
+ <div class="demo-player">
+ <div class="demo-step-display">
+ <div class="demo-step-num" id="demoCurrentStep">1/5</div>
+ <div class="demo-narration" id="demoNarration" data-i18n="demo_s1">Click Play to start the guided demo...</div>
+ </div>
+ <div class="demo-progress"><div class="demo-progress-bar" id="demoProgressBar" style="width:0%"></div></div>
+ <div class="demo-controls">
+ <button class="btn-sm" id="demoPrevBtn" onclick="demoNav(-1)">⏮ <span data-i18n="demoPrev">Prev</span></button>
+ <button class="btn-sm primary" id="demoPlayBtn" onclick="demoToggle()">▶ <span data-i18n="demoPlay">Play</span></button>
+ <button class="btn-sm" id="demoNextBtn" onclick="demoNav(1)"><span data-i18n="demoNext">Next</span> ⏭</button>
+ </div>
+ </div>
+ </div>
+ </details>
 
-      <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionA">A — How It Works</span></summary><div class="card"><div class="step-grid">
-      <div class="step-card"><span class="step-icon">&#x1F4AA;</span><span class="step-num">1</span><h4 data-i18n="step1Title">EMG Pickup</h4><p data-i18n="step1Desc">Electrodes on forearm detect electrical signals from muscle contractions (EMG).</p></div>
-      <div class="step-card"><span class="step-icon">&#x1F4CA;</span><span class="step-num">2</span><h4 data-i18n="step2Title">Threshold Detection</h4><p data-i18n="step2Desc">Signal amplitude above threshold = muscle active. Short flex = dot, long = dash.</p></div>
-      <div class="step-card"><span class="step-icon">&#x1F4E4;</span><span class="step-num">3</span><h4 data-i18n="step3Title">Morse Encoding</h4><p data-i18n="step3Desc">Muscle contractions are converted to dots and dashes following international Morse code.</p></div>
-      <div class="step-card"><span class="step-icon">&#x1F4E1;</span><span class="step-num">4</span><h4 data-i18n="step4Title">Transmission</h4><p data-i18n="step4Desc">Morse code is transmitted via micro:bit radio. Receiver decodes back to text.</p></div>
-    </div></div></details>
-    <details class="collapsible"><summary><span class="icon">&#x1F3C6;</span> <span data-i18n="sectionC">C — Challenges</span></summary><div class="card"><div class="challenge-list">
-      <div class="challenge-item"><span class="ch-num">1</span><div><h4 data-i18n="ch1Title">SOS Signal</h4><p data-i18n="ch1Desc">Tap the universal distress signal: ... --- ... (SOS). How fast can you send it?</p></div></div>
-      <div class="challenge-item"><span class="ch-num">2</span><div><h4 data-i18n="ch2Title">Name Encode</h4><p data-i18n="ch2Desc">Encode your name in Morse using only muscle flexes. Have a friend decode it!</p></div></div>
-      <div class="challenge-item"><span class="ch-num">3</span><div><h4 data-i18n="ch3Title">Speed Record</h4><p data-i18n="ch3Desc">How many words per minute can you tap? Professional telegraphers did 20+ WPM!</p></div></div>
-    </div></div></details>
+ <details class="collapsible"><summary><span class="icon">&#x1F4DA;</span> <span data-i18n="sectionA">A — How It Works</span></summary><div class="card"><div class="step-grid">
+ <div class="step-card"><span class="step-icon">&#x1F4AA;</span><span class="step-num">1</span><h4 data-i18n="step1Title">EMG Pickup</h4><p data-i18n="step1Desc">Electrodes on forearm detect electrical signals from muscle contractions (EMG).</p></div>
+ <div class="step-card"><span class="step-icon">&#x1F4CA;</span><span class="step-num">2</span><h4 data-i18n="step2Title">Threshold Detection</h4><p data-i18n="step2Desc">Signal amplitude above threshold = muscle active. Short flex = dot, long = dash.</p></div>
+ <div class="step-card"><span class="step-icon">&#x1F4E4;</span><span class="step-num">3</span><h4 data-i18n="step3Title">Morse Encoding</h4><p data-i18n="step3Desc">Muscle contractions are converted to dots and dashes following international Morse code.</p></div>
+ <div class="step-card"><span class="step-icon">&#x1F4E1;</span><span class="step-num">4</span><h4 data-i18n="step4Title">Transmission</h4><p data-i18n="step4Desc">Morse code is transmitted via micro:bit radio. Receiver decodes back to text.</p></div>
+ </div></div></details>
+ <details class="collapsible"><summary><span class="icon">&#x1F3C6;</span> <span data-i18n="sectionC">C — Challenges</span></summary><div class="card"><div class="challenge-list">
+ <div class="challenge-item"><span class="ch-num">1</span><div><h4 data-i18n="ch1Title">SOS Signal</h4><p data-i18n="ch1Desc">Tap the universal distress signal: ... --- ... (SOS). How fast can you send it?</p></div></div>
+ <div class="challenge-item"><span class="ch-num">2</span><div><h4 data-i18n="ch2Title">Name Encode</h4><p data-i18n="ch2Desc">Encode your name in Morse using only muscle flexes. Have a friend decode it!</p></div></div>
+ <div class="challenge-item"><span class="ch-num">3</span><div><h4 data-i18n="ch3Title">Speed Record</h4><p data-i18n="ch3Desc">How many words per minute can you tap? Professional telegraphers did 20+ WPM!</p></div></div>
+ </div></div></details>
 
-      <details class="collapsible">
-        <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
-        <div class="card">
-          <div class="code-tabs" id="codeTabs">
-            <button class="code-tab active" data-codetarget="python">Python</button>
-          </div>
-            <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
-        <div class="code-inline" id="inlineCode"><h4 data-i18n="codeTitle">Starter Code</h4><p class="code-lang" data-i18n="codeLang">Code</p><pre class="code-block"><code data-i18n="codeSnippet">// Loading...</code></pre><p class="code-explain" data-i18n="codeExplain">Explanation loading...</p></div></div>
-      </details>
+ <details class="collapsible">
+ <summary><span class="icon">📦</span> <span data-i18n="sectionCode">Device Code</span></summary>
+ <div class="card">
+ <div class="code-tabs" id="codeTabs">
+ <button class="code-tab active" data-codetarget="python">Python</button>
+ </div>
+ <div class="code-display" id="code-python"><p>📄 <a href="code/python/main.py" target="_blank">code/python/main.py</a></p><button class="btn-sm" onclick="window.open('code/python/main.py')">⬇ Download</button></div>
+ <div class="code-inline" id="inlineCode"><h4 data-i18n="codeTitle">Starter Code</h4><p class="code-lang" data-i18n="codeLang">Code</p><pre class="code-block"><code data-i18n="codeSnippet">// Loading...</code></pre><p class="code-explain" data-i18n="codeExplain">Explanation loading...</p></div></div>
+ </details>
 
-  </div>
-  <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer><div class="deco-band bottom-band" aria-hidden="true"></div></div>
-  <canvas id="matrixCanvas" class="matrix-canvas"></canvas><div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
-  <div class="sidebar-overlay" id="helpOverlay"></div>
-  <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#x2753; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button><button class="help-tab" data-tab="quiz" data-i18n="quizTab">Quiz</button></div><div class="sidebar-body">
-    <div class="help-content active" id="helpFaq">        <details class="help-item"><summary data-i18n="faq_q1">What does this app do?</summary><p data-i18n="faq_a1">It simulates bio-signals! 🔬 You get to experiment with body signals into radio in a safe sandbox.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q2">How does it work?</summary><p data-i18n="faq_a2">The simulation runs in your browser. It models real body signals into radio so you can see what happens step by step.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q3">What should I try first?</summary><p data-i18n="faq_a3">Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q4">What's the real science?</summary><p data-i18n="faq_a4">This is real biometric radio technology! The same principles are used by professionals in the field. 🧪</p></details>
-        <details class="help-item"><summary data-i18n="faq_q5">Can I break it?</summary><p data-i18n="faq_a5">Try the Lab section! Push the parameters to extremes and see what happens. That's how scientists discover new things! 💡</p></details>
-        <details class="help-item"><summary data-i18n="faq_q6">What hardware do I need?</summary><p data-i18n="faq_a6">For the real version, you'll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!</p></details>
-        <details class="help-item"><summary data-i18n="faq_q7">Is it safe to use?</summary><p data-i18n="faq_a7">Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.</p></details>
-        <details class="help-item"><summary data-i18n="faq_q8">What should I try next?</summary><p data-i18n="faq_a8">Try Bio Nerve Impulse Detector and Bio Heartbeat Cipher! Each teaches something different. 🚀</p></details></div>
-    <div class="help-content" id="helpGuide"><h3 data-i18n="guideTitle">What Am I Looking At?</h3><div class="guide-item"><p data-i18n="guideCanvas">The main area shows a live visualization.</p></div><div class="guide-item"><p data-i18n="guideControls">The buttons control the simulation.</p></div><div class="guide-item"><p data-i18n="guideSections">Below the main card, sections show detailed data.</p></div><div class="guide-item"><p data-i18n="guideStatus">The colored dot shows connection status.</p><div class="guide-item" id="theoryBlock"><h3 data-i18n="theoryTitle">📖 Theory & Background</h3><p data-i18n="theory" style="line-height:1.6;font-size:0.85rem;">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="realworldTitle">Real-World Stories</h4><p data-i18n="realworld1"></p><p data-i18n="realworld2"></p><p data-i18n="realworld3"></p></div><div class="wiki-entry"><h4 data-i18n="experimentTitle">Experiments</h4><h5 data-i18n="experiment_1_title"></h5><p data-i18n="experiment_1"></p><h5 data-i18n="experiment_2_title"></h5><p data-i18n="experiment_2"></p><h5 data-i18n="experiment_3_title"></h5><p data-i18n="experiment_3"></p></div><div class="guide-item" id="shortcutsBlock"><h3 data-i18n="shortcutsTitle">⌨️ Keyboard Shortcuts</h3><p data-i18n="shortcutsInfo" style="font-size:0.85rem;">? = Help, Esc = Close, S = Start, R = Reset, 1-9 = Tabs</p></div><div class="guide-item" id="achieveBlock"><h3 data-i18n="achieveTitle">🏆 Achievements</h3><div id="achievementBadges" style="font-size:1.5rem;margin:0.5rem 0;"></div><p data-i18n="achieveExplorer" style="font-size:0.8rem;margin:0.2rem 0;">🗺️ Explorer</p><p data-i18n="achieveScientist" style="font-size:0.8rem;margin:0.2rem 0;">🔬 Scientist</p><p data-i18n="achieveExperimenter" style="font-size:0.8rem;margin:0.2rem 0;">⚗️ Experimenter</p></div></div></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Start EMG, then use Dot/Dash buttons to build Morse code.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Use Space to separate letters, click Decode to convert to text.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Or type text and click Encode to see the Morse representation.</p></div></div>
-    <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_concept_title">🔬 Topic</h3><p data-i18n="wiki_concept">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_howworks_title">⚙️ Topic</h3><p data-i18n="wiki_howworks">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_realworld_title">🌍 Topic</h3><p data-i18n="wiki_realworld">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_safety_title">🛡️ Topic</h3><p data-i18n="wiki_safety">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="proTipTitle">Pro Tips</h4><p data-i18n="proTip1"></p><p data-i18n="proTip2"></p></div><div class="wiki-entry"><h4 data-i18n="funFactTitle">Did You Know?</h4><p data-i18n="funFact"></p></div><div class="wiki-entry"><h4 data-i18n="mistakeTitle">Common Mistakes</h4><p data-i18n="mistake1"></p><p data-i18n="mistake2"></p><p data-i18n="mistake3"></p></div><div class="wiki-entry"><h3 data-i18n="wiki_emg_title">&#x1F4AA; EMG Signals</h3><p data-i18n="wiki_emg">Motor neurons fire action potentials causing muscle fibers to contract. Surface EMG detects the summated activity.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_morse_title">&#x1F4E4; Morse Code</h3><p data-i18n="wiki_morse">Invented 1840s by Samuel Morse. Each letter is a unique sequence of dots and dashes. SOS = ... --- ...</p></div></div>
-  </div><div class="help-content" id="helpKids"><h3 data-i18n="kidTitle">For Young Explorers</h3><div class="kids-item"><p data-i18n="kidIntro">This app shows you how it works by letting you play.</p></div><div class="kids-item"><h4>Is it safe?</h4><p data-i18n="kidSafe">Completely safe!</p></div><div class="kids-item"><h4>Try this first!</h4><p data-i18n="kidTry">Press Start and watch.</p></div><div class="kids-item"><h4>For parents & teachers</h4><p data-i18n="kidParent">Suitable for STEM education.</p></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="wiki-entry" id="relatedBlock"><h3 data-i18n="relatedTitle">🔗 Related Apps</h3>
+ </div>
+ <footer class="app-footer"><span class="footer-text">powered by <a href="https://workshop-diy.org" target="_blank" rel="noopener">workshop-diy.org</a></span><span class="hijri-date" id="hijriDate"></span></footer><div class="deco-band bottom-band" aria-hidden="true"></div></div>
+ <canvas id="matrixCanvas" class="matrix-canvas"></canvas><div id="debugPanel" class="debug-panel"><span id="debugFps">0 FPS</span><span id="debugMem">0 MB</span></div>
+ <div class="sidebar-overlay" id="helpOverlay"></div>
+ <aside class="sidebar sidebar-left" id="helpPanel" aria-label="Help" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="help">&#x2753; Help</span><button id="helpCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="help-tabs"><button class="help-tab active" data-tab="faq" data-i18n="faq">FAQ</button><button class="help-tab" data-tab="howto" data-i18n="howto">How-To</button><button class="help-tab" data-tab="wiki" data-i18n="wiki">Wiki</button><button class="help-tab" data-tab="quiz" data-i18n="quizTab">Quiz</button><button class="help-tab" data-tab="tools" data-i18n="toolsTab">Tools</button></div><div class="sidebar-body">
+ <div class="help-content active" id="helpFaq"> <details class="help-item"><summary data-i18n="faq_q1">What does this app do?</summary><p data-i18n="faq_a1">It simulates bio-signals! 🔬 You get to experiment with body signals into radio in a safe sandbox.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q2">How does it work?</summary><p data-i18n="faq_a2">The simulation runs in your browser. It models real body signals into radio so you can see what happens step by step.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q3">What should I try first?</summary><p data-i18n="faq_a3">Press the main button and watch! 🎯 Then tweak the settings to see how different parameters change the results.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q4">What's the real science?</summary><p data-i18n="faq_a4">This is real biometric radio technology! The same principles are used by professionals in the field. 🧪</p></details>
+ <details class="help-item"><summary data-i18n="faq_q5">Can I break it?</summary><p data-i18n="faq_a5">Try the Lab section! Push the parameters to extremes and see what happens. That's how scientists discover new things! 💡</p></details>
+ <details class="help-item"><summary data-i18n="faq_q6">What hardware do I need?</summary><p data-i18n="faq_a6">For the real version, you'll need a computer with Python 3. Check the 📦 Device Code section for ready-to-use firmware!</p></details>
+ <details class="help-item"><summary data-i18n="faq_q7">Is it safe to use?</summary><p data-i18n="faq_a7">Absolutely safe! 🛡️ Everything runs locally in your browser. No internet required, no data leaves your device.</p></details>
+ <details class="help-item"><summary data-i18n="faq_q8">What should I try next?</summary><p data-i18n="faq_a8">Try Bio Nerve Impulse Detector and Bio Heartbeat Cipher! Each teaches something different. 🚀</p></details></div>
+ <div class="help-content" id="helpGuide"><h3 data-i18n="guideTitle">What Am I Looking At?</h3><div class="guide-item"><p data-i18n="guideCanvas">The main area shows a live visualization.</p></div><div class="guide-item"><p data-i18n="guideControls">The buttons control the simulation.</p></div><div class="guide-item"><p data-i18n="guideSections">Below the main card, sections show detailed data.</p></div><div class="guide-item"><p data-i18n="guideStatus">The colored dot shows connection status.</p><div class="guide-item" id="theoryBlock"><h3 data-i18n="theoryTitle">📖 Theory & Background</h3><p data-i18n="theory" style="line-height:1.6;font-size:0.85rem;">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="realworldTitle">Real-World Stories</h4><p data-i18n="realworld1"></p><p data-i18n="realworld2"></p><p data-i18n="realworld3"></p></div><div class="wiki-entry"><h4 data-i18n="experimentTitle">Experiments</h4><h5 data-i18n="experiment_1_title"></h5><p data-i18n="experiment_1"></p><h5 data-i18n="experiment_2_title"></h5><p data-i18n="experiment_2"></p><h5 data-i18n="experiment_3_title"></h5><p data-i18n="experiment_3"></p></div><div class="guide-item" id="shortcutsBlock"><h3 data-i18n="shortcutsTitle">⌨️ Keyboard Shortcuts</h3><p data-i18n="shortcutsInfo" style="font-size:0.85rem;">? = Help, Esc = Close, S = Start, R = Reset, 1-9 = Tabs</p></div><div class="guide-item" id="achieveBlock"><h3 data-i18n="achieveTitle">🏆 Achievements</h3><div id="achievementBadges" style="font-size:1.5rem;margin:0.5rem 0;"></div><p data-i18n="achieveExplorer" style="font-size:0.8rem;margin:0.2rem 0;">🗺️ Explorer</p><p data-i18n="achieveScientist" style="font-size:0.8rem;margin:0.2rem 0;">🔬 Scientist</p><p data-i18n="achieveExperimenter" style="font-size:0.8rem;margin:0.2rem 0;">⚗️ Experimenter</p></div></div></div><div class="help-content" id="helpHowto"><div class="help-step"><span class="help-step-num">1</span><p data-i18n="howto_1">Start EMG, then use Dot/Dash buttons to build Morse code.</p></div><div class="help-step"><span class="help-step-num">2</span><p data-i18n="howto_2">Use Space to separate letters, click Decode to convert to text.</p></div><div class="help-step"><span class="help-step-num">3</span><p data-i18n="howto_3">Or type text and click Encode to see the Morse representation.</p></div></div>
+ <div class="help-content" id="helpWiki"><div class="wiki-entry"><h3 data-i18n="wiki_concept_title">🔬 Topic</h3><p data-i18n="wiki_concept">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_howworks_title">⚙️ Topic</h3><p data-i18n="wiki_howworks">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_realworld_title">🌍 Topic</h3><p data-i18n="wiki_realworld">Loading...</p></div><div class="wiki-entry"><h3 data-i18n="wiki_safety_title">🛡️ Topic</h3><p data-i18n="wiki_safety">Loading...</p></div><div class="wiki-entry"><h4 data-i18n="proTipTitle">Pro Tips</h4><p data-i18n="proTip1"></p><p data-i18n="proTip2"></p></div><div class="wiki-entry"><h4 data-i18n="funFactTitle">Did You Know?</h4><p data-i18n="funFact"></p></div><div class="wiki-entry"><h4 data-i18n="mistakeTitle">Common Mistakes</h4><p data-i18n="mistake1"></p><p data-i18n="mistake2"></p><p data-i18n="mistake3"></p></div><div class="wiki-entry"><h3 data-i18n="wiki_emg_title">&#x1F4AA; EMG Signals</h3><p data-i18n="wiki_emg">Motor neurons fire action potentials causing muscle fibers to contract. Surface EMG detects the summated activity.</p></div><div class="wiki-entry"><h3 data-i18n="wiki_morse_title">&#x1F4E4; Morse Code</h3><p data-i18n="wiki_morse">Invented 1840s by Samuel Morse. Each letter is a unique sequence of dots and dashes. SOS = ... --- ...</p></div></div>
+ <div class="wiki-entry" id="relatedBlock"><h3 data-i18n="relatedTitle">🔗 Related Apps</h3>
 <div class="related-app"><a id="related1Link" href="#"><strong data-i18n="related1_name">App</strong></a><p data-i18n="related1_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
-<div class="related-app"><a id="related2Link" href="#"><strong data-i18n="related2_name">App</strong></a><p data-i18n="related2_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
-<div class="related-app"><a id="related3Link" href="#"><strong data-i18n="related3_name">App</strong></a><p data-i18n="related3_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div></div>
 <div class="wiki-entry" id="pathBlock"><h3 data-i18n="pathTitle">🛤️ Learning Path</h3>
 <p id="pathPrevP" style="margin:0.3rem 0;"><span style="opacity:0.6;">← Previous:</span> <a id="pathPrevLink" href="#" data-i18n="pathPrev_name">...</a></p>
 <p id="pathNextP" style="margin:0.3rem 0;"><span style="opacity:0.6;">Next →</span> <a id="pathNextLink" href="#" data-i18n="pathNext_name">...</a></p></div>
-<div style="display:none" id="spacedPanel"></div>
+
+</div><div class="help-content" id="helpTools"><div class="wiki-entry"><h3 data-i18n="toolsTitle">Toolbox</h3><div id="toolsDailySlot"></div><div id="toolsCompareSlot"></div><div id="toolsLabSlot"></div><div id="toolsPeerSlot"></div><div id="toolsHeatmapSlot"></div><div id="toolsDiffSlot"></div></div></div><div class="help-content" id="helpKids"><h3 data-i18n="kidTitle">For Young Explorers</h3><div class="kids-item"><p data-i18n="kidIntro">This app shows you how it works by letting you play.</p></div><div class="kids-item"><h4>Is it safe?</h4><p data-i18n="kidSafe">Completely safe!</p></div><div class="kids-item"><h4>Try this first!</h4><p data-i18n="kidTry">Press Start and watch.</p></div><div class="kids-item"><h4>For parents & teachers</h4><p data-i18n="kidParent">Suitable for STEM education.</p></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="help-content" id="helpQuiz"><h3 data-i18n="quizTitle">&#129514; Test Your Knowledge</h3><div id="quizContainer"></div><div id="quizScore" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:rgba(var(--accent-rgb),0.1);text-align:center;"><p id="quizScoreText" style="font-size:1.2rem;font-weight:700;"></p><button onclick="startQuiz()" class="btn-sm" style="margin-top:0.5rem;" data-i18n="quizRetry">Retry</button></div></div><div class="related-app"><a id="related2Link" href="#"><strong data-i18n="related2_name">App</strong></a><p data-i18n="related2_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div>
+<div class="related-app"><a id="related3Link" href="#"><strong data-i18n="related3_name">App</strong></a><p data-i18n="related3_desc" style="font-size:0.8rem;opacity:0.7;margin:0;">Description</p></div></div>
 <div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span><button onclick="printWorksheet()" class="btn-sm" style="margin-left:0.5rem;" data-i18n="printBtn">🖨️ Print</button></div></aside>
-  <div class="sidebar-overlay" id="settingsOverlay"></div>
-  <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="sidebar-body">
-    <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>&#x1F1EC;&#x1F1E7; EN</option><option value="fr">&#x1F1EB;&#x1F1F7; FR</option><option value="ar">&#x1F1E9;&#x1F1FF; &#x0639;&#x0631;&#x0628;&#x064A;</option></select></div>
-    <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
-    <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">&#x1F50A; Sound effects</span></label></div>
-    <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
-    <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
-    <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="musicMode">Music reactive</span></button></div>
-  </div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
-  <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">&#x1F4DC; Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#x2713;</button><button class="log-filter" data-filter="error">&#x2717;</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div></aside>
-  <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working&hellip;</div></div></div>
-  <div class="daily-challenge" id="dailyChallenge" style="display:none;margin:1rem 0;padding:1rem;border-radius:10px;background:rgba(var(--accent-rgb,212,175,55),0.08);border:1px solid rgba(var(--accent-rgb,212,175,55),0.2);"></div><div class="mentor-overlay" id="mentorOverlay" style="display:none;"></div><button id="mentorTriggerBtn" class="btn-sm" style="margin:0.5rem 0.3rem;padding:0.4rem 0.8rem;border-radius:20px;border:1px solid var(--accent,#d4af37);background:rgba(var(--accent-rgb,212,175,55),0.1);cursor:pointer;font-size:0.8rem;color:inherit;" data-i18n="mentorStart">🎓 Tutorial</button><div style="display:none" id="peerModePanel"></div><div style="display:none" id="activityHeatmap"></div>
+ <div class="sidebar-overlay" id="settingsOverlay"></div>
+ <aside class="sidebar" id="settingsPanel" aria-label="Settings" role="dialog" aria-modal="true"><div class="sidebar-header"><span class="sidebar-title" data-i18n="settings">&#x2699;&#xFE0F; Settings</span><button id="settingsCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div><div class="sidebar-body">
+ <div class="sidebar-group"><label class="sidebar-label" data-i18n="language">Language</label><select id="langSelect" class="sidebar-select"><option value="en" selected>&#x1F1EC;&#x1F1E7; EN</option><option value="fr">&#x1F1EB;&#x1F1F7; FR</option><option value="ar">&#x1F1E9;&#x1F1FF; &#x0639;&#x0631;&#x0628;&#x064A;</option></select></div>
+ <div class="sidebar-group"><label class="sidebar-label" data-i18n="theme">Theme</label><select id="themeSelect" class="sidebar-select"><option value="mosque-gold">Mosque</option><option value="zellige">Zellige</option><option value="andalus">Andalus</option><option value="riad">Riad</option><option value="medina">Medina</option><option value="space">Space</option><option value="jungle">Jungle</option><option value="robot">Robot</option></select></div>
+ <div class="sidebar-group"><label class="toggle-ctrl"><input type="checkbox" id="soundToggle" class="checkbox-ctrl"/><span data-i18n="soundEffects">&#x1F50A; Sound effects</span></label></div>
+ <div class="sidebar-group"><button id="whisperBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3A4;</span> <span data-i18n="whisperMode">Whisper mode</span></button></div>
+ <div class="sidebar-group"><button id="breathingBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1FAC1;</span> <span data-i18n="breathingGuide">Breathing guide</span></button><div class="dhikr-display" id="dhikrDisplay" style="display:none"><span class="dhikr-label">&#x0633;&#x0628;&#x062D;&#x0627;&#x0646; &#x0627;&#x0644;&#x0644;&#x0647;</span><span class="dhikr-count" id="dhikrCounter">0</span><button id="dhikrBtn" class="btn-sm primary"><span data-i18n="dhikrTap">Tap</span></button></div></div>
+ <div class="sidebar-group"><button id="musicBtn" class="btn-sm" style="width:100%"><span class="btn-icon">&#x1F3B5;</span> <span data-i18n="musicMode">Music reactive</span></button></div>
+ </div><div class="sidebar-footer"><span>Workshop DIY</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+ <aside class="sidebar" id="logPanel" aria-label="Activity Log"><div class="resize-handle" id="logResizeHandle"></div><div class="sidebar-header"><span class="sidebar-title" data-i18n="activityLog">&#x1F4DC; Activity Log</span><div class="log-controls"><button id="clearLogBtn" class="btn-sm"><span class="btn-icon">&#x1F9F9;</span><span data-i18n="clear">Clear</span></button><button id="copyLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4CB;</span><span data-i18n="copy">Copy</span></button><button id="exportLogBtn" class="btn-sm"><span class="btn-icon">&#x1F4BE;</span><span data-i18n="export">Export</span></button><button id="logCloseBtn" class="btn-icon-only" aria-label="Close">&#x2715;</button></div></div><div class="log-filters" id="logFilters"><button class="log-filter active" data-filter="all" data-i18n="filterAll">All</button><button class="log-filter" data-filter="info">Info</button><button class="log-filter" data-filter="success">&#x2713;</button><button class="log-filter" data-filter="error">&#x2717;</button><button class="log-filter" data-filter="tx">TX</button><button class="log-filter" data-filter="rx">RX</button></div><div class="sidebar-body log-body"><div class="log" id="logContainer" aria-live="polite"></div></div><div class="sidebar-footer"><span data-i18n="eventsMsg">Events &amp; messages</span><span class="badge"><strong>v1.0</strong></span></div></aside>
+ <div id="toastIndicator" class="toast-indicator"><div class="toast-inner"><div class="spinner"></div><div id="toastMessage" class="toast-text">Working&hellip;</div></div></div>
+ 
 <script src="script.js"></script>
-<div class="tooltip-float" id="tooltipFloat" style="display:none;position:fixed;z-index:9999;background:#1a1a2e;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:250px;pointer-events:none;transition:opacity 0.2s"></div>
 
-
-
-
-
-<button class="voice-btn" id="voiceBtn" style="display:none" data-i18n="voiceTitle">🎤 Voice</button>
-<div class="voice-indicator" id="voiceIndicator" style="display:none;position:fixed;top:10px;right:10px;width:12px;height:12px;background:red;border-radius:50%;z-index:9999"></div>
-<button class="share-btn" id="shareBtn" data-i18n="shareBtn">📤 Share</button>
 </body>
 </html>
