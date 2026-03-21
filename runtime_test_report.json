@@ -1,0 +1,2810 @@
+{
+  "date": "2026-03-21T04:31:09.751Z",
+  "total": 488,
+  "pass": 23,
+  "fail": 465,
+  "failures": [
+    {
+      "app": "01-spy-microbit/bit-field-scanner",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "01-spy-microbit/bit-invisible-ink",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "01-spy-microbit/bit-micro-wire",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "01-spy-microbit/bit-panic-button",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "01-spy-microbit/bit-shake-cipher",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "01-spy-microbit/bit-spy-compass",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "01-spy-microbit/bit-stealth-alarm",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-dark-net-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-dead-zone",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-frequency-hunter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-ghost-beacon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-packet-sniffer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-shadow-cam",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-tor-relay",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-usb-rubber-ducky",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-vault",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "02-spy-esp32/esp-wifi-jammer-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-burner-chat",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-cipher-suite",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-dark-profile",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-exif-eraser",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-metadata-detective",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-network-map",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-onion-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-password-cracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-phishing-trainer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "03-spy-browser/web-steganography-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "04-spy-combos/kit-capture-the-flag",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "04-spy-combos/kit-escape-hq",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "04-spy-combos/kit-spy-pro",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-arp-detective",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-captive-portal",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-dead-letter-box",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-dns-playground",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-honeypot",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-mesh-whisper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-network-cartographer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-packet-storm",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-rogue-ap-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-signal-ghost",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-spectrum-wars",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "05-net-esp32/esp-wifi-thermometer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-bgp-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-blockchain-messenger",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-botnet-defense",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-certificate-inspector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-darknet-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-dns-odyssey",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-firewall-fortress",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-mitm-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-packet-racer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-port-scanner",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-protocol-decoder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-subnet-architect",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-traceroute-quest",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "06-net-browser/web-vpn-tunnel",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "07-net-microbit/bit-ble-mesh-chat",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "07-net-microbit/bit-mesh-rescue",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "07-net-microbit/bit-micro-vpn",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "07-net-microbit/bit-radio-cartographer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "07-net-microbit/bit-radio-sniffer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-consensus-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-cyber-range",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-gossip-protocol",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-internet-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-network-time-machine",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-swarm-net",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "08-net-multi/esp-tor-in-a-box",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "09-net-ultimate/web-cyber-academy",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "09-net-ultimate/web-hackathon-arena",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "09-net-ultimate/web-operation-blackout",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-aircraft-radar",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-fm-pirate-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-gsm-tower-mapper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-pager-decoder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-ism-band-explorer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-radio-telescope",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-replay-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-rf-fingerprinter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-rf-time-machine",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-rf-waterfall",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-satellite-listener",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-signal-hunter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-signal-zoo",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "10-hrf-sigint/hrf-spectrum-wars",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "11-hrf-microbit/bit-frequency-duel",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "11-hrf-microbit/bit-micro-radar",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "11-hrf-microbit/bit-rf-alarm-system",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "11-hrf-microbit/bit-rf-remote-control",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-bug-sweeper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-covert-channel",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-direction-finder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-rf-cloak",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-rf-jail",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-signal-forge",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "13-hrf-spyops/hrf-tracker-hunter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-beacon-flood",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-channel-heatmap",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-client-fingerprinter",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-deauth-detector",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-evil-twin-spotter",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-handshake-theater",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-packet-microscope",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-probe-tracker",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-sonar",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "14-wifi-recon/wifi-timeline",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "15-wifi-spy/wifi-covert-exfil",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (2): Error: <path> attribute d: Expected number, \"…2h6.5zm-13,.16.2h-3.2v-16.2h3.2z…\"."
+      ]
+    },
+    {
+      "app": "15-wifi-spy/wifi-ghost-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "15-wifi-spy/wifi-invisibility-test",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "15-wifi-spy/wifi-movement-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "15-wifi-spy/wifi-persona-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "15-wifi-spy/wifi-rf-lineup",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "16-wifi-hackrf/wifi-frequency-forensics",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "16-wifi-hackrf/wifi-full-spectrum",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "16-wifi-hackrf/wifi-hidden-network",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "16-wifi-hackrf/wifi-jamming-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "16-wifi-hackrf/wifi-protocol-rainbow",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "17-wifi-classroom/wifi-101-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "17-wifi-classroom/wifi-attack-defense",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "17-wifi-classroom/wifi-escape-room",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "17-wifi-classroom/wifi-network-detective",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "17-wifi-classroom/wifi-security-audit",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "18-wifi-esp32/esp-captive-portal-atk",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "18-wifi-esp32/esp-honeypot-network",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "18-wifi-esp32/esp-mesh-vs-traditional",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "18-wifi-esp32/esp-roaming-visualizer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "18-wifi-esp32/esp-wifi-canary",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-band-explorer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-cw-decoder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-cw-keyer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-propagation-monitor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-qso-logger",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-repeater-map",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-ssb-visualizer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "19-ham-core/ham-waterfall-art",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-aprs-dashboard",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-aprs-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-digi-mode-zoo",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-ft8-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-ft8-world-map",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-js8-messenger",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-packet-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-psk31-chat",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-sstv-gallery",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-winlink-gateway",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "20-ham-digital/ham-wspr-beacon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-cubesat-telemetry",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-graves-radar",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-iss-contact",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-meteor-m2-hd",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-moon-bounce",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-noaa-weather",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "21-ham-satellite/ham-satellite-commander",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "22-ham-microbit/bit-cw-paddle",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "22-ham-microbit/bit-fox-hunt-compass",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "22-ham-microbit/bit-satellite-alarm",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "22-ham-microbit/bit-signal-meter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "23-ham-esp32/esp-antenna-analyzer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "23-ham-esp32/esp-aprs-igate",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "23-ham-esp32/esp-beacon-controller",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "23-ham-esp32/esp-digi-repeater",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "23-ham-esp32/esp-remote-sdr",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "23-ham-esp32/esp-solar-monitor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "24-ham-emergency/esp-field-day",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "24-ham-emergency/ham-mesh-emergency",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "24-ham-emergency/ham-skywarn",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "24-ham-emergency/kit-go-box",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "25-ham-learning/ham-antenna-sim-vs-real",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "25-ham-learning/ham-band-condition-game",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "25-ham-learning/ham-exam-trainer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "25-ham-learning/ham-qsl-card-maker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "26-ham-godtier/ham-all-band",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "26-ham-godtier/ham-contest-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "26-ham-godtier/ham-ionosphere-mapper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "26-ham-godtier/ham-radio-observatory",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-demod-challenge",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-dsp-workbench",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-fft-racing",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-filter-forge",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-iq-explorer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-modulation-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-noise-floor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "27-sdr-dsp/sdr-signal-generator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "28-sdr-multi/sdr-coherent",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "28-sdr-multi/sdr-correlation",
+      "errors": [
+        "Theme switch did not change data-theme",
+        "JS errors (1): Cannot read properties of null (reading 'value')"
+      ]
+    },
+    {
+      "app": "28-sdr-multi/sdr-doppler-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "28-sdr-multi/sdr-farm",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "28-sdr-multi/sdr-tdoa-locator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "28-sdr-multi/sdr-wideband-recorder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-acars-decoder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-ais-maritime",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-lightning",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-navtex",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-radiosonde",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-vdl-mode2",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "29-sdr-aviation/sdr-vhf-airband",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "30-sdr-science/sdr-jupiter-receiver",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "30-sdr-science/sdr-propagation-beacon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "30-sdr-science/sdr-radio-spectrometer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "30-sdr-science/sdr-rfi-hunter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "30-sdr-science/sdr-solar-flare",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "31-sdr-iot/sdr-industrial",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "31-sdr-iot/sdr-keyfob",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "31-sdr-iot/sdr-lorawan",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "31-sdr-iot/sdr-smart-meter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "31-sdr-iot/sdr-tpms",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "31-sdr-iot/sdr-zigbee",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "32-sdr-tools/sdr-antenna-profiler",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "32-sdr-tools/sdr-band-allocator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "32-sdr-tools/sdr-benchmark",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "32-sdr-tools/sdr-interference-finder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "32-sdr-tools/sdr-oscilloscope",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "32-sdr-tools/sdr-signal-classifier",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "33-sdr-learning/sdr-build-receiver",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "33-sdr-learning/sdr-protocol-reverse",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "33-sdr-learning/sdr-exam-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "33-sdr-learning/sdr-rf-101",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "33-sdr-learning/sdr-sandbox",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "34-sdr-godtier/sdr-os",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "34-sdr-godtier/sdr-server",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "34-sdr-godtier/sdr-spectrum-observatory",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "34-sdr-godtier/sdr-universal-decoder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-antenna-forge",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-antenna-graveyard",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-antenna-range",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-antenna-shootout",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-farm-manager",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-fox-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-fractal-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-magnetic-loop",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-pcb-studio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-satellite-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-sdr-tuner",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-wire-wizard",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "35-ant-build/ant-yagi-optimizer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "36-ant-pi/pi-antenna-switch",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "36-ant-pi/pi-nec-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "36-ant-pi/pi-phased-array",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "36-ant-pi/pi-remote-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "36-ant-pi/pi-rotator-controller",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-camera-trap",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-clock-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-honeypot-server",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-igate-digipeater",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-kiosk",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-mesh-node",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-nas-vault",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-packet-bbs",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-print-server",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-radio-recorder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-repeater",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-sdr-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-tor-router",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-vpn-gateway",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "37-pi-core/pi-war-room",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "38-pi-antenna/pi-remote-antenna-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/kit-field-comms",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-agent-communicator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-burst-transmitter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-counter-surveillance",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-covert-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-dead-drop",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-faraday-test",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-lockpick-trainer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-signal-intercept",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-spy-zero",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-stealth-ap",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "39-agent-gear/pi-surveillance-drone",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "40-agent-microbit/bit-dead-man-switch",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "40-agent-microbit/bit-extraction-signal",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "40-agent-microbit/bit-invisible-fence",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "40-agent-microbit/bit-micro-beacon-trail",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "40-agent-microbit/bit-wrist-communicator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "41-agent-antenna/ant-antenna-in-a-bag",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "41-agent-antenna/ant-covert-antenna",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "41-agent-antenna/ant-direction-finder-pro",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "41-agent-antenna/ant-rf-perimeter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "41-agent-antenna/ant-satellite-comms",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-agent-onboarding",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-blue-team",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-ghost-box",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-mission-impossible",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-mobile-command",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-red-team",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "42-agent-ultimate/kit-safe-house",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-body-antenna",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-brainwave-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-breath-modulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-gesture-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-heartbeat-cipher",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-heartbeat-mesh",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-muscle-telegraph",
+      "errors": [
+        "missing #splash"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-nerve-impulse-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-phantom-limb-radio",
+      "errors": [
+        "missing #splash"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-pupil-morse",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-skin-galvanic-key",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-sweat-sensor-crypto",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-thermal-signature",
+      "errors": [
+        "missing #splash"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-voice-rf-fingerprint",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "43-bio-radio/bio-walking-gait-id",
+      "errors": [
+        "missing #splash"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-acoustic-covert-channel",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-acoustic-fence",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-acoustic-keylogger",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-acoustic-levitator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-audio-steganography",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-dolphin-attack-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-glass-laser-mic",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-infrasound-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-parametric-speaker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-room-impulse-mapper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-seismic-footprint",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-sonar-mapper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-ultrasonic-data-link",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-voice-cloak",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "44-acoustic-warfare/sonic-whisper-network",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-chronos-beacon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-drift-detective",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-entropy-harvester",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-epoch-vault",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-frequency-hopping-chess",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-jitter-fingerprint",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-light-speed-measure",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-nanosecond-radar",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-packet-time-machine",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-relativistic-calculator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-temporal-steganography",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-temporal-triangulation",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-time-crystal-sync",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-time-reversal-mirror",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "45-time-manipulation/chrono-timing-attack-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-ant-colony-mesh",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-cellular-automata-mesh",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-consensus-blockchain",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-democratic-frequency",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-emergent-firewall",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-flock-formation",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-genetic-algorithm-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-hive-mind-sensor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-murmuration-display",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-particle-swarm-optimizer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-quorum-sensing",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-slime-mold-router",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-stigmergy-network",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-swarm-spectrum-scan",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "46-swarm-intelligence/swarm-wolf-pack-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-bell-inequality-rf",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-casimir-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-doppler-cooling-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-em-drive-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-faraday-rotation-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-gravitational-wave-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-holographic-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-metamaterial-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-plasma-antenna",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-quantum-random-beacon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-radio-black-hole",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-sagnac-interferometer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-superluminal-illusion",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-tunneling-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "47-impossible-physics/phys-zero-point-meter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-bluetooth-impersonator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-cable-tap-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-dns-exfiltration-engine",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-evil-firmware-flasher",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-firmware-reverse-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-ghost-network-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-hardware-trojan-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-power-analysis-attack",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-radio-replay-attack",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-rogue-base-station",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-rubber-ducky-generator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-side-channel-arsenal",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-supply-chain-auditor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-tempest-spy",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "48-dark-arts/dark-wifi-karma-attack",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-adaptive-filter-ai",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-ai-signal-identifier",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-anomaly-hunter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-cognitive-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-deepfake-voice-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-dream-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-emotion-detector-rf",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-gesture-recognition-rf",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-gpt-radio-operator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-material-identifier-rf",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-neural-codec",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-neural-demodulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-person-counting-wifi",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-radio-gan",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "49-ai-radio/ai-spectrum-predictor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-atmospheric-electricity",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-coral-reef-monitor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-diy-earthquake-warning",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-diy-starlink-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-locust-swarm-radar",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-mesh-internet-disaster",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-nuclear-fallout-mapper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-ocean-current-mapper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-radio-archaeology",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-seed-vault-beacon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-solar-storm-shield",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-space-debris-tracker",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-underground-rescue-radio",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-volcano-monitor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "50-civilization-hacks/civ-whale-song-decoder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-baiting-trap-designer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-credential-harvester",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-deepfake-voice-cloner",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-dumpster-diving-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-impersonation-toolkit",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-influence-ops-dashboard",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-osint-profile-aggregator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-phishing-campaign-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-pretexting-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-qr-code-poisoner",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-shoulder-surfing-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-social-media-recon",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-tailgating-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-vishing-call-simulator",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "51-social-engineering/se-watering-hole-architect",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-covert-audio-implant",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-evil-maid-toolkit",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-gps-tracker-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-hardware-trojan-designer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-hidden-camera-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-keyboard-logger-pcb",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-lan-turtle-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-magnetic-stripe-cloner",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-nfc-skimmer-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-pi-zero-dropbox",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-rogue-charger-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-screen-mirror-implant",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-supply-chain-backdoor",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-usb-implant-designer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "52-hardware-implants/imp-wifi-pineapple-diy",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-anti-drone-system",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-cognitive-ew",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-comms-interception-hub",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-directed-energy-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-drone-hijacker-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-electronic-warfare-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-frequency-deconfliction",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-gps-spoofing-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-imsi-catcher-sim",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-meaconing-attack",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-radar-jammer-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-rf-fingerprint-spoofer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-satellite-injection-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-spectrum-denial-lab",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "54-rf-warfare/rfw-spoofing-detector",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-airgap-jumper",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-anti-forensics-toolkit",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-burner-identity-gen",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-counter-surveillance-sweep",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-dead-drop-network",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-exfiltration-olympics",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-fingerprint-randomizer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-forensic-evidence-planter",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-metadata-scrubber",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-secure-comms-hardener",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-steganography-suite",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-stylometry-defeater",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-tor-traffic-analyzer",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-traffic-camouflage",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    },
+    {
+      "app": "55-escape-evasion/esc-vpn-chain-builder",
+      "errors": [
+        "Theme switch did not change data-theme"
+      ]
+    }
+  ]
+}
