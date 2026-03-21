@@ -253,7 +253,7 @@ const LANG={
  achieveExperimenter:'Experimenter — changed 5+ parameters'
  ,
  printBtn: '🖨️ Print Worksheet',quizTab:'Quiz',quizTitle:'Test Your Knowledge',quizRetry:'Retry',quizCorrect:'Correct!',quizWrong:'Wrong!',quizScore:'Score',quiz_q1:'What is signal-to-noise ratio (SNR)?',quiz_q1a:'Signal color',quiz_q1b:'Ratio of signal power to noise power',quiz_q1c:'Signal speed',quiz_q1d:'Number of signals',quiz_q1_answer:'1',quiz_q2:'What is the relationship between wavelength and frequency?',quiz_q2a:'Directly proportional',quiz_q2b:'Inversely proportional',quiz_q2c:'No relationship',quiz_q2d:'Exponential',quiz_q2_answer:'1',quiz_q3:'What unit is commonly used for signal strength?',quiz_q3a:'Hertz',quiz_q3b:'Decibels (dBm)',quiz_q3c:'Watts only',quiz_q3d:'Meters',quiz_q3_answer:'1',quiz_q4:'What is impedance measured in?',quiz_q4a:'Farads',quiz_q4b:'Henrys',quiz_q4c:'Ohms',quiz_q4d:'Watts',quiz_q4_answer:'2',quiz_q5:'What does modulation do to a signal?',quiz_q5a:'Deletes it',quiz_q5b:'Encodes information onto a carrier wave',quiz_q5c:'Makes it louder',quiz_q5d:'Stops transmission',quiz_q5_answer:'1',realworldTitle:'🌍 Real-World Stories',realworld1:'In 2015, researchers showed that a $20 SDR dongle could track every aircraft in range by decoding unencrypted ADS-B transponder signals. This revealed a fundamental security gap in global aviation surveillance.',realworld2:'The Stuxnet worm (2010) destroyed 1,000 Iranian nuclear centrifuges by manipulating their PLCs via infected USB drives. It was the first cyber weapon to cause physical destruction and crossed the digital-physical boundary.',realworld3:'In 2017, GPS spoofing in the Black Sea made 20+ ships believe they were 25 miles inland at an airport. This demonstrated that satellite navigation — relied on by aviation, shipping, and military — can be fooled by fake RF signals.',experimentTitle:'🔬 Experiments',experiment_1_title:'Baseline Measurement',experiment_1:'Set all controls to default values and record the initial readings. These are your baseline measurements. Good scientists always establish a baseline before changing variables — it gives you a reference point to measure all future changes against.',experiment_2_title:'Sensitivity Analysis',experiment_2:'Change one parameter to its minimum value, record the result, then set it to maximum. The difference reveals the system\'s sensitivity to that variable. Repeat for each control. In signal interception, knowing which parameters matter most helps you focus your efforts efficiently.',experiment_3_title:'Interaction Effects',experiment_3:'After testing parameters individually, change two simultaneously. Does the combined effect equal the sum of individual effects? Or is there a synergy (or cancellation)? Non-linear interactions are common in signal interception and reveal the hidden complexity beneath simple-looking systems.',wiki_concept_title:'💡 Core Concept',wiki_concept:'DNS Odyssey demonstrates a fundamental concept in signal interception. At its core, this simulation models how real systems process signals, data, or physical phenomena. The key insight is that complex behaviors emerge from simple rules applied repeatedly. Understanding this principle — that sophisticated outcomes arise from basic building blocks — is the foundation of engineering and scientific thinking.',wiki_realworld_title:'🌐 Real-World Applications',wiki_realworld:'The principles demonstrated in DNS Odyssey have direct real-world applications. Professionals in signal interception use these same concepts daily. In industry, HackRF and similar hardware implement these algorithms in embedded systems. In research, these models help scientists predict and analyze complex phenomena. The skills you develop here — systematic experimentation, parameter tuning, and data interpretation — are exactly what employers seek.',wiki_safety_title:'⚠️ Safety & Responsibility',wiki_safety:'Working with signal interception carries important responsibilities. Always operate within legal boundaries — many countries regulate equipment and techniques in this field. Never test on systems you do not own without explicit written permission. This simulation is designed for safe educational use — it does not transmit real signals or access real networks. When you progress to real hardware, research your local regulations first.',proTipTitle:'💡 Pro Tips',proTip1:'Always use an external LNA (Low Noise Amplifier) for weak signal reception. The HackRF\\x27s built-in amplifier has a high noise figure that masks faint signals.',proTip2:'Set your sample rate to at least 2x the signal bandwidth (Nyquist theorem). For FM radio (200kHz bandwidth), use at least 400kHz sample rate.',funFactTitle:'🎯 Did You Know?',funFact:'The Sun is the strongest radio source in our sky. Solar flares can disrupt HF radio communications worldwide for hours — ham operators call these events \\x27radio blackouts.\\x27',mistakeTitle:'⚠️ Common Mistakes',mistake1:'Changing multiple parameters at once makes it impossible to isolate cause and effect. Always change ONE variable at a time.',mistake2:'Skipping the baseline measurement. Without knowing the default behavior, you cannot measure how your changes affect the system.',mistake3:'Ignoring the activity log. It records every event with timestamps — essential for understanding sequences and debugging unexpected results.',voiceTitle:'🎤 Voice',voiceOn:'Voice ON',voiceOff:'Voice OFF',voiceListening:'Listening...',voiceCmd:'Command recognised',voiceHelp:'Say: start, stop, reset, help, theme, next, previous',voice_cmds:'start / stop / reset / help / theme / next / previous',shareTitle:'📤 Share',shareBtn:'📤 Share',shareCopied:'Copied to clipboard!',shareGenerate:'Generate Summary',shareExport:'Export JSON',missionTitle:'MISSION BRIEFING',missionClassified:'CLASSIFIED',missionObjective:'Your mission objective:',missionAgent:'AGENT-61F7D9',missionSkip:'Skip',missionGo:'ACCEPT MISSION',mission_obj:'Explore and master DNS Odyssey \u2014 analyze, experiment, and complete all challenges.',nightVisionTitle:'Night Vision Mode',nightVisionOn:'NV ON',nightVisionOff:'NV OFF',nightVisionAuto:'Auto NV',},
- fr:{tooltipTitle:'Infobulles intelligentes',tooltipToggle:'Activer les infobulles',tip_start:'Lancer la simulation et observer la visualisation s\x27animer',tip_stop:'Mettre en pause la simulation en conservant l\x27état actuel',tip_reset:'Effacer toutes les données et revenir aux conditions initiales',tip_slider:'Glisser pour ajuster ce paramètre — la visualisation se met à jour en temps réel',tip_theme:'Basculer entre 8 thèmes visuels dont 2 thèmes clairs islamiques',tip_help:'Ouvrir le panneau d\x27aide avec FAQ, guides, wiki et défis',explorerTitle:'Explorateur d\x27espace paramétrique',explorerStart:'Auto-Explorer',explorerStop:'Arrêter l\x27exploration',explorerProgress:'Exploration des combinaisons...',explorerResult:'Exploration terminée',explorerInfo:'Teste systématiquement min/milieu/max pour chaque curseur et enregistre les résultats',
+ fr:{narratorTitle:'Narrateur Auto',narratorScanning:'Recherche de signaux...',narratorDetected:'Signal d\x27tect\x27! Activit\x27: HAUTE',narratorProcessing:'Traitement des donn\x27es...',narratorWarning:'Alerte: anomalie d\x27tect\x27e',narratorAcquired:'Signal acquis avec succ\x27s',whatifTitle:'Et si?',whatifIncrease:'Augmenter',whatifDecrease:'Diminuer',tooltipTitle:'Infobulles intelligentes',tooltipToggle:'Activer les infobulles',tip_start:'Lancer la simulation et observer la visualisation s\x27animer',tip_stop:'Mettre en pause la simulation en conservant l\x27état actuel',tip_reset:'Effacer toutes les données et revenir aux conditions initiales',tip_slider:'Glisser pour ajuster ce paramètre — la visualisation se met à jour en temps réel',tip_theme:'Basculer entre 8 thèmes visuels dont 2 thèmes clairs islamiques',tip_help:'Ouvrir le panneau d\x27aide avec FAQ, guides, wiki et défis',explorerTitle:'Explorateur d\x27espace paramétrique',explorerStart:'Auto-Explorer',explorerStop:'Arrêter l\x27exploration',explorerProgress:'Exploration des combinaisons...',explorerResult:'Exploration terminée',explorerInfo:'Teste systématiquement min/milieu/max pour chaque curseur et enregistre les résultats',
  title:'DNS Odyssee',subtitle:'Suivez la resolution DNS recursive etape par etape',
  disconnected:'Deconnecte',connected:'Connecte',
  mainSection:'Voyage de Resolution DNS',mainDesc:'Resolution DNS recursive etape par etape',
@@ -311,7 +311,7 @@ const LANG={
  faq_a10: 'Cette simulation modélise la même physique et les mêmes mathématiques que les systèmes professionnels. Les paramètres que vous ajustez correspondent aux réglages de vrais équipements. Les visualisations montrent des motifs identiques à ceux des instruments professionnels. La différence principale est que ceci fonctionne en sécurité dans votre navigateur — les vrais systèmes utilisent du matériel HackRF SDR et peuvent avoir des exigences légales.',
  glossTitle: '📚 Termes clés',learnAge:'Âge :',relatedTitle:'\ud83d\udd17 Apps Similaires',related1_name:'Dead Drop — Transfert BLE',related1_desc:'Chiffrez et échangez des messages secrets via simulation BLE',related1_path:'../../50-civilization-hacks/civ-underground-rescue-radio/index.html',related2_name:'Dead Drop — Transfert BLE',related2_desc:'Chiffrez et échangez des messages secrets via simulation BLE',related2_path:'../../50-civilization-hacks/civ-diy-earthquake-warning/index.html',related3_name:'Dead Drop — Transfert BLE',related3_desc:'Chiffrez et échangez des messages secrets via simulation BLE',related3_path:'../../50-civilization-hacks/civ-whale-song-decoder/index.html',pathTitle:'\ud83d\udee4\ufe0f Parcours',pathPrev_name:'Reseau Onion',pathPrev_path:'../../06-net-browser/web-darknet-simulator/index.html',pathNext_name:'Defense par regles',pathNext_path:'../../06-net-browser/web-firewall-fortress/index.html',
  printBtn: '🖨️ Imprimer',realworldTitle:'🌍 Histoires réelles',realworld1:'En 2015, des chercheurs ont montré qu\'un dongle SDR à 20$ pouvait suivre chaque avion à portée en décodant les signaux ADS-B non chiffrés des transpondeurs.',realworld2:'Le ver Stuxnet (2010) a détruit 1000 centrifugeuses nucléaires iraniennes en manipulant leurs automates programmables via des clés USB infectées.',realworld3:'En 2017, le spoofing GPS en mer Noire a fait croire à plus de 20 navires qu\'ils se trouvaient à 25 milles à l\'intérieur des terres dans un aéroport.',experimentTitle:'🔬 Expériences',experiment_1_title:'Mesure de référence',experiment_1:'Réglez tous les contrôles sur les valeurs par défaut et notez les lectures initiales. Ce sont vos mesures de référence. Un bon scientifique établit toujours une référence avant de modifier des variables — cela donne un point de comparaison pour mesurer tous les changements futurs.',experiment_2_title:'Analyse de sensibilité',experiment_2:'Changez un paramètre à sa valeur minimale, notez le résultat, puis réglez-le au maximum. La différence révèle la sensibilité du système à cette variable. En interception de signaux, savoir quels paramètres comptent le plus vous aide à concentrer vos efforts.',experiment_3_title:'Effets d\'interaction',experiment_3:'Après avoir testé les paramètres individuellement, changez-en deux simultanément. L\'effet combiné est-il égal à la somme des effets individuels? Les interactions non linéaires sont courantes en interception de signaux et révèlent la complexité cachée sous des systèmes simples en apparence.',wiki_concept_title:'💡 Concept fondamental',wiki_concept:'DNS Odyssey illustre un concept fondamental en interception de signaux. Cette simulation modélise comment les systèmes réels traitent les signaux, les données ou les phénomènes physiques. L\'idée clé est que des comportements complexes émergent de règles simples appliquées de manière répétée.',wiki_realworld_title:'🌐 Applications réelles',wiki_realworld:'Les principes démontrés dans DNS Odyssey ont des applications directes dans le monde réel. Les professionnels de interception de signaux utilisent ces mêmes concepts quotidiennement. Dans l\'industrie, HackRF et du matériel similaire implémentent ces algorithmes dans des systèmes embarqués.',wiki_safety_title:'⚠️ Sécurité et responsabilité',wiki_safety:'Travailler en interception de signaux implique des responsabilités importantes. Opérez toujours dans les limites légales. Cette simulation est conçue pour un usage éducatif sûr — elle ne transmet pas de vrais signaux et n\'accède pas à de vrais réseaux.',voiceTitle:'🎤 Voix',voiceOn:'Voix ON',voiceOff:'Voix OFF',voiceListening:'Écoute...',voiceCmd:'Commande reconnue',voiceHelp:'Dites : démarrer, arrêter, aide, thème, suivant, précédent',voice_cmds:'démarrer / arrêter / aide / thème / suivant / précédent',shareTitle:'📤 Partager',shareBtn:'📤 Partager',shareCopied:'Copié dans le presse-papiers !',shareGenerate:'Générer le résumé',shareExport:'Exporter JSON',missionTitle:'BRIEFING DE MISSION',missionClassified:'CLASSIFI\xc9',missionObjective:'Objectif de mission :',missionAgent:'AGENT-61F7D9',missionSkip:'Passer',missionGo:'ACCEPTER LA MISSION',mission_obj:'Explorer et ma\xeetrisez DNS Odyssey \u2014 analysez, exp\xe9rimentez et compl\xe9tez tous les d\xe9fis.',nightVisionTitle:'Mode Vision Nocturne',nightVisionOn:'VN ON',nightVisionOff:'VN OFF',nightVisionAuto:'VN Auto',},
- ar:{tooltipTitle:'تلميحات ذكية',tooltipToggle:'تبديل التلميحات',tip_start:'ابدأ المحاكاة وشاهد الرسم البياني ينبض بالحياة',tip_stop:'أوقف المحاكاة مؤقتاً مع الحفاظ على الحالة الحالية',tip_reset:'امسح جميع البيانات وعد إلى الشروط الأولية',tip_slider:'اسحب لضبط هذا المعامل — يتحدث الرسم البياني في الوقت الفعلي',tip_theme:'بدّل بين 8 مظاهر مرئية منها تصميمان إسلاميان فاتحان',tip_help:'افتح لوحة المساعدة مع الأسئلة الشائعة والأدلة والويكي والتحديات',explorerTitle:'مستكشف فضاء المعاملات',explorerStart:'استكشاف تلقائي',explorerStop:'إيقاف الاستكشاف',explorerProgress:'جارٍ استكشاف التوليفات...',explorerResult:'اكتمل الاستكشاف',explorerInfo:'يختبر بشكل منهجي الحد الأدنى/الوسط/الأقصى لكل منزلق ويسجل النتائج',
+ ar:{narratorTitle:'الراوي التلقائي',narratorScanning:'...جاري البحث عن إشارات',narratorDetected:'!تم اكتشاف إشارة',narratorProcessing:'...معالجة البيانات',narratorWarning:'تحذير: تم اكتشاف شذوذ',narratorAcquired:'تم الحصول على الإشارة بنجاح',whatifTitle:'ماذا لو؟',whatifIncrease:'زيادة',whatifDecrease:'تقليل',tooltipTitle:'تلميحات ذكية',tooltipToggle:'تبديل التلميحات',tip_start:'ابدأ المحاكاة وشاهد الرسم البياني ينبض بالحياة',tip_stop:'أوقف المحاكاة مؤقتاً مع الحفاظ على الحالة الحالية',tip_reset:'امسح جميع البيانات وعد إلى الشروط الأولية',tip_slider:'اسحب لضبط هذا المعامل — يتحدث الرسم البياني في الوقت الفعلي',tip_theme:'بدّل بين 8 مظاهر مرئية منها تصميمان إسلاميان فاتحان',tip_help:'افتح لوحة المساعدة مع الأسئلة الشائعة والأدلة والويكي والتحديات',explorerTitle:'مستكشف فضاء المعاملات',explorerStart:'استكشاف تلقائي',explorerStop:'إيقاف الاستكشاف',explorerProgress:'جارٍ استكشاف التوليفات...',explorerResult:'اكتمل الاستكشاف',explorerInfo:'يختبر بشكل منهجي الحد الأدنى/الوسط/الأقصى لكل منزلق ويسجل النتائج',
  title:'رحلة DNS',subtitle:'شاهد حل DNS التكراري خطوة بخطوة',
  disconnected:'غير متصل',peerTitle:'👥 Mode Pair',peerConnect:'Connecter',peerDisconnect:'D\xe9connecter',peerStatus:'Statut pair',peerSend:'Envoy\xe9',peerReceive:'Re\xe7u',peerInfo:'Ouvrez cette app dans deux onglets pour synchroniser les param\xe8tres',heatmapTitle:'📅 Carte d\x27activit\xe9',heatmapToday:'Aujourd\x27hui',heatmapStreak:'S\xe9rie',heatmapTotal:'Total',heatmapLegend:'Moins \u2192 Plus',connected:'متصل',
  mainSection:'رحلة حل DNS',mainDesc:'حل DNS التكراري خطوة بخطوة',
@@ -370,6 +370,151 @@ const LANG={
  glossTitle: '📚 مصطلحات أساسية',learnAge:'العمر:',relatedTitle:'\ud83d\udd17 تطبيقات ذات صلة',related1_name:'Dead Drop — نقل رسائل BLE',related1_desc:'شفّر وتبادل رسائل سرية عبر محاكاة BLE',related1_path:'../../50-civilization-hacks/civ-underground-rescue-radio/index.html',related2_name:'Dead Drop — نقل رسائل BLE',related2_desc:'شفّر وتبادل رسائل سرية عبر محاكاة BLE',related2_path:'../../50-civilization-hacks/civ-diy-earthquake-warning/index.html',related3_name:'Dead Drop — نقل رسائل BLE',related3_desc:'شفّر وتبادل رسائل سرية عبر محاكاة BLE',related3_path:'../../50-civilization-hacks/civ-whale-song-decoder/index.html',pathTitle:'\ud83d\udee4\ufe0f مسار التعلم',pathPrev_name:'شبكة البصل',pathPrev_path:'../../06-net-browser/web-darknet-simulator/index.html',pathNext_name:'الدفاع بالقواعد',pathNext_path:'../../06-net-browser/web-firewall-fortress/index.html',
  printBtn: '🖨️ طباعة',realworldTitle:'🌍 قصص واقعية',realworld1:'في عام 2015 أثبت باحثون أن جهاز SDR بقيمة 20 دولارًا يمكنه تتبع كل طائرة في النطاق عبر فك تشفير إشارات ADS-B غير المشفرة.',realworld2:'دمرت دودة ستكسنت (2010) ألف جهاز طرد مركزي نووي إيراني من خلال التلاعب بوحدات التحكم المنطقية عبر أقراص USB مصابة.',realworld3:'في عام 2017 جعل انتحال GPS في البحر الأسود أكثر من 20 سفينة تعتقد أنها على بعد 25 ميلاً داخل البر في مطار.',experimentTitle:'🔬 تجارب',experiment_1_title:'القياس المرجعي',experiment_1:'اضبط جميع عناصر التحكم على القيم الافتراضية وسجّل القراءات الأولية. هذه هي قياساتك المرجعية. يقوم العالم الجيد دائمًا بتحديد خط الأساس قبل تغيير المتغيرات — فهو يمنحك نقطة مرجعية لقياس جميع التغييرات المستقبلية.',experiment_2_title:'تحليل الحساسية',experiment_2:'غيّر معلمة واحدة إلى قيمتها الدنيا وسجّل النتيجة ثم اضبطها على الحد الأقصى. يكشف الفرق عن حساسية النظام لهذا المتغير. في اعتراض الإشارات معرفة المعلمات الأكثر أهمية تساعدك على تركيز جهودك بكفاءة.',experiment_3_title:'تأثيرات التفاعل',experiment_3:'بعد اختبار المعلمات بشكل فردي غيّر اثنتين في وقت واحد. هل التأثير المشترك يساوي مجموع التأثيرات الفردية؟ التفاعلات غير الخطية شائعة في اعتراض الإشارات وتكشف التعقيد الخفي تحت أنظمة تبدو بسيطة.',wiki_concept_title:'💡 المفهوم الأساسي',wiki_concept:'DNS Odyssey يوضح مفهومًا أساسيًا في اعتراض الإشارات. تحاكي هذه المحاكاة كيفية معالجة الأنظمة الحقيقية للإشارات والبيانات أو الظواهر الفيزيائية. الفكرة الرئيسية هي أن السلوكيات المعقدة تنشأ من قواعد بسيطة تُطبق بشكل متكرر.',wiki_realworld_title:'🌐 التطبيقات الواقعية',wiki_realworld:'المبادئ المعروضة في DNS Odyssey لها تطبيقات مباشرة في العالم الحقيقي. يستخدم المحترفون في اعتراض الإشارات هذه المفاهيم نفسها يوميًا. في الصناعة يُنفذ HackRF وأجهزة مماثلة هذه الخوارزميات في أنظمة مدمجة.',wiki_safety_title:'⚠️ السلامة والمسؤولية',wiki_safety:'العمل في مجال اعتراض الإشارات يحمل مسؤوليات مهمة. تعمل دائمًا ضمن الحدود القانونية. هذه المحاكاة مصممة للاستخدام التعليمي الآمن — لا ترسل إشارات حقيقية ولا تصل إلى شبكات حقيقية.',voiceTitle:'🎤 صوت',voiceOn:'الصوت مفعل',voiceOff:'الصوت معطل',voiceListening:'جاري الاستماع...',voiceCmd:'تم التعرف على الأمر',voiceHelp:'قل: ابدأ، توقف، مساعدة',voice_cmds:'ابدأ / توقف / مساعدة',shareTitle:'📤 مشاركة',shareBtn:'📤 مشاركة',shareCopied:'تم النسخ!',shareGenerate:'إنشاء ملخص',shareExport:'تصدير JSON',peerTitle:'👥 \u0648\u0636\u0639 \u0627\u0644\u0646\u0638\u064a\u0631',peerConnect:'\u0627\u062a\u0635\u0627\u0644',peerDisconnect:'\u0642\u0637\u0639',peerStatus:'\u062d\u0627\u0644\u0629 \u0627\u0644\u0646\u0638\u064a\u0631',peerSend:'\u0623\u0631\u0633\u0644',peerReceive:'\u0627\u0633\u062a\u0644\u0645',peerInfo:'\u0627\u0641\u062a\u062d \u0647\u0630\u0627 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0641\u064a \u062a\u0628\u0648\u064a\u0628\u064a\u0646 \u0644\u0644\u0645\u0632\u0627\u0645\u0646\u0629',heatmapTitle:'📅 \u062e\u0631\u064a\u0637\u0629 \u0627\u0644\u0646\u0634\u0627\u0637',heatmapToday:'\u0627\u0644\u064a\u0648\u0645',heatmapStreak:'\u0633\u0644\u0633\u0644\u0629',heatmapTotal:'\u0627\u0644\u0645\u062c\u0645\u0648\u0639',heatmapLegend:'\u0623\u0642\u0644 \u2192 \u0623\u0643\u062b\u0631',missionTitle:'\u0625\u062D\u0627\u0637\u0629 \u0627\u0644\u0645\u0647\u0645\u0629',missionClassified:'\u0633\u0631\u064A',missionObjective:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0647\u0645\u0629:',missionAgent:'AGENT-61F7D9',missionSkip:'\u062A\u062E\u0637\u064A',missionGo:'\u0642\u0628\u0648\u0644 \u0627\u0644\u0645\u0647\u0645\u0629',mission_obj:'\u0627\u0633\u062A\u0643\u0634\u0641 \u0648\u0623\u062A\u0642\u0646 \u0647\u0630\u0627 \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u2014 \u062D\u0644\u0644 \u0648\u062C\u0631\u0628 \u0648\u0623\u0643\u0645\u0644 \u062C\u0645\u064A\u0639 \u0627\u0644\u062A\u062D\u062F\u064A\u0627\u062A.',nightVisionTitle:'\u0648\u0636\u0639 \u0627\u0644\u0631\u0624\u064A\u0629 \u0627\u0644\u0644\u064A\u0644\u064A\u0629',nightVisionOn:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 ON',nightVisionOff:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 OFF',nightVisionAuto:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 \u062A\u0644\u0642\u0627\u0626\u064A',}
 };
+
+/* ═══════ Auto-Narrator ═══════ */
+function initAutoNarrator(){
+ if(document.getElementById('narratorBox'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var box=document.createElement('div');
+ box.id='narratorBox';
+ box.style.cssText='position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:300px;background:rgba(0,0,0,0.78);color:#0f0;font-family:monospace;font-size:13px;padding:10px 16px;border-radius:10px;z-index:9999;text-align:center;pointer-events:none;opacity:0;transition:opacity 0.4s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+ document.body.appendChild(box);
+ var hideTimer=null;
+ var running=false;
+ var lastText='';
+ function showNarration(txt){
+  if(txt===lastText)return;
+  lastText=txt;
+  box.textContent=txt;
+  box.style.opacity='1';
+  if(hideTimer)clearTimeout(hideTimer);
+  hideTimer=setTimeout(function(){box.style.opacity='0';},3000);
+ }
+ var startBtn=document.getElementById('startBtn');
+ if(startBtn){
+  startBtn.addEventListener('click',function(){running=true;});
+ }
+ var stopBtn=document.getElementById('stopBtn');
+ if(stopBtn){
+  stopBtn.addEventListener('click',function(){running=false;});
+ }
+ var resetBtn=document.getElementById('resetBtn');
+ if(resetBtn){
+  resetBtn.addEventListener('click',function(){running=false;});
+ }
+ var canvas=document.getElementById('simCanvas');
+ if(canvas){
+  var ctx=null;
+  try{ctx=canvas.getContext('2d',{willReadFrequently:true});}catch(e){}
+  if(ctx){
+   setInterval(function(){
+    if(!running)return;
+    try{
+     var w=canvas.width||300;
+     var h=canvas.height||150;
+     var data=ctx.getImageData(0,0,Math.min(w,100),Math.min(h,100)).data;
+     var rSum=0,gSum=0,bSum=0,total=0;
+     for(var i=0;i<data.length;i+=16){
+      rSum+=data[i];gSum+=data[i+1];bSum+=data[i+2];total++;
+     }
+     if(total===0)return;
+     var rAvg=rSum/total,gAvg=gSum/total,bAvg=bSum/total;
+     var brightness=(rAvg+gAvg+bAvg)/3;
+     if(rAvg>gAvg*1.5&&rAvg>bAvg*1.5){
+      showNarration(L.narratorWarning||'Warning: anomaly detected');
+     }else if(gAvg>rAvg*1.3&&gAvg>bAvg*1.3){
+      showNarration(L.narratorAcquired||'Signal acquired successfully');
+     }else if(brightness>170){
+      showNarration(L.narratorDetected||'Signal detected! Activity: HIGH');
+     }else if(brightness<50){
+      showNarration(L.narratorScanning||'Scanning for signals...');
+     }else{
+      showNarration(L.narratorProcessing||'Processing data streams...');
+     }
+    }catch(e){}
+   },500);
+  }
+ }
+ var sliders=document.querySelectorAll('input[type=range]');
+ for(var s=0;s<sliders.length;s++){
+  (function(sl){
+   sl.addEventListener('input',function(){
+    if(!running)return;
+    var label='parameter';
+    var lbl=sl.previousElementSibling;
+    if(lbl&&lbl.textContent)label=lbl.textContent.replace(/[:\s]+$/,'');
+    showNarration('Adjusting '+label+' to '+sl.value+'...');
+   });
+  })(sliders[s]);
+ }
+ var hdr=document.querySelector('.header-buttons')||document.querySelector('header');
+ if(hdr){
+  var btn=document.createElement('button');
+  btn.className='btn-icon-only';
+  btn.textContent='\ud83d\udce1';
+  btn.title=L.narratorTitle||'Auto Narrator';
+  btn.style.cssText='background:none;border:1px solid currentColor;border-radius:6px;cursor:pointer;font-size:18px;padding:4px 8px;margin-left:4px;';
+  var vis=true;
+  btn.addEventListener('click',function(){
+   vis=!vis;
+   box.style.display=vis?'block':'none';
+  });
+  hdr.appendChild(btn);
+ }
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAutoNarrator);}
+else{initAutoNarrator();}
+
+/* ═══════ What-If Engine ═══════ */
+function initWhatIfEngine(){
+ if(document.querySelector('.whatif-btn'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var kwMap={frequency:'oscillation speed',power:'signal strength',range:'detection distance',sensitivity:'noise threshold',speed:'processing rate',gain:'amplification level',threshold:'trigger point',delay:'response time'};
+ var sliders=document.querySelectorAll('input[type=range]');
+ for(var s=0;s<sliders.length;s++){
+  (function(sl){
+   var btn=document.createElement('button');
+   btn.className='whatif-btn';
+   btn.textContent='?';
+   btn.title=L.whatifTitle||'What If?';
+   btn.style.cssText='background:rgba(0,0,0,0.6);color:#0ff;border:1px solid #0ff;border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;margin-left:6px;padding:0;line-height:20px;text-align:center;vertical-align:middle;flex-shrink:0;';
+   sl.parentNode.insertBefore(btn,sl.nextSibling);
+   btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var existing=document.querySelector('.whatif-popup');
+    if(existing)existing.remove();
+    var label='parameter';
+    var lbl=sl.previousElementSibling;
+    if(lbl&&lbl.textContent)label=lbl.textContent.replace(/[:\s]+$/,'').toLowerCase();
+    var val=parseInt(sl.value,10);
+    var min=parseInt(sl.min||'0',10);
+    var max=parseInt(sl.max||'100',10);
+    var mid=(min+max)/2;
+    var pct=max>min?Math.round(((val-min)/(max-min))*100):50;
+    var kw='behavior';
+    for(var k in kwMap){
+     if(label.indexOf(k)!==-1){kw=kwMap[k];break;}
+    }
+    var incWord=L.whatifIncrease||'Increasing';
+    var decWord=L.whatifDecrease||'Decreasing';
+    var txt=incWord+' '+label+' will increase '+kw+', potentially revealing hidden patterns. '+decWord+' it will reduce '+kw+'. Currently at '+pct+'%.';
+    var popup=document.createElement('div');
+    popup.className='whatif-popup';
+    popup.style.cssText='position:absolute;background:rgba(0,0,20,0.92);color:#0ff;font-size:12px;padding:10px 14px;border-radius:8px;border:1px solid #0ff;max-width:260px;z-index:10000;box-shadow:0 4px 16px rgba(0,255,255,0.15);line-height:1.5;';
+    popup.textContent=txt;
+    document.body.appendChild(popup);
+    var rect=sl.getBoundingClientRect();
+    popup.style.left=Math.max(4,rect.left+window.scrollX)+'px';
+    popup.style.top=(rect.bottom+window.scrollY+6)+'px';
+    function closePopup(){popup.remove();document.removeEventListener('click',closePopup);}
+    setTimeout(function(){document.addEventListener('click',closePopup);},10);
+   });
+  })(sliders[s]);
+ }
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initWhatIfEngine);}
+else{initWhatIfEngine();}
+
 /* ═══════ Mission Cards ═══════ */
 function initMissionCards(){
  if(document.getElementById('missionCardBtn'))return;

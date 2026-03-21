@@ -242,7 +242,7 @@ const LANG={
  achieveExperimenter:'Experimenter — changed 5+ parameters'
  ,
  printBtn: '🖨️ Print Worksheet',quizTab:'Quiz',quizTitle:'Test Your Knowledge',quizRetry:'Retry',quizCorrect:'Correct!',quizWrong:'Wrong!',quizScore:'Score',quiz_q1:'What does AI stand for?',quiz_q1a:'Automated Input',quiz_q1b:'Artificial Intelligence',quiz_q1c:'Analog Interface',quiz_q1d:'Active Integration',quiz_q1_answer:'1',quiz_q2:'What is a neural network?',quiz_q2a:'Physical wires',quiz_q2b:'Computing system inspired by biological neurons',quiz_q2c:'Social network',quiz_q2d:'Radio network',quiz_q2_answer:'1',quiz_q3:'What is machine learning?',quiz_q3a:'Programming robots',quiz_q3b:'Systems that learn from data',quiz_q3c:'Manual computation',quiz_q3d:'Hardware design',quiz_q3_answer:'1',quiz_q4:'What does RSA stand for?',quiz_q4a:'Random Secure Algorithm',quiz_q4b:'Rivest-Shamir-Adleman',quiz_q4c:'Rapid Signal Authentication',quiz_q4d:'Radio Security Architecture',quiz_q4_answer:'1',quiz_q5:'What is a hash function?',quiz_q5a:'Encryption method',quiz_q5b:'One-way function producing fixed-size output',quiz_q5c:'Compression algorithm',quiz_q5d:'Random number generator',quiz_q5_answer:'1',realworldTitle:'🌍 Real-World Stories',realworld1:'Heartbleed (2014) was a buffer overflow in OpenSSL that let attackers read 64KB of server memory per request — potentially grabbing private keys, passwords, and session tokens from any HTTPS server worldwide.',realworld2:'Alan Turing\'s team at Bletchley Park cracked the Enigma machine during WWII, reading 84,000 encrypted German messages per month by 1945. This achievement shortened the war by an estimated 2 years.',realworld3:'The SolarWinds attack (2020) compromised 18,000 organizations by hiding malware inside trusted software updates. Attackers had 9 months of undetected access to US Treasury, Commerce, and Homeland Security systems.',experimentTitle:'🔬 Experiments',experiment_1_title:'Baseline Measurement',experiment_1:'Set all controls to default values and record the initial readings. These are your baseline measurements. Good scientists always establish a baseline before changing variables — it gives you a reference point to measure all future changes against.',experiment_2_title:'Sensitivity Analysis',experiment_2:'Change one parameter to its minimum value, record the result, then set it to maximum. The difference reveals the system\'s sensitivity to that variable. Repeat for each control. In AI frontier, knowing which parameters matter most helps you focus your efforts efficiently.',experiment_3_title:'Interaction Effects',experiment_3:'After testing parameters individually, change two simultaneously. Does the combined effect equal the sum of individual effects? Or is there a synergy (or cancellation)? Non-linear interactions are common in AI frontier and reveal the hidden complexity beneath simple-looking systems.',proTipTitle:'💡 Pro Tips',proTip1:'Export simulation data using the Copy button, paste into a spreadsheet, and create your own charts. Comparing multiple runs in a chart reveals patterns invisible on screen.',proTip2:'Open your browser\\x27s Developer Console (F12) to see the raw data behind the visualization. The simulation logs every calculation — this is how you verify the math.',funFactTitle:'🎯 Did You Know?',funFact:'A 256-bit AES key has more possible combinations (2²⁵⁶) than atoms in the observable universe (≈2²⁶⁶). Even checking a trillion keys per second, brute-forcing would take longer than the age of the universe.',mistakeTitle:'⚠️ Common Mistakes',mistake1:'Changing multiple parameters at once makes it impossible to isolate cause and effect. Always change ONE variable at a time.',mistake2:'Skipping the baseline measurement. Without knowing the default behavior, you cannot measure how your changes affect the system.',mistake3:'Ignoring the activity log. It records every event with timestamps — essential for understanding sequences and debugging unexpected results.',voiceTitle:'🎤 Voice',voiceOn:'Voice ON',voiceOff:'Voice OFF',voiceListening:'Listening...',voiceCmd:'Command recognised',voiceHelp:'Say: start, stop, reset, help, theme, next, previous',voice_cmds:'start / stop / reset / help / theme / next / previous',shareTitle:'📤 Share',shareBtn:'📤 Share',shareCopied:'Copied to clipboard!',shareGenerate:'Generate Summary',shareExport:'Export JSON',missionTitle:'MISSION BRIEFING',missionClassified:'CLASSIFIED',missionObjective:'Your mission objective:',missionAgent:'AGENT-5F5B5F',missionSkip:'Skip',missionGo:'ACCEPT MISSION',mission_obj:'Explore and master Timing Oracle Attack \u2014 analyze, experiment, and complete all challenges.',nightVisionTitle:'Night Vision Mode',nightVisionOn:'NV ON',nightVisionOff:'NV OFF',nightVisionAuto:'Auto NV',},
- fr:{tooltipTitle:'Infobulles intelligentes',tooltipToggle:'Activer les infobulles',tip_start:'Lancer la simulation et observer la visualisation s\x27animer',tip_stop:'Mettre en pause la simulation en conservant l\x27état actuel',tip_reset:'Effacer toutes les données et revenir aux conditions initiales',tip_slider:'Glisser pour ajuster ce paramètre — la visualisation se met à jour en temps réel',tip_theme:'Basculer entre 8 thèmes visuels dont 2 thèmes clairs islamiques',tip_help:'Ouvrir le panneau d\x27aide avec FAQ, guides, wiki et défis',explorerTitle:'Explorateur d\x27espace paramétrique',explorerStart:'Auto-Explorer',explorerStop:'Arrêter l\x27exploration',explorerProgress:'Exploration des combinaisons...',explorerResult:'Exploration terminée',explorerInfo:'Teste systématiquement min/milieu/max pour chaque curseur et enregistre les résultats',
+ fr:{narratorTitle:'Narrateur Auto',narratorScanning:'Recherche de signaux...',narratorDetected:'Signal d\x27tect\x27! Activit\x27: HAUTE',narratorProcessing:'Traitement des donn\x27es...',narratorWarning:'Alerte: anomalie d\x27tect\x27e',narratorAcquired:'Signal acquis avec succ\x27s',whatifTitle:'Et si?',whatifIncrease:'Augmenter',whatifDecrease:'Diminuer',tooltipTitle:'Infobulles intelligentes',tooltipToggle:'Activer les infobulles',tip_start:'Lancer la simulation et observer la visualisation s\x27animer',tip_stop:'Mettre en pause la simulation en conservant l\x27état actuel',tip_reset:'Effacer toutes les données et revenir aux conditions initiales',tip_slider:'Glisser pour ajuster ce paramètre — la visualisation se met à jour en temps réel',tip_theme:'Basculer entre 8 thèmes visuels dont 2 thèmes clairs islamiques',tip_help:'Ouvrir le panneau d\x27aide avec FAQ, guides, wiki et défis',explorerTitle:'Explorateur d\x27espace paramétrique',explorerStart:'Auto-Explorer',explorerStop:'Arrêter l\x27exploration',explorerProgress:'Exploration des combinaisons...',explorerResult:'Exploration terminée',explorerInfo:'Teste systématiquement min/milieu/max pour chaque curseur et enregistre les résultats',
  title:'Attaque Oracle Temporel',subtitle:'Exploitez les differences de temps pour reveler les secrets octet par octet',
  mainSection:'Oracle Temporel',mainDesc:'Observez comment la comparaison naive octet par octet fuit des informations temporelles',
  secretLabel:'Jeton Secret (cache)',peerTitle:'👥 Peer Mode',peerConnect:'Connect',peerDisconnect:'Disconnect',peerStatus:'Peer Status',peerSend:'Sent',peerReceive:'Received',peerInfo:'Open this app in two tabs to sync parameters via BroadcastChannel',heatmapTitle:'📅 Activity Heatmap',heatmapToday:'Today',heatmapStreak:'Streak',heatmapTotal:'Total',heatmapLegend:'Less \u2192 More',secretHint:'Le secret serveur que vous essayez de decouvrir',
@@ -294,7 +294,7 @@ const LANG={
  faq_a10: 'Cette simulation modélise la même physique et les mêmes mathématiques que les systèmes professionnels. Les paramètres que vous ajustez correspondent aux réglages de vrais équipements. Les visualisations montrent des motifs identiques à ceux des instruments professionnels. La différence principale est que ceci fonctionne en sécurité dans votre navigateur — les vrais systèmes utilisent du matériel browser et peuvent avoir des exigences légales.',
  glossTitle: '📚 Termes clés',learnAge:'Âge :',relatedTitle:'\ud83d\udd17 Apps Similaires',related1_name:'PCB Keylogger — Simulation de conception',related1_desc:'Concevez et analysez des PCB de keylogger matériel pour la formation à la détection',related1_path:'../../52-hardware-implants/imp-keyboard-logger-pcb/index.html',related2_name:'LAN Turtle Builder — Covert Network Implant Sim',related2_desc:'Build and deploy simulated LAN Turtle implants for network interception training',related2_path:'../../52-hardware-implants/imp-lan-turtle-builder/index.html',related3_name:'Laboratoire Shoulder Surfing',related3_desc:'Détecter l\\',related3_path:'../../51-social-engineering/se-shoulder-surfing-lab/index.html',pathTitle:'\ud83d\udee4\ufe0f Parcours',pathPrev_name:'Labo Factorisation',pathPrev_path:'../../53-crypto-attacks/cry-rsa-factoring-race/index.html',pathNext_name:'',pathNext_path:'',
  printBtn: '🖨️ Imprimer',realworldTitle:'🌍 Histoires réelles',realworld1:'Heartbleed (2014) était un dépassement de tampon dans OpenSSL qui permettait aux attaquants de lire 64 Ko de mémoire serveur par requête.',realworld2:'L\'équipe d\'Alan Turing à Bletchley Park a décrypté la machine Enigma pendant la WWII, lisant 84 000 messages allemands chiffrés par mois en 1945.',realworld3:'L\'attaque SolarWinds (2020) a compromis 18 000 organisations en cachant des malwares dans des mises à jour logicielles de confiance.',experimentTitle:'🔬 Expériences',experiment_1_title:'Mesure de référence',experiment_1:'Réglez tous les contrôles sur les valeurs par défaut et notez les lectures initiales. Ce sont vos mesures de référence. Un bon scientifique établit toujours une référence avant de modifier des variables — cela donne un point de comparaison pour mesurer tous les changements futurs.',experiment_2_title:'Analyse de sensibilité',experiment_2:'Changez un paramètre à sa valeur minimale, notez le résultat, puis réglez-le au maximum. La différence révèle la sensibilité du système à cette variable. En frontière IA, savoir quels paramètres comptent le plus vous aide à concentrer vos efforts.',experiment_3_title:'Effets d\'interaction',experiment_3:'Après avoir testé les paramètres individuellement, changez-en deux simultanément. L\'effet combiné est-il égal à la somme des effets individuels? Les interactions non linéaires sont courantes en frontière IA et révèlent la complexité cachée sous des systèmes simples en apparence.',voiceTitle:'🎤 Voix',voiceOn:'Voix ON',voiceOff:'Voix OFF',voiceListening:'Écoute...',voiceCmd:'Commande reconnue',voiceHelp:'Dites : démarrer, arrêter, aide, thème, suivant, précédent',voice_cmds:'démarrer / arrêter / aide / thème / suivant / précédent',shareTitle:'📤 Partager',shareBtn:'📤 Partager',shareCopied:'Copié dans le presse-papiers !',shareGenerate:'Générer le résumé',shareExport:'Exporter JSON',missionTitle:'BRIEFING DE MISSION',missionClassified:'CLASSIFI\xc9',missionObjective:'Objectif de mission :',missionAgent:'AGENT-5F5B5F',missionSkip:'Passer',missionGo:'ACCEPTER LA MISSION',mission_obj:'Explorer et ma\xeetrisez Timing Oracle Attack \u2014 analysez, exp\xe9rimentez et compl\xe9tez tous les d\xe9fis.',nightVisionTitle:'Mode Vision Nocturne',nightVisionOn:'VN ON',nightVisionOff:'VN OFF',nightVisionAuto:'VN Auto',},
- ar:{tooltipTitle:'تلميحات ذكية',tooltipToggle:'تبديل التلميحات',tip_start:'ابدأ المحاكاة وشاهد الرسم البياني ينبض بالحياة',tip_stop:'أوقف المحاكاة مؤقتاً مع الحفاظ على الحالة الحالية',tip_reset:'امسح جميع البيانات وعد إلى الشروط الأولية',tip_slider:'اسحب لضبط هذا المعامل — يتحدث الرسم البياني في الوقت الفعلي',tip_theme:'بدّل بين 8 مظاهر مرئية منها تصميمان إسلاميان فاتحان',tip_help:'افتح لوحة المساعدة مع الأسئلة الشائعة والأدلة والويكي والتحديات',explorerTitle:'مستكشف فضاء المعاملات',explorerStart:'استكشاف تلقائي',explorerStop:'إيقاف الاستكشاف',explorerProgress:'جارٍ استكشاف التوليفات...',explorerResult:'اكتمل الاستكشاف',explorerInfo:'يختبر بشكل منهجي الحد الأدنى/الوسط/الأقصى لكل منزلق ويسجل النتائج',
+ ar:{narratorTitle:'الراوي التلقائي',narratorScanning:'...جاري البحث عن إشارات',narratorDetected:'!تم اكتشاف إشارة',narratorProcessing:'...معالجة البيانات',narratorWarning:'تحذير: تم اكتشاف شذوذ',narratorAcquired:'تم الحصول على الإشارة بنجاح',whatifTitle:'ماذا لو؟',whatifIncrease:'زيادة',whatifDecrease:'تقليل',tooltipTitle:'تلميحات ذكية',tooltipToggle:'تبديل التلميحات',tip_start:'ابدأ المحاكاة وشاهد الرسم البياني ينبض بالحياة',tip_stop:'أوقف المحاكاة مؤقتاً مع الحفاظ على الحالة الحالية',tip_reset:'امسح جميع البيانات وعد إلى الشروط الأولية',tip_slider:'اسحب لضبط هذا المعامل — يتحدث الرسم البياني في الوقت الفعلي',tip_theme:'بدّل بين 8 مظاهر مرئية منها تصميمان إسلاميان فاتحان',tip_help:'افتح لوحة المساعدة مع الأسئلة الشائعة والأدلة والويكي والتحديات',explorerTitle:'مستكشف فضاء المعاملات',explorerStart:'استكشاف تلقائي',explorerStop:'إيقاف الاستكشاف',explorerProgress:'جارٍ استكشاف التوليفات...',explorerResult:'اكتمل الاستكشاف',explorerInfo:'يختبر بشكل منهجي الحد الأدنى/الوسط/الأقصى لكل منزلق ويسجل النتائج',
  title:'هجوم اوراكل التوقيت',subtitle:'استغل فروقات التوقيت لكشف الاسرار بايت تلو بايت',peerTitle:'👥 Mode Pair',peerConnect:'Connecter',peerDisconnect:'D\xe9connecter',peerStatus:'Statut pair',peerSend:'Envoy\xe9',peerReceive:'Re\xe7u',peerInfo:'Ouvrez cette app dans deux onglets pour synchroniser les param\xe8tres',heatmapTitle:'📅 Carte d\x27activit\xe9',heatmapToday:'Aujourd\x27hui',heatmapStreak:'S\xe9rie',heatmapTotal:'Total',heatmapLegend:'Moins \u2192 Plus',
  mainSection:'اوراكل التوقيت',mainDesc:'شاهد كيف تسرب المقارنة البسيطة بايت تلو بايت معلومات التوقيت',
  secretLabel:'الرمز السري (مخفي)',secretHint:'السر الذي تحاول اكتشافه',
@@ -347,6 +347,151 @@ const LANG={
  glossTitle: '📚 مصطلحات أساسية',learnAge:'العمر:',relatedTitle:'\ud83d\udd17 تطبيقات ذات صلة',related1_name:'لوحة دوائر راصد المفاتيح — محاكاة التصميم',related1_desc:'صمم وحلل تخطيطات لوحات راصد المفاتيح للتدريب على الكشف',related1_path:'../../52-hardware-implants/imp-keyboard-logger-pcb/index.html',related2_name:'LAN Turtle Builder — Covert Network Implant Sim',related2_desc:'Build and deploy simulated LAN Turtle implants for network interception training',related2_path:'../../52-hardware-implants/imp-lan-turtle-builder/index.html',related3_name:'مختبر التطفل البصري',related3_desc:'كشف التنصت البصري',related3_path:'../../51-social-engineering/se-shoulder-surfing-lab/index.html',pathTitle:'\ud83d\udee4\ufe0f مسار التعلم',pathPrev_name:'مختبر التحليل',pathPrev_path:'../../53-crypto-attacks/cry-rsa-factoring-race/index.html',pathNext_name:'',pathNext_path:'',
  printBtn: '🖨️ طباعة',realworldTitle:'🌍 قصص واقعية',realworld1:'كانت ثغرة هارتبليد (2014) تجاوزًا في المخزن المؤقت في OpenSSL سمح للمهاجمين بقراءة 64 كيلوبايت من ذاكرة الخادم لكل طلب.',realworld2:'فك فريق آلان تورينغ في بلتشلي بارك شفرة آلة إنغما خلال الحرب العالمية الثانية وقرأ 84000 رسالة ألمانية مشفرة شهريًا بحلول عام 1945.',realworld3:'اخترق هجوم سولار ويندز (2020) أكثر من 18000 منظمة من خلال إخفاء برامج ضارة داخل تحديثات البرمجيات الموثوقة.',experimentTitle:'🔬 تجارب',experiment_1_title:'القياس المرجعي',experiment_1:'اضبط جميع عناصر التحكم على القيم الافتراضية وسجّل القراءات الأولية. هذه هي قياساتك المرجعية. يقوم العالم الجيد دائمًا بتحديد خط الأساس قبل تغيير المتغيرات — فهو يمنحك نقطة مرجعية لقياس جميع التغييرات المستقبلية.',experiment_2_title:'تحليل الحساسية',experiment_2:'غيّر معلمة واحدة إلى قيمتها الدنيا وسجّل النتيجة ثم اضبطها على الحد الأقصى. يكشف الفرق عن حساسية النظام لهذا المتغير. في حدود الذكاء معرفة المعلمات الأكثر أهمية تساعدك على تركيز جهودك بكفاءة.',experiment_3_title:'تأثيرات التفاعل',experiment_3:'بعد اختبار المعلمات بشكل فردي غيّر اثنتين في وقت واحد. هل التأثير المشترك يساوي مجموع التأثيرات الفردية؟ التفاعلات غير الخطية شائعة في حدود الذكاء وتكشف التعقيد الخفي تحت أنظمة تبدو بسيطة.',voiceTitle:'🎤 صوت',voiceOn:'الصوت مفعل',voiceOff:'الصوت معطل',voiceListening:'جاري الاستماع...',voiceCmd:'تم التعرف على الأمر',voiceHelp:'قل: ابدأ، توقف، مساعدة',voice_cmds:'ابدأ / توقف / مساعدة',shareTitle:'📤 مشاركة',shareBtn:'📤 مشاركة',shareCopied:'تم النسخ!',shareGenerate:'إنشاء ملخص',shareExport:'تصدير JSON',peerTitle:'👥 \u0648\u0636\u0639 \u0627\u0644\u0646\u0638\u064a\u0631',peerConnect:'\u0627\u062a\u0635\u0627\u0644',peerDisconnect:'\u0642\u0637\u0639',peerStatus:'\u062d\u0627\u0644\u0629 \u0627\u0644\u0646\u0638\u064a\u0631',peerSend:'\u0623\u0631\u0633\u0644',peerReceive:'\u0627\u0633\u062a\u0644\u0645',peerInfo:'\u0627\u0641\u062a\u062d \u0647\u0630\u0627 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0641\u064a \u062a\u0628\u0648\u064a\u0628\u064a\u0646 \u0644\u0644\u0645\u0632\u0627\u0645\u0646\u0629',heatmapTitle:'📅 \u062e\u0631\u064a\u0637\u0629 \u0627\u0644\u0646\u0634\u0627\u0637',heatmapToday:'\u0627\u0644\u064a\u0648\u0645',heatmapStreak:'\u0633\u0644\u0633\u0644\u0629',heatmapTotal:'\u0627\u0644\u0645\u062c\u0645\u0648\u0639',heatmapLegend:'\u0623\u0642\u0644 \u2192 \u0623\u0643\u062b\u0631',missionTitle:'\u0625\u062D\u0627\u0637\u0629 \u0627\u0644\u0645\u0647\u0645\u0629',missionClassified:'\u0633\u0631\u064A',missionObjective:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0647\u0645\u0629:',missionAgent:'AGENT-5F5B5F',missionSkip:'\u062A\u062E\u0637\u064A',missionGo:'\u0642\u0628\u0648\u0644 \u0627\u0644\u0645\u0647\u0645\u0629',mission_obj:'\u0627\u0633\u062A\u0643\u0634\u0641 \u0648\u0623\u062A\u0642\u0646 \u0647\u0630\u0627 \u0627\u0644\u062A\u0637\u0628\u064A\u0642 \u2014 \u062D\u0644\u0644 \u0648\u062C\u0631\u0628 \u0648\u0623\u0643\u0645\u0644 \u062C\u0645\u064A\u0639 \u0627\u0644\u062A\u062D\u062F\u064A\u0627\u062A.',nightVisionTitle:'\u0648\u0636\u0639 \u0627\u0644\u0631\u0624\u064A\u0629 \u0627\u0644\u0644\u064A\u0644\u064A\u0629',nightVisionOn:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 ON',nightVisionOff:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 OFF',nightVisionAuto:'\u0631\u0624\u064A\u0629 \u0644\u064A\u0644\u064A\u0629 \u062A\u0644\u0642\u0627\u0626\u064A',}
 };
+
+/* ═══════ Auto-Narrator ═══════ */
+function initAutoNarrator(){
+ if(document.getElementById('narratorBox'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var box=document.createElement('div');
+ box.id='narratorBox';
+ box.style.cssText='position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:300px;background:rgba(0,0,0,0.78);color:#0f0;font-family:monospace;font-size:13px;padding:10px 16px;border-radius:10px;z-index:9999;text-align:center;pointer-events:none;opacity:0;transition:opacity 0.4s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+ document.body.appendChild(box);
+ var hideTimer=null;
+ var running=false;
+ var lastText='';
+ function showNarration(txt){
+  if(txt===lastText)return;
+  lastText=txt;
+  box.textContent=txt;
+  box.style.opacity='1';
+  if(hideTimer)clearTimeout(hideTimer);
+  hideTimer=setTimeout(function(){box.style.opacity='0';},3000);
+ }
+ var startBtn=document.getElementById('startBtn');
+ if(startBtn){
+  startBtn.addEventListener('click',function(){running=true;});
+ }
+ var stopBtn=document.getElementById('stopBtn');
+ if(stopBtn){
+  stopBtn.addEventListener('click',function(){running=false;});
+ }
+ var resetBtn=document.getElementById('resetBtn');
+ if(resetBtn){
+  resetBtn.addEventListener('click',function(){running=false;});
+ }
+ var canvas=document.getElementById('simCanvas');
+ if(canvas){
+  var ctx=null;
+  try{ctx=canvas.getContext('2d',{willReadFrequently:true});}catch(e){}
+  if(ctx){
+   setInterval(function(){
+    if(!running)return;
+    try{
+     var w=canvas.width||300;
+     var h=canvas.height||150;
+     var data=ctx.getImageData(0,0,Math.min(w,100),Math.min(h,100)).data;
+     var rSum=0,gSum=0,bSum=0,total=0;
+     for(var i=0;i<data.length;i+=16){
+      rSum+=data[i];gSum+=data[i+1];bSum+=data[i+2];total++;
+     }
+     if(total===0)return;
+     var rAvg=rSum/total,gAvg=gSum/total,bAvg=bSum/total;
+     var brightness=(rAvg+gAvg+bAvg)/3;
+     if(rAvg>gAvg*1.5&&rAvg>bAvg*1.5){
+      showNarration(L.narratorWarning||'Warning: anomaly detected');
+     }else if(gAvg>rAvg*1.3&&gAvg>bAvg*1.3){
+      showNarration(L.narratorAcquired||'Signal acquired successfully');
+     }else if(brightness>170){
+      showNarration(L.narratorDetected||'Signal detected! Activity: HIGH');
+     }else if(brightness<50){
+      showNarration(L.narratorScanning||'Scanning for signals...');
+     }else{
+      showNarration(L.narratorProcessing||'Processing data streams...');
+     }
+    }catch(e){}
+   },500);
+  }
+ }
+ var sliders=document.querySelectorAll('input[type=range]');
+ for(var s=0;s<sliders.length;s++){
+  (function(sl){
+   sl.addEventListener('input',function(){
+    if(!running)return;
+    var label='parameter';
+    var lbl=sl.previousElementSibling;
+    if(lbl&&lbl.textContent)label=lbl.textContent.replace(/[:\s]+$/,'');
+    showNarration('Adjusting '+label+' to '+sl.value+'...');
+   });
+  })(sliders[s]);
+ }
+ var hdr=document.querySelector('.header-buttons')||document.querySelector('header');
+ if(hdr){
+  var btn=document.createElement('button');
+  btn.className='btn-icon-only';
+  btn.textContent='\ud83d\udce1';
+  btn.title=L.narratorTitle||'Auto Narrator';
+  btn.style.cssText='background:none;border:1px solid currentColor;border-radius:6px;cursor:pointer;font-size:18px;padding:4px 8px;margin-left:4px;';
+  var vis=true;
+  btn.addEventListener('click',function(){
+   vis=!vis;
+   box.style.display=vis?'block':'none';
+  });
+  hdr.appendChild(btn);
+ }
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAutoNarrator);}
+else{initAutoNarrator();}
+
+/* ═══════ What-If Engine ═══════ */
+function initWhatIfEngine(){
+ if(document.querySelector('.whatif-btn'))return;
+ var L=(window.LANG&&window.LANG[document.documentElement.lang||'en'])||{};
+ var kwMap={frequency:'oscillation speed',power:'signal strength',range:'detection distance',sensitivity:'noise threshold',speed:'processing rate',gain:'amplification level',threshold:'trigger point',delay:'response time'};
+ var sliders=document.querySelectorAll('input[type=range]');
+ for(var s=0;s<sliders.length;s++){
+  (function(sl){
+   var btn=document.createElement('button');
+   btn.className='whatif-btn';
+   btn.textContent='?';
+   btn.title=L.whatifTitle||'What If?';
+   btn.style.cssText='background:rgba(0,0,0,0.6);color:#0ff;border:1px solid #0ff;border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;margin-left:6px;padding:0;line-height:20px;text-align:center;vertical-align:middle;flex-shrink:0;';
+   sl.parentNode.insertBefore(btn,sl.nextSibling);
+   btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var existing=document.querySelector('.whatif-popup');
+    if(existing)existing.remove();
+    var label='parameter';
+    var lbl=sl.previousElementSibling;
+    if(lbl&&lbl.textContent)label=lbl.textContent.replace(/[:\s]+$/,'').toLowerCase();
+    var val=parseInt(sl.value,10);
+    var min=parseInt(sl.min||'0',10);
+    var max=parseInt(sl.max||'100',10);
+    var mid=(min+max)/2;
+    var pct=max>min?Math.round(((val-min)/(max-min))*100):50;
+    var kw='behavior';
+    for(var k in kwMap){
+     if(label.indexOf(k)!==-1){kw=kwMap[k];break;}
+    }
+    var incWord=L.whatifIncrease||'Increasing';
+    var decWord=L.whatifDecrease||'Decreasing';
+    var txt=incWord+' '+label+' will increase '+kw+', potentially revealing hidden patterns. '+decWord+' it will reduce '+kw+'. Currently at '+pct+'%.';
+    var popup=document.createElement('div');
+    popup.className='whatif-popup';
+    popup.style.cssText='position:absolute;background:rgba(0,0,20,0.92);color:#0ff;font-size:12px;padding:10px 14px;border-radius:8px;border:1px solid #0ff;max-width:260px;z-index:10000;box-shadow:0 4px 16px rgba(0,255,255,0.15);line-height:1.5;';
+    popup.textContent=txt;
+    document.body.appendChild(popup);
+    var rect=sl.getBoundingClientRect();
+    popup.style.left=Math.max(4,rect.left+window.scrollX)+'px';
+    popup.style.top=(rect.bottom+window.scrollY+6)+'px';
+    function closePopup(){popup.remove();document.removeEventListener('click',closePopup);}
+    setTimeout(function(){document.addEventListener('click',closePopup);},10);
+   });
+  })(sliders[s]);
+ }
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initWhatIfEngine);}
+else{initWhatIfEngine();}
+
 /* ═══════ Mission Cards ═══════ */
 function initMissionCards(){
  if(document.getElementById('missionCardBtn'))return;
