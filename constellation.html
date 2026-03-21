@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constellation Navigator</title>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#06080f;font-family:'Share Tech Mono',monospace;color:#e0d8c8}
+canvas{display:block;cursor:grab}
+canvas:active{cursor:grabbing}
+
+#ui-layer{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10}
+#ui-layer>*{pointer-events:auto}
+
+#search-box{position:fixed;top:16px;left:16px;z-index:20;display:flex;align-items:center;background:rgba(10,12,20,0.85);border:1px solid #c8a84e44;border-radius:8px;padding:4px 12px;backdrop-filter:blur(6px)}
+#search-box input{background:transparent;border:none;outline:none;color:#c8a84e;font-family:'Orbitron',sans-serif;font-size:13px;width:220px;padding:6px 4px}
+#search-box input::placeholder{color:#c8a84e66}
+#search-icon{color:#c8a84e;margin-right:6px;font-size:16px}
+#search-count{color:#c8a84e88;font-size:11px;margin-left:8px;font-family:'Orbitron',sans-serif}
+
+#lang-toggle{position:fixed;top:16px;right:16px;z-index:20;display:flex;gap:4px;background:rgba(10,12,20,0.85);border:1px solid #c8a84e44;border-radius:8px;padding:4px;backdrop-filter:blur(6px)}
+#lang-toggle button{background:transparent;border:1px solid transparent;color:#c8a84e88;font-family:'Orbitron',sans-serif;font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;transition:.2s}
+#lang-toggle button.active{border-color:#c8a84e;color:#c8a84e;background:rgba(200,168,78,0.12)}
+#lang-toggle button:hover{color:#c8a84e}
+
+#tooltip{position:fixed;display:none;background:rgba(10,12,20,0.92);border:1px solid #c8a84e;border-radius:10px;padding:14px 18px;max-width:320px;z-index:30;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(200,168,78,0.15)}
+#tooltip h3{font-family:'Righteous',sans-serif;color:#c8a84e;font-size:15px;margin-bottom:4px}
+#tooltip .tt-cat{font-family:'Orbitron',sans-serif;font-size:10px;color:#c8a84e88;margin-bottom:6px}
+#tooltip p{font-size:12px;line-height:1.5;color:#ccc;margin-bottom:10px}
+#tooltip .tt-open{display:inline-block;background:#c8a84e;color:#06080f;font-family:'Orbitron',sans-serif;font-size:11px;padding:5px 14px;border-radius:5px;text-decoration:none;cursor:pointer;transition:.2s}
+#tooltip .tt-open:hover{background:#e0c06e}
+
+#legend{position:fixed;bottom:16px;left:16px;z-index:20;background:rgba(10,12,20,0.85);border:1px solid #c8a84e44;border-radius:8px;padding:10px 14px;backdrop-filter:blur(6px);font-size:10px;font-family:'Orbitron',sans-serif;max-height:40vh;overflow-y:auto}
+#legend h4{color:#c8a84e;margin-bottom:6px;font-size:11px}
+.legend-item{display:flex;align-items:center;gap:6px;margin:3px 0;color:#aaa;cursor:pointer;transition:.2s}
+.legend-item:hover{color:#fff}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+#stats{position:fixed;bottom:16px;right:16px;z-index:20;font-family:'Orbitron',sans-serif;font-size:10px;color:#c8a84e66}
+#minimap{position:fixed;bottom:50px;right:16px;z-index:20;width:140px;height:100px;border:1px solid #c8a84e44;border-radius:6px;background:rgba(10,12,20,0.7);overflow:hidden}
+
+#loading{position:fixed;top:0;left:0;width:100%;height:100%;background:#06080f;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+#loading h1{font-family:'Righteous',sans-serif;color:#c8a84e;font-size:28px;margin-bottom:12px}
+#loading p{font-family:'Orbitron',sans-serif;color:#c8a84e88;font-size:12px}
+#load-bar{width:200px;height:3px;background:#1a1a2e;border-radius:2px;margin-top:16px;overflow:hidden}
+#load-fill{width:0%;height:100%;background:#c8a84e;transition:width .3s}
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <h1>CONSTELLATION NAVIGATOR</h1>
+  <p>Mapping 488 stations...</p>
+  <div id="load-bar"><div id="load-fill"></div></div>
+</div>
+
+<canvas id="sky"></canvas>
+
+<div id="ui-layer">
+  <div id="search-box">
+    <span id="search-icon">&#x1F50D;</span>
+    <input id="search" type="text" placeholder="Search apps..." autocomplete="off">
+    <span id="search-count"></span>
+  </div>
+
+  <div id="lang-toggle">
+    <button class="active" data-lang="en">EN</button>
+    <button data-lang="fr">FR</button>
+    <button data-lang="ar">AR</button>
+  </div>
+
+  <div id="tooltip">
+    <h3 id="tt-title"></h3>
+    <div class="tt-cat" id="tt-cat"></div>
+    <p id="tt-desc"></p>
+    <a class="tt-open" id="tt-open">OPEN APP</a>
+  </div>
+
+  <div id="legend"><h4>CONSTELLATIONS</h4></div>
+  <canvas id="minimap"></canvas>
+  <div id="stats"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// --- i18n ---
+const I18N = {
+  en: { search:"Search apps...", open:"OPEN APP", legend:"CONSTELLATIONS", stats:"{n} apps | {c} constellations", loading:"Mapping {n} stations..." },
+  fr: { search:"Rechercher...", open:"OUVRIR", legend:"CONSTELLATIONS", stats:"{n} apps | {c} constellations", loading:"Cartographie de {n} stations..." },
+  ar: { search:"...بحث", open:"فتح", legend:"الأبراج", stats:"{n} تطبيق | {c} مجموعة", loading:"...جارٍ رسم {n} محطة" }
+};
+let lang = "en";
+
+// --- Category color mapping ---
+const CAT_COLOR_MAP = {
+  spy:    {h:0,   s:80, l:60},   // red
+  net:    {h:30,  s:80, l:55},   // orange
+  hrf:    {h:140, s:70, l:50},   // green
+  wifi:   {h:210, s:85, l:60},   // blue
+  ham:    {h:45,  s:90, l:55},   // gold/amber
+  sdr:    {h:170, s:75, l:50},   // teal
+  ant:    {h:90,  s:70, l:50},   // lime
+  pi:     {h:280, s:65, l:60},   // purple
+  agent:  {h:350, s:75, l:55},   // crimson
+  bio:    {h:185, s:80, l:55},   // cyan
+  acoustic:{h:60, s:70, l:50},  // yellow-green
+  time:   {h:55,  s:90, l:60},   // yellow
+  swarm:  {h:120, s:60, l:50},   // green
+  impossible:{h:270,s:70,l:60},  // violet
+  dark:   {h:320, s:70, l:45},   // dark magenta
+  ai:     {h:200, s:85, l:60},   // sky blue
+  civilization:{h:40,s:80,l:55}, // warm gold
+  social: {h:15,  s:75, l:55},   // red-orange
+  hardware:{h:160,s:60, l:45},   // dark teal
+  crypto: {h:290, s:75, l:60},   // purple
+  rf:     {h:100, s:75, l:50},   // green
+  escape: {h:220, s:70, l:55}    // blue
+};
+
+function getCatGroup(cat) {
+  const name = cat.replace(/^\d+-/, "");
+  const prefix = name.split("-")[0];
+  return CAT_COLOR_MAP[prefix] || {h:(hashStr(cat)*137)%360, s:70, l:55};
+}
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i);return Math.abs(h)}
+function catColor(cat, alpha){
+  const c = getCatGroup(cat);
+  return `hsla(${c.h},${c.s}%,${c.l}%,${alpha||1})`;
+}
+
+// --- State ---
+let apps = [];
+let categories = {};
+let catList = [];
+let stars = [];
+let cam = {x:0, y:0, zoom:1};
+let targetCam = {x:0, y:0, zoom:1};
+let dragging = false;
+let dragStart = {x:0, y:0};
+let camStart = {x:0, y:0};
+let selectedStar = null;
+let hoveredStar = null;
+let searchTerm = "";
+let matchSet = null;
+let twinkleT = 0;
+let bgStars = [];
+
+const canvas = document.getElementById("sky");
+const ctx = canvas.getContext("2d");
+const mmCanvas = document.getElementById("minimap");
+const mmCtx = mmCanvas.getContext("2d");
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  mmCanvas.width = 140;
+  mmCanvas.height = 100;
+}
+window.addEventListener("resize", resize);
+resize();
+
+// --- Generate background stars ---
+function genBgStars(){
+  bgStars = [];
+  for(let i=0; i<600; i++){
+    bgStars.push({
+      x: Math.random()*6000 - 3000,
+      y: Math.random()*4000 - 2000,
+      r: Math.random()*1.2 + 0.2,
+      blink: Math.random()*Math.PI*2,
+      speed: Math.random()*0.5 + 0.3
+    });
+  }
+}
+
+// --- Layout: arrange categories in a grid-like constellation map ---
+function layoutStars(){
+  const cols = Math.ceil(Math.sqrt(catList.length * 1.5));
+  const cellW = 400;
+  const cellH = 350;
+
+  catList.forEach((cat, ci) => {
+    const col = ci % cols;
+    const row = Math.floor(ci / cols);
+    const cx = col * cellW - (cols*cellW)/2 + cellW/2;
+    const cy = row * cellH - (Math.ceil(catList.length/cols)*cellH)/2 + cellH/2;
+
+    const catApps = categories[cat];
+    const n = catApps.length;
+    // Arrange in a loose constellation shape
+    catApps.forEach((app, ai) => {
+      const angle = (ai / n) * Math.PI * 2 + (ci * 0.7);
+      const radius = 40 + Math.sqrt(ai) * 28 + (ai % 3) * 15;
+      const jitterX = (hashStr(app.app + "x") % 40) - 20;
+      const jitterY = (hashStr(app.app + "y") % 40) - 20;
+      const kwCount = (app.keywords || "").split(/\s+/).length;
+      stars.push({
+        x: cx + Math.cos(angle) * radius + jitterX,
+        y: cy + Math.sin(angle) * radius + jitterY,
+        r: Math.max(2.5, Math.min(7, kwCount / 3)),
+        app: app,
+        cat: cat,
+        catIdx: ci,
+        labelX: cx,
+        labelY: cy - (n > 4 ? 130 : 80),
+        blink: Math.random() * Math.PI * 2
+      });
+    });
+  });
+}
+
+// --- Build constellation lines (minimum spanning tree-ish) ---
+function getConstellationLines(cat){
+  const catStars = stars.filter(s => s.cat === cat);
+  if(catStars.length < 2) return [];
+  // Connect each star to its nearest neighbor not yet connected (simple chain)
+  const lines = [];
+  const used = new Set();
+  used.add(0);
+  while(used.size < catStars.length){
+    let bestD = Infinity, bestI = -1, bestJ = -1;
+    for(const i of used){
+      for(let j=0; j<catStars.length; j++){
+        if(used.has(j)) continue;
+        const dx = catStars[i].x - catStars[j].x;
+        const dy = catStars[i].y - catStars[j].y;
+        const d = dx*dx + dy*dy;
+        if(d < bestD){ bestD=d; bestI=i; bestJ=j; }
+      }
+    }
+    if(bestJ < 0) break;
+    used.add(bestJ);
+    lines.push([catStars[bestI], catStars[bestJ]]);
+  }
+  return lines;
+}
+
+let constellationLines = {};
+
+// --- World <-> Screen transforms ---
+function w2s(wx, wy){
+  return {
+    x: (wx - cam.x) * cam.zoom + canvas.width/2,
+    y: (wy - cam.y) * cam.zoom + canvas.height/2
+  };
+}
+function s2w(sx, sy){
+  return {
+    x: (sx - canvas.width/2) / cam.zoom + cam.x,
+    y: (sy - canvas.height/2) / cam.zoom + cam.y
+  };
+}
+
+// --- Drawing ---
+function draw(){
+  twinkleT += 0.016;
+
+  // Smooth camera
+  cam.x += (targetCam.x - cam.x) * 0.12;
+  cam.y += (targetCam.y - cam.y) * 0.12;
+  cam.zoom += (targetCam.zoom - cam.zoom) * 0.12;
+
+  ctx.fillStyle = "#06080f";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Subtle gradient
+  const grd = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width*0.7);
+  grd.addColorStop(0, "rgba(15,18,40,0.4)");
+  grd.addColorStop(1, "rgba(6,8,15,0)");
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Background stars
+  for(const bs of bgStars){
+    const sp = w2s(bs.x, bs.y);
+    if(sp.x < -10 || sp.x > canvas.width+10 || sp.y < -10 || sp.y > canvas.height+10) continue;
+    const flicker = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(twinkleT * bs.speed + bs.blink));
+    ctx.globalAlpha = flicker * 0.5;
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(sp.x, sp.y, bs.r * cam.zoom * 0.5, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // Constellation lines
+  for(const cat of catList){
+    const lines = constellationLines[cat];
+    if(!lines) continue;
+    const dim = matchSet !== null;
+    ctx.strokeStyle = catColor(cat, dim ? 0.06 : 0.18);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for(const [a, b] of lines){
+      const sa = w2s(a.x, a.y);
+      const sb = w2s(b.x, b.y);
+      ctx.moveTo(sa.x, sa.y);
+      ctx.lineTo(sb.x, sb.y);
+    }
+    ctx.stroke();
+  }
+
+  // Stars
+  for(const star of stars){
+    const sp = w2s(star.x, star.y);
+    if(sp.x < -20 || sp.x > canvas.width+20 || sp.y < -20 || sp.y > canvas.height+20) continue;
+
+    const isMatch = matchSet === null || matchSet.has(star);
+    const isHovered = star === hoveredStar;
+    const isSelected = star === selectedStar;
+    const flicker = 0.7 + 0.3 * Math.sin(twinkleT * 1.5 + star.blink);
+    const baseR = star.r * cam.zoom;
+    const r = isHovered ? baseR * 1.4 : (isSelected ? baseR * 1.3 : baseR);
+
+    if(!isMatch && matchSet !== null){
+      ctx.globalAlpha = 0.08;
+    } else {
+      ctx.globalAlpha = flicker;
+    }
+
+    // Glow
+    if(isMatch || matchSet === null){
+      const glow = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, r * 4);
+      glow.addColorStop(0, catColor(star.cat, 0.3));
+      glow.addColorStop(1, "transparent");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, r * 4, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // Star body
+    ctx.fillStyle = catColor(star.cat, 1);
+    ctx.beginPath();
+    ctx.arc(sp.x, sp.y, r, 0, Math.PI*2);
+    ctx.fill();
+
+    // Bright center
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    ctx.beginPath();
+    ctx.arc(sp.x, sp.y, r * 0.4, 0, Math.PI*2);
+    ctx.fill();
+
+    // Selection ring
+    if(isSelected){
+      ctx.globalAlpha = 0.6 + 0.4 * Math.sin(twinkleT * 3);
+      ctx.strokeStyle = "#c8a84e";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, r + 6, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 1;
+  }
+
+  // Category labels
+  if(cam.zoom > 0.25){
+    const drawnLabels = new Set();
+    for(const star of stars){
+      if(drawnLabels.has(star.cat)) continue;
+      drawnLabels.add(star.cat);
+      const sp = w2s(star.labelX, star.labelY);
+      if(sp.x < -200 || sp.x > canvas.width+200 || sp.y < -50 || sp.y > canvas.height+50) continue;
+      const dim = matchSet !== null && !stars.some(s => s.cat === star.cat && matchSet.has(s));
+      ctx.globalAlpha = dim ? 0.1 : 0.6;
+      ctx.fillStyle = catColor(star.cat, 1);
+      ctx.font = `${Math.max(9, 11 * cam.zoom)}px Orbitron`;
+      ctx.textAlign = "center";
+      const label = star.cat.replace(/^\d+-/, "").replace(/-/g, " ").toUpperCase();
+      ctx.fillText(label, sp.x, sp.y);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // Minimap
+  drawMinimap();
+
+  requestAnimationFrame(draw);
+}
+
+function drawMinimap(){
+  mmCtx.fillStyle = "rgba(10,12,20,0.9)";
+  mmCtx.fillRect(0, 0, 140, 100);
+  if(stars.length === 0) return;
+
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  for(const s of stars){
+    if(s.x<minX)minX=s.x; if(s.x>maxX)maxX=s.x;
+    if(s.y<minY)minY=s.y; if(s.y>maxY)maxY=s.y;
+  }
+  const pad=100;
+  minX-=pad;maxX+=pad;minY-=pad;maxY+=pad;
+  const scaleX=138/(maxX-minX), scaleY=98/(maxY-minY), sc=Math.min(scaleX,scaleY);
+
+  for(const s of stars){
+    mmCtx.fillStyle = catColor(s.cat, 0.6);
+    mmCtx.fillRect(1+(s.x-minX)*sc, 1+(s.y-minY)*sc, 1.5, 1.5);
+  }
+
+  // Viewport rect
+  const tl = s2w(0, 0);
+  const br = s2w(canvas.width, canvas.height);
+  const rx = 1+(tl.x-minX)*sc, ry = 1+(tl.y-minY)*sc;
+  const rw = (br.x-tl.x)*sc, rh = (br.y-tl.y)*sc;
+  mmCtx.strokeStyle = "#c8a84e88";
+  mmCtx.lineWidth = 1;
+  mmCtx.strokeRect(rx, ry, rw, rh);
+}
+
+// --- Interaction ---
+function getStarAt(sx, sy){
+  let best = null, bestD = Infinity;
+  for(const star of stars){
+    const sp = w2s(star.x, star.y);
+    const dx = sp.x - sx, dy = sp.y - sy;
+    const d = Math.sqrt(dx*dx + dy*dy);
+    const hitR = Math.max(12, star.r * cam.zoom * 2);
+    if(d < hitR && d < bestD){ bestD = d; best = star; }
+  }
+  return best;
+}
+
+canvas.addEventListener("mousedown", e => {
+  if(e.button !== 0) return;
+  dragging = true;
+  dragStart = {x: e.clientX, y: e.clientY};
+  camStart = {x: targetCam.x, y: targetCam.y};
+});
+
+canvas.addEventListener("mousemove", e => {
+  if(dragging){
+    targetCam.x = camStart.x - (e.clientX - dragStart.x) / cam.zoom;
+    targetCam.y = camStart.y - (e.clientY - dragStart.y) / cam.zoom;
+    hideTooltip();
+  } else {
+    hoveredStar = getStarAt(e.clientX, e.clientY);
+    canvas.style.cursor = hoveredStar ? "pointer" : "grab";
+  }
+});
+
+canvas.addEventListener("mouseup", e => {
+  const wasDrag = Math.abs(e.clientX - dragStart.x) > 4 || Math.abs(e.clientY - dragStart.y) > 4;
+  dragging = false;
+  if(!wasDrag){
+    const star = getStarAt(e.clientX, e.clientY);
+    if(star){
+      if(selectedStar === star){
+        // Second click: open
+        window.open(star.app.path, "_blank");
+        selectedStar = null;
+        hideTooltip();
+      } else {
+        selectedStar = star;
+        showTooltip(star, e.clientX, e.clientY);
+      }
+    } else {
+      selectedStar = null;
+      hideTooltip();
+    }
+  }
+});
+
+canvas.addEventListener("wheel", e => {
+  e.preventDefault();
+  const zoomFactor = e.deltaY > 0 ? 0.88 : 1.14;
+  targetCam.zoom = Math.max(0.15, Math.min(5, targetCam.zoom * zoomFactor));
+}, {passive:false});
+
+// Touch support
+let lastTouchDist = 0;
+canvas.addEventListener("touchstart", e => {
+  if(e.touches.length === 1){
+    dragging = true;
+    dragStart = {x: e.touches[0].clientX, y: e.touches[0].clientY};
+    camStart = {x: targetCam.x, y: targetCam.y};
+  } else if(e.touches.length === 2){
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    lastTouchDist = Math.sqrt(dx*dx+dy*dy);
+  }
+}, {passive:true});
+canvas.addEventListener("touchmove", e => {
+  e.preventDefault();
+  if(e.touches.length === 1 && dragging){
+    targetCam.x = camStart.x - (e.touches[0].clientX - dragStart.x) / cam.zoom;
+    targetCam.y = camStart.y - (e.touches[0].clientY - dragStart.y) / cam.zoom;
+  } else if(e.touches.length === 2){
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if(lastTouchDist > 0){
+      const scale = dist / lastTouchDist;
+      targetCam.zoom = Math.max(0.15, Math.min(5, targetCam.zoom * scale));
+    }
+    lastTouchDist = dist;
+  }
+}, {passive:false});
+canvas.addEventListener("touchend", e => {
+  dragging = false;
+  lastTouchDist = 0;
+  if(e.changedTouches.length === 1){
+    const t = e.changedTouches[0];
+    const star = getStarAt(t.clientX, t.clientY);
+    if(star){
+      if(selectedStar === star){
+        window.open(star.app.path, "_blank");
+        selectedStar = null;
+        hideTooltip();
+      } else {
+        selectedStar = star;
+        showTooltip(star, t.clientX, t.clientY);
+      }
+    }
+  }
+});
+
+// --- Tooltip ---
+function showTooltip(star, mx, my){
+  const tt = document.getElementById("tooltip");
+  document.getElementById("tt-title").textContent = star.app.title;
+  document.getElementById("tt-cat").textContent = star.cat.replace(/^\d+-/, "").replace(/-/g, " ").toUpperCase();
+  document.getElementById("tt-desc").textContent = star.app.desc;
+  const openBtn = document.getElementById("tt-open");
+  openBtn.textContent = I18N[lang].open;
+  openBtn.onclick = () => window.open(star.app.path, "_blank");
+  tt.style.display = "block";
+  // Position
+  let x = mx + 16, y = my + 16;
+  if(x + 330 > window.innerWidth) x = mx - 340;
+  if(y + 150 > window.innerHeight) y = my - 160;
+  tt.style.left = x + "px";
+  tt.style.top = y + "px";
+}
+function hideTooltip(){
+  document.getElementById("tooltip").style.display = "none";
+}
+
+// --- Search ---
+document.getElementById("search").addEventListener("input", function(){
+  searchTerm = this.value.trim().toLowerCase();
+  if(!searchTerm){
+    matchSet = null;
+    document.getElementById("search-count").textContent = "";
+    return;
+  }
+  matchSet = new Set();
+  const terms = searchTerm.split(/\s+/);
+  for(const star of stars){
+    const haystack = (star.app.title + " " + star.app.desc + " " + star.app.keywords + " " + star.cat).toLowerCase();
+    if(terms.every(t => haystack.includes(t))){
+      matchSet.add(star);
+    }
+  }
+  document.getElementById("search-count").textContent = matchSet.size + " found";
+});
+
+// --- Language toggle ---
+document.querySelectorAll("#lang-toggle button").forEach(btn => {
+  btn.addEventListener("click", function(){
+    document.querySelectorAll("#lang-toggle button").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+    lang = this.dataset.lang;
+    document.getElementById("search").placeholder = I18N[lang].search;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    updateStats();
+    if(selectedStar) {
+      document.getElementById("tt-open").textContent = I18N[lang].open;
+    }
+    buildLegend();
+  });
+});
+
+function updateStats(){
+  const t = I18N[lang].stats.replace("{n}", apps.length).replace("{c}", catList.length);
+  document.getElementById("stats").textContent = t;
+}
+
+// --- Legend ---
+function buildLegend(){
+  const leg = document.getElementById("legend");
+  leg.innerHTML = `<h4>${I18N[lang].legend}</h4>`;
+  for(const cat of catList){
+    const div = document.createElement("div");
+    div.className = "legend-item";
+    const label = cat.replace(/^\d+-/, "").replace(/-/g, " ");
+    const count = categories[cat].length;
+    div.innerHTML = `<span class="legend-dot" style="background:${catColor(cat,1)}"></span>${label} (${count})`;
+    div.addEventListener("click", () => {
+      const catStars = stars.filter(s => s.cat === cat);
+      if(catStars.length === 0) return;
+      let cx=0, cy=0;
+      for(const s of catStars){cx+=s.x; cy+=s.y}
+      cx /= catStars.length; cy /= catStars.length;
+      targetCam.x = cx;
+      targetCam.y = cy;
+      targetCam.zoom = 1.5;
+    });
+    leg.appendChild(div);
+  }
+}
+
+// --- Load data ---
+async function loadData(){
+  const fill = document.getElementById("load-fill");
+  fill.style.width = "20%";
+  try {
+    const res = await fetch("search-index.json");
+    apps = await res.json();
+  } catch(e){
+    // Fallback for file:// with XMLHttpRequest
+    apps = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "search-index.json", true);
+      xhr.onload = () => resolve(JSON.parse(xhr.responseText));
+      xhr.onerror = reject;
+      xhr.send();
+    });
+  }
+  fill.style.width = "50%";
+
+  // Build categories
+  for(const app of apps){
+    if(!categories[app.cat]) categories[app.cat] = [];
+    categories[app.cat].push(app);
+  }
+  catList = Object.keys(categories).sort();
+
+  fill.style.width = "70%";
+
+  genBgStars();
+  layoutStars();
+
+  // Build constellation lines
+  for(const cat of catList){
+    constellationLines[cat] = getConstellationLines(cat);
+  }
+
+  fill.style.width = "100%";
+
+  buildLegend();
+  updateStats();
+
+  setTimeout(() => {
+    const loading = document.getElementById("loading");
+    loading.style.opacity = "0";
+    setTimeout(() => loading.style.display = "none", 800);
+  }, 400);
+
+  draw();
+}
+
+loadData();
+
+})();
+</script>
+</body>
+</html>

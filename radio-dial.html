@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio Dial Navigator</title>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#06080f;font-family:'Share Tech Mono',monospace;color:#e0d8c8}
+
+#app{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+
+/* Static noise canvas */
+#noise{position:fixed;top:0;left:0;width:100%;height:100%;opacity:0;pointer-events:none;z-index:1;transition:opacity .3s}
+
+/* Header */
+#header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:linear-gradient(180deg,rgba(6,8,15,0.95),transparent)}
+#header h1{font-family:'Righteous',sans-serif;color:#c8a84e;font-size:20px;letter-spacing:2px}
+#lang-toggle{display:flex;gap:4px}
+#lang-toggle button{background:transparent;border:1px solid transparent;color:#c8a84e88;font-family:'Orbitron',sans-serif;font-size:10px;padding:4px 10px;border-radius:5px;cursor:pointer;transition:.2s}
+#lang-toggle button.active{border-color:#c8a84e;color:#c8a84e;background:rgba(200,168,78,0.12)}
+#lang-toggle button:hover{color:#c8a84e}
+
+/* Dial area */
+#dial-wrap{position:relative;width:min(90vw,700px);height:min(90vw,700px);max-width:700px;max-height:700px;flex-shrink:0}
+#dial-canvas{width:100%;height:100%;cursor:grab;touch-action:none}
+#dial-canvas:active{cursor:grabbing}
+
+/* Info panel */
+#info-panel{position:fixed;bottom:0;left:0;right:0;z-index:10;background:linear-gradient(0deg,rgba(6,8,15,0.95) 60%,transparent);padding:20px 30px 28px;text-align:center;min-height:140px;transition:opacity .3s}
+#info-panel.empty{opacity:0.3}
+#station-freq{font-family:'Orbitron',sans-serif;font-size:32px;color:#c8a84e;margin-bottom:2px;text-shadow:0 0 20px rgba(200,168,78,0.4)}
+#station-title{font-family:'Righteous',sans-serif;font-size:22px;color:#fff;margin-bottom:4px}
+#station-cat{font-family:'Orbitron',sans-serif;font-size:11px;color:#c8a84e88;margin-bottom:6px}
+#station-desc{font-size:13px;color:#aaa;max-width:500px;margin:0 auto 12px;line-height:1.5}
+#open-btn{display:inline-block;background:#c8a84e;color:#06080f;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;padding:8px 28px;border-radius:6px;border:none;cursor:pointer;transition:.2s;text-decoration:none}
+#open-btn:hover{background:#e0c06e;transform:scale(1.05)}
+#open-btn.hidden{display:none}
+
+/* Signal meter */
+#signal-wrap{position:fixed;top:60px;right:24px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:4px}
+#signal-label{font-family:'Orbitron',sans-serif;font-size:9px;color:#c8a84e88}
+#signal-bars{display:flex;gap:3px;align-items:flex-end;height:40px}
+.sig-bar{width:6px;background:#c8a84e33;border-radius:2px;transition:background .3s,height .3s}
+.sig-bar.on{background:#c8a84e}
+
+/* Frequency display */
+#freq-display{position:fixed;top:60px;left:24px;z-index:10;font-family:'Orbitron',sans-serif;font-size:11px;color:#c8a84e66}
+
+/* Loading */
+#loading{position:fixed;top:0;left:0;width:100%;height:100%;background:#06080f;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+#loading h1{font-family:'Righteous',sans-serif;color:#c8a84e;font-size:26px;margin-bottom:12px}
+#loading p{font-family:'Orbitron',sans-serif;color:#c8a84e88;font-size:12px}
+#load-bar{width:200px;height:3px;background:#1a1a2e;border-radius:2px;margin-top:16px;overflow:hidden}
+#load-fill{width:0%;height:100%;background:#c8a84e;transition:width .3s}
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <h1>RADIO DIAL NAVIGATOR</h1>
+  <p>Tuning 488 stations...</p>
+  <div id="load-bar"><div id="load-fill"></div></div>
+</div>
+
+<canvas id="noise"></canvas>
+
+<div id="app">
+  <div id="header">
+    <h1>RADIO DIAL</h1>
+    <div id="lang-toggle">
+      <button class="active" data-lang="en">EN</button>
+      <button data-lang="fr">FR</button>
+      <button data-lang="ar">AR</button>
+    </div>
+  </div>
+
+  <div id="signal-wrap">
+    <div id="signal-bars">
+      <div class="sig-bar" style="height:8px"></div>
+      <div class="sig-bar" style="height:14px"></div>
+      <div class="sig-bar" style="height:20px"></div>
+      <div class="sig-bar" style="height:26px"></div>
+      <div class="sig-bar" style="height:34px"></div>
+    </div>
+    <span id="signal-label">SIGNAL</span>
+  </div>
+
+  <div id="freq-display"></div>
+
+  <div id="dial-wrap">
+    <canvas id="dial-canvas"></canvas>
+  </div>
+
+  <div id="info-panel" class="empty">
+    <div id="station-freq">88.0 MHz</div>
+    <div id="station-title">Tune to a station...</div>
+    <div id="station-cat"></div>
+    <div id="station-desc"></div>
+    <button id="open-btn" class="hidden">OPEN APP</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const I18N = {
+  en:{title:"RADIO DIAL",signal:"SIGNAL",open:"OPEN APP",tune:"Tune to a station...",between:"Between stations...",stations:"{n} stations"},
+  fr:{title:"CADRAN RADIO",signal:"SIGNAL",open:"OUVRIR",tune:"Tournez vers une station...",between:"Entre les stations...",stations:"{n} stations"},
+  ar:{title:"قرص الراديو",signal:"إشارة",open:"فتح",tune:"...اضبط على محطة",between:"...بين المحطات",stations:"{n} محطة"}
+};
+let lang="en";
+
+// Color map (same as constellation)
+const CAT_COLORS={
+  spy:"#e05555",net:"#d9893a",hrf:"#50b860",wifi:"#5599dd",ham:"#d4a840",
+  sdr:"#45b0a0",ant:"#80c040",pi:"#a070d0",agent:"#d04050",bio:"#40c8c8",
+  acoustic:"#a0b040",time:"#e0d040",swarm:"#50a050",impossible:"#9060d8",
+  dark:"#b040a0",ai:"#50a8e0",civilization:"#d0a030",social:"#d06030",
+  hardware:"#408880",crypto:"#b070e0",rf:"#60b050",escape:"#5080d0"
+};
+function catColor(cat){
+  const g=cat.replace(/^\d+-/,"").split("-")[0];
+  return CAT_COLORS[g]||"#c8a84e";
+}
+
+let apps=[];
+let angle=0; // current dial angle in radians (0 = top, clockwise)
+let targetAngle=0;
+let dragging=false;
+let dragStartAngle=0;
+let dialStartAngle=0;
+let tunedApp=null;
+let signalStrength=0;
+let noiseLevel=0;
+
+const FREQ_MIN=88.0, FREQ_MAX=108.0;
+
+const dialCanvas=document.getElementById("dial-canvas");
+const dCtx=dialCanvas.getContext("2d");
+const noiseCanvas=document.getElementById("noise");
+const nCtx=noiseCanvas.getContext("2d");
+
+function resize(){
+  const wrap=document.getElementById("dial-wrap");
+  const sz=Math.min(wrap.clientWidth, wrap.clientHeight);
+  dialCanvas.width=sz*2; dialCanvas.height=sz*2;
+  dialCanvas.style.width=sz+"px"; dialCanvas.style.height=sz+"px";
+  noiseCanvas.width=window.innerWidth/4;
+  noiseCanvas.height=window.innerHeight/4;
+}
+window.addEventListener("resize",resize);
+
+function angleToFreq(a){
+  // Map full circle (0..2PI) to freq range
+  let norm=((a%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
+  return FREQ_MIN+(norm/(Math.PI*2))*(FREQ_MAX-FREQ_MIN);
+}
+function freqToAngle(f){
+  return((f-FREQ_MIN)/(FREQ_MAX-FREQ_MIN))*Math.PI*2;
+}
+function appFreq(idx){
+  return FREQ_MIN+(idx/(apps.length))*(FREQ_MAX-FREQ_MIN);
+}
+
+function findNearest(freq){
+  let best=null,bestDist=Infinity;
+  for(let i=0;i<apps.length;i++){
+    const f=appFreq(i);
+    const d=Math.abs(f-freq);
+    if(d<bestDist){bestDist=d;best={app:apps[i],idx:i,freq:f,dist:d};}
+  }
+  return best;
+}
+
+// --- Dial drawing ---
+function drawDial(){
+  const w=dialCanvas.width, h=dialCanvas.height;
+  const cx=w/2, cy=h/2;
+  const R=w*0.44;
+
+  dCtx.clearRect(0,0,w,h);
+
+  // Outer ring
+  dCtx.strokeStyle="rgba(200,168,78,0.15)";
+  dCtx.lineWidth=2;
+  dCtx.beginPath();
+  dCtx.arc(cx,cy,R+20,0,Math.PI*2);
+  dCtx.stroke();
+
+  // Frequency markings
+  const totalTicks=200;
+  for(let i=0;i<totalTicks;i++){
+    const a=(i/totalTicks)*Math.PI*2 - Math.PI/2;
+    const isMajor=(i%10===0);
+    const isMid=(i%5===0);
+    const len=isMajor?18:isMid?10:5;
+    const x1=cx+Math.cos(a)*(R+4);
+    const y1=cy+Math.sin(a)*(R+4);
+    const x2=cx+Math.cos(a)*(R+4+len);
+    const y2=cy+Math.sin(a)*(R+4+len);
+    dCtx.strokeStyle=isMajor?"rgba(200,168,78,0.6)":isMid?"rgba(200,168,78,0.3)":"rgba(200,168,78,0.12)";
+    dCtx.lineWidth=isMajor?2:1;
+    dCtx.beginPath();
+    dCtx.moveTo(x1,y1);dCtx.lineTo(x2,y2);dCtx.stroke();
+
+    // Frequency labels
+    if(isMajor){
+      const freq=FREQ_MIN+(i/totalTicks)*(FREQ_MAX-FREQ_MIN);
+      const lx=cx+Math.cos(a)*(R+38);
+      const ly=cy+Math.sin(a)*(R+38);
+      dCtx.save();
+      dCtx.translate(lx,ly);
+      dCtx.rotate(a+Math.PI/2);
+      dCtx.font="bold "+Math.round(w*0.018)+"px Orbitron";
+      dCtx.fillStyle="rgba(200,168,78,0.5)";
+      dCtx.textAlign="center";
+      dCtx.fillText(freq.toFixed(1),0,0);
+      dCtx.restore();
+    }
+  }
+
+  // Station dots on the dial
+  for(let i=0;i<apps.length;i++){
+    const f=appFreq(i);
+    const a=freqToAngle(f)-Math.PI/2;
+    const dotR=R-8;
+    const x=cx+Math.cos(a)*dotR;
+    const y=cy+Math.sin(a)*dotR;
+    const col=catColor(apps[i].cat);
+    const isTuned=tunedApp&&tunedApp.idx===i;
+
+    if(isTuned){
+      // Glow for tuned station
+      const grd=dCtx.createRadialGradient(x,y,0,x,y,20);
+      grd.addColorStop(0,col);
+      grd.addColorStop(1,"transparent");
+      dCtx.fillStyle=grd;
+      dCtx.beginPath();dCtx.arc(x,y,20,0,Math.PI*2);dCtx.fill();
+    }
+
+    dCtx.fillStyle=isTuned?col:col+"88";
+    dCtx.beginPath();
+    dCtx.arc(x,y,isTuned?5:2.5,0,Math.PI*2);
+    dCtx.fill();
+  }
+
+  // Needle / tuning indicator
+  const needleAngle=angle-Math.PI/2;
+  // Glow line
+  const grd2=dCtx.createLinearGradient(cx,cy,cx+Math.cos(needleAngle)*R,cy+Math.sin(needleAngle)*R);
+  grd2.addColorStop(0,"transparent");
+  grd2.addColorStop(0.5,"rgba(200,168,78,0.05)");
+  grd2.addColorStop(1,"rgba(200,168,78,0.35)");
+  dCtx.strokeStyle=grd2;
+  dCtx.lineWidth=3;
+  dCtx.beginPath();
+  dCtx.moveTo(cx+Math.cos(needleAngle)*40,cy+Math.sin(needleAngle)*40);
+  dCtx.lineTo(cx+Math.cos(needleAngle)*(R+2),cy+Math.sin(needleAngle)*(R+2));
+  dCtx.stroke();
+
+  // Needle tip triangle
+  const tipX=cx+Math.cos(needleAngle)*(R+6);
+  const tipY=cy+Math.sin(needleAngle)*(R+6);
+  dCtx.fillStyle="#c8a84e";
+  dCtx.beginPath();
+  dCtx.moveTo(tipX,tipY);
+  const perpA=needleAngle+Math.PI/2;
+  dCtx.lineTo(tipX-Math.cos(needleAngle)*12+Math.cos(perpA)*5, tipY-Math.sin(needleAngle)*12+Math.sin(perpA)*5);
+  dCtx.lineTo(tipX-Math.cos(needleAngle)*12-Math.cos(perpA)*5, tipY-Math.sin(needleAngle)*12-Math.sin(perpA)*5);
+  dCtx.closePath();
+  dCtx.fill();
+
+  // Center knob
+  const kGrd=dCtx.createRadialGradient(cx,cy,0,cx,cy,35);
+  kGrd.addColorStop(0,"#2a2520");
+  kGrd.addColorStop(0.7,"#1a1510");
+  kGrd.addColorStop(1,"#0a0a08");
+  dCtx.fillStyle=kGrd;
+  dCtx.beginPath();dCtx.arc(cx,cy,35,0,Math.PI*2);dCtx.fill();
+  dCtx.strokeStyle="rgba(200,168,78,0.3)";
+  dCtx.lineWidth=1.5;
+  dCtx.beginPath();dCtx.arc(cx,cy,35,0,Math.PI*2);dCtx.stroke();
+
+  // Center dot
+  dCtx.fillStyle="#c8a84e";
+  dCtx.beginPath();dCtx.arc(cx,cy,4,0,Math.PI*2);dCtx.fill();
+}
+
+// --- Static noise ---
+let noiseImageData=null;
+function drawNoise(){
+  if(!noiseImageData||noiseImageData.width!==noiseCanvas.width){
+    noiseImageData=nCtx.createImageData(noiseCanvas.width,noiseCanvas.height);
+  }
+  const d=noiseImageData.data;
+  for(let i=0;i<d.length;i+=4){
+    const v=Math.random()*255;
+    d[i]=d[i+1]=d[i+2]=v;
+    d[i+3]=255;
+  }
+  nCtx.putImageData(noiseImageData,0,0);
+}
+
+// --- Interaction ---
+function getAngleFromMouse(mx,my){
+  const rect=dialCanvas.getBoundingClientRect();
+  const cx=rect.left+rect.width/2;
+  const cy=rect.top+rect.height/2;
+  return Math.atan2(my-cy,mx-cx)+Math.PI/2;
+}
+
+dialCanvas.addEventListener("mousedown",e=>{
+  dragging=true;
+  dragStartAngle=getAngleFromMouse(e.clientX,e.clientY);
+  dialStartAngle=targetAngle;
+  e.preventDefault();
+});
+window.addEventListener("mousemove",e=>{
+  if(!dragging)return;
+  const a=getAngleFromMouse(e.clientX,e.clientY);
+  let delta=a-dragStartAngle;
+  // Normalize delta
+  while(delta>Math.PI)delta-=Math.PI*2;
+  while(delta<-Math.PI)delta+=Math.PI*2;
+  targetAngle=dialStartAngle+delta;
+});
+window.addEventListener("mouseup",()=>{dragging=false});
+
+// Touch
+dialCanvas.addEventListener("touchstart",e=>{
+  if(e.touches.length===1){
+    dragging=true;
+    dragStartAngle=getAngleFromMouse(e.touches[0].clientX,e.touches[0].clientY);
+    dialStartAngle=targetAngle;
+  }
+},{passive:true});
+window.addEventListener("touchmove",e=>{
+  if(!dragging||!e.touches.length)return;
+  const a=getAngleFromMouse(e.touches[0].clientX,e.touches[0].clientY);
+  let delta=a-dragStartAngle;
+  while(delta>Math.PI)delta-=Math.PI*2;
+  while(delta<-Math.PI)delta+=Math.PI*2;
+  targetAngle=dialStartAngle+delta;
+},{passive:true});
+window.addEventListener("touchend",()=>{dragging=false});
+
+// Scroll wheel to fine-tune
+dialCanvas.addEventListener("wheel",e=>{
+  e.preventDefault();
+  targetAngle+=(e.deltaY>0?0.015:-0.015);
+},{passive:false});
+
+// --- Update loop ---
+function update(){
+  // Smooth angle
+  let diff=targetAngle-angle;
+  angle+=diff*0.15;
+
+  const freq=angleToFreq(angle);
+  const nearest=findNearest(freq);
+
+  // Snap threshold: how close to "lock on"
+  const snapThresh=0.04; // in MHz
+  const lockThresh=0.12;
+
+  if(nearest){
+    const dist=nearest.dist;
+    signalStrength=Math.max(0,1-dist/lockThresh);
+    noiseLevel=1-signalStrength;
+
+    if(dist<snapThresh && !dragging){
+      // Snap to station
+      const snapAngle=freqToAngle(nearest.freq);
+      let d2=snapAngle-targetAngle;
+      while(d2>Math.PI)d2-=Math.PI*2;
+      while(d2<-Math.PI)d2+=Math.PI*2;
+      if(Math.abs(d2)<0.05) targetAngle+=d2*0.1;
+    }
+
+    if(dist<lockThresh){
+      tunedApp=nearest;
+      updateInfoPanel(nearest.app,nearest.freq,signalStrength);
+    } else {
+      tunedApp=null;
+      showBetween(freq);
+    }
+  }
+
+  // Update visuals
+  noiseCanvas.style.opacity=noiseLevel*0.12;
+  if(noiseLevel>0.05) drawNoise();
+
+  updateSignalBars(signalStrength);
+  document.getElementById("freq-display").textContent=freq.toFixed(1)+" MHz";
+
+  drawDial();
+  requestAnimationFrame(update);
+}
+
+function updateInfoPanel(app,freq,strength){
+  const panel=document.getElementById("info-panel");
+  panel.classList.remove("empty");
+  document.getElementById("station-freq").textContent=freq.toFixed(1)+" MHz";
+  document.getElementById("station-title").textContent=app.title;
+  document.getElementById("station-cat").textContent=app.cat.replace(/^\d+-/,"").replace(/-/g," ").toUpperCase();
+  document.getElementById("station-desc").textContent=app.desc;
+  const btn=document.getElementById("open-btn");
+  btn.classList.remove("hidden");
+  btn.textContent=I18N[lang].open;
+  btn.onclick=()=>window.open(app.path,"_blank");
+
+  // Pulse title color by signal
+  const alpha=0.5+strength*0.5;
+  document.getElementById("station-title").style.opacity=alpha;
+}
+
+function showBetween(freq){
+  const panel=document.getElementById("info-panel");
+  panel.classList.add("empty");
+  document.getElementById("station-freq").textContent=freq.toFixed(1)+" MHz";
+  document.getElementById("station-title").textContent=I18N[lang].between;
+  document.getElementById("station-cat").textContent="";
+  document.getElementById("station-desc").textContent="";
+  document.getElementById("open-btn").classList.add("hidden");
+  document.getElementById("station-title").style.opacity=0.4;
+}
+
+function updateSignalBars(strength){
+  const bars=document.querySelectorAll(".sig-bar");
+  const count=Math.round(strength*bars.length);
+  bars.forEach((b,i)=>{
+    b.classList.toggle("on",i<count);
+  });
+}
+
+// --- Language ---
+document.querySelectorAll("#lang-toggle button").forEach(btn=>{
+  btn.addEventListener("click",function(){
+    document.querySelectorAll("#lang-toggle button").forEach(b=>b.classList.remove("active"));
+    this.classList.add("active");
+    lang=this.dataset.lang;
+    document.getElementById("header").querySelector("h1").textContent=I18N[lang].title;
+    document.getElementById("signal-label").textContent=I18N[lang].signal;
+    document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+    if(tunedApp){
+      document.getElementById("open-btn").textContent=I18N[lang].open;
+    }
+  });
+});
+
+// --- Load ---
+async function loadData(){
+  const fill=document.getElementById("load-fill");
+  fill.style.width="30%";
+  try{
+    const res=await fetch("search-index.json");
+    apps=await res.json();
+  }catch(e){
+    apps=await new Promise((resolve,reject)=>{
+      const xhr=new XMLHttpRequest();
+      xhr.open("GET","search-index.json",true);
+      xhr.onload=()=>resolve(JSON.parse(xhr.responseText));
+      xhr.onerror=reject;
+      xhr.send();
+    });
+  }
+  fill.style.width="100%";
+
+  resize();
+
+  setTimeout(()=>{
+    const loading=document.getElementById("loading");
+    loading.style.opacity="0";
+    setTimeout(()=>loading.style.display="none",800);
+  },400);
+
+  update();
+}
+
+loadData();
+
+})();
+</script>
+</body>
+</html>
