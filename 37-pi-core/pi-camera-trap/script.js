@@ -263,7 +263,7 @@ const LANG = {
  howto_3:'Scroll down to the expandable sections. "Live Feed" shows detailed measurements and charts that update in real time. Click section headers to expand or collapse them. The data here helps you understand what the visualization is showing.',
  howto_4:'Now experiment: change one parameter at a time. Press Stop, adjust a slider, then Start again. Compare the new output with what you saw before. This is how real engineers and scientists work — isolate one variable, observe the effect, and build understanding step by step.',
  wiki_themes_title: '🎨 Themes', wiki_themes: '8 built-in themes: 6 dark (Mosque, Zellige, Andalus, Space, Jungle, Robot) and 2 light Islamic themes (Riad, Medina).',
- wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, العربية. Arabic automatically enables right-to-left layout.',
+ wiki_i18n_title: '🌐 Languages', wiki_i18n: 'Trilingual support: English, Français, Arabic automatically enables right-to-left layout.',
  wiki_log_title: '📜 Activity Log', wiki_log: 'Timestamped, color-coded log. Clear or copy to clipboard. Types: info, success, error, TX, RX.',
  wiki_privacy_title: '🔒 Privacy', wiki_privacy: 'Local-first, privacy-first. All data stays in your browser. No tracking, no analytics, no external calls.',
  working: 'Working…',
