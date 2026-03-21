@@ -222,8 +222,8 @@ body {
 }
 
 .header-right {
-  display: flex; flex-direction: column;
-  align-items: flex-end; gap: 6px;
+  display: flex; flex-direction: row; flex-wrap: wrap;
+  align-items: center; gap: 6px;
 }
 [dir="rtl"] .header-right { align-items: flex-start; }
 
